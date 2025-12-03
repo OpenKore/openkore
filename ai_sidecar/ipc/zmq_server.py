@@ -34,6 +34,7 @@ class ZMQServer:
         self,
         config: ZMQConfig | None = None,
         message_handler: MessageHandler | None = None,
+        port: int | None = None,
     ) -> None:
         """
         Initialize the ZeroMQ server.
@@ -42,8 +43,19 @@ class ZMQServer:
             config: ZMQ configuration. If None, uses default from settings.
             message_handler: Async callback for processing messages.
                             Must accept a dict and return a dict response.
+            port: Port number to bind to. If provided, overrides config endpoint.
         """
         self._config = config or get_settings().zmq
+        
+        # Override endpoint if port is provided
+        if port is not None:
+            self._config = ZMQConfig(
+                endpoint=f"tcp://*:{port}",
+                recv_timeout_ms=self._config.recv_timeout_ms,
+                send_timeout_ms=self._config.send_timeout_ms,
+                linger_ms=self._config.linger_ms,
+                high_water_mark=self._config.high_water_mark,
+            )
         self._message_handler = message_handler
         
         # ZMQ context and socket (created on start)
@@ -249,6 +261,15 @@ class ZMQServer:
             },
             "fallback_mode": get_settings().decision.fallback_mode,
         }
+    
+    @property
+    def port(self) -> int:
+        """Get the port number from endpoint."""
+        # Extract port from endpoint like "tcp://*:5556"
+        try:
+            return int(self._config.endpoint.split(":")[-1])
+        except (ValueError, IndexError):
+            return 0
     
     @property
     def is_running(self) -> bool:

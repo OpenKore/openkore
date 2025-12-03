@@ -395,7 +395,7 @@ class PvPCoordinator:
             command = event_data.get("command")
             await self.coordination.receive_command(command)
 
-        self.log.debug("PvP event handled", event=event_type)
+        self.log.debug("pvp_event_handled", event_type=event_type)
 
     def _track_enemy(self, enemy_data: dict[str, Any]) -> None:
         """Track enemy player data"""

@@ -13,7 +13,7 @@ import structlog
 from pydantic import BaseModel, Field, ConfigDict
 
 from ai_sidecar.instances.registry import InstanceDefinition
-from ai_sidecar.instances.state import InstanceState
+from ai_sidecar.instances.state import InstanceState, InstanceType
 
 logger = structlog.get_logger(__name__)
 
@@ -195,61 +195,58 @@ class InstanceStrategyEngine:
     async def generate_strategy(
         self,
         instance_def: InstanceDefinition,
-        character_state: Dict[str, Any],
-        party_composition: List[str]
+        character_state: dict,
+        party_composition: Optional[list] = None
     ) -> InstanceStrategy:
         """
-        Generate strategy based on context.
+        Generate strategy based on instance definition and party.
         
         Args:
             instance_def: Instance definition
             character_state: Character state dict
-            party_composition: List of party member job classes
+            party_composition: Optional list of party member job classes
             
         Returns:
-            Generated instance strategy
+            Generated InstanceStrategy object
         """
-        # Check for existing strategy
-        existing = await self.get_strategy(instance_def.instance_id)
-        if existing:
-            return existing
+        # Check if strategy already exists
+        if instance_def.instance_id in self.strategies:
+            return self.strategies[instance_def.instance_id]
         
-        # Generate basic strategy
-        char_level = character_state.get("base_level", 99)
+        party_composition = party_composition or []
+        char_level = character_state.get("base_level", 1)
+        
+        # Determine party composition type
         is_solo = len(party_composition) <= 1
+        has_healer = any(job in str(party_composition).lower() for job in ['priest', 'high priest', 'archbishop'])
+        has_tank = any(job in str(party_composition).lower() for job in ['swordsman', 'knight', 'crusader', 'royal guard'])
         
         # Determine approach
-        speed_run = False
-        full_clear = True
-        
-        if char_level > instance_def.recommended_level + 20:
-            speed_run = True
-            full_clear = False
+        level_diff = char_level - instance_def.recommended_level
+        speed_run = level_diff >= 20  # High level enables speed run
+        full_clear = not speed_run
         
         # Generate floor strategies
-        floor_strategies: Dict[int, FloorStrategy] = {}
-        for floor_num in range(1, instance_def.floors + 1):
-            floor_strategies[floor_num] = FloorStrategy(
-                floor_number=floor_num,
-                buff_requirements=["blessing", "increase_agi"] if floor_num == 1 else []
+        floor_strategies = {}
+        for floor in range(1, instance_def.floors + 1):
+            floor_strategies[floor] = FloorStrategy(
+                floor_number=floor,
+                buff_requirements=["blessing", "increase_agi"] if floor == 1 else []
             )
         
         # Generate boss strategies
-        boss_strategies: Dict[str, BossStrategy] = {}
+        boss_strategies = {}
         for boss_name in instance_def.boss_names:
-            positioning = "ranged" if is_solo else "melee"
+            # Determine positioning based on party
+            if is_solo or not has_tank:
+                positioning = "ranged"
+            else:
+                positioning = "melee"
+            
             boss_strategies[boss_name] = BossStrategy(
                 boss_name=boss_name,
-                positioning=positioning,
-                adds_priority="kill_first" if is_solo else "ignore"
+                positioning=positioning
             )
-        
-        # Resource budgets
-        consumable_budget = {
-            "White Potion": 50,
-            "Blue Potion": 30,
-            "Fly Wing": 10,
-        }
         
         strategy = InstanceStrategy(
             instance_id=instance_def.instance_id,
@@ -257,18 +254,32 @@ class InstanceStrategyEngine:
             full_clear=full_clear,
             floor_strategies=floor_strategies,
             boss_strategies=boss_strategies,
-            consumable_budget=consumable_budget,
-            death_limit=5 if is_solo else 10,
+            death_limit=5 if is_solo else 10
         )
+        
+        self.strategies[instance_def.instance_id] = strategy
         
         self.log.info(
             "Generated strategy",
             instance=instance_def.instance_name,
-            speed_run=speed_run,
-            solo=is_solo
+            floors=instance_def.floors,
+            party_size=len(party_composition),
+            speed_run=speed_run
         )
         
         return strategy
+    
+    def get_strategy_history(self, instance_name: str) -> list:
+        """
+        Get strategy history for an instance.
+        
+        Args:
+            instance_name: Name of instance
+            
+        Returns:
+            List of learned tactics
+        """
+        return self.learned_tactics.get(instance_name, [])
     
     async def get_floor_actions(
         self,
@@ -429,7 +440,7 @@ class InstanceStrategyEngine:
         """
         self.log.info(
             "Adapting strategy",
-            event=event,
+            event_type=event,
             floor=state.current_floor,
             progress=f"{state.overall_progress:.1f}%"
         )
@@ -446,25 +457,37 @@ class InstanceStrategyEngine:
         
         self.learned_tactics[state.instance_id] = instance_tactics[-10:]
     
-    async def learn_from_run(self, final_state: InstanceState) -> None:
+    async def learn_from_run(
+        self,
+        state: InstanceState
+    ) -> None:
         """
-        Learn from completed run.
+        Learn from completed instance run.
         
         Args:
-            final_state: Final instance state
+            state: Final instance state after completion/failure
         """
-        success = final_state.phase.value == "completed"
+        from ai_sidecar.instances.state import InstancePhase
+        
+        instance_id = state.instance_id
+        success = state.phase == InstancePhase.COMPLETED
         
         self.log.info(
-            "Learning from run",
-            instance=final_state.instance_name,
+            "Learning from instance run",
+            instance=instance_id,
             success=success,
-            deaths=final_state.deaths,
-            time=f"{final_state.elapsed_seconds:.1f}s"
+            floor=state.current_floor
         )
         
-        # Record successful patterns
+        # Record in learned tactics
+        tactics = self.learned_tactics.get(instance_id, [])
         if success:
-            tactics = self.learned_tactics.get(final_state.instance_id, [])
             tactics.append("successful_completion")
-            self.learned_tactics[final_state.instance_id] = tactics[-20:]
+        else:
+            tactics.append(f"failed_at_floor_{state.current_floor}")
+        
+        self.learned_tactics[instance_id] = tactics[-20:]
+
+
+# Alias for backward compatibility
+StrategyEngine = InstanceStrategyEngine

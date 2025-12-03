@@ -127,7 +127,7 @@ class EndlessTowerHandler:
                     boss_name=self.MVP_FLOORS[floor_num],
                     mvp_floor=True,
                     recommended_level=min(99, 60 + (floor_num // 25) * 10),
-                    danger_rating=7 + (floor_num // 25)
+                    danger_rating=min(10, 7 + (floor_num // 25))
                 )
             else:
                 # Regular floor
@@ -144,27 +144,34 @@ class EndlessTowerHandler:
     async def get_floor_strategy(
         self,
         floor: int,
-        character_state: Dict[str, Any]
+        character_state: Optional[Dict[str, Any]] = None
     ) -> FloorStrategy:
         """
         Get strategy for specific floor.
         
         Args:
             floor: Floor number
-            character_state: Character state dict
+            character_state: Optional character state dict for personalized strategy
             
         Returns:
-            Floor strategy
+            FloorStrategy object based on floor and character
         """
         floor_data = self.floor_data.get(floor)
         if not floor_data:
             # Default strategy
-            return FloorStrategy(floor_number=floor)
+            return FloorStrategy(
+                floor_number=floor,
+                special_mechanics=["Unknown floor - proceed with caution"]
+            )
+        
+        # Determine approach based on character level if provided
+        char_level = character_state.get("level", 1) if character_state else 1
         
         # Determine if this is an MVP floor
         if floor_data.mvp_floor:
             return FloorStrategy(
                 floor_number=floor,
+                priority_targets=[floor_data.boss_name] if floor_data.boss_name else [],
                 buff_requirements=["Assumptio", "Bless", "Increase AGI"],
                 special_mechanics=[
                     f"MVP: {floor_data.boss_name}",
@@ -179,6 +186,10 @@ class EndlessTowerHandler:
             buff_requirements=["Bless", "Increase AGI"] if floor == 1 else [],
             special_mechanics=["Clear all monsters to proceed"]
         )
+    
+    def get_mvp_name(self, floor: int) -> Optional[str]:
+        """Get MVP boss name for a floor."""
+        return self.MVP_FLOORS.get(floor)
     
     async def can_handle_floor(
         self,
@@ -436,3 +447,7 @@ class EndlessTowerHandler:
     def get_floor_info(self, floor: int) -> Optional[ETFloorData]:
         """Get floor data."""
         return self.floor_data.get(floor)
+
+
+# Alias for backward compatibility
+EndlessTowerStrategy = EndlessTowerHandler

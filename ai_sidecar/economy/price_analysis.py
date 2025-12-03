@@ -166,7 +166,7 @@ class PriceAnalyzer:
         """
         history = self.market.get_price_history(item_id, days=30)
         
-        if not history or len(history.price_points) < 5:
+        if not history or len(history.price_points) < 3:
             # Not enough data to determine
             return (False, "insufficient_data")
         
@@ -396,7 +396,7 @@ class PriceAnalyzer:
         
         for card_id in cards:
             card_price = self.market.get_current_price(card_id)
-            if card_price:
+            if card_price and "median_price" in card_price:
                 # Cards add 80% of their market value
                 # (accounting for risk/effort of slotting)
                 total_value += int(card_price["median_price"] * 0.8)
@@ -475,3 +475,104 @@ class PriceAnalyzer:
         except Exception as e:
             self.log.error("config_load_failed", error=str(e))
             return {}
+    
+    def estimate_fair_price(
+        self,
+        item_id: int,
+        refine_level: int = 0,
+        cards: List[int] = None
+    ) -> int:
+        """
+        Estimate fair market price for item (alias for calculate_fair_price).
+        
+        Args:
+            item_id: Item ID
+            refine_level: Refine level for equipment
+            cards: List of card IDs inserted
+            
+        Returns:
+            Estimated fair price
+        """
+        return self.calculate_fair_price(item_id, refine_level, cards)
+
+
+class SupplyDemandAnalyzer:
+    """
+    Analyzes supply and demand dynamics in the market.
+    
+    Features:
+    - Demand estimation based on listing turnover
+    - Supply tracking
+    - Buy/sell pressure analysis
+    """
+    
+    def __init__(self, market_manager: MarketManager):
+        """
+        Initialize supply/demand analyzer.
+        
+        Args:
+            market_manager: Market data manager
+        """
+        self.log = logger.bind(system="supply_demand")
+        self.market = market_manager
+    
+    def estimate_demand(self, item_id: int) -> float:
+        """
+        Estimate demand level for an item.
+        
+        Args:
+            item_id: Item ID
+            
+        Returns:
+            Demand score (0.0-1.0, higher = more demand)
+        """
+        current_price = self.market.get_current_price(item_id)
+        history = self.market.get_price_history(item_id, days=7)
+        
+        if not current_price or not history:
+            return 0.5  # Unknown demand
+        
+        # Factors indicating demand:
+        # 1. Rising prices
+        # 2. Multiple listings (sellers know there are buyers)
+        # 3. Low volatility (stable demand)
+        
+        demand_score = 0.0
+        
+        # Trend-based demand
+        if history.trend == PriceTrend.RISING_FAST:
+            demand_score += 0.4
+        elif history.trend == PriceTrend.RISING:
+            demand_score += 0.3
+        elif history.trend == PriceTrend.STABLE:
+            demand_score += 0.2
+        
+        # Listing count
+        listing_count = current_price.get("listing_count", 0)
+        if listing_count > 10:
+            demand_score += 0.3
+        elif listing_count > 5:
+            demand_score += 0.2
+        elif listing_count > 0:
+            demand_score += 0.1
+        
+        # Volatility (lower = more stable demand)
+        volatility = history.volatility
+        if volatility < 0.1:
+            demand_score += 0.3
+        elif volatility < 0.2:
+            demand_score += 0.2
+        elif volatility < 0.3:
+            demand_score += 0.1
+        
+        demand_score = min(1.0, demand_score)
+        
+        self.log.debug(
+            "demand_estimated",
+            item_id=item_id,
+            demand=demand_score,
+            trend=history.trend.value,
+            listings=listing_count
+        )
+        
+        return demand_score

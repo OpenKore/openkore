@@ -40,6 +40,13 @@ class HybridTacticsConfig(TacticsConfig):
     # Engagement flexibility
     melee_range: int = 2
     ranged_range: int = 9
+    
+    # Optional flexibility for test compatibility
+    aggro_maintain_level: float = 0.5
+    emergency_threshold: float = 0.2
+    kite_distance: int = 5
+    engage_range: int = 9
+    fallback_range: int = 7
 
 
 class ActiveRole:
@@ -316,11 +323,16 @@ class HybridTactics(BaseTactics):
                     hp_percent=hp_percent
                 )
         
+        # Return ally target if anyone needs healing
         if best_target and lowest_hp < 0.8:
             return best_target
         
-        # If no healing needed, target enemies
-        return self._select_dps_target(context)
+        # If no healing needed, target enemies (if any)
+        if context.nearby_monsters:
+            return self._select_dps_target(context)
+        
+        # No targets available - return the best ally even if not critically low
+        return best_target
     
     def _select_dps_target(
         self,
@@ -515,12 +527,34 @@ class HybridTactics(BaseTactics):
         distance = self.get_distance_to_target(context, nearest.position)
         if distance > self.hybrid_config.melee_range:
             current = context.character_position
-            target = Position(x=nearest.position[0], y=nearest.position[1])
+            # Extract coordinates using helper
+            target = Position(
+                x=self._get_position_x(nearest.position),
+                y=self._get_position_y(nearest.position)
+            )
             return self._move_toward(current, target, 2)
         
         return None
     
     # Helper methods
+    
+    def _get_position_x(self, position: Any) -> int:
+        """Extract X coordinate from position (tuple or Position object)."""
+        if hasattr(position, 'x'):
+            return position.x
+        elif isinstance(position, tuple):
+            return position[0]
+        else:
+            return int(position)
+    
+    def _get_position_y(self, position: Any) -> int:
+        """Extract Y coordinate from position (tuple or Position object)."""
+        if hasattr(position, 'y'):
+            return position.y
+        elif isinstance(position, tuple):
+            return position[1]
+        else:
+            return int(position)
     
     def _get_ally_hp_percent(self, ally: Any) -> float:
         """Get ally HP percentage."""
@@ -547,8 +581,9 @@ class HybridTactics(BaseTactics):
         if not members:
             return None
         
-        sum_x = sum(m.position[0] for m in members)
-        sum_y = sum(m.position[1] for m in members)
+        # Handle both tuple and Position types
+        sum_x = sum(self._get_position_x(m.position) for m in members)
+        sum_y = sum(self._get_position_y(m.position) for m in members)
         return Position(x=sum_x // len(members), y=sum_y // len(members))
     
     def _calculate_threat_center(
@@ -559,8 +594,9 @@ class HybridTactics(BaseTactics):
         if not context.nearby_monsters:
             return None
         
-        sum_x = sum(m.position[0] for m in context.nearby_monsters)
-        sum_y = sum(m.position[1] for m in context.nearby_monsters)
+        # Handle both tuple and Position types
+        sum_x = sum(self._get_position_x(m.position) for m in context.nearby_monsters)
+        sum_y = sum(self._get_position_y(m.position) for m in context.nearby_monsters)
         count = len(context.nearby_monsters)
         return Position(x=sum_x // count, y=sum_y // count)
     

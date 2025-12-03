@@ -26,13 +26,15 @@ class LearningEngine:
     - Pattern discovery
     """
     
-    def __init__(self, memory_manager: MemoryManager):
+    def __init__(self, memory_manager: MemoryManager | None = None):
         """
         Initialize learning engine.
         
         Args:
-            memory_manager: Memory manager instance
+            memory_manager: Memory manager instance. If None, creates a default one.
         """
+        if memory_manager is None:
+            memory_manager = MemoryManager()
         self.memory = memory_manager
         self.learning_rate = 0.1
         
@@ -186,11 +188,13 @@ class LearningEngine:
         
         # Analyze each type
         for dtype, type_memories in by_type.items():
-            successful = [
-                m
-                for m in type_memories
-                if m.content.get("outcome", {}).get("success", False)
-            ]
+            successful = []
+            for m in type_memories:
+                if not m.content:
+                    continue
+                outcome = m.content.get("outcome")
+                if outcome and outcome.get("success", False):
+                    successful.append(m)
             
             if len(type_memories) >= 5:
                 success_rate = len(successful) / len(type_memories)
@@ -290,6 +294,35 @@ class LearningEngine:
             best_option = persistent["parameters"]
         
         return best_option, best_score
+    
+    async def train(self, data: List[Any], model_name: str) -> Dict[str, Any]:
+        """
+        Train a model with provided data.
+        
+        Args:
+            data: Training data
+            model_name: Name of model to train
+            
+        Returns:
+            Training results
+        """
+        logger.info("train_called", model=model_name, data_size=len(data))
+        # Placeholder for actual training logic
+        return {"model": model_name, "samples": len(data), "status": "trained"}
+    
+    async def predict(self, input_data: Dict[str, Any]) -> Any:
+        """
+        Make a prediction using trained model.
+        
+        Args:
+            input_data: Input data for prediction
+            
+        Returns:
+            Prediction result
+        """
+        logger.info("predict_called", input_keys=list(input_data.keys()))
+        # Placeholder for actual prediction logic
+        return None
     
     async def cleanup_pending(self) -> int:
         """

@@ -4,7 +4,7 @@ Tests for learning engine.
 
 import pytest
 import tempfile
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from ai_sidecar.memory.manager import MemoryManager
 from ai_sidecar.memory.decision_models import DecisionContext, DecisionOutcome

@@ -289,11 +289,18 @@ class QuestManager:
         """Get all active quests"""
         return list(self.active_quests.values())
     
-    def get_available_quests(self, character_state: dict) -> List[Quest]:
-        """Get quests available for character"""
+    def get_available_quests(self, character_state) -> List[Quest]:
+        """Get quests available for character (accepts dict or CharacterState)"""
         available = []
-        level = character_state.get("level", 1)
-        job = character_state.get("job", "Novice")
+        
+        # Handle both dict and CharacterState objects
+        if isinstance(character_state, dict):
+            level = character_state.get("level", 1)
+            job = character_state.get("job", "Novice")
+        else:
+            # CharacterState object
+            level = getattr(character_state, 'base_level', 1)
+            job = getattr(character_state, 'job_class', 'Novice')
         
         for quest in self.quests.values():
             if quest.quest_id in self.active_quests:
@@ -313,20 +320,34 @@ class QuestManager:
         
         return available
     
-    def _check_requirements(self, quest: Quest, character_state: dict) -> bool:
-        """Check if character meets quest requirements"""
+    def _check_requirements(self, quest: Quest, character_state) -> bool:
+        """Check if character meets quest requirements (accepts dict or CharacterState)"""
+        # Handle both dict and CharacterState objects
+        def get_value(key: str, default=None):
+            if isinstance(character_state, dict):
+                return character_state.get(key, default)
+            else:
+                # Map keys to CharacterState attributes
+                attr_map = {
+                    "level": "base_level",
+                    "job_level": "job_level",
+                    "job": "job_class"
+                }
+                attr_name = attr_map.get(key, key)
+                return getattr(character_state, attr_name, default)
+        
         for req in quest.requirements:
             if req.requirement_type == "quest":
                 if req.requirement_id not in self.completed_quests:
                     return False
             elif req.requirement_type == "level":
-                if character_state.get("level", 1) < req.required_value:
+                if get_value("level", 1) < req.required_value:
                     return False
             elif req.requirement_type == "job_level":
-                if character_state.get("job_level", 1) < req.required_value:
+                if get_value("job_level", 1) < req.required_value:
                     return False
             elif req.requirement_type == "job":
-                if character_state.get("job") != req.required_value:
+                if get_value("job") != req.required_value:
                     return False
         return True
     
@@ -455,3 +476,48 @@ class QuestManager:
         
         available.sort(key=priority_score, reverse=True)
         return available[:limit]
+    
+    async def tick(self, game_state=None) -> list:
+        """
+        Perform periodic tick processing for quest management.
+        
+        Args:
+            game_state: Optional game state for context
+            
+        Checks:
+        - Quest time limits
+        - Daily quest resets
+        - Objective auto-completion detection
+        
+        Returns:
+            List of actions to perform
+        """
+        current_time = datetime.now()
+        actions = []
+        
+        # Check for expired quests
+        for quest in list(self.active_quests.values()):
+            if quest.expires_at and current_time > quest.expires_at:
+                self.log.warning("quest_expired", quest_id=quest.quest_id)
+                quest.status = QuestStatus.FAILED
+                del self.active_quests[quest.quest_id]
+        
+        # Check for ready-to-complete quests
+        for quest in self.active_quests.values():
+            if quest.is_complete and quest.status != QuestStatus.COMPLETED:
+                self.log.info("quest_ready_for_completion", quest_id=quest.quest_id)
+        
+        return actions
+    
+    async def accept_quest(self, quest_id: str | int) -> bool:
+        """Accept a quest by ID or name."""
+        # Try as int first
+        try:
+            qid = int(quest_id) if isinstance(quest_id, str) and quest_id.isdigit() else quest_id
+            return self.start_quest(qid)
+        except (ValueError, TypeError):
+            # Try finding by name
+            for quest in self.quests.values():
+                if quest.quest_name.lower() == str(quest_id).lower():
+                    return self.start_quest(quest.quest_id)
+        return False

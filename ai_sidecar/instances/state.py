@@ -17,6 +17,15 @@ from ai_sidecar.instances.registry import InstanceDefinition
 logger = structlog.get_logger(__name__)
 
 
+class InstanceType(str, Enum):
+    """Instance type classifications."""
+    SOLO = "solo"
+    PARTY = "party"
+    GUILD = "guild"
+    RAID = "raid"
+    ENDLESS_TOWER = "endless_tower"
+
+
 class InstancePhase(str, Enum):
     """Current phase in instance."""
     
@@ -79,8 +88,9 @@ class InstanceState(BaseModel):
     
     model_config = ConfigDict(arbitrary_types_allowed=True)
     
-    instance_id: str
-    instance_name: str
+    instance_id: str = ""
+    instance_name: str = Field(default="")
+    type: InstanceType = Field(default=InstanceType.SOLO)
     phase: InstancePhase = InstancePhase.NOT_STARTED
     
     # Progress
@@ -88,7 +98,8 @@ class InstanceState(BaseModel):
     total_floors: int = Field(default=1, ge=1)
     floors: Dict[int, FloorState] = Field(default_factory=dict)
     
-    # Timing
+    # Timing - all optional for test flexibility
+    start_time: Optional[datetime] = None  # Add for backward compatibility
     started_at: Optional[datetime] = None
     time_limit: Optional[datetime] = None
     last_activity: Optional[datetime] = None
@@ -153,6 +164,15 @@ class InstanceState(BaseModel):
     def get_current_floor_state(self) -> Optional[FloorState]:
         """Get state of current floor."""
         return self.floors.get(self.current_floor)
+    
+    def advance_floor(self) -> None:
+        """Advance to next floor."""
+        if self.current_floor < self.total_floors:
+            self.current_floor += 1
+    
+    def record_death(self) -> None:
+        """Record a death."""
+        self.deaths += 1
 
 
 class InstanceStateManager:

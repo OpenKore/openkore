@@ -394,6 +394,77 @@ class AoETargetingSystem:
         
         return clusters
         
+    def calculate_optimal_position(
+        self, positions: list[tuple], skill_radius: int
+    ) -> tuple[int, int]:
+        """
+        Calculate optimal position for AoE skill (synchronous version).
+        
+        Args:
+            positions: List of target positions
+            skill_radius: Radius of the AoE skill
+            
+        Returns:
+            Optimal center position (x, y)
+        """
+        if not positions:
+            return (0, 0)
+            
+        best_center = positions[0]
+        max_hits = 0
+        
+        for candidate in positions:
+            hits = sum(
+                1 for pos in positions
+                if self._distance(candidate, pos) <= skill_radius
+            )
+            if hits > max_hits:
+                max_hits = hits
+                best_center = candidate
+                
+        return best_center
+    
+    def find_clusters(self, positions: list[tuple], radius: int) -> list[list[tuple]]:
+        """
+        Find clusters of nearby positions within radius.
+        
+        Simplified clustering for direct position grouping.
+        
+        Args:
+            positions: List of positions to cluster
+            radius: Maximum distance between cluster members
+            
+        Returns:
+            List of clusters (each cluster is list of positions)
+        """
+        if not positions:
+            return []
+            
+        clusters: list[list[tuple]] = []
+        used = set()
+        
+        for pos in positions:
+            if pos in used:
+                continue
+                
+            # Start new cluster
+            cluster = [pos]
+            used.add(pos)
+            
+            # Find nearby positions
+            for other_pos in positions:
+                if other_pos in used:
+                    continue
+                    
+                dist = self._distance(pos, other_pos)
+                if dist <= radius:
+                    cluster.append(other_pos)
+                    used.add(other_pos)
+            
+            clusters.append(cluster)
+        
+        return clusters
+        
     async def plan_aoe_sequence(
         self,
         clusters: List[List[Tuple[int, int]]],
@@ -450,3 +521,7 @@ class AoETargetingSystem:
         self.log.info("aoe_sequence_planned", actions=len(sequence))
         
         return sequence
+
+
+# Alias for backward compatibility
+AOECalculator = AoETargetingSystem

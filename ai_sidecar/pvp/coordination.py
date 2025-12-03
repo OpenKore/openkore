@@ -494,3 +494,114 @@ class GuildCoordinator:
             cmd for cmd in self.active_commands
             if cmd.expires_at is None or cmd.expires_at > now
         ]
+
+    async def coordinate_team_attack(
+        self, team: list[dict[str, Any]], enemies: list[Any]
+    ) -> dict[str, Any]:
+        """
+        Coordinate team attack on enemies.
+        
+        Args:
+            team: List of team member data
+            enemies: List of enemy targets
+            
+        Returns:
+            Coordination result with target assignments
+        """
+        if not team or not enemies:
+            self.log.debug("Empty team or enemies in coordinate_team_attack")
+            return {"assignments": [], "strategy": "none"}
+        
+        # Simple focus fire strategy - all attack highest priority target
+        result = {
+            "assignments": [],
+            "strategy": "focus_fire",
+            "called_target": None
+        }
+        
+        if enemies:
+            # Call target on first enemy
+            primary_target = enemies[0]
+            if hasattr(primary_target, 'id'):
+                target_id = primary_target.id
+            else:
+                target_id = 0
+                
+            result["called_target"] = target_id
+            
+            # Assign all team members to attack primary target
+            for member in team:
+                result["assignments"].append({
+                    "player_id": member.get("player_id", 0),
+                    "target_id": target_id,
+                    "action": "attack"
+                })
+        
+        self.log.info(
+            "Team attack coordinated",
+            team_size=len(team),
+            enemy_count=len(enemies),
+            strategy=result["strategy"]
+        )
+        
+        return result
+
+    async def assign_roles(self, team: list[dict[str, Any]]) -> dict[str, list[int]]:
+        """
+        Assign roles to team members.
+        
+        Args:
+            team: List of team member data
+            
+        Returns:
+            Role assignments mapping role names to player IDs
+        """
+        assignments: dict[str, list[int]] = {
+            "tank": [],
+            "healer": [],
+            "dps": [],
+            "support": []
+        }
+        
+        if not team:
+            self.log.debug("Empty team in assign_roles")
+            return assignments
+        
+        # Simple role assignment based on class or provided role
+        for member in team:
+            player_id = member.get("player_id", 0)
+            job_class = member.get("class", "").lower()
+            provided_role = member.get("role", "").lower()
+            
+            # Determine role
+            if provided_role in assignments:
+                role = provided_role
+            elif any(tank_class in job_class for tank_class in ["knight", "crusader", "royal"]):
+                role = "tank"
+            elif any(heal_class in job_class for heal_class in ["priest", "acolyte", "arch"]):
+                role = "healer"
+            elif any(support_class in job_class for support_class in ["bard", "dancer", "professor"]):
+                role = "support"
+            else:
+                role = "dps"
+            
+            assignments[role].append(player_id)
+            
+            # Update member in coordination if they exist
+            if player_id in self.members:
+                self.members[player_id].role = role
+        
+        self.log.info(
+            "Roles assigned",
+            team_size=len(team),
+            tanks=len(assignments["tank"]),
+            healers=len(assignments["healer"]),
+            dps=len(assignments["dps"]),
+            support=len(assignments["support"])
+        )
+        
+        return assignments
+
+
+# Alias for backward compatibility
+TeamCoordinator = GuildCoordinator

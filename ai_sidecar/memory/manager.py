@@ -116,16 +116,20 @@ class MemoryManager:
         
         return None
     
-    async def query(self, query: MemoryQuery) -> List[Memory]:
+    async def query(self, query: MemoryQuery | MemoryType) -> List[Memory]:
         """
         Query memories across all tiers.
         
         Args:
-            query: Query parameters
+            query: Query parameters or MemoryType for simple queries
         
         Returns:
             List of matching memories
         """
+        # Handle MemoryType shortcut
+        if isinstance(query, MemoryType):
+            query = MemoryQuery(memory_types=[query], limit=100)
+        
         results = []
         seen_ids = set()
         

@@ -335,7 +335,7 @@ class PoisonManager:
         if self.current_coating.is_expired:
             return True
 
-        return self.current_coating.charges < min_charges
+        return self.current_coating.charges <= min_charges
 
     def get_recommended_poison(self, situation: str) -> PoisonType | None:
         """
@@ -405,3 +405,19 @@ class PoisonManager:
         self.edp_active = False
         self.edp_expires_at = None
         self.log.debug("Poison state reset")
+
+    def clear_coating(self) -> None:
+        """
+        Clear current weapon coating.
+        
+        Removes any active poison coating from weapon.
+        """
+        if self.current_coating:
+            self.log.info(
+                "Poison coating cleared",
+                poison=self.current_coating.poison_type.value,
+                charges_remaining=self.current_coating.charges
+            )
+            self.current_coating = None
+        else:
+            self.log.debug("No coating to clear")

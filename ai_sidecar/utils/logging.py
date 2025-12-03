@@ -3,30 +3,47 @@ Structured logging module for AI Sidecar.
 
 Uses structlog for structured, context-rich logging with support for
 JSON output (production) and colored console output (development).
+
+Note: This module uses lazy imports for config to avoid circular dependencies.
+The import chain utils/__init__.py -> logging.py -> config.py -> __init__.py
+would otherwise cause a deadlock on import.
 """
 
 import logging
 import sys
 from functools import lru_cache
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 import structlog
 from structlog.types import Processor
 
-from ai_sidecar.config import get_settings, LoggingConfig
+# Use TYPE_CHECKING for type hints only, avoiding runtime circular import
+if TYPE_CHECKING:
+    from ai_sidecar.config import LoggingConfig
 
 
 def _add_app_context(
     logger: logging.Logger, method_name: str, event_dict: dict[str, Any]
 ) -> dict[str, Any]:
-    """Add application context to log entries."""
+    """Add application context to log entries.
+    
+    Uses lazy import to avoid circular dependency at module load time.
+    """
+    from ai_sidecar.config import get_settings
     settings = get_settings()
     event_dict["app"] = settings.app_name
     return event_dict
 
 
-def _get_log_level(config: LoggingConfig) -> int:
-    """Convert string log level to logging constant."""
+def _get_log_level(config: "LoggingConfig") -> int:
+    """Convert string log level to logging constant.
+    
+    Args:
+        config: LoggingConfig instance with level setting
+        
+    Returns:
+        Python logging level constant
+    """
     level_map = {
         "DEBUG": logging.DEBUG,
         "INFO": logging.INFO,
@@ -37,8 +54,15 @@ def _get_log_level(config: LoggingConfig) -> int:
     return level_map.get(config.level, logging.INFO)
 
 
-def _build_processors(config: LoggingConfig) -> list[Processor]:
-    """Build the processor chain based on configuration."""
+def _build_processors(config: "LoggingConfig") -> list[Processor]:
+    """Build the processor chain based on configuration.
+    
+    Args:
+        config: LoggingConfig instance with processor settings
+        
+    Returns:
+        List of structlog processors
+    """
     processors: list[Processor] = [
         structlog.contextvars.merge_contextvars,
         structlog.stdlib.add_log_level,
@@ -64,8 +88,15 @@ def _build_processors(config: LoggingConfig) -> list[Processor]:
     return processors
 
 
-def _get_renderer(config: LoggingConfig) -> Processor:
-    """Get the appropriate renderer based on format configuration."""
+def _get_renderer(config: "LoggingConfig") -> Processor:
+    """Get the appropriate renderer based on format configuration.
+    
+    Args:
+        config: LoggingConfig instance with format setting
+        
+    Returns:
+        Appropriate structlog renderer processor
+    """
     if config.format == "json":
         return structlog.processors.JSONRenderer()
     elif config.format == "console":
@@ -79,13 +110,35 @@ def _get_renderer(config: LoggingConfig) -> Processor:
         )
 
 
-def setup_logging() -> None:
+def setup_logging(level: str = "INFO") -> None:
     """
     Configure structlog and stdlib logging based on application settings.
     
     Should be called once at application startup.
+    
+    Args:
+        level: Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+               If provided, overrides config setting.
+    
+    Uses lazy import to avoid circular dependency at module load time.
+    The import is deferred until this function is actually called,
+    which happens after the main package is fully initialized.
     """
+    from ai_sidecar.config import get_settings
     config = get_settings().logging
+    
+    # Override config level if provided
+    if level != "INFO":
+        # Create a modified config with the provided level
+        from ai_sidecar.config import LoggingConfig
+        config = LoggingConfig(
+            level=level,
+            format=config.format,
+            include_timestamp=config.include_timestamp,
+            include_caller=config.include_caller,
+            file_path=config.file_path,
+        )
+    
     log_level = _get_log_level(config)
     
     # Build processor chain
@@ -179,3 +232,7 @@ def unbind_context(*keys: str) -> None:
         *keys: Keys to remove from context.
     """
     structlog.contextvars.unbind_contextvars(*keys)
+
+
+# Alias for backward compatibility
+configure_logging = setup_logging

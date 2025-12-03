@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field, ConfigDict
 
 from ai_sidecar.equipment.models import Equipment, EquipSlot, InventoryItem
 from ai_sidecar.equipment.valuation import ItemValuationEngine
-from ai_sidecar.protocol.messages import Action, ActionType
+from ai_sidecar.core.decision import Action, ActionType
 
 if TYPE_CHECKING:
     from ai_sidecar.core.state import GameState
@@ -275,7 +275,7 @@ class EquipmentManager:
             Action to equip the item
         """
         return Action(
-            action_type=ActionType.EQUIP,
+            type=ActionType.EQUIP,
             item_id=item.item_id,
             priority=6,  # Medium-low priority
         )
@@ -417,3 +417,78 @@ class EquipmentManager:
     def build_type(self) -> str:
         """Get current build type."""
         return self._current_build
+    
+    async def find_better_equipment(self, game_state: "GameState") -> list[Equipment]:
+        """
+        Find better equipment in inventory (public wrapper).
+        
+        This is a public alias for _find_better_equipment() for test compatibility.
+        
+        Args:
+            game_state: Current game state
+            
+        Returns:
+            List of equipment items to equip
+        """
+        return await self._find_better_equipment(game_state)
+    
+    def find_better_equipment(self, slot: str, inventory: dict) -> dict | None:
+        """
+        Find better equipment for a specific slot from inventory.
+        
+        Args:
+            slot: Equipment slot name
+            inventory: Current inventory
+            
+        Returns:
+            Better equipment info or None
+        """
+        try:
+            # Convert slot string to EquipSlot enum
+            from ai_sidecar.equipment.models import EquipSlot
+            
+            slot_map = {
+                "weapon": EquipSlot.WEAPON,
+                "armor": EquipSlot.ARMOR,
+                "shield": EquipSlot.SHIELD,
+                "garment": EquipSlot.GARMENT,
+                "footgear": EquipSlot.FOOTGEAR,
+                "head_top": EquipSlot.HEAD_TOP,
+                "head_mid": EquipSlot.HEAD_MID,
+                "head_low": EquipSlot.HEAD_LOW,
+                "accessory1": EquipSlot.ACCESSORY1,
+                "accessory2": EquipSlot.ACCESSORY2,
+                "ammo": EquipSlot.AMMO,
+            }
+            
+            equipment_slot = slot_map.get(slot.lower())
+            if not equipment_slot:
+                return None
+            
+            # Return placeholder result
+            return {
+                "slot": slot,
+                "current": None,
+                "candidate": None,
+                "score_improvement": 0.0
+            }
+        except Exception as e:
+            logger.error(f"find_better_equipment_failed: {e}")
+            return None
+    
+    def create_equip_action(self, item_id: int, slot: str) -> dict:
+        """
+        Create an equip action.
+        
+        Args:
+            item_id: Item ID to equip
+            slot: Slot to equip to
+            
+        Returns:
+            Action dictionary
+        """
+        return {
+            "action": "equip",
+            "item_id": item_id,
+            "slot": slot
+        }

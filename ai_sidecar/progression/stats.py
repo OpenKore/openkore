@@ -146,7 +146,7 @@ class StatDistributionEngine:
         """
         Calculate cost to increase a stat by 1 point.
         
-        RO Formula: cost = 1 + floor((stat_value - 1) / 10)
+        RO Formula: cost = 1 + floor(stat_value / 10)
         
         Examples:
         - Stats 1-9: cost 1 point
@@ -163,7 +163,7 @@ class StatDistributionEngine:
         if current_value < 1:
             current_value = 1
         
-        return 1 + ((current_value - 1) // 10)
+        return 1 + (current_value // 10)
     
     @staticmethod
     def calculate_total_cost(from_value: int, to_value: int) -> int:

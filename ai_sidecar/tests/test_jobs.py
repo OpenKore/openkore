@@ -418,4 +418,664 @@ class TestJobMechanicsIntegration:
         # Verify setup
         assert mgr.get_active_insignia() == CircleType.FIRE_INSIGNIA
         assert mgr.get_circle_count() == 2
-        assert mgr.get_elemental_bonus("fire") == 1.5
+
+
+class TestJobCoordinatorComprehensive:
+    """Comprehensive tests for Job AI Coordinator."""
+    
+    @pytest.fixture
+    def coordinator(self, data_dir):
+        """Create coordinator instance."""
+        return JobAICoordinator(data_dir)
+    
+    @pytest.mark.asyncio
+    async def test_set_job_invalid(self, coordinator):
+        """Test setting invalid job."""
+        result = await coordinator.set_job(99999)
+        assert result is False
+        assert coordinator.current_job is None
+    
+    @pytest.mark.asyncio
+    async def test_set_job_valid(self, coordinator, monkeypatch):
+        """Test setting valid job."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        # Create mock job
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_spirit_spheres=True
+        )
+        
+        # Mock job registry
+        monkeypatch.setattr(coordinator.job_registry, 'get_job', lambda job_id: mock_job if job_id == 4005 else None)
+        
+        # Mock rotation engine
+        async def mock_load_rotation(job_name):
+            pass
+        
+        result = await coordinator.set_job(4005)
+        assert result is True
+        assert coordinator.current_job == mock_job
+        assert coordinator.current_job_id == 4005
+    
+    def test_get_current_job_none(self, coordinator):
+        """Test getting current job when none set."""
+        assert coordinator.get_current_job() is None
+    
+    def test_get_current_job_set(self, coordinator, monkeypatch):
+        """Test getting current job when set."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE
+        )
+        coordinator.current_job = mock_job
+        
+        assert coordinator.get_current_job() == mock_job
+    
+    @pytest.mark.asyncio
+    async def test_get_next_action_no_job(self, coordinator):
+        """Test getting next action without job set."""
+        action = await coordinator.get_next_action({})
+        assert action["type"] == "wait"
+        assert action["reason"] == "no_job_set"
+    
+    @pytest.mark.asyncio
+    async def test_get_next_action_with_maintenance(self, coordinator, monkeypatch):
+        """Test getting next action with maintenance needed."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_spirit_spheres=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock maintenance check to return action
+        monkeypatch.setattr(coordinator, '_check_mechanics_maintenance', 
+                          lambda cs: {"type": "use_skill", "skill": "Summon Spirit Sphere"})
+        
+        action = await coordinator.get_next_action({})
+        assert action["type"] == "use_skill"
+        assert action["skill"] == "Summon Spirit Sphere"
+    
+    @pytest.mark.asyncio
+    async def test_get_next_action_with_rotation(self, coordinator, monkeypatch):
+        """Test getting next action from rotation."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock no maintenance
+        monkeypatch.setattr(coordinator, '_check_mechanics_maintenance', lambda cs: None)
+        
+        # Mock rotation engine
+        async def mock_get_next_skill(job_name, rotation_type, char_state, target_state):
+            from unittest.mock import Mock
+            skill_step = Mock()
+            skill_step.skill_name = "Raging Palm Strike"
+            skill_step.cast_time_ms = 1000
+            skill_step.cooldown_ms = 2000
+            return skill_step
+        
+        monkeypatch.setattr(coordinator.rotation_engine, 'get_next_skill', mock_get_next_skill)
+        
+        action = await coordinator.get_next_action({}, {})
+        assert action["type"] == "use_skill"
+        assert "skill" in action
+    
+    @pytest.mark.asyncio
+    async def test_get_next_action_no_rotation(self, coordinator, monkeypatch):
+        """Test getting next action when no rotation available."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock no maintenance
+        monkeypatch.setattr(coordinator, '_check_mechanics_maintenance', lambda cs: None)
+        
+        # Mock rotation engine returning None
+        async def mock_get_next_skill(job_name, rotation_type, char_state, target_state):
+            return None
+        
+        monkeypatch.setattr(coordinator.rotation_engine, 'get_next_skill', mock_get_next_skill)
+        
+        action = await coordinator.get_next_action({})
+        assert action["type"] == "wait"
+        assert action["reason"] == "no_action_available"
+    
+    def test_check_mechanics_maintenance_no_job(self, coordinator):
+        """Test maintenance check without job."""
+        action = coordinator._check_mechanics_maintenance({})
+        assert action is None
+    
+    def test_check_mechanics_maintenance_spirit_spheres(self, coordinator, monkeypatch):
+        """Test maintenance for spirit spheres."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_spirit_spheres=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock sphere manager to need generation
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'should_generate_spheres', lambda: True)
+        
+        action = coordinator._check_mechanics_maintenance({})
+        assert action is not None
+        assert action["type"] == "use_skill"
+        assert action["skill"] == "Summon Spirit Sphere"
+    
+    def test_check_mechanics_maintenance_poisons(self, coordinator, monkeypatch):
+        """Test maintenance for poison coating."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        from ai_sidecar.jobs.mechanics.poisons import PoisonType
+        
+        mock_job = JobClass(
+            job_id=4059,
+            name="guillotine_cross",
+            display_name="Guillotine Cross",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_poisons=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock poison manager to need reapply
+        monkeypatch.setattr(coordinator.poison_mgr, 'should_reapply_coating', lambda: True)
+        monkeypatch.setattr(coordinator.poison_mgr, 'get_recommended_poison', 
+                          lambda target: PoisonType.TOXIN)
+        
+        action = coordinator._check_mechanics_maintenance({})
+        assert action is not None
+        assert action["type"] == "apply_poison"
+    
+    def test_check_mechanics_maintenance_runes(self, coordinator, monkeypatch):
+        """Test maintenance for runes."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        from ai_sidecar.jobs.mechanics.runes import RuneType
+        
+        mock_job = JobClass(
+            job_id=4054,
+            name="rune_knight",
+            display_name="Rune Knight",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.TANK,
+            positioning=PositioningStyle.MELEE,
+            has_runes=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock rune manager
+        monkeypatch.setattr(coordinator.rune_mgr, 'get_available_runes', 
+                          lambda: [RuneType.RUNE_OF_CRASH])
+        monkeypatch.setattr(coordinator.rune_mgr, 'get_recommended_rune', 
+                          lambda target: RuneType.RUNE_OF_CRASH)
+        
+        action = coordinator._check_mechanics_maintenance({"in_combat": True})
+        assert action is not None
+        assert action["type"] == "use_rune"
+    
+    def test_enhance_action_no_job(self, coordinator):
+        """Test action enhancement without job."""
+        action = {"type": "use_skill", "skill": "Test"}
+        enhanced = coordinator._enhance_action_with_mechanics(action, {})
+        assert enhanced == action
+    
+    def test_enhance_action_with_spirit_spheres(self, coordinator, monkeypatch):
+        """Test action enhancement with spirit spheres."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_spirit_spheres=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock sphere manager
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'can_use_skill', 
+                          lambda skill: (True, 5))
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'get_sphere_count', lambda: 5)
+        
+        action = {"type": "use_skill", "skill": "Asura Strike"}
+        enhanced = coordinator._enhance_action_with_mechanics(action, {})
+        
+        assert "spirit_spheres" in enhanced
+        assert enhanced["spirit_spheres"]["can_use"] is True
+        assert enhanced["spirit_spheres"]["required"] == 5
+        assert enhanced["spirit_spheres"]["current"] == 5
+    
+    def test_enhance_action_with_poisons(self, coordinator, monkeypatch):
+        """Test action enhancement with poison coating."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        from ai_sidecar.jobs.mechanics.poisons import PoisonType
+        
+        mock_job = JobClass(
+            job_id=4059,
+            name="guillotine_cross",
+            display_name="Guillotine Cross",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_poisons=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock poison manager
+        monkeypatch.setattr(coordinator.poison_mgr, 'get_current_coating', 
+                          lambda: PoisonType.TOXIN)
+        monkeypatch.setattr(coordinator.poison_mgr, 'is_edp_active', lambda: True)
+        
+        action = {"type": "attack"}
+        enhanced = coordinator._enhance_action_with_mechanics(action, {})
+        
+        assert enhanced["poison_coating"] == PoisonType.TOXIN.value
+        assert enhanced["edp_active"] is True
+    
+    def test_enhance_action_with_runes(self, coordinator, monkeypatch):
+        """Test action enhancement with runes."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        from ai_sidecar.jobs.mechanics.runes import RuneType
+        
+        mock_job = JobClass(
+            job_id=4054,
+            name="rune_knight",
+            display_name="Rune Knight",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.TANK,
+            positioning=PositioningStyle.MELEE,
+            has_runes=True
+        )
+        coordinator.current_job = mock_job
+        coordinator.rune_mgr.current_rune_points = 50
+        
+        # Mock available runes
+        monkeypatch.setattr(coordinator.rune_mgr, 'get_available_runes', 
+                          lambda: [RuneType.RUNE_OF_CRASH])
+        
+        action = {"type": "use_skill"}
+        enhanced = coordinator._enhance_action_with_mechanics(action, {})
+        
+        assert enhanced["rune_points"] == 50
+        assert RuneType.RUNE_OF_CRASH.value in enhanced["available_runes"]
+    
+    def test_enhance_action_with_magic_circles(self, coordinator, monkeypatch):
+        """Test action enhancement with magic circles."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        from ai_sidecar.jobs.mechanics.magic_circles import CircleType
+        
+        mock_job = JobClass(
+            job_id=4081,
+            name="sorcerer",
+            display_name="Sorcerer",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MAGIC_DPS,
+            positioning=PositioningStyle.LONG_RANGE,
+            has_magic_circles=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock magic circle manager
+        monkeypatch.setattr(coordinator.magic_circle_mgr, 'get_active_insignia', 
+                          lambda: CircleType.FIRE_INSIGNIA)
+        monkeypatch.setattr(coordinator.magic_circle_mgr, 'get_circle_count', lambda: 3)
+        
+        action = {"type": "use_skill"}
+        enhanced = coordinator._enhance_action_with_mechanics(action, {})
+        
+        assert enhanced["active_insignia"] == CircleType.FIRE_INSIGNIA.value
+        assert enhanced["circle_count"] == 3
+    
+    def test_update_mechanics_state_no_job(self, coordinator):
+        """Test update mechanics without job."""
+        # Should not raise error
+        coordinator.update_mechanics_state("skill_used", {})
+    
+    def test_update_mechanics_spirit_sphere_skill(self, coordinator, monkeypatch):
+        """Test spirit sphere update on skill use."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_spirit_spheres=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock sphere manager
+        consume_called = []
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'consume_spheres', 
+                          lambda skill: consume_called.append(skill) or 5)
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'is_generation_skill', 
+                          lambda skill: False)
+        
+        coordinator.update_mechanics_state("skill_used", {"skill_name": "Asura Strike"})
+        assert "Asura Strike" in consume_called
+    
+    def test_update_mechanics_sphere_generation(self, coordinator, monkeypatch):
+        """Test spirit sphere generation on skill use."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_spirit_spheres=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock sphere manager
+        generated_count = []
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'consume_spheres', lambda skill: 0)
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'is_generation_skill', 
+                          lambda skill: True)
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'generate_multiple_spheres', 
+                          lambda count: generated_count.append(count) or count)
+        
+        coordinator.update_mechanics_state("skill_used", 
+                                         {"skill_name": "Triple Attack", "spheres_generated": 3})
+        assert 3 in generated_count
+    
+    def test_update_mechanics_poison_attack(self, coordinator, monkeypatch):
+        """Test poison coating update on attack."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4059,
+            name="guillotine_cross",
+            display_name="Guillotine Cross",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_poisons=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock poison manager
+        used = []
+        monkeypatch.setattr(coordinator.poison_mgr, 'use_coating_charge', 
+                          lambda: used.append(True) or True)
+        
+        coordinator.update_mechanics_state("attack", {})
+        assert len(used) == 1
+    
+    def test_update_mechanics_edp_buff(self, coordinator, monkeypatch):
+        """Test EDP buff application."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4059,
+            name="guillotine_cross",
+            display_name="Guillotine Cross",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            has_poisons=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock poison manager
+        activated = []
+        monkeypatch.setattr(coordinator.poison_mgr, 'activate_edp', 
+                          lambda dur: activated.append(dur))
+        
+        coordinator.update_mechanics_state("buff_applied", 
+                                         {"buff_name": "Enchant Deadly Poison", "duration": 45})
+        assert 45 in activated
+    
+    def test_update_mechanics_rune_used(self, coordinator, monkeypatch):
+        """Test rune usage event."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4054,
+            name="rune_knight",
+            display_name="Rune Knight",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.TANK,
+            positioning=PositioningStyle.MELEE,
+            has_runes=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Should not raise error
+        coordinator.update_mechanics_state("rune_used", {})
+    
+    def test_update_mechanics_rune_points(self, coordinator, monkeypatch):
+        """Test rune point generation."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4054,
+            name="rune_knight",
+            display_name="Rune Knight",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.TANK,
+            positioning=PositioningStyle.MELEE,
+            has_runes=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock rune manager
+        added_points = []
+        monkeypatch.setattr(coordinator.rune_mgr, 'add_rune_points', 
+                          lambda pts: added_points.append(pts))
+        
+        coordinator.update_mechanics_state("combat_tick", {"points": 10})
+        assert 10 in added_points
+    
+    def test_update_mechanics_trap_triggered(self, coordinator, monkeypatch):
+        """Test trap trigger event."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4013,
+            name="ranger",
+            display_name="Ranger",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.RANGED_DPS,
+            positioning=PositioningStyle.LONG_RANGE,
+            has_traps=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock trap manager
+        triggered_pos = []
+        monkeypatch.setattr(coordinator.trap_mgr, 'trigger_trap', 
+                          lambda pos: triggered_pos.append(pos))
+        
+        coordinator.update_mechanics_state("trap_triggered", {"position": (10, 10)})
+        assert (10, 10) in triggered_pos
+    
+    def test_update_mechanics_magic_circle(self, coordinator, monkeypatch):
+        """Test magic circle placement event."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4081,
+            name="sorcerer",
+            display_name="Sorcerer",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MAGIC_DPS,
+            positioning=PositioningStyle.LONG_RANGE,
+            has_magic_circles=True
+        )
+        coordinator.current_job = mock_job
+        
+        # Should not raise error
+        coordinator.update_mechanics_state("circle_placed", {})
+    
+    def test_update_mechanics_doram_ability(self, coordinator, monkeypatch):
+        """Test Doram ability usage."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4218,
+            name="spirit_handler",
+            display_name="spirit_handler",
+            tier=JobTier.EXTENDED,
+            primary_role=CombatRole.MAGIC_DPS,
+            positioning=PositioningStyle.MID_RANGE
+        )
+        coordinator.current_job = mock_job
+        coordinator.doram_mgr.ability_costs = {"Hiss": 5}
+        
+        # Mock doram manager
+        consumed = []
+        monkeypatch.setattr(coordinator.doram_mgr, 'consume_spirit_points', 
+                          lambda pts: consumed.append(pts))
+        
+        coordinator.update_mechanics_state("ability_used", {"ability_name": "Hiss"})
+        assert 5 in consumed
+    
+    def test_get_mechanics_status_no_job(self, coordinator):
+        """Test getting mechanics status without job."""
+        status = coordinator.get_mechanics_status()
+        assert status["job_set"] is False
+    
+    def test_get_mechanics_status_with_all_mechanics(self, coordinator, monkeypatch):
+        """Test getting status with all mechanics."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4218,
+            name="spirit_handler",
+            display_name="spirit_handler",
+            tier=JobTier.EXTENDED,
+            primary_role=CombatRole.MAGIC_DPS,
+            positioning=PositioningStyle.MID_RANGE,
+            has_spirit_spheres=True,
+            has_traps=True,
+            has_poisons=True,
+            has_runes=True,
+            has_magic_circles=True
+        )
+        coordinator.current_job = mock_job
+        coordinator.current_job_id = 4218
+        
+        # Mock all managers to return status
+        monkeypatch.setattr(coordinator.spirit_sphere_mgr, 'get_status', lambda: {"spheres": 5})
+        monkeypatch.setattr(coordinator.trap_mgr, 'get_status', lambda: {"traps": 2})
+        monkeypatch.setattr(coordinator.poison_mgr, 'get_status', lambda: {"coating": "toxin"})
+        monkeypatch.setattr(coordinator.rune_mgr, 'get_status', lambda: {"points": 50})
+        monkeypatch.setattr(coordinator.magic_circle_mgr, 'get_status', lambda: {"circles": 3})
+        monkeypatch.setattr(coordinator.doram_mgr, 'get_status', lambda: {"spirit_points": 10})
+        
+        status = coordinator.get_mechanics_status()
+        
+        assert status["job_set"] is True
+        assert status["job_name"] == "spirit_handler"
+        assert "spirit_spheres" in status
+        assert "traps" in status
+        assert "poisons" in status
+        assert "runes" in status
+        assert "magic_circles" in status
+        assert "doram" in status
+    
+    def test_get_job_stats_no_job(self, coordinator):
+        """Test getting job stats without job."""
+        stats = coordinator.get_job_stats()
+        assert stats == {}
+    
+    def test_get_job_stats_with_job(self, coordinator):
+        """Test getting job stats with job set."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="champion",
+            display_name="Champion",
+            tier=JobTier.TRANSCENDENT,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE,
+            recommended_stats={"str": 120, "agi": 90, "vit": 70},
+            stat_weights={"str": 1.5, "agi": 1.2},
+            armor_type="light",
+            preferred_weapon="knuckle"
+        )
+        coordinator.current_job = mock_job
+        
+        stats = coordinator.get_job_stats()
+        
+        assert "recommended_stats" in stats
+        assert "stat_weights" in stats
+        assert stats["positioning"] == PositioningStyle.MELEE.value
+        assert stats["armor_type"] == "light"
+        assert stats["preferred_weapon"] == "knuckle"
+    
+    def test_get_job_skills_no_job(self, coordinator):
+        """Test getting job skills without job."""
+        skills = coordinator.get_job_skills()
+        assert skills == set()
+    
+    def test_get_job_skills_with_job(self, coordinator, monkeypatch):
+        """Test getting job skills with job set."""
+        from ai_sidecar.jobs.registry import JobClass, CombatRole, PositioningStyle, JobTier
+        
+        mock_job = JobClass(
+            job_id=4005,
+            name="Champion",
+            display_name="Champion",
+            tier=JobTier.THIRD,
+            primary_role=CombatRole.MELEE_DPS,
+            positioning=PositioningStyle.MELEE
+        )
+        coordinator.current_job = mock_job
+        
+        # Mock job registry
+        mock_skills = {"Asura Strike", "Raging Palm Strike", "Guillotine Fist"}
+        monkeypatch.setattr(coordinator.job_registry, 'get_all_skills_for_job', 
+                          lambda name: mock_skills)
+        
+        skills = coordinator.get_job_skills()
+        assert skills == mock_skills

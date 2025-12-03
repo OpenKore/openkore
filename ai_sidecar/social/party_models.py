@@ -18,6 +18,7 @@ class PartyRole(str, Enum):
     LEADER = "leader"
     TANK = "tank"
     HEALER = "healer"
+    DPS = "dps"
     DPS_MELEE = "dps_melee"
     DPS_RANGED = "dps_ranged"
     DPS_MAGIC = "dps_magic"
@@ -28,15 +29,17 @@ class PartyRole(str, Enum):
 class PartyMember(BaseModel):
     """Party member with role and status."""
     
-    account_id: int = Field(description="Account ID")
-    char_id: int = Field(description="Character ID")
+    account_id: int = Field(default=0, description="Account ID")
+    char_id: int = Field(default=0, description="Character ID")
+    player_id: int | None = Field(default=None, description="Player ID (alias)")
     name: str = Field(description="Character name")
-    job_class: str = Field(description="Job class name")
-    base_level: int = Field(ge=1, le=999, description="Base level")
+    job_class: str = Field(default="Novice", description="Job class name")
+    base_level: int = Field(default=1, ge=1, le=999, description="Base level")
+    role: PartyRole | None = Field(default=None, description="Party role (alias)")
     
     # Status
-    hp: int = Field(default=0, ge=0, description="Current HP")
-    hp_max: int = Field(default=1, ge=1, description="Maximum HP")
+    hp: int = Field(default=100, ge=0, description="Current HP")
+    hp_max: int = Field(default=100, ge=1, description="Maximum HP")
     sp: int = Field(default=0, ge=0, description="Current SP")
     sp_max: int = Field(default=1, ge=1, description="Maximum SP")
     map_name: str = Field(default="", description="Current map")
@@ -60,6 +63,10 @@ class PartyMember(BaseModel):
     def sp_percent(self) -> float:
         """Calculate SP percentage."""
         return (self.sp / self.sp_max * 100) if self.sp_max > 0 else 0.0
+    
+    def is_healthy(self) -> bool:
+        """Check if member is healthy (>= 70% HP)."""
+        return self.hp_percent >= 70.0
     
     @property
     def needs_healing(self) -> bool:

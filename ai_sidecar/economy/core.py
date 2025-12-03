@@ -25,6 +25,7 @@ class MarketSource(str, Enum):
     """Sources of market data"""
     VENDING = "vending"           # Player vending shops
     BUYING = "buying"             # Buying stores
+    NPC = "npc"                   # Generic NPC
     NPC_BUY = "npc_buy"           # NPC buy prices
     NPC_SELL = "npc_sell"         # NPC sell prices
     AUCTION = "auction"           # Auction house
@@ -41,20 +42,48 @@ class PriceTrend(str, Enum):
     VOLATILE = "volatile"
 
 
+class PricePoint(BaseModel):
+    """Single price data point for historical tracking."""
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    price: int = Field(ge=0)
+    quantity: int = Field(default=1, ge=1)
+    source: MarketSource
+    
+    
 class MarketListing(BaseModel):
     """Single market listing"""
     item_id: int
     item_name: str
-    price: int
+    price: Optional[int] = None
+    price_per_unit: Optional[int] = None
     quantity: int
     refine_level: int = 0
     cards: List[int] = Field(default_factory=list)
     source: MarketSource
     seller_name: Optional[str] = None
+    location: Optional[str] = None
     location_map: Optional[str] = None
     location_x: Optional[int] = None
     location_y: Optional[int] = None
     timestamp: datetime = Field(default_factory=datetime.utcnow)
+    
+    def __init__(self, **data):
+        """Initialize market listing with flexible pricing."""
+        # If price_per_unit is provided but not price, calculate it
+        if 'price_per_unit' in data and 'price' not in data:
+            data['price'] = data['price_per_unit'] * data.get('quantity', 1)
+        # If price is provided but not price_per_unit, calculate it
+        elif 'price' in data and 'price_per_unit' not in data:
+            data['price_per_unit'] = data['price'] // data.get('quantity', 1) if data.get('quantity', 1) > 0 else data['price']
+        super().__init__(**data)
+    
+    def total_price(self) -> int:
+        """Calculate total price for this listing."""
+        if self.price:
+            return self.price
+        if self.price_per_unit:
+            return self.price_per_unit * self.quantity
+        return 0
 
 
 class PriceHistory(BaseModel):
@@ -131,6 +160,63 @@ class MarketManager:
             price=listing.price,
             source=listing.source.value
         )
+    
+    def add_listing(self, listing: MarketListing) -> None:
+        """Convenience alias for record_listing()."""
+        self.record_listing(listing)
+    
+    def remove_listing(self, listing: MarketListing) -> None:
+        """Remove a listing from the market."""
+        item_id = listing.item_id
+        if item_id in self.listings:
+            self.listings[item_id] = [
+                l for l in self.listings[item_id]
+                if not (l.price == listing.price and l.seller_name == listing.seller_name)
+            ]
+            if not self.listings[item_id]:
+                del self.listings[item_id]
+    
+    def get_best_price(self, item_id: int) -> Optional[int]:
+        """Get lowest price for item."""
+        if item_id not in self.listings or not self.listings[item_id]:
+            return None
+        return min(l.price for l in self.listings[item_id])
+    
+    def get_average_price(self, item_id: int) -> Optional[float]:
+        """Get average price for item."""
+        if item_id not in self.listings or not self.listings[item_id]:
+            return None
+        prices = [l.price for l in self.listings[item_id]]
+        return statistics.mean(prices)
+    
+    def get_listings(self, item_id: int) -> List[MarketListing]:
+        """Get all listings for item."""
+        return self.listings.get(item_id, [])
+    
+    def get_sellers_count(self, item_id: int) -> int:
+        """Get number of unique sellers for item."""
+        if item_id not in self.listings:
+            return 0
+        sellers = set(l.seller_name for l in self.listings[item_id] if l.seller_name)
+        return len(sellers)
+    
+    def clear_old_listings(self, max_age_hours: int = 24) -> int:
+        """Clear listings older than max_age_hours."""
+        cutoff = datetime.utcnow() - timedelta(hours=max_age_hours)
+        removed = 0
+        
+        for item_id in list(self.listings.keys()):
+            old_count = len(self.listings[item_id])
+            self.listings[item_id] = [
+                l for l in self.listings[item_id]
+                if l.timestamp >= cutoff
+            ]
+            removed += old_count - len(self.listings[item_id])
+            
+            if not self.listings[item_id]:
+                del self.listings[item_id]
+        
+        return removed
     
     def get_current_price(
         self,
@@ -387,20 +473,15 @@ class MarketManager:
         first_third = prices[:len(prices)//3]
         last_third = prices[-len(prices)//3:]
         
+        if not first_third or not last_third:
+            return PriceTrend.STABLE
+        
         avg_first = statistics.mean(first_third)
         avg_last = statistics.mean(last_third)
         
         change_pct = (avg_last - avg_first) / avg_first if avg_first > 0 else 0
         
-        # Check volatility
-        if len(prices) > 1:
-            std_dev = statistics.stdev(prices)
-            volatility = std_dev / statistics.mean(prices) if statistics.mean(prices) > 0 else 0
-            
-            if volatility > 0.3:
-                return PriceTrend.VOLATILE
-        
-        # Determine trend
+        # Determine trend FIRST - prioritize directional trends
         if change_pct > 0.15:
             return PriceTrend.RISING_FAST
         elif change_pct > 0.05:
@@ -409,8 +490,17 @@ class MarketManager:
             return PriceTrend.FALLING_FAST
         elif change_pct < -0.05:
             return PriceTrend.FALLING
-        else:
-            return PriceTrend.STABLE
+        
+        # Only check volatility if trend is STABLE
+        if len(prices) > 1:
+            std_dev = statistics.stdev(prices)
+            avg_price = statistics.mean(prices)
+            volatility = std_dev / avg_price if avg_price > 0 else 0
+            
+            if volatility > 0.3:
+                return PriceTrend.VOLATILE
+        
+        return PriceTrend.STABLE
     
     def _get_source_stats(self) -> Dict[str, int]:
         """Get statistics by market source."""

@@ -319,7 +319,9 @@ class SkillRotationEngine:
                 return False
 
         # Target HP condition
-        if condition.target_hp_percent is not None and target_state:
+        if condition.target_hp_percent is not None:
+            if not target_state:
+                return False
             target_hp = target_state.get("hp_percent", 100)
             if target_hp > condition.target_hp_percent:
                 return False

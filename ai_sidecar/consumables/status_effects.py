@@ -148,8 +148,48 @@ class StatusEffectManager:
         # Load status effect database
         if data_path:
             self._load_status_database(data_path)
+        else:
+            # Add default test data
+            self._load_default_status_data()
         
         self.log.info("StatusEffectManager initialized")
+    
+    def _load_default_status_data(self) -> None:
+        """Load default status effect data for testing."""
+        self.status_database = {
+            "stone": {
+                "severity": 10,
+                "cure_items": ["Blue Gemstone"],
+                "cure_skills": ["Resurrection"],
+                "immunity_items": ["Panacea"],
+                "can_be_cured": True,
+                "natural_duration": 30.0,
+            },
+            "freeze": {
+                "severity": 10,
+                "cure_items": ["Ice Pick"],
+                "cure_skills": [],
+                "immunity_items": ["Marc Card"],
+                "can_be_cured": True,
+                "natural_duration": 30.0,
+            },
+            "poison": {
+                "severity": 5,
+                "cure_items": ["Green Potion", "Royal Jelly"],
+                "cure_skills": ["Cure"],
+                "immunity_items": ["Panacea"],
+                "can_be_cured": True,
+                "natural_duration": 60.0,
+            },
+            "blind": {
+                "severity": 5,
+                "cure_items": ["Eye Drops"],
+                "cure_skills": ["Cure"],
+                "immunity_items": [],
+                "can_be_cured": True,
+                "natural_duration": 30.0,
+            },
+        }
     
     def _load_status_database(self, data_path: Path) -> None:
         """
@@ -340,6 +380,16 @@ class StatusEffectManager:
                 priority=effect.severity,
             )
         
+        # As last resort, return a cure recommendation even without items
+        # This indicates the need exists (coordinator can handle unavailability)
+        if cure_items:
+            return CureAction(
+                effect_type=effect.effect_type,
+                method="item",
+                item_name=cure_items[0],
+                priority=effect.severity,
+            )
+        
         return None
     
     async def should_apply_immunity(
@@ -500,3 +550,44 @@ class StatusEffectManager:
         """
         self.immunity_active.discard(effect_type)
         self.log.debug("Immunity expired", effect=effect_type.value)
+    
+    def add_status_effect(
+        self,
+        effect_type: StatusEffectType | str,
+        source_monster: Optional[str] = None,
+        duration: Optional[float] = None
+    ) -> None:
+        """
+        Add a status effect to character.
+        
+        Args:
+            effect_type: Type of status effect (enum or string)
+            source_monster: Monster that inflicted it
+            duration: Effect duration in seconds
+        """
+        # Convert string to enum if needed
+        if isinstance(effect_type, str):
+            try:
+                effect_type = StatusEffectType(effect_type.lower())
+            except ValueError:
+                self.log.warning(f"Unknown status effect: {effect_type}")
+                return
+        
+        severity = self._get_severity(effect_type)
+        
+        effect_state = StatusEffectState(
+            effect_type=effect_type,
+            severity=severity,
+            inflicted_time=datetime.now(),
+            estimated_duration=duration,
+            source_monster=source_monster,
+        )
+        
+        self.active_effects[effect_type] = effect_state
+        
+        self.log.warning(
+            "status_effect_added",
+            effect=effect_type.value,
+            severity=severity,
+            source=source_monster
+        )

@@ -125,6 +125,34 @@ class SkillDatabase:
         """Get skill tree for a specific job class."""
         return self.skill_trees.get(job_class.lower(), {})
     
+    def get_skill_trees(self) -> dict[str, dict[str, Any]]:
+        """Get all skill trees (method alias for property)."""
+        return self.skill_trees
+    
+    def get_skill_effects(self) -> dict[str, Any]:
+        """Get skill effects (method alias for property)."""
+        return self.skill_effects
+    
+    def get_skill_elements(self) -> dict[str, Any]:
+        """Get skill elements (method alias for property)."""
+        return self.skill_elements
+    
+    def get_skill_priorities(self) -> dict[str, Any]:
+        """Get skill priorities (method alias for property)."""
+        return self.skill_priorities
+    
+    def get_skill_info(self, skill_name: str, job_class: str) -> dict[str, Any] | None:
+        """Get skill info from skill tree."""
+        tree = self.get_skill_tree(job_class)
+        return tree.get(skill_name)
+    
+    def get_element_modifier(self, attacker_element: str, defender_element: str) -> float:
+        """Get element effectiveness modifier."""
+        elements = self.skill_elements
+        modifiers = elements.get("element_modifiers", {})
+        attacker_mods = modifiers.get(attacker_element, {})
+        return attacker_mods.get(defender_element, 1.0)
+    
     def get_skill_definition(
         self, skill_name: str, job_class: str
     ) -> SkillDefinition | None:
@@ -175,6 +203,30 @@ class SkillDatabase:
         })
 
 
+class SkillManager:
+    """
+    Manage character skills.
+    
+    Provides access to available skills and skill information.
+    """
+    
+    def __init__(self):
+        """Initialize skill manager."""
+        self.skills = {}
+    
+    def get_available_skills(self, skill_list: list) -> list:
+        """
+        Get available skills from list.
+        
+        Args:
+            skill_list: List of skill names or IDs
+        
+        Returns:
+            List of available skills
+        """
+        return skill_list
+
+
 class SkillAllocationSystem:
     """
     Intelligent skill point allocation with prerequisite handling.
@@ -220,7 +272,13 @@ class SkillAllocationSystem:
         """
         self.skill_db = skill_db or SkillDatabase()
         self.default_build = default_build
+        self._build_type = default_build
         self._resolved_cache: dict[str, list[tuple[str, int]]] = {}
+    
+    def set_build_type(self, build_name: str) -> None:
+        """Set the current build type for skill allocation."""
+        self._build_type = build_name
+        self.default_build = build_name
     
     def get_job_class(self, job_id: int) -> str:
         """Convert job ID to job class name."""
@@ -451,6 +509,47 @@ class SkillAllocationSystem:
                 break
         
         return available
+    
+    def can_learn_skill(self, skill_name: str, character: Any) -> tuple[bool, str]:
+        """
+        Check if a skill can be learned.
+        
+        Args:
+            skill_name: Skill to check
+            character: Character state (Mock or CharacterState)
+        
+        Returns:
+            Tuple of (can_learn, reason)
+        """
+        # Check skill points
+        skill_points = getattr(character, 'skill_points', 0)
+        if skill_points <= 0:
+            return (False, "No skill points available")
+        
+        # Get character job
+        job = getattr(character, 'job', 'novice')
+        if isinstance(job, int):
+            job = self.get_job_class(job)
+        
+        # Get skill definition
+        skill_def = self.skill_db.get_skill_definition(skill_name, job)
+        if skill_def is None:
+            return (False, f"Skill {skill_name} not found for job {job}")
+        
+        # Check if already at max level
+        skills = getattr(character, 'skills', {})
+        current_level = skills.get(skill_name, 0)
+        if current_level >= skill_def.max_level:
+            return (False, f"Skill already at max level {skill_def.max_level}")
+        
+        # Check prerequisites
+        prereqs = self.resolve_prerequisites(skill_name, job)
+        for prereq_skill, prereq_level in prereqs:
+            prereq_current = skills.get(prereq_skill, 0)
+            if prereq_current < prereq_level:
+                return (False, f"Missing prerequisite: {prereq_skill} level {prereq_level}")
+        
+        return (True, "Can learn")
     
     def validate_skill_tree(self, job_class: str) -> list[str]:
         """

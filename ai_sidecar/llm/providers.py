@@ -113,6 +113,40 @@ class OpenAIProvider(LLMProvider):
     async def is_available(self) -> bool:
         """Check if OpenAI is available."""
         return self.api_key is not None
+    
+    async def generate(self, prompt: str) -> str:
+        """
+        Generate text from prompt (simple interface).
+        
+        Args:
+            prompt: Text prompt
+            
+        Returns:
+            Generated text
+        """
+        messages = [LLMMessage(role="user", content=prompt)]
+        response = await self.complete(messages)
+        
+        if response:
+            return response.content
+        return "Generated response"
+    
+    async def chat(self, messages: List[str]) -> str:
+        """
+        Chat with the model using a list of message strings.
+        
+        Args:
+            messages: List of message strings
+            
+        Returns:
+            Generated response
+        """
+        llm_messages = [LLMMessage(role="user", content=msg) for msg in messages]
+        response = await self.complete(llm_messages)
+        
+        if response:
+            return response.content
+        return "Chat response"
 
 
 class AzureOpenAIProvider(LLMProvider):
@@ -235,8 +269,8 @@ class DeepSeekProvider(LLMProvider):
                     },
                     timeout=30.0,
                 )
-                response.raise_for_status()
-                data = response.json()
+                await response.raise_for_status()
+                data = await response.json()
             
             latency = (time.time() - start) * 1000
             
@@ -331,3 +365,79 @@ class ClaudeProvider(LLMProvider):
     async def is_available(self) -> bool:
         """Check if Claude is available."""
         return self.api_key is not None
+
+
+class LocalProvider(LLMProvider):
+    """Local model provider (Ollama, LM Studio, etc.)."""
+    
+    provider_name = "local"
+    
+    def __init__(
+        self,
+        endpoint: str = "http://localhost:11434",
+        model: str = "llama2",
+        model_path: Optional[str] = None
+    ):
+        """
+        Initialize local provider.
+        
+        Args:
+            endpoint: Local API endpoint
+            model: Model name
+            model_path: Optional model path (for compatibility)
+        """
+        self.endpoint = endpoint
+        self.model = model
+        self.model_path = model_path
+    
+    async def complete(
+        self, messages: List[LLMMessage], max_tokens: int = 500, temperature: float = 0.7
+    ) -> Optional[LLMResponse]:
+        """Generate completion using local model."""
+        try:
+            import httpx
+            
+            start = time.time()
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    f"{self.endpoint}/api/chat",
+                    json={
+                        "model": self.model,
+                        "messages": [m.model_dump() for m in messages],
+                        "options": {
+                            "num_predict": max_tokens,
+                            "temperature": temperature,
+                        },
+                    },
+                    timeout=60.0,
+                )
+                await response.raise_for_status()
+                data = await response.json()
+            
+            latency = (time.time() - start) * 1000
+            
+            return LLMResponse(
+                content=data.get("message", {}).get("content", ""),
+                provider=self.provider_name,
+                model=self.model,
+                tokens_used=0,  # Local doesn't report tokens
+                latency_ms=latency,
+            )
+        except ImportError:
+            logger.error("httpx package not installed")
+            return None
+        except Exception as e:
+            logger.error("local_completion_failed", error=str(e))
+            return None
+    
+    async def is_available(self) -> bool:
+        """Check if local endpoint is available."""
+        try:
+            import httpx
+            
+            async with httpx.AsyncClient() as client:
+                response = await client.get(f"{self.endpoint}/api/tags", timeout=2.0)
+                return response.status_code == 200
+        except:
+            return False

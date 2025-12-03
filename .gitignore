@@ -159,3 +159,55 @@ models/
 secrets.json
 credentials.json
 .secrets/
+
+# ================================
+# AI Sidecar - Test & Coverage
+# ================================
+ai_sidecar/.pytest_cache/
+ai_sidecar/htmlcov/
+ai_sidecar/.coverage
+ai_sidecar/coverage.xml
+ai_sidecar/*_report.txt
+ai_sidecar/all_failures.txt
+ai_sidecar/failures.txt
+ai_sidecar/test_*.py.bak
+
+# AI Sidecar - Build artifacts
+ai_sidecar/build/
+ai_sidecar/dist/
+ai_sidecar/*.egg-info/
+
+# AI Sidecar - Temporary files
+ai_sidecar/test_imports_11b.py
+ai_sidecar/test_phase*.py
+ai_sidecar/test_deep_imports.py
+ai_sidecar/coverage_batch*.txt
+ai_sidecar/install_log.txt
+
+# ================================
+# Docker & Containers
+# ================================
+docker-compose.override.yml
+.dockerignore
+
+# ================================
+# Data Files (user-specific)
+# ================================
+ai_sidecar/data/*.db
+ai_sidecar/data/*.sqlite*
+ai_sidecar/data/user_*
+ai_sidecar/data/custom_*
+
+# ================================
+# IDE Specific
+# ================================
+.roo/
+.cursor/
+*.code-workspace
+
+# ================================
+# Large binary files
+# ================================
+*.bin
+*.dat
+*.idx

@@ -25,13 +25,16 @@ logger = structlog.get_logger(__name__)
 
 class VendingLocation(BaseModel):
     """Vending location data"""
-    map_name: str
+    map_name: str = Field(alias="map")
     x: int
     y: int
     traffic_score: float = Field(ge=0, le=100)
     competition_count: int = 0
     avg_sales_per_hour: float = 0.0
     category_preference: List[str] = Field(default_factory=list)
+    
+    class Config:
+        populate_by_name = True  # Allow both map and map_name
 
 
 class VendingItem(BaseModel):

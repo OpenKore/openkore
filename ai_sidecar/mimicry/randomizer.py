@@ -62,6 +62,37 @@ class RandomBehaviorPool(BaseModel):
         return random.choice(self.behaviors) if self.behaviors else None
 
 
+class ActionRandomizer:
+    """
+    Inject random action variations.
+    
+    Alias for BehaviorRandomizer for backward compatibility.
+    """
+    
+    def __init__(self, data_dir: Path | None = None):
+        """Initialize action randomizer."""
+        self._randomizer = BehaviorRandomizer(data_dir or Path("data"))
+    
+    def __getattr__(self, name):
+        """Delegate to BehaviorRandomizer."""
+        return getattr(self._randomizer, name)
+    
+    def add_jitter(self, base_value: float, jitter_factor: float = 0.1) -> float:
+        """
+        Add random jitter to a value.
+        
+        Args:
+            base_value: Base value to add jitter to
+            jitter_factor: Jitter factor (0.1 = ±10%)
+        
+        Returns:
+            Value with jitter applied
+        """
+        import random
+        jitter_amount = base_value * jitter_factor
+        return base_value + random.uniform(-jitter_amount, jitter_amount)
+
+
 class BehaviorRandomizer:
     """
     Inject random human-like behaviors.

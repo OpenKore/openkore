@@ -16,6 +16,8 @@ RO Mercenary Mechanics:
 - Mercenary types: Swordsman, Archer, Lancer (levels 1-10)
 """
 
+from __future__ import annotations
+
 import time
 from enum import Enum
 from typing import Literal
@@ -406,24 +408,28 @@ class MercenaryManager:
         avg_enemy_x = sum(pos.x for pos in enemy_positions) / len(enemy_positions)
         avg_enemy_y = sum(pos.y for pos in enemy_positions) / len(enemy_positions)
         
-        # Positioning strategy based on role and config
-        if role == "sword" or self.config.positioning == "front":
-            # Position between player and enemies (tank)
-            target_x = int((player_pos.x + avg_enemy_x) / 2)
-            target_y = int((player_pos.y + avg_enemy_y) / 2)
-        
-        elif role == "archer" or self.config.positioning == "back":
-            # Position behind player (ranged)
+        # Positioning strategy - role takes precedence over config
+        if self.config.positioning == "flank":
+            # Explicit flank positioning
             dx = avg_enemy_x - player_pos.x
             dy = avg_enemy_y - player_pos.y
-            # Move 3 cells opposite to enemy direction
-            target_x = player_pos.x - int(dx / (abs(dx) + 1) * 3)
-            target_y = player_pos.y - int(dy / (abs(dy) + 1) * 3)
+            # Position perpendicular to enemy direction
+            target_x = player_pos.x + int(dy / (abs(dy) + 1) * 5)
+            target_y = player_pos.y - int(dx / (abs(dx) + 1) * 5)
         
-        elif self.config.positioning == "flank":
-            # Position to the side of player (flank)
-            target_x = player_pos.x + 3
-            target_y = player_pos.y
+        elif role == "archer" or self.config.positioning == "back":
+            # Ranged positioning - stay behind player
+            dx = avg_enemy_x - player_pos.x
+            dy = avg_enemy_y - player_pos.y
+            # Move 5 cells opposite to enemy direction (backline positioning)
+            distance = max(abs(dx), abs(dy), 1)
+            target_x = player_pos.x - int((dx / distance) * 5)
+            target_y = player_pos.y - int((dy / distance) * 5)
+        
+        elif role == "sword" or self.config.positioning == "front":
+            # Tank positioning - between player and enemies
+            target_x = int((player_pos.x + avg_enemy_x) / 2)
+            target_y = int((player_pos.y + avg_enemy_y) / 2)
         
         else:
             # Default: stay near player

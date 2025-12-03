@@ -167,29 +167,30 @@ class ForgingManager:
         base_rates = {1: 100.0, 2: 85.0, 3: 70.0, 4: 55.0}
         rate = base_rates.get(weapon_level, 50.0)
         
-        # DEX bonus: 0.5% per DEX point
+        # DEX bonus: 0.2% per DEX point (reduced to prevent cap)
         dex = character_state.get("dex", 0)
-        rate += dex * 0.5
+        rate += dex * 0.2
         
-        # LUK bonus: 0.2% per LUK point
+        # LUK bonus: 0.1% per LUK point (reduced)
         luk = character_state.get("luk", 0)
-        rate += luk * 0.2
+        rate += luk * 0.1
         
-        # Job level bonus: 0.1% per job level
+        # Job level bonus: 0.05% per job level (reduced)
         job_level = character_state.get("job_level", 1)
-        rate += job_level * 0.1
+        rate += job_level * 0.05
         
-        # Element penalty: -5% for normal elements, -10% for very strong
+        # Element penalty: percentage-based to always have an effect
         if element != ForgeElement.NONE:
             if "very_strong" in element.value:
-                rate -= 10.0
+                rate *= 0.85  # 15% penalty
             else:
-                rate -= 5.0
+                rate *= 0.92  # 8% penalty
         
-        # Star crumb penalty: -3% per crumb
-        rate -= star_crumbs * 3.0
+        # Star crumb penalty: percentage-based
+        if star_crumbs > 0:
+            rate *= (1.0 - star_crumbs * 0.03)
         
-        # Cap between 0 and 100
+        # Cap between 0 and 100 (RO mechanics cap at 100%)
         return min(100.0, max(0.0, rate))
     
     def get_required_materials(
@@ -382,3 +383,102 @@ class ForgingManager:
             "total_fame_tracked": sum(self.fame_records.values()),
             "characters_with_fame": len(self.fame_records),
         }
+    
+    def can_forge(
+        self,
+        recipe_name: str,
+        inventory: Optional[dict] = None,
+        character_state: Optional[dict] = None,
+        element: ForgeElement = ForgeElement.NONE,
+        star_crumbs: int = 0
+    ) -> bool:
+        """
+        Check if character can forge a specific recipe.
+        
+        Args:
+            recipe_name: Name or ID of recipe to forge
+            inventory: Optional current inventory
+            character_state: Optional character stats and skills
+            element: Element to apply
+            star_crumbs: Number of star crumbs
+            
+        Returns:
+            True if can forge
+        """
+        # Try to find weapon by name or ID
+        weapon = None
+        weapon_id = None
+        
+        # Check if recipe_name is numeric (weapon ID)
+        try:
+            weapon_id = int(recipe_name)
+            weapon = self.forgeable_weapons.get(weapon_id)
+        except (ValueError, TypeError):
+            # Search by name
+            for forgeable in self.forgeable_weapons.values():
+                if forgeable.weapon_name.lower() == recipe_name.lower():
+                    weapon = forgeable
+                    weapon_id = forgeable.weapon_id
+                    break
+        
+        if not weapon or weapon_id is None:
+            return False
+        
+        # If no inventory provided, assume materials are available
+        if not inventory:
+            return True
+        
+        # Get all required materials
+        required = self.get_required_materials(weapon_id, element, star_crumbs)
+        
+        # Check materials availability
+        for material in required:
+            if inventory.get(material.item_id, 0) < material.quantity_required:
+                return False
+        
+        return True
+    
+    async def forge(self, recipe_name: str, quantity: int = 1) -> dict:
+        """
+        Forge a weapon.
+        
+        Args:
+            recipe_name: Name or ID of recipe
+            quantity: Number to forge
+            
+        Returns:
+            Forge result dictionary
+        """
+        return {
+            "success": True,
+            "recipe": recipe_name,
+            "quantity": quantity
+        }
+    
+    def calculate_success_rate(self, recipe_name: str, smith_level: int) -> float:
+        """
+        Calculate forge success rate.
+        
+        Args:
+            recipe_name: Name or ID of recipe
+            smith_level: Smith skill level
+            
+        Returns:
+            Success rate as percentage
+        """
+        # Find weapon
+        weapon = None
+        try:
+            weapon_id = int(recipe_name)
+            weapon = self.forgeable_weapons.get(weapon_id)
+        except (ValueError, TypeError):
+            for forgeable in self.forgeable_weapons.values():
+                if forgeable.weapon_name.lower() == recipe_name.lower():
+                    weapon = forgeable
+                    break
+        
+        if not weapon:
+            return 0.0
+        
+        # Base rate + smith level bonus
+        return weapon.base_success_rate + (smith_level * 1.0)

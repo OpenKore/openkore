@@ -295,21 +295,21 @@ class PetManager:
         
         state = self.current_state
         
-        # Check basic requirements
-        if not state.can_evolve or state.intimacy < 910:
-            return EvolutionDecision(
-                should_evolve=False,
-                target=None,
-                reason=f"intimacy_too_low_{state.intimacy}"
-            )
-        
-        # Get evolution info
+        # Check evolution path first
         evolution_info = self._get_evolution_info(state.pet_type)
         if not evolution_info:
             return EvolutionDecision(
                 should_evolve=False,
                 target=None,
                 reason="no_evolution_path"
+            )
+        
+        # Check intimacy requirement
+        if state.intimacy < 910:
+            return EvolutionDecision(
+                should_evolve=False,
+                target=None,
+                reason=f"intimacy_too_low_{state.intimacy}"
             )
         
         target = PetType(evolution_info["target"])

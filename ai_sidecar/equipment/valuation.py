@@ -587,7 +587,6 @@ class ItemValuationEngine:
                 priority *= 1.2  # Accessories for damage
         
         return min(priority, 1.0)
-    
     def calculate_total_equipment_value(
         self,
         equipment_set: dict[EquipSlot, Equipment | None],
@@ -608,4 +607,97 @@ class ItemValuationEngine:
                 _, avg_price, _ = self.estimate_market_value(item)
                 total += avg_price
         
+        return total
+        
+
+
+class EquipmentEvaluator:
+    """Evaluate equipment value and upgrades."""
+    
+    def __init__(self):
+        """Initialize equipment evaluator."""
+        self.valuation_engine = ItemValuationEngine()
+    
+    def calculate_score(self, equipment: dict, build_type: str) -> float:
+        """
+        Calculate equipment score for build type.
+        
+        Args:
+            equipment: Equipment dictionary
+            build_type: Build type (melee_dps, tank, etc.)
+            
+        Returns:
+            Equipment score (higher is better)
+        """
+        # Convert dict to Equipment if needed
+        if isinstance(equipment, dict):
+            # Simple scoring based on dict values
+            score = 0.0
+            score += equipment.get("atk", 0) * 1.0
+            score += equipment.get("matk", 0) * 1.0
+            score += equipment.get("defense", 0) * 0.5
+            score += equipment.get("refine", 0) * 5.0
+            return score
+        
+        # Use valuation engine for Equipment objects
+        return self.valuation_engine.calculate_equipment_score(equipment, build_type)
+    
+    def evaluate_upgrade(self, current: dict, candidate: dict) -> float:
+        """
+        Evaluate upgrade value.
+        
+        Args:
+            current: Current equipment
+            candidate: Candidate equipment
+            
+        Returns:
+            Upgrade value (positive if upgrade is beneficial)
+        """
+        if current is None:
+            return self.calculate_score(candidate, "hybrid")
+        
+        current_score = self.calculate_score(current, "hybrid")
+        candidate_score = self.calculate_score(candidate, "hybrid")
+        
+        return candidate_score - current_score
+    
+    def evaluate_refine(self, equipment: dict, target_refine: int) -> float:
+        """
+        Evaluate refine value.
+        
+        Args:
+            equipment: Equipment to refine
+            target_refine: Target refine level
+            
+        Returns:
+            Expected value gain from refining
+        """
+        current_refine = equipment.get("refine", 0)
+        if target_refine <= current_refine:
+            return 0.0
+        
+        # Simple calculation: each refine level adds value
+        refine_diff = target_refine - current_refine
+        base_score = self.calculate_score(equipment, "hybrid")
+        
+        # Estimate value gain (5% per refine level)
+        return base_score * refine_diff * 0.05
+    
+    def calculate_total_value(self, equipment_set: dict) -> float:
+        """
+        Calculate total value of equipment set.
+        
+        Args:
+            equipment_set: Dictionary of equipped items by slot
+            
+        Returns:
+            Total equipment value score
+        """
+        if not equipment_set:
+            return 0.0
+        
+        total = 0.0
+        for slot, item in equipment_set.items():
+            if item:
+                total += self.calculate_score(item, "balanced")
         return total

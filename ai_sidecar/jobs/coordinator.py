@@ -79,8 +79,8 @@ class JobAICoordinator:
         self.current_job = job
         self.current_job_id = job_id
 
-        # Load job-specific rotation
-        await self.rotation_engine.load_rotation_for_job(job.name)
+        # Rotations are already loaded in rotation engine's __init__
+        # No need to load separately
 
         self.log.info(
             "Job set",
@@ -118,14 +118,24 @@ class JobAICoordinator:
         if maintenance_action:
             return maintenance_action
 
-        # Get skill rotation action
+        # Get skill rotation action using proper method signature
         rotation_action = await self.rotation_engine.get_next_skill(
-            character_state, target_state
+            self.current_job.name,
+            "farming",  # Default rotation type
+            character_state,
+            target_state
         )
 
         # Apply job-specific modifications
         if rotation_action:
-            return self._enhance_action_with_mechanics(rotation_action, character_state)
+            # Convert SkillRotationStep to action dict
+            action_dict = {
+                "type": "use_skill",
+                "skill": rotation_action.skill_name,
+                "cast_time_ms": rotation_action.cast_time_ms,
+                "cooldown_ms": rotation_action.cooldown_ms
+            }
+            return self._enhance_action_with_mechanics(action_dict, character_state)
 
         return {"type": "wait", "reason": "no_action_available"}
 

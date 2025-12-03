@@ -139,12 +139,17 @@ class TestCombatAI:
     async def test_evaluate_combat_situation(self, combat_ai, game_state):
         """Test evaluating combat situation."""
         from ai_sidecar.combat.models import CombatContext
+        from ai_sidecar.core.state import CharacterState
         
         context = await combat_ai.evaluate_combat_situation(game_state)
         
         assert context is not None
         assert isinstance(context, CombatContext)
-        assert context.character == game_state.character
+        # Character should be converted to CharacterState
+        assert isinstance(context.character, CharacterState)
+        # Check that values match
+        assert context.character.hp == game_state.character.hp
+        assert context.character.hp_max == game_state.character.hp_max
     
     @pytest.mark.asyncio
     async def test_evaluate_combat_situation_with_monsters(self, combat_ai, game_state_with_monster):

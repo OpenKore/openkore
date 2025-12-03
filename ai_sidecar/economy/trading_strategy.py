@@ -23,17 +23,17 @@ logger = structlog.get_logger(__name__)
 
 class TradeOpportunity(BaseModel):
     """Single trading opportunity"""
-    opportunity_id: int
-    item_id: int
-    item_name: str
-    buy_price: int
-    sell_price: int
-    profit: int
-    profit_margin: float
-    risk_level: float = Field(ge=0, le=1)
-    confidence: float = Field(ge=0, le=1)
-    buy_source: MarketSource
-    sell_source: MarketSource
+    opportunity_id: int = 0
+    item_id: int = 0
+    item_name: str = ""
+    buy_price: int = 0
+    sell_price: int = 0
+    profit: int = 0
+    profit_margin: float = 0.0
+    risk_level: float = Field(default=0.5, ge=0, le=1)
+    confidence: float = Field(default=0.5, ge=0, le=1)
+    buy_source: MarketSource = MarketSource.VENDING
+    sell_source: MarketSource = MarketSource.VENDING
     expires_at: Optional[datetime] = None
     quantity_available: int = 1
 
@@ -111,32 +111,35 @@ class TradingManager:
                     by_source[source] = []
                 by_source[source].append(listing)
             
-            # Look for price differences between sources
-            sources = list(by_source.keys())
+            # Look for price differences - compare each buy listing to each sell listing
+            all_listings = listings
             
-            for i, buy_source in enumerate(sources):
-                for sell_source in sources[i+1:]:
-                    # Find cheapest buy price
-                    buy_listings = by_source[buy_source]
-                    sell_listings = by_source[sell_source]
+            for i, buy_listing in enumerate(all_listings):
+                for sell_listing in all_listings[i+1:]:
+                    # Skip if same source
+                    if buy_listing.source == sell_listing.source:
+                        continue
                     
-                    min_buy = min(l.price for l in buy_listings)
-                    max_sell = max(l.price for l in sell_listings)
+                    # Calculate potential arbitrage
+                    buy_price = min(buy_listing.price, sell_listing.price)
+                    sell_price = max(buy_listing.price, sell_listing.price)
                     
-                    # Calculate arbitrage
-                    profit = max_sell - min_buy
-                    margin = profit / min_buy if min_buy > 0 else 0
+                    profit = sell_price - buy_price
+                    margin = profit / buy_price if buy_price > 0 else 0
                     
                     if profit >= min_profit and margin >= min_margin:
                         # Found arbitrage opportunity
                         self._opportunity_counter += 1
                         
+                        buy_source = buy_listing.source if buy_listing.price < sell_listing.price else sell_listing.source
+                        sell_source = sell_listing.source if sell_listing.price > buy_listing.price else buy_listing.source
+                        
                         opportunity = TradeOpportunity(
                             opportunity_id=self._opportunity_counter,
                             item_id=item_id,
                             item_name=listings[0].item_name,
-                            buy_price=min_buy,
-                            sell_price=max_sell,
+                            buy_price=buy_price,
+                            sell_price=sell_price,
                             profit=profit,
                             profit_margin=margin,
                             risk_level=0.2,  # Arbitrage is low risk
@@ -144,10 +147,7 @@ class TradingManager:
                             buy_source=buy_source,
                             sell_source=sell_source,
                             expires_at=datetime.utcnow() + timedelta(hours=1),
-                            quantity_available=min(
-                                sum(l.quantity for l in buy_listings),
-                                sum(l.quantity for l in sell_listings)
-                            )
+                            quantity_available=min(buy_listing.quantity, sell_listing.quantity)
                         )
                         
                         opportunities.append(opportunity)
@@ -403,10 +403,12 @@ class TradingManager:
             return (False, "no_price_data")
         
         if purpose == "flip":
-            # For flipping, need good margin
+            # For flipping, need good margin (>=20%)
             if comparison["recommendation"] in ["excellent_buy", "good_buy"]:
-                profit_potential = comparison["median_market"] - price
-                if profit_potential > 1000:
+                median_market = comparison.get("median_market", 0)
+                profit_potential = median_market - price
+                margin = profit_potential / price if price > 0 else 0
+                if margin >= 0.20:  # 20% profit margin
                     return (True, "good_flip_opportunity")
             return (False, "insufficient_profit_margin")
         

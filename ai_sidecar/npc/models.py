@@ -44,18 +44,18 @@ class DialogueChoice(BaseModel):
 class DialogueState(BaseModel):
     """Current state of NPC dialogue interaction."""
 
-    model_config = ConfigDict(frozen=False)
+    model_config = ConfigDict(frozen=False, populate_by_name=True)
 
     npc_id: int = Field(description="NPC actor ID")
     npc_name: str = Field(description="NPC name")
-    current_text: str = Field(description="Current dialogue text")
+    current_text: str = Field(description="Current dialogue text", alias="text")
     choices: list[DialogueChoice] = Field(
         default_factory=list, description="Available dialogue choices"
     )
     waiting_for_input: bool = Field(
         default=False, description="Is waiting for player input"
     )
-    input_type: Literal["choice", "number", "text", "none"] = Field(
+    input_type: Literal["choice", "number", "text", "none", "continue"] = Field(
         default="none", description="Type of input expected"
     )
     history: list[str] = Field(

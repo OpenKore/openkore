@@ -105,20 +105,28 @@ class AchievementManager:
     - Completion recommendations
     """
     
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path | None = None, data_path: Path | None = None):
         """
         Initialize achievement manager.
         
         Args:
             data_dir: Directory containing achievement data
+            data_path: Alias for data_dir (backwards compatibility)
         """
         self.log = logger.bind(component="achievements")
-        self.data_dir = Path(data_dir)
+        # Support both parameters for backwards compatibility
+        final_data_dir = data_dir or data_path or Path("data/achievements")
+        self.data_dir = Path(final_data_dir)
         self.achievements: Dict[int, Achievement] = {}
         self.completed_achievements: List[int] = []
         self.total_points: int = 0
         self.unlocked_titles: List[str] = []
         self._load_achievement_data()
+    
+    @property
+    def _achievements(self) -> Dict[int, Achievement]:
+        """Backwards compatibility alias for achievements."""
+        return self.achievements
     
     def _load_achievement_data(self) -> None:
         """Load achievement definitions from data files"""
@@ -237,16 +245,41 @@ class AchievementManager:
             achievement.current_value + amount
         )
     
-    def check_completion(self, achievement_id: int) -> bool:
+    async def track_progress(self, achievement_id: int | str, value: int) -> bool:
         """
-        Check if achievement is complete.
+        Track/update achievement progress (alias for add_progress).
         
         Args:
-            achievement_id: Achievement ID
+            achievement_id: Achievement ID (int or string that parses to int)
+            value: Amount to add
             
         Returns:
-            True if complete
+            True if achievement completed
         """
+        # Convert string ID to int if needed
+        try:
+            aid = int(achievement_id) if isinstance(achievement_id, str) else achievement_id
+        except (ValueError, TypeError):
+            # Invalid ID - log and return False
+            self.log.warning("invalid_achievement_id", achievement_id=achievement_id)
+            return False
+        
+        return self.add_progress(aid, value)
+    
+    async def check_completion(self, achievement_id: int | None = None) -> bool:
+        """
+        Check if achievement is complete or check all achievements.
+        
+        Args:
+            achievement_id: Achievement ID (None to check all)
+            
+        Returns:
+            True if complete (or if any complete when checking all)
+        """
+        if achievement_id is None:
+            # Check all achievements
+            return any(ach.is_complete for ach in self.achievements.values())
+        
         achievement = self.achievements.get(achievement_id)
         return achievement.is_complete if achievement else False
     

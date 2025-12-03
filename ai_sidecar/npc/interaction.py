@@ -23,8 +23,9 @@ logger = get_logger(__name__)
 class InteractionContext(BaseModel):
     """Context for ongoing NPC interaction."""
 
-    npc: NPC = Field(description="NPC being interacted with")
+    npc: NPC | None = Field(default=None, description="NPC being interacted with")
     purpose: Literal["quest", "shop", "service", "exploration"] = Field(
+        default="exploration",
         description="Purpose of interaction"
     )
     started_at: datetime = Field(

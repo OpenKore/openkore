@@ -17,7 +17,7 @@ import structlog
 
 from ai_sidecar.quests.achievements import AchievementManager
 from ai_sidecar.quests.core import Quest, QuestManager
-from ai_sidecar.quests.daily import DailyQuestManager
+from ai_sidecar.quests.daily import DailyQuestManager, DailyQuestCategory
 from ai_sidecar.quests.hunting import HuntingQuestManager
 
 logger = structlog.get_logger(__name__)
@@ -180,7 +180,7 @@ class QuestCoordinator:
         
         # Medium session (30-60 min): Dailies + hunting
         elif available_time_minutes < 60:
-            if not self.daily.is_daily_completed(self.daily.DailyQuestCategory.GRAMPS):
+            if not self.daily.is_daily_completed(DailyQuestCategory.GRAMPS):
                 gramps = self.daily.get_gramps_quest(character_state.get("level", 1))
                 if gramps:
                     return {

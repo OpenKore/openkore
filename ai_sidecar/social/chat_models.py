@@ -9,17 +9,19 @@ import re
 from datetime import datetime
 from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class ChatChannel(str, Enum):
     """Chat channels in Ragnarok Online."""
     
     GLOBAL = "global"
+    PUBLIC = "global"  # Alias for GLOBAL for backward compatibility
     PARTY = "party"
     GUILD = "guild"
     WHISPER = "whisper"
     SHOUT = "shout"
+    TRADE = "trade"
     LOCAL = "local"
 
 
@@ -35,11 +37,18 @@ class ChatMessage(BaseModel):
         default_factory=datetime.now,
         description="Message timestamp"
     )
+    is_self: bool = Field(default=False, description="Is this message from the bot itself")
     is_command: bool = Field(default=False, description="Is this a command")
     target_name: str | None = Field(
         default=None,
         description="Target name for whispers"
     )
+    
+    # Alias for backwards compatibility
+    @property
+    def id(self) -> str:
+        """Alias for message_id."""
+        return self.message_id
     
     def is_directed_at(self, bot_name: str) -> bool:
         """Check if message is directed at the bot."""
@@ -99,6 +108,8 @@ class ChatMessage(BaseModel):
 class ChatFilter(BaseModel):
     """Chat filtering rules."""
     
+    model_config = ConfigDict(frozen=False)
+    
     keywords_block: list[str] = Field(
         default_factory=list,
         description="Keywords that trigger message blocking"
@@ -145,6 +156,8 @@ class ChatFilter(BaseModel):
 
 class AutoResponse(BaseModel):
     """Automatic chat response rule."""
+    
+    model_config = {"frozen": False, "arbitrary_types_allowed": True}
     
     trigger_patterns: list[str] = Field(
         description="Regex patterns that trigger this response"

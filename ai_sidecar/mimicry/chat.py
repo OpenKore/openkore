@@ -242,9 +242,13 @@ class HumanChatSimulator:
             # Missing letter
             chars.pop(pos)
         
-        elif typo_type == "transpose" and pos < len(chars) - 1:
-            # Transpose two letters
-            chars[pos], chars[pos + 1] = chars[pos + 1], chars[pos]
+        elif typo_type == "transpose" and pos < len(message) - 1:
+            # Transpose two letters (only if they're different)
+            if chars[pos] != chars[pos + 1]:
+                chars[pos], chars[pos + 1] = chars[pos + 1], chars[pos]
+            else:
+                # If same character, use double instead
+                chars.insert(pos, chars[pos])
         
         typo_message = "".join(chars)
         
@@ -440,3 +444,7 @@ class HumanChatSimulator:
             "style": self.style.value,
             "base_wpm": self.base_wpm
         }
+
+
+# Alias for backward compatibility
+ChatHumanizer = HumanChatSimulator

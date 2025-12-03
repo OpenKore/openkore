@@ -432,3 +432,17 @@ class DoramManager:
         self.active_spirits.clear()
         self.spirit_expires.clear()
         self.log.debug("Doram state reset")
+
+    def deactivate_spirit(self, spirit_type: SpiritType) -> None:
+        """
+        Deactivate a specific spirit buff.
+        
+        Args:
+            spirit_type: Spirit type to deactivate
+        """
+        if spirit_type in self.active_spirits:
+            self.active_spirits.discard(spirit_type)
+            self.spirit_expires.pop(spirit_type, None)
+            self.log.info("Spirit deactivated", spirit=spirit_type.value)
+        else:
+            self.log.debug("Spirit not active", spirit=spirit_type.value)

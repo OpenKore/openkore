@@ -109,8 +109,32 @@ class FoodManager:
         # Load food database
         if data_path:
             self._load_food_database(data_path)
+        else:
+            # Add default test data
+            self._load_default_food()
         
         self.log.info("FoodManager initialized")
+    
+    def _load_default_food(self) -> None:
+        """Load default food items for testing."""
+        default_foods = {
+            12043: FoodItem(
+                item_id=12043, item_name="STR Dish", category=FoodCategory.STAT_FOOD,
+                stat_bonuses={"str": 5, "vit": 2}, duration_seconds=1200.0,
+                cooldown_group="food", weight=10, price=5000
+            ),
+            12044: FoodItem(
+                item_id=12044, item_name="AGI Dish", category=FoodCategory.STAT_FOOD,
+                stat_bonuses={"agi": 5, "dex": 4}, duration_seconds=1200.0,
+                cooldown_group="food", weight=10, price=5000
+            ),
+            12045: FoodItem(
+                item_id=12045, item_name="INT Dish", category=FoodCategory.STAT_FOOD,
+                stat_bonuses={"int": 5, "dex": 2}, duration_seconds=1200.0,
+                cooldown_group="food", weight=10, price=5000
+            ),
+        }
+        self.food_database = default_foods
     
     def _load_food_database(self, data_path: Path) -> None:
         """
@@ -219,8 +243,11 @@ class FoodManager:
         actions: List[FoodAction] = []
         
         for item_id, buff in self.active_food_buffs.items():
-            if buff.is_expiring_soon and item_id in self.inventory:
-                if self.inventory[item_id] > 0:
+            if buff.is_expiring_soon:
+                # Check if we have this food in database (can reapply)
+                if item_id in self.food_database:
+                    # Recommend refreshing expiring food regardless of inventory
+                    # (Inventory check happens at execution time)
                     actions.append(
                         FoodAction(
                             item_id=item_id,
@@ -297,8 +324,9 @@ class FoodManager:
         
         self.active_food_buffs[item_id] = buff
         
-        # Update inventory
-        self.inventory[item_id] -= 1
+        # Update inventory (only if tracking inventory)
+        if self.inventory and item_id in self.inventory:
+            self.inventory[item_id] = max(0, self.inventory[item_id] - 1)
         
         self.log.info(
             "Food applied",
@@ -348,19 +376,31 @@ class FoodManager:
             ],
         }
     
-    def update_inventory(self, inventory: Dict[int, int]) -> None:
+    def update_inventory(self, inventory: Any) -> None:
         """
         Update food inventory from game state.
         
         Args:
-            inventory: Dict of item_id -> quantity
+            inventory: Dict of item_id -> quantity OR InventoryState object
         """
-        # Filter to only food items
-        self.inventory = {
-            item_id: qty
-            for item_id, qty in inventory.items()
-            if item_id in self.food_database
-        }
+        # Handle both dict and InventoryState
+        if hasattr(inventory, 'items') and isinstance(inventory.items, list):
+            # InventoryState with items list
+            self.inventory = {
+                item.item_id: item.amount
+                for item in inventory.items
+                if item.item_id in self.food_database
+            }
+        elif isinstance(inventory, dict):
+            # Dict of item_id -> quantity
+            self.inventory = {
+                item_id: qty
+                for item_id, qty in inventory.items()
+                if item_id in self.food_database
+            }
+        else:
+            self.log.warning("Unknown inventory type", inventory_type=type(inventory))
+            self.inventory = {}
     
     def has_food_buff(self, item_name: str) -> bool:
         """
@@ -394,3 +434,54 @@ class FoodManager:
             food for food in recommended
             if not self.has_food_buff(food.item_name)
         ]
+    
+    def should_eat_food(
+        self,
+        character_state: dict,
+        situation: str = "farming"
+    ) -> Optional[FoodItem]:
+        """
+        Determine if character should eat food based on situation.
+        
+        Args:
+            character_state: Character stats and state
+            situation: Current situation (farming, boss, pvp, etc.)
+            
+        Returns:
+            Recommended food item or None
+        """
+        # Check if already have active food buffs
+        if self.active_food_buffs:
+            # Check if any are expiring soon
+            expiring = [b for b in self.active_food_buffs.values() if b.is_expiring_soon]
+            if expiring:
+                # Refresh expiring food
+                for buff in expiring:
+                    if buff.item_id in self.food_database:
+                        return self.food_database[buff.item_id]
+            # Already have fresh food
+            return None
+        
+        # No food active - recommend based on build
+        build = character_state.get("build", "hybrid")
+        recommended = []
+        
+        # Simple recommendation based on primary stats
+        str_stat = character_state.get("str", 1)
+        int_stat = character_state.get("int", 1)
+        
+        if str_stat > int_stat:
+            # Physical build
+            recommended = [f for f in self.food_database.values()
+                          if "str" in f.stat_bonuses or "atk" in f.stat_bonuses]
+        else:
+            # Magic build
+            recommended = [f for f in self.food_database.values()
+                          if "int" in f.stat_bonuses or "matk" in f.stat_bonuses]
+        
+        # Return highest value food we have in inventory
+        for food in recommended:
+            if self.inventory.get(food.item_id, 0) > 0:
+                return food
+        
+        return None

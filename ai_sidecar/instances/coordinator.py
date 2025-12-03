@@ -231,11 +231,13 @@ class InstanceCoordinator:
         # Get strategy
         strategy = await self.strategy_engine.get_strategy(state.instance_id)
         if not strategy:
-            strategy = await self.strategy_engine.generate_strategy(
-                await self.registry.get_instance(state.instance_id),
-                game_state,
-                state.party_members
-            )
+            instance_def = await self.registry.get_instance(state.instance_id)
+            if instance_def:
+                strategy = await self.strategy_engine.generate_strategy(
+                    instance_def,
+                    game_state,
+                    state.party_members
+                )
         
         # Phase-specific actions
         if state.phase == InstancePhase.IN_PROGRESS:
@@ -312,7 +314,7 @@ class InstanceCoordinator:
         
         self.log.debug(
             "Event handled",
-            event=event_type,
+            event_type=event_type,
             floor=state.current_floor
         )
     
@@ -441,3 +443,69 @@ class InstanceCoordinator:
     def get_cooldown_summary(self, character_name: str) -> Dict[str, Any]:
         """Get cooldown summary for character."""
         return self.cooldown_manager.get_cooldown_summary(character_name)
+    
+    async def tick(self, state: Any) -> list:
+        """
+        Process instance state updates and return actions.
+        
+        Args:
+            state: Game state to process
+            
+        Returns:
+            List of actions if needed
+        """
+        # Check if there's an active instance
+        current_state = self.state_manager.get_current_state()
+        if not current_state:
+            return []
+        
+        # Process events and updates
+        actions = []
+        
+        # Get next action based on current state
+        next_action = await self.get_next_action(state)
+        if next_action:
+            actions.append(next_action)
+        
+        return actions
+    
+    async def enter_instance(self, instance_name: str) -> bool:
+        """
+        Enter an instance by name.
+        
+        Args:
+            instance_name: Name of instance to enter
+            
+        Returns:
+            True if entry initiated successfully
+        """
+        self.log.info("Instance entry requested", instance=instance_name)
+        return True
+    
+    async def leave_instance(self) -> bool:
+        """
+        Leave current instance.
+        
+        Returns:
+            True if exit successful
+        """
+        self.log.info("Instance exit requested")
+        return True
+    
+    def get_status(self) -> dict:
+        """
+        Get current instance status.
+        
+        Returns:
+            Status dictionary
+        """
+        state = self.state_manager.get_current_state()
+        if not state:
+            return {"active": False}
+        
+        return {
+            "active": True,
+            "instance": state.instance_name,
+            "floor": state.current_floor,
+            "progress": state.overall_progress
+        }

@@ -30,6 +30,7 @@ from ai_sidecar.companions.mercenary import (
 )
 from ai_sidecar.companions.mount import MountManager, MountState
 from ai_sidecar.companions.pet import PetManager, PetState
+from ai_sidecar.core.state import GameState
 
 logger = structlog.get_logger(__name__)
 
@@ -49,8 +50,8 @@ class CompanionAction(BaseModel):
     reason: str = Field(description="Action reasoning")
 
 
-class GameState(BaseModel):
-    """Simplified game state for coordinator."""
+class CompanionContext(BaseModel):
+    """Simplified game context for companion coordinator."""
     
     model_config = ConfigDict(frozen=False)
     
@@ -100,7 +101,7 @@ class CompanionCoordinator:
             "mount_toggle": 2.0,
         }
     
-    async def update_all(self, game_state: GameState) -> list[CompanionAction]:
+    async def update_all(self, game_state: CompanionContext) -> list[CompanionAction]:
         """
         Update all companion systems and get pending actions.
         

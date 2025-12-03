@@ -19,6 +19,11 @@ from ai_sidecar.environment.time_core import TimeManager
 class DayNightPhase(str, Enum):
     """Detailed day/night phases throughout the day."""
 
+    # Simple day/night indicators (for tests/compatibility)
+    DAY = "day"
+    NIGHT = "night"
+    
+    # Detailed phases
     EARLY_MORNING = "early_morning"  # 5:00-6:59
     MORNING = "morning"  # 7:00-9:59
     LATE_MORNING = "late_morning"  # 10:00-11:59
@@ -414,3 +419,28 @@ class DayNightManager:
             return True
 
         return True
+    
+    def update_time(self, hour: int, minute: int) -> None:
+        """
+        Update time-based effects.
+        
+        This method processes time advancement and updates any time-sensitive
+        modifiers or states. It's called periodically by the environment coordinator.
+        
+        Args:
+            hour: Current game hour
+            minute: Current game minute
+        """
+        # Log phase changes
+        current_phase = self.get_current_phase()
+        
+        # Track phase changes (would store last_phase as instance variable in real impl)
+        if not hasattr(self, '_last_phase'):
+            self._last_phase = current_phase
+        elif self._last_phase != current_phase:
+            self.log.info(
+                "day_night_phase_changed",
+                old_phase=self._last_phase.value,
+                new_phase=current_phase.value
+            )
+            self._last_phase = current_phase

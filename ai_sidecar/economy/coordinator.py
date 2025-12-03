@@ -73,6 +73,33 @@ class EconomyCoordinator:
         
         self.log.info("economy_coordinator_initialized", data_dir=str(data_dir))
     
+    async def tick(self, game_state) -> List[dict]:
+        """
+        Process tick and return economic actions.
+        
+        Args:
+            game_state: Current game state
+            
+        Returns:
+            List of action dicts
+        """
+        actions = []
+        
+        # Check for economic actions
+        character = game_state.character
+        inventory = game_state.inventory
+        
+        action = await self.get_next_economic_action(
+            character_state={"level": character.base_level},
+            inventory={"items": []},
+            zeny=character.zeny
+        )
+        
+        if action["action"] != "wait":
+            actions.append(action)
+        
+        return actions
+    
     async def update_market_data(self, listings: List[dict]) -> dict:
         """
         Update market with new listings.
@@ -89,8 +116,11 @@ class EconomyCoordinator:
         
         for listing_data in listings:
             try:
+                # Normalize listing data for MarketListing compatibility
+                normalized = self._normalize_listing_data(listing_data)
+                
                 # Create listing object
-                listing = MarketListing(**listing_data)
+                listing = MarketListing(**normalized)
                 
                 # Record in market
                 self.market.record_listing(listing)
@@ -123,6 +153,52 @@ class EconomyCoordinator:
         self.log.info("market_data_updated", **result)
         
         return result
+    
+    def _normalize_listing_data(self, data: dict) -> dict:
+        """
+        Normalize listing data to match MarketListing model.
+        
+        Handles field name variations and source conversions.
+        
+        Args:
+            data: Raw listing data
+            
+        Returns:
+            Normalized data dict
+        """
+        from ai_sidecar.economy.core import MarketSource
+        
+        normalized = data.copy()
+        
+        # Map alternate field names
+        if "seller" in normalized and "seller_name" not in normalized:
+            normalized["seller_name"] = normalized.pop("seller")
+        
+        if "map_name" in normalized and "location_map" not in normalized:
+            normalized["location_map"] = normalized.pop("map_name")
+        
+        # Normalize source to MarketSource enum
+        if "source" in normalized:
+            source_str = normalized["source"].lower()
+            # Map common variations to valid MarketSource values
+            source_mapping = {
+                "player_shop": MarketSource.VENDING,
+                "vending": MarketSource.VENDING,
+                "buying": MarketSource.BUYING,
+                "npc": MarketSource.NPC,
+                "npc_buy": MarketSource.NPC_BUY,
+                "npc_sell": MarketSource.NPC_SELL,
+                "auction": MarketSource.AUCTION,
+                "trade": MarketSource.TRADE,
+            }
+            
+            if source_str in source_mapping:
+                normalized["source"] = source_mapping[source_str]
+            elif not isinstance(normalized["source"], MarketSource):
+                # Default to VENDING if unknown
+                normalized["source"] = MarketSource.VENDING
+        
+        return normalized
     
     async def get_next_economic_action(
         self,

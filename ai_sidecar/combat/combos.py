@@ -359,6 +359,59 @@ class SkillComboEngine:
         
         return best_combo
         
+    def get_next_combo_skill(self, skill_history: list[str]) -> str | None:
+        """
+        Get next skill in combo based on skill history.
+        
+        Args:
+            skill_history: List of recently used skills
+            
+        Returns:
+            Next skill name or None
+        """
+        if not skill_history:
+            return None
+            
+        last_skill = skill_history[-1].lower()
+        
+        # Check if last skill is part of a combo
+        for job_combos in self.combos.values():
+            for combo in job_combos:
+                for i, step in enumerate(combo.steps):
+                    if step.skill_name.lower() == last_skill:
+                        # Return next skill if available
+                        if i + 1 < len(combo.steps):
+                            return combo.steps[i + 1].skill_name
+        
+        return None
+    
+    def check_combo(self, skill_name: str) -> dict | None:
+        """
+        Check if skill starts or continues a combo.
+        
+        Args:
+            skill_name: Name of skill to check
+            
+        Returns:
+            Combo info dict or None if no combo found
+        """
+        # Check if skill is part of any combo
+        for job_combos in self.combos.values():
+            for combo in job_combos:
+                # Check if skill is in this combo
+                for step in combo.steps:
+                    if step.skill_name.lower() == skill_name.lower():
+                        return {
+                            "combo_id": combo.combo_id,
+                            "combo_name": combo.combo_name,
+                            "skill_name": step.skill_name,
+                            "skill_level": step.skill_level,
+                            "is_starter": combo.steps[0].skill_name.lower() == skill_name.lower(),
+                            "total_steps": len(combo.steps),
+                        }
+        
+        return None
+        
     async def start_combo(self, combo_id: str) -> Optional[ComboState]:
         """
         Initialize combo execution.
@@ -531,3 +584,7 @@ class SkillComboEngine:
         self._active_combo_def = None
         
         return stats
+
+
+# Alias for backward compatibility
+ComboManager = SkillComboEngine

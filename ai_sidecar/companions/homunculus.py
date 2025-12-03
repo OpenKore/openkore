@@ -15,6 +15,8 @@ RO Homunculus Mechanics:
 - Stat Growth: Random within growth rate ranges per type
 """
 
+from __future__ import annotations
+
 import json
 from enum import Enum
 from pathlib import Path
@@ -66,12 +68,12 @@ class HomunculusState(BaseModel):
     max_sp: int = Field(default=0, ge=0, description="Maximum SP")
     
     # Base stats
-    stat_str: int = Field(default=1, ge=1, description="STR", alias="str")
-    agi: int = Field(default=1, ge=1, description="AGI")
-    vit: int = Field(default=1, ge=1, description="VIT")
-    int_stat: int = Field(default=1, ge=1, description="INT", alias="int")
-    dex: int = Field(default=1, ge=1, description="DEX")
-    luk: int = Field(default=1, ge=1, description="LUK")
+    stat_str: int = Field(default=1, ge=0, description="STR", alias="str")
+    agi: int = Field(default=1, ge=0, description="AGI")
+    vit: int = Field(default=1, ge=0, description="VIT")
+    int_stat: int = Field(default=1, ge=0, description="INT", alias="int")
+    dex: int = Field(default=1, ge=0, description="DEX")
+    luk: int = Field(default=1, ge=0, description="LUK")
     
     # Skills
     skills: dict[str, int] = Field(

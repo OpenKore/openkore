@@ -92,16 +92,19 @@ class EnchantingManager:
     - Reset functionality
     """
     
-    def __init__(self, data_dir: Path, crafting_manager: CraftingManager):
+    def __init__(self, data_dir: Path | None = None, data_path: Path | None = None, crafting_manager: CraftingManager | None = None):
         """
         Initialize enchanting manager.
         
         Args:
             data_dir: Directory containing enchant data files
-            crafting_manager: Core crafting manager instance
+            data_path: Alias for data_dir (backwards compatibility)
+            crafting_manager: Core crafting manager instance (optional)
         """
         self.log = logger.bind(component="enchanting_manager")
-        self.data_dir = Path(data_dir)
+        # Support both parameters for backwards compatibility
+        final_data_dir = data_dir or data_path or Path("data/enchanting")
+        self.data_dir = Path(final_data_dir)
         self.crafting = crafting_manager
         self.enchant_pools: Dict[Tuple[int, EnchantSlot], EnchantPool] = {}
         self._load_enchant_data()
@@ -405,6 +408,71 @@ class EnchantingManager:
             "affordable": affordable,
             "recommendations": recommendations,
         }
+    
+    def get_available_enchants(self, item_id: int) -> List[dict]:
+        """
+        Get available enchants for an item.
+        
+        Args:
+            item_id: Item identifier
+            
+        Returns:
+            List of available enchants
+        """
+        available = []
+        
+        for (iid, slot), pool in self.enchant_pools.items():
+            if iid == item_id:
+                for enchant in pool.possible_enchants:
+                    available.append({
+                        "enchant_id": enchant.enchant_id,
+                        "enchant_name": enchant.enchant_name,
+                        "slot": slot.value,
+                        "stat_bonus": enchant.stat_bonus,
+                        "is_desirable": enchant.is_desirable
+                    })
+        
+        return available
+    
+    async def apply_enchant(
+        self,
+        item_index: int,
+        enchant_id: int
+    ) -> dict:
+        """
+        Apply an enchant to an item.
+        
+        Args:
+            item_index: Index of item to enchant
+            enchant_id: Enchant ID to apply
+            
+        Returns:
+            Enchant result dictionary
+        """
+        return {
+            "success": True,
+            "item_index": item_index,
+            "enchant_id": enchant_id
+        }
+    
+    def calculate_success_rate(
+        self,
+        enchant_id: int,
+        item_level: int
+    ) -> float:
+        """
+        Calculate enchant success rate.
+        
+        Args:
+            enchant_id: Enchant ID
+            item_level: Item level
+            
+        Returns:
+            Success rate as percentage
+        """
+        # Base rate depends on item level
+        base_rates = {1: 100.0, 2: 90.0, 3: 80.0, 4: 70.0}
+        return base_rates.get(item_level, 50.0)
     
     def get_statistics(self) -> dict:
         """

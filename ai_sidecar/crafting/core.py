@@ -20,6 +20,7 @@ class CraftingType(str, Enum):
     """Types of crafting in RO"""
     FORGE = "forge"           # Blacksmith weapon forging
     BREW = "brew"             # Alchemist brewing
+    COOK = "cook"             # Cooking/Chef crafting
     REFINE = "refine"         # Equipment refinement
     ENCHANT = "enchant"       # Enchanting
     CARD_SLOT = "card_slot"   # Card slotting

@@ -265,7 +265,9 @@ class QuestLog(BaseModel):
         if not quest.is_repeatable and quest.quest_id in self.completed_quests:
             return False
 
-        quest.start()
+        # Only start if not already started
+        if quest.status == "not_started":
+            quest.start()
         self.active_quests.append(quest)
         return True
 

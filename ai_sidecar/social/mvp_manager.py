@@ -31,6 +31,9 @@ class MVPManager:
         self.active_hunt: MVPHuntingStrategy | None = None
         self.spawn_notifications: list[tuple[int, str, datetime]] = []
         self.current_map: str = ""
+        self.rotation_index: int = 0  # Current location in rotation
+        self.last_rotation_time: datetime | None = None
+        self.rotation_interval_seconds: int = 30  # Time to wait at each spot
     
     async def tick(self, game_state: GameState) -> list[Action]:
         """Main MVP hunting tick."""
@@ -121,9 +124,11 @@ class MVPManager:
                             actions.append(Action.move_to(x, y, priority=5))
         
         elif strategy.approach_strategy == "check_rotation":
-            # Rotate through known locations
-            # Placeholder implementation
-            pass
+            # Rotate through known spawn locations
+            rotation_actions = self._execute_location_rotation(
+                mvp.monster_id, game_state
+            )
+            actions.extend(rotation_actions)
         
         # Check if MVP is visible
         for actor in game_state.actors:
@@ -255,15 +260,111 @@ class MVPManager:
             role_counts[role] = role_counts.get(role, 0) + 1
         return role_counts
     
+    def _execute_location_rotation(
+        self, monster_id: int, game_state: GameState
+    ) -> list[Action]:
+        """
+        Rotate through known MVP spawn locations.
+        
+        Args:
+            monster_id: MVP monster ID
+            game_state: Current game state
+            
+        Returns:
+            List of movement actions
+        """
+        actions: list[Action] = []
+        
+        # Get known locations for this MVP
+        locations = self.tracker.known_locations.get(monster_id, [])
+        if not locations:
+            # No known locations, use spawn maps from database
+            mvp = self.mvp_db.get(monster_id)
+            if mvp and mvp.spawn_maps:
+                # Add default center locations for each map
+                for spawn_map in mvp.spawn_maps:
+                    locations.append((spawn_map, 150, 150))  # Default center
+            if not locations:
+                logger.warning(f"No spawn locations for MVP {monster_id}")
+                return actions
+        
+        # Check if we should rotate to next location
+        now = datetime.now()
+        should_rotate = False
+        
+        if self.last_rotation_time is None:
+            should_rotate = True
+        else:
+            elapsed = (now - self.last_rotation_time).total_seconds()
+            if elapsed >= self.rotation_interval_seconds:
+                should_rotate = True
+        
+        if should_rotate:
+            # Move to next location in rotation
+            self.rotation_index = (self.rotation_index + 1) % len(locations)
+            self.last_rotation_time = now
+        
+        # Get current target location
+        target_map, target_x, target_y = locations[self.rotation_index]
+        
+        # Check if we're on the right map
+        if self.current_map != target_map:
+            # Would need to warp/portal - log intent
+            logger.info(f"Need to warp to {target_map} for rotation point {self.rotation_index + 1}/{len(locations)}")
+            # Create warp action if available
+            actions.append(
+                Action(
+                    type=ActionType.COMMAND,
+                    extra={"command": "memo", "target_map": target_map},
+                    priority=3,
+                )
+            )
+        else:
+            # Move to target location on current map
+            char_pos = game_state.character.position
+            distance = ((char_pos.x - target_x) ** 2 + (char_pos.y - target_y) ** 2) ** 0.5
+            
+            if distance > 5:
+                actions.append(Action.move_to(target_x, target_y, priority=4))
+                logger.debug(
+                    f"Moving to rotation point {self.rotation_index + 1}/{len(locations)} "
+                    f"at ({target_x}, {target_y})"
+                )
+        
+        return actions
+    
+    def set_rotation_interval(self, seconds: int) -> None:
+        """Set the time to wait at each rotation location."""
+        self.rotation_interval_seconds = max(10, seconds)  # Minimum 10 seconds
+        logger.debug(f"Rotation interval set to {self.rotation_interval_seconds}s")
+    
+    def reset_rotation(self) -> None:
+        """Reset rotation to start position."""
+        self.rotation_index = 0
+        self.last_rotation_time = None
+        logger.debug("MVP rotation reset")
+    
     def _initiate_hunt(self, mvp: MVPBoss) -> list[Action]:
         """Initiate MVP hunt (move to spawn location)."""
         actions: list[Action] = []
+        
+        # Reset rotation for new hunt
+        self.reset_rotation()
         
         # Get spawn location
         if mvp.spawn_maps:
             target_map = mvp.spawn_maps[0]
             logger.info(f"Initiating hunt on {target_map}")
-            # Would create warp/move action here
+            
+            # If we're not on the target map, queue a warp
+            if self.current_map != target_map:
+                actions.append(
+                    Action(
+                        type=ActionType.COMMAND,
+                        extra={"command": "warp", "target_map": target_map},
+                        priority=3,
+                    )
+                )
         
         return actions
     

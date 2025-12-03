@@ -136,8 +136,45 @@ class RecoveryManager:
         # Load recovery items database
         if data_path:
             self._load_items_database(data_path)
+        else:
+            # Add default test data
+            self._load_default_items()
         
         self.log.info("RecoveryManager initialized")
+    
+    def _load_default_items(self) -> None:
+        """Load default recovery items for testing."""
+        default_items = {
+            501: RecoveryItem(
+                item_id=501, item_name="Red Potion", recovery_type=RecoveryType.HP_INSTANT,
+                base_recovery=45, weight=7, price=50, cooldown_group="potion"
+            ),
+            502: RecoveryItem(
+                item_id=502, item_name="Orange Potion", recovery_type=RecoveryType.HP_INSTANT,
+                base_recovery=105, weight=10, price=200, cooldown_group="potion"
+            ),
+            503: RecoveryItem(
+                item_id=503, item_name="Yellow Potion", recovery_type=RecoveryType.HP_INSTANT,
+                base_recovery=175, weight=13, price=550, cooldown_group="potion"
+            ),
+            504: RecoveryItem(
+                item_id=504, item_name="White Potion", recovery_type=RecoveryType.HP_INSTANT,
+                base_recovery=325, weight=15, price=1200, cooldown_group="potion"
+            ),
+            505: RecoveryItem(
+                item_id=505, item_name="Blue Potion", recovery_type=RecoveryType.SP_INSTANT,
+                base_recovery=60, weight=15, price=5000, cooldown_group="potion"
+            ),
+            607: RecoveryItem(
+                item_id=607, item_name="Yggdrasil Berry", recovery_type=RecoveryType.EMERGENCY,
+                percentage_recovery=1.0, weight=30, price=500000, cooldown_group="yggdrasil"
+            ),
+            608: RecoveryItem(
+                item_id=608, item_name="Yggdrasil Seed", recovery_type=RecoveryType.HP_SP_COMBO,
+                percentage_recovery=0.5, weight=20, price=50000, cooldown_group="yggdrasil"
+            ),
+        }
+        self.items_database = default_items
     
     def _load_items_database(self, data_path: Path) -> None:
         """
@@ -327,6 +364,9 @@ class RecoveryManager:
     
     def _is_available(self, item_id: int) -> bool:
         """Check if item is in inventory."""
+        # If not tracking inventory, assume items are available
+        if not self.inventory:
+            return True
         return self.inventory.get(item_id, 0) > 0
     
     def _is_on_cooldown(self, cooldown_group: str) -> bool:

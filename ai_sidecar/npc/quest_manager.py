@@ -15,6 +15,7 @@ from ai_sidecar.npc.quest_models import (
     QuestLog,
     QuestObjectiveType,
 )
+from ai_sidecar.social import config
 from ai_sidecar.utils.logging import get_logger
 
 if TYPE_CHECKING:
@@ -83,9 +84,84 @@ class QuestManager:
         Args:
             game_state: Current game state
         """
-        # This would be called by event handlers in practice
-        # For now, it's a placeholder for the tick cycle
-        pass
+        if not self.quest_log.active_quests:
+            return
+        
+        # Track inventory items for collection quests
+        inventory_counts: dict[int, int] = {}
+        for item in game_state.inventory:
+            inventory_counts[item.id] = inventory_counts.get(item.id, 0) + item.amount
+        
+        # Update each active quest
+        for quest in self.quest_log.active_quests:
+            self._update_single_quest_progress(quest, game_state, inventory_counts)
+    
+    def _update_single_quest_progress(
+        self,
+        quest: Quest,
+        game_state: "GameState",
+        inventory_counts: dict[int, int]
+    ) -> None:
+        """
+        Update progress for a single quest.
+        
+        Args:
+            quest: Quest to update
+            game_state: Current game state
+            inventory_counts: Pre-calculated inventory item counts
+        """
+        quest_changed = False
+        
+        for obj in quest.objectives:
+            if obj.completed:
+                continue
+            
+            if obj.objective_type == QuestObjectiveType.COLLECT_ITEM:
+                # Check inventory for required items
+                current_count = inventory_counts.get(obj.target_id, 0)
+                if current_count != obj.current_count:
+                    old_count = obj.current_count
+                    obj.current_count = min(current_count, obj.required_count)
+                    if obj.current_count > old_count:
+                        logger.debug(
+                            f"Quest '{quest.name}' item progress: "
+                            f"{obj.target_name} {old_count} -> {obj.current_count}/{obj.required_count}"
+                        )
+                        quest_changed = True
+                    
+                    # Check completion
+                    if obj.current_count >= obj.required_count:
+                        obj.completed = True
+                        logger.info(f"Quest objective completed: Collect {obj.target_name}")
+            
+            elif obj.objective_type == QuestObjectiveType.VISIT_LOCATION:
+                # Check if we're at the target location
+                if obj.map_name and obj.x is not None and obj.y is not None:
+                    if game_state.map_name == obj.map_name:
+                        char_pos = game_state.character.position
+                        distance = ((char_pos.x - obj.x) ** 2 + (char_pos.y - obj.y) ** 2) ** 0.5
+                        
+                        if distance <= 5:  # Within 5 cells
+                            obj.update_progress(1)
+                            logger.info(f"Quest objective completed: Visit {obj.target_name}")
+                            quest_changed = True
+            
+            elif obj.objective_type == QuestObjectiveType.TALK_TO_NPC:
+                # Check if NPC is nearby and we recently talked
+                for actor in game_state.actors:
+                    if actor.id == obj.target_id:
+                        char_pos = game_state.character.position
+                        distance = char_pos.distance_to(actor.position)
+                        
+                        # If we're very close, assume we talked
+                        if distance <= 2:
+                            # Would need actual talk event tracking
+                            pass
+        
+        # Check if quest is now completable
+        if quest_changed and quest.all_objectives_complete:
+            quest.status = "ready_to_turn_in"
+            logger.info(f"Quest ready to turn in: {quest.name}")
 
     def on_monster_kill(self, monster_id: int, monster_name: str) -> None:
         """
@@ -219,7 +295,7 @@ class QuestManager:
 
     def _calculate_quest_priority(self, quest: Quest) -> float:
         """
-        Calculate quest priority based on various factors.
+        Calculate quest priority based on various factors and config.
 
         Args:
             quest: Quest to evaluate
@@ -228,10 +304,16 @@ class QuestManager:
             Priority score (higher = more priority)
         """
         priority = 0.0
+        quest_priorities = config.QUEST_PRIORITIES
 
         # High priority if ready to turn in
         if quest.status == "ready_to_turn_in":
             priority += 100.0
+
+        # Priority based on quest type from config
+        quest_type = self._determine_quest_type(quest)
+        type_priority = quest_priorities.get(quest_type, 50)
+        priority += type_priority
 
         # Priority based on progress
         priority += quest.progress_percent * 0.5
@@ -251,9 +333,42 @@ class QuestManager:
 
         # Bonus for daily quests
         if quest.is_daily:
-            priority += 15.0
+            priority += quest_priorities.get("daily", 80)
 
         return priority
+    
+    def _determine_quest_type(self, quest: Quest) -> str:
+        """
+        Determine quest type for priority calculation.
+        
+        Args:
+            quest: Quest to evaluate
+            
+        Returns:
+            Quest type string
+        """
+        # Check quest properties
+        if quest.is_daily:
+            return "daily"
+        
+        if quest.is_repeatable:
+            return "repeatable"
+        
+        # Check quest name/description for hints
+        name_lower = quest.name.lower()
+        desc_lower = quest.description.lower()
+        
+        if any(word in name_lower for word in ["main", "story", "chapter"]):
+            return "main_story"
+        
+        if any(word in name_lower for word in ["side", "optional"]):
+            return "side_quest"
+        
+        if any(word in desc_lower for word in ["collect", "gather", "bring"]):
+            return "collection"
+        
+        # Default to side quest
+        return "side_quest"
 
     def _create_turn_in_actions(
         self, completable_quests: list[Quest], game_state: "GameState"

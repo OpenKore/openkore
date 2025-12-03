@@ -14,7 +14,7 @@ from ai_sidecar.economy.storage import StorageManager, StorageManagerConfig
 from ai_sidecar.economy.trading import TradingSystem, TradingSystemConfig
 from ai_sidecar.economy.zeny import ZenyManager, ZenyManagerConfig
 from ai_sidecar.equipment.manager import EquipmentManager, EquipmentManagerConfig
-from ai_sidecar.protocol.messages import Action
+from ai_sidecar.core.decision import Action
 
 if TYPE_CHECKING:
     from ai_sidecar.core.state import GameState
@@ -143,8 +143,7 @@ class EconomicManager:
         
         if limited_actions:
             logger.debug(
-                f"Economic tick: {len(limited_actions)} actions",
-                tick=game_state.tick,
+                f"Economic tick: {len(limited_actions)} actions (tick={game_state.tick})"
             )
         
         return limited_actions

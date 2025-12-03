@@ -246,3 +246,25 @@ class TickProcessor:
             "history_size": len(self._state_history),
             "last_tick": self._last_tick,
         }
+    
+    def health_check(self) -> dict[str, Any]:
+        """
+        Get comprehensive health status of tick processor and all subsystems.
+        
+        Returns:
+            Dict with processor stats and decision engine health status
+        """
+        health = {
+            "tick_processor": self.stats,
+            "decision_engine": None,
+        }
+        
+        # Add decision engine health if available
+        if hasattr(self._engine, 'health_check'):
+            try:
+                health["decision_engine"] = self._engine.health_check()
+            except Exception as e:
+                logger.error(f"Error getting decision engine health: {e}")
+                health["decision_engine"] = {"error": str(e)}
+        
+        return health

@@ -32,9 +32,10 @@ class TimingProfile(BaseModel):
     
     model_config = ConfigDict(frozen=False)
     
-    profile_name: str = Field(description="Profile identifier")
+    profile_name: str = Field(default="default", description="Profile identifier")
     
     # Base reaction times (milliseconds)
+    base_reaction_ms: Optional[int] = Field(default=None, ge=50, description="Base reaction time (overrides min/max if set)")
     min_reaction_ms: int = Field(default=150, ge=50, description="Minimum reaction time")
     max_reaction_ms: int = Field(default=500, ge=100, description="Maximum reaction time")
     
@@ -47,6 +48,13 @@ class TimingProfile(BaseModel):
     micro_delay_chance: float = Field(default=0.3, ge=0.0, le=1.0, description="Chance of micro-pause")
     typo_chance: float = Field(default=0.02, ge=0.0, le=0.1, description="Typing error rate")
     misclick_chance: float = Field(default=0.01, ge=0.0, le=0.1, description="Targeting error rate")
+    
+    def model_post_init(self, __context):
+        """Initialize min/max from base_reaction_ms if provided."""
+        if self.base_reaction_ms is not None:
+            # Set min/max based on base
+            object.__setattr__(self, 'min_reaction_ms', int(self.base_reaction_ms * 0.8))
+            object.__setattr__(self, 'max_reaction_ms', int(self.base_reaction_ms * 1.5))
 
 
 class ActionTiming(BaseModel):
@@ -194,9 +202,11 @@ class HumanTimingEngine:
         base_delay = self.get_reaction_delay(reaction)
         
         # Apply consecutive action speedup (muscle memory)
-        if self.last_action_type == action_type and self.consecutive_same_action < 5:
-            speedup = math.pow(self.profile.consecutive_action_speedup, self.consecutive_same_action)
-            base_delay = int(base_delay * speedup)
+        if self.last_action_type == action_type:
+            # Apply speedup up to 5 consecutive actions
+            if self.consecutive_same_action < 5:
+                speedup = math.pow(self.profile.consecutive_action_speedup, self.consecutive_same_action)
+                base_delay = int(base_delay * speedup)
             self.consecutive_same_action += 1
         else:
             self.consecutive_same_action = 1
@@ -408,6 +418,19 @@ class HumanTimingEngine:
         """
         return random.random() < self.profile.misclick_chance
     
+    def calculate_action_delay(self, action_type: str) -> int:
+        """
+        Calculate action delay (alias for get_action_delay).
+        
+        Args:
+            action_type: Type of action
+        
+        Returns:
+            Delay in milliseconds
+        """
+        timing = self.get_action_delay(action_type)
+        return timing.actual_delay_ms
+    
     def get_session_stats(self) -> dict:
         """Get current session statistics."""
         return {
@@ -417,3 +440,7 @@ class HumanTimingEngine:
             "time_of_day_factor": self.profile.time_of_day_factor,
             "warmup_factor": self.get_warmup_factor()
         }
+
+
+# Alias for backward compatibility
+HumanTiming = HumanTimingEngine

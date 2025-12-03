@@ -8,7 +8,14 @@ OpenKore and the AI Sidecar.
 from enum import Enum
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator, model_validator
+
+
+class BaseMessage(BaseModel):
+    """Base class for all IPC messages."""
+    
+    type: str = Field(description="Message type identifier")
+    timestamp: int = Field(description="Unix timestamp in milliseconds")
 
 
 class MessageType(str, Enum):
@@ -117,6 +124,38 @@ class ActionPayload(BaseModel):
     skill_level: int | None = Field(default=None)
     item_id: int | None = Field(default=None)
     item_index: int | None = Field(default=None)
+    extra: dict[str, Any] = Field(default_factory=dict, description="Extra action data")
+    
+    @model_validator(mode='before')
+    @classmethod
+    def convert_action_type_field(cls, data: Any) -> Any:
+        """Convert action_type to type for backwards compatibility."""
+        if isinstance(data, dict):
+            data = data.copy()
+            if 'action_type' in data and 'type' not in data:
+                action_type = data.pop('action_type')
+                # Convert enum to string if needed
+                if hasattr(action_type, 'value'):
+                    data['type'] = action_type.value
+                else:
+                    data['type'] = str(action_type)
+        return data
+
+
+# Aliases for backwards compatibility
+ActionModel = ActionPayload
+Action = ActionPayload  # Legacy alias
+
+
+class ActionType(str, Enum):
+    """Action types for backwards compatibility."""
+    NOOP = "noop"
+    MOVE = "move"
+    ATTACK = "attack"
+    SKILL = "skill"
+    ITEM = "item"
+    SIT = "sit"
+    STAND = "stand"
 
 
 class DecisionResponseMessage(BaseModel):
@@ -202,3 +241,9 @@ def get_decision_response_schema() -> dict[str, Any]:
 def get_heartbeat_schema() -> dict[str, Any]:
     """Get JSON Schema for heartbeat message."""
     return HeartbeatMessage.model_json_schema()
+
+
+# Aliases for backwards compatibility with generate_* naming
+generate_state_update_schema = get_state_update_schema
+generate_decision_response_schema = get_decision_response_schema
+generate_heartbeat_schema = get_heartbeat_schema

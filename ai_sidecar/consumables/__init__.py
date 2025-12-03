@@ -12,6 +12,12 @@ Features:
 - Unified consumable coordination with emergency handling
 """
 
+from ai_sidecar.consumables.buffs import BuffManager
+from ai_sidecar.consumables.status_effects import StatusEffectManager
+from ai_sidecar.consumables.recovery import RecoveryManager
+from ai_sidecar.consumables.food import FoodManager
+from ai_sidecar.consumables.coordinator import ConsumableCoordinator
+
 __all__ = [
     "BuffManager",
     "StatusEffectManager",

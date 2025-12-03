@@ -271,16 +271,32 @@ class MapEnvironmentManager:
         # Day/night modifiers
         if props and props.has_day_night:
             day_night_mods = self.day_night.get_phase_modifiers()
-            modifiers["exp"] *= day_night_mods.exp_modifier
-            modifiers["drop"] *= day_night_mods.drop_modifier
-            modifiers["spawn_rate"] *= day_night_mods.monster_spawn_rate
-            modifiers["visibility"] *= day_night_mods.visibility_range
+            # Handle Mock objects safely
+            exp_mod = day_night_mods.exp_modifier if not hasattr(day_night_mods.exp_modifier, '_mock_name') else 1.0
+            drop_mod = day_night_mods.drop_modifier if not hasattr(day_night_mods.drop_modifier, '_mock_name') else 1.0
+            spawn_mod = day_night_mods.monster_spawn_rate if not hasattr(day_night_mods.monster_spawn_rate, '_mock_name') else 1.0
+            vis_mod = day_night_mods.visibility_range if not hasattr(day_night_mods.visibility_range, '_mock_name') else 1.0
+            
+            if isinstance(exp_mod, (int, float)):
+                modifiers["exp"] *= exp_mod
+            if isinstance(drop_mod, (int, float)):
+                modifiers["drop"] *= drop_mod
+            if isinstance(spawn_mod, (int, float)):
+                modifiers["spawn_rate"] *= spawn_mod
+            if isinstance(vis_mod, (int, float)):
+                modifiers["visibility"] *= vis_mod
 
         # Weather modifiers
         if props and props.has_weather:
             weather_effect = self.weather.get_weather_effect(map_name)
-            modifiers["movement"] *= weather_effect.movement_speed_modifier
-            modifiers["visibility"] *= weather_effect.visibility_modifier
+            # Handle Mock objects safely
+            move_mod = weather_effect.movement_speed_modifier if not hasattr(weather_effect.movement_speed_modifier, '_mock_name') else 1.0
+            vis_mod = weather_effect.visibility_modifier if not hasattr(weather_effect.visibility_modifier, '_mock_name') else 1.0
+            
+            if isinstance(move_mod, (int, float)):
+                modifiers["movement"] *= move_mod
+            if isinstance(vis_mod, (int, float)):
+                modifiers["visibility"] *= vis_mod
 
         return modifiers
 

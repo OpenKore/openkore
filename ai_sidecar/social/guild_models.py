@@ -6,9 +6,19 @@ WoE coordination, and storage in Ragnarok Online.
 """
 
 from datetime import datetime
+from enum import Enum
 from typing import Any
 
 from pydantic import BaseModel, Field
+
+
+class GuildRank(str, Enum):
+    """Guild rank/position classifications."""
+    MASTER = "master"
+    VICE_MASTER = "vice_master"
+    OFFICER = "officer"
+    MEMBER = "member"
+    RECRUIT = "recruit"
 
 
 class GuildPosition(BaseModel):
@@ -171,6 +181,14 @@ class GuildStorage(BaseModel):
     def has_space(self, count: int = 1) -> bool:
         """Check if storage has space for count items."""
         return self.get_item_count() + count <= self.max_capacity
+    
+    def get_item_count_by_id(self, item_id: int) -> int:
+        """Get count of an item in storage by item ID."""
+        total = 0
+        for item in self.items:
+            if isinstance(item, dict) and item.get("item_id") == item_id:
+                total += item.get("amount", 0)
+        return total
     
     def log_access(
         self,

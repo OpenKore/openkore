@@ -310,3 +310,12 @@ class TrapManager:
         """Reset trap state (e.g., after map change)."""
         self.placed_traps.clear()
         self.log.debug("Trap state reset")
+
+    def get_placed_traps(self) -> list[PlacedTrap]:
+        """
+        Get all currently placed traps.
+        
+        Returns:
+            List of placed traps (includes expired ones until cleanup)
+        """
+        return self.placed_traps.copy()

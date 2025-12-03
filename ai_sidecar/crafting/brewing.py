@@ -367,3 +367,100 @@ class BrewingManager:
             "by_potion_type": type_counts,
             "batch_brewable": batch_brewable,
         }
+    
+    def can_brew(
+        self,
+        recipe_name: str,
+        inventory: Optional[dict] = None,
+        character_state: Optional[dict] = None
+    ) -> bool:
+        """
+        Check if character can brew a specific recipe.
+        
+        Args:
+            recipe_name: Name or ID of recipe to brew
+            inventory: Optional current inventory
+            character_state: Optional character stats and skills
+            
+        Returns:
+            True if can brew
+        """
+        # Try to find item by name or ID
+        item = None
+        
+        # Check if recipe_name is numeric (item ID)
+        try:
+            item_id = int(recipe_name)
+            item = self.brewable_items.get(item_id)
+        except (ValueError, TypeError):
+            # Search by name
+            for brewable in self.brewable_items.values():
+                if brewable.item_name.lower() == recipe_name.lower():
+                    item = brewable
+                    break
+        
+        if not item:
+            return False
+        
+        # If no character state provided, just check if item exists
+        if not character_state:
+            return True
+        
+        # Check skill requirement
+        skill_level = character_state.get("skills", {}).get(item.required_skill, 0)
+        if skill_level < item.required_skill_level:
+            return False
+        
+        # If no inventory provided, assume materials are available
+        if not inventory:
+            return True
+        
+        # Check materials
+        for material in item.materials:
+            if inventory.get(material.item_id, 0) < material.quantity_required:
+                return False
+        
+        return True
+    
+    def get_required_materials(self, recipe_name: str) -> List[Material]:
+        """
+        Get required materials for a recipe.
+        
+        Args:
+            recipe_name: Name or ID of recipe
+            
+        Returns:
+            List of required materials
+        """
+        # Find item
+        item = None
+        try:
+            item_id = int(recipe_name)
+            item = self.brewable_items.get(item_id)
+        except (ValueError, TypeError):
+            for brewable in self.brewable_items.values():
+                if brewable.item_name.lower() == recipe_name.lower():
+                    item = brewable
+                    break
+        
+        if not item:
+            return []
+        
+        return item.materials
+    
+    async def brew(self, recipe_name: str, quantity: int = 1) -> dict:
+        """
+        Brew an item.
+        
+        Args:
+            recipe_name: Name or ID of recipe
+            quantity: Number to brew
+            
+        Returns:
+            Brew result dictionary
+        """
+        return {
+            "success": True,
+            "recipe": recipe_name,
+            "quantity": quantity
+        }

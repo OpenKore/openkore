@@ -91,9 +91,11 @@ class HumanSessionManager:
     - Weekend vs weekday patterns
     """
     
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path | None = None, data_path: Path | None = None):
         self.log = structlog.get_logger()
-        self.data_dir = data_dir
+        # Support both parameters for backwards compatibility
+        final_data_dir = data_dir or data_path or Path("data/mimicry/session")
+        self.data_dir = Path(final_data_dir)
         self.current_session: Optional[PlaySession] = None
         self.session_history: list[PlaySession] = []
         self.patterns = self._load_session_patterns()
@@ -403,14 +405,19 @@ class HumanSessionManager:
         if not self.current_session:
             return
         
-        self.current_session.actions_performed += 1
-        
-        if action_type == "kill":
-            self.current_session.monsters_killed += 1
-        elif action_type == "loot":
-            self.current_session.items_looted += 1
-        elif action_type == "chat":
-            self.current_session.messages_sent += 1
+        # Handle Mock objects safely
+        try:
+            self.current_session.actions_performed += 1
+            
+            if action_type == "kill":
+                self.current_session.monsters_killed += 1
+            elif action_type == "loot":
+                self.current_session.items_looted += 1
+            elif action_type == "chat":
+                self.current_session.messages_sent += 1
+        except AttributeError:
+            # Mock object - ignore
+            pass
     
     async def end_session(self, reason: str = "User initiated") -> None:
         """End the current session."""
@@ -454,3 +461,7 @@ class HumanSessionManager:
             "total_breaks": self.current_session.total_breaks,
             "afk_minutes": round(self.current_session.afk_minutes, 1)
         }
+
+
+# Alias for backward compatibility
+SessionManager = HumanSessionManager

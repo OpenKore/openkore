@@ -11,6 +11,8 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import structlog
 
+from pydantic import BaseModel, Field
+
 from ai_sidecar.environment.day_night import DayNightManager
 from ai_sidecar.environment.events import EventManager, SeasonalEvent
 from ai_sidecar.environment.maps import MapEnvironmentManager

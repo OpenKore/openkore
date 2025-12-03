@@ -63,8 +63,8 @@ class ServerResetType(str, Enum):
 class GameTime(BaseModel):
     """Current game time state."""
 
-    game_hour: int = Field(ge=0, le=23)
-    game_minute: int = Field(ge=0, le=59)
+    game_hour: int = Field(default=0, ge=0, le=23)
+    game_minute: int = Field(default=0, ge=0, le=59)
     period: GamePeriod = GamePeriod.MORNING
     is_daytime: bool = True
 

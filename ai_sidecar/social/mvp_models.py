@@ -6,11 +6,21 @@ hunting strategies, and drop management in Ragnarok Online.
 """
 
 from datetime import datetime, timedelta
+from enum import Enum
 from typing import Literal
 
 from pydantic import BaseModel, Field
 
 from ai_sidecar.social.party_models import PartyRole
+
+
+class MVPDifficulty(str, Enum):
+    """MVP difficulty level classifications."""
+    EASY = "easy"
+    NORMAL = "normal"
+    HARD = "hard"
+    VERY_HARD = "very_hard"
+    EXTREME = "extreme"
 
 
 class MVPBoss(BaseModel):

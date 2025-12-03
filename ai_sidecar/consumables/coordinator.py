@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 import structlog
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from ai_sidecar.consumables.buffs import (
     BuffManager,
@@ -30,6 +30,7 @@ from ai_sidecar.consumables.status_effects import (
     CureAction,
     StatusSeverity,
 )
+from ai_sidecar.core.state import GameState as CoreGameState
 
 logger = structlog.get_logger(__name__)
 
@@ -58,8 +59,10 @@ class ConsumableAction(BaseModel):
     reason: str = ""
 
 
-class GameState(BaseModel):
-    """Simplified game state for consumable decisions."""
+class ConsumableContext(BaseModel):
+    """Simplified game context for consumable decisions."""
+    
+    model_config = ConfigDict(extra='allow')
     
     character: Dict[str, Any] = Field(default_factory=dict)
     hp_percent: float = Field(ge=0.0, le=1.0)
@@ -73,6 +76,9 @@ class GameState(BaseModel):
     status_effects: List[str] = Field(default_factory=list)
     inventory: Dict[int, int] = Field(default_factory=dict)
 
+
+# Alias for tests
+GameState = ConsumableContext
 
 class ConsumableCoordinator:
     """
@@ -125,7 +131,7 @@ class ConsumableCoordinator:
     
     async def update_all(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> List[ConsumableAction]:
         """
         Update all systems and get prioritized actions.
@@ -153,8 +159,9 @@ class ConsumableCoordinator:
         self.food_manager.update_inventory(game_state.inventory)
         
         # Detect status effects
+        status_effects = getattr(game_state, 'status_effects', [])
         await self.status_manager.detect_status_effects(
-            {"character": {"status_effects": game_state.status_effects}}
+            {"character": {"status_effects": status_effects}}
         )
         
         # Get all possible actions
@@ -197,7 +204,7 @@ class ConsumableCoordinator:
     
     async def _handle_emergency_recovery(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> Optional[ConsumableAction]:
         """Handle emergency HP recovery."""
         decision = await self.recovery_manager.emergency_recovery()
@@ -217,7 +224,7 @@ class ConsumableCoordinator:
     
     async def _handle_critical_status(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> List[ConsumableAction]:
         """Handle critical status effects (Stone, Freeze)."""
         actions: List[ConsumableAction] = []
@@ -231,8 +238,23 @@ class ConsumableCoordinator:
             if effect.severity == StatusSeverity.CRITICAL
         ]
         
+        # Build available items set from inventory
+        available_items = set()
+        for item_id in game_state.inventory.keys():
+            # Map item IDs to names (simplified for now)
+            item_name_map = {
+                506: "Green Potion",
+                507: "Red Herb",
+                508: "Yellow Herb",
+            }
+            if item_id in item_name_map:
+                available_items.add(item_name_map[item_id])
+        
         for effect in critical:
-            cure = await self.status_manager.get_cure_action(effect)
+            cure = await self.status_manager.get_cure_action(
+                effect,
+                available_items=available_items if available_items else None
+            )
             
             if cure:
                 actions.append(
@@ -249,7 +271,7 @@ class ConsumableCoordinator:
     
     async def _handle_urgent_recovery(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> Optional[ConsumableAction]:
         """Handle urgent HP recovery."""
         decision = await self.recovery_manager.evaluate_recovery_need(
@@ -272,7 +294,7 @@ class ConsumableCoordinator:
     
     async def _handle_status_cure(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> List[ConsumableAction]:
         """Handle non-critical status effect curing."""
         actions: List[ConsumableAction] = []
@@ -312,7 +334,7 @@ class ConsumableCoordinator:
     
     async def _handle_normal_recovery(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> Optional[ConsumableAction]:
         """Handle normal HP/SP recovery."""
         decision = await self.recovery_manager.evaluate_recovery_need(
@@ -335,7 +357,7 @@ class ConsumableCoordinator:
     
     async def _handle_rebuffing(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> List[ConsumableAction]:
         """Handle buff rebuffing."""
         actions: List[ConsumableAction] = []
@@ -366,7 +388,7 @@ class ConsumableCoordinator:
     
     async def _handle_food_maintenance(
         self,
-        game_state: GameState,
+        game_state: ConsumableContext,
     ) -> List[ConsumableAction]:
         """Handle food buff maintenance."""
         actions: List[ConsumableAction] = []

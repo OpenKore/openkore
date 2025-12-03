@@ -9,7 +9,7 @@ from enum import Enum
 from typing import Any, Dict, List, Optional
 
 import hashlib
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class MemoryTier(str, Enum):
@@ -27,10 +27,13 @@ class MemoryType(str, Enum):
     DECISION = "decision"     # What we decided and why
     OUTCOME = "outcome"       # Results of decisions
     PATTERN = "pattern"       # Recognized patterns
+    COMBAT_PATTERN = "combat_pattern"  # Combat-specific patterns
     STRATEGY = "strategy"     # Learned strategies
     ENTITY = "entity"         # Players, monsters, NPCs we've interacted with
     LOCATION = "location"     # Map areas and their properties
     ECONOMIC = "economic"     # Price history, market patterns
+    SHORT_TERM = "short_term" # Temporary memories for current session
+    FACT = "fact"             # Factual information
 
 
 class MemoryImportance(str, Enum):
@@ -58,10 +61,18 @@ class Memory(BaseModel):
     tier: MemoryTier = MemoryTier.WORKING
     importance: MemoryImportance = MemoryImportance.NORMAL
     
-    # Content
-    content: Dict[str, Any]
-    summary: str
+    # Content - can be string or dict for flexibility
+    content: str | Dict[str, Any] | None = Field(default=None)
+    summary: str = Field(default="")
     context: Dict[str, Any] = Field(default_factory=dict)
+    
+    @field_validator('content', mode='before')
+    @classmethod
+    def default_content_from_summary(cls, v, info):
+        """Default content to summary if not provided."""
+        if v is None and 'summary' in info.data:
+            return info.data['summary']
+        return v if v is not None else ""
     
     # Metadata
     created_at: datetime = Field(default_factory=datetime.now)

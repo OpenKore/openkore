@@ -415,3 +415,30 @@ class HuntingQuestManager:
             List of active hunts
         """
         return list(self.active_hunts.values())
+    
+    def track_kill(self, monster_id: int, monster_name: str = "", is_party_kill: bool = False) -> List[int]:
+        """
+        Track monster kill and update hunting quest progress.
+        
+        This is an alias for record_kill() with additional logging.
+        
+        Args:
+            monster_id: Killed monster ID
+            monster_name: Monster name (for logging)
+            is_party_kill: Whether kill was by party member
+            
+        Returns:
+            List of affected hunting quest IDs
+        """
+        affected = self.record_kill(monster_id, is_party_kill)
+        
+        if affected:
+            self.log.debug(
+                "kill_tracked",
+                monster_id=monster_id,
+                monster_name=monster_name,
+                affected_quests=affected,
+                party_kill=is_party_kill
+            )
+        
+        return affected

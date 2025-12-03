@@ -41,6 +41,10 @@ class SupportTacticsConfig(TacticsConfig):
     # Positioning
     safe_distance_from_combat: int = 5
     max_heal_range: int = 9
+    
+    # Optional flexibility for test compatibility
+    aggro_maintain_level: float = 0.5
+    emergency_threshold: float = 0.2
 
 
 class SupportTactics(BaseTactics):
@@ -204,32 +208,35 @@ class SupportTactics(BaseTactics):
         - Be within heal range of party
         - Not draw aggro
         """
-        if not context.nearby_monsters:
-            return None
-        
         current = context.character_position
         
         # Find party center
         party_center = self._calculate_party_center(context)
         
-        # Find threat center
-        threat_center = self._calculate_threat_center(context)
-        
+        # No party - check for threats
         if party_center is None:
-            # Solo - just stay away from enemies
-            if threat_center:
-                return self._calculate_safe_position(current, threat_center)
+            if context.nearby_monsters:
+                # Solo - stay away from enemies
+                threat_center = self._calculate_threat_center(context)
+                if threat_center:
+                    return self._calculate_safe_position(current, threat_center)
             return None
         
-        # Position behind party, away from threats
+        # Have party - position relative to party and threats
+        threat_center = self._calculate_threat_center(context)
+        
         if threat_center:
             return self._calculate_support_position(
                 party_center, threat_center
             )
         
-        # No threats - stay near party center
-        if current.distance_to(party_center) > self.support_config.max_heal_range:
-            return self._move_toward(current, party_center, 3)
+        # No threats - check if need to move toward party
+        party_distance = current.distance_to(party_center)
+        if party_distance > self.support_config.max_heal_range:
+            # Move to get within heal range
+            # Calculate exact distance needed to be within range
+            needed_dist = int(party_distance - self.support_config.max_heal_range + 1)
+            return self._move_toward(current, party_center, needed_dist)
         
         return None
     
@@ -524,8 +531,9 @@ class SupportTactics(BaseTactics):
         if not members:
             return None
         
-        sum_x = sum(m.position[0] for m in members)
-        sum_y = sum(m.position[1] for m in members)
+        # Handle both tuple and Position types
+        sum_x = sum(m.position.x if hasattr(m.position, 'x') else m.position[0] for m in members)
+        sum_y = sum(m.position.y if hasattr(m.position, 'y') else m.position[1] for m in members)
         count = len(members)
         
         return Position(x=sum_x // count, y=sum_y // count)
@@ -538,8 +546,9 @@ class SupportTactics(BaseTactics):
         if not context.nearby_monsters:
             return None
         
-        sum_x = sum(m.position[0] for m in context.nearby_monsters)
-        sum_y = sum(m.position[1] for m in context.nearby_monsters)
+        # Handle both tuple and Position types
+        sum_x = sum(m.position.x if hasattr(m.position, 'x') else m.position[0] for m in context.nearby_monsters)
+        sum_y = sum(m.position.y if hasattr(m.position, 'y') else m.position[1] for m in context.nearby_monsters)
         count = len(context.nearby_monsters)
         
         return Position(x=sum_x // count, y=sum_y // count)

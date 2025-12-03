@@ -19,6 +19,14 @@ from pydantic import BaseModel, Field, ConfigDict
 
 from ai_sidecar.combat.models import MonsterRace, MonsterSize
 
+# Export aliases for backwards compatibility
+Race = MonsterRace
+Property = MonsterSize
+
+# Module exports
+__all__ = ['Race', 'Property', 'RacePropertyCalculator', 'MonsterRace', 'MonsterSize',
+           'RaceDamageModifier', 'CardInfo', 'WEAPON_SIZE_PENALTY']
+
 
 class RaceDamageModifier(BaseModel):
     """Damage modifier for race and size."""

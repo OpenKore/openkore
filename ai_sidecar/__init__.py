@@ -9,11 +9,19 @@ Architecture:
 - Core Layer: State management, decision engine, and tick processing
 - Protocol Layer: Message definitions and JSON schemas
 - Utils Layer: Logging and helper utilities
+
+IMPORTANT: To avoid circular import dependencies, configuration is NOT exported
+from this module. Import settings directly from the config module:
+
+    from ai_sidecar.config import get_settings, Settings
+
+This breaks the circular chain:
+    __init__.py -> config.py -> utils -> logging.py -> config.py
 """
 
 __version__ = "0.1.0"
 __author__ = "AI-MMORPG Team"
 
-from ai_sidecar.config import get_settings
-
-__all__ = ["__version__", "__author__", "get_settings"]
+# Note: get_settings is NOT exported here to avoid circular imports.
+# Users should import directly: from ai_sidecar.config import get_settings
+__all__ = ["__version__", "__author__"]

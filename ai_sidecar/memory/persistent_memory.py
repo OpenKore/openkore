@@ -40,6 +40,7 @@ class PersistentMemory:
         Args:
             db_path: Path to SQLite database file
         """
+        self.log = logger
         self.db_path = Path(db_path)
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
         self._connection: Optional[sqlite3.Connection] = None
@@ -154,10 +155,15 @@ class PersistentMemory:
             memory.tier = MemoryTier.PERSISTENT
             cursor = self._connection.cursor()
             
+            # Handle content - if string, wrap in dict
+            content_to_store = memory.content
+            if isinstance(content_to_store, str):
+                content_to_store = {"text": content_to_store}
+            
             cursor.execute(
                 """
-                INSERT OR REPLACE INTO memories 
-                (memory_id, memory_type, importance, content, summary, context, 
+                INSERT OR REPLACE INTO memories
+                (memory_id, memory_type, importance, content, summary, context,
                  tags, created_at, accessed_at, access_count, strength, related_memories)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
@@ -165,7 +171,7 @@ class PersistentMemory:
                     memory.memory_id,
                     memory.memory_type.value,
                     memory.importance.value,
-                    json.dumps(memory.content),
+                    json.dumps(content_to_store),
                     memory.summary,
                     json.dumps(memory.context),
                     json.dumps(memory.tags),
@@ -375,6 +381,50 @@ class PersistentMemory:
             strength=row["strength"],
             related_memories=json.loads(row["related_memories"]),
         )
+    
+    async def connect(self) -> None:
+        """
+        Connect to persistent storage.
+        
+        Initializes the database connection and schema.
+        """
+        await self.initialize()
+        self.log.info("persistent_memory_connected")
+    
+    async def query_by_type(self, memory_type: "MemoryType") -> List[Memory]:
+        """
+        Query memories by type.
+        
+        Args:
+            memory_type: Type of memory to query
+            
+        Returns:
+            List of matching memories
+        """
+        query = MemoryQuery(memory_types=[memory_type])
+        return await self.query(query)
+    
+    async def delete(self, memory_id: str) -> bool:
+        """
+        Delete a memory.
+        
+        Args:
+            memory_id: Memory ID to delete
+            
+        Returns:
+            True if deleted successfully
+        """
+        if not self._connection:
+            return False
+        
+        try:
+            cursor = self._connection.cursor()
+            cursor.execute("DELETE FROM memories WHERE memory_id = ?", (memory_id,))
+            self._connection.commit()
+            return cursor.rowcount > 0
+        except Exception as e:
+            self.log.error("persistent_memory_delete_failed", error=str(e))
+            return False
     
     async def close(self) -> None:
         """Close database connection."""

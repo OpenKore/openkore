@@ -81,7 +81,7 @@ class EconomicIntelligence:
         """
         history = self.market.get_price_history(item_id, days=7)
         
-        if not history or len(history.price_points) < 10:
+        if not history or len(history.price_points) < 5:
             return None
         
         # Check for sudden price spikes

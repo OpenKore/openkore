@@ -276,6 +276,13 @@ class MountManager:
                 reason="auto_mount_disabled"
             )
         
+        # Don't mount in combat
+        if in_combat:
+            return MountDecision(
+                should_mount=False,
+                reason="in_combat"
+            )
+        
         # Mount for long distance travel
         if distance_to_destination >= self.config.min_travel_distance:
             return MountDecision(
@@ -283,8 +290,8 @@ class MountManager:
                 reason=f"long_distance_travel_{distance_to_destination}_cells"
             )
         
-        # Don't mount for short distances or combat
-        if in_combat or distance_to_destination < self.config.min_travel_distance:
+        # Don't mount for short distances
+        if distance_to_destination < self.config.min_travel_distance:
             return MountDecision(
                 should_mount=False,
                 reason="short_distance_or_combat"
@@ -423,17 +430,23 @@ class MountManager:
         Returns:
             Speed multiplier (1.25 for most mounts, 1.0 for none)
         """
-        if not self.current_state or not self.current_state.is_mounted:
+        if not self.current_state:
             return 1.0
         
-        # Most mounts give 25% speed boost
-        # Cart gives speed penalty instead (handled separately)
+        # Start with base speed
+        base_speed = 1.0
+        
+        # Apply mount bonus if mounted
+        if self.current_state.is_mounted:
+            base_speed = 1.25
+        
+        # Apply cart penalty if has cart (regardless of mount status)
         if self.current_state.has_cart:
             cart_ratio = self.current_state.cart_weight / max(
                 self.current_state.cart_max_weight, 1
             )
-            # Speed penalty increases with cart weight
-            penalty = 0.1 * cart_ratio  # Up to 10% slower when full
-            return 1.0 - penalty
+            # Speed penalty increases with cart weight (up to 10% slower when full)
+            penalty = 0.1 * cart_ratio
+            base_speed *= (1.0 - penalty)
         
-        return 1.25
+        return base_speed

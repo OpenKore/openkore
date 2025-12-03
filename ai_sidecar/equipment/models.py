@@ -9,7 +9,7 @@ Defines Pydantic v2 models for equipment management including:
 """
 
 from enum import Enum
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -28,6 +28,44 @@ class EquipSlot(str, Enum):
     ACCESSORY1 = "accessory1"
     ACCESSORY2 = "accessory2"
     AMMO = "ammo"
+
+
+# Alias for backward compatibility
+EquipmentSlot = EquipSlot
+
+
+class EquipmentType(str, Enum):
+    """Equipment type classifications."""
+    
+    WEAPON = "weapon"
+    ARMOR = "armor"
+    SHIELD = "shield"
+    HEADGEAR = "headgear"
+    ACCESSORY = "accessory"
+    GARMENT = "garment"
+    FOOTGEAR = "footgear"
+    ONE_HAND_SWORD = "one_hand_sword"
+    TWO_HAND_SWORD = "two_hand_sword"
+
+
+class RefineLevel(str, Enum):
+    """Refine level classifications."""
+    PLUS_0 = "+0"
+    PLUS_1 = "+1"
+    PLUS_2 = "+2"
+    PLUS_3 = "+3"
+    PLUS_4 = "+4"
+    PLUS_5 = "+5"
+    PLUS_6 = "+6"
+    PLUS_7 = "+7"
+    PLUS_8 = "+8"
+    PLUS_9 = "+9"
+    PLUS_10 = "+10"
+    PLUS_11 = "+11"
+    PLUS_12 = "+12"
+    PLUS_13 = "+13"
+    PLUS_14 = "+14"
+    PLUS_15 = "+15"
 
 
 class WeaponType(str, Enum):
@@ -85,6 +123,8 @@ class Equipment(BaseModel):
     item_id: int = Field(description="Item database ID")
     name: str = Field(default="", description="Item name")
     slot: EquipSlot = Field(description="Equipment slot")
+    type: EquipmentType | None = Field(default=None, description="Equipment type classification")
+    current_stats: dict[str, Any] = Field(default_factory=dict, description="Current stats")
     
     # Weapon-specific
     weapon_type: WeaponType | None = Field(default=None, description="Weapon type")
@@ -164,6 +204,14 @@ class Equipment(BaseModel):
     def has_empty_slots(self) -> bool:
         """Check if there are empty card slots."""
         return self.card_count < self.slots
+    
+    def is_weapon(self) -> bool:
+        """Check if this is a weapon."""
+        return self.slot == EquipSlot.WEAPON
+    
+    def is_armor(self) -> bool:
+        """Check if this is an armor piece."""
+        return self.slot in [EquipSlot.ARMOR, EquipSlot.SHIELD, EquipSlot.GARMENT, EquipSlot.FOOTGEAR]
 
 
 class EquipmentSet(BaseModel):

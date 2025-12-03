@@ -104,6 +104,33 @@ class MockCombatContext:
         self.threat_level = threat_level
         self.in_pvp = False
         self.in_woe = False
+    
+    @property
+    def character_position(self):
+        """Get character position as Position object."""
+        from ai_sidecar.combat.tactics.base import Position
+        pos = self.character.position
+        return Position(x=pos[0], y=pos[1])
+    
+    @property
+    def character_hp(self) -> int:
+        """Get character HP."""
+        return self.character.hp
+    
+    @property
+    def character_hp_max(self) -> int:
+        """Get character max HP."""
+        return self.character.hp_max
+    
+    @property
+    def character_sp(self) -> int:
+        """Get character SP."""
+        return self.character.sp
+    
+    @property
+    def character_sp_max(self) -> int:
+        """Get character max SP."""
+        return self.character.sp_max
 
 
 class TestBaseTactics:
@@ -176,7 +203,7 @@ class TestTankTactics:
         if target is not None:
             # Find the monster
             monster = next(
-                (m for m in combat_context.nearby_monsters if m.actor_id == target.target_id),
+                (m for m in combat_context.nearby_monsters if m.actor_id == target.actor_id),
                 None
             )
             assert monster is not None
@@ -227,7 +254,7 @@ class TestMeleeDPSTactics:
         
         # Should prefer low HP target for quick kills
         if target is not None:
-            assert target.target_id in [1, 2]
+            assert target.actor_id in [1, 2]
     
     def test_threat_assessment_considers_hp(self, melee_tactics):
         """Test threat considers own HP."""
@@ -298,7 +325,7 @@ class TestMagicDPSTactics:
         
         # Should select a target (element matching is secondary)
         if target is not None:
-            assert target.target_id in [1, 2]
+            assert target.actor_id in [1, 2]
     
     def test_threat_assessment_considers_sp(self, magic_tactics):
         """Test threat considers SP levels."""
@@ -346,7 +373,7 @@ class TestSupportTactics:
         target = await support_tactics.select_target(combat_context_with_party)
         
         # May select injured party member or self
-        assert target is None or target.target_id is not None
+        assert target is None or target.actor_id is not None
     
     def test_threat_assessment_party_hp(self, support_tactics):
         """Test threat considers party HP."""
@@ -474,10 +501,9 @@ class TestTacticsEdgeCases:
         )
         
         target = TargetPriority(
-            target_id=1,
-            priority=1.0,
+            actor_id=1,
+            priority_score=1.0,
             reason="test",
-            is_monster=True,
         )
         
         # Should handle gracefully (maybe return basic attack)
@@ -501,10 +527,9 @@ class TestTacticsEdgeCases:
         )
         
         target = TargetPriority(
-            target_id=1,
-            priority=1.0,
+            actor_id=1,
+            priority_score=1.0,
             reason="test",
-            is_monster=True,
         )
         
         # Should handle gracefully

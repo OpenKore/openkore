@@ -98,10 +98,12 @@ class MovementHumanizer:
     - Collision avoidance patterns
     """
     
-    def __init__(self, data_dir: Path):
+    def __init__(self, data_dir: Path | None = None, data_path: Path | None = None):
         self.log = structlog.get_logger()
         self.movement_history: list[HumanPath] = []
-        self.data_dir = data_dir
+        # Support both parameters for backwards compatibility
+        final_data_dir = data_dir or data_path or Path("data/mimicry/movement")
+        self.data_dir = Path(final_data_dir)
         
         # Movement parameters
         self.base_speed_cells_per_sec = 5.0  # Average walking speed

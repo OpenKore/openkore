@@ -380,11 +380,15 @@ class BaseTactics(ABC):
     def get_distance_to_target(
         self,
         context: CombatContextProtocol,
-        target_position: tuple[int, int]
+        target_position: tuple[int, int] | Position
     ) -> float:
         """Calculate distance to a target position."""
         char_pos = context.character_position
-        target_pos = Position(x=target_position[0], y=target_position[1])
+        # Handle both tuple and Position types
+        if hasattr(target_position, 'x') and hasattr(target_position, 'y'):
+            target_pos = target_position
+        else:
+            target_pos = Position(x=target_position[0], y=target_position[1])
         return char_pos.distance_to(target_pos)
     
     def prioritize_targets(

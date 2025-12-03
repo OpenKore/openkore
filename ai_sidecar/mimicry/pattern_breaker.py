@@ -59,9 +59,9 @@ class PatternBreaker:
     - Self-monitoring for bot-like behavior
     """
     
-    def __init__(self, data_dir: Path, history_size: int = 100):
+    def __init__(self, data_dir: Path | None = None, history_size: int = 100):
         self.log = structlog.get_logger()
-        self.data_dir = data_dir
+        self.data_dir = data_dir or Path("data")
         
         # Action history with limited size
         self.action_history: deque = deque(maxlen=history_size)
@@ -79,6 +79,29 @@ class PatternBreaker:
         
         self.log.info("pattern_breaker_initialized", history_size=history_size)
         
+    def should_break_pattern(self, activity_type: str, duration_minutes: int) -> bool:
+        """
+        Determine if pattern should be broken.
+        
+        Args:
+            activity_type: Type of activity (combat, farming, etc.)
+            duration_minutes: How long in this activity
+        
+        Returns:
+            True if pattern should be broken
+        """
+        # Break pattern if activity too long
+        if duration_minutes > 30:
+            return True
+        
+        # Check entropy
+        entropy = self.calculate_behavior_entropy()
+        if entropy < 0.5:
+            return True
+        
+        # Check for critical patterns
+        return any(p.is_critical for p in self.detected_patterns)
+    
     async def analyze_patterns(self) -> list[DetectedPattern]:
         """
         Analyze recent actions for patterns.

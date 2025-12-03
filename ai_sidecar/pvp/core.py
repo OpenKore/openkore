@@ -183,8 +183,16 @@ class ThreatAssessor:
     def update_threat(self, player_id: int, event: str, data: dict[str, Any]) -> None:
         """Update threat based on observed event"""
         if player_id not in self.threats:
-            return
-
+            # Create new threat entry from event data
+            threat = PlayerThreat(
+                player_id=player_id,
+                player_name=data.get("name", f"Player{player_id}"),
+                job_class=data.get("job_class", "unknown"),
+                level=data.get("level", 1),
+                guild_name=data.get("guild", None),
+            )
+            self.threats[player_id] = threat
+        
         threat = self.threats[player_id]
 
         if event == "killed_us":

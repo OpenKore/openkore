@@ -5,7 +5,10 @@ Handles chat message processing, filtering, auto-responses,
 and command recognition in Ragnarok Online.
 """
 
+import re
 import uuid
+from datetime import datetime
+from typing import Any
 
 from ai_sidecar.core.decision import Action, ActionType
 from ai_sidecar.core.state import GameState
@@ -16,6 +19,7 @@ from ai_sidecar.social.chat_models import (
     ChatFilter,
     ChatMessage,
 )
+from ai_sidecar.social import config
 from ai_sidecar.utils.logging import get_logger
 
 logger = get_logger(__name__)
@@ -31,9 +35,15 @@ class ChatManager:
         self.max_history: int = 1000
         self.commands: dict[str, ChatCommand] = {}
         self.bot_name: str = ""
+        self.last_processed_message_id: str = ""
+        self.authorized_commanders: set[str] = set()  # Players who can issue commands
+        self.friend_list: set[str] = set()
+        self.party_leader: str = ""
+        self.guild_leader: str = ""
         
         # Register default commands
         self._register_default_commands()
+        self._register_auto_responses()
     
     async def tick(self, game_state: GameState) -> list[Action]:
         """Process incoming chat messages."""
@@ -45,11 +55,7 @@ class ChatManager:
         for msg in new_messages:
             # Filter and store
             if not self.filter.should_block(msg):
-                self.message_history.append(msg)
-                
-                # Trim history if needed
-                if len(self.message_history) > self.max_history:
-                    self.message_history = self.message_history[-self.max_history:]
+                self._add_to_history(msg)
                 
                 # Check for commands directed at us
                 if self._is_command_for_me(msg):
@@ -66,8 +72,63 @@ class ChatManager:
     
     def _get_new_messages(self, game_state: GameState) -> list[ChatMessage]:
         """Extract new chat messages from game state."""
-        # Placeholder - would parse from game_state.extra or similar
-        return []
+        messages: list[ChatMessage] = []
+        
+        # Extract from game_state.extra if available
+        if not hasattr(game_state, 'extra') or not game_state.extra:
+            return messages
+        
+        raw_messages = game_state.extra.get("chat_messages", [])
+        
+        for raw_msg in raw_messages:
+            # Skip already processed messages
+            msg_id = raw_msg.get("id", "")
+            if msg_id and msg_id <= self.last_processed_message_id:
+                continue
+            
+            try:
+                # Parse channel
+                channel_str = raw_msg.get("channel", "public")
+                channel = self._parse_channel(channel_str)
+                
+                # Create ChatMessage
+                msg = ChatMessage(
+                    message_id=msg_id or str(uuid.uuid4()),
+                    channel=channel,
+                    sender_name=raw_msg.get("sender", "Unknown"),
+                    sender_id=raw_msg.get("sender_id", 0),
+                    content=raw_msg.get("content", ""),
+                    timestamp=datetime.fromtimestamp(
+                        raw_msg.get("timestamp", datetime.now().timestamp())
+                    ),
+                    is_self=False
+                )
+                msg.is_self = raw_msg.get("sender", "") == self.bot_name
+                
+                messages.append(msg)
+                
+                # Update last processed
+                if msg_id:
+                    self.last_processed_message_id = msg_id
+                    
+            except Exception as e:
+                logger.error(f"Error parsing chat message: {e}")
+                continue
+        
+        return messages
+    
+    def _parse_channel(self, channel_str: str) -> ChatChannel:
+        """Parse channel string to ChatChannel enum."""
+        channel_map = {
+            "public": ChatChannel.PUBLIC,
+            "party": ChatChannel.PARTY,
+            "guild": ChatChannel.GUILD,
+            "whisper": ChatChannel.WHISPER,
+            "pm": ChatChannel.WHISPER,
+            "global": ChatChannel.GLOBAL,
+            "trade": ChatChannel.TRADE,
+        }
+        return channel_map.get(channel_str.lower(), ChatChannel.PUBLIC)
     
     def _is_command_for_me(self, msg: ChatMessage) -> bool:
         """Check if message contains a command for this bot."""
@@ -122,33 +183,150 @@ class ChatManager:
         """Execute a recognized command."""
         command_name = cmd.name
         
-        # Basic command implementations
+        # Check authorization
+        if not self._is_authorized_commander(msg.sender_name, msg.channel):
+            logger.warning(f"Unauthorized command from {msg.sender_name}: {command_name}")
+            return self.send_message(
+                ChatChannel.WHISPER,
+                "You are not authorized to issue commands.",
+                target=msg.sender_name
+            )
+        
+        logger.info(f"Executing command '{command_name}' from {msg.sender_name}")
+        
+        # Command implementations
         if command_name == "follow":
-            # Return follow action (placeholder)
-            logger.info(f"Following {msg.sender_name}")
-            return None
+            return self._cmd_follow(msg.sender_name, args)
         
         elif command_name == "attack":
-            # Return attack action (placeholder)
-            logger.info("Attacking on command")
-            return None
+            return self._cmd_attack(args)
         
         elif command_name == "retreat":
-            # Return retreat action (placeholder)
-            logger.info("Retreating on command")
-            return None
+            return self._cmd_retreat()
         
         elif command_name == "heal":
-            # Return heal action (placeholder)
-            logger.info("Healing on command")
-            return None
+            return self._cmd_heal(msg.sender_name, args)
         
         elif command_name == "buff":
-            # Return buff action (placeholder)
-            logger.info("Buffing on command")
-            return None
+            return self._cmd_buff(msg.sender_name, args)
+        
+        elif command_name == "stop":
+            return self._cmd_stop()
+        
+        elif command_name == "status":
+            return self._cmd_status(msg)
         
         return None
+    
+    def _is_authorized_commander(self, sender: str, channel: ChatChannel) -> bool:
+        """Check if sender is authorized to issue commands."""
+        # Explicit authorized commanders always allowed
+        if sender in self.authorized_commanders:
+            return True
+        
+        # Party leader can command via party chat
+        if channel == ChatChannel.PARTY and sender == self.party_leader:
+            return True
+        
+        # Guild leader can command via guild chat
+        if channel == ChatChannel.GUILD and sender == self.guild_leader:
+            return True
+        
+        # Friends can issue limited commands via whisper
+        if channel == ChatChannel.WHISPER and sender in self.friend_list:
+            return True
+        
+        return False
+    
+    def _cmd_follow(self, sender: str, args: list[str]) -> Action:
+        """Execute follow command."""
+        # Target defaults to command sender
+        target = args[0] if args else sender
+        
+        return Action(
+            type=ActionType.NOOP,  # Would be FOLLOW_PLAYER
+            priority=3,
+            extra={
+                "command": "follow",
+                "target_name": target,
+                "behavior": "follow"
+            }
+        )
+    
+    def _cmd_attack(self, args: list[str]) -> Action:
+        """Execute attack command."""
+        target_spec = args[0] if args else "nearest"
+        
+        return Action(
+            type=ActionType.NOOP,  # Would be SET_ATTACK_MODE
+            priority=2,
+            extra={
+                "command": "attack",
+                "target": target_spec,
+                "mode": "aggressive"
+            }
+        )
+    
+    def _cmd_retreat(self) -> Action:
+        """Execute retreat command."""
+        return Action(
+            type=ActionType.NOOP,  # Would be RETREAT
+            priority=1,  # High priority
+            extra={
+                "command": "retreat",
+                "behavior": "flee_combat"
+            }
+        )
+    
+    def _cmd_heal(self, sender: str, args: list[str]) -> Action:
+        """Execute heal command."""
+        # Target defaults to command sender
+        target = args[0] if args else sender
+        
+        return Action(
+            type=ActionType.SKILL,
+            skill_id=28,  # Heal skill ID
+            priority=1,
+            extra={
+                "command": "heal",
+                "target_name": target
+            }
+        )
+    
+    def _cmd_buff(self, sender: str, args: list[str]) -> Action:
+        """Execute buff command."""
+        # Target defaults to command sender
+        target = args[0] if args else sender
+        buff_type = args[1] if len(args) > 1 else "all"
+        
+        return Action(
+            type=ActionType.NOOP,  # Would be BUFF_PLAYER
+            priority=3,
+            extra={
+                "command": "buff",
+                "target_name": target,
+                "buff_type": buff_type
+            }
+        )
+    
+    def _cmd_stop(self) -> Action:
+        """Execute stop command - cancel all actions."""
+        return Action(
+            type=ActionType.NOOP,  # Would be CANCEL_ALL
+            priority=1,  # Highest priority (min valid value)
+            extra={
+                "command": "stop",
+                "behavior": "idle"
+            }
+        )
+    
+    def _cmd_status(self, msg: ChatMessage) -> Action:
+        """Execute status command - report current state."""
+        return self.send_message(
+            ChatChannel.WHISPER if msg.channel == ChatChannel.WHISPER else msg.channel,
+            "Status: Active | HP: OK | SP: OK | Mode: Normal",
+            target=msg.sender_name if msg.channel == ChatChannel.WHISPER else None
+        )
     
     def _check_auto_responses(self, msg: ChatMessage) -> Action | None:
         """Check if message triggers auto-responses."""
@@ -215,22 +393,22 @@ class ChatManager:
             ChatCommand(
                 name="follow",
                 aliases=["f"],
-                description="Follow the command sender",
-                usage="follow",
+                description="Follow the command sender or target",
+                usage="follow [target]",
                 min_args=0,
-                max_args=0
+                max_args=1
             ),
             ChatCommand(
                 name="attack",
                 aliases=["atk", "a"],
-                description="Attack nearest enemy",
+                description="Attack nearest enemy or specified target",
                 usage="attack [target]",
                 min_args=0,
                 max_args=1
             ),
             ChatCommand(
                 name="retreat",
-                aliases=["back", "run"],
+                aliases=["back", "run", "flee"],
                 description="Retreat from combat",
                 usage="retreat",
                 min_args=0,
@@ -247,8 +425,24 @@ class ChatManager:
             ChatCommand(
                 name="buff",
                 aliases=["b"],
-                description="Buff party members",
-                usage="buff",
+                description="Buff party members or target",
+                usage="buff [target] [type]",
+                min_args=0,
+                max_args=2
+            ),
+            ChatCommand(
+                name="stop",
+                aliases=["s", "halt", "wait"],
+                description="Stop all actions",
+                usage="stop",
+                min_args=0,
+                max_args=0
+            ),
+            ChatCommand(
+                name="status",
+                aliases=["stat", "hp"],
+                description="Report current status",
+                usage="status",
                 min_args=0,
                 max_args=0
             ),
@@ -257,7 +451,82 @@ class ChatManager:
         for cmd in commands:
             self.register_command(cmd)
     
+    def _register_auto_responses(self) -> None:
+        """Register default auto-responses from config."""
+        import random
+        
+        for trigger, response_config in config.CHAT_AUTO_RESPONSES.items():
+            # Extract response list and pick one (or use first)
+            responses = response_config.get("responses", [])
+            if not responses:
+                continue
+            
+            # Use first response (could randomize later)
+            response_text = responses[0]
+            
+            # Extract cooldown
+            cooldown = response_config.get("cooldown", 30)
+            
+            # Extract channels and create one AutoResponse per channel
+            channels = response_config.get("channels", ["public"])
+            for channel_name in channels:
+                # Parse channel name to ChatChannel enum
+                channel = self._parse_channel(channel_name)
+                
+                self.register_auto_response(
+                    trigger=trigger,
+                    response=response_text,
+                    channel=channel,
+                    cooldown=cooldown
+                )
+    
     def set_bot_name(self, name: str) -> None:
         """Set the bot's character name for command recognition."""
         self.bot_name = name
         logger.info(f"Bot name set to: {name}")
+    
+    def set_party_leader(self, leader_name: str) -> None:
+        """Set party leader for command authorization."""
+        self.party_leader = leader_name
+        logger.debug(f"Party leader set to: {leader_name}")
+    
+    def set_guild_leader(self, leader_name: str) -> None:
+        """Set guild leader for command authorization."""
+        self.guild_leader = leader_name
+        logger.debug(f"Guild leader set to: {leader_name}")
+    
+    def add_authorized_commander(self, name: str) -> None:
+        """Add player to authorized commanders list."""
+        self.authorized_commanders.add(name)
+        logger.info(f"Added authorized commander: {name}")
+    
+    def remove_authorized_commander(self, name: str) -> None:
+        """Remove player from authorized commanders list."""
+        self.authorized_commanders.discard(name)
+        logger.info(f"Removed authorized commander: {name}")
+    
+    def set_friend_list(self, friends: list[str]) -> None:
+        """Set friend list for whisper command authorization."""
+        self.friend_list = set(friends)
+        logger.debug(f"Friend list updated: {len(friends)} friends")
+    
+    def get_recent_messages(
+        self,
+        channel: ChatChannel | None = None,
+        count: int = 10
+    ) -> list[ChatMessage]:
+        """Get recent messages, optionally filtered by channel."""
+        messages = self.message_history
+        if channel:
+            messages = [m for m in messages if m.channel == channel]
+        return messages[-count:]
+    
+    def _add_to_history(self, msg: ChatMessage) -> None:
+        """Add message to history with automatic trimming."""
+        self.message_history.append(msg)
+        if len(self.message_history) > self.max_history:
+            self.message_history = self.message_history[-self.max_history:]
+    
+    def find_player_in_chat(self, player_name: str) -> list[ChatMessage]:
+        """Find messages from a specific player."""
+        return [m for m in self.message_history if m.sender_name == player_name]

@@ -58,9 +58,9 @@ class SeasonalEvent(BaseModel):
     """Seasonal event definition."""
 
     event_id: str
-    event_type: EventType
+    event_type: EventType = EventType.CUSTOM  # Default to custom event type
     event_name: str
-    description: str
+    description: str = ""  # Optional description
 
     # Timing
     start_date: datetime
@@ -437,7 +437,7 @@ class EventManager:
 
         if quest_id not in self.completed_quests[event_id]:
             self.completed_quests[event_id].append(quest_id)
-            self.log.info("quest_completed", event=event_id, quest=quest_id)
+            self.log.info("quest_completed", event_id=event_id, quest=quest_id)
 
     def get_event_monsters(self, event_id: str) -> List[str]:
         """
@@ -505,3 +505,15 @@ class EventManager:
             return True, f"{len(incomplete)} quests available"
 
         return False, "Low priority event"
+    
+    # Alias method for backward compatibility
+    def check_active_events(self) -> List[SeasonalEvent]:
+        """
+        Check and return currently active events.
+        
+        This is an alias for get_active_events() for backward compatibility.
+        
+        Returns:
+            List of active SeasonalEvent objects
+        """
+        return self.get_active_events()

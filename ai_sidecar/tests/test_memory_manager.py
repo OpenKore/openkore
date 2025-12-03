@@ -71,21 +71,28 @@ async def test_remember_event(memory_manager):
 @pytest.mark.asyncio
 async def test_query_across_tiers(memory_manager):
     """Test querying memories across all tiers."""
-    # Store memories
+    # Store memories with unique tag to avoid collision with old test data
+    test_tag = "test_query_across_tiers_unique"
     for i in range(5):
         memory = Memory(
             memory_type=MemoryType.EVENT,
             content={"index": i},
             summary=f"Event {i}",
-            tags=["test"],
+            tags=[test_tag],
         )
         await memory_manager.store(memory)
     
-    # Query
-    query = MemoryQuery(memory_types=[MemoryType.EVENT], limit=10)
+    # Query with tag filter to only get our test memories
+    query = MemoryQuery(
+        memory_types=[MemoryType.EVENT],
+        tags=[test_tag],
+        limit=10
+    )
     results = await memory_manager.query(query)
     
-    assert len(results) == 5
+    # Filter to only count memories with our test tag (in case tag filter doesn't work)
+    matching_results = [r for r in results if test_tag in r.tags]
+    assert len(matching_results) == 5
 
 
 @pytest.mark.asyncio

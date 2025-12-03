@@ -50,7 +50,7 @@ class PlacedCircle(BaseModel):
     position: tuple[int, int] = Field(description="Circle position (x, y)")
     placed_at: datetime = Field(default_factory=datetime.now)
     duration_seconds: int = Field(ge=1, description="Circle duration")
-    radius: int = Field(ge=1, description="Effect radius")
+    radius: int = Field(ge=0, default=1, description="Effect radius")
     is_active: bool = Field(default=True)
 
     @property
@@ -409,3 +409,12 @@ class MagicCircleManager:
         self.active_insignia = None
         self.insignia_expires_at = None
         self.log.debug("Magic circle state reset")
+
+    def get_placed_circles(self) -> list[PlacedCircle]:
+        """
+        Get all currently placed circles.
+        
+        Returns:
+            List of placed circles (includes expired ones until cleanup)
+        """
+        return self.placed_circles.copy()

@@ -17,7 +17,7 @@ from ai_sidecar.combat.combat_ai import CombatAI, CombatAIConfig, CombatState
 from ai_sidecar.combat.models import CombatAction, CombatActionType, CombatContext
 from ai_sidecar.combat.skills import SkillAllocationSystem, SkillDatabase
 from ai_sidecar.combat.tactics import TacticalRole, get_default_role_for_job
-from ai_sidecar.protocol.messages import Action, ActionType
+from ai_sidecar.core.decision import Action, ActionType
 
 if TYPE_CHECKING:
     from ai_sidecar.core.state import CharacterState, GameState
@@ -157,7 +157,7 @@ class CombatManager:
         if self.config.enable_emergency_handling:
             emergency = await self._check_emergencies(game_state)
             if emergency:
-                logger.warning(f"Emergency action triggered: {emergency.action_type}")
+                logger.warning(f"Emergency action triggered: {emergency.type}")
                 return [emergency]
         
         # Priority 2: Skill point allocation
@@ -213,7 +213,7 @@ class CombatManager:
             if heal_item:
                 logger.info(f"Emergency heal: using {heal_item.item_name}")
                 return Action(
-                    action_type=ActionType.USE_ITEM,
+                    type=ActionType.USE_ITEM,
                     target_id=heal_item.item_id,
                     priority=10,
                 )
@@ -221,7 +221,7 @@ class CombatManager:
             # No items - flee
             logger.warning("Emergency flee: critical HP, no healing items")
             return Action(
-                action_type=ActionType.MOVE,  # Move away
+                type=ActionType.MOVE,  # Move away
                 priority=10,
             )
         
@@ -230,7 +230,7 @@ class CombatManager:
             heal_item = self._find_best_healing_item(game_state, character)
             if heal_item:
                 return Action(
-                    action_type=ActionType.USE_ITEM,
+                    type=ActionType.USE_ITEM,
                     target_id=heal_item.item_id,
                     priority=8,
                 )
@@ -240,7 +240,7 @@ class CombatManager:
             sp_item = self._find_sp_recovery_item(game_state)
             if sp_item:
                 return Action(
-                    action_type=ActionType.USE_ITEM,
+                    type=ActionType.USE_ITEM,
                     target_id=sp_item.item_id,
                     priority=6,
                 )
@@ -293,7 +293,7 @@ class CombatManager:
             return None
         
         return Action(
-            action_type=action_type,
+            type=action_type,
             skill_id=combat_action.skill_id,
             target_id=combat_action.target_id,
             priority=combat_action.priority,
@@ -382,9 +382,27 @@ class CombatManager:
             Dict of item_id -> quantity
         """
         if hasattr(game_state, "inventory"):
-            return dict(game_state.inventory)
+            inv = game_state.inventory
+            
+            # Handle dict directly (most common in tests)
+            if isinstance(inv, dict):
+                return dict(inv)
+            
+            # Handle InventoryState object
+            if hasattr(inv, "items") and not callable(inv.items):
+                # items is an attribute (list), not the dict method
+                inventory_dict = {}
+                for item in inv.items:
+                    item_id = item.item_id if hasattr(item, "item_id") else item.get("item_id", 0)
+                    amount = item.amount if hasattr(item, "amount") else item.get("amount", 1)
+                    inventory_dict[item_id] = inventory_dict.get(item_id, 0) + amount
+                return inventory_dict
+        
         if hasattr(game_state.character, "inventory"):
-            return dict(game_state.character.inventory)
+            char_inv = game_state.character.inventory
+            if isinstance(char_inv, dict):
+                return dict(char_inv)
+        
         return {}
     
     def _detect_build_type(self, character: "CharacterState") -> str | None:

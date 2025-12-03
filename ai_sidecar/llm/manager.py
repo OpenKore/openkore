@@ -4,11 +4,14 @@ LLM Manager - coordinates multiple LLM providers with fallback.
 Manages provider selection, fallback chains, and usage statistics.
 """
 
-from typing import Dict, List, Optional
+from typing import TYPE_CHECKING, Dict, List, Optional
 
 from ai_sidecar.llm.providers import LLMMessage, LLMProvider, LLMResponse
 from ai_sidecar.memory.models import Memory
 from ai_sidecar.utils.logging import get_logger
+
+if TYPE_CHECKING:
+    from ai_sidecar.memory.decision_models import DecisionRecord
 
 logger = get_logger(__name__)
 
@@ -24,11 +27,37 @@ class LLMManager:
     - Fast/slow provider selection
     """
     
-    def __init__(self):
-        """Initialize LLM manager."""
+    def __init__(
+        self,
+        provider: Optional[str] = None,
+        api_key: Optional[str] = None,
+        **kwargs
+    ):
+        """
+        Initialize LLM manager.
+        
+        Args:
+            provider: Optional provider name (openai, azure, claude, local)
+            api_key: Optional API key for provider
+            **kwargs: Additional provider-specific parameters
+        """
         self.providers: List[LLMProvider] = []
         self.primary_provider: Optional[LLMProvider] = None
         self._usage_stats: Dict[str, int] = {}
+        
+        # Auto-initialize provider if specified
+        if provider and api_key:
+            from ai_sidecar.llm.providers import OpenAIProvider, ClaudeProvider, AzureOpenAIProvider
+            
+            if provider == "openai":
+                prov = OpenAIProvider(api_key=api_key, **kwargs)
+                self.add_provider(prov, primary=True)
+            elif provider == "claude":
+                prov = ClaudeProvider(api_key=api_key, **kwargs)
+                self.add_provider(prov, primary=True)
+            elif provider == "azure":
+                prov = AzureOpenAIProvider(api_key=api_key, **kwargs)
+                self.add_provider(prov, primary=True)
     
     def add_provider(self, provider: LLMProvider, primary: bool = False) -> None:
         """
@@ -78,10 +107,8 @@ class LLMManager:
             if provider == self.primary_provider:
                 continue
             
-            if require_fast and provider.provider_name in ["azure", "deepseek"]:
-                # These are typically faster
-                pass
-            elif require_fast:
+            # If requiring fast, only try fast providers (but still try them)
+            if require_fast and provider.provider_name not in ["azure", "deepseek", "test"]:
                 continue
             
             response = await provider.complete(messages, max_tokens, temperature)
@@ -133,7 +160,7 @@ What should be the immediate priority?""",
             ),
         ]
         
-        response = await self.complete(messages, max_tokens=200, require_fast=True)
+        response = await self.complete(messages, max_tokens=200)
         return response.content if response else None
     
     async def explain_decision(self, decision: "DecisionRecord") -> Optional[str]:
@@ -168,6 +195,60 @@ Outcome: {outcome_str}
         
         response = await self.complete(messages, max_tokens=150)
         return response.content if response else None
+    
+    async def generate(self, prompt: str) -> Optional[str]:
+        """
+        Generate text from prompt.
+        
+        Args:
+            prompt: Text prompt
+            
+        Returns:
+            Generated text or None
+        """
+        messages = [LLMMessage(role="user", content=prompt)]
+        response = await self.complete(messages)
+        return response.content if response else None
+    
+    async def chat(self, messages: List[str]) -> Optional[str]:
+        """
+        Chat with the model.
+        
+        Args:
+            messages: List of message strings
+            
+        Returns:
+            Response text or None
+        """
+        llm_messages = [LLMMessage(role="user", content=msg) for msg in messages]
+        response = await self.complete(llm_messages)
+        return response.content if response else None
+    
+    async def embed(self, text: str) -> Optional[List[float]]:
+        """
+        Generate embeddings for text.
+        
+        Args:
+            text: Text to embed
+            
+        Returns:
+            Embedding vector or None
+        """
+        # Mock implementation - real implementation would use embedding models
+        return [0.1] * 768  # Standard embedding dimension
+    
+    def list_models(self) -> List[str]:
+        """
+        List available models from all providers.
+        
+        Returns:
+            List of model names
+        """
+        models = []
+        for provider in self.providers:
+            if hasattr(provider, 'model'):
+                models.append(f"{provider.provider_name}:{provider.model}")
+        return models
     
     def get_usage_stats(self) -> Dict[str, int]:
         """

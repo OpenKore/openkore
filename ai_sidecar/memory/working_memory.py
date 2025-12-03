@@ -216,6 +216,14 @@ class WorkingMemory:
             self._by_type.clear()
             self._by_tag.clear()
     
+    def get_all(self) -> List[Memory]:
+        """Get all memories (synchronous accessor for internal use)."""
+        return list(self.memories.values())
+    
+    def is_full(self) -> bool:
+        """Check if memory is at capacity (synchronous accessor)."""
+        return len(self.memories) >= self.max_size
+    
     async def size(self) -> int:
         """Get current memory count."""
         async with self._lock:
