@@ -2210,95 +2210,88 @@ sub itemNameSimple {
 # cards   => 8-byte binary data as sent by server
 # upgrade => integer upgrade level
 sub itemName {
-	my $item = shift;
+    my $item = shift;
 
-	my $name = itemNameSimple($item->{nameID});
+    my $name = itemNameSimple($item->{nameID});
 
-	# Resolve item prefix/suffix (carded or forged)
-	my $prefix = "";
-	my $suffix = "";
-	my @cards;
-	my %cards;
+    # Resolve item prefix/suffix (carded or forged)
+    my $prefix = "";
+    my $suffix = "";
+    my @cards;
+    my %cards;
 
-	my $item_len = length($item);
-	my $card_unpack;
+    my $card_unpack = ($masterServer->{itemListType}) ? "V" : "v";
+    my $card_len = length pack $card_unpack;
 
-	# FIXME WORKAROUND TO ITEMID 4BYTES
-	if ($masterServer->{itemListType}) {
-		$card_unpack = "V";
-	} else {
-		$card_unpack = "v";
-	}
+    for (my $i = 0; $i < 4; $i++) {
+        my $card = unpack($card_unpack, substr($item->{cards}, $i * $card_len, $card_len));
+        next unless $card;
+        push(@cards, $card);
+        ($cards{$card} ||= 0) += 1;
+    }
 
-	my $card_len = length pack $card_unpack;
-	for (my $i = 0; $i < 4; $i++) {
-		my $card = unpack($card_unpack, substr($item->{cards}, $i*$card_len, $card_len));
-		next unless $card;
-		push(@cards, $card);
-		($cards{$card} ||= 0) += 1;
-	}
-	if ($cards[0] == 254) {
-		# Alchemist-made potion
-		#
-		# Ignore the "cards" inside.
-	} elsif ($cards[0] == 65280 || $cards[0] == 1) {
-		# Pet egg
-		# cards[0] == 65280
-		# substr($item->{cards}, 2, 4) = packed pet ID
-		# cards[3] == 1 if named, 0 if not named
+    if ($cards[0] == 254) {
+        # Alchemist-made potion
+    } elsif ($cards[0] == 65280 || $cards[0] == 1) {
+        # Pet egg
+    } elsif ($cards[0] == 255) {
+        # Forged weapon
+        my $elementID = $cards[1] % 10;
+        my $elementName = $elements_lut{$elementID};
+        my $starCrumbs = ($cards[1] >> 8) / 5;
 
-	} elsif ($cards[0] == 255) {
-		# Forged weapon
-		#
-		# Display e.g. "VVS Earth" or "Fire"
-		my $elementID = $cards[1] % 10;
-		my $elementName = $elements_lut{$elementID};
-		my $starCrumbs = ($cards[1] >> 8) / 5;
+        if ($starCrumbs == 1) {
+            $prefix .= T("VS ");
+        } elsif ($starCrumbs == 2) {
+            $prefix .= T("VVS ");
+        } elsif ($starCrumbs == 3) {
+            $prefix .= T("VVVS ");
+        }
 
-		# Translation-friendly
-		if ($starCrumbs == 1) {
-			$prefix .= T("VS ");
-		} elsif ($starCrumbs == 2) {
-			$prefix .= T("VVS ");
-		} elsif ($starCrumbs == 3) {
-			$prefix .= T("VVVS ");
-		}
+        $suffix = "$elementName" if ($elementName ne "");
+    } elsif (@cards) {
+        # Carded item
+        $suffix = join(':', map {
+            cardName($_) . ($cards{$_} > 1 ? "*$cards{$_}" : '')
+        } sort { cardName($a) cmp cardName($b) } keys %cards);
+    }
 
-		# $prefix .= "$elementName " if ($elementName ne "");
-		$suffix = "$elementName" if ($elementName ne "");
-	} elsif (@cards) {
-		# Carded item
-		#
-		# List cards in alphabetical order.
-		# Stack identical cards.
-		# e.g. "Hydra*2,Mummy*2", "Hydra*3,Mummy"
-		$suffix = join(':', map {
-			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
-		} sort { cardName($a) cmp cardName($b) } keys %cards);
-	}
+    my @options = grep { $_->{type} } map {
+        my @c = unpack 'vvC', $_;
+        { type => $c[0], value => $c[1], param => $c[2] }
+    } unpack '(a5)*', $item->{options} || '';
 
-    my $total_options = 0;
+    my $total_options = scalar @options;
+    my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
 
-	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
-	foreach ( @options ) {
-		if ( $_->{type} ) {
-			$total_options++;
-		}
-	}
+    my $display = "";
+    $display .= T("BROKEN ") if $item->{broken};
+    $display .= "+$item->{upgrade} " if $item->{upgrade};
+    $display .= $prefix if $prefix;
+    $display .= $name;
+    $display .= " [$suffix]" if $suffix;
+    $display .= " [$numSlots]" if $numSlots;
 
-	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
+    if ($total_options) {
+        if (Config::get('itemShowOption')) {
+            my @labels;
+            foreach my $opt (@options) {
+                my $template = $typeToOptionName{$opt->{type}};
+                if ($template) {
+                    push @labels, sprintf($template, $opt->{value});
+                } else {
+                    push @labels, "Option $opt->{type} ($opt->{value})";
+                }
+            }
+            $display .= " [" . join(', ', @labels) . "]" if @labels;
+        } else {
+            $display .= " [$total_options Option]";
+        }
+    }
 
-	my $display = "";
-	$display .= T("BROKEN ") if $item->{broken};
-	$display .= "+$item->{upgrade} " if $item->{upgrade};
-	$display .= $prefix if $prefix;
-	$display .= $name;
-	$display .= " [$suffix]" if $suffix;
-	$display .= " [$numSlots]" if $numSlots;
-	$display .= " [$total_options Option]" if $total_options;
-
-	return $display;
+    return $display;
 }
+
 
 sub itemNameToID {
 	my $itemName = lc shift;
