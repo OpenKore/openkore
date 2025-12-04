@@ -264,7 +264,7 @@ BD_RAGNAROK#Ragnarok#
 BA_MUSICALLESSON#Musical Lesson#
 BA_MUSICALSTRIKE#Musical Strike#
 BA_DISSONANCE#Dissonance#
-BA_FROSTJOKE#Frost Joke#
+BA_FROSTJOKER#Frost Joker#
 BA_WHISTLE#Whistle#
 BA_ASSASSINCROSS#Assassin Cross of Sunset#
 BA_POEMBRAGI#Poem of Bragi#
@@ -288,7 +288,7 @@ LK_TENSIONRELAX#Tension Relax#
 LK_BERSERK#Berserk#
 HP_ASSUMPTIO#Assumptio#
 HP_BASILICA#Basilica#
-HP_MEDITATIO#Meditation#
+HP_MEDITATIO#Meditatio#
 HW_SOULDRAIN#Soul Drain#
 HW_MAGICCRASHER#Magic Crasher#
 HW_MAGICPOWER#Mystical Amplification#
@@ -655,6 +655,16 @@ NPC_EVILLAND2#Demonic Evil Land#
 NPC_HELLJUDGEMENT2#Demonic Hell Judgement#
 NPC_RAINOFMETEOR#Rain of Meteor#
 NPC_GROUNDDRIVE#Ground Drive#
+NPC_DEADLYCURSE2#와이드 데들리 커스#
+All_EVENT_20TH_ANNIVERSARY#RO 20th Anniversary Firecracker#
+NPC_TARGET_MARKER#Target Marker#
+NPC_AIMED_SHOWER#Aimed Shower#
+NPC_BLAZING_ERUPTION#Blazing Eruption#
+NPC_BLOCK_SEAL#Seal#
+NPC_BLOCK_EXPLOSION#Seal Explosion#
+NPC_FROST_FIELD#Frost Field#
+NPC_LIGHTNING_JUDGEMENT#Lightning Judgment#
+NPC_RESET_EFST#Effect Off#
 KN_CHARGEATK#Charge Attack#
 CR_SHRINK#Shrink#
 AS_SONICACCEL#Sonic Acceleration#
@@ -782,7 +792,7 @@ NC_PILEBUNKER#Pile Bunker#
 NC_VULCANARM#Vulcan Arm#
 NC_FLAMELAUNCHER#Flame Launcher#
 NC_COLDSLOWER#Cold Slower#
-NC_ARMSCANNON#Arms Cannon#
+NC_ARMSCANNON#Arm Cannon#
 NC_ACCELERATION#Acceleration#
 NC_HOVERING#Hover#
 NC_F_SIDESLIDE#Front Slide#
@@ -1058,7 +1068,7 @@ ALL_THANATOS_RECALL#Return to Thanatos#
 GC_DARKCROW#Dark Claw#
 RA_UNLIMIT#Unlimit#
 GN_ILLUSIONDOPING#Illusion Doping#
-RK_DRAGONBREATH_WATER#Dragon Breath Water#
+RK_DRAGONBREATH_WATER#Dragon Breath - Water#
 RK_LUXANIMA#Lux Anima#
 NC_MAGMA_ERUPTION#Magma Eruption#
 WM_FRIGG_SONG#Frigg's Song#
@@ -1118,8 +1128,8 @@ DK_SERVANT_W_SIGN#Servant Weapon - Sign#
 DK_SERVANT_W_PHANTOM#Servant Weapon - Phantom#
 DK_SERVANT_W_DEMOL#Servant Weapon - Demolition#
 DK_CHARGINGPIERCE#Charging Pierce#
-DK_TWOHANDDEF#Two Hand Defender#
-DK_HACKANDSLASHER#Hack and Slash#
+DK_TWOHANDDEF#Two Handed Defense#
+DK_HACKANDSLASHER#Hack and Slasher#
 DK_DRAGONIC_AURA#Dragonic Aura#
 DK_MADNESS_CRUSHER#Madness Crusher#
 DK_VIGOR#Vigor#
@@ -1200,24 +1210,24 @@ SHC_ENCHANTING_SHADOW#Enchanting Shadow#
 SHC_FATAL_SHADOW_CROW#Fatal Shadow Crow#
 MT_AXE_STOMP#Axe Stomp#
 MT_RUSH_QUAKE#Rush Quake#
-MT_M_MACHINE#Machine Mastery#
-MT_A_MACHINE#Manfacture Machine A#
-MT_D_MACHINE#Manufacture Machine D#
-MT_TWOAXEDEF#Two Hand Axe Defense#
+MT_M_MACHINE#Manufacture Machine#
+MT_A_MACHINE#Activation Attack Machine#
+MT_D_MACHINE#Activation Defense Machine#
+MT_TWOAXEDEF#Two-Handed Axe Defending#
 MT_ABR_M#ABR Mastery#
-MT_SUMMON_ABR_BATTLE_WARIOR#ABR-Battle Warrior#
-MT_SUMMON_ABR_DUAL_CANNON#ABR-Dual Cannon#
-MT_SUMMON_ABR_MOTHER_NET#ABR-Mother Net#
-MT_SUMMON_ABR_INFINITY#ABR-Infinity#
+MT_SUMMON_ABR_BATTLE_WARIOR#ABR - Battle Warrior#
+MT_SUMMON_ABR_DUAL_CANNON#ABR - Dual Cannon#
+MT_SUMMON_ABR_MOTHER_NET#ABR - Mother Net#
+MT_SUMMON_ABR_INFINITY#ABR - Infinity#
 ABC_DAGGER_AND_BOW_M#Dagger & Bow Mastery#
 ABC_MAGIC_SWORD_M#Magic Sword Mastery#
 ABC_STRIP_SHADOW#Strip Shadow#
 ABC_ABYSS_DAGGER#Abyss Dagger#
 ABC_UNLUCKY_RUSH#Unlucky Rush#
-ABC_CHAIN_REACTION_SHOT#Chan Reaction Shot#
+ABC_CHAIN_REACTION_SHOT#Chain Reaction Shot#
 ABC_FROM_THE_ABYSS#From the Abyss#
 ABC_ABYSS_SLAYER#Abyss Slayer#
-ABC_ABYSS_STRIKE#Abyss Strike#
+ABC_ABYSS_STRIKE#Omega Abyss Strike#
 ABC_DEFT_STAB#Deft Stab#
 ABC_ABYSS_SQUARE#Abyss Square#
 ABC_FRENZY_SHOT#Frenzy Shot#
@@ -1228,7 +1238,7 @@ WH_HAWKRUSH#Hawk Rush#
 WH_HAWK_M#Hawk Mastery#
 WH_CALAMITYGALE#Calamity Gale#
 WH_HAWKBOOMERANG#Hawk Boomerang#
-WH_GALESTORM#Galestorm#
+WH_GALESTORM#Gale Storm#
 WH_DEEPBLINDTRAP#Deep Blinding Trap#
 WH_SOLIDTRAP#Solid Trap#
 WH_SWIFTTRAP#Swift Trap#
@@ -1279,6 +1289,144 @@ EM_SUMMON_ELEMENTAL_TERREMOTUS#Summon Elemental Terremotus#
 EM_SUMMON_ELEMENTAL_SERPENS#Summon Elemental Serpens#
 EM_ELEMENTAL_BUSTER#Elemental Buster#
 EM_ELEMENTAL_VEIL#Elemental Veil#
+NPC_BO_THROWROCK#Throw Rock#
+NPC_BO_WOODEN_ATTACK#Wooden Attack#
+NPC_BO_HELL_HOWLING#Hell Howling#
+NPC_BO_HELL_DUSTY#Hell Tree Powder#
+NPC_BO_FAIRY_DUSTY#Fairy Tree Powder#
+NW_P_F_I#P.F.I#
+NW_GRENADE_MASTERY#Grenade Mastery#
+NW_INTENSIVE_AIM#Intensive Aim#
+NW_GRENADE_FRAGMENT#Grenade Fragment#
+NW_THE_VIGILANTE_AT_NIGHT#The Vigilante at Night#
+NW_ONLY_ONE_BULLET#Only One Bullet#
+NW_SPIRAL_SHOOTING#Spiral Shooting#
+NW_MAGAZINE_FOR_ONE#Magazine for One#
+NW_WILD_FIRE#Wild Fire#
+NW_BASIC_GRENADE#Basic Grenade#
+NW_HASTY_FIRE_IN_THE_HOLE#Hasty Fire in the Hole#
+NW_GRENADES_DROPPING#Grenade Dropping#
+NW_AUTO_FIRING_LAUNCHER#Auto Firing Launcher#
+NW_HIDDEN_CARD#Hidden Card#
+NW_MISSION_BOMBARD#Mission Bombard#
+SOA_TALISMAN_MASTERY#Talisman Mastery#
+SOA_SOUL_MASTERY#Soul Mastery#
+SOA_TALISMAN_OF_PROTECTION#Talisman of Protection#
+SOA_TALISMAN_OF_WARRIOR#Talisman of Warrior#
+SOA_TALISMAN_OF_MAGICIAN#Talisman of Magician#
+SOA_SOUL_GATHERING#Soul Gathering#
+SOA_TOTEM_OF_TUTELARY#Talisman of Tutelary#
+SOA_TALISMAN_OF_FIVE_ELEMENTS#Talisman of Five Elements#
+SOA_TALISMAN_OF_SOUL_STEALING#Talisman of Soul Stealing#
+SOA_EXORCISM_OF_MALICIOUS_SOUL#Exorcism of Malicious Soul#
+SOA_TALISMAN_OF_BLUE_DRAGON#Talisman of Blue Dragon#
+SOA_TALISMAN_OF_WHITE_TIGER#Talisman of White Tiger#
+SOA_TALISMAN_OF_RED_PHOENIX#Talisman of Red Phoenix#
+SOA_TALISMAN_OF_BLACK_TORTOISE#Talisman of Black Tortoise#
+SOA_TALISMAN_OF_FOUR_BEARING_GOD#Talisman of Four Bearing God#
+SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS#Circle of Directions and Elementals#
+SOA_SOUL_OF_HEAVEN_AND_EARTH#Soul of Heaven and Earth#
+SH_MYSTICAL_CREATURE_MASTERY#Mystical Creature Mastery#
+SH_COMMUNE_WITH_CHUL_HO#Commune With Chulho#
+SH_CHUL_HO_SONIC_CLAW#Chulho Sonic Claw#
+SH_HOWLING_OF_CHUL_HO#Howling of Chulho#
+SH_HOGOGONG_STRIKE#Hogogong Strike#
+SH_COMMUNE_WITH_KI_SUL#Commune With Kisul#
+SH_KI_SUL_WATER_SPRAYING#Kisul Water Spraying#
+SH_MARINE_FESTIVAL_OF_KI_SUL#Marine Festival of Kisul#
+SH_SANDY_FESTIVAL_OF_KI_SUL#Sandy Festival of Kisul#
+SH_KI_SUL_RAMPAGE#Kisul Rampage#
+SH_COMMUNE_WITH_HYUN_ROK#Commune With Hyunrok#
+SH_COLORS_OF_HYUN_ROK#Colors of Hyunrok#
+SH_HYUN_ROKS_BREEZE#Hyunrok Breeze#
+SH_HYUN_ROK_CANNON#Hyunrok Cannon#
+SH_TEMPORARY_COMMUNION#Temporary Communion#
+SH_BLESSING_OF_MYSTICAL_CREATURES#Blessing of Mystical Creatures#
+HN_SELFSTUDY_TATICS#Self Study Tactics#
+HN_SELFSTUDY_SOCERY#Self Study Sorcery#
+HN_DOUBLEBOWLINGBASH#Double Bowling Bash#
+HN_MEGA_SONIC_BLOW#Mega Sonic Blow#
+HN_SHIELD_CHAIN_RUSH#Shield Chain Rush#
+HN_SPIRAL_PIERCE_MAX#Spiral Pierce Max#
+HN_METEOR_STORM_BUSTER#Meteor Storm Buster#
+HN_JUPITEL_THUNDER_STORM#Jupitel Thunderstorm#
+HN_JACK_FROST_NOVA#Jack Frost Nova#
+HN_HELLS_DRIVE#Hell's Drive#
+HN_GROUND_GRAVITATION#Ground Gravitation#
+HN_NAPALM_VULCAN_STRIKE#Napalm Vulcan Strike#
+HN_BREAKINGLIMIT#Breaking Limit#
+HN_RULEBREAK#Rule Break#
+SKE_SKY_MASTERY#Sky Mastery#
+SKE_WAR_BOOK_MASTERY#War Book Mastery#
+SKE_RISING_SUN#Rising Sun#
+SKE_NOON_BLAST#Noon Blast#
+SKE_SUNSET_BLAST#Sunset Blast#
+SKE_RISING_MOON#Rising Moon#
+SKE_MIDNIGHT_KICK#Midnight Kick#
+SKE_DAWN_BREAK#Dawn Break#
+SKE_TWINKLING_GALAXY#Twinkling Galaxy#
+SKE_STAR_BURST#Star Burst#
+SKE_STAR_CANNON#Star Cannon#
+SKE_ALL_IN_THE_SKY#All in the Sky#
+SKE_ENCHANTING_SKY#Enchanting Sky#
+SS_TOKEDASU#Melt Away#
+SS_SHIMIRU#Infiltrate#
+SS_AKUMUKESU#Nightmare Erasion#
+SS_SHINKIROU#Mirage#
+SS_KAGEGARI#Shadow Hunting#
+SS_KAGENOMAI#Shadow Dance#
+SS_KAGEGISSEN#Shadow Flash#
+SS_FUUMASHOUAKU#Huuma Shuriken - Grasp#
+SS_FUUMAKOUCHIKU#Huuma Shuriken - Construct#
+SS_KUNAIWAIKYOKU#Kunai - Distortion#
+SS_KUNAIKAITEN#Kunai - Rotation#
+SS_KUNAIKUSSETSU#Kunai - Refraction#
+SS_SEKIENHOU#Red Flame Cannon#
+SS_REIKETSUHOU#Cold Blooded Cannon#
+SS_RAIDENPOU#Thundering Cannon#
+SS_KINRYUUHOU#Golden Dragon Cannon#
+SS_ANTENPOU#Darkening Cannon#
+SS_KAGEAKUMU#Shadow - Nightmare#
+SS_HITOUAKUMU#Kunai - Nightmare#
+SS_ANKOKURYUUAKUMU#Dark Dragon - Nightmare#
+NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING#The Vigilante at Night#
+NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN#The Vigilante at Night#
+SS_FOUR_CHARM#Four Colors Charm#
+NW_WILD_SHOT#Wild Shot#
+NW_MIDNIGHT_FALLEN#Midnight Fallen#
+SKE_SKY_SUN#Sky Sun#
+SKE_SKY_MOON#Sky Moon#
+SKE_STAR_LIGHT_KICK#Star Light Kick#
+HN_OVERCOMING_CRISIS#Overcoming Crisis#
+SH_CHUL_HO_BATTERING#Chulho Battering#
+SH_HYUN_ROK_SPIRIT_POWER#Hyunrok Spirit Power#
+DK_DRAGONIC_BREATH#Dragonic Breath#
+MT_SPARK_BLASTER#Spark Blaster#
+MT_TRIPLE_LASER#Triple Laser#
+MT_MIGHTY_SMASH#Mighty Smash#
+BO_EXPLOSIVE_POWDER#Explosive Powder#
+BO_MAYHEMIC_THORNS#Mayhemic Thorns#
+DK_DRAGONIC_PIERCE#Dragonic Pierce#
+IG_RADIANT_SPEAR#Radiant Spear#
+IG_IMPERIAL_CROSS#Imperial Cross#
+IG_IMPERIAL_PRESSURE#Imperial Pressure#
+MT_RUSH_STRIKE#Rush Strike#
+MT_POWERFUL_SWING#Powerful Swing#
+MT_ENERGY_CANNONADE#Energy Cannonade#
+BO_MYSTERY_POWDER#Mystery Powder#
+BO_DUST_EXPLOSION#Dust Explosion#
+SHC_CROSS_SLASH#Cross Slash#
+ABC_HIT_AND_SLIDING#Hit And Sliding#
+ABC_CHASING_BREAK#Chasing Break#
+ABC_CHASING_SHOT#Chasing Shot#
+ABC_ABYSS_FLAME#Abyss Flame#
+AG_ENERGY_CONVERSION#Energy Conversion#
+EM_PSYCHIC_STREAM#Psychic Stream#
+CD_DIVINUS_FLOS#Divinus Flos#
+IQ_BLAZING_FLAME_BLAST#Blazing Flame Blast#
+WH_WILD_WALK#Wild Walk#
+TR_RHYTHMICAL_WAVE#Rhythmical Wave#
+ABC_ABYSS_FLAME_ATK#Abyss Flame#
 HLIF_HEAL#Touch of Heal#
 HLIF_AVOID#Emergency Avoid#
 HLIF_BRAIN#Brain Surgery#
@@ -1305,7 +1453,7 @@ MH_ERASER_CUTTER#Eraser Cutter#
 MH_XENO_SLASHER#Xeno Slasher#
 MH_SILENT_BREEZE#Silent Breeze#
 MH_STYLE_CHANGE#Style Change#
-MH_SONIC_CRAW#Sonic Claw#
+MH_SONIC_CLAW#Sonic Claw#
 MH_SILVERVEIN_RUSH#Silvervein Rush#
 MH_MIDNIGHT_FRENZY#Midnight Frenzy#
 MH_STAHL_HORN#Stahl Horn#
@@ -1321,6 +1469,22 @@ MH_GRANITIC_ARMOR#Granitic Armor#
 MH_LAVA_SLIDE#Lava Slide#
 MH_PYROCLASTIC#Pyroclastic#
 MH_VOLCANIC_ASH#Volcanic Ash#
+MH_BLAST_FORGE#Blast Forge#
+MH_TEMPERING#Tempering#
+MH_CLASSY_FLUTTER#Classy Flutter#
+MH_TWISTER_CUTTER#Twister Cutter#
+MH_ABSOLUTE_ZEPHYR#Absolute Zephyr#
+MH_BRUSHUP_CLAW#Brushup Claw#
+MH_BLAZING_AND_FURIOUS#Blazing And Furious#
+MH_THE_ONE_FIGHTER_RISES#The One Fighter Rises#
+MH_POLISHING_NEEDLE#Polishing Needle#
+MH_TOXIN_OF_MANDARA#Toxin Of Mandara#
+MH_NEEDLE_STINGER#Needle Stinger#
+MH_LICHT_GEHORN#Licht Gehorn#
+MH_GLANZEN_SPIES#Glanzen Spies#
+MH_HEILIGE_PFERD#Heilige Pferd#
+MH_GOLDENE_TONE#Goldene Tone#
+MH_BLAZING_LAVA#Blazing Lava#
 MS_BASH#Bash#
 MS_MAGNUM#Magnum Break#
 MS_BOWLINGBASH#Bowling Bash#
@@ -1342,8 +1506,8 @@ ML_SPIRALPIERCE#Spiral Pierce#
 ML_DEFENDER#Defender#
 ML_AUTOGUARD#Auto Guard#
 ML_DEVOTION#Devotion#
-MER_MAGNIFICAT#Blessing of Mana#
-MER_QUICKEN#Weapon Quicken#
+MER_MAGNIFICAT#Magnificat#
+MER_QUICKEN#Two-Hand Quicken#
 MER_SIGHT#Sight#
 MER_CRASH#Crash#
 MER_REGAIN#Regain#
@@ -1425,7 +1589,7 @@ ABR_NET_REPAIR#ABR Net Repair#
 ABR_NET_SUPPORT#ABR Net Support#
 ABR_INFINITY_BUSTER#ABR Infinity Buster#
 GD_APPROVAL#Official Guild Approval#
-GD_KAFRACONTRACT#Contract with Kafra#
+GD_KAFRACONTRACT#Kafra Contract#
 GD_GUARDRESEARCH#Guardian Research#
 GD_GUARDUP#Strengthen Guardians#
 GD_EXTENSION#Guild Extension#
@@ -1439,7 +1603,7 @@ GD_REGENERATION#Regeneration#
 GD_RESTORE#Restore#
 GD_EMERGENCYCALL#Emergency Call#
 GD_DEVELOPMENT#Permanent Development#
-GD_ITEMEMERGENCYCALL#Emergency Call#
+GD_ITEMEMERGENCYCALL#Item Emergency Call#
 GD_GUILD_STORAGE#Guild Storage Expansion#
 GD_CHARGESHOUT_FLAG#Charge Shout Flag#
 GD_CHARGESHOUT_BEATING#Charge Shout Beating#
