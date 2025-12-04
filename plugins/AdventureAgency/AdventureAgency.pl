@@ -433,7 +433,7 @@ sub build_party_packet {
 }
 
 sub unload {
-	Plugins::delHooks( $base_hooks );
+	Plugins::delHooks( $base_hooks )  if ( $base_hooks );
 	Plugins::delHooks( $hooks ) if ( $hooks );
 	Commands::unregister($commandID) if $commandID;
 }

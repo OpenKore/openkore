@@ -65,7 +65,7 @@ sub checkServer {
 }
 
 sub unload {
-	Plugins::delHooks( $base_hooks );
+	Plugins::delHooks( $base_hooks ) if ( $base_hooks );
 	Plugins::delHooks( $hooks ) if ( $hooks );
 }
 
