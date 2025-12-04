@@ -5502,7 +5502,7 @@ sub solveMSG {
 		}
 	}
 	warning TF("Unknown msgid: %d. Need to update the file msgstringtable.txt (from data.grf)\n", --$id) if !$msgTable[$id];
-
+	Plugins::callHook('solveMSG', { msg => \$msg });
 	return $msg;
 }
 
@@ -5548,6 +5548,7 @@ sub solveMessage {
 	if ($msg =~ /<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/) {
 		$msg =~ s/<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/solveItemLink($1)/eg;
 	}
+	Plugins::callHook('solveMessage', { msg => \$msg });
 	return $msg;
 }
 
