@@ -14,7 +14,7 @@ REM
 REM Options:
 REM   /force, --force      Force reinstall even if already installed
 REM   /verbose, --verbose  Enable verbose output for debugging
-REM   /?, --help, /h, -h   Show this help message
+REM   --help, /?, /h, -h   Show this help message
 REM
 REM Requirements:
 REM   - Python 3.10+ with pip and venv
@@ -32,7 +32,8 @@ REM ============================================================================
 
 REM Configuration
 set "SCRIPT_DIR=%~dp0"
-set "VENV_DIR=%SCRIPT_DIR%ai_sidecar\.venv"
+set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
+set "VENV_DIR=%SCRIPT_DIR%\ai_sidecar\.venv"
 set "PYTHON_MIN_VERSION=3.10"
 set "REQUIRED_PYTHON_MAJOR=3"
 set "REQUIRED_PYTHON_MINOR=10"
@@ -73,7 +74,7 @@ echo Location: %SCRIPT_DIR%
 echo.
 
 if %FORCE_INSTALL%==1 (
-    echo [!] Force install mode enabled - will recreate virtual environment
+    echo [*] Force install mode enabled - will recreate virtual environment
     echo.
 )
 
@@ -83,7 +84,7 @@ if %VERBOSE%==1 (
 )
 
 REM Check if running from correct directory
-if not exist "%SCRIPT_DIR%pyproject.toml" (
+if not exist "%SCRIPT_DIR%\pyproject.toml" (
     echo [ERROR] pyproject.toml not found!
     echo.
     echo Please run this script from the openkore-AI directory.
@@ -172,7 +173,7 @@ echo.
 echo OPTIONS:
 echo   /force, --force      Force reinstall even if venv exists
 echo   /verbose, --verbose  Enable verbose output during installation
-echo   /?, --help, /h, -h   Show this help message
+echo   --help, /?, /h, -h   Show this help message
 echo.
 echo DESCRIPTION:
 echo   This script automates the installation of the AI Sidecar for OpenKore.
@@ -200,7 +201,7 @@ echo   - Python 3.10 or higher
 echo   - pip package manager
 echo   - Internet connection
 echo.
-echo For more information, see: %SCRIPT_DIR%INSTALL.md
+echo For more information, see: %SCRIPT_DIR%\INSTALL.md
 echo.
 exit /b 0
 
@@ -418,8 +419,8 @@ REM Installs the package in editable mode
 REM ----------------------------------------------------------------------------
 :install_dependencies
 REM Check if pyproject.toml exists
-if not exist "%SCRIPT_DIR%pyproject.toml" (
-    echo [ERROR] pyproject.toml not found at: %SCRIPT_DIR%pyproject.toml
+if not exist "%SCRIPT_DIR%\pyproject.toml" (
+    echo [ERROR] pyproject.toml not found at: %SCRIPT_DIR%\pyproject.toml
     echo.
     echo Make sure you're running this script from the project root.
     echo.
@@ -492,7 +493,7 @@ if %VERBOSE%==1 (
 )
 
 REM Test 4: Check if main module exists
-if exist "%SCRIPT_DIR%ai_sidecar\main.py" (
+if exist "%SCRIPT_DIR%\ai_sidecar\main.py" (
     if %VERBOSE%==1 echo [VERBOSE] Main module found: ai_sidecar\main.py
 )
 
@@ -523,7 +524,7 @@ echo    copy .env.example .env
 echo    notepad .env
 echo.
 echo 3. Start the AI Sidecar:
-if exist "%SCRIPT_DIR%ai_sidecar\main.py" (
+if exist "%SCRIPT_DIR%\ai_sidecar\main.py" (
     echo    cd ai_sidecar
 )
 echo    python main.py
@@ -536,9 +537,9 @@ echo ===========================================================================
 echo Documentation:
 echo ============================================================================
 echo.
-echo  * Installation Guide: %SCRIPT_DIR%INSTALL.md
-echo  * Project README:     %SCRIPT_DIR%README.md
-echo  * AI Sidecar Docs:    %SCRIPT_DIR%ai_sidecar\README.md
+echo  * Installation Guide: %SCRIPT_DIR%\INSTALL.md
+echo  * Project README:     %SCRIPT_DIR%\README.md
+echo  * AI Sidecar Docs:    %SCRIPT_DIR%\ai_sidecar\README.md
 echo.
 echo ============================================================================
 echo Tips:
@@ -548,7 +549,7 @@ echo  * Use --verbose flag for detailed output during installation
 echo  * Use --force flag to reinstall if needed
 echo  * Check logs if you encounter issues
 echo.
-echo [!] Remember: Always activate the virtual environment before running!
+echo [*] Remember: Always activate the virtual environment before running!
 echo     %VENV_DIR%\Scripts\activate.bat
 echo.
 exit /b 0
