@@ -322,6 +322,7 @@ REM Write the startup commands to temporary script
     echo echo.
     echo echo %COLOR_RED%AI Sidecar has stopped.%COLOR_RESET%
     echo pause
+    echo del "%%~f0"
 ) > "%TEMP_SCRIPT%"
 
 REM Start the new terminal window
@@ -333,9 +334,9 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Clean up after a short delay (the new window has its own copy)
-timeout /t 1 /nobreak >nul 2>&1
-del "%TEMP_SCRIPT%" 2>nul
+REM The temp script will delete itself after execution, so no cleanup needed here
+REM timeout /t 1 /nobreak >nul 2>&1
+REM del "%TEMP_SCRIPT%" 2>nul
 
 echo %COLOR_GREEN%[OK]%COLOR_RESET% AI Sidecar started in new terminal
 exit /b 0

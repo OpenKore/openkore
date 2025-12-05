@@ -134,7 +134,14 @@ class JobAdvancementSystem:
             
             data = json.loads(file_path.read_text(encoding="utf-8"))
             
+            # Skip metadata keys when parsing NPC locations
+            metadata_keys = {"version", "description", "comment"}
+            
             for job_name, npc_data in data.items():
+                # Skip metadata fields
+                if job_name in metadata_keys:
+                    continue
+                    
                 self._npc_locations[job_name] = JobNPCLocation.model_validate(npc_data)
             
             logger.info(

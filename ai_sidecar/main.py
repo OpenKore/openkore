@@ -104,7 +104,7 @@ class AISidecar:
         
         # Display ready message
         if self._progress:
-            self._progress.show_summary()
+            self._progress.display_summary()
         
         # Log ready status
         logger.info(
