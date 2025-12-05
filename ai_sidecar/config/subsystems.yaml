@@ -1,0 +1,147 @@
+# AI Sidecar Subsystem Configuration
+# All features enabled by default - disable any you don't want
+
+subsystems:
+  # ============================================
+  # CORE SYSTEMS (Critical - Cannot Disable)
+  # ============================================
+  core:
+    enabled: true
+    description: "Core decision engine and IPC communication"
+  
+  # ============================================
+  # SOCIAL SYSTEMS
+  # ============================================
+  social:
+    enabled: true
+    description: "Chat, party, guild, MVP coordination"
+    features:
+      chat_responses: true
+      party_coordination: true
+      guild_management: true
+      mvp_hunting: true
+  
+  # ============================================
+  # PROGRESSION SYSTEMS
+  # ============================================
+  progression:
+    enabled: true
+    description: "Character stats, skills, job advancement"
+    features:
+      auto_stat_allocation: true
+      auto_skill_allocation: true
+      job_advancement: true
+  
+  # ============================================
+  # COMBAT SYSTEMS
+  # ============================================
+  combat:
+    enabled: true
+    description: "Tactical combat, skill rotation, targeting"
+    features:
+      skill_usage: true
+      target_selection: true
+      tactical_positioning: true
+      emergency_actions: true
+  
+  # ============================================
+  # COMPANION SYSTEMS
+  # ============================================
+  companions:
+    enabled: true
+    description: "Pet, homunculus, mercenary, mount management"
+    features:
+      pet_management: true
+      homunculus_ai: true
+      mercenary_coordination: true
+      mount_optimization: true
+  
+  # ============================================
+  # CONSUMABLE SYSTEMS
+  # ============================================
+  consumables:
+    enabled: true
+    description: "Buff management, healing, status cure"
+    features:
+      buff_maintenance: true
+      auto_healing: true
+      status_cure: true
+      food_buffs: true
+  
+  # ============================================
+  # EQUIPMENT SYSTEMS
+  # ============================================
+  equipment:
+    enabled: true
+    description: "Equipment scoring and optimization"
+    features:
+      equipment_evaluation: true
+      auto_equip_recommendations: true
+  
+  # ============================================
+  # ECONOMY SYSTEMS
+  # ============================================
+  economy:
+    enabled: true
+    description: "Market analysis, trading, storage"
+    features:
+      market_analysis: true
+      vendor_scanning: true
+      storage_management: true
+      price_intelligence: true
+  
+  # ============================================
+  # NPC/QUEST SYSTEMS
+  # ============================================
+  npc_quest:
+    enabled: true
+    description: "NPC dialogue and quest automation"
+    features:
+      npc_automation: true
+      quest_tracking: true
+      daily_quests: true
+  
+  # ============================================
+  # INSTANCE SYSTEMS
+  # ============================================
+  instances:
+    enabled: true
+    description: "Endless Tower, Memorial Dungeons"
+    features:
+      endless_tower: true
+      memorial_dungeons: true
+  
+  # ============================================
+  # ENVIRONMENT SYSTEMS
+  # ============================================
+  environment:
+    enabled: true
+    description: "Time, weather, event awareness"
+    features:
+      day_night_optimization: true
+      weather_awareness: true
+      event_detection: true
+
+# ============================================
+# QUICK PRESETS
+# ============================================
+presets:
+  full_automation:
+    description: "All features enabled (default)"
+    enable_all: true
+  
+  combat_only:
+    description: "Only combat features"
+    enable: [core, combat, consumables, companions]
+  
+  social_only:
+    description: "Only social features"
+    enable: [core, social]
+  
+  farming:
+    description: "Optimized for farming"
+    enable: [core, combat, consumables, equipment, economy]
+  
+  party_support:
+    description: "Optimized for party support role"
+    enable: [core, social, combat, consumables, companions]

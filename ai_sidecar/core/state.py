@@ -75,6 +75,187 @@ class ActorState(BaseModel):
         return None
 
 
+class BuffInfo(BaseModel):
+    """Active buff information (P1 Important - Buff Bridge)."""
+    buff_id: int
+    name: str
+    expires_at: int = 0
+    duration: int = 0
+
+
+class StatusEffect(BaseModel):
+    """Status effect (buff or debuff) (P1 Important - Combat Bridge)."""
+    effect_id: int
+    name: str
+    is_negative: bool = False
+    duration: int = 0
+
+
+class PartyMember(BaseModel):
+    """Party member state (P1 Important - Party Bridge)."""
+    char_id: int
+    name: str
+    hp: int = 0
+    hp_max: int = 0
+    sp: int = 0
+    sp_max: int = 0
+    job_class: int = 0
+    online: bool = True
+    is_leader: bool = False
+
+
+class PartyState(BaseModel):
+    """Party information (P1 Important - Party Bridge)."""
+    party_id: str = ""
+    name: str = ""
+    members: list[PartyMember] = Field(default_factory=list)
+    member_count: int = 0
+
+
+class GuildState(BaseModel):
+    """Guild information (P1 Important - Guild Bridge)."""
+    guild_id: int = 0
+    name: str = ""
+    level: int = 1
+    member_count: int = 0
+    max_members: int = 0
+    average_level: int = 0
+    exp: int = 0
+    exp_max: int = 0
+
+
+class PetState(BaseModel):
+    """Pet information (P2 Important - Companion Bridge)."""
+    pet_id: int = 0
+    name: str = ""
+    intimacy: int = 0
+    hunger: int = 0
+    is_summoned: bool = False
+
+
+class HomunculusState(BaseModel):
+    """Homunculus information (P2 Important - Companion Bridge)."""
+    type: str = ""
+    level: int = 1
+    hp: int = 0
+    hp_max: int = 0
+    sp: int = 0
+    sp_max: int = 0
+    intimacy: int = 0
+    hunger: int = 0
+    skill_points: int = 0
+    stats: dict[str, int] = Field(default_factory=dict)
+
+
+class MercenaryState(BaseModel):
+    """Mercenary information (P2 Important - Companion Bridge)."""
+    type: str = ""
+    level: int = 1
+    hp: int = 0
+    hp_max: int = 0
+    sp: int = 0
+    sp_max: int = 0
+    contract_remaining: int = 0
+    faith: int = 0
+
+
+class MountState(BaseModel):
+    """Mount and cart information (P2 Important - Companion Bridge)."""
+    is_mounted: bool = False
+    mount_type: int = 0
+    has_cart: bool = False
+    cart_weight: int = 0
+    cart_weight_max: int = 0
+    cart_items_count: int = 0
+
+
+class EquippedItem(BaseModel):
+    """Equipped item information (P2 Important - Equipment Bridge)."""
+    item_id: int
+    name: str
+    refine_level: int = 0
+    broken: bool = False
+    identified: bool = True
+
+
+class DialogueChoice(BaseModel):
+    """NPC dialogue choice (P3 Advanced - NPC Bridge)."""
+    index: int
+    text: str
+
+
+class NPCDialogue(BaseModel):
+    """NPC dialogue state (P3 Advanced - NPC Bridge)."""
+    npc_id: int
+    npc_name: str
+    in_dialogue: bool
+    has_choices: bool = False
+    choices: list[DialogueChoice] = Field(default_factory=list)
+    current_text: str = ""
+
+
+class QuestInfo(BaseModel):
+    """Active quest information (P3 Advanced - Quest Bridge)."""
+    quest_id: int
+    name: str
+    time_limit: int = 0
+    mob_objectives: list = Field(default_factory=list)
+    item_objectives: list = Field(default_factory=list)
+    is_complete: bool = False
+
+
+class QuestState(BaseModel):
+    """All quest information (P3 Advanced - Quest Bridge)."""
+    active_quests: list[QuestInfo] = Field(default_factory=list)
+    quest_count: int = 0
+
+
+class VendorItem(BaseModel):
+    """Item in vendor shop (P3 Advanced - Economy Bridge)."""
+    item_id: int
+    name: str
+    price: int
+    amount: int
+
+
+class Vendor(BaseModel):
+    """Player vendor shop (P3 Advanced - Economy Bridge)."""
+    vendor_id: int
+    vendor_name: str
+    position: dict[str, int]
+    items: list[VendorItem] = Field(default_factory=list)
+
+
+class MarketState(BaseModel):
+    """Market/vendor information (P3 Advanced - Economy Bridge)."""
+    vendors: list[Vendor] = Field(default_factory=list)
+    vendor_count: int = 0
+
+
+class Environment(BaseModel):
+    """Environment/time state (P3 Advanced - Environment Bridge)."""
+    server_time: int
+    is_night: bool = False
+    weather_type: int = 0
+
+
+class GroundItem(BaseModel):
+    """Item on ground (P3 Advanced - Ground Items Bridge)."""
+    id: int
+    item_id: int
+    name: str
+    amount: int = 1
+    position: dict[str, int] = Field(default_factory=dict)
+
+
+class InstanceState(BaseModel):
+    """Instance/dungeon state (P4 Final - Instance Bridge)."""
+    in_instance: bool = False
+    instance_name: str = ""
+    current_floor: int = 0
+    time_limit: int = 0
+
+
 class CharacterState(BaseModel):
     """State of the player character."""
     
@@ -114,8 +295,11 @@ class CharacterState(BaseModel):
     attacking: bool = Field(default=False, description="Is attacking")
     target_id: int | None = Field(default=None, description="Current target ID")
     
-    # Status effects (list of status IDs)
-    status_effects: list[int] = Field(default_factory=list, description="Active status effect IDs")
+    # Enhanced status effects (P1 Important - Combat Bridge)
+    status_effects: list[StatusEffect] = Field(default_factory=list, description="Active status effects")
+    
+    # Active buffs (P1 Important - Buff Bridge)
+    buffs: list[BuffInfo] = Field(default_factory=list, description="Active buffs")
     
     # Progression fields
     stat_points: int = Field(default=0, ge=0, description="Available stat points")
@@ -258,11 +442,26 @@ class GameState(BaseModel):
     # AI mode from OpenKore (0=manual, 1=auto, 2=?)
     ai_mode: int = Field(default=1, ge=0, le=2, description="OpenKore AI mode")
     
-    # Companion states (optional)
-    pet_state: Any | None = Field(default=None, description="Pet state if pet is active")
-    homun_state: Any | None = Field(default=None, description="Homunculus state if active")
-    merc_state: Any | None = Field(default=None, description="Mercenary state if active")
-    mount_state: Any | None = Field(default=None, description="Mount state if available")
+    # Party and Guild (P1 Important - Party/Guild Bridge)
+    party: PartyState | None = Field(default=None, description="Party information if in party")
+    guild: GuildState | None = Field(default=None, description="Guild information if in guild")
+    
+    # Companion states (P2 Important - Companion Bridge)
+    pet: PetState | None = Field(default=None, description="Pet state if pet is active")
+    homunculus: HomunculusState | None = Field(default=None, description="Homunculus state if active")
+    mercenary: MercenaryState | None = Field(default=None, description="Mercenary state if active")
+    mount: MountState = Field(default_factory=MountState, description="Mount and cart state")
+    equipment: dict[str, EquippedItem] = Field(default_factory=dict, description="Equipped items by slot")
+    
+    # P3 Advanced bridges (NEW)
+    npc_dialogue: NPCDialogue | None = Field(default=None, description="NPC dialogue state if in dialogue")
+    quests: QuestState = Field(default_factory=QuestState, description="Quest tracking state")
+    market: MarketState = Field(default_factory=MarketState, description="Market and vendor state")
+    environment: Environment = Field(default_factory=lambda: Environment(server_time=0), description="Environment and time state")
+    ground_items: list[GroundItem] = Field(default_factory=list, description="Items on ground")
+    
+    # P4 Final bridge - Instance
+    instance: InstanceState = Field(default_factory=InstanceState, description="Instance/dungeon state")
     
     # Combat status
     in_combat: bool = Field(default=False, description="Whether character is in combat")

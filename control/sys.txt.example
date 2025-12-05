@@ -1,0 +1,68 @@
+# ===================================
+# OpenKore System Configuration Template
+# ===================================
+# Copy this file to 'sys.txt' to customize system-level settings.
+# Default installation already includes sys.txt with AI Bridge plugins enabled.
+#
+# For game-specific settings, see config.txt
+
+# ===================================
+# Plugin Loading Configuration
+# ===================================
+# loadPlugins controls how plugins are loaded at startup:
+#   0 = Disable automatic plugin loading
+#   1 = Load ALL plugins from plugins/ directory (default behavior without sys.txt)
+#   2 = Load ONLY plugins listed in loadPlugins_list (RECOMMENDED)
+#   3 = Load all plugins EXCEPT those in skipPlugins_list
+#
+# Mode 2 gives you explicit control over which plugins load.
+
+loadPlugins 2
+
+# ===================================
+# God-Tier AI Bridge System (REQUIRED FOR AI)
+# ===================================
+# These plugins are CRITICAL for AI-driven autonomous gameplay.
+# They enable communication between OpenKore and the AI Sidecar.
+#
+# ⚠️  WARNING: Removing these will break AI functionality!
+
+loadPlugins_list AI_Bridge
+loadPlugins_list godtier_chat_bridge
+
+# ===================================
+# Additional Plugins (Optional)
+# ===================================
+# Uncomment plugins you want to enable by adding loadPlugins_list entries.
+# All plugins must be in the plugins/ directory or plugins/subfolder/
+#
+# Example plugins:
+
+# Advanced macro system for conditional automation
+# loadPlugins_list eventMacro
+
+# Automatic shop management
+# loadPlugins_list autoShopAuto
+
+# Intelligent item management
+# loadPlugins_list needs
+
+# ===================================
+# Plugin Loading Mode 3 Alternative
+# ===================================
+# If you prefer to load all plugins EXCEPT specific ones:
+# 1. Change loadPlugins to 3
+# 2. List plugins to skip with skipPlugins_list instead
+#
+# Example:
+# loadPlugins 3
+# skipPlugins_list obsoletePlugin
+# skipPlugins_list debugPlugin
+
+# ===================================
+# Disabling All Plugins
+# ===================================
+# To run OpenKore without any plugins:
+# loadPlugins 0
+#
+# WARNING: This will disable AI Bridge, losing autonomous capabilities!

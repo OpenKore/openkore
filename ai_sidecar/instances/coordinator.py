@@ -444,12 +444,13 @@ class InstanceCoordinator:
         """Get cooldown summary for character."""
         return self.cooldown_manager.get_cooldown_summary(character_name)
     
-    async def tick(self, state: Any) -> list:
+    async def tick(self, state: Any, tick_number: int = 0) -> list:
         """
         Process instance state updates and return actions.
         
         Args:
             state: Game state to process
+            tick_number: Current tick number (optional)
             
         Returns:
             List of actions if needed

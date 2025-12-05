@@ -16,6 +16,7 @@ import time
 
 from ai_sidecar.core.state import GameState, Position
 from ai_sidecar.config import get_settings
+from ai_sidecar.config.loader import get_config
 from ai_sidecar.utils.logging import get_logger
 
 logger = get_logger(__name__)
@@ -51,6 +52,53 @@ class ActionType(str, Enum):
     RESPAWN = "respawn"
     EMOTION = "emotion"
     COMMAND = "command"  # Custom command
+    
+    # Progression (P0 Critical - Progression & Combat Bridge)
+    ALLOCATE_STAT = "allocate_stat"
+    ALLOCATE_SKILL = "allocate_skill"
+    
+    # Party actions (P1 Important - Party Bridge)
+    PARTY_HEAL = "party_heal"
+    PARTY_BUFF = "party_buff"
+    
+    # Companion actions (P2 Important - Companion Bridge)
+    FEED_PET = "feed_pet"
+    HOMUN_SKILL = "homun_skill"
+    MOUNT = "mount"
+    DISMOUNT = "dismount"
+    
+    # NPC/Quest actions (P3 Advanced - NPC/Quest Bridge)
+    NPC_TALK = "npc_talk"
+    NPC_CHOOSE = "npc_choose"
+    NPC_CLOSE = "npc_close"
+    QUEST_ACCEPT = "quest_accept"
+    QUEST_COMPLETE = "quest_complete"
+    
+    # Item/inventory actions (P3 Advanced - Inventory/Equipment Bridge)
+    DROP_ITEM = "drop_item"
+    PICK_ITEM = "pick_item"
+    EQUIP_ITEM = "equip_item"
+    UNEQUIP_ITEM = "unequip_item"
+    
+    # Storage actions (P3 Advanced - Storage Bridge)
+    STORAGE_GET = "storage_get"
+    STORAGE_ADD = "storage_add"
+    
+    # Chat sending (P3 Advanced - Communication Bridge)
+    CHAT_SEND = "chat_send"
+    
+    # Teleport (P3 Advanced - Movement Bridge)
+    TELEPORT_ACTION = "teleport"  # Renamed to avoid conflict with existing TELEPORT
+    
+    # Buy/Sell (P3 Advanced - Economy Bridge)
+    BUY_FROM_NPC = "buy_from_npc"
+    SELL_TO_NPC = "sell_to_npc"
+    BUY_FROM_VENDOR = "buy_from_vendor"
+    
+    # Instance actions (P4 Final - Instance Bridge)
+    ENTER_INSTANCE = "enter_instance"
+    NEXT_FLOOR = "next_floor"
+    EXIT_INSTANCE = "exit_instance"
     
     # Meta
     NOOP = "noop"  # No operation
@@ -275,37 +323,28 @@ class ProgressionDecisionEngine(DecisionEngine):
     9. Companions (non-urgent actions)
     """
     
-    def __init__(
-        self,
-        enable_companions: bool = True,
-        enable_consumables: bool = True,
-        enable_progression: bool = True,
-        enable_combat: bool = True,
-        enable_npc: bool = True,
-        enable_economic: bool = True,
-        enable_social: bool = True,
-    ) -> None:
+    def __init__(self) -> None:
         """
         Initialize the progression decision engine.
         
-        Args:
-            enable_companions: Enable companion systems (pet, homunculus, etc.)
-            enable_consumables: Enable consumable systems (buffs, recovery, etc.)
-            enable_progression: Enable progression systems
-            enable_combat: Enable combat AI systems
-            enable_npc: Enable NPC interaction systems
-            enable_economic: Enable economic systems
-            enable_social: Enable social systems (party, guild, chat, MVP)
+        Subsystem configuration is loaded from config/subsystems.yaml.
+        All subsystems are enabled by default unless explicitly disabled in config.
         """
         self._initialized = False
         self._decision_count = 0
-        self._enable_companions = enable_companions
-        self._enable_consumables = enable_consumables
-        self._enable_progression = enable_progression
-        self._enable_combat = enable_combat
-        self._enable_npc = enable_npc
-        self._enable_economic = enable_economic
-        self._enable_social = enable_social
+        
+        # Load configuration from subsystems.yaml
+        config = get_config()
+        
+        self._enable_companions = config.is_enabled('companions')
+        self._enable_consumables = config.is_enabled('consumables')
+        self._enable_progression = config.is_enabled('progression')
+        self._enable_combat = config.is_enabled('combat')
+        self._enable_npc = config.is_enabled('npc_quest')
+        self._enable_economic = config.is_enabled('economy')
+        self._enable_social = config.is_enabled('social')
+        self._enable_environment = config.is_enabled('environment')
+        self._enable_instances = config.is_enabled('instances')
         
         # Managers and Coordinators (lazy loaded)
         self._companion_coordinator = None
@@ -315,6 +354,8 @@ class ProgressionDecisionEngine(DecisionEngine):
         self._npc_manager = None
         self._economic_manager = None
         self._social_manager = None
+        self._environment_coordinator = None
+        self._instance_coordinator = None
     
     @property
     def companions(self):
@@ -400,18 +441,56 @@ class ProgressionDecisionEngine(DecisionEngine):
                 logger.warning("SocialManager not available")
         return self._social_manager
     
+    @property
+    def environment(self):
+        """Lazy load environment coordinator."""
+        if not hasattr(self, '_environment_coordinator') or self._environment_coordinator is None:
+            try:
+                from ai_sidecar.environment.coordinator import EnvironmentCoordinator
+                self._environment_coordinator = EnvironmentCoordinator()
+            except ImportError:
+                logger.warning("EnvironmentCoordinator not available")
+                self._environment_coordinator = None
+        return self._environment_coordinator
+    
+    @property
+    def instances(self):
+        """Lazy load instance coordinator."""
+        if self._instance_coordinator is None and self._enable_instances:
+            try:
+                from ai_sidecar.instances.coordinator import InstanceCoordinator
+                self._instance_coordinator = InstanceCoordinator()
+            except ImportError:
+                logger.warning("InstanceCoordinator not available")
+        return self._instance_coordinator
+    
     async def initialize(self) -> None:
         """Initialize the engine and its subsystems."""
-        logger.info(
-            "Initializing progression decision engine",
-            companions=self._enable_companions,
-            consumables=self._enable_consumables,
-            progression=self._enable_progression,
-            combat=self._enable_combat,
-            npc=self._enable_npc,
-            economic=self._enable_economic,
-            social=self._enable_social,
-        )
+        config = get_config()
+        enabled_subsystems = config.get_enabled_subsystems()
+        
+        logger.info("=" * 60)
+        logger.info("AI Sidecar Subsystem Status")
+        logger.info("=" * 60)
+        
+        subsystem_names = {
+            'social': 'SOCIAL',
+            'progression': 'PROGRESSION',
+            'combat': 'COMBAT',
+            'companions': 'COMPANIONS',
+            'consumables': 'CONSUMABLES',
+            'equipment': 'EQUIPMENT',
+            'economy': 'ECONOMY',
+            'npc_quest': 'NPC/QUEST',
+            'instances': 'INSTANCES',
+            'environment': 'ENVIRONMENT',
+        }
+        
+        for subsystem_key, display_name in subsystem_names.items():
+            status = "✅ ENABLED" if subsystem_key in enabled_subsystems else "❌ DISABLED"
+            logger.info(f"{status:12} {display_name}")
+        
+        logger.info("=" * 60)
         
         # Pre-initialize all coordinators and managers
         if self._enable_companions:
@@ -430,6 +509,10 @@ class ProgressionDecisionEngine(DecisionEngine):
             _ = self.social
             if self.social:
                 await self.social.initialize()
+        if self._enable_environment:
+            _ = self.environment
+        if self._enable_instances:
+            _ = self.instances
         
         self._initialized = True
         logger.info("All subsystems initialized")
@@ -453,6 +536,8 @@ class ProgressionDecisionEngine(DecisionEngine):
         self._npc_manager = None
         self._economic_manager = None
         self._social_manager = None
+        self._environment_coordinator = None
+        self._instance_coordinator = None
     
     async def decide(self, state: GameState) -> DecisionResult:
         """
@@ -462,11 +547,12 @@ class ProgressionDecisionEngine(DecisionEngine):
         1. Social (party/guild emergencies, chat commands)
         2. Progression (lifecycle, job change, stats)
         3. Combat (skills, attack, positioning)
-        4. NPC (quests, services)
-        5. Economic (equipment, trading, storage)
-        
-        Note: Companions and Consumables coordinators are stubbed for future implementation.
-        They require context adapters to convert GameState to their expected formats.
+        4. Consumables (buffs, healing, status cure) - P3 Advanced
+        5. Companions (pet/homun management) - P3 Advanced
+        6. NPC (quests, services) - P3 Advanced
+        7. Environment (time-based optimizations) - P3 Advanced
+        7.5. Instances (Endless Tower, Memorial Dungeons) - P4 Final
+        8. Economic (equipment, trading, storage)
         
         Args:
             state: Current game state snapshot
@@ -495,18 +581,35 @@ class ProgressionDecisionEngine(DecisionEngine):
                 combat_actions = await self.combat.tick(state)
                 all_actions.extend(self._convert_to_actions(combat_actions))
             
-            # Priority 4: NPC (quests, services) - NOW WIRED!
+            # Priority 4: Consumables (buffs, healing, status cure) - P3 Advanced
+            if self.consumables is not None:
+                consumable_actions = await self.consumables.tick(state, state.tick)
+                all_actions.extend(self._convert_to_actions(consumable_actions))
+            
+            # Priority 5: Companions (pet/homun management) - P3 Advanced
+            if self.companions is not None:
+                companion_actions = await self.companions.tick(state, state.tick)
+                all_actions.extend(self._convert_to_actions(companion_actions))
+            
+            # Priority 6: NPC (quests, services) - P3 Advanced
             if self.npc is not None:
                 npc_actions = await self.npc.tick(state)
                 all_actions.extend(self._convert_to_actions(npc_actions))
             
-            # Priority 5: Economic (equipment, trading, storage)
+            # Priority 7: Environment (time-based optimizations) - P3 Advanced
+            if self.environment is not None:
+                env_actions = await self.environment.tick(state, state.tick)
+                all_actions.extend(self._convert_to_actions(env_actions))
+            
+            # Priority 7.5: Instances (Endless Tower, Memorial Dungeons) - P4 Final
+            if self.instances is not None:
+                instance_actions = await self.instances.tick(state, state.tick)
+                all_actions.extend(self._convert_to_actions(instance_actions))
+            
+            # Priority 8: Economic (equipment, trading, storage)
             if self.economic is not None:
                 economic_actions = await self.economic.tick(state)
                 all_actions.extend(self._convert_to_actions(economic_actions))
-            
-            # Note: Companions and Consumables coordinators exist but need context adapters
-            # They will be fully integrated in a future phase when adapters are implemented
             
         except Exception as e:
             logger.error(f"Decision engine error: {e}", exc_info=True)
@@ -637,6 +740,16 @@ class ProgressionDecisionEngine(DecisionEngine):
                     "loaded": self._social_manager is not None,
                     "status": "active" if self._social_manager else "unloaded",
                 },
+                "environment": {
+                    "enabled": self._enable_environment,
+                    "loaded": self._environment_coordinator is not None,
+                    "status": "active" if self._environment_coordinator else "unloaded",
+                },
+                "instances": {
+                    "enabled": self._enable_instances,
+                    "loaded": self._instance_coordinator is not None,
+                    "status": "active" if self._instance_coordinator else "unloaded",
+                },
             },
         }
 
@@ -646,9 +759,11 @@ def create_decision_engine() -> DecisionEngine:
     Factory function to create the appropriate decision engine.
     
     Based on configuration, creates the right engine type.
+    Subsystem configuration is loaded from config/subsystems.yaml.
+    
     Supports:
     - stub: Minimal testing engine
-    - rule_based: Full-featured engine with all coordinators (Phase 10C+)
+    - rule_based: Full-featured engine with all coordinators
     - ml: Machine learning engine (Future)
     """
     engine_type = get_settings().decision.engine_type
@@ -656,15 +771,8 @@ def create_decision_engine() -> DecisionEngine:
     if engine_type == "stub":
         return StubDecisionEngine()
     elif engine_type == "rule_based":
-        return ProgressionDecisionEngine(
-            enable_companions=True,
-            enable_consumables=True,
-            enable_progression=True,
-            enable_combat=True,
-            enable_npc=True,
-            enable_economic=True,
-            enable_social=True,
-        )
+        # Configuration is loaded automatically from subsystems.yaml
+        return ProgressionDecisionEngine()
     # Future: Add other engine types
     # elif engine_type == "ml":
     #     return MLEngine()

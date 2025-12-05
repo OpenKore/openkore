@@ -1,0 +1,200 @@
+# =================================================
+# AI Sidecar Subsystem Configuration Template
+# =================================================
+# Copy this to subsystems.yaml and customize
+# 
+# DEFAULT: All subsystems enabled for full automation
+# CUSTOMIZE: Set enabled: false to disable features
+
+# =================================================
+# QUICK START EXAMPLES
+# =================================================
+
+# Example 1: Disable everything except combat
+# subsystems:
+#   social: {enabled: false}
+#   progression: {enabled: false}
+#   combat: {enabled: true}
+#   companions: {enabled: false}
+#   consumables: {enabled: true}  # Keep for healing
+#   equipment: {enabled: false}
+#   economy: {enabled: false}
+#   npc_quest: {enabled: false}
+#   instances: {enabled: false}
+#   environment: {enabled: false}
+
+# Example 2: Disable just companion management
+# subsystems:
+#   companions: {enabled: false}
+
+# Example 3: Farming bot (combat + economy)
+# subsystems:
+#   social: {enabled: false}
+#   progression: {enabled: false}
+#   combat: {enabled: true}
+#   companions: {enabled: false}
+#   consumables: {enabled: true}
+#   equipment: {enabled: true}
+#   economy: {enabled: true}
+#   npc_quest: {enabled: false}
+#   instances: {enabled: false}
+#   environment: {enabled: false}
+
+# Example 4: Party support bot
+# subsystems:
+#   social: {enabled: true}
+#   progression: {enabled: false}
+#   combat: {enabled: true}
+#   companions: {enabled: true}
+#   consumables: {enabled: true}
+#   equipment: {enabled: false}
+#   economy: {enabled: false}
+#   npc_quest: {enabled: false}
+#   instances: {enabled: false}
+#   environment: {enabled: false}
+
+# =================================================
+# FULL CONFIGURATION (All Enabled - Default)
+# =================================================
+subsystems:
+  # Core systems - always enabled
+  core:
+    enabled: true
+    description: "Core decision engine"
+  
+  # Social features
+  social:
+    enabled: true
+    description: "Chat, party, guild, MVP"
+    features:
+      chat_responses: true
+      party_coordination: true
+      guild_management: true
+      mvp_hunting: true
+  
+  # Character progression
+  progression:
+    enabled: true
+    description: "Stats, skills, job advancement"
+    features:
+      auto_stat_allocation: true
+      auto_skill_allocation: true
+      job_advancement: true
+  
+  # Combat AI
+  combat:
+    enabled: true
+    description: "Combat tactics and skills"
+    features:
+      skill_usage: true
+      target_selection: true
+      tactical_positioning: true
+      emergency_actions: true
+  
+  # Companion management
+  companions:
+    enabled: true
+    description: "Pet, homunculus, mercenary, mount"
+    features:
+      pet_management: true
+      homunculus_ai: true
+      mercenary_coordination: true
+      mount_optimization: true
+  
+  # Consumable management
+  consumables:
+    enabled: true
+    description: "Buffs, healing, status cure"
+    features:
+      buff_maintenance: true
+      auto_healing: true
+      status_cure: true
+      food_buffs: true
+  
+  # Equipment optimization
+  equipment:
+    enabled: true
+    description: "Equipment scoring"
+    features:
+      equipment_evaluation: true
+      auto_equip_recommendations: true
+  
+  # Economic systems
+  economy:
+    enabled: true
+    description: "Trading and storage"
+    features:
+      market_analysis: true
+      vendor_scanning: true
+      storage_management: true
+      price_intelligence: true
+  
+  # NPC and quest automation
+  npc_quest:
+    enabled: true
+    description: "NPC dialogue and quests"
+    features:
+      npc_automation: true
+      quest_tracking: true
+      daily_quests: true
+  
+  # Instance dungeons
+  instances:
+    enabled: true
+    description: "Endless Tower, Memorial Dungeons"
+    features:
+      endless_tower: true
+      memorial_dungeons: true
+  
+  # Environment awareness
+  environment:
+    enabled: true
+    description: "Time, weather, events"
+    features:
+      day_night_optimization: true
+      weather_awareness: true
+      event_detection: true
+
+# =================================================
+# CONFIGURATION PRESETS
+# =================================================
+# Uncomment to apply a preset configuration
+# Then customize individual subsystems as needed
+
+presets:
+  full_automation:
+    description: "All features enabled (default)"
+    enable_all: true
+  
+  combat_only:
+    description: "Only combat features"
+    enable: [core, combat, consumables, companions]
+  
+  social_only:
+    description: "Only social features"
+    enable: [core, social]
+  
+  farming:
+    description: "Optimized for farming"
+    enable: [core, combat, consumables, equipment, economy]
+  
+  party_support:
+    description: "Optimized for party support role"
+    enable: [core, social, combat, consumables, companions]
+
+# =================================================
+# USAGE TIPS
+# =================================================
+# 1. Copy this file to subsystems.yaml
+# 2. Uncomment and modify the subsystems you want to change
+# 3. Restart AI Sidecar to apply changes
+# 4. Check logs on startup to verify active subsystems
+#
+# Feature-level control:
+# - Set individual features to false to disable specific functionality
+# - Example: disable just auto_stat_allocation while keeping progression enabled
+#
+# Using presets:
+# - Presets provide quick configuration templates
+# - Apply a preset, then override specific subsystems as needed
+# - Preset changes require manual edits (not dynamic)
