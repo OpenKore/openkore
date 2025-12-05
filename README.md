@@ -109,147 +109,499 @@ Looking for the **best Ragnarok Online bot**? Here's how the AI-enhanced version
 
 ---
 
-## 🚀 Quick Start
+## 📦 Installation
 
-### Prerequisites
+Complete installation guide for setting up the God-Tier AI Sidecar system.
 
-- **OpenKore**: The base bot (included in this repository)
-- **Python 3.10+**: For the AI sidecar (3.11+ recommended)
-- **Git**: For cloning the repository
-- **Optional**: DragonflyDB for session memory, LLM API key for advanced features
+### 📋 Prerequisites
 
-### Installation
+Before installing the AI Sidecar, ensure your system meets the following requirements:
 
-#### 1. Get OpenKore AI
+#### Required Software
+
+| Software | Minimum Version | Recommended Version | Purpose |
+|----------|----------------|---------------------|---------|
+| **Python** | 3.10+ | 3.12+ | Core runtime |
+| **Git** | 2.0+ | Latest | Repository cloning |
+| **pip** | 20.0+ | Latest | Package management |
+
+#### System Requirements
+
+**Minimum Requirements (CPU Mode)**
+- **CPU**: 2+ cores @ 2.0GHz
+- **RAM**: 2GB available
+- **Storage**: 2GB free space
+- **OS**: Windows 10/11, Ubuntu 20.04+, or macOS 10.15+
+
+**Recommended Requirements**
+- **CPU**: 4+ cores @ 2.5GHz
+- **RAM**: 4GB available
+- **Storage**: 5GB free space
+- **OS**: Windows 11, Ubuntu 22.04+, or macOS 12+
+
+**Optional Components**
+- **NVIDIA GPU with CUDA** (for GPU mode) - GTX 1060+ with 6GB+ VRAM
+- **DragonflyDB or Redis** (for enhanced memory features)
+- **LLM API Key** (for LLM-powered features) - OpenAI, Azure, DeepSeek, or Claude
+
+#### Platform-Specific Prerequisites
+
+**Linux:**
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install -y python3.12 python3.12-venv python3-pip git build-essential
+
+# Fedora/RHEL
+sudo dnf install -y python3.12 python3-pip git gcc
+
+# Arch Linux
+sudo pacman -S python python-pip git base-devel
+```
+
+**Windows:**
+- Download Python 3.12+ from [python.org](https://www.python.org/downloads/)
+- Ensure "Add Python to PATH" is checked during installation
+- Install Git from [git-scm.com](https://git-scm.com/download/win)
+- Restart your terminal after installation
+
+#### Verification
+
+Run these commands to verify prerequisites:
 
 ```bash
-git clone https://github.com/YourRepo/openkore-AI.git
+# Check Python version (should be 3.10+)
+python --version
+# Or on some systems:
+python3 --version
+
+# Check pip version
+pip --version
+# Or:
+pip3 --version
+
+# Check Git version
+git --version
+```
+
+**Expected Output:**
+```
+Python 3.12.0 (or higher)
+pip 24.0 (or higher)
+git version 2.40.0 (or higher)
+```
+
+---
+
+### 🐧 Installation on Linux
+
+Follow these steps to manually install the AI Sidecar on Linux systems.
+
+#### Step 1: Clone the Repository
+
+If you haven't already cloned the repository:
+
+```bash
+# Clone the repository
+git clone https://github.com/OpenKore/openkore.git openkore-AI
 cd openkore-AI
 ```
 
-#### 2. Setup AI Sidecar
+If you already have the repository:
+
+```bash
+# Navigate to the project directory
+cd /path/to/openkore-AI
+```
+
+#### Step 2: Create Virtual Environment
+
+Create an isolated Python environment for the AI Sidecar:
+
+```bash
+# Create virtual environment in the project root
+python3 -m venv .venv
+
+# Activate the virtual environment
+source .venv/bin/activate
+```
+
+**Note:** Your terminal prompt should now show `(.venv)` indicating the virtual environment is active.
+
+#### Step 3: Upgrade pip
+
+Ensure you have the latest pip version:
+
+```bash
+# Upgrade pip to the latest version
+pip install --upgrade pip setuptools wheel
+```
+
+#### Step 4: Install Dependencies
+
+Install the AI Sidecar package and all its dependencies:
+
+```bash
+# Install the package in editable mode
+pip install -e .
+
+# Verify installation
+python -c "import ai_sidecar; print('✅ AI Sidecar installed successfully!')"
+```
+
+**Alternative:** Install from requirements.txt (if available):
 
 ```bash
 cd ai_sidecar
-
-# Create virtual environment
-python3 -m venv .venv
-source .venv/bin/activate  # Linux/macOS
-# OR: .\.venv\Scripts\activate  # Windows
-
-# Install dependencies
 pip install -r requirements.txt
+```
 
-# Copy and configure environment
+#### Step 5: Configure Environment
+
+Create and configure your environment file:
+
+```bash
+# Copy the example environment file
 cp .env.example .env
+
+# Edit with your preferred editor
+nano .env
+# Or use: vim .env, gedit .env, etc.
 ```
 
-#### 3. Choose Your AI Backend
-
-**CPU Mode (Default - No GPU needed)**
-```bash
-python -m ai_sidecar.main
-```
-
-**GPU Mode (CUDA acceleration)**
-```bash
-AI_DECISION_ENGINE_TYPE=gpu python -m ai_sidecar.main
-```
-
-**ML Mode (Self-learning)**
-```bash
-AI_DECISION_ENGINE_TYPE=ml python -m ai_sidecar.main
-```
-
-**LLM Mode (Claude, GPT-4, DeepSeek)**
-```bash
-# Set your API key in .env, then:
-AI_DECISION_ENGINE_TYPE=llm python -m ai_sidecar.main
-```
-
-#### 4. Start OpenKore
+**Minimal `.env` configuration:**
 
 ```bash
-# In a new terminal
-cd openkore-AI
-perl openkore.pl  # Linux/macOS
-# OR: start.exe   # Windows
+# Core Settings
+AI_DEBUG_MODE=false
+AI_LOG_LEVEL=INFO
+
+# ZeroMQ Communication
+AI_ZMQ_BIND_ADDRESS=tcp://127.0.0.1:5555
+
+# Compute Backend (cpu, gpu, or llm)
+COMPUTE_BACKEND=cpu
+
+# Decision Engine
+AI_DECISION_ENGINE_TYPE=rule_based
 ```
 
-**✅ Success Indicators:**
-- AI Sidecar shows: `[INFO] ZeroMQ server listening on tcp://127.0.0.1:5555`
-- OpenKore shows: `[GodTier] Connected to AI sidecar`
+#### Step 6: Verify Installation
 
----
+Test that everything is installed correctly:
 
-### Windows Installation
+```bash
+# Test core dependencies
+python -c "import zmq, pydantic, structlog; print('✅ Core dependencies OK')"
 
-**Prerequisites:**
-- Python 3.12+ ([Download here](https://www.python.org/downloads/))
-- OpenKore for Windows
-- Git for Windows (optional)
+# Test AI Sidecar import
+python -c "from ai_sidecar.core.config import Settings; print('✅ AI Sidecar configuration OK')"
 
-**Quick Install:**
+# Check version (if available)
+python -c "import ai_sidecar; print(f'AI Sidecar version: {ai_sidecar.__version__}')" 2>/dev/null || echo "Version info not available"
+```
 
-1. **Run the installer**
-   ```cmd
-   install.bat
-   ```
+#### Step 7: Run the AI Sidecar
 
-2. **Configure your AI backend**
-   
-   Edit `ai_sidecar\.env`:
-   ```ini
-   COMPUTE_BACKEND=cpu
-   # For LLM mode:
-   # COMPUTE_BACKEND=llm
-   # LLM_PROVIDER=openai
-   # OPENAI_API_KEY=sk-your-key
-   ```
+Start the AI Sidecar service:
 
-3. **Start the AI**
-   ```cmd
-   run.bat
-   ```
-
-4. **Launch OpenKore**
-   
-   Double-click `start.exe` or `wxstart.exe`
-
-**Manual Installation (Windows):**
-
-```cmd
-cd openkore-AI\ai_sidecar
-python -m venv .venv
-.venv\Scripts\activate.bat
-pip install -r requirements.txt
-copy .env.example .env
-REM Edit .env with your settings
+```bash
+# From the project root with virtual environment activated
+cd ai_sidecar
 python main.py
 ```
 
-**Troubleshooting Windows:**
-- If Python not found: Add Python to PATH during installation
-- If DLL errors: Install Visual C++ Redistributable
-- If permissions: Run as Administrator
+**Expected Output:**
+```
+[INFO] AI Sidecar starting v3.0.0
+[INFO] Configuration loaded from: /path/to/openkore-AI/.env
+[INFO] Compute backend: cpu
+[INFO] ZeroMQ server binding to tcp://127.0.0.1:5555
+✅ AI Sidecar ready! Listening on: tcp://127.0.0.1:5555
+[INFO] Waiting for OpenKore connection...
+```
 
 ---
 
-## 🚀 Quick Start Scripts
+### 🪟 Installation on Windows
 
-For convenience, we provide automated scripts:
+Follow these steps to manually install the AI Sidecar on Windows systems.
 
-### Linux/Mac
-```bash
-./install.sh  # One-time setup
-./run.sh      # Start AI sidecar
+#### Step 1: Open Command Prompt or PowerShell
+
+**Option A: Command Prompt**
+- Press `Win + R`, type `cmd`, press Enter
+
+**Option B: PowerShell** (Recommended)
+- Press `Win + X`, select "Windows PowerShell" or "Terminal"
+
+#### Step 2: Clone the Repository
+
+If you haven't already cloned the repository:
+
+```powershell
+# PowerShell or Command Prompt
+git clone https://github.com/OpenKore/openkore.git openkore-AI
+cd openkore-AI
 ```
 
-### Windows
+If you already have the repository:
+
+```powershell
+# Navigate to the project directory
+cd C:\path\to\openkore-AI
+```
+
+#### Step 3: Create Virtual Environment
+
+Create an isolated Python environment:
+
+**Using Command Prompt:**
 ```cmd
-install.bat   REM One-time setup
-run.bat       REM Start AI sidecar
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+.venv\Scripts\activate.bat
 ```
+
+**Using PowerShell:**
+```powershell
+# Create virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+.venv\Scripts\Activate.ps1
+```
+
+**Note:** If you get an execution policy error in PowerShell, run:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+Your prompt should now show `(.venv)` indicating the virtual environment is active.
+
+#### Step 4: Upgrade pip
+
+Ensure you have the latest pip version:
+
+```powershell
+# Upgrade pip
+python -m pip install --upgrade pip setuptools wheel
+```
+
+#### Step 5: Install Dependencies
+
+Install the AI Sidecar package and all its dependencies:
+
+```powershell
+# Install the package in editable mode
+pip install -e .
+
+# Verify installation
+python -c "import ai_sidecar; print('AI Sidecar installed successfully!')"
+```
+
+**Alternative:** Install from requirements.txt (if available):
+
+```powershell
+cd ai_sidecar
+pip install -r requirements.txt
+```
+
+#### Step 6: Configure Environment
+
+Create and configure your environment file:
+
+```powershell
+# Copy the example environment file
+copy .env.example .env
+
+# Edit with notepad
+notepad .env
+```
+
+**Minimal `.env` configuration:**
+
+```bash
+# Core Settings
+AI_DEBUG_MODE=false
+AI_LOG_LEVEL=INFO
+
+# ZeroMQ Communication
+AI_ZMQ_BIND_ADDRESS=tcp://127.0.0.1:5555
+
+# Compute Backend (cpu, gpu, or llm)
+COMPUTE_BACKEND=cpu
+
+# Decision Engine
+AI_DECISION_ENGINE_TYPE=rule_based
+```
+
+#### Step 7: Verify Installation
+
+Test that everything is installed correctly:
+
+```powershell
+# Test core dependencies
+python -c "import zmq, pydantic, structlog; print('Core dependencies OK')"
+
+# Test AI Sidecar import
+python -c "from ai_sidecar.core.config import Settings; print('AI Sidecar configuration OK')"
+```
+
+#### Step 8: Run the AI Sidecar
+
+Start the AI Sidecar service:
+
+```powershell
+# From the project root with virtual environment activated
+cd ai_sidecar
+python main.py
+```
+
+**Expected Output:**
+```
+[INFO] AI Sidecar starting v3.0.0
+[INFO] Configuration loaded from: C:\path\to\openkore-AI\.env
+[INFO] Compute backend: cpu
+[INFO] ZeroMQ server binding to tcp://127.0.0.1:5555
+✅ AI Sidecar ready! Listening on: tcp://127.0.0.1:5555
+[INFO] Waiting for OpenKore connection...
+```
+
+---
+
+### 🚀 Quick Start
+
+Once installation is complete, follow these steps to run the system.
+
+#### Starting the AI Sidecar
+
+**Linux/macOS:**
+```bash
+# Terminal 1: Start AI Sidecar
+cd /path/to/openkore-AI
+source .venv/bin/activate
+cd ai_sidecar
+python main.py
+```
+
+**Windows (PowerShell):**
+```powershell
+# Terminal 1: Start AI Sidecar
+cd C:\path\to\openkore-AI
+.venv\Scripts\Activate.ps1
+cd ai_sidecar
+python main.py
+```
+
+**Windows (Command Prompt):**
+```cmd
+# Terminal 1: Start AI Sidecar
+cd C:\path\to\openkore-AI
+.venv\Scripts\activate.bat
+cd ai_sidecar
+python main.py
+```
+
+#### Starting OpenKore
+
+Open a **second terminal** and start OpenKore:
+
+**Linux/macOS:**
+```bash
+# Terminal 2: Start OpenKore
+cd /path/to/openkore-AI
+./start.pl
+```
+
+**Windows:**
+```cmd
+# Terminal 2: Start OpenKore
+cd C:\path\to\openkore-AI
+start.exe
+```
+
+#### Success Indicators
+
+✅ **You should see these messages:**
+
+**In Terminal 1 (AI Sidecar):**
+```
+[INFO] AI Sidecar starting v3.0.0
+[INFO] ZeroMQ server binding to tcp://127.0.0.1:5555
+✅ AI Sidecar ready! Listening on: tcp://127.0.0.1:5555
+[INFO] Connection established with OpenKore
+```
+
+**In Terminal 2 (OpenKore):**
+```
+[GodTier] AI Bridge plugin loaded
+[GodTier] Connecting to AI sidecar at tcp://127.0.0.1:5555
+[GodTier] Connected to AI sidecar
+✅ God-Tier AI activated!
+```
+
+#### Basic Commands
+
+Once both are running, the AI will automatically:
+- Make decisions based on game state
+- Control character movement and combat
+- Manage inventory and resources
+- Respond to in-game events
+
+**Manual Override:**
+You can still use standard OpenKore console commands when needed.
+
+#### Common Usage Patterns
+
+**Auto-Leveling:**
+- The AI will automatically farm monsters appropriate for your level
+- Stats and skills are allocated based on your job class
+- No manual intervention required
+
+**Party Play:**
+- The AI coordinates with party members
+- Supports healing, tanking, and DPS roles
+- Automatic buff and heal responses
+
+**Resource Management:**
+- Auto-pickup valuable items
+- Intelligent inventory management
+- Auto-use potions when needed
+
+---
+
+### 🤖 Automated Installation
+
+For convenience, automated installation scripts are provided for both Linux and Windows.
+
+#### Linux Automated Installation
+
+The automated script handles all installation steps automatically.
+
+**Using `install.sh`:**
+
+```bash
+# Navigate to project directory
+cd /path/to/openkore-AI
+
+# Make script executable
+chmod +x install.sh
+
+# Run installation
+./install.sh
+```
+
+**What the script does:**
+1. ✅ Checks Python version (3.10+)
+2. ✅ Creates virtual environment
+3. ✅ Upgrades pip
+4. ✅ Installs all dependencies
+5. ✅ Creates `.env` from template
+6. ✅ Verifies installation
+7. ✅ Provides next steps
 
 **Script Features:**
 - ✅ Auto-detects Python version
@@ -257,6 +609,419 @@ run.bat       REM Start AI sidecar
 - ✅ Installs all dependencies
 - ✅ Generates config template
 - ✅ Sets up PYTHONPATH automatically
+
+#### Windows Automated Installation
+
+The automated batch script handles all installation steps automatically.
+
+**Using `install.bat`:**
+
+```cmd
+# Navigate to project directory
+cd C:\path\to\openkore-AI
+
+# Run installation
+install.bat
+```
+
+**What the script does:**
+1. ✅ Checks Python installation
+2. ✅ Creates virtual environment
+3. ✅ Upgrades pip
+4. ✅ Installs all dependencies
+5. ✅ Creates `.env` from template
+6. ✅ Verifies installation
+7. ✅ Provides next steps
+
+#### Quick Start Scripts
+
+For convenience, we also provide run scripts:
+
+**Linux/Mac:**
+```bash
+./run.sh      # Start AI sidecar
+```
+
+**Windows:**
+```cmd
+run.bat       # Start AI sidecar
+```
+
+---
+
+### 🔧 Troubleshooting
+
+Common issues and solutions for installation and setup.
+
+#### ❌ Issue: ModuleNotFoundError for 'ai_sidecar'
+
+**Symptoms:**
+```
+ModuleNotFoundError: No module named 'ai_sidecar'
+```
+
+**Solutions:**
+
+**Solution 1: Install in editable mode**
+```bash
+# Navigate to project root (where pyproject.toml is located)
+cd /path/to/openkore-AI
+
+# Activate virtual environment
+source .venv/bin/activate  # Linux/macOS
+# or: .venv\Scripts\activate  # Windows
+
+# Install in editable mode
+pip install -e .
+```
+
+**Solution 2: Set PYTHONPATH**
+```bash
+# Linux/macOS
+export PYTHONPATH=/path/to/openkore-AI:$PYTHONPATH
+
+# Windows (PowerShell)
+$env:PYTHONPATH = "C:\path\to\openkore-AI;$env:PYTHONPATH"
+
+# Windows (Command Prompt)
+set PYTHONPATH=C:\path\to\openkore-AI;%PYTHONPATH%
+```
+
+**Solution 3: Verify pyproject.toml location**
+```bash
+# pyproject.toml should be in the project root
+ls -la pyproject.toml  # Linux/macOS
+dir pyproject.toml     # Windows
+
+# If missing, it may be in the wrong location
+# It should be at: openkore-AI/pyproject.toml
+```
+
+---
+
+#### ❌ Issue: Virtual Environment Not Activating
+
+**Symptoms:**
+- Prompt doesn't show `(.venv)`
+- Python packages install globally
+- `pip list` shows system packages
+
+**Solutions:**
+
+**Linux/macOS:**
+```bash
+# Make sure you're using the correct activate script
+source .venv/bin/activate
+
+# If that fails, try:
+. .venv/bin/activate
+
+# Check if virtual environment was created
+ls -la .venv/bin/activate
+```
+
+**Windows PowerShell:**
+```powershell
+# Enable script execution
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Activate
+.venv\Scripts\Activate.ps1
+
+# Verify
+Get-Command python | Select-Object Source
+```
+
+**Windows Command Prompt:**
+```cmd
+# Activate
+.venv\Scripts\activate.bat
+
+# Verify
+where python
+```
+
+---
+
+#### ❌ Issue: ZeroMQ Connection Failed
+
+**Symptoms:**
+```
+[ERROR] Failed to connect to AI sidecar at tcp://127.0.0.1:5555
+```
+
+**Solutions:**
+
+**Solution 1: Verify AI Sidecar is running**
+```bash
+# Check if process is running
+# Linux/macOS:
+ps aux | grep "python main.py"
+
+# Windows (PowerShell):
+Get-Process | Where-Object {$_.ProcessName -like "*python*"}
+```
+
+**Solution 2: Check port availability**
+```bash
+# Linux/macOS:
+netstat -tlnp | grep 5555
+# or:
+lsof -i :5555
+
+# Windows:
+netstat -ano | findstr :5555
+```
+
+**Solution 3: Try alternative address**
+```bash
+# Edit .env file
+AI_ZMQ_BIND_ADDRESS=tcp://0.0.0.0:5555
+```
+
+**Solution 4: Firewall configuration**
+```bash
+# Linux (Ubuntu/Debian):
+sudo ufw allow 5555/tcp
+
+# Windows: Add rule in Windows Defender Firewall
+# Control Panel → System and Security → Windows Defender Firewall → Advanced Settings
+```
+
+---
+
+#### ❌ Issue: Permission Denied
+
+**Symptoms:**
+```
+PermissionError: [Errno 13] Permission denied
+```
+
+**Solutions:**
+
+**Linux/macOS:**
+```bash
+# Fix script permissions
+chmod +x ./start.pl
+
+# Fix directory permissions
+chmod -R u+w ./ai_sidecar
+
+# Check ownership
+ls -la
+```
+
+**Windows:**
+```powershell
+# Run PowerShell as Administrator
+# Right-click PowerShell → Run as Administrator
+
+# Or adjust file properties
+# Right-click folder → Properties → Security → Edit permissions
+```
+
+---
+
+#### ❌ Issue: Python Version Mismatch
+
+**Symptoms:**
+```
+ERROR: This package requires Python '>=3.10'
+```
+
+**Solutions:**
+
+**Option 1: Install correct Python version**
+```bash
+# Linux (using deadsnakes PPA for Ubuntu):
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.12 python3.12-venv
+
+# macOS (using Homebrew):
+brew install python@3.12
+
+# Windows: Download from python.org
+```
+
+**Option 2: Use pyenv (recommended)**
+```bash
+# Install pyenv
+curl https://pyenv.run | bash
+
+# Install Python 3.12
+pyenv install 3.12.0
+pyenv local 3.12.0
+
+# Create new virtual environment
+python -m venv .venv
+```
+
+---
+
+#### ❌ Issue: pip Install Fails
+
+**Symptoms:**
+```
+ERROR: Could not find a version that satisfies the requirement...
+```
+
+**Solutions:**
+
+**Solution 1: Upgrade pip**
+```bash
+python -m pip install --upgrade pip setuptools wheel
+```
+
+**Solution 2: Clear pip cache**
+```bash
+pip cache purge
+pip install -e . --no-cache-dir
+```
+
+**Solution 3: Install build dependencies**
+```bash
+# Linux (Ubuntu/Debian):
+sudo apt install python3-dev build-essential
+
+# macOS:
+xcode-select --install
+
+# Windows: Install Visual Studio Build Tools
+# Download from: visualstudio.microsoft.com/downloads/
+```
+
+---
+
+#### ❌ Issue: DragonflyDB Connection Failed
+
+**Symptoms:**
+```
+ConnectionRefusedError: Could not connect to DragonflyDB at localhost:6379
+```
+
+**Solutions:**
+
+**Solution 1: Start DragonflyDB (Optional)**
+```bash
+# Using Docker (recommended):
+docker run -d --name openkore-dragonfly -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
+
+# Verify:
+docker ps | grep dragonfly
+```
+
+**Solution 2: Use Redis instead**
+```bash
+# Install Redis
+# Ubuntu/Debian:
+sudo apt install redis-server
+
+# macOS:
+brew install redis
+
+# Start Redis:
+sudo systemctl start redis  # Linux
+brew services start redis   # macOS
+```
+
+**Solution 3: Disable memory features**
+```yaml
+# Edit config.yaml
+memory:
+  session:
+    backend: none  # Disables session memory requirement
+```
+
+---
+
+#### ⚠️ Issue: High Memory Usage
+
+**Symptoms:**
+- RAM usage grows continuously
+- System becomes slow
+
+**Solutions:**
+
+```yaml
+# Edit config.yaml
+memory:
+  working:
+    max_entries: 500          # Reduce buffer size (default: 1000)
+    cleanup_interval_s: 60    # Clean more frequently
+
+  session:
+    ttl_hours: 12             # Shorter retention (default: 24)
+```
+
+---
+
+#### Issue: Wrong Working Directory
+
+**Symptoms:**
+```
+FileNotFoundError: [Errno 2] No such file or directory: 'config.yaml'
+```
+
+**Solutions:**
+
+```bash
+# Always run from project root
+cd /path/to/openkore-AI
+
+# Check current directory
+pwd  # Linux/macOS
+cd   # Windows
+
+# Verify structure
+ls -la  # Should see: ai_sidecar/, pyproject.toml, .venv/
+```
+
+---
+
+#### Getting Help
+
+If you're still experiencing issues after trying these solutions:
+
+1. **📖 Check Documentation**
+   - [AI Sidecar README](ai_sidecar/README.md)
+   - [Full Documentation](docs/GODTIER-RO-AI-DOCUMENTATION.md)
+
+2. **🐛 Search Issues**
+   - [GitHub Issues](https://github.com/OpenKore/openkore/issues)
+   - Search for similar problems and solutions
+
+3. **💬 Community Support**
+   - [Discord Server](https://discord.com/invite/hdAhPM6)
+   - [OpenKore Forum](https://forums.openkore.com/)
+
+4. **📝 Report Bug**
+   - Create a new issue with:
+     - System information (`python --version`, OS, etc.)
+     - Error messages (full traceback)
+     - Steps to reproduce
+     - What you've already tried
+
+---
+
+### ✅ Installation Checklist
+
+Use this checklist to verify your installation:
+
+- [ ] Python 3.10+ installed and verified
+- [ ] Git installed and working
+- [ ] Repository cloned to local machine
+- [ ] Virtual environment created (`.venv/`)
+- [ ] Virtual environment activated (prompt shows `(.venv)`)
+- [ ] pip upgraded to latest version
+- [ ] Dependencies installed successfully
+- [ ] `.env` file created and configured
+- [ ] AI Sidecar starts without errors
+- [ ] ZeroMQ binds to port 5555
+- [ ] OpenKore connects to AI Sidecar
+- [ ] System shows "✅ God-Tier AI activated!"
+
+If all items are checked, your installation is complete! 🎉
 
 ---
 
