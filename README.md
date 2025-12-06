@@ -1301,6 +1301,420 @@ Strategic **Ragnarok PvP bot** for competitive play:
 
 ---
 
+## ⚙️ Essential Configuration
+
+Before running OpenKore AI, you **must configure** the AI Sidecar settings in `ai_sidecar/.env`. This file controls all AI behavior, compute backends, and optional features.
+
+### 📝 Quick Setup Guide
+
+**Step 1: Create your configuration file**
+
+**Linux/macOS:**
+```bash
+cd openkore-AI/ai_sidecar
+cp .env.example .env
+nano .env  # or use: vim .env, gedit .env
+```
+
+**Windows (PowerShell):**
+```powershell
+cd C:\path\to\openkore-AI\ai_sidecar
+Copy-Item .env.example .env
+notepad .env  # or use: code .env, notepad++ .env
+```
+
+**Windows (Command Prompt):**
+```cmd
+cd C:\path\to\openkore-AI\ai_sidecar
+copy .env.example .env
+notepad .env
+```
+
+**Step 2: Choose your configuration profile**
+
+### 🎯 Configuration Profiles
+
+Select a profile based on your needs:
+
+#### Profile 1: Minimal (CPU-Only) 🆓
+**Best for**: Testing, low-end hardware, free usage
+
+```bash
+# ai_sidecar/.env - Minimal Configuration
+# ========================================
+
+# Core Settings (Required)
+AI_DEBUG=false
+AI_LOG_LEVEL=INFO
+
+# ZeroMQ IPC (Required)
+AI_ZMQ_ENDPOINT=tcp://127.0.0.1:5555
+
+# Compute Backend (Required)
+COMPUTE_BACKEND=cpu                    # Free, works on any hardware
+AI_DECISION_ENGINE_TYPE=rule_based     # Rule-based decision engine
+
+# Anti-Detection (Recommended)
+ANTI_DETECTION_ENABLED=true            # Enable stealth features
+ANTI_DETECTION_PARANOIA_LEVEL=medium   # Balance safety vs efficiency
+```
+
+**That's it!** This minimal configuration is sufficient for full autonomous gameplay.
+
+---
+
+#### Profile 2: GPU-Accelerated 🚀
+**Best for**: High performance, NVIDIA GPU users
+
+```bash
+# ai_sidecar/.env - GPU Configuration
+# ====================================
+
+# Core Settings
+AI_DEBUG=false
+AI_LOG_LEVEL=INFO
+AI_ZMQ_ENDPOINT=tcp://127.0.0.1:5555
+
+# GPU Compute Backend (Requires NVIDIA CUDA GPU)
+COMPUTE_BACKEND=gpu                    # Use GPU acceleration
+AI_DECISION_ENGINE_TYPE=ml             # Machine learning engine
+
+# Anti-Detection
+ANTI_DETECTION_ENABLED=true
+ANTI_DETECTION_PARANOIA_LEVEL=medium
+ANTI_DETECTION_TIMING_VARIANCE_MS=150
+
+# Performance
+AI_TICK_INTERVAL_MS=100                # 10 ticks/second
+AI_MAX_MEMORY_MB=1024                  # Higher for GPU mode
+```
+
+**Requirements**: NVIDIA GPU with CUDA 11.0+, 6GB+ VRAM
+
+---
+
+#### Profile 3: LLM-Powered (Advanced) 🧠
+**Best for**: Maximum intelligence, natural chat, strategic planning
+
+```bash
+# ai_sidecar/.env - LLM Configuration
+# ====================================
+
+# Core Settings
+AI_DEBUG=false
+AI_LOG_LEVEL=INFO
+AI_ZMQ_ENDPOINT=tcp://127.0.0.1:5555
+
+# LLM Compute Backend (Requires API Key)
+COMPUTE_BACKEND=llm                    # Use LLM for decisions
+
+# LLM Provider (Choose ONE)
+# Option A: OpenAI (Best quality)
+OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+OPENAI_MODEL=gpt-4o-mini               # $0.15 per 1M tokens
+
+# Option B: DeepSeek (70% cheaper than OpenAI!)
+# DEEPSEEK_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# DEEPSEEK_MODEL=deepseek-chat         # $0.14 per 1M tokens
+
+# Option C: Claude (Safe, good reasoning)
+# ANTHROPIC_API_KEY=sk-ant-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+# ANTHROPIC_MODEL=claude-3-haiku-20240307
+
+# Cost Control (Recommended)
+API_RATE_LIMIT_PER_MINUTE=60          # Prevent API spam
+API_DAILY_BUDGET_LIMIT_USD=5          # Stop after $5/day
+API_ENABLE_RESPONSE_CACHE=true        # Cache responses to save cost
+
+# Anti-Detection
+ANTI_DETECTION_ENABLED=true
+ANTI_DETECTION_PARANOIA_LEVEL=high    # Higher for LLM (smarter = more suspicious)
+```
+
+**Cost Estimate**: $0.50 - $5.00 per day depending on usage
+
+---
+
+### 🔑 Required Configuration
+
+The **absolute minimum** you need to configure:
+
+| Setting | Required | Default | Purpose |
+|---------|----------|---------|---------|
+| `COMPUTE_BACKEND` | ✅ Yes | `cpu` | Choose: `cpu`, `gpu`, `ml`, or `llm` |
+| `AI_ZMQ_ENDPOINT` | ✅ Yes | `tcp://127.0.0.1:5555` | IPC endpoint |
+| `AI_DECISION_ENGINE_TYPE` | ✅ Yes | `rule_based` | Decision engine type |
+
+### 🎨 Optional But Recommended
+
+| Setting | Default | Purpose |
+|---------|---------|---------|
+| `ANTI_DETECTION_ENABLED` | `true` | Enable stealth features |
+| `ANTI_DETECTION_PARANOIA_LEVEL` | `medium` | `low/medium/high/extreme` |
+| `AI_LOG_LEVEL` | `INFO` | `DEBUG/INFO/WARNING/ERROR` |
+| `REDIS_URL` | None | Improves performance if available |
+
+### 🚨 Backend-Specific Requirements
+
+#### For CPU Backend (Default)
+✅ **No extra configuration needed!** Works out of the box.
+
+#### For GPU Backend
+```bash
+# Requirements:
+COMPUTE_BACKEND=gpu
+AI_DECISION_ENGINE_TYPE=ml
+
+# Hardware needed:
+# - NVIDIA GPU with CUDA 11.0+
+# - 6GB+ VRAM
+# - CUDA drivers installed
+```
+
+#### For ML Backend
+```bash
+# Requirements:
+COMPUTE_BACKEND=ml
+AI_DECISION_ENGINE_TYPE=ml
+
+# Hardware needed:
+# - Good CPU (4+ cores) OR
+# - NVIDIA GPU with CUDA
+```
+
+#### For LLM Backend
+```bash
+# Requirements:
+COMPUTE_BACKEND=llm
+
+# API Key needed (Choose ONE):
+OPENAI_API_KEY=sk-proj-xxxxx          # OpenAI
+# OR
+DEEPSEEK_API_KEY=sk-xxxxx             # DeepSeek (70% cheaper!)
+# OR
+ANTHROPIC_API_KEY=sk-ant-xxxxx        # Claude
+# OR
+AZURE_OPENAI_KEY=xxxxx                # Azure OpenAI
+AZURE_OPENAI_ENDPOINT=https://xxx...
+```
+
+### 💰 Cost Comparison (LLM Backends)
+
+| Provider | Model | Input Cost | Output Cost | Best For |
+|----------|-------|------------|-------------|----------|
+| **DeepSeek** | deepseek-chat | $0.14/1M | $0.28/1M | 🏆 Best value |
+| **OpenAI** | gpt-4o-mini | $0.15/1M | $0.60/1M | Quality |
+| **OpenAI** | gpt-4o | $2.50/1M | $10.00/1M | Maximum intelligence |
+| **Claude** | haiku | $0.25/1M | $1.25/1M | Safe, reasoning |
+| **Azure** | gpt-4 | $10.00/1M | $30.00/1M | Enterprise |
+
+**Daily Cost Estimates:**
+- **Light usage** (4 hours): $0.50 - $2.00/day
+- **Medium usage** (8 hours): $1.00 - $4.00/day
+- **Heavy usage** (12+ hours): $2.00 - $8.00/day
+
+💡 **Pro Tip**: Use CPU for combat + LLM only for social/strategic = Best cost/performance!
+
+### 🔐 Getting API Keys
+
+#### OpenAI API Key
+1. Visit [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
+2. Sign in or create account
+3. Click "Create new secret key"
+4. Copy key and paste into `.env` file as `OPENAI_API_KEY=sk-proj-xxxxx`
+5. Add payment method at [platform.openai.com/account/billing](https://platform.openai.com/account/billing)
+
+#### DeepSeek API Key (70% Cheaper!) 🎯
+1. Visit [platform.deepseek.com](https://platform.deepseek.com/)
+2. Create account
+3. Navigate to API Keys section
+4. Generate new key
+5. Copy and paste into `.env` as `DEEPSEEK_API_KEY=sk-xxxxx`
+
+#### Anthropic (Claude) API Key
+1. Visit [console.anthropic.com](https://console.anthropic.com/)
+2. Sign up for account
+3. Go to API Keys
+4. Create new key
+5. Copy and paste into `.env` as `ANTHROPIC_API_KEY=sk-ant-xxxxx`
+
+#### Azure OpenAI
+1. Create Azure account at [portal.azure.com](https://portal.azure.com/)
+2. Create Azure OpenAI resource
+3. Deploy a model (e.g., gpt-4)
+4. Get endpoint URL and API key from resource
+5. Configure both `AZURE_OPENAI_KEY` and `AZURE_OPENAI_ENDPOINT`
+
+### 🎛️ Advanced Settings
+
+#### Memory Configuration (Optional Performance Boost)
+
+```bash
+# Optional: DragonflyDB or Redis for session memory
+# Improves performance but NOT required
+REDIS_URL=redis://localhost:6379
+
+# Memory settings
+AI_MEMORY_DB_PATH=data/memory.db       # Persistent storage
+AI_MEMORY_CONSOLIDATION_INTERVAL_S=300 # 5 minutes
+AI_MEMORY_WORKING_MAX_SIZE=1000        # Buffer size
+AI_MEMORY_SESSION_TTL_HOURS=24         # Session retention
+```
+
+**To use Redis/DragonflyDB (optional):**
+
+**Linux/macOS:**
+```bash
+# Using Docker (easiest for all platforms):
+docker run -d --name openkore-dragonfly -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
+
+# Or install Redis:
+# Ubuntu/Debian: sudo apt install redis-server
+# macOS: brew install redis
+```
+
+**Windows:**
+```powershell
+# Option 1: Using Docker Desktop (Recommended)
+docker run -d --name openkore-dragonfly -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
+
+# Option 2: Using WSL2 with Redis
+wsl -d Ubuntu
+sudo apt update && sudo apt install redis-server
+sudo service redis-server start
+
+# Option 3: Windows native Redis (Legacy)
+# Download Memurai (Redis-compatible): https://www.memurai.com/
+# Or download Redis for Windows: https://github.com/microsoftarchive/redis/releases
+```
+
+**Verify Redis/DragonflyDB is running:**
+```bash
+# Test connection
+redis-cli ping
+# Expected output: PONG
+
+# Or using Python:
+python -c "import redis; r = redis.from_url('redis://localhost:6379'); print(r.ping())"
+# Expected output: True
+```
+
+#### Anti-Detection Fine-Tuning
+
+```bash
+# Paranoia Levels:
+# - low: 2-5% detection risk, high efficiency
+# - medium: 5-10% detection risk, balanced (default)
+# - high: 10-15% detection risk, more random
+# - extreme: 15-20% detection risk, maximum stealth
+
+ANTI_DETECTION_PARANOIA_LEVEL=medium
+
+# Timing Configuration
+ANTI_DETECTION_TIMING_VARIANCE_MS=150  # Random delay (50-300ms typical)
+
+# Session Limits (prevent 24/7 patterns)
+ANTI_DETECTION_MAX_CONTINUOUS_HOURS=4  # Take breaks after 4 hours
+ANTI_DETECTION_DAILY_MAX_HOURS=12      # Max 12 hours per day
+
+# GM Detection
+ANTI_DETECTION_GM_DETECTION_ENABLED=true  # Auto-stealth when GM nearby
+```
+
+#### Performance Tuning
+
+```bash
+# Tick Rate (how often AI makes decisions)
+AI_TICK_INTERVAL_MS=100                # Default: 100ms (10 ticks/sec)
+                                       # Lower = faster reactions, higher CPU
+                                       # Higher = slower reactions, lower CPU
+
+# Max Actions Per Tick
+AI_DECISION_MAX_ACTIONS_PER_TICK=5     # Default: 5
+                                       # Lower = more cautious
+                                       # Higher = more aggressive
+
+# Memory Limits
+AI_MAX_MEMORY_MB=512                   # Process memory limit
+                                       # Increase for GPU/ML modes
+```
+
+### ✅ Configuration Checklist
+
+Before starting the AI Sidecar, verify:
+
+- [ ] `.env` file created from `.env.example`
+- [ ] `COMPUTE_BACKEND` set to your choice (`cpu`, `gpu`, `ml`, or `llm`)
+- [ ] If using LLM: API key configured for chosen provider
+- [ ] If using GPU: CUDA drivers installed and GPU detected
+- [ ] `ANTI_DETECTION_ENABLED` set to `true` (recommended)
+- [ ] Log level appropriate for your needs (`INFO` for production)
+- [ ] Memory limits appropriate for your system
+
+### 🧪 Test Your Configuration
+
+**Linux/macOS:**
+```bash
+# Activate virtual environment
+cd openkore-AI/ai_sidecar
+source .venv/bin/activate
+
+# Test configuration
+python -c "from ai_sidecar.config import get_settings; s = get_settings(); print(f'✅ Config valid! Backend: {s.compute.backend}')"
+
+# Start AI Sidecar
+python main.py
+```
+
+**Windows (PowerShell):**
+```powershell
+# Activate virtual environment
+cd C:\path\to\openkore-AI\ai_sidecar
+.\.venv\Scripts\Activate.ps1
+
+# Test configuration
+python -c "from ai_sidecar.config import get_settings; s = get_settings(); print(f'✅ Config valid! Backend: {s.compute.backend}')"
+
+# Start AI Sidecar
+python main.py
+```
+
+**Windows (Command Prompt):**
+```cmd
+# Activate virtual environment
+cd C:\path\to\openkore-AI\ai_sidecar
+.venv\Scripts\activate.bat
+
+# Test configuration
+python -c "from ai_sidecar.config import get_settings; s = get_settings(); print('Config valid!')"
+
+# Start AI Sidecar
+python main.py
+```
+
+**Success looks like:**
+```
+✅ AI Sidecar ready! Listening on: tcp://127.0.0.1:5555
+   Steps: 3 succeeded, 0 failed, 0 warnings, 0 skipped
+```
+
+### 🆘 Configuration Troubleshooting
+
+**Issue: "OPENAI_API_KEY not found"**
+- Solution: Make sure you uncommented the line and added your actual key
+- The key should start with `sk-proj-` or `sk-`
+
+**Issue: "Invalid COMPUTE_BACKEND"**
+- Solution: Must be exactly one of: `cpu`, `gpu`, `ml`, `llm` (lowercase)
+
+**Issue: "CUDA not available"**
+- Solution: Install CUDA drivers or switch to `COMPUTE_BACKEND=cpu`
+
+**Issue: Redis connection failed**
+- Solution: Either start Redis/DragonflyDB or leave `REDIS_URL` empty (it's optional)
+
+---
+
 ## 🔌 LLM Provider Setup
 
 OpenKore AI supports multiple LLM providers for advanced reasoning, natural chat, and strategic planning.
