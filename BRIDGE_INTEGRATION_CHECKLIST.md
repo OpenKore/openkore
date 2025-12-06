@@ -115,9 +115,20 @@
   # Required
   AI_DEBUG_MODE=false
   AI_LOG_LEVEL=INFO
-  AI_ZMQ_BIND_ADDRESS=tcp://127.0.0.1:5555
+  # AI_ZMQ_ENDPOINT - Leave unset for automatic platform detection (recommended)
   AI_DECISION_ENGINE_TYPE=rule_based  # or stub, ml, llm
   ```
+
+#### Platform Detection Validation
+- [ ] Platform detected correctly:
+  ```bash
+  python -c "from ai_sidecar.utils.platform import detect_platform; info = detect_platform(); print(f'Platform: {info.platform_name}'); print(f'IPC Support: {info.can_use_ipc}'); print(f'Default: {info.default_endpoint}')"
+  ```
+- [ ] Expected platform detected (Windows, Linux, macOS, WSL, etc.)
+- [ ] IPC support matches platform capability:
+  - [ ] Windows/WSL1/Cygwin → IPC Support: False, Default: TCP
+  - [ ] Linux/macOS/WSL2 → IPC Support: True, Default: IPC
+- [ ] No platform compatibility warnings in logs
 
 #### Backend Configuration
 - [ ] Compute backend selected:
@@ -166,8 +177,19 @@
 #### Plugin Configuration
 - [ ] `plugins/AI_Bridge.txt` configured (if exists)
 - [ ] Debug mode set appropriately
-- [ ] ZeroMQ endpoint matches AI Sidecar
-- [ ] Timeout values reasonable
+- [ ] **CRITICAL**: ZeroMQ endpoint matches AI Sidecar exactly:
+  ```perl
+  # Perl side (plugins/AI_Bridge/AI_Bridge.txt)
+  AI_Bridge_address tcp://127.0.0.1:5555
+  
+  # Must match Python side (.env)
+  # AI_ZMQ_ENDPOINT=tcp://127.0.0.1:5555
+  ```
+- [ ] Timeout values reasonable (50-100ms typical)
+- [ ] Platform-appropriate endpoint used:
+  - [ ] Windows users: Must use TCP endpoint
+  - [ ] Unix users: Can use IPC or TCP (IPC faster)
+  - [ ] WSL users: Check WSL version (1→TCP, 2→IPC or TCP)
 
 #### Server Configuration
 - [ ] `control/config.txt` configured for target server
@@ -183,18 +205,38 @@
 
 #### Step 1: Start AI Sidecar
 - [ ] Terminal 1 opened
-- [ ] Virtual environment activated
-- [ ] AI Sidecar started:
+- [ ] Virtual environment activated:
   ```bash
+  # Linux/macOS/WSL:
   cd ai_sidecar
   source .venv/bin/activate
+  
+  # Windows (PowerShell):
+  cd ai_sidecar
+  .\.venv\Scripts\Activate.ps1
+  
+  # Windows (Command Prompt):
+  cd ai_sidecar
+  .venv\Scripts\activate.bat
+  ```
+- [ ] AI Sidecar started:
+  ```bash
   python main.py
+  ```
+- [ ] Platform detection logged:
+  ```
+  [INFO] Platform detected: Windows (or Linux, macOS, WSL2, etc.)
+  [INFO] Using endpoint: tcp://127.0.0.1:5555 (automatic)
   ```
 - [ ] Startup message displayed:
   ```
   ✅ AI Sidecar ready! Listening on: tcp://127.0.0.1:5555
   ```
-- [ ] No error messages in log
+- [ ] Endpoint matches platform capabilities:
+  - [ ] Windows: Shows TCP endpoint
+  - [ ] Unix: Shows IPC or TCP endpoint
+- [ ] No platform compatibility errors in log
+- [ ] No socket cleanup errors (Unix only)
 
 #### Step 2: Start OpenKore
 - [ ] Terminal 2 opened
@@ -220,10 +262,46 @@
 ### Connectivity Tests
 
 #### Run Validation Script
-- [ ] Execute: `./validate_bridges.sh` (Linux/Mac) or `validate_bridges.bat` (Windows)
+- [ ] Execute validation script:
+  ```bash
+  # Linux/macOS:
+  ./validate_bridges.sh
+  
+  # Windows (if script exists):
+  validate_bridges.bat
+  ```
 - [ ] All critical checks passed
+- [ ] Platform detection check passed
+- [ ] Endpoint compatibility verified
+- [ ] Socket cleanup check passed (Unix only)
 - [ ] Warnings reviewed and addressed (if any)
 - [ ] Exit code 0 (success)
+
+#### Platform-Specific Verification
+
+**Windows Users**:
+- [ ] Confirmed using TCP endpoint (not IPC)
+- [ ] Port 5555 available or alternative configured
+- [ ] Firewall allows Python.exe
+- [ ] No antivirus blocking AI Sidecar
+- [ ] No PowerShell execution policy errors
+
+**Linux/macOS Users**:
+- [ ] IPC socket created in `/tmp/` or configured location
+- [ ] Socket file has correct permissions
+- [ ] No stale socket warnings (auto-cleanup working)
+- [ ] Can write to socket directory
+
+**WSL Users**:
+- [ ] WSL version identified (1 or 2)
+- [ ] Endpoint matches WSL version (1→TCP, 2→IPC recommended)
+- [ ] No file system performance issues
+- [ ] Cross-WSL-Windows communication configured (if applicable)
+
+**Docker Users**:
+- [ ] Volume mount configured for IPC socket (if using IPC)
+- [ ] Network connectivity to host verified
+- [ ] Container has proper permissions
 
 #### Run Bridge Connection Tester
 - [ ] Execute: `python ai_sidecar/test_bridge_connection.py`
@@ -547,7 +625,10 @@ Before deploying to production, verify:
 ### Documentation
 - **[Complete Documentation](docs/GODTIER-RO-AI-DOCUMENTATION.md)** - Full system guide
 - **[Testing Guide](docs/BRIDGE_TESTING_GUIDE.md)** - Detailed test procedures
-- **[Troubleshooting](BRIDGE_TROUBLESHOOTING.md)** - Common issues and solutions
+- **[Bridge Troubleshooting](BRIDGE_TROUBLESHOOTING.md)** - Common bridge issues
+- **[ZMQ Troubleshooting](docs/ZMQ_TROUBLESHOOTING.md)** - Platform-specific ZMQ issues ⭐ NEW
+- **[Windows Setup Guide](docs/WINDOWS_SETUP_GUIDE.md)** - Complete Windows guide ⭐ NEW
+- **[Cross-Platform Architecture](docs/CROSS_PLATFORM_ZMQ_ARCHITECTURE.md)** - Technical details ⭐ NEW
 
 ### Tools
 - **Validation Scripts**
@@ -560,6 +641,60 @@ Before deploying to production, verify:
 - **Discord:** [OpenKore Community](https://discord.com/invite/hdAhPM6)
 - **Forum:** [OpenKore Forums](https://forums.openkore.com/)
 - **Issues:** [GitHub Issues](https://github.com/OpenKore/openkore/issues)
+
+---
+
+## 🌍 Platform-Specific Quick Reference
+
+### Windows Quick Checks
+```powershell
+# Verify platform detection
+python -c "from ai_sidecar.utils.platform import is_windows; print(f'Is Windows: {is_windows()}')"
+
+# Check endpoint is TCP
+python -c "from ai_sidecar.config import get_settings; ep = get_settings().zmq.endpoint; print(f'Endpoint: {ep}'); assert ep.startswith('tcp://'), 'ERROR: Must use TCP on Windows!'"
+
+# Verify no IPC socket errors
+python -c "from ai_sidecar.config import get_settings; get_settings()" 2>&1 | Select-String -Pattern "IPC|compatibility" -CaseSensitive
+```
+
+### Linux/Unix Quick Checks
+```bash
+# Verify platform detection
+python -c "from ai_sidecar.utils.platform import is_unix_like; print(f'Is Unix-like: {is_unix_like()}')"
+
+# Check endpoint (IPC recommended)
+python -c "from ai_sidecar.config import get_settings; print(f\"Endpoint: {get_settings().zmq.endpoint}\")"
+
+# Verify socket cleanup works
+ls -la /tmp/openkore-ai.sock 2>/dev/null || echo "✅ No stale socket"
+```
+
+### WSL Quick Checks
+```bash
+# Check WSL version
+wsl.exe -l -v 2>/dev/null || cat /proc/version | grep -i microsoft
+
+# Verify appropriate endpoint
+python -c "
+from ai_sidecar.utils.platform import detect_platform
+info = detect_platform()
+print(f'WSL Version: {info.wsl_version or \"Not WSL\"}')
+print(f'Recommended: {info.default_endpoint}')
+"
+```
+
+### Docker Quick Checks
+```bash
+# Verify container detection
+python -c "from ai_sidecar.utils.platform import is_docker; print(f'In Docker: {is_docker()}')"
+
+# Check volume mounts (for IPC)
+mount | grep /tmp
+
+# Or use TCP for simplicity
+# AI_ZMQ_ENDPOINT=tcp://host.docker.internal:5555
+```
 
 ---
 

@@ -1,0 +1,169 @@
+# =============================================================================
+# Chat Abbreviations Configuration
+# =============================================================================
+# This file defines text transformations for chat humanization/mimicry.
+# These abbreviations make bot chat appear more natural and human-like.
+#
+# Format:
+#   abbreviations:
+#     full_word: shortened_form
+#
+# Notes:
+# - Transformations are case-insensitive (preserve original capitalization)
+# - Common gaming abbreviations help blend in with real players
+# - Customize for your server's culture/language
+# =============================================================================
+
+# Version for tracking configuration changes
+version: "1.0.0"
+
+# Gaming-specific abbreviations commonly used in MMORPGs
+abbreviations:
+  # Common words
+  please: pls
+  thanks: thx
+  okay: ok
+  because: cuz
+  you: u
+  are: r
+  before: b4
+  later: l8r
+  tonight: 2nite
+  tomorrow: tmrw
+  awesome: awesom
+  nothing: nothin
+  something: somethin
+  
+  # Gaming-specific
+  player: plyr
+  level: lvl
+  experience: exp
+  damage: dmg
+  defense: def
+  attack: atk
+  equipment: equip
+  inventory: inv
+  character: char
+  monster: mob
+  dungeon: dung
+  
+  # Social
+  people: ppl
+  someone: some1
+  anyone: any1
+  everyone: every1
+  whatever: w/e
+  without: w/o
+  message: msg
+  
+  # Time-related
+  second: sec
+  seconds: secs
+  minute: min
+  minutes: mins
+  moment: mo
+  
+  # Ragnarok Online specific
+  potion: pot
+  potions: pots
+  teleport: tele
+  warp: wrp
+  party: pt
+  guild: gld
+  kafra: kfr
+  storage: stor
+  merchant: merch
+  blacksmith: bs
+  alchemist: alch
+  assassin: sin
+  wizard: wiz
+  knight: knt
+  crusader: sader
+  hunter: hunt
+  priest: prs
+  monk: mnk
+
+# Typo patterns for realistic human-like typing errors
+typo_patterns:
+  # Adjacent keys on QWERTY keyboard
+  # Key -> [list of adjacent keys that could be accidentally pressed]
+  adjacent_keys:
+    a: [s, q, w, z]
+    s: [a, d, w, x, z]
+    d: [s, f, e, r, c, x]
+    e: [w, r, d, f]
+    r: [e, t, f, g]
+    t: [r, y, g, h]
+    y: [t, u, h, j]
+    u: [y, i, j, k]
+    i: [u, o, k, l]
+    o: [i, p, k, l]
+    p: [o, l]
+    q: [w, a]
+    w: [q, e, a, s]
+    f: [d, g, r, t, c, v]
+    g: [f, h, t, y, v, b]
+    h: [g, j, y, u, b, n]
+    j: [h, k, u, i, n, m]
+    k: [j, l, i, o, m]
+    l: [k, o, p]
+    z: [a, s, x]
+    x: [z, s, d, c]
+    c: [x, d, f, v]
+    v: [c, f, g, b]
+    b: [v, g, h, n]
+    n: [b, h, j, m]
+    m: [n, j, k]
+  
+  # Common word typos (word -> [possible typo variants])
+  common_typos:
+    the: [teh, hte]
+    and: [adn, nad]
+    that: [taht, htat]
+    what: [waht, hwat]
+    with: [wiht, wtih]
+    have: [hvae, ahve]
+    this: [tihs, htis]
+    will: [wlil, iwll]
+    your: [yuor, yoru]
+    from: [form, fomr]
+    they: [tehy, htey]
+    been: [bene, eben]
+    said: [siad, siaid]
+    each: [eahc, aech]
+    which: [whcih, wihch]
+    their: [thier, tehir]
+    about: [abotu, abuot]
+    would: [woudl, owuld]
+
+# Emoticons configuration
+emoticons:
+  # Emotion -> [list of possible emoticons to use]
+  happy: [":)", "^^", ":D", "=)"]
+  sad: [":(", "T_T", ";_;"]
+  laugh: ["lol", "haha", "xD", "rofl"]
+  love: ["<3", "♥"]
+  confused: ["???", "?", "o.O"]
+  surprised: ["!", "!!", "o_o", "O_O"]
+  angry: [">:(", "DX"]
+  neutral: [".", "..."]
+  wink: [";)", ";D"]
+  cool: ["B)", "8)"]
+  thinking: ["hmm", "..."]
+
+# Settings for abbreviation behavior
+settings:
+  # Probability of applying abbreviations (0.0 - 1.0)
+  abbreviation_chance: 0.7
+  
+  # Probability of adding typos (0.0 - 1.0)
+  typo_chance: 0.02
+  
+  # Probability of adding emoticons (0.0 - 1.0)
+  emoticon_chance: 0.4
+  
+  # Minimum message length to apply typos
+  min_typo_length: 3
+  
+  # Maximum number of typos per message
+  max_typos_per_message: 2

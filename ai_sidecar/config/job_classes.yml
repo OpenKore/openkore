@@ -1,0 +1,396 @@
+# =============================================================================
+# Job Classes Configuration
+# =============================================================================
+# This file defines job class IDs and categorizations for Ragnarok Online.
+# Used for job-specific logic throughout the AI sidecar.
+#
+# Job ID Reference:
+# - 0-24: Base/1st/2nd jobs (Classic)
+# - 4001-4049: Transcendent jobs (Rebirth)
+# - 4050-4100: Extended jobs
+# - 4101-4200: 3rd jobs
+# - 4201+: 4th jobs
+#
+# Server Note:
+# Different servers may have different job IDs for custom jobs.
+# Modify this file to match your server's configuration.
+# =============================================================================
+
+# Version for tracking configuration changes
+version: "1.0.0"
+
+# =============================================================================
+# JOB CATEGORIES
+# =============================================================================
+# Categorize jobs for AI decision making (cart access, combat style, etc.)
+
+job_categories:
+  # ---------------------------------------------------------------------------
+  # MERCHANT LINE (Has cart access)
+  # ---------------------------------------------------------------------------
+  merchant:
+    name: Merchant Classes
+    description: "Jobs that can use carts and have merchant skills"
+    job_ids: [5, 10, 18, 4006, 4011, 4019, 4058, 4064, 4115, 4116]
+    capabilities:
+      - cart_access
+      - vending
+      - discount
+      - overcharge
+    job_names:
+      5: Merchant
+      10: Blacksmith
+      18: Alchemist
+      4006: Merchant High
+      4011: Whitesmith
+      4019: Biochemist
+      4058: Baby Merchant
+      4064: Baby Blacksmith
+      4115: Mechanic
+      4116: Geneticist
+
+  # ---------------------------------------------------------------------------
+  # SWORDSMAN LINE (Melee frontline)
+  # ---------------------------------------------------------------------------
+  swordsman:
+    name: Swordsman Classes
+    description: "Melee combat classes with high HP"
+    job_ids: [1, 7, 14, 4001, 4008, 4015, 4054, 4060, 4101, 4102]
+    capabilities:
+      - melee_combat
+      - high_hp
+      - provoke
+      - bash
+    job_names:
+      1: Swordsman
+      7: Knight
+      14: Crusader
+      4001: Swordsman High
+      4008: Lord Knight
+      4015: Paladin
+      4054: Baby Swordsman
+      4060: Baby Knight
+      4101: Rune Knight
+      4102: Royal Guard
+
+  # ---------------------------------------------------------------------------
+  # MAGE LINE (Magic DPS)
+  # ---------------------------------------------------------------------------
+  mage:
+    name: Mage Classes
+    description: "Magic-based damage dealers"
+    job_ids: [2, 9, 16, 4002, 4010, 4017, 4055, 4061, 4103, 4104]
+    capabilities:
+      - magic_damage
+      - elemental_attacks
+      - aoe_damage
+      - high_matk
+    job_names:
+      2: Mage
+      9: Wizard
+      16: Sage
+      4002: Mage High
+      4010: High Wizard
+      4017: Professor
+      4055: Baby Mage
+      4061: Baby Wizard
+      4103: Warlock
+      4104: Sorcerer
+
+  # ---------------------------------------------------------------------------
+  # ARCHER LINE (Ranged physical DPS)
+  # ---------------------------------------------------------------------------
+  archer:
+    name: Archer Classes
+    description: "Ranged physical damage dealers"
+    job_ids: [3, 11, 19, 20, 4003, 4012, 4020, 4021, 4056, 4062, 4105, 4106]
+    capabilities:
+      - ranged_combat
+      - ammunition_user
+      - high_dex
+      - critical_damage
+    job_names:
+      3: Archer
+      11: Hunter
+      19: Bard
+      20: Dancer
+      4003: Archer High
+      4012: Sniper
+      4020: Clown
+      4021: Gypsy
+      4056: Baby Archer
+      4062: Baby Hunter
+      4105: Ranger
+      4106: Wanderer/Minstrel
+
+  # ---------------------------------------------------------------------------
+  # THIEF LINE (Melee DPS/Evasion)
+  # ---------------------------------------------------------------------------
+  thief:
+    name: Thief Classes
+    description: "High-speed melee with evasion focus"
+    job_ids: [4, 12, 17, 4004, 4013, 4018, 4057, 4063, 4107, 4108]
+    capabilities:
+      - high_flee
+      - hiding
+      - steal
+      - critical_damage
+      - dual_wield
+    job_names:
+      4: Thief
+      12: Assassin
+      17: Rogue
+      4004: Thief High
+      4013: Assassin Cross
+      4018: Stalker
+      4057: Baby Thief
+      4063: Baby Assassin
+      4107: Guillotine Cross
+      4108: Shadow Chaser
+
+  # ---------------------------------------------------------------------------
+  # ACOLYTE LINE (Support/Healer)
+  # ---------------------------------------------------------------------------
+  acolyte:
+    name: Acolyte Classes
+    description: "Support and healing focused classes"
+    job_ids: [6, 8, 15, 4005, 4009, 4016, 4059, 4065, 4109, 4110]
+    capabilities:
+      - healing
+      - buff_skills
+      - holy_element
+      - resurrection
+    job_names:
+      6: Acolyte
+      8: Priest
+      15: Monk
+      4005: Acolyte High
+      4009: High Priest
+      4016: Champion
+      4059: Baby Acolyte
+      4065: Baby Priest
+      4109: Arch Bishop
+      4110: Sura
+
+  # ---------------------------------------------------------------------------
+  # NOVICE/SUPER NOVICE
+  # ---------------------------------------------------------------------------
+  novice:
+    name: Novice Classes
+    description: "Starting class and Super Novice variants"
+    job_ids: [0, 23, 4023, 4045, 4046, 4190]
+    capabilities:
+      - basic_skills
+    job_names:
+      0: Novice
+      23: Super Novice
+      4023: Novice High
+      4045: Super Novice Transcendent
+      4046: Baby Novice
+      4190: Super Novice Expanded
+
+  # ---------------------------------------------------------------------------
+  # TAEKWON LINE (Martial arts)
+  # ---------------------------------------------------------------------------
+  taekwon:
+    name: Taekwon Classes
+    description: "Kick-based martial arts classes"
+    job_ids: [4046, 4047, 4048, 4049, 4212]
+    capabilities:
+      - kick_skills
+      - stance_system
+      - union_skills
+    job_names:
+      4046: Taekwon Kid
+      4047: Taekwon Master/Star Gladiator
+      4048: Soul Linker
+      4049: Soul Reaper
+      4212: Star Emperor
+
+  # ---------------------------------------------------------------------------
+  # GUNSLINGER LINE
+  # ---------------------------------------------------------------------------
+  gunslinger:
+    name: Gunslinger Classes
+    description: "Gun-based ranged classes"
+    job_ids: [24, 4215]
+    capabilities:
+      - gun_combat
+      - ammunition_user
+      - coin_system
+    job_names:
+      24: Gunslinger
+      4215: Rebellion
+
+  # ---------------------------------------------------------------------------
+  # NINJA LINE
+  # ---------------------------------------------------------------------------
+  ninja:
+    name: Ninja Classes
+    description: "Stealth and ninjutsu classes"
+    job_ids: [25, 4211]
+    capabilities:
+      - ninjutsu
+      - throwing_weapons
+      - hiding
+    job_names:
+      25: Ninja
+      4211: Kagerou/Oboro
+
+  # ---------------------------------------------------------------------------
+  # DORAM (Cat) LINE
+  # ---------------------------------------------------------------------------
+  doram:
+    name: Doram Classes
+    description: "Cat-race classes"
+    job_ids: [4218, 4220]
+    capabilities:
+      - summoning
+      - doram_skills
+    job_names:
+      4218: Summoner
+      4220: Spirit Handler
+
+# =============================================================================
+# COMBAT ROLE CLASSIFICATIONS
+# =============================================================================
+# Used for party composition and tactics
+
+combat_roles:
+  tank:
+    name: Tank
+    description: "High HP/DEF, holds aggro"
+    primary_jobs: [7, 14, 4008, 4015, 4101, 4102]
+    backup_jobs: [1, 15, 4016, 4110]
+  
+  melee_dps:
+    name: Melee DPS
+    description: "High physical damage, close range"
+    primary_jobs: [12, 17, 10, 15, 4013, 4018, 4011, 4016, 4107, 4108]
+    backup_jobs: [7, 4008]
+  
+  ranged_dps:
+    name: Ranged DPS
+    description: "Physical damage from distance"
+    primary_jobs: [11, 19, 20, 24, 4012, 4020, 4021, 4105, 4106, 4215]
+    backup_jobs: [3, 17]
+  
+  magic_dps:
+    name: Magic DPS
+    description: "High MATK, elemental damage"
+    primary_jobs: [9, 16, 4010, 4017, 4103, 4104]
+    backup_jobs: [2, 48]
+  
+  healer:
+    name: Healer
+    description: "Primary healing and resurrection"
+    primary_jobs: [8, 4009, 4109]
+    backup_jobs: [6, 18, 4019, 4116]
+  
+  support:
+    name: Support
+    description: "Buffs, debuffs, utility"
+    primary_jobs: [19, 20, 16, 4020, 4021, 4017, 48]
+    backup_jobs: [8, 4009]
+
+# =============================================================================
+# JOB ADVANCEMENT PATHS
+# =============================================================================
+# Used for job change quest tracking
+
+advancement_paths:
+  swordsman_path:
+    novice: 0
+    first_job: 1
+    second_job: [7, 14]
+    transcendent_first: 4001
+    transcendent_second: [4008, 4015]
+    third_job: [4101, 4102]
+  
+  mage_path:
+    novice: 0
+    first_job: 2
+    second_job: [9, 16]
+    transcendent_first: 4002
+    transcendent_second: [4010, 4017]
+    third_job: [4103, 4104]
+  
+  archer_path:
+    novice: 0
+    first_job: 3
+    second_job: [11, 19, 20]
+    transcendent_first: 4003
+    transcendent_second: [4012, 4020, 4021]
+    third_job: [4105, 4106]
+  
+  thief_path:
+    novice: 0
+    first_job: 4
+    second_job: [12, 17]
+    transcendent_first: 4004
+    transcendent_second: [4013, 4018]
+    third_job: [4107, 4108]
+  
+  merchant_path:
+    novice: 0
+    first_job: 5
+    second_job: [10, 18]
+    transcendent_first: 4006
+    transcendent_second: [4011, 4019]
+    third_job: [4115, 4116]
+  
+  acolyte_path:
+    novice: 0
+    first_job: 6
+    second_job: [8, 15]
+    transcendent_first: 4005
+    transcendent_second: [4009, 4016]
+    third_job: [4109, 4110]
+
+# =============================================================================
+# JOB SPECIAL REQUIREMENTS
+# =============================================================================
+# Items or conditions specific to certain jobs
+
+job_requirements:
+  # Jobs requiring ammunition
+  ammunition_required:
+    job_ids: [3, 11, 19, 20, 24, 4003, 4012, 4020, 4021, 4105, 4106, 4215]
+    item_types: [arrow, bullet]
+  
+  # Jobs that can use Katar weapons
+  katar_users:
+    job_ids: [12, 4013, 4107]
+  
+  # Jobs with cart capability
+  cart_users:
+    job_ids: [5, 10, 18, 4006, 4011, 4019, 4115, 4116]
+  
+  # Jobs that can use instruments
+  instrument_users:
+    job_ids: [19, 4020, 4106]
+  
+  # Jobs that can use whips
+  whip_users:
+    job_ids: [20, 4021, 4106]
+  
+  # Jobs with Falcon companion
+  falcon_users:
+    job_ids: [11, 4012, 4105]
+  
+  # Jobs with Homunculus
+  homunculus_users:
+    job_ids: [18, 4019, 4116]
+
+# =============================================================================
+# SETTINGS
+# =============================================================================
+settings:
+  # Default job for unknown/new characters
+  default_job_category: novice
+  
+  # Whether to log job detection
+  verbose_job_logging: true
+  
+  # Cache job lookups for performance
+  cache_job_lookups: true

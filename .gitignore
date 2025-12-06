@@ -1,8 +1,12 @@
+# ============================================================================
+# OpenKore - Original Bot Ignores
+# ============================================================================
+
 # Debug logs
 config.log
 errors.txt
 benchmark-results.txt
-logs
+logs/
 DUMP.txt
 
 # Plugin files
@@ -17,8 +21,7 @@ DUMP.txt
 *.orig
 *.rej
 
-# Auto generated files
-*.pyc
+# Auto generated files (OpenKore build artifacts)
 *.dist
 *.o
 *.os
@@ -39,10 +42,10 @@ src/auto/XSTools/utils/perl/Rijndael.xs.cpp
 src/auto/XSTools/utils/perl/Whirlpool.c
 src/test/http-reader-test
 
-# Local modifications of official files.
+# Local modifications of official files
 tables/iRO/*-custom.txt
 
-# Auto-generated files.
+# Auto-generated table files
 tables/**/portalsLOS.txt
 tables/pserver/**/portalsLOS.txt
 tables/**/npcs.txt
@@ -50,54 +53,136 @@ tables/**/monsters.txt
 *.xpm
 *.weight
 
+# ============================================================================
+# Python - AI Sidecar Core
+# ============================================================================
 
-# ================================
-# Python AI Sidecar Ignores
-# ================================
-
-# Python cache and compiled files
+# Python bytecode and cache
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 .Python
+*.pyc
 
 # Distribution / packaging
 build/
+develop-eggs/
 dist/
-*.egg-info/
+downloads/
+eggs/
 .eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
 *.egg
-
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.nox/
-
-# Type checking
-.mypy_cache/
-.ruff_cache/
+MANIFEST
 
 # Pip
 pip-log.txt
 pip-delete-this-directory.txt
 
-# ================================
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IPython
+profile_default/
+ipython_config.py
+
+# ============================================================================
 # Virtual Environments
-# ================================
+# ============================================================================
+
 .venv/
 venv/
 ENV/
 env/
+env.bak/
+venv.bak/
+.python-version
+
+# ============================================================================
+# Testing & Coverage
+# ============================================================================
+
+# Pytest
+.pytest_cache/
+pytest_debug.log
+
+# Coverage
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+
+# Other test frameworks
+.tox/
+.nox/
+.hypothesis/
+
+# AI Sidecar specific test artifacts
+ai_sidecar/.pytest_cache/
+ai_sidecar/htmlcov/
+ai_sidecar/.coverage
+ai_sidecar/coverage.xml
+ai_sidecar/*_report.txt
+ai_sidecar/all_failures.txt
+ai_sidecar/failures.txt
+ai_sidecar/test_*.py.bak
+ai_sidecar/test_imports_11b.py
+ai_sidecar/test_phase*.py
+ai_sidecar/test_deep_imports.py
+ai_sidecar/coverage_batch*.txt
+
+# ============================================================================
+# Type Checking & Linting
+# ============================================================================
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Ruff linter
+.ruff_cache/
+
+# ============================================================================
+# Environment & Configuration
+# ============================================================================
+
+# Environment files (IMPORTANT: .env.example must be tracked!)
 .env
-*.env
 .env.local
 .env.*.local
+ai_sidecar/.env
 
-# ================================
-# IDE / Editor Ignores
-# ================================
+# Configuration backups
+*.yml.backup
+*.yaml.backup
+*.json.backup
+
+# Secrets and credentials
+*.pem
+*.key
+secrets.json
+credentials.json
+.secrets/
+
+# ============================================================================
+# IDE & Editor
+# ============================================================================
+
 .vscode/
 .idea/
 *.swp
@@ -105,10 +190,13 @@ env/
 .project
 .pydevproject
 .settings/
+.roo/
+.cursor/
+*.code-workspace
 
-# ================================
-# OS-Specific Ignores
-# ================================
+# ============================================================================
+# OS-Specific
+# ============================================================================
 
 # macOS
 .DS_Store
@@ -122,9 +210,9 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# ================================
-# AI Sidecar Specific
-# ================================
+# ============================================================================
+# AI Sidecar - Application Specific
+# ============================================================================
 
 # Database files
 ai_sidecar/data/*.db
@@ -136,11 +224,38 @@ ai_sidecar/logs/
 ai_sidecar/.cache/
 *.log
 *.pid
-*.sock
 
-# ================================
+# IPC Socket files (cross-platform)
+*.sock
+/tmp/openkore-ai.sock
+/tmp/openkore-ai-*.sock
+
+# Build artifacts
+ai_sidecar/build/
+ai_sidecar/dist/
+ai_sidecar/*.egg-info/
+
+# Install logs
+ai_sidecar/install_log.txt
+
+# ============================================================================
+# Data Files (User-Specific)
+# ============================================================================
+
+ai_sidecar/data/user_*
+ai_sidecar/data/custom_*
+
+# Navigation caches
+data/navigation/cache/
+data/navigation/*.cache
+
+# Quest system backups
+data/quests/*.backup
+
+# ============================================================================
 # ML / Model Files
-# ================================
+# ============================================================================
+
 *.h5
 *.hdf5
 *.pkl
@@ -150,64 +265,50 @@ ai_sidecar/.cache/
 *.pt
 *.pth
 models/
+data/learning/models/
 
-# ================================
-# Secrets and Credentials
-# ================================
-*.pem
-*.key
-secrets.json
-credentials.json
-.secrets/
-
-# ================================
-# AI Sidecar - Test & Coverage
-# ================================
-ai_sidecar/.pytest_cache/
-ai_sidecar/htmlcov/
-ai_sidecar/.coverage
-ai_sidecar/coverage.xml
-ai_sidecar/*_report.txt
-ai_sidecar/all_failures.txt
-ai_sidecar/failures.txt
-ai_sidecar/test_*.py.bak
-
-# AI Sidecar - Build artifacts
-ai_sidecar/build/
-ai_sidecar/dist/
-ai_sidecar/*.egg-info/
-
-# AI Sidecar - Temporary files
-ai_sidecar/test_imports_11b.py
-ai_sidecar/test_phase*.py
-ai_sidecar/test_deep_imports.py
-ai_sidecar/coverage_batch*.txt
-ai_sidecar/install_log.txt
-
-# ================================
+# ============================================================================
 # Docker & Containers
-# ================================
+# ============================================================================
+
 docker-compose.override.yml
 .dockerignore
 
-# ================================
-# Data Files (user-specific)
-# ================================
-ai_sidecar/data/*.db
-ai_sidecar/data/*.sqlite*
-ai_sidecar/data/user_*
-ai_sidecar/data/custom_*
+# ============================================================================
+# Large Binary Files
+# ============================================================================
 
-# ================================
-# IDE Specific
-# ================================
-.roo/
-.cursor/
-*.code-workspace
-
-# ================================
-# Large binary files
-# ================================
 *.bin
 *.dat
 *.idx
+
+# ============================================================================
+# Database Files (Global)
+# ============================================================================
+
+*.db
+*.sqlite
+*.sqlite3
+# Exception: Allow database schema files
+!**/schema.sql
+!**/migrations/*.sql
+
+# ============================================================================
+# IMPORTANT: Files to Always Include (Negations)
+# ============================================================================
+# These patterns MUST be at the end to properly override ignores above
+
+# Example and template files should always be committed
+!.env.example
+!**/.env.example
+!*.example
+!*.template
+!*.sample
+!**/*.example
+!**/*.template
+!**/*.sample
+
+# Keep documentation
+!README.md
+!LICENSE
+!CHANGELOG.md

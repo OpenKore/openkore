@@ -1,5 +1,18 @@
 # AI Sidecar Subsystem Configuration
 # All features enabled by default - disable any you don't want
+#
+# Configuration Files:
+#   - subsystems.yaml     - This file - Feature toggles and presets
+#   - chat_abbreviations.yml - Chat mimicry text transformations
+#   - consumable_items.yml   - Consumable inventory management
+#   - job_classes.yml        - Job class categorization
+#   - card_values.yml        - Card market value estimates
+#
+# Hot-Reload Support:
+#   All configuration files support hot-reload without restart.
+#   Changes are detected via file modification timestamps.
+#
+# Version: 1.1.0
 
 subsystems:
   # ============================================
@@ -145,3 +158,180 @@ presets:
   party_support:
     description: "Optimized for party support role"
     enable: [core, social, combat, consumables, companions]
+
+# ============================================
+# EXTERNALIZED CONFIGURATION FILES
+# ============================================
+# These files contain server-customizable values
+# that were previously hardcoded in source code.
+# Edit these to customize behavior for different servers.
+
+config_files:
+  # Chat text transformation rules
+  chat_abbreviations:
+    file: "chat_abbreviations.yml"
+    description: "Chat mimicry configuration - abbreviations, typos, emoticons"
+    module: "mimicry/chat.py"
+    hot_reload: true
+    options:
+      abbreviations:
+        description: "Word-to-abbreviation mappings for casual speech"
+        example: { "please": "pls", "thanks": "thx" }
+      typo_patterns:
+        description: "Character substitution patterns for typo simulation"
+        example: { "a": ["q", "s", "z"], "i": ["o", "u", "k"] }
+      emoticons:
+        description: "Emoticon list for random insertion"
+        example: [":)", ":D", "XD", "^^"]
+      settings:
+        abbreviation_chance:
+          description: "Probability of applying abbreviations (0.0-1.0)"
+          default: 0.3
+        typo_chance:
+          description: "Probability of introducing typos (0.0-1.0)"
+          default: 0.1
+        emoticon_chance:
+          description: "Probability of adding emoticons (0.0-1.0)"
+          default: 0.15
+
+  # Consumable item inventory management
+  consumable_items:
+    file: "consumable_items.yml"
+    description: "Consumable definitions and restocking thresholds"
+    module: "npc/coordinator.py"
+    hot_reload: true
+    options:
+      consumables:
+        description: "List of consumable item definitions"
+        fields:
+          - item_id: "RO item database ID"
+          - name: "Human-readable item name"
+          - category: "Item category (healing, sp_recovery, buffs, utility)"
+          - min_count: "Minimum inventory threshold for restocking"
+          - max_count: "Maximum count to maintain"
+          - priority: "Restocking priority (0-100, higher = more important)"
+        example:
+          item_id: 501
+          name: "Red Potion"
+          category: "healing"
+          min_count: 100
+          max_count: 200
+          priority: 70
+      restocking:
+        description: "Global restocking behavior settings"
+        fields:
+          - enabled: "Enable/disable automatic restocking"
+          - check_interval: "Seconds between inventory checks"
+          - npc_preference: "Preferred NPC type for restocking"
+      protected_items:
+        description: "Item IDs that should never be sold/discarded"
+        example: [501, 502, 503, 504, 505]
+
+  # Job class categorization and IDs
+  job_classes:
+    file: "job_classes.yml"
+    description: "Job class definitions and categorizations"
+    module: "npc/coordinator.py"
+    hot_reload: true
+    options:
+      job_categories:
+        description: "Mapping of category names to job IDs"
+        categories:
+          merchant:
+            description: "Merchant class tree - special vendor/buying capabilities"
+            job_ids: [5, 10, 18, 4006, 4011, 4019, 4058, 4064, 4115, 4116]
+          swordsman:
+            description: "Swordsman class tree - melee combat focus"
+            job_ids: [1, 7, 14, 4001, 4008, 4015, 4054, 4060, 4108, 4109]
+          mage:
+            description: "Mage class tree - magic damage focus"
+            job_ids: [2, 9, 16, 4003, 4010, 4017, 4056, 4062, 4112, 4113]
+          # See job_classes.yml for complete list
+
+  # Card market value estimates
+  card_values:
+    file: "card_values.yml"
+    description: "Card value estimates for equipment valuation"
+    module: "equipment/valuation.py"
+    hot_reload: true
+    options:
+      cards:
+        description: "Mapping of card_id to estimated zeny value"
+        example: { 4001: 500000, 4002: 1000000, 4094: 50000000 }
+      default_value:
+        description: "Default value for unlisted cards"
+        default: 50000
+      economy_multiplier:
+        description: "Server economy scaling factor (1.0 = standard rates)"
+        default: 1.0
+
+# ============================================
+# CONFIGURATION USAGE EXAMPLES
+# ============================================
+examples:
+  # Example: Customizing for a high-rate server
+  high_rate_server:
+    description: "Configuration adjustments for high-rate servers"
+    changes:
+      - file: "consumable_items.yml"
+        change: "Increase min_count values (potions are cheaper)"
+        example: "min_count: 500 instead of 100"
+      - file: "card_values.yml"
+        change: "Adjust economy_multiplier"
+        example: "economy_multiplier: 0.1 (cards worth less)"
+
+  # Example: Customizing for a low-rate server
+  low_rate_server:
+    description: "Configuration adjustments for low-rate servers"
+    changes:
+      - file: "consumable_items.yml"
+        change: "Decrease min_count values (potions are expensive)"
+        example: "min_count: 30 instead of 100"
+      - file: "card_values.yml"
+        change: "Adjust economy_multiplier"
+        example: "economy_multiplier: 5.0 (cards worth more)"
+
+  # Example: Customizing chat style
+  formal_chat:
+    description: "Disable abbreviations for formal servers"
+    changes:
+      - file: "chat_abbreviations.yml"
+        change: "Set abbreviation_chance to 0"
+        example: "abbreviation_chance: 0.0"
+      - file: "chat_abbreviations.yml"
+        change: "Set emoticon_chance low"
+        example: "emoticon_chance: 0.05"
+
+  # Example: Adding custom consumables
+  custom_consumables:
+    description: "Adding server-specific consumable items"
+    steps:
+      - "Edit consumable_items.yml"
+      - "Add new item to consumables list"
+      - "Set appropriate min_count and priority"
+      - "Restart not required (hot-reload)"
+
+# ============================================
+# API FOR PROGRAMMATIC ACCESS
+# ============================================
+api:
+  loader_module: "config.loader"
+  functions:
+    get_chat_config:
+      description: "Get chat abbreviations configuration"
+      returns: "ChatAbbreviationsConfig instance"
+    get_consumables_config:
+      description: "Get consumable items configuration"
+      returns: "ConsumableItemsConfig instance"
+    get_job_classes_config:
+      description: "Get job classes configuration"
+      returns: "JobClassesConfig instance"
+    get_card_values_config:
+      description: "Get card values configuration"
+      returns: "CardValuesConfig instance"
+    reload_all_configs:
+      description: "Force reload all configuration files"
+      returns: "Dict with reload status for each config"
+    get_config_summary:
+      description: "Get summary of all loaded configurations"
+      returns: "Dict with config stats and versions"

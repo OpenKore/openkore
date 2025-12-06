@@ -237,7 +237,7 @@ class StorageManager:
         # These actions serve as recommendations for the economic manager
         for item in items_to_store:
             actions.append(Action(
-                action_type=ActionType.NOOP,  # Placeholder for storage action
+                action_type=ActionType.STORE_ITEM,
                 priority=5,
                 item_id=item.item_id,
                 extra={
@@ -275,7 +275,7 @@ class StorageManager:
                 needed = 50 - current_count
                 logger.info(f"Need to retrieve item {item_id} from storage")
                 actions.append(Action(
-                    action_type=ActionType.NOOP,  # Placeholder for retrieve action
+                    action_type=ActionType.RETRIEVE_ITEM,
                     priority=7,  # Higher priority for consumables
                     item_id=item_id,
                     extra={

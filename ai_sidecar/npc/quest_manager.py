@@ -5,16 +5,21 @@ Coordinates quest tracking, objective updates, and quest completion logic.
 Integrates with the decision engine to suggest quest-related actions.
 """
 
-from typing import TYPE_CHECKING
+from pathlib import Path
+from typing import TYPE_CHECKING, Optional
 
-from ai_sidecar.core.decision import Action, ActionType
+from ai_sidecar.core.decision import Action
 from ai_sidecar.npc.dialogue_parser import DialogueParser
+from ai_sidecar.npc.quest_actions import QuestActionGenerator
+from ai_sidecar.npc.quest_db_loader import QuestDatabaseLoader, get_quest_loader
 from ai_sidecar.npc.quest_models import (
     Quest,
     QuestDatabase,
     QuestLog,
     QuestObjectiveType,
 )
+from ai_sidecar.npc.quest_progress import QuestProgressTracker
+from ai_sidecar.npc.quest_suggestions import QuestSuggestionEngine
 from ai_sidecar.social import config
 from ai_sidecar.utils.logging import get_logger
 
@@ -33,15 +38,53 @@ class QuestManager:
     - Objective progress updates
     - Quest turn-in detection
     - Priority calculation for active quests
+    - Quest database loading and caching
+    - Quest chain tracking
     """
 
-    def __init__(self) -> None:
-        """Initialize quest manager."""
-        self.quest_db = QuestDatabase()
+    def __init__(
+        self,
+        db_path: Optional[Path] = None,
+        custom_quest_paths: Optional[list[Path]] = None,
+        auto_load: bool = True
+    ) -> None:
+        """
+        Initialize quest manager.
+        
+        Args:
+            db_path: Path to quest database directory
+            custom_quest_paths: Additional paths for custom server quests
+            auto_load: Whether to auto-load quest database on init
+        """
         self.quest_log = QuestLog()
         self.dialogue_parser = DialogueParser()
+        
+        # Initialize quest database loader
+        self._loader = get_quest_loader(
+            db_path=db_path,
+            custom_paths=custom_quest_paths
+        )
+        
+        # Load quest database
+        if auto_load:
+            self.quest_db = self._loader.load_all()
+        else:
+            self.quest_db = QuestDatabase()
+        
+        # Initialize sub-modules
+        self._progress_tracker = QuestProgressTracker(self.quest_log)
+        self._action_generator = QuestActionGenerator(self.quest_log)
+        self._suggestion_engine = QuestSuggestionEngine(
+            self.quest_db,
+            self.quest_log,
+            self._loader
+        )
 
-        logger.info("Quest manager initialized")
+        logger.info(
+            "Quest manager initialized",
+            quests_loaded=len(self.quest_db._quests),
+            auto_load=auto_load
+        )
 
     async def tick(self, game_state: "GameState") -> list[Action]:
         """
@@ -57,188 +100,46 @@ class QuestManager:
 
         try:
             # Priority 1: Update quest progress from game state
-            self._update_quest_progress(game_state)
+            self._progress_tracker.update_progress(game_state)
 
             # Priority 2: Check for completable quests
             completable = self.quest_log.get_completable_quests()
             if completable:
-                turn_in_actions = self._create_turn_in_actions(completable, game_state)
+                turn_in_actions = self._action_generator.create_turn_in_actions(
+                    completable, game_state
+                )
                 actions.extend(turn_in_actions)
-                # Return early - focus on turn-in
                 return actions
 
             # Priority 3: Suggest next quest objectives
             if not actions:
-                objective_actions = self._get_objective_actions(game_state)
-                actions.extend(objective_actions[:3])  # Limit to top 3 actions
+                priority_quest = self.get_priority_quest()
+                if priority_quest:
+                    objective_actions = self._action_generator.get_objective_actions(
+                        priority_quest, game_state
+                    )
+                    actions.extend(objective_actions[:3])
 
         except Exception as e:
             logger.error(f"Error in quest tick: {e}", exc_info=True)
 
         return actions
 
-    def _update_quest_progress(self, game_state: "GameState") -> None:
-        """
-        Update all quest objective progress based on game state.
-
-        Args:
-            game_state: Current game state
-        """
-        if not self.quest_log.active_quests:
-            return
-        
-        # Track inventory items for collection quests
-        inventory_counts: dict[int, int] = {}
-        for item in game_state.inventory:
-            inventory_counts[item.id] = inventory_counts.get(item.id, 0) + item.amount
-        
-        # Update each active quest
-        for quest in self.quest_log.active_quests:
-            self._update_single_quest_progress(quest, game_state, inventory_counts)
+    # === Event Handlers (delegated to progress tracker) ===
     
-    def _update_single_quest_progress(
-        self,
-        quest: Quest,
-        game_state: "GameState",
-        inventory_counts: dict[int, int]
-    ) -> None:
-        """
-        Update progress for a single quest.
-        
-        Args:
-            quest: Quest to update
-            game_state: Current game state
-            inventory_counts: Pre-calculated inventory item counts
-        """
-        quest_changed = False
-        
-        for obj in quest.objectives:
-            if obj.completed:
-                continue
-            
-            if obj.objective_type == QuestObjectiveType.COLLECT_ITEM:
-                # Check inventory for required items
-                current_count = inventory_counts.get(obj.target_id, 0)
-                if current_count != obj.current_count:
-                    old_count = obj.current_count
-                    obj.current_count = min(current_count, obj.required_count)
-                    if obj.current_count > old_count:
-                        logger.debug(
-                            f"Quest '{quest.name}' item progress: "
-                            f"{obj.target_name} {old_count} -> {obj.current_count}/{obj.required_count}"
-                        )
-                        quest_changed = True
-                    
-                    # Check completion
-                    if obj.current_count >= obj.required_count:
-                        obj.completed = True
-                        logger.info(f"Quest objective completed: Collect {obj.target_name}")
-            
-            elif obj.objective_type == QuestObjectiveType.VISIT_LOCATION:
-                # Check if we're at the target location
-                if obj.map_name and obj.x is not None and obj.y is not None:
-                    if game_state.map_name == obj.map_name:
-                        char_pos = game_state.character.position
-                        distance = ((char_pos.x - obj.x) ** 2 + (char_pos.y - obj.y) ** 2) ** 0.5
-                        
-                        if distance <= 5:  # Within 5 cells
-                            obj.update_progress(1)
-                            logger.info(f"Quest objective completed: Visit {obj.target_name}")
-                            quest_changed = True
-            
-            elif obj.objective_type == QuestObjectiveType.TALK_TO_NPC:
-                # Check if NPC is nearby and we recently talked
-                for actor in game_state.actors:
-                    if actor.id == obj.target_id:
-                        char_pos = game_state.character.position
-                        distance = char_pos.distance_to(actor.position)
-                        
-                        # If we're very close, assume we talked
-                        if distance <= 2:
-                            # Would need actual talk event tracking
-                            pass
-        
-        # Check if quest is now completable
-        if quest_changed and quest.all_objectives_complete:
-            quest.status = "ready_to_turn_in"
-            logger.info(f"Quest ready to turn in: {quest.name}")
-
     def on_monster_kill(self, monster_id: int, monster_name: str) -> None:
-        """
-        Handle monster kill event for quest tracking.
-
-        Args:
-            monster_id: ID of killed monster
-            monster_name: Name of killed monster
-        """
-        # Update all kill objectives
-        for quest in self.quest_log.active_quests:
-            kill_objectives = quest.get_objective_by_type(
-                QuestObjectiveType.KILL_MONSTER
-            )
-
-            for obj in kill_objectives:
-                if obj.target_id == monster_id and not obj.completed:
-                    obj.update_progress(1)
-                    logger.info(
-                        f"Quest objective updated: {quest.name} - {obj.target_name} ({obj.current_count}/{obj.required_count})"
-                    )
-
-                    # Check if quest is now completable
-                    if quest.all_objectives_complete:
-                        quest.status = "ready_to_turn_in"
-                        logger.info(f"Quest ready to turn in: {quest.name}")
+        """Handle monster kill event for quest tracking."""
+        self._progress_tracker.on_monster_kill(monster_id, monster_name)
 
     def on_item_obtained(self, item_id: int, quantity: int) -> None:
-        """
-        Handle item acquisition for quest tracking.
-
-        Args:
-            item_id: ID of obtained item
-            quantity: Number obtained
-        """
-        # Update all collection objectives
-        for quest in self.quest_log.active_quests:
-            collect_objectives = quest.get_objective_by_type(
-                QuestObjectiveType.COLLECT_ITEM
-            )
-
-            for obj in collect_objectives:
-                if obj.target_id == item_id and not obj.completed:
-                    obj.update_progress(quantity)
-                    logger.info(
-                        f"Quest objective updated: {quest.name} - {obj.target_name} ({obj.current_count}/{obj.required_count})"
-                    )
-
-                    # Check if quest is now completable
-                    if quest.all_objectives_complete:
-                        quest.status = "ready_to_turn_in"
-                        logger.info(f"Quest ready to turn in: {quest.name}")
+        """Handle item acquisition for quest tracking."""
+        self._progress_tracker.on_item_obtained(item_id, quantity)
 
     def on_npc_talk(self, npc_id: int) -> None:
-        """
-        Handle NPC conversation for quest tracking.
+        """Handle NPC conversation for quest tracking."""
+        self._progress_tracker.on_npc_talk(npc_id)
 
-        Args:
-            npc_id: ID of NPC being talked to
-        """
-        # Update talk objectives
-        for quest in self.quest_log.active_quests:
-            talk_objectives = quest.get_objective_by_type(
-                QuestObjectiveType.TALK_TO_NPC
-            )
-
-            for obj in talk_objectives:
-                if obj.target_id == npc_id and not obj.completed:
-                    obj.update_progress(1)
-                    logger.info(
-                        f"Quest objective updated: {quest.name} - Talk to {obj.target_name}"
-                    )
-
-                    # Check if quest is now completable
-                    if quest.all_objectives_complete:
-                        quest.status = "ready_to_turn_in"
-                        logger.info(f"Quest ready to turn in: {quest.name}")
+    # === Quest Management ===
 
     def accept_quest(self, quest: Quest) -> bool:
         """
@@ -284,7 +185,6 @@ class QuestManager:
         if not self.quest_log.active_quests:
             return None
 
-        # Sort by priority (calculated)
         sorted_quests = sorted(
             self.quest_log.active_quests,
             key=lambda q: self._calculate_quest_priority(q),
@@ -294,15 +194,7 @@ class QuestManager:
         return sorted_quests[0] if sorted_quests else None
 
     def _calculate_quest_priority(self, quest: Quest) -> float:
-        """
-        Calculate quest priority based on various factors and config.
-
-        Args:
-            quest: Quest to evaluate
-
-        Returns:
-            Priority score (higher = more priority)
-        """
+        """Calculate quest priority based on various factors and config."""
         priority = 0.0
         quest_priorities = config.QUEST_PRIORITIES
 
@@ -322,10 +214,10 @@ class QuestManager:
         total_exp = sum(
             r.amount for r in quest.rewards if r.reward_type in ["exp_base", "exp_job"]
         )
-        priority += total_exp * 0.001  # Scale down
+        priority += total_exp * 0.001
 
         total_zeny = sum(r.amount for r in quest.rewards if r.reward_type == "zeny")
-        priority += total_zeny * 0.01  # Scale down
+        priority += total_zeny * 0.01
 
         # Bonus for time-limited quests
         if quest.time_limit_seconds:
@@ -338,228 +230,107 @@ class QuestManager:
         return priority
     
     def _determine_quest_type(self, quest: Quest) -> str:
-        """
-        Determine quest type for priority calculation.
-        
-        Args:
-            quest: Quest to evaluate
-            
-        Returns:
-            Quest type string
-        """
-        # Check quest properties
+        """Determine quest type for priority calculation."""
         if quest.is_daily:
             return "daily"
-        
         if quest.is_repeatable:
             return "repeatable"
         
-        # Check quest name/description for hints
         name_lower = quest.name.lower()
         desc_lower = quest.description.lower()
         
         if any(word in name_lower for word in ["main", "story", "chapter"]):
             return "main_story"
-        
         if any(word in name_lower for word in ["side", "optional"]):
             return "side_quest"
-        
         if any(word in desc_lower for word in ["collect", "gather", "bring"]):
             return "collection"
         
-        # Default to side quest
         return "side_quest"
 
-    def _create_turn_in_actions(
-        self, completable_quests: list[Quest], game_state: "GameState"
-    ) -> list[Action]:
-        """
-        Create actions to turn in completed quests.
-
-        Args:
-            completable_quests: Quests ready to turn in
-            game_state: Current game state
-
-        Returns:
-            List of turn-in actions
-        """
-        actions: list[Action] = []
-
-        for quest in completable_quests:
-            # Determine turn-in NPC
-            turn_in_npc_id = quest.turn_in_npc_id or quest.npc_id
-
-            # Check if NPC is nearby
-            npc = None
-            for actor in game_state.actors:
-                if actor.id == turn_in_npc_id:
-                    npc = actor
-                    break
-
-            if npc:
-                # NPC is visible - check distance
-                char_pos = game_state.character.position
-                distance = char_pos.distance_to(npc.position)
-
-                if distance > 5:
-                    # Move to NPC
-                    actions.append(
-                        Action.move_to(npc.position.x, npc.position.y, priority=1)
-                    )
-                else:
-                    # Talk to NPC
-                    actions.append(
-                        Action(
-                            type=ActionType.TALK_NPC,
-                            target_id=turn_in_npc_id,
-                            priority=1,
-                        )
-                    )
-
-        return actions
-
-    def _get_objective_actions(self, game_state: "GameState") -> list[Action]:
-        """
-        Get actions for progressing quest objectives.
-
-        Args:
-            game_state: Current game state
-
-        Returns:
-            List of objective-related actions
-        """
-        actions: list[Action] = []
-
-        # Get priority quest
-        priority_quest = self.get_priority_quest()
-        if not priority_quest:
-            return actions
-
-        # Get incomplete objectives
-        incomplete_objectives = [
-            obj for obj in priority_quest.objectives if not obj.completed
-        ]
-
-        for obj in incomplete_objectives:
-            if obj.objective_type == QuestObjectiveType.KILL_MONSTER:
-                # Find monster and attack
-                for actor in game_state.actors:
-                    if (
-                        hasattr(actor, "mob_id")
-                        and actor.mob_id == obj.target_id
-                        and actor.hp
-                        and actor.hp > 0
-                    ):
-                        actions.append(
-                            Action.attack(target_id=actor.id, priority=3)
-                        )
-                        break
-
-            elif obj.objective_type == QuestObjectiveType.TALK_TO_NPC:
-                # Find NPC and talk
-                for actor in game_state.actors:
-                    if actor.id == obj.target_id:
-                        char_pos = game_state.character.position
-                        distance = char_pos.distance_to(actor.position)
-
-                        if distance > 5:
-                            # Move to NPC
-                            actions.append(
-                                Action.move_to(
-                                    actor.position.x, actor.position.y, priority=3
-                                )
-                            )
-                        else:
-                            # Talk to NPC
-                            actions.append(
-                                Action(
-                                    type=ActionType.TALK_NPC,
-                                    target_id=actor.id,
-                                    priority=3,
-                                )
-                            )
-                        break
-
-            elif obj.objective_type == QuestObjectiveType.VISIT_LOCATION:
-                # Move to location
-                if obj.x is not None and obj.y is not None:
-                    char_pos = game_state.character.position
-                    distance = (
-                        (char_pos.x - obj.x) ** 2 + (char_pos.y - obj.y) ** 2
-                    ) ** 0.5
-
-                    if distance > 3:
-                        actions.append(Action.move_to(obj.x, obj.y, priority=3))
-                    else:
-                        # Mark objective complete
-                        obj.update_progress(1)
-
-        return actions
-
     def get_quest_by_id(self, quest_id: int) -> Quest | None:
-        """
-        Get quest by ID from active quests or database.
-
-        Args:
-            quest_id: Quest ID to find
-
-        Returns:
-            Quest or None
-        """
-        # Check active quests first
+        """Get quest by ID from active quests or database."""
         quest = self.quest_log.get_quest(quest_id)
         if quest:
             return quest
-
-        # Check database
         return self.quest_db.get_quest(quest_id)
 
-    def load_quest_database(self, quest_data: dict) -> None:
+    # === Database Operations ===
+
+    def load_quest_database(
+        self,
+        db_path: Optional[Path] = None,
+        custom_paths: Optional[list[Path]] = None,
+        force_reload: bool = False
+    ) -> int:
         """
-        Load quest definitions from data.
+        Load quest definitions from database files.
 
         Args:
-            quest_data: Dictionary of quest definitions
+            db_path: Override default database path
+            custom_paths: Additional paths for custom quests
+            force_reload: Force reload even if already loaded
+
+        Returns:
+            Number of quests loaded
         """
-        for quest_id_str, quest_dict in quest_data.items():
-            try:
-                quest_id = int(quest_id_str)
-                # Would parse and create Quest objects here
-                # For now, this is a placeholder
-                logger.debug(f"Loading quest {quest_id}")
-            except (ValueError, KeyError) as e:
-                logger.warning(f"Failed to load quest {quest_id_str}: {e}")
+        if force_reload or not self.quest_db._quests:
+            if db_path or custom_paths:
+                from ai_sidecar.npc.quest_db_loader import reset_quest_loader
+                reset_quest_loader()
+                self._loader = get_quest_loader(
+                    db_path=db_path,
+                    custom_paths=custom_paths
+                )
+            
+            self.quest_db = self._loader.load_all()
+            
+            # Update suggestion engine reference
+            self._suggestion_engine = QuestSuggestionEngine(
+                self.quest_db,
+                self.quest_log,
+                self._loader
+            )
+            
+            logger.info(
+                "Quest database loaded",
+                total_quests=len(self.quest_db._quests),
+                stats=self._loader.get_stats()
+            )
+        
+        return len(self.quest_db._quests)
+    
+    def reload_quest_database(self) -> int:
+        """Hot-reload quest database from files."""
+        self.quest_db = self._loader.reload()
+        
+        # Update suggestion engine reference
+        self._suggestion_engine = QuestSuggestionEngine(
+            self.quest_db,
+            self.quest_log,
+            self._loader
+        )
+        
+        logger.info(f"Quest database reloaded: {len(self.quest_db._quests)} quests")
+        return len(self.quest_db._quests)
+
+    # === Quest Availability & Suggestions (delegated) ===
 
     def get_available_quests(
         self, level: int, job: str, map_name: str
     ) -> list[Quest]:
-        """
-        Get quests available to accept at current level/location.
-
-        Args:
-            level: Character level
-            job: Character job class
-            map_name: Current map
-
-        Returns:
-            List of available quests
-        """
+        """Get quests available to accept at current level/location."""
         available = []
-
-        # Get quests for level
         level_quests = self.quest_db.get_quests_for_level(level)
 
         for quest in level_quests:
-            # Check if already completed (unless repeatable)
             if not quest.is_repeatable:
                 if self.quest_log.is_quest_completed(quest.quest_id):
                     continue
 
-            # Check if already active
             if self.quest_log.get_quest(quest.quest_id):
                 continue
 
-            # Check prerequisites
             prereqs_met = all(
                 self.quest_log.is_quest_completed(prereq_id)
                 for prereq_id in quest.prerequisite_quests
@@ -567,13 +338,62 @@ class QuestManager:
             if not prereqs_met:
                 continue
 
-            # Check daily quest availability
             if quest.is_daily:
                 if not self.quest_log.can_accept_daily_quest(quest.quest_id):
                     continue
 
-            # Check eligibility
             if quest.is_eligible(level, job):
                 available.append(quest)
 
         return available
+    
+    def get_quest_chain(self, quest_id: int) -> list[Quest]:
+        """Get all quests in a chain containing the given quest."""
+        return self._suggestion_engine.get_quest_chain(quest_id)
+    
+    def check_prerequisites(
+        self,
+        quest_id: int,
+        level: int,
+        job: str,
+        completed_quests: Optional[set[int]] = None
+    ) -> tuple[bool, list[str]]:
+        """Check if a quest's prerequisites are met."""
+        return self._suggestion_engine.check_prerequisites(
+            quest_id, level, job, completed_quests
+        )
+    
+    def suggest_next_quests(
+        self,
+        level: int,
+        job: str,
+        map_name: Optional[str] = None,
+        max_suggestions: int = 5
+    ) -> list[tuple[Quest, float]]:
+        """Suggest next quests based on level, job, and optionally location."""
+        available = self.get_available_quests(level, job, map_name or "")
+        return self._suggestion_engine.suggest_next_quests(
+            level, job, available, map_name, max_suggestions
+        )
+    
+    def track_objective_progress(
+        self,
+        quest_id: int,
+        objective_type: Optional[QuestObjectiveType] = None
+    ) -> dict:
+        """Get detailed progress tracking for quest objectives."""
+        return self._suggestion_engine.track_objective_progress(
+            quest_id, objective_type
+        )
+    
+    def get_quests_by_type(self, quest_type: str) -> list[Quest]:
+        """Get all quests of a specific type from database."""
+        return self._loader.get_quests_by_type(quest_type)
+    
+    def get_quests_by_npc(self, npc_id: int) -> list[Quest]:
+        """Get all quests available from a specific NPC."""
+        return self._loader.get_quests_by_npc(npc_id)
+    
+    def get_quest_database_stats(self) -> dict:
+        """Get statistics about the loaded quest database."""
+        return self._loader.get_stats()

@@ -4,6 +4,12 @@ Chat humanization for anti-detection.
 Generates human-like chat behavior including response timing,
 typing delays, occasional typos, abbreviations, and emoticons
 to prevent detection through chat pattern analysis.
+
+Configuration is loaded from config/chat_abbreviations.yml which allows:
+- Custom abbreviation mappings per server
+- Typo pattern customization
+- Emoticon sets
+- Behavior tuning (chances, limits)
 """
 
 import json
@@ -12,10 +18,13 @@ import re
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Dict, Any, List
 
 import structlog
 from pydantic import BaseModel, Field, ConfigDict
+
+# Import the centralized config loader
+from ..config.loader import get_chat_config, ChatAbbreviationsConfig
 
 logger = structlog.get_logger(__name__)
 
@@ -62,67 +71,136 @@ class HumanChatSimulator:
     - Appropriate silence (not responding to everything)
     - Personality consistency
     - Context awareness
+    
+    Configuration is loaded from YAML config files for easy customization
+    per server or deployment. See config/chat_abbreviations.yml for options.
     """
     
-    def __init__(self, style: ChatStyle = ChatStyle.CASUAL, data_dir: Optional[Path] = None):
+    def __init__(
+        self,
+        style: ChatStyle = ChatStyle.CASUAL,
+        data_dir: Optional[Path] = None,
+        config: Optional[ChatAbbreviationsConfig] = None
+    ):
         self.log = structlog.get_logger()
         self.style = style
         self.message_history: list[tuple[datetime, str]] = []
         
-        # Load abbreviations and typo patterns
+        # Use provided config or get global singleton
+        self._config = config or get_chat_config()
+        
+        # Load abbreviations and typo patterns from config
         self.abbreviations = self._load_abbreviations(data_dir)
         self.typo_patterns = self._load_typo_patterns(data_dir)
+        self.emoticons = self._load_emoticons()
+        
+        # Load settings from config
+        self._settings = self._config.settings
         
         # Typing speed (words per minute)
         self.base_wpm = random.randint(40, 80)
         
-        self.log.info("chat_simulator_initialized", style=style.value, wpm=self.base_wpm)
+        # Register for config reload notifications
+        self._config.register_reload_callback(self._on_config_reload)
         
-    def _load_abbreviations(self, data_dir: Optional[Path]) -> dict:
-        """Load gaming abbreviations from config."""
-        if data_dir:
-            behaviors_file = data_dir / "human_behaviors.json"
-            if behaviors_file.exists():
-                try:
-                    with open(behaviors_file, "r") as f:
-                        data = json.load(f)
-                        return data.get("gaming_abbreviations", {})
-                except Exception as e:
-                    self.log.error("failed_to_load_abbreviations", error=str(e))
-        
-        # Default abbreviations
-        return {
-            "please": "pls", "thanks": "thx", "okay": "ok", "because": "cuz",
-            "you": "u", "are": "r", "before": "b4", "later": "l8r",
-            "tonight": "2nite", "tomorrow": "tmrw", "awesome": "awesom",
-            "nothing": "nothin", "something": "somethin"
-        }
+        self.log.info(
+            "chat_simulator_initialized",
+            style=style.value,
+            wpm=self.base_wpm,
+            abbreviation_count=len(self.abbreviations),
+            config_version=self._config.config.get("version", "unknown")
+        )
     
-    def _load_typo_patterns(self, data_dir: Optional[Path]) -> dict:
-        """Load typo patterns from config."""
+    def _on_config_reload(self) -> None:
+        """Handle configuration reload - refresh cached values."""
+        self.abbreviations = self._config.abbreviations
+        self.typo_patterns = self._config.typo_patterns
+        self.emoticons = self._config.emoticons
+        self._settings = self._config.settings
+        self.log.info("chat_config_reloaded", abbreviation_count=len(self.abbreviations))
+        
+    def _load_abbreviations(self, data_dir: Optional[Path]) -> Dict[str, str]:
+        """
+        Load gaming abbreviations from config.
+        
+        Priority:
+        1. YAML config file (config/chat_abbreviations.yml)
+        2. Legacy JSON file (data_dir/human_behaviors.json)
+        3. Hardcoded defaults in config loader
+        """
+        # First try: Use YAML config (recommended)
+        yaml_abbreviations = self._config.abbreviations
+        if yaml_abbreviations:
+            self.log.debug("abbreviations_loaded_from_yaml", count=len(yaml_abbreviations))
+            return yaml_abbreviations
+        
+        # Second try: Legacy JSON file for backward compatibility
         if data_dir:
             behaviors_file = data_dir / "human_behaviors.json"
             if behaviors_file.exists():
                 try:
                     with open(behaviors_file, "r") as f:
                         data = json.load(f)
-                        return data.get("typo_patterns", {})
+                        legacy_abbrevs = data.get("gaming_abbreviations", {})
+                        if legacy_abbrevs:
+                            self.log.info(
+                                "abbreviations_loaded_from_legacy_json",
+                                path=str(behaviors_file),
+                                count=len(legacy_abbrevs)
+                            )
+                            return legacy_abbrevs
                 except Exception as e:
-                    self.log.error("failed_to_load_typo_patterns", error=str(e))
+                    self.log.error("failed_to_load_legacy_abbreviations", error=str(e))
         
-        # Default typo patterns
-        return {
-            "adjacent_keys": {
-                "a": ["s", "q", "w", "z"], "s": ["a", "d", "w", "x", "z"],
-                "d": ["s", "f", "e", "r", "c", "x"], "e": ["w", "r", "d", "f"],
-                "r": ["e", "t", "f", "g"], "t": ["r", "y", "g", "h"],
-                "o": ["i", "p", "k", "l"], "p": ["o", "l"]
-            },
-            "common_typos": {
-                "the": ["teh", "hte"], "and": ["adn", "nad"],
-                "that": ["taht", "htat"], "what": ["waht", "hwat"]
-            }
-        }
+        # Fallback: defaults from config loader
+        self.log.debug("using_default_abbreviations")
+        return self._config._get_defaults().get("abbreviations", {})
+    
+    def _load_typo_patterns(self, data_dir: Optional[Path]) -> Dict[str, Any]:
+        """
+        Load typo patterns from config.
+        
+        Priority:
+        1. YAML config file (config/chat_abbreviations.yml)
+        2. Legacy JSON file (data_dir/human_behaviors.json)
+        3. Hardcoded defaults in config loader
+        """
+        # First try: Use YAML config (recommended)
+        yaml_patterns = self._config.typo_patterns
+        if yaml_patterns:
+            self.log.debug("typo_patterns_loaded_from_yaml")
+            return yaml_patterns
+        
+        # Second try: Legacy JSON file for backward compatibility
+        if data_dir:
+            behaviors_file = data_dir / "human_behaviors.json"
+            if behaviors_file.exists():
+                try:
+                    with open(behaviors_file, "r") as f:
+                        data = json.load(f)
+                        legacy_patterns = data.get("typo_patterns", {})
+                        if legacy_patterns:
+                            self.log.info(
+                                "typo_patterns_loaded_from_legacy_json",
+                                path=str(behaviors_file)
+                            )
+                            return legacy_patterns
+                except Exception as e:
+                    self.log.error("failed_to_load_legacy_typo_patterns", error=str(e))
+        
+        # Fallback: defaults from config loader
+        self.log.debug("using_default_typo_patterns")
+        return self._config._get_defaults().get("typo_patterns", {})
+    
+    def _load_emoticons(self) -> Dict[str, List[str]]:
+        """Load emoticons from config."""
+        emoticons = self._config.emoticons
+        if emoticons:
+            self.log.debug("emoticons_loaded_from_yaml", categories=list(emoticons.keys()))
+            return emoticons
+        
+        # Fallback to defaults
+        return self._config._get_defaults().get("emoticons", {})
     
     def should_respond(self, context: ChatContext, message: str) -> tuple[bool, float]:
         """
@@ -212,12 +290,25 @@ class HumanChatSimulator:
         
         return delays
     
-    def add_typo(self, message: str, typo_rate: float = 0.02) -> tuple[str, bool]:
+    def add_typo(self, message: str, typo_rate: Optional[float] = None) -> tuple[str, bool]:
         """
         Add realistic typos.
         Types: adjacent key, double letter, missing letter, transposed
+        
+        Args:
+            message: Original message
+            typo_rate: Override typo rate (default from config)
+            
+        Returns:
+            Tuple of (modified message, whether typo was added)
         """
-        if len(message) < 3 or random.random() > typo_rate:
+        # Use config-based typo rate if not overridden
+        if typo_rate is None:
+            typo_rate = self._settings.get("typo_chance", 0.02)
+        
+        min_length = self._settings.get("min_typo_length", 3)
+        
+        if len(message) < min_length or random.random() > typo_rate:
             return message, False
         
         # Select random position (not first or last character)
@@ -283,21 +374,18 @@ class HumanChatSimulator:
     
     def add_emotion_indicators(self, message: str, emotion: str) -> str:
         """
-        Add emoticons/reactions.
+        Add emoticons/reactions from configuration.
         "ok" -> "ok :)", "thanks" -> "thx <3"
-        """
-        emoticons = {
-            "happy": [":)", "^^", ":D", "=)"],
-            "sad": [":(", "T_T", ";_;"],
-            "laugh": ["lol", "haha", "xD", "rofl"],
-            "love": ["<3", "♥"],
-            "confused": ["???", "?", "o.O"],
-            "surprised": ["!", "!!", "o_o", "O_O"],
-            "angry": [">:(", "DX"],
-            "neutral": [".", "..."]
-        }
         
-        if emotion in emoticons and random.random() < 0.4:  # 40% chance
+        Emoticons are loaded from config/chat_abbreviations.yml for customization.
+        """
+        # Use emoticons from config (loaded in __init__ or on reload)
+        emoticons = self.emoticons
+        
+        # Get emoticon chance from settings (default 40%)
+        emoticon_chance = self._settings.get("emoticon_chance", 0.4)
+        
+        if emotion in emoticons and random.random() < emoticon_chance:
             emoticon = random.choice(emoticons[emotion])
             
             # Don't add emoticon if message already has one
@@ -351,7 +439,7 @@ class HumanChatSimulator:
         self,
         message: str,
         emotion: str = "neutral",
-        typo_chance: float = 0.02
+        typo_chance: Optional[float] = None
     ) -> ChatResponse:
         """
         Apply all humanization to a chat message.
@@ -359,13 +447,19 @@ class HumanChatSimulator:
         Args:
             message: Original message
             emotion: Emotion to express
-            typo_chance: Probability of typo
+            typo_chance: Probability of typo (default from config)
             
         Returns:
             Humanized ChatResponse
         """
-        # Apply abbreviations
-        message = self.abbreviate_message(message)
+        # Use config-based typo rate if not overridden
+        if typo_chance is None:
+            typo_chance = self._settings.get("typo_chance", 0.02)
+        
+        # Apply abbreviations based on config chance
+        abbreviation_chance = self._settings.get("abbreviation_chance", 0.7)
+        if random.random() < abbreviation_chance:
+            message = self.abbreviate_message(message)
         
         # Sometimes make message all lowercase (casual)
         if self.style == ChatStyle.CASUAL and random.random() < 0.6:
@@ -430,9 +524,12 @@ class HumanChatSimulator:
         return None
     
     def get_chat_stats(self) -> dict:
-        """Get chat statistics."""
+        """Get chat statistics including configuration info."""
         if not self.message_history:
-            return {"total_messages": 0}
+            return {
+                "total_messages": 0,
+                "config_version": self._config.config.get("version", "unknown")
+            }
         
         recent_count = len([m for t, m in self.message_history if (datetime.now() - t).total_seconds() < 3600])
         avg_length = sum(len(m) for _, m in self.message_history) / len(self.message_history)
@@ -442,8 +539,25 @@ class HumanChatSimulator:
             "recent_hour_count": recent_count,
             "avg_message_length": round(avg_length, 1),
             "style": self.style.value,
-            "base_wpm": self.base_wpm
+            "base_wpm": self.base_wpm,
+            "config_version": self._config.config.get("version", "unknown"),
+            "abbreviation_count": len(self.abbreviations),
+            "emoticon_categories": list(self.emoticons.keys()),
+            "settings": {
+                "abbreviation_chance": self._settings.get("abbreviation_chance", 0.7),
+                "typo_chance": self._settings.get("typo_chance", 0.02),
+                "emoticon_chance": self._settings.get("emoticon_chance", 0.4)
+            }
         }
+    
+    def reload_config(self) -> None:
+        """
+        Manually trigger configuration reload.
+        
+        Useful for applying config changes without restarting.
+        """
+        if self._config.reload():
+            self._on_config_reload()
 
 
 # Alias for backward compatibility

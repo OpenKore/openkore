@@ -258,7 +258,7 @@ class TradingSystem:
                     if total_cost <= available_budget:
                         actions.append(
                             Action(
-                                action_type=ActionType.NOOP,  # Placeholder
+                                action_type=ActionType.BUY_FROM_NPC,
                                 priority=wanted.priority,
                                 item_id=shop_item.item_id,
                                 extra={
@@ -323,7 +323,7 @@ class TradingSystem:
                     )
                     actions.append(
                         Action(
-                            action_type=ActionType.NOOP,  # Placeholder
+                            action_type=ActionType.BUY_FROM_VENDOR,
                             priority=wanted.priority,
                             item_id=vend_item.item_id,
                             extra={
@@ -364,7 +364,7 @@ class TradingSystem:
         
         # Create vending setup action
         return Action(
-            action_type=ActionType.NOOP,  # Placeholder for vending
+            action_type=ActionType.OPEN_VENDING,
             priority=5,
             extra={
                 "action": "setup_vending",
@@ -465,7 +465,7 @@ class TradingSystem:
                 logger.info(f"Sell: {inv_item.name} x{quantity}")
                 actions.append(
                     Action(
-                        action_type=ActionType.NOOP,  # Placeholder for sell
+                        action_type=ActionType.SELL_TO_NPC,
                         priority=5,
                         item_id=inv_item.item_id,
                         extra={

@@ -30,6 +30,21 @@ from ai_sidecar.economy.supply_demand import (
     SupplyDemandAnalyzer,
     SupplyDemandMetrics,
 )
+
+# Item categories and crafting (Phase 3.2)
+from ai_sidecar.economy.item_categories import (
+    CategoryType,
+    ItemCategory,
+    ItemCategoryDatabase,
+)
+from ai_sidecar.economy.crafting_recipes import (
+    CraftingRecipe,
+    CraftingRecipeDatabase,
+    CraftingType,
+    JobClass,
+    RecipeMaterial,
+)
+from ai_sidecar.economy.crafting_analyzer import CraftingAnalyzer
 from ai_sidecar.economy.vending import (
     VendingItem,
     VendingLocation,
@@ -75,6 +90,18 @@ __all__ = [
     "ItemRarity",
     "SupplyDemandAnalyzer",
     "SupplyDemandMetrics",
+    # Item Categories (Phase 3.2)
+    "CategoryType",
+    "ItemCategory",
+    "ItemCategoryDatabase",
+    # Crafting Recipes (Phase 3.2)
+    "CraftingRecipe",
+    "CraftingRecipeDatabase",
+    "CraftingType",
+    "JobClass",
+    "RecipeMaterial",
+    # Crafting Analyzer (Phase 3.2)
+    "CraftingAnalyzer",
     # Vending
     "VendingItem",
     "VendingLocation",

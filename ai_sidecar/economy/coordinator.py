@@ -73,17 +73,39 @@ class EconomyCoordinator:
         
         self.log.info("economy_coordinator_initialized", data_dir=str(data_dir))
     
-    async def tick(self, game_state) -> List[dict]:
+    async def tick(self, game_state, tick: int) -> List[dict]:
         """
         Process tick and return economic actions.
         
+        P3 Bridge Features (100%):
+        - Market price synchronization
+        - Vending system management
+        - Trading UI monitoring
+        - Auction house integration
+        - Economic intelligence
+        
         Args:
             game_state: Current game state
+            tick: Current game tick
             
         Returns:
             List of action dicts
         """
         actions = []
+        
+        # Update market data from game state
+        await self._sync_market_prices(game_state)
+        
+        # Check for active vending
+        if hasattr(game_state, 'market') and game_state.market:
+            await self._update_vendor_tracking(game_state.market)
+        
+        # Handle trading UI if active
+        if hasattr(game_state, 'market') and game_state.market and game_state.market.trading_ui:
+            trading_actions = await self._handle_trading_ui(game_state.market.trading_ui)
+            if trading_actions:
+                actions.extend(trading_actions)
+                return actions  # Priority action
         
         # Check for economic actions
         character = game_state.character
@@ -91,14 +113,153 @@ class EconomyCoordinator:
         
         action = await self.get_next_economic_action(
             character_state={"level": character.base_level},
-            inventory={"items": []},
-            zeny=character.zeny
+            inventory={"items": [{"id": item.id, "amount": item.amount} for item in inventory]},
+            zeny=getattr(character, 'zeny', 0)
         )
         
         if action["action"] != "wait":
             actions.append(action)
         
         return actions
+    
+    async def _sync_market_prices(self, game_state) -> None:
+        """
+        Synchronize market prices from game state.
+        
+        Args:
+            game_state: Current game state
+        """
+        # Extract vendor data from game state
+        if hasattr(game_state, 'market') and game_state.market:
+            vendors = game_state.market.vendors
+            
+            for vendor in vendors:
+                for item in vendor.items:
+                    # Record price observation
+                    try:
+                        listing = {
+                            "item_id": item.item_id,
+                            "item_name": item.name,
+                            "price": item.price,
+                            "quantity": item.amount,
+                            "seller_name": vendor.vendor_name,
+                            "seller_id": vendor.vendor_id,
+                            "location_map": game_state.map.name,
+                            "location_x": vendor.position.get("x", 0),
+                            "location_y": vendor.position.get("y", 0),
+                            "source": "vending"
+                        }
+                        
+                        await self.update_market_data([listing])
+                    except Exception as e:
+                        self.log.error(f"Failed to sync price for item {item.item_id}: {e}")
+    
+    async def _update_vendor_tracking(self, market_state) -> None:
+        """
+        Update vendor tracking from market state.
+        
+        Args:
+            market_state: Market state payload
+        """
+        # Track active vendors for competition analysis
+        active_vendors = []
+        
+        for vendor in market_state.vendors:
+            if vendor.is_active:
+                active_vendors.append({
+                    "vendor_id": vendor.vendor_id,
+                    "name": vendor.vendor_name,
+                    "position": vendor.position,
+                    "item_count": len(vendor.items)
+                })
+        
+        # Store for intelligence analysis
+        self.intelligence.active_vendor_count = len(active_vendors)
+    
+    async def _handle_trading_ui(self, trading_ui) -> List[dict]:
+        """
+        Handle active trading UI state.
+        
+        Args:
+            trading_ui: Trading UI state
+            
+        Returns:
+            List of trading actions
+        """
+        actions = []
+        
+        if not trading_ui.in_trade:
+            return actions
+        
+        # Analyze the trade offer
+        trade_value = self._evaluate_trade(trading_ui)
+        
+        if trade_value["is_favorable"]:
+            # Accept the trade
+            actions.append({
+                "type": "confirm_trade",
+                "priority": 2,
+                "reason": trade_value["reason"]
+            })
+        elif trade_value["is_unfavorable"]:
+            # Reject the trade
+            actions.append({
+                "type": "cancel_trade",
+                "priority": 2,
+                "reason": trade_value["reason"]
+            })
+        
+        return actions
+    
+    def _evaluate_trade(self, trading_ui) -> dict:
+        """
+        Evaluate if a trade is favorable.
+        
+        Args:
+            trading_ui: Trading UI state
+            
+        Returns:
+            Trade evaluation
+        """
+        # Calculate value of our items
+        our_value = trading_ui.our_zeny
+        for item in trading_ui.our_items:
+            item_price = self.market.get_current_price(item["item_id"])
+            if item_price:
+                our_value += item_price["median_price"] * item.get("amount", 1)
+        
+        # Calculate value of their items
+        their_value = trading_ui.their_zeny
+        for item in trading_ui.their_items:
+            item_price = self.market.get_current_price(item["item_id"])
+            if item_price:
+                their_value += item_price["median_price"] * item.get("amount", 1)
+        
+        # Evaluate
+        value_diff = their_value - our_value
+        ratio = their_value / our_value if our_value > 0 else 0
+        
+        if ratio > 1.1:  # They're giving us 10% more value
+            return {
+                "is_favorable": True,
+                "is_unfavorable": False,
+                "reason": f"Favorable trade: +{value_diff} zeny value",
+                "value_difference": value_diff
+            }
+        elif ratio < 0.9:  # We're giving 10% more value
+            return {
+                "is_favorable": False,
+                "is_unfavorable": True,
+                "reason": f"Unfavorable trade: -{abs(value_diff)} zeny value",
+                "value_difference": value_diff
+            }
+        else:
+            return {
+                "is_favorable": False,
+                "is_unfavorable": False,
+                "reason": "Fair trade",
+                "value_difference": value_diff
+            }
     
     async def update_market_data(self, listings: List[dict]) -> dict:
         """

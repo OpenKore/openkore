@@ -181,12 +181,57 @@ class VendorPayload(BaseModel):
     vendor_name: str
     position: dict[str, int] = Field(default_factory=lambda: {"x": 0, "y": 0})
     items: list[VendorItemPayload] = []
+    is_active: bool = False
+
+
+class AuctionItemPayload(BaseModel):
+    """Item in auction house (P3 Advanced - Economy Bridge)."""
+    auction_id: int
+    item_id: int
+    item_name: str
+    current_price: int
+    seller_name: str
+    time_remaining: int = 0
+
+
+class TradingUIPayload(BaseModel):
+    """Active trading UI state (P3 Advanced - Economy Bridge)."""
+    in_trade: bool = False
+    trade_partner: str = ""
+    partner_id: int = 0
+    our_items: list[dict] = Field(default_factory=list)
+    their_items: list[dict] = Field(default_factory=list)
+    our_zeny: int = 0
+    their_zeny: int = 0
+    trade_confirmed: bool = False
 
 
 class MarketStatePayload(BaseModel):
     """Market/vendor information (P3 Advanced - Economy Bridge)."""
     vendors: list[VendorPayload] = []
     vendor_count: int = 0
+    auction_items: list[AuctionItemPayload] = Field(default_factory=list)
+    trading_ui: TradingUIPayload | None = None
+
+
+class ServerEventPayload(BaseModel):
+    """Server event notification (P3 Advanced - Environment Bridge)."""
+    event_id: int
+    event_name: str
+    event_type: str = "unknown"
+    start_time: int = 0
+    end_time: int = 0
+    is_active: bool = False
+    bonus_exp: float = 1.0
+    bonus_drop: float = 1.0
+
+
+class MapHazardPayload(BaseModel):
+    """Map hazard information (P3 Advanced - Environment Bridge)."""
+    hazard_type: str = "none"
+    position: dict[str, int] = Field(default_factory=lambda: {"x": 0, "y": 0})
+    radius: int = 0
+    damage_per_tick: int = 0
 
 
 class EnvironmentPayload(BaseModel):
@@ -194,6 +239,9 @@ class EnvironmentPayload(BaseModel):
     server_time: int
     is_night: bool = False
     weather_type: int = 0
+    season: str = "spring"
+    active_events: list[ServerEventPayload] = Field(default_factory=list)
+    map_hazards: list[MapHazardPayload] = Field(default_factory=list)
 
 
 class GroundItemPayload(BaseModel):

@@ -3,9 +3,13 @@ MVP hunting manager for social features.
 
 Manages MVP tracking, spawn timers, hunting coordination,
 and drop management in Ragnarok Online.
+
+Integrates with the navigation system for cross-map travel
+to MVP spawn locations.
 """
 
 from datetime import datetime, timedelta
+from typing import Optional
 
 from ai_sidecar.core.decision import Action, ActionType
 from ai_sidecar.core.state import GameState
@@ -17,15 +21,24 @@ from ai_sidecar.social.mvp_models import (
     MVPTracker,
 )
 from ai_sidecar.social.party_models import Party, PartyRole
+from ai_sidecar.navigation.navigator import NavigationService, get_navigation_service
+from ai_sidecar.navigation.models import NavigationPreference, NavigationRoute
 from ai_sidecar.utils.logging import get_logger
 
 logger = get_logger(__name__)
 
 
 class MVPManager:
-    """Manages MVP tracking and hunting coordination."""
+    """Manages MVP tracking and hunting coordination with navigation support."""
     
-    def __init__(self) -> None:
+    def __init__(self, navigation_service: Optional[NavigationService] = None) -> None:
+        """
+        Initialize MVP manager.
+        
+        Args:
+            navigation_service: Optional navigation service instance.
+                               If not provided, will use singleton.
+        """
         self.mvp_db = MVPDatabase()
         self.tracker = MVPTracker()
         self.active_hunt: MVPHuntingStrategy | None = None
@@ -34,6 +47,23 @@ class MVPManager:
         self.rotation_index: int = 0  # Current location in rotation
         self.last_rotation_time: datetime | None = None
         self.rotation_interval_seconds: int = 30  # Time to wait at each spot
+        
+        # Navigation integration
+        self._nav_service = navigation_service
+        self._pending_navigation: Optional[NavigationRoute] = None
+        self._navigation_initialized = False
+        
+        logger.info("MVP Manager initialized with navigation support")
+    
+    @property
+    def navigation_service(self) -> NavigationService:
+        """Get or create navigation service."""
+        if self._nav_service is None:
+            self._nav_service = get_navigation_service()
+        if not self._navigation_initialized:
+            self._nav_service.initialize()
+            self._navigation_initialized = True
+        return self._nav_service
     
     async def tick(self, game_state: GameState) -> list[Action]:
         """Main MVP hunting tick."""
@@ -48,8 +78,8 @@ class MVPManager:
         # Check for MVP spawn windows
         upcoming = self._get_upcoming_spawns(minutes=10)
         if upcoming and not self.active_hunt:
-            # Notify about upcoming spawns (placeholder)
-            logger.info(f"Upcoming MVP spawn: {upcoming[0][0]}")
+            # Get spawn notification with navigation info
+            actions.extend(self._notify_upcoming_spawns(upcoming, game_state))
         
         # If actively hunting
         if self.active_hunt:
@@ -87,8 +117,21 @@ class MVPManager:
         # Check if we're on the right map
         target_map = strategy.get_spawn_map()
         if self.current_map != target_map:
-            # Move to target map (placeholder - would need portal/warp logic)
-            logger.info(f"Need to move to {target_map} for MVP hunt")
+            # Use navigation system to get to target map
+            nav_actions = self._navigate_to_map(target_map, game_state)
+            if nav_actions:
+                actions.extend(nav_actions)
+                logger.info(
+                    f"Navigating to {target_map} for MVP hunt",
+                    current_map=self.current_map,
+                    target_map=target_map,
+                    action_count=len(nav_actions)
+                )
+            else:
+                logger.warning(
+                    f"Cannot navigate to {target_map} - no route found",
+                    current_map=self.current_map
+                )
             return actions
         
         # Check for spawn window
@@ -309,16 +352,18 @@ class MVPManager:
         
         # Check if we're on the right map
         if self.current_map != target_map:
-            # Would need to warp/portal - log intent
-            logger.info(f"Need to warp to {target_map} for rotation point {self.rotation_index + 1}/{len(locations)}")
-            # Create warp action if available
-            actions.append(
-                Action(
-                    type=ActionType.COMMAND,
-                    extra={"command": "memo", "target_map": target_map},
-                    priority=3,
+            # Use navigation system to travel to target map
+            nav_actions = self._navigate_to_map(target_map, game_state)
+            if nav_actions:
+                actions.extend(nav_actions)
+                logger.info(
+                    f"Navigating to {target_map} for rotation point {self.rotation_index + 1}/{len(locations)}",
+                    route_actions=len(nav_actions)
                 )
-            )
+            else:
+                logger.warning(
+                    f"Cannot navigate to {target_map} for rotation - no route found"
+                )
         else:
             # Move to target location on current map
             char_pos = game_state.character.position
@@ -345,7 +390,7 @@ class MVPManager:
         logger.debug("MVP rotation reset")
     
     def _initiate_hunt(self, mvp: MVPBoss) -> list[Action]:
-        """Initiate MVP hunt (move to spawn location)."""
+        """Initiate MVP hunt (navigate to spawn location)."""
         actions: list[Action] = []
         
         # Reset rotation for new hunt
@@ -354,17 +399,38 @@ class MVPManager:
         # Get spawn location
         if mvp.spawn_maps:
             target_map = mvp.spawn_maps[0]
-            logger.info(f"Initiating hunt on {target_map}")
+            logger.info(
+                f"Initiating hunt for {mvp.name}",
+                target_map=target_map,
+                current_map=self.current_map
+            )
             
-            # If we're not on the target map, queue a warp
-            if self.current_map != target_map:
-                actions.append(
-                    Action(
-                        type=ActionType.COMMAND,
-                        extra={"command": "warp", "target_map": target_map},
-                        priority=3,
-                    )
+            # If we're not on the target map, use navigation system
+            if self.current_map and self.current_map != target_map:
+                # Calculate and cache route
+                route = self.navigation_service.get_route_to_map(
+                    self.current_map,
+                    target_map,
+                    preference=NavigationPreference.FASTEST
                 )
+                
+                if route:
+                    self._pending_navigation = route
+                    nav_actions = self.navigation_service.generate_navigation_actions(
+                        route, priority=3
+                    )
+                    actions.extend(nav_actions)
+                    logger.info(
+                        f"Navigation route calculated for {mvp.name} hunt",
+                        steps=route.step_count,
+                        estimated_time=f"{route.estimated_time:.1f}s",
+                        total_cost=route.total_cost
+                    )
+                else:
+                    logger.warning(
+                        f"Cannot find route to {target_map} for {mvp.name} hunt",
+                        current_map=self.current_map
+                    )
         
         return actions
     
@@ -372,3 +438,199 @@ class MVPManager:
         """Load MVP database from dictionary."""
         self.mvp_db.load_from_dict(data)
         logger.info(f"Loaded {len(self.mvp_db.get_all())} MVPs into database")
+    
+    # Navigation integration methods
+    
+    def _notify_upcoming_spawns(
+        self,
+        upcoming: list[tuple[int, MVPSpawnRecord]],
+        game_state: GameState
+    ) -> list[Action]:
+        """
+        Generate notifications and prepare for upcoming MVP spawns.
+        
+        Args:
+            upcoming: List of (monster_id, spawn_record) tuples
+            game_state: Current game state
+            
+        Returns:
+            List of preparation actions
+        """
+        actions: list[Action] = []
+        
+        if not upcoming:
+            return actions
+        
+        # Get first upcoming spawn
+        monster_id, record = upcoming[0]
+        mvp = self.mvp_db.get(monster_id)
+        
+        if not mvp:
+            logger.warning(f"Unknown MVP ID in upcoming spawns: {monster_id}")
+            return actions
+        
+        # Calculate time until spawn
+        now = datetime.now()
+        time_until = record.next_spawn_earliest - now
+        minutes_until = max(0, int(time_until.total_seconds() / 60))
+        
+        # Log spawn notification with travel info
+        target_map = record.map_name
+        travel_time = self.navigation_service.estimate_travel_time(
+            self.current_map, target_map
+        )
+        
+        if travel_time >= 0:
+            travel_minutes = travel_time / 60
+            should_leave_in = max(0, minutes_until - travel_minutes - 1)
+            
+            logger.info(
+                f"Upcoming MVP spawn: {mvp.name}",
+                map=target_map,
+                spawn_in_minutes=minutes_until,
+                travel_time_seconds=f"{travel_time:.1f}",
+                leave_in_minutes=f"{should_leave_in:.1f}"
+            )
+            
+            # If spawn is soon and we need to travel
+            if should_leave_in <= 2 and self.current_map != target_map:
+                logger.info(
+                    f"Should leave now for {mvp.name} spawn",
+                    reason="Travel time would cause miss"
+                )
+                # Could auto-start hunt here if configured
+        else:
+            logger.info(
+                f"Upcoming MVP spawn: {mvp.name}",
+                map=target_map,
+                spawn_in_minutes=minutes_until,
+                note="Target map unreachable from current location"
+            )
+        
+        # Store notification
+        if (monster_id, target_map, record.next_spawn_earliest) not in self.spawn_notifications:
+            self.spawn_notifications.append((monster_id, target_map, record.next_spawn_earliest))
+            # Keep only recent notifications
+            self.spawn_notifications = self.spawn_notifications[-10:]
+        
+        return actions
+    
+    def _navigate_to_map(
+        self,
+        target_map: str,
+        game_state: GameState
+    ) -> list[Action]:
+        """
+        Generate navigation actions to travel to target map.
+        
+        Args:
+            target_map: Destination map name
+            game_state: Current game state
+            
+        Returns:
+            List of navigation actions
+        """
+        if not target_map or target_map == self.current_map:
+            return []
+        
+        # Get current position
+        current_x = game_state.character.position.x if game_state.character else 0
+        current_y = game_state.character.position.y if game_state.character else 0
+        
+        # Calculate route
+        route = self.navigation_service.get_route_to_map(
+            self.current_map,
+            target_map,
+            current_x,
+            current_y,
+            preference=NavigationPreference.FASTEST
+        )
+        
+        if not route:
+            return []
+        
+        # Store pending navigation for tracking
+        self._pending_navigation = route
+        
+        # Generate actions
+        actions = self.navigation_service.generate_navigation_actions(
+            route,
+            game_state=game_state,
+            priority=4
+        )
+        
+        logger.debug(
+            f"Generated navigation to {target_map}",
+            steps=route.step_count,
+            actions=len(actions),
+            estimated_time=f"{route.estimated_time:.1f}s"
+        )
+        
+        return actions
+    
+    def get_travel_time_to_mvp(self, monster_id: int) -> float:
+        """
+        Estimate travel time to an MVP's spawn location.
+        
+        Args:
+            monster_id: MVP monster ID
+            
+        Returns:
+            Estimated time in seconds, or -1 if unreachable
+        """
+        mvp = self.mvp_db.get(monster_id)
+        if not mvp or not mvp.spawn_maps:
+            return -1.0
+        
+        target_map = mvp.spawn_maps[0]
+        return self.navigation_service.estimate_travel_time(
+            self.current_map,
+            target_map,
+            NavigationPreference.FASTEST
+        )
+    
+    def is_mvp_reachable(self, monster_id: int) -> bool:
+        """
+        Check if an MVP's spawn location is reachable.
+        
+        Args:
+            monster_id: MVP monster ID
+            
+        Returns:
+            True if MVP location is accessible
+        """
+        mvp = self.mvp_db.get(monster_id)
+        if not mvp or not mvp.spawn_maps:
+            return False
+        
+        target_map = mvp.spawn_maps[0]
+        return self.navigation_service.is_map_accessible(
+            self.current_map,
+            target_map
+        )
+    
+    def get_nearest_huntable_mvp(self) -> Optional[MVPBoss]:
+        """
+        Find the nearest MVP with an active or upcoming spawn window.
+        
+        Returns:
+            MVPBoss object or None if none found
+        """
+        upcoming = self._get_upcoming_spawns(minutes=60)
+        if not upcoming:
+            return None
+        
+        best_mvp = None
+        best_time = float('inf')
+        
+        for monster_id, record in upcoming:
+            mvp = self.mvp_db.get(monster_id)
+            if not mvp:
+                continue
+            
+            travel_time = self.get_travel_time_to_mvp(monster_id)
+            if travel_time >= 0 and travel_time < best_time:
+                best_time = travel_time
+                best_mvp = mvp
+        
+        return best_mvp

@@ -427,3 +427,233 @@ class EnvironmentCoordinator:
         # Sort by score
         recommendations.sort(key=lambda x: x[1], reverse=True)
         return recommendations[:limit]
+    
+    async def tick(self, game_state, tick: int) -> List[dict]:
+        """
+        Main environment coordinator tick.
+        
+        P3 Bridge Features (100%):
+        - Server time synchronization
+        - Weather/season tracking
+        - Event detection and management
+        - Map hazard awareness
+        - Time-based optimization recommendations
+        
+        Args:
+            game_state: Current game state
+            tick: Current game tick
+            
+        Returns:
+            List of environment-related actions
+        """
+        actions = []
+        
+        try:
+            # Update environmental state from game
+            await self._sync_environment_data(game_state)
+            
+            # Refresh active events
+            self.events.refresh_active_events()
+            
+            # Check for hazards on current map
+            hazard_actions = await self._handle_map_hazards(game_state)
+            if hazard_actions:
+                actions.extend(hazard_actions)
+                return actions  # Priority action
+            
+            # Check for event-based actions
+            event_actions = await self._check_event_actions(game_state)
+            if event_actions:
+                actions.extend(event_actions)
+            
+            # Check for relocation recommendations
+            if not actions and tick % 300 == 0:  # Check every 5 minutes
+                should_relocate, target_map, reason = await self.should_relocate(
+                    game_state.map.name,
+                    {"level": game_state.character.base_level}
+                )
+                
+                if should_relocate and target_map:
+                    actions.append({
+                        "type": "relocate",
+                        "priority": 5,
+                        "target_map": target_map,
+                        "reason": reason
+                    })
+        
+        except Exception as e:
+            self.log.error(f"Error in environment coordinator tick: {e}", exc_info=True)
+        
+        return actions
+    
+    async def _sync_environment_data(self, game_state) -> None:
+        """
+        Synchronize environment data from game state.
+        
+        Args:
+            game_state: Current game state
+        """
+        # Update server time
+        if hasattr(game_state, 'environment') and game_state.environment:
+            env = game_state.environment
+            
+            # Update time manager
+            if hasattr(env, 'server_time'):
+                self.time.server_time = env.server_time
+            
+            # Update day/night state
+            if hasattr(env, 'is_night'):
+                self.day_night.is_night = env.is_night
+            
+            # Update weather
+            if hasattr(env, 'weather_type'):
+                self.weather.current_weather_type = env.weather_type
+            
+            # Update season
+            if hasattr(env, 'season'):
+                self.time.current_season = env.season
+            
+            # Process active events
+            if hasattr(env, 'active_events'):
+                await self._process_server_events(env.active_events)
+    
+    async def _process_server_events(self, server_events: List) -> None:
+        """
+        Process server events from game state.
+        
+        Args:
+            server_events: List of server event payloads
+        """
+        from ai_sidecar.environment.events import SeasonalEvent
+        
+        for event_data in server_events:
+            try:
+                # Convert to SeasonalEvent if needed
+                if hasattr(event_data, 'event_id'):
+                    event = SeasonalEvent(
+                        event_id=event_data.event_id,
+                        event_name=event_data.event_name,
+                        event_type=event_data.event_type,
+                        start_date=event_data.start_time,
+                        end_date=event_data.end_time,
+                        is_active=event_data.is_active,
+                        exp_bonus=event_data.bonus_exp,
+                        drop_bonus=event_data.bonus_drop,
+                        event_maps=[]
+                    )
+                    
+                    # Add or update in event manager
+                    self.events.add_or_update_event(event)
+            except Exception as e:
+                self.log.error(f"Failed to process event: {e}")
+    
+    async def _handle_map_hazards(self, game_state) -> List[dict]:
+        """
+        Handle map hazards (poison swamps, lava, etc.).
+        
+        Args:
+            game_state: Current game state
+            
+        Returns:
+            List of hazard avoidance actions
+        """
+        actions = []
+        
+        if not hasattr(game_state, 'environment') or not game_state.environment:
+            return actions
+        
+        env = game_state.environment
+        if not hasattr(env, 'map_hazards'):
+            return actions
+        
+        char_pos = game_state.character.position
+        
+        # Check each hazard
+        for hazard in env.map_hazards:
+            hazard_pos = hazard.position
+            distance = ((char_pos.x - hazard_pos["x"]) ** 2 +
+                       (char_pos.y - hazard_pos["y"]) ** 2) ** 0.5
+            
+            # If we're within hazard radius, move away
+            if distance < hazard.radius:
+                # Calculate safe position (opposite direction)
+                dx = char_pos.x - hazard_pos["x"]
+                dy = char_pos.y - hazard_pos["y"]
+                
+                # Normalize and extend
+                magnitude = (dx ** 2 + dy ** 2) ** 0.5
+                if magnitude > 0:
+                    safe_x = char_pos.x + int(dx / magnitude * (hazard.radius + 3))
+                    safe_y = char_pos.y + int(dy / magnitude * (hazard.radius + 3))
+                    
+                    actions.append({
+                        "type": "move",
+                        "priority": 1,  # High priority
+                        "x": safe_x,
+                        "y": safe_y,
+                        "extra": {
+                            "reason": f"Avoiding {hazard.hazard_type} hazard",
+                            "damage": hazard.damage_per_tick
+                        }
+                    })
+        
+        return actions
+    
+    async def _check_event_actions(self, game_state) -> List[dict]:
+        """
+        Check for event-specific actions.
+        
+        Args:
+            game_state: Current game state
+            
+        Returns:
+            List of event-related actions
+        """
+        actions = []
+        
+        # Get time-sensitive actions
+        time_sensitive = self.get_time_sensitive_actions()
+        
+        for action in time_sensitive[:2]:  # Top 2 most urgent
+            actions.append({
+                "type": action["type"],
+                "priority": 4,
+                "extra": {
+                    "event": action.get("event"),
+                    "reason": action["action"]
+                }
+            })
+        
+        return actions
+    
+    def get_hazard_warning(self, map_name: str, position: dict) -> dict | None:
+        """
+        Check if position has hazards.
+        
+        Args:
+            map_name: Map name
+            position: Position to check
+            
+        Returns:
+            Hazard warning or None
+        """
+        # Would check known hazard locations
+        return None
+    
+    def get_environment_bonuses_summary(self) -> dict:
+        """
+        Get summary of all active bonuses.
+        
+        Returns:
+            Dictionary of active bonuses
+        """
+        bonuses = self.get_current_bonuses()
+        
+        return {
+            "total_exp_multiplier": bonuses["exp_multiplier"],
+            "total_drop_multiplier": bonuses["drop_multiplier"],
+            "spawn_rate": bonuses["spawn_rate"],
+            "visibility": bonuses["visibility"],
+            "active_event_count": bonuses["event_count"],
+            "recommendation": "Excellent farming conditions" if bonuses["exp_multiplier"] > 1.5 else "Normal conditions"
+        }

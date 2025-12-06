@@ -346,6 +346,16 @@ class TestCreateDecisionEngine:
             
             assert isinstance(engine, ProgressionDecisionEngine)
     
+    def test_create_ml_engine(self):
+        """Test creating ML engine."""
+        with patch('ai_sidecar.core.decision.get_settings') as mock_settings:
+            mock_settings.return_value.decision.engine_type = "ml"
+            
+            engine = create_decision_engine()
+            
+            # ML engine uses ProgressionDecisionEngine as base with ML-ready architecture
+            assert isinstance(engine, ProgressionDecisionEngine)
+    
     def test_create_unknown_engine_type(self):
         """Test creating engine with unknown type."""
         with patch('ai_sidecar.core.decision.get_settings') as mock_settings:
@@ -353,8 +363,8 @@ class TestCreateDecisionEngine:
             
             engine = create_decision_engine()
             
-            # Should default to stub
-            assert isinstance(engine, StubDecisionEngine)
+            # Should default to ProgressionDecisionEngine (functional) instead of stub
+            assert isinstance(engine, ProgressionDecisionEngine)
 
 
 class TestDecisionResultToDict:

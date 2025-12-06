@@ -244,7 +244,7 @@ class ChatManager:
         target = args[0] if args else sender
         
         return Action(
-            type=ActionType.NOOP,  # Would be FOLLOW_PLAYER
+            type=ActionType.FOLLOW_PLAYER,
             priority=3,
             extra={
                 "command": "follow",
@@ -258,7 +258,7 @@ class ChatManager:
         target_spec = args[0] if args else "nearest"
         
         return Action(
-            type=ActionType.NOOP,  # Would be SET_ATTACK_MODE
+            type=ActionType.SET_ATTACK_MODE,
             priority=2,
             extra={
                 "command": "attack",
@@ -270,7 +270,7 @@ class ChatManager:
     def _cmd_retreat(self) -> Action:
         """Execute retreat command."""
         return Action(
-            type=ActionType.NOOP,  # Would be RETREAT
+            type=ActionType.RETREAT,
             priority=1,  # High priority
             extra={
                 "command": "retreat",
@@ -300,7 +300,7 @@ class ChatManager:
         buff_type = args[1] if len(args) > 1 else "all"
         
         return Action(
-            type=ActionType.NOOP,  # Would be BUFF_PLAYER
+            type=ActionType.BUFF_PLAYER,
             priority=3,
             extra={
                 "command": "buff",
@@ -312,7 +312,7 @@ class ChatManager:
     def _cmd_stop(self) -> Action:
         """Execute stop command - cancel all actions."""
         return Action(
-            type=ActionType.NOOP,  # Would be CANCEL_ALL
+            type=ActionType.CANCEL_ALL,
             priority=1,  # Highest priority (min valid value)
             extra={
                 "command": "stop",
@@ -350,10 +350,19 @@ class ChatManager:
         target: str | None = None
     ) -> Action:
         """Create action to send a chat message."""
-        # Create chat message action
-        # Implementation depends on protocol
+        # Determine appropriate action type based on channel
+        channel_to_action = {
+            ChatChannel.PUBLIC: ActionType.SEND_CHAT,
+            ChatChannel.WHISPER: ActionType.SEND_PM,
+            ChatChannel.PARTY: ActionType.SEND_PARTY_CHAT,
+            ChatChannel.GUILD: ActionType.SEND_GUILD_CHAT,
+            ChatChannel.GLOBAL: ActionType.SEND_CHAT,
+            ChatChannel.TRADE: ActionType.SEND_CHAT,
+        }
+        action_type = channel_to_action.get(channel, ActionType.SEND_CHAT)
+        
         action = Action(
-            type=ActionType.NOOP,  # Would be custom chat action
+            type=action_type,
             priority=7,
             extra={
                 "chat_channel": channel.value,

@@ -1,0 +1,262 @@
+# =============================================================================
+# Card Values Configuration
+# =============================================================================
+# This file defines estimated market values for cards in Ragnarok Online.
+# Used by equipment valuation for card insertion decisions and item pricing.
+#
+# Value Guidelines (in zeny):
+# - Common drops: 10,000 - 100,000
+# - Uncommon drops: 100,000 - 500,000  
+# - Rare drops: 500,000 - 2,000,000
+# - MVP cards: 2,000,000 - 50,000,000+
+# - Event/Special: Varies widely
+#
+# Note: These are baseline estimates. Actual values vary by server economy.
+# Customize for your server's market conditions.
+# =============================================================================
+
+# Version for tracking configuration changes
+version: "1.0.0"
+
+# Default value for cards not in this list (fallback)
+default_card_value: 50000
+
+# =============================================================================
+# CARD VALUES BY ID
+# =============================================================================
+# Format: card_id: value (in zeny)
+
+cards:
+  # ===========================================================================
+  # COMMON MONSTER CARDS (Low value)
+  # ===========================================================================
+  
+  # Poring Family
+  4001: 50000       # Poring Card - +2 LUK, +1 Perfect Dodge
+  4002: 50000       # Fabre Card - +1 VIT, +100 Max HP
+  4003: 80000       # Pupa Card - +700 Max HP
+  4004: 50000       # Drops Card - +1 DEX
+  4005: 60000       # Poring Card duplicate check
+  4006: 150000      # Lunatic Card - +1 LUK, +1 Crit, +10 Flee
+  4007: 50000       # Pecopeco Egg Card
+  4008: 50000       # Picky Card - +1 STR, +10 ATK
+  4009: 50000       # Chonchon Card - +1 AGI, +2 Flee
+  4010: 100000      # Willow Card - +80 Max SP
+  
+  # Basic Monsters
+  4011: 60000       # Thief Bug Card - +1 AGI
+  4012: 70000       # Tarou Card - +1 STR, LUK
+  4013: 50000       # Rocker Card - +1 DEX, +1% ATK
+  4014: 150000      # Thief Bug Egg Card - +400 Max HP
+  4015: 80000       # Ambernite Card - +2 DEF
+  4016: 100000      # Andre Card - +20 ATK
+  4017: 200000      # Golem Card - Weapon Indestructible
+  4018: 80000       # Vitata Card - +1 VIT
+  4019: 70000       # Creamy Card - Teleport Lv1
+  4020: 100000      # Coco Card - +2 DEF, -5% from Brute
+  
+  # Mid-Tier Common
+  4021: 150000      # Steel Chonchon Card - +2 DEF, +5% resist Wind
+  4022: 100000      # Elder Willow Card - +2 INT
+  4023: 200000      # Muka Card - +1 STR
+  4024: 180000      # Scorpion Card - +20 ATK
+  4025: 120000      # Drainliar Card - +5% damage to Demon
+  4026: 300000      # Zerom Card - +3 DEX
+  4027: 100000      # Requiem Card - Chance to Chaos enemy
+  4028: 200000      # Marc Card - Cannot be Frozen
+  4029: 180000      # Argiope Card - +5% resist Poison
+  4030: 300000      # Matyr Card - +10% Max HP, +1 AGI
+  
+  # ===========================================================================
+  # UNCOMMON/USEFUL CARDS
+  # ===========================================================================
+  
+  # Highly Sought After
+  4031: 800000      # Hornet Card - +3 STR, +3 ATK
+  4032: 500000      # Magnolia Card - Chance to Curse
+  4033: 500000      # Mantis Card - +3 STR
+  4034: 750000      # Argos Card - Chance to Stone Curse
+  4035: 1200000     # Savage Card - STR +4, 10% more damage from Insect
+  4036: 600000      # Soldier Skeleton Card - +9 Crit
+  4037: 1500000     # Pirate Skeleton Card - +5 Crit
+  4038: 400000      # Vadon Card - +20% damage to Fire
+  4039: 400000      # Drainliar Card - +20% damage to Undead
+  4040: 500000      # Hydra Card - +20% damage to Demi-Human
+  
+  # Popular PvP/WoE Cards
+  4041: 2000000     # Skel Worker Card - +15 ATK, +5% damage to Medium
+  4042: 1500000     # Orc Skeleton Card - +5 ATK
+  4043: 800000      # Minorous Card - +15% damage to Large
+  4044: 1000000     # Strouf Card - +20% damage to Demon
+  4045: 1200000     # Marionette Card - -1 DEF, +1 SP Recovery
+  4046: 700000      # Anacondaq Card - +20% damage to Poison element
+  4047: 5000000     # Desert Wolf Card - +15% damage to Small, +5 ATK
+  4048: 500000      # Deviace Card - +7% damage to Boss
+  4049: 600000      # Rafflesia Card - +20% damage to Fish
+  4050: 800000      # Beetle King Card - +3 STR
+  
+  # ===========================================================================
+  # RARE CARDS
+  # ===========================================================================
+  
+  # High-End Farming Cards
+  4051: 2500000     # Santa Poring Card - Item Drop +10%
+  4052: 3000000     # Garm Card - Freeze on hit (8%)
+  4053: 2000000     # Turtle General Card - +20% ATK
+  4054: 5000000     # Dark Lord Card - +1 DEF, Meteor Storm when attacked
+  4055: 3500000     # Osiris Card - -50% revival HP/SP
+  4056: 4000000     # Baphomet Card - Enables Splash Attack
+  4057: 8000000     # Doppelganger Card - 100% ASPD
+  4058: 10000000    # Drake Card - Ignores DEF of Normal monsters
+  4059: 6000000     # Mistress Card - No Gemstone requirement
+  4060: 3000000     # Pharaoh Card - -30% SP consumption
+  
+  # ===========================================================================
+  # MVP CARDS (Very High Value)
+  # ===========================================================================
+  
+  4121: 30000000    # Maya Card - Reflect Magic
+  4122: 25000000    # Orc Hero Card - Immune to Stun
+  4123: 20000000    # Orc Lord Card - Reflect physical damage
+  4124: 15000000    # Golden Thief Bug Card - Immune to all magic
+  4125: 50000000    # Eddga Card - No movement penalty
+  4126: 35000000    # Moonlight Flower Card - No cast interruption
+  4127: 40000000    # Dark Lord Card
+  4128: 25000000    # Baphomet Card
+  4129: 100000000   # Lord of Death Card - Coma on hit
+  4130: 80000000    # Fallen Bishop Card - +50 MATK
+  
+  # Mini-Boss Cards
+  4131: 5000000     # Angeling Card - Holy Armor
+  4132: 5000000     # Archangeling Card - +5% Max HP, SP
+  4133: 4000000     # Deviling Card - +50% vs Neutral, -50% vs Elements
+  4134: 3000000     # Ghostring Card - Ghost Armor
+  4135: 8000000     # Maya Purple Card - See Hidden enemies
+  4136: 3500000     # Nightmare Card - No Sleep, +1 AGI
+  4137: 2500000     # Bathory Card - Shadow Armor
+  4138: 4000000     # Evil Druid Card - Undead Armor
+  4139: 6000000     # Pasana Card - Fire Armor
+  4140: 3000000     # Swordfish Card - Water Armor
+  
+  # ===========================================================================
+  # RENEWAL/NEWER CARDS
+  # ===========================================================================
+  
+  # Instances
+  4200: 15000000    # Bijou Card
+  4201: 20000000    # Sarah Card
+  4202: 18000000    # Big Bell Card
+  4203: 12000000    # Amdarais Card
+  4204: 25000000    # Faceworm Queen Card
+  4205: 30000000    # Cenere Card
+  4206: 22000000    # Bio5 MVPs
+  
+  # Special/Event Cards (placeholder values)
+  4300: 50000000    # Event Card 1
+  4301: 50000000    # Event Card 2
+  
+# =============================================================================
+# CARD CATEGORIES (for bulk pricing adjustments)
+# =============================================================================
+card_categories:
+  common:
+    description: "Easy-to-obtain monster drops"
+    value_range: [10000, 200000]
+    default_multiplier: 1.0
+  
+  uncommon:
+    description: "Moderate difficulty to obtain"
+    value_range: [200000, 1000000]
+    default_multiplier: 1.0
+  
+  rare:
+    description: "Hard to obtain, high demand"
+    value_range: [1000000, 10000000]
+    default_multiplier: 1.0
+  
+  mvp:
+    description: "MVP boss drops"
+    value_range: [10000000, 200000000]
+    default_multiplier: 1.0
+  
+  mini_boss:
+    description: "Mini-boss monster drops"
+    value_range: [2000000, 20000000]
+    default_multiplier: 1.0
+  
+  event:
+    description: "Limited time event cards"
+    value_range: [5000000, 100000000]
+    default_multiplier: 1.0
+
+# =============================================================================
+# CARD EFFECTS MAPPING (for AI decision making)
+# =============================================================================
+card_effects:
+  # Cards that provide elemental resistance
+  elemental_resist:
+    fire: [4139, 4099]
+    water: [4140, 4088]
+    wind: [4021]
+    earth: []
+    holy: [4131]
+    shadow: [4137]
+    ghost: [4134]
+    undead: [4138]
+  
+  # Cards that provide race damage bonus
+  race_damage:
+    demi_human: [4040]  # Hydra
+    brute: [4025]
+    undead: [4039]
+    demon: [4044]
+    dragon: []
+    plant: []
+    fish: [4049]
+    insect: []
+    formless: []
+    angel: []
+  
+  # Cards that provide size damage bonus
+  size_damage:
+    small: [4047]   # Desert Wolf
+    medium: [4041]  # Skel Worker
+    large: [4043]   # Minorous
+  
+  # Status immunity cards
+  status_immunity:
+    freeze: [4028]  # Marc
+    stun: [4122]    # Orc Hero
+    sleep: [4136]   # Nightmare
+    stone: []
+    curse: []
+    blind: []
+    silence: []
+
+# =============================================================================
+# SETTINGS
+# =============================================================================
+settings:
+  # Auto-update card values from market data
+  auto_update_from_market: true
+  
+  # Maximum age of cached values (seconds)
+  cache_max_age: 86400  # 24 hours
+  
+  # Fallback multiplier when card not found
+  unknown_card_multiplier: 1.0
+  
+  # Log card valuation lookups
+  verbose_logging: true
+  
+  # Server economy type affects all values
+  # Options: low_rate, mid_rate, high_rate, renewal, pre_renewal
+  server_economy_type: mid_rate
+  
+  # Economy multipliers by server type
+  economy_multipliers:
+    low_rate: 2.0      # Values doubled (harder to obtain)
+    mid_rate: 1.0      # Baseline
+    high_rate: 0.5     # Values halved (easier to obtain)
+    renewal: 0.8       # Slightly lower (more sources)
+    pre_renewal: 1.2   # Slightly higher (fewer sources)

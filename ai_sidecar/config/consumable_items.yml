@@ -1,0 +1,380 @@
+# =============================================================================
+# Consumable Items Configuration
+# =============================================================================
+# This file defines consumable item inventory management settings.
+# Used by NPC coordinator for auto-restocking decisions.
+#
+# Item Categories:
+# - healing: HP restoration items (potions, herbs)
+# - mana: SP restoration items
+# - ammunition: Arrows, bullets, throwing items
+# - buffs: Temporary stat boost items
+# - cure: Status cure items
+# - misc: Other consumables
+#
+# Priority Guide:
+# - 100: Critical (must have)
+# - 80-99: High (very important)
+# - 60-79: Medium (good to have)
+# - 40-59: Low (nice to have)
+# - 1-39: Optional
+# =============================================================================
+
+# Version for tracking configuration changes
+version: "1.0.0"
+
+# Consumable item definitions
+consumables:
+  # ==========================================================================
+  # HEALING POTIONS (HP Recovery)
+  # ==========================================================================
+  - item_id: 501
+    name: Red Potion
+    category: healing
+    min_count: 100
+    max_count: 200
+    priority: 70
+    npc_purchasable: true
+    estimated_price: 50
+    description: "Basic HP recovery (+45 HP)"
+  
+  - item_id: 502
+    name: Orange Potion
+    category: healing
+    min_count: 50
+    max_count: 100
+    priority: 60
+    npc_purchasable: true
+    estimated_price: 200
+    description: "Medium HP recovery (+105 HP)"
+  
+  - item_id: 503
+    name: Yellow Potion
+    category: healing
+    min_count: 30
+    max_count: 80
+    priority: 50
+    npc_purchasable: true
+    estimated_price: 550
+    description: "Good HP recovery (+175 HP)"
+  
+  - item_id: 504
+    name: White Potion
+    category: healing
+    min_count: 20
+    max_count: 50
+    priority: 65
+    npc_purchasable: true
+    estimated_price: 1200
+    description: "High HP recovery (+325 HP)"
+  
+  - item_id: 505
+    name: Blue Potion
+    category: mana
+    min_count: 30
+    max_count: 80
+    priority: 55
+    npc_purchasable: true
+    estimated_price: 5000
+    description: "SP recovery (+60 SP)"
+  
+  - item_id: 506
+    name: Green Potion
+    category: cure
+    min_count: 20
+    max_count: 50
+    priority: 45
+    npc_purchasable: true
+    estimated_price: 40
+    description: "Cures poison status"
+  
+  - item_id: 507
+    name: Red Herb
+    category: healing
+    min_count: 0
+    max_count: 50
+    priority: 20
+    npc_purchasable: false
+    estimated_price: 10
+    description: "Basic herb (+18 HP)"
+  
+  - item_id: 508
+    name: Yellow Herb
+    category: healing
+    min_count: 0
+    max_count: 50
+    priority: 25
+    npc_purchasable: false
+    estimated_price: 40
+    description: "Medium herb (+38 HP)"
+  
+  - item_id: 509
+    name: White Herb
+    category: healing
+    min_count: 0
+    max_count: 50
+    priority: 30
+    npc_purchasable: false
+    estimated_price: 100
+    description: "Good herb (+75 HP)"
+  
+  - item_id: 510
+    name: Blue Herb
+    category: mana
+    min_count: 0
+    max_count: 30
+    priority: 35
+    npc_purchasable: false
+    estimated_price: 60
+    description: "SP herb (+15 SP)"
+  
+  # Condensed Potions (Alchemist-crafted)
+  - item_id: 545
+    name: Condensed Red Potion
+    category: healing
+    min_count: 0
+    max_count: 100
+    priority: 75
+    npc_purchasable: false
+    estimated_price: 800
+    description: "Efficient HP recovery"
+  
+  - item_id: 546
+    name: Condensed Yellow Potion
+    category: healing
+    min_count: 0
+    max_count: 50
+    priority: 70
+    npc_purchasable: false
+    estimated_price: 2000
+    description: "Efficient medium HP recovery"
+  
+  - item_id: 547
+    name: Condensed White Potion
+    category: healing
+    min_count: 0
+    max_count: 30
+    priority: 80
+    npc_purchasable: false
+    estimated_price: 5000
+    description: "Efficient high HP recovery"
+
+  # ==========================================================================
+  # AMMUNITION
+  # ==========================================================================
+  - item_id: 1750
+    name: Arrow
+    category: ammunition
+    min_count: 500
+    max_count: 2000
+    priority: 80
+    npc_purchasable: true
+    estimated_price: 1
+    description: "Basic arrow for Archers"
+    job_requirement: [archer, hunter, bard, dancer, sniper, clown, gypsy, ranger]
+  
+  - item_id: 1751
+    name: Silver Arrow
+    category: ammunition
+    min_count: 200
+    max_count: 500
+    priority: 75
+    npc_purchasable: true
+    estimated_price: 3
+    description: "Holy element arrow"
+    job_requirement: [archer, hunter, bard, dancer, sniper, clown, gypsy, ranger]
+  
+  - item_id: 1752
+    name: Fire Arrow
+    category: ammunition
+    min_count: 100
+    max_count: 300
+    priority: 60
+    npc_purchasable: true
+    estimated_price: 3
+    description: "Fire element arrow"
+    job_requirement: [archer, hunter, bard, dancer, sniper, clown, gypsy, ranger]
+  
+  - item_id: 1753
+    name: Steel Arrow
+    category: ammunition
+    min_count: 100
+    max_count: 300
+    priority: 55
+    npc_purchasable: true
+    estimated_price: 2
+    description: "Higher damage arrow"
+    job_requirement: [archer, hunter, bard, dancer, sniper, clown, gypsy, ranger]
+  
+  - item_id: 1754
+    name: Crystal Arrow
+    category: ammunition
+    min_count: 100
+    max_count: 300
+    priority: 60
+    npc_purchasable: true
+    estimated_price: 3
+    description: "Water element arrow"
+    job_requirement: [archer, hunter, bard, dancer, sniper, clown, gypsy, ranger]
+  
+  - item_id: 1755
+    name: Wind Arrow
+    category: ammunition
+    min_count: 100
+    max_count: 300
+    priority: 60
+    npc_purchasable: true
+    estimated_price: 3
+    description: "Wind element arrow"
+    job_requirement: [archer, hunter, bard, dancer, sniper, clown, gypsy, ranger]
+  
+  - item_id: 1756
+    name: Stone Arrow
+    category: ammunition
+    min_count: 100
+    max_count: 300
+    priority: 55
+    npc_purchasable: true
+    estimated_price: 3
+    description: "Earth element arrow"
+    job_requirement: [archer, hunter, bard, dancer, sniper, clown, gypsy, ranger]
+
+  # ==========================================================================
+  # STATUS CURE ITEMS
+  # ==========================================================================
+  - item_id: 525
+    name: Panacea
+    category: cure
+    min_count: 10
+    max_count: 30
+    priority: 50
+    npc_purchasable: true
+    estimated_price: 500
+    description: "Cures all negative status effects"
+  
+  - item_id: 526
+    name: Royal Jelly
+    category: cure
+    min_count: 5
+    max_count: 20
+    priority: 55
+    npc_purchasable: false
+    estimated_price: 7000
+    description: "Cures all status + HP recovery"
+  
+  - item_id: 605
+    name: Anodyne
+    category: cure
+    min_count: 5
+    max_count: 15
+    priority: 40
+    npc_purchasable: false
+    estimated_price: 2000
+    description: "Temporary endure effect"
+  
+  - item_id: 606
+    name: Aloevera
+    category: cure
+    min_count: 5
+    max_count: 15
+    priority: 35
+    npc_purchasable: false
+    estimated_price: 1500
+    description: "Cures silence status"
+
+  # ==========================================================================
+  # BUFF ITEMS
+  # ==========================================================================
+  - item_id: 678
+    name: Poison Bottle
+    category: buffs
+    min_count: 10
+    max_count: 50
+    priority: 70
+    npc_purchasable: false
+    estimated_price: 5000
+    description: "Required for Assassin Cross Enchant Deadly Poison"
+    job_requirement: [assassin_cross]
+  
+  - item_id: 12020
+    name: Box of Sunlight
+    category: buffs
+    min_count: 5
+    max_count: 20
+    priority: 60
+    npc_purchasable: false
+    estimated_price: 10000
+    description: "Temporary light in dark maps"
+
+  # ==========================================================================
+  # TELEPORT/UTILITY ITEMS
+  # ==========================================================================
+  - item_id: 601
+    name: Fly Wing
+    category: utility
+    min_count: 50
+    max_count: 150
+    priority: 75
+    npc_purchasable: true
+    estimated_price: 60
+    description: "Random teleport on current map"
+  
+  - item_id: 602
+    name: Butterfly Wing
+    category: utility
+    min_count: 20
+    max_count: 50
+    priority: 65
+    npc_purchasable: true
+    estimated_price: 300
+    description: "Teleport to save point"
+  
+  - item_id: 12210
+    name: Bubble Gum
+    category: buffs
+    min_count: 0
+    max_count: 10
+    priority: 50
+    npc_purchasable: false
+    estimated_price: 50000
+    description: "Double drop rate for 30 minutes"
+
+# =============================================================================
+# RESTOCKING SETTINGS
+# =============================================================================
+settings:
+  # Enable automatic restocking behavior
+  auto_restock_enabled: true
+  
+  # Weight threshold (percentage) to trigger storage visit before restocking
+  max_weight_for_restock: 50
+  
+  # Minimum zeny required to attempt restocking
+  min_zeny_for_restock: 10000
+  
+  # Maximum items to buy per restock trip
+  max_items_per_trip: 10
+  
+  # Priority threshold - only restock items with priority >= this value
+  min_priority_threshold: 40
+  
+  # How often to check stock levels (in game ticks)
+  check_interval_ticks: 100
+  
+  # Whether to visit storage before restocking to deposit items
+  deposit_before_restock: true
+  
+  # Item IDs that should never be auto-sold
+  protected_items: [501, 502, 503, 504, 505, 601, 602, 1750]
+
+# =============================================================================
+# CATEGORY PRIORITIES (for bulk decisions)
+# =============================================================================
+category_priorities:
+  healing: 70
+  mana: 55
+  ammunition: 80
+  cure: 45
+  buffs: 50
+  utility: 65
+  misc: 30

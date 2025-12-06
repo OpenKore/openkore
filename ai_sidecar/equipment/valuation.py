@@ -6,12 +6,15 @@ Calculates item worth based on multiple factors including:
 - Market prices and trends
 - Card and enchant values
 - Refine levels and risks
+
+Configuration is externalized to YAML files for customization:
+- config/card_values.yml - Card market value estimates
 """
 
 import json
 import logging
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, Dict
 
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -22,6 +25,9 @@ from ai_sidecar.equipment.models import (
     get_refine_success_rate,
     calculate_refine_cost,
 )
+
+# Import centralized card values config
+from ai_sidecar.config.loader import get_card_values_config, CardValuesConfig
 
 logger = logging.getLogger(__name__)
 
@@ -142,12 +148,16 @@ class ItemValuationEngine:
     - Market value estimation
     - Equipment comparison
     - Refine risk/reward analysis
+    
+    Card values are loaded from config/card_values.yml for easy customization
+    per server without code changes.
     """
     
     def __init__(
         self,
         market_prices: dict[int, MarketPrice] | None = None,
         build_weights: dict[str, BuildWeights] | None = None,
+        card_values_config: Optional[CardValuesConfig] = None,
     ):
         """
         Initialize valuation engine.
@@ -155,9 +165,35 @@ class ItemValuationEngine:
         Args:
             market_prices: Market price database
             build_weights: Custom build weights (uses defaults if not provided)
+            card_values_config: Optional custom card values config (uses global if None)
         """
         self.market_prices = market_prices or {}
         self.build_weights = build_weights or DEFAULT_BUILD_WEIGHTS
+        
+        # Load card values configuration
+        self._card_config = card_values_config or get_card_values_config()
+        
+        # Register for config reload notifications
+        self._card_config.register_reload_callback(self._on_card_config_reload)
+        
+        logger.info(
+            "Item valuation engine initialized",
+            extra={
+                "card_config_version": self._card_config.config.get("version", "unknown"),
+                "default_card_value": self._card_config.default_value,
+                "card_count": len(self._card_config.get_all_card_values())
+            }
+        )
+    
+    def _on_card_config_reload(self) -> None:
+        """Handle card values config reload."""
+        logger.info(
+            "Card values config reloaded",
+            extra={
+                "card_count": len(self._card_config.get_all_card_values()),
+                "default_value": self._card_config.default_value
+            }
+        )
     
     def load_market_prices(self, prices_file: str | Path) -> None:
         """
@@ -266,16 +302,26 @@ class ItemValuationEngine:
         # Refine multiplier (exponential)
         refine_multiplier = 1.0 + (item.refine * 0.2) + (item.refine ** 2 * 0.05)
         
-        # Card value (rough estimate)
+        # Card value estimation using config and market data
         card_value = 0
         for card in item.cards:
             if card.card_id:
-                # Card prices vary widely; this is a placeholder
+                # Priority: 1) Market prices, 2) Config values, 3) Config default
                 card_market = self.market_prices.get(card.card_id)
                 if card_market:
                     card_value += card_market.avg_price
+                    logger.debug(
+                        "Card value from market",
+                        extra={"card_id": card.card_id, "value": card_market.avg_price}
+                    )
                 else:
-                    card_value += 50000  # Default card value
+                    # Fall back to config-based card value (supports hot-reload)
+                    config_card_value = self._card_config.get_card_value(card.card_id)
+                    card_value += config_card_value
+                    logger.debug(
+                        "Card value from config",
+                        extra={"card_id": card.card_id, "value": config_card_value}
+                    )
         
         # Enchant value (rough estimate)
         enchant_value = len(item.enchants) * 100000
@@ -439,9 +485,13 @@ class ItemValuationEngine:
         
         improvement = carded_score - current_score
         
-        # Get card market value
+        # Get card market value (priority: market prices, then config)
         card_price = self.market_prices.get(card_id)
-        card_cost = card_price.avg_price if card_price else 50000
+        if card_price:
+            card_cost = card_price.avg_price
+        else:
+            # Fall back to config-based card value
+            card_cost = self._card_config.get_card_value(card_id)
         
         return {
             "score_improvement": improvement,
@@ -587,6 +637,57 @@ class ItemValuationEngine:
                 priority *= 1.2  # Accessories for damage
         
         return min(priority, 1.0)
+    
+    def get_card_value(self, card_id: int) -> int:
+        """
+        Get estimated value for a card.
+        
+        Uses market prices if available, otherwise falls back to config values.
+        
+        Args:
+            card_id: Card item ID
+            
+        Returns:
+            Estimated value in zeny
+        """
+        # Check market prices first
+        card_market = self.market_prices.get(card_id)
+        if card_market:
+            return card_market.avg_price
+        
+        # Fall back to config-based value
+        return self._card_config.get_card_value(card_id)
+    
+    def get_config_summary(self) -> Dict[str, Any]:
+        """
+        Get configuration summary for diagnostics.
+        
+        Returns:
+            Configuration status and info
+        """
+        return {
+            "card_values": {
+                "version": self._card_config.config.get("version", "unknown"),
+                "default_value": self._card_config.default_value,
+                "configured_card_count": len(self._card_config.get_all_card_values()),
+                "settings": self._card_config.settings
+            },
+            "build_weights": list(self.build_weights.keys()),
+            "market_prices_loaded": len(self.market_prices)
+        }
+    
+    def reload_card_config(self) -> bool:
+        """
+        Manually trigger card values config reload.
+        
+        Returns:
+            True if config was reloaded, False otherwise
+        """
+        result = self._card_config.reload()
+        if result:
+            logger.info("Card values config manually reloaded")
+        return result
+    
     def calculate_total_equipment_value(
         self,
         equipment_set: dict[EquipSlot, Equipment | None],

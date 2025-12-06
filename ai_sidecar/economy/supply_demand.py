@@ -6,19 +6,33 @@ Features:
 - Market liquidity analysis
 - Volume estimation
 - Demand prediction
+- Item category integration
+- Crafting recipe analysis (via CraftingAnalyzer)
 """
 
-import json
 import statistics
 from datetime import timedelta
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional, Set
 
 import structlog
 from pydantic import BaseModel, Field
 
 from ai_sidecar.economy.core import MarketManager
+from ai_sidecar.economy.item_categories import ItemCategoryDatabase, CategoryType
+from ai_sidecar.economy.crafting_recipes import (
+    CraftingRecipeDatabase,
+    CraftingType,
+)
+from ai_sidecar.economy.crafting_analyzer import CraftingAnalyzer
+from ai_sidecar.economy.supply_demand_helpers import (
+    calculate_supply_score,
+    calculate_demand_score,
+    calculate_liquidity,
+    estimate_sale_time,
+    load_drop_rates,
+)
 
 logger = structlog.get_logger(__name__)
 
@@ -69,11 +83,37 @@ class SupplyDemandAnalyzer:
         self.market = market_manager
         self.data_dir = data_dir
         
-        # Load drop rates
-        self.drop_rates: Dict[int, float] = {}
-        self._load_drop_rates(data_dir)
+        # Load drop rates using helper function
+        self.drop_rates: Dict[int, float] = load_drop_rates(data_dir, self.log)
         
-        self.log.info("supply_demand_initialized", drop_rates=len(self.drop_rates))
+        # Initialize item category database
+        self.category_db = ItemCategoryDatabase(data_dir)
+        self.log.debug(
+            "category_db_loaded",
+            categories=len(self.category_db.categories)
+        )
+        
+        # Initialize crafting recipe database
+        self.recipe_db = CraftingRecipeDatabase(data_dir)
+        self.log.debug(
+            "recipe_db_loaded",
+            recipes=len(self.recipe_db.recipes)
+        )
+        
+        # Initialize crafting analyzer with composition
+        self.crafting_analyzer = CraftingAnalyzer(
+            recipe_db=self.recipe_db,
+            category_db=self.category_db,
+            market=self.market,
+            supply_demand_calculator=self.calculate_supply_demand
+        )
+        
+        self.log.info(
+            "supply_demand_initialized",
+            drop_rates=len(self.drop_rates),
+            categories=len(self.category_db.categories),
+            recipes=len(self.recipe_db.recipes)
+        )
     
     def get_item_rarity(self, item_id: int) -> ItemRarity:
         """
@@ -136,20 +176,21 @@ class SupplyDemandAnalyzer:
         listings = self.market.listings.get(item_id, [])
         history = self.market.get_price_history(item_id, days=30)
         
-        # Calculate supply score
-        supply_score = self._calculate_supply_score(item_id, listings)
+        # Calculate supply score using helper
+        supply_score = calculate_supply_score(item_id, listings, self.drop_rates)
         
-        # Calculate demand score
-        demand_score = self._calculate_demand_score(item_id, history)
+        # Calculate demand score using helper
+        daily_volume = self.estimate_market_volume(item_id)
+        demand_score = calculate_demand_score(daily_volume, history)
         
         # Calculate scarcity index
         scarcity_index = demand_score / supply_score if supply_score > 0 else 10.0
         
-        # Calculate market liquidity
-        liquidity = self._calculate_liquidity(item_id, history)
+        # Calculate market liquidity using helper
+        liquidity = calculate_liquidity(daily_volume, history)
         
-        # Estimate sale time
-        avg_sale_time = self._estimate_sale_time(item_id, supply_score, demand_score)
+        # Estimate sale time using helper
+        avg_sale_time = estimate_sale_time(supply_score, demand_score)
         
         # Estimate daily volume
         daily_volume = self.estimate_market_volume(item_id)
@@ -265,21 +306,99 @@ class SupplyDemandAnalyzer:
         """
         Get items with correlated demand.
         
+        Uses item categories and crafting recipes to find related items:
+        1. Items in the same category (siblings)
+        2. Materials needed to craft this item (if craftable)
+        3. Products that can be made from this item (if it's a material)
+        4. Items in upgrade paths (via category tree)
+        
         Args:
             item_id: Item ID
             
         Returns:
             List of related item IDs
         """
-        # This would ideally use item categories and crafting recipes
-        # For now, return empty list
-        # TODO: Integrate with item categories and recipe data
+        related: Set[int] = set()
         
-        return []
+        self.log.debug(
+            "finding_related_items",
+            item_id=item_id
+        )
+        
+        # 1. Get items in same category (siblings)
+        try:
+            siblings = self.category_db.get_sibling_items(item_id)
+            related.update(siblings)
+            self.log.debug(
+                "category_siblings_found",
+                item_id=item_id,
+                sibling_count=len(siblings)
+            )
+        except Exception as e:
+            self.log.warning(
+                "sibling_lookup_failed",
+                item_id=item_id,
+                error=str(e)
+            )
+        
+        # 2. If this item is craftable, get the materials it needs
+        if self.recipe_db.is_craftable(item_id):
+            recipes = self.recipe_db.get_recipes_for_product(item_id)
+            for recipe in recipes:
+                material_ids = recipe.get_material_ids()
+                related.update(material_ids)
+                self.log.debug(
+                    "crafting_materials_found",
+                    item_id=item_id,
+                    recipe_id=recipe.recipe_id,
+                    material_count=len(material_ids)
+                )
+        
+        # 3. If this item is a material, get products it can make
+        if self.recipe_db.is_crafting_material(item_id):
+            products = self.recipe_db.get_products_from_material(item_id)
+            related.update(products)
+            self.log.debug(
+                "craftable_products_found",
+                item_id=item_id,
+                product_count=len(products)
+            )
+        
+        # 4. Get items from parent category (broader related items)
+        category = self.category_db.get_category(item_id)
+        if category and category.parent_category:
+            parent_cat = self.category_db.categories.get(category.parent_category)
+            if parent_cat:
+                # Get limited sample from parent to avoid too many items
+                parent_items = parent_cat.get_all_item_ids()
+                # Limit to first 50 items from parent
+                limited_parent = set(list(parent_items)[:50])
+                related.update(limited_parent)
+                self.log.debug(
+                    "parent_category_items_found",
+                    item_id=item_id,
+                    parent_category=category.parent_category,
+                    item_count=len(limited_parent)
+                )
+        
+        # Remove the input item itself
+        related.discard(item_id)
+        
+        # Remove items with ID 0 (placeholder for refining recipes)
+        related.discard(0)
+        
+        self.log.info(
+            "related_items_found",
+            item_id=item_id,
+            total_related=len(related)
+        )
+        
+        return list(related)
     
-    def analyze_crafting_demand(self, product_id: int) -> dict:
+    def analyze_crafting_demand(self, product_id: int) -> Dict[str, Any]:
         """
         Analyze material demand for crafted items.
+        Delegates to CraftingAnalyzer.
         
         Args:
             product_id: Crafted product ID
@@ -287,195 +406,111 @@ class SupplyDemandAnalyzer:
         Returns:
             Dict with material demand analysis
         """
-        # This would require recipe data integration
-        # For now, return basic structure
+        return self.crafting_analyzer.analyze_crafting_demand(product_id)
+    
+    def is_craftable(self, item_id: int) -> bool:
+        """
+        Check if an item can be crafted.
+        Delegates to CraftingAnalyzer.
+        
+        Args:
+            item_id: Item ID to check
+            
+        Returns:
+            True if item has crafting recipes
+        """
+        return self.crafting_analyzer.is_craftable(item_id)
+    
+    def get_crafting_requirements(self, item_id: int) -> Optional[Dict[str, Any]]:
+        """
+        Get crafting requirements for an item.
+        Delegates to CraftingAnalyzer.
+        
+        Args:
+            item_id: Item ID to check
+            
+        Returns:
+            Dict with requirements or None if not craftable
+        """
+        return self.crafting_analyzer.get_crafting_requirements(item_id)
+    
+    def estimate_crafting_value(self, item_id: int) -> Dict[str, float]:
+        """
+        Estimate the crafting value and potential profit for an item.
+        Delegates to CraftingAnalyzer.
+        
+        Args:
+            item_id: Item ID to analyze
+            
+        Returns:
+            Dict with value estimates
+        """
+        return self.crafting_analyzer.estimate_crafting_value(item_id)
+    
+    def get_material_demand_impact(self, material_id: int) -> Dict[str, Any]:
+        """
+        Analyze how demand for products affects demand for this material.
+        Delegates to CraftingAnalyzer.
+        
+        Args:
+            material_id: Material item ID
+            
+        Returns:
+            Dict with demand impact analysis
+        """
+        return self.crafting_analyzer.get_material_demand_impact(material_id)
+    
+    def get_item_category_info(self, item_id: int) -> Dict[str, Any]:
+        """
+        Get category information for an item.
+        
+        Args:
+            item_id: Item ID
+            
+        Returns:
+            Dict with category information
+        """
+        category = self.category_db.get_category(item_id)
+        
+        if not category:
+            return {
+                "item_id": item_id,
+                "has_category": False,
+                "category_id": None,
+                "category_name": None,
+                "category_type": None,
+                "parent_category": None,
+                "tags": []
+            }
         
         return {
-            "product_id": product_id,
-            "materials": [],
-            "profitability": 0.0,
-            "material_availability": {}
+            "item_id": item_id,
+            "has_category": True,
+            "category_id": category.category_id,
+            "category_name": category.name,
+            "category_type": category.category_type.value,
+            "parent_category": category.parent_category,
+            "description": category.description,
+            "tags": list(category.tags)
         }
     
-    def _calculate_supply_score(
+    def find_profitable_crafting(
         self,
-        item_id: int,
-        listings: List
-    ) -> float:
+        min_profit_margin: float = 10.0,
+        crafting_type: Optional[CraftingType] = None
+    ) -> List[Dict[str, Any]]:
         """
-        Calculate supply score.
+        Find items that are profitable to craft.
+        Delegates to CraftingAnalyzer.
         
         Args:
-            item_id: Item ID
-            listings: Current market listings
+            min_profit_margin: Minimum profit margin percentage
+            crafting_type: Optional filter by crafting type
             
         Returns:
-            Supply score (0-100)
+            List of profitable crafting opportunities sorted by profit
         """
-        # Base score on number of listings
-        listing_count = len(listings)
-        
-        # More listings = higher supply
-        if listing_count == 0:
-            base_score = 0.0
-        elif listing_count < 5:
-            base_score = 20.0
-        elif listing_count < 20:
-            base_score = 40.0
-        elif listing_count < 50:
-            base_score = 60.0
-        elif listing_count < 100:
-            base_score = 80.0
-        else:
-            base_score = 100.0
-        
-        # Factor in drop rate
-        drop_rate = self.drop_rates.get(item_id, 0.0)
-        
-        if drop_rate > 0:
-            # Higher drop rate = more supply
-            drop_multiplier = min(1.5, 1.0 + drop_rate)
-            base_score *= drop_multiplier
-        
-        return min(100.0, base_score)
-    
-    def _calculate_demand_score(
-        self,
-        item_id: int,
-        history
-    ) -> float:
-        """
-        Calculate demand score.
-        
-        Args:
-            item_id: Item ID
-            history: Price history
-            
-        Returns:
-            Demand score (0-100)
-        """
-        if not history or not history.price_points:
-            return 50.0  # Default medium demand
-        
-        # Base score on transaction volume
-        daily_volume = self.estimate_market_volume(item_id)
-        
-        if daily_volume == 0:
-            base_score = 20.0
-        elif daily_volume < 10:
-            base_score = 40.0
-        elif daily_volume < 50:
-            base_score = 60.0
-        elif daily_volume < 200:
-            base_score = 80.0
-        else:
-            base_score = 100.0
-        
-        # Factor in price trend
-        if history.trend.value in ["rising", "rising_fast"]:
-            base_score *= 1.2  # Rising prices indicate demand
-        elif history.trend.value in ["falling", "falling_fast"]:
-            base_score *= 0.8  # Falling prices indicate low demand
-        
-        return min(100.0, base_score)
-    
-    def _calculate_liquidity(
-        self,
-        item_id: int,
-        history
-    ) -> float:
-        """
-        Calculate market liquidity.
-        
-        Args:
-            item_id: Item ID
-            history: Price history
-            
-        Returns:
-            Liquidity score (0-1)
-        """
-        if not history or not history.price_points:
-            return 0.0
-        
-        # High liquidity = many transactions, stable prices
-        
-        # Factor 1: Transaction volume
-        daily_volume = self.estimate_market_volume(item_id)
-        volume_score = min(1.0, daily_volume / 100.0)
-        
-        # Factor 2: Price stability (inverse of volatility)
-        stability_score = max(0.0, 1.0 - history.volatility)
-        
-        # Combined liquidity
-        liquidity = (volume_score * 0.6) + (stability_score * 0.4)
-        
-        return liquidity
-    
-    def _estimate_sale_time(
-        self,
-        item_id: int,
-        supply_score: float,
-        demand_score: float
-    ) -> timedelta:
-        """
-        Estimate average time to sell item.
-        
-        Args:
-            item_id: Item ID
-            supply_score: Supply score
-            demand_score: Demand score
-            
-        Returns:
-            Estimated time to sell
-        """
-        # High demand + low supply = fast sale
-        # Low demand + high supply = slow sale
-        
-        if demand_score == 0:
-            # No demand, assume long sale time
-            return timedelta(days=30)
-        
-        ratio = supply_score / demand_score
-        
-        if ratio < 0.5:
-            # High demand, low supply
-            hours = 2
-        elif ratio < 1.0:
-            # Good demand
-            hours = 12
-        elif ratio < 2.0:
-            # Moderate
-            hours = 48
-        elif ratio < 5.0:
-            # Slow
-            hours = 168  # 7 days
-        else:
-            # Very slow
-            hours = 720  # 30 days
-        
-        return timedelta(hours=hours)
-    
-    def _load_drop_rates(self, data_dir: Path) -> None:
-        """Load drop rate data from file."""
-        drop_file = data_dir / "drop_rates.json"
-        
-        if not drop_file.exists():
-            self.log.warning("no_drop_rates_file", path=str(drop_file))
-            return
-        
-        try:
-            with open(drop_file, 'r') as f:
-                data = json.load(f)
-            
-            # Load normal drop rates
-            for item_id_str, drop_info in data.get("drop_rates", {}).items():
-                self.drop_rates[int(item_id_str)] = drop_info.get("rate", 0.0)
-            
-            # Load MVP drop rates
-            for item_id_str, drop_info in data.get("mvp_drops", {}).items():
-                self.drop_rates[int(item_id_str)] = drop_info.get("rate", 0.0)
-            
-            self.log.info("drop_rates_loaded", count=len(self.drop_rates))
-        
-        except Exception as e:
-            self.log.error("drop_rates_load_failed", error=str(e))
+        return self.crafting_analyzer.find_profitable_crafting(
+            min_profit_margin=min_profit_margin,
+            crafting_type=crafting_type
+        )

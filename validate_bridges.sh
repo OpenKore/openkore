@@ -166,6 +166,50 @@ else
     check_warn "godtier_chat_bridge.pl not found" "Chat features will be limited without this plugin"
 fi
 
+print_header "Platform Detection & Configuration"
+
+# Check platform detection module
+print_section "Platform Detection Module"
+if [ -f "ai_sidecar/utils/platform.py" ]; then
+    check_pass "platform.py module found"
+    
+    # Test platform detection
+    if command -v python3 &> /dev/null && [ -d "ai_sidecar/.venv" ]; then
+        source ai_sidecar/.venv/bin/activate 2>/dev/null || true
+        
+        PLATFORM_INFO=$(python3 -c "from ai_sidecar.utils.platform import detect_platform; info = detect_platform(); print(f'{info.platform_name}|{info.can_use_ipc}|{info.default_endpoint}')" 2>/dev/null || echo "ERROR||")
+        
+        if [[ "$PLATFORM_INFO" != "ERROR||" ]]; then
+            IFS='|' read -r PLATFORM_NAME CAN_USE_IPC DEFAULT_ENDPOINT <<< "$PLATFORM_INFO"
+            check_pass "Platform detected: $PLATFORM_NAME"
+            
+            if [[ "$CAN_USE_IPC" == "True" ]]; then
+                check_pass "IPC sockets supported: Yes"
+                check_pass "Default endpoint: $DEFAULT_ENDPOINT (IPC - optimal)"
+            else
+                check_pass "IPC sockets supported: No (using TCP)"
+                check_pass "Default endpoint: $DEFAULT_ENDPOINT (TCP - only option)"
+            fi
+        else
+            check_warn "Platform detection test failed" "Manual verification needed"
+        fi
+        
+        deactivate 2>/dev/null || true
+    else
+        check_warn "Cannot test platform detection" "Python or venv not available"
+    fi
+else
+    check_fail "platform.py module not found" "Missing: ai_sidecar/utils/platform.py (Phase 1 implementation required)"
+fi
+
+# Check socket cleanup module
+print_section "Socket Cleanup Module"
+if [ -f "ai_sidecar/ipc/socket_cleanup.py" ]; then
+    check_pass "socket_cleanup.py module found"
+else
+    check_warn "socket_cleanup.py not found" "Automatic socket cleanup not available (Phase 2 feature)"
+fi
+
 print_header "Python AI Sidecar Dependencies"
 
 # Check if ai_sidecar directory exists

@@ -3,6 +3,11 @@ ZeroMQ server for AI Sidecar IPC.
 
 Implements an async REP socket server that receives game state updates
 from OpenKore and responds with AI decisions.
+
+Features:
+- Automatic cleanup of stale IPC sockets
+- Cross-platform endpoint support
+- Graceful shutdown and resource cleanup
 """
 
 import asyncio
@@ -15,6 +20,7 @@ import zmq.asyncio
 
 from ai_sidecar.config import get_settings, ZMQConfig
 from ai_sidecar.utils.logging import get_logger
+from ai_sidecar.ipc.socket_cleanup import cleanup_ipc_socket, CleanupResult
 
 logger = get_logger(__name__)
 
@@ -84,12 +90,18 @@ class ZMQServer:
         
         Creates the ZMQ context and socket, binds to the endpoint,
         and enters the main message processing loop.
+        
+        For IPC endpoints, attempts to clean up stale socket files
+        before binding to prevent "address already in use" errors.
         """
         if self._running:
             logger.warning("Server already running")
             return
         
         logger.info("Starting ZMQ server", endpoint=self._config.endpoint)
+        
+        # Attempt IPC socket cleanup before binding (best-effort)
+        self._attempt_ipc_cleanup()
         
         # Create async context
         self._context = zmq.asyncio.Context()
@@ -117,6 +129,63 @@ class ZMQServer:
         
         # Enter main loop
         await self._run_loop()
+    
+    def _attempt_ipc_cleanup(self) -> None:
+        """
+        Attempt to clean up stale IPC socket files before binding.
+        
+        This is a best-effort operation - failures are logged but don't
+        prevent server startup. The cleanup helps recover from scenarios
+        where a previous process crashed without cleaning up its socket.
+        
+        Note: Only operates on IPC endpoints, skips TCP endpoints.
+        """
+        endpoint = self._config.endpoint
+        
+        # Only attempt cleanup for IPC endpoints
+        if not endpoint.startswith("ipc://"):
+            logger.debug(
+                "ipc_cleanup_skipped",
+                endpoint=endpoint,
+                reason="not_ipc_endpoint",
+            )
+            return
+        
+        try:
+            result: CleanupResult = cleanup_ipc_socket(endpoint)
+            
+            if result.was_stale:
+                # Successfully cleaned up a stale socket
+                logger.info(
+                    "stale_ipc_socket_cleaned",
+                    endpoint=endpoint,
+                    socket_path=str(result.socket_path),
+                    cleanup_time_ms=result.cleanup_time_ms,
+                )
+            elif result.success:
+                # No cleanup needed
+                logger.debug(
+                    "ipc_cleanup_not_needed",
+                    endpoint=endpoint,
+                    cleanup_time_ms=result.cleanup_time_ms,
+                )
+            else:
+                # Cleanup attempted but failed
+                logger.warning(
+                    "ipc_cleanup_failed",
+                    endpoint=endpoint,
+                    error=result.error,
+                    cleanup_time_ms=result.cleanup_time_ms,
+                )
+                
+        except Exception as e:
+            # Unexpected error during cleanup - log and continue
+            logger.warning(
+                "ipc_cleanup_error",
+                endpoint=endpoint,
+                error=str(e),
+                error_type=type(e).__name__,
+            )
     
     async def stop(self) -> None:
         """Stop the ZeroMQ server gracefully."""

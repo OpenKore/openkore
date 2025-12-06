@@ -290,7 +290,7 @@ class GuildManager:
             inventory_count = self._get_inventory_item_count(game_state, item_id)
             if inventory_count >= amount:
                 actions.append(Action(
-                    type=ActionType.NOOP,  # Would be STORAGE_DEPOSIT
+                    type=ActionType.GUILD_STORAGE_DEPOSIT,
                     priority=5,
                     extra={
                         "operation": "deposit",
@@ -311,7 +311,7 @@ class GuildManager:
                 storage_count = self.storage.get_item_count_by_id(item_id)
                 if storage_count >= amount:
                     actions.append(Action(
-                        type=ActionType.NOOP,  # Would be STORAGE_WITHDRAW
+                        type=ActionType.GUILD_STORAGE_WITHDRAW,
                         priority=5,
                         extra={
                             "operation": "withdraw",
@@ -374,7 +374,7 @@ class GuildManager:
         logger.info(f"Donating {amount}% EXP to guild {self.guild.name}")
         
         return Action(
-            type=ActionType.NOOP,  # Would be GUILD_EXP_DONATE
+            type=ActionType.GUILD_DONATE_EXP,
             priority=8,
             extra={
                 "operation": "donate_exp",

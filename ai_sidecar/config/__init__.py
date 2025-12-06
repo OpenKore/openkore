@@ -27,6 +27,11 @@ get_config_summary = _config_module.get_config_summary
 validate_config = _config_module.validate_config
 print_config_help = _config_module.print_config_help
 
+# Platform-related constants for backward compatibility
+DEFAULT_ZMQ_ENDPOINT_UNIX = _config_module.DEFAULT_ZMQ_ENDPOINT_UNIX
+DEFAULT_ZMQ_ENDPOINT_WINDOWS = _config_module.DEFAULT_ZMQ_ENDPOINT_WINDOWS
+DEFAULT_ZMQ_ENDPOINT = _config_module.DEFAULT_ZMQ_ENDPOINT
+
 __all__ = [
     "SubsystemConfig",
     "get_config",
@@ -40,4 +45,8 @@ __all__ = [
     "get_config_summary",
     "validate_config",
     "print_config_help",
+    # Platform-related exports
+    "DEFAULT_ZMQ_ENDPOINT_UNIX",
+    "DEFAULT_ZMQ_ENDPOINT_WINDOWS",
+    "DEFAULT_ZMQ_ENDPOINT",
 ]

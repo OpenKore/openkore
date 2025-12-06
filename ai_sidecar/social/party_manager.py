@@ -603,7 +603,7 @@ class PartyManager:
         if self.party and self.party.settings.auto_accept_invites:
             logger.info(f"Auto-accepting party invite from {inviter_name}")
             return Action(
-                type=ActionType.NOOP,  # Would be ACCEPT_PARTY_INVITE
+                type=ActionType.ACCEPT_PARTY_INVITE,
                 priority=1,
                 extra={"inviter_id": inviter_id, "accept": True}
             )
@@ -619,7 +619,7 @@ class PartyManager:
             logger.debug(f"Accepting party invite with {delay:.1f}s delay")
             
             return Action(
-                type=ActionType.NOOP,  # Would be ACCEPT_PARTY_INVITE
+                type=ActionType.ACCEPT_PARTY_INVITE,
                 priority=1,
                 extra={"inviter_id": inviter_id, "accept": True, "delay": delay}
             )
@@ -629,7 +629,7 @@ class PartyManager:
         else:
             # Reject
             return Action(
-                type=ActionType.NOOP,  # Would be REJECT_PARTY_INVITE
+                type=ActionType.REJECT_PARTY_INVITE,
                 priority=1,
                 extra={"inviter_id": inviter_id, "accept": False}
             )

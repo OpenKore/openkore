@@ -8,9 +8,13 @@ Features:
 - Startup progress indicators for user feedback
 - Graceful shutdown with signal handling
 - User-friendly error messages with recovery suggestions
+- CLI debug controls (--debug, --verbose, --trace, --profile)
+- Cross-platform support with automatic endpoint selection
 """
 
+import argparse
 import asyncio
+import os
 import signal
 import sys
 from typing import NoReturn
@@ -26,6 +30,7 @@ from ai_sidecar.utils.errors import (
     ZMQConnectionError,
     format_loading_error,
 )
+from ai_sidecar.utils.platform import detect_platform, PlatformInfo
 from ai_sidecar.ipc import ZMQServer
 from ai_sidecar.core.tick import TickProcessor
 
@@ -232,22 +237,138 @@ async def run_sidecar() -> None:
         print("\n👋 AI Sidecar stopped. Goodbye!")
 
 
+def parse_arguments() -> argparse.Namespace:
+    """
+    Parse command line arguments.
+    
+    Returns:
+        Parsed arguments namespace
+    """
+    parser = argparse.ArgumentParser(
+        description="OpenKore AI Sidecar - Intelligent game automation",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s                          Start with default settings
+  %(prog)s --debug                   Enable debug logging
+  %(prog)s --verbose                 Enable verbose output
+  %(prog)s --trace                   Enable trace-level logging
+  %(prog)s --debug-modules combat,memory  Debug specific modules only
+  %(prog)s --profile                 Enable performance profiling
+  
+Environment Variables:
+  AI_LOG_LEVEL                       Set log level (DEBUG, INFO, WARNING, ERROR)
+  AI_DEBUG_MODULES                   Comma-separated list of modules to debug
+  AI_DEBUG_PROFILE                   Enable profiling (true/false)
+  
+For configuration help:
+  %(prog)s --config-help
+        """,
+    )
+    
+    # Version
+    parser.add_argument(
+        "-v", "--version",
+        action="version",
+        version=f"AI Sidecar v{__version__}",
+    )
+    
+    # Debug flags
+    parser.add_argument(
+        "-d", "--debug",
+        action="store_true",
+        help="Enable debug logging (sets AI_LOG_LEVEL=DEBUG)",
+    )
+    
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Enable verbose output (same as --debug)",
+    )
+    
+    parser.add_argument(
+        "--trace",
+        action="store_true",
+        help="Enable trace-level logging (maximum verbosity)",
+    )
+    
+    parser.add_argument(
+        "--debug-modules",
+        type=str,
+        metavar="MODULES",
+        help="Comma-separated list of modules to debug (e.g., combat,memory,ipc)",
+    )
+    
+    # Performance profiling
+    parser.add_argument(
+        "--profile",
+        action="store_true",
+        help="Enable performance profiling (creates .prof files)",
+    )
+    
+    parser.add_argument(
+        "--profile-dir",
+        type=str,
+        default="profiles",
+        metavar="DIR",
+        help="Directory for profile output (default: profiles/)",
+    )
+    
+    # Configuration help
+    parser.add_argument(
+        "--config-help",
+        action="store_true",
+        help="Display configuration help and exit",
+    )
+    
+    return parser.parse_args()
+
+
+def apply_cli_overrides(args: argparse.Namespace) -> None:
+    """
+    Apply CLI argument overrides to environment variables.
+    
+    This allows CLI flags to override environment and config file settings.
+    
+    Args:
+        args: Parsed command line arguments
+    """
+    # Debug level overrides
+    if args.trace:
+        os.environ["AI_LOG_LEVEL"] = "DEBUG"
+        os.environ["AI_DEBUG_MODE"] = "trace"
+    elif args.debug or args.verbose:
+        os.environ["AI_LOG_LEVEL"] = "DEBUG"
+        os.environ["AI_DEBUG_MODE"] = "debug"
+    
+    # Module filtering
+    if args.debug_modules:
+        os.environ["AI_DEBUG_MODULES"] = args.debug_modules
+    
+    # Profiling
+    if args.profile:
+        os.environ["AI_DEBUG_PROFILE"] = "true"
+        os.environ["AI_DEBUG_PROFILE_DIR"] = args.profile_dir
+
+
 def main() -> NoReturn:
     """
     Main entry point.
     
-    Initializes logging and runs the async event loop with user feedback.
+    Parses CLI arguments, initializes logging, and runs the async event loop.
     """
-    # Parse command line arguments for help
-    if "--help" in sys.argv or "-h" in sys.argv:
+    # Parse command line arguments
+    args = parse_arguments()
+    
+    # Handle config help
+    if args.config_help:
         print_config_help()
         sys.exit(0)
     
-    if "--version" in sys.argv or "-v" in sys.argv:
-        print(f"AI Sidecar v{__version__}")
-        sys.exit(0)
+    # Apply CLI overrides to environment
+    apply_cli_overrides(args)
     
-    # Setup logging first
+    # Setup logging with CLI settings
     try:
         setup_logging()
     except Exception as e:
@@ -256,6 +377,20 @@ def main() -> NoReturn:
         sys.exit(1)
     
     logger.info("AI Sidecar starting", version=__version__)
+    
+    # Log platform detection results for cross-platform debugging
+    _log_platform_info()
+    
+    # Log debug configuration if enabled
+    if args.debug or args.verbose or args.trace:
+        debug_mode = os.getenv("AI_DEBUG_MODE", "debug")
+        modules = os.getenv("AI_DEBUG_MODULES", "all")
+        logger.info(
+            "Debug mode enabled",
+            mode=debug_mode,
+            modules=modules,
+            profile=args.profile,
+        )
     
     # Run the main async function
     try:
@@ -274,6 +409,49 @@ def main() -> NoReturn:
         sys.exit(1)
     
     sys.exit(0)
+
+
+def _log_platform_info() -> None:
+    """
+    Log platform detection results for debugging cross-platform issues.
+    
+    This helps diagnose endpoint selection and IPC compatibility issues
+    by providing detailed platform information at startup.
+    """
+    platform_info: PlatformInfo = detect_platform()
+    settings = get_settings()
+    
+    # Log platform detection at info level for visibility
+    logger.info(
+        "Platform detected",
+        platform=platform_info.platform_name,
+        platform_type=platform_info.platform_type.value,
+        supports_ipc=platform_info.can_use_ipc,
+        is_container=platform_info.is_container,
+        wsl_version=platform_info.wsl_version,
+    )
+    
+    # Log endpoint selection reasoning
+    endpoint = settings.zmq.endpoint
+    endpoint_type = "ipc" if endpoint.startswith("ipc://") else "tcp"
+    
+    logger.info(
+        "Endpoint configured",
+        endpoint=endpoint,
+        endpoint_type=endpoint_type,
+        default_endpoint=platform_info.default_endpoint,
+        using_default=(endpoint == platform_info.default_endpoint),
+    )
+    
+    # Warn if IPC used on unsupported platform
+    if endpoint.startswith("ipc://") and not platform_info.can_use_ipc:
+        logger.warning(
+            "IPC endpoint on unsupported platform",
+            endpoint=endpoint,
+            platform=platform_info.platform_name,
+            recommended=platform_info.default_tcp_endpoint,
+            hint="Consider using TCP endpoint for this platform",
+        )
 
 
 if __name__ == "__main__":

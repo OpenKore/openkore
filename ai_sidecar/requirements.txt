@@ -1,12 +1,13 @@
 # AI Sidecar Core Dependencies
-# 
+#
 # Install with: pip install -r requirements.txt
 # For development: pip install -r requirements.txt -e ".[dev]"
+# Last Updated: December 6, 2025 - Phase 1 HIGH Priority Updates
 
 # Core Framework
 pyzmq>=25.1.0
-pydantic>=2.5.0
-pydantic-settings>=2.1.0
+pydantic>=2.10.0              # Updated from 2.5.0 (Phase 1 - Performance improvements)
+pydantic-settings>=2.6.0      # Updated from 2.1.0 (Phase 1 - New features)
 structlog>=23.2.0
 aiofiles>=23.2.0
 python-dotenv>=1.0.0
@@ -15,7 +16,7 @@ pyyaml>=6.0.1
 # Memory and Learning (Phase 8)
 redis>=5.0.0
 openai>=1.68.0
-anthropic>=0.30.0
+anthropic>=0.40.0             # Updated from 0.30.0 (Phase 1 - Claude 3.5 support)
 httpx>=0.27.0
 
 # ML and Data Processing

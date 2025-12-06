@@ -47,17 +47,35 @@ class LLMManager:
         
         # Auto-initialize provider if specified
         if provider and api_key:
-            from ai_sidecar.llm.providers import OpenAIProvider, ClaudeProvider, AzureOpenAIProvider
+            from ai_sidecar.llm.providers import (
+                OpenAIProvider,
+                ClaudeProvider,
+                AzureOpenAIProvider,
+                DeepSeekProvider,
+            )
             
             if provider == "openai":
-                prov = OpenAIProvider(api_key=api_key, **kwargs)
+                # Default to gpt-5.1 (latest flagship) unless specified
+                model = kwargs.pop("model", "gpt-5.1")
+                prov = OpenAIProvider(api_key=api_key, model=model, **kwargs)
                 self.add_provider(prov, primary=True)
+                logger.info("llm_manager_openai_initialized", model=model)
             elif provider == "claude":
-                prov = ClaudeProvider(api_key=api_key, **kwargs)
+                # Default to claude-sonnet-4-5 (recommended) unless specified
+                model = kwargs.pop("model", "claude-sonnet-4-5")
+                prov = ClaudeProvider(api_key=api_key, model=model, **kwargs)
                 self.add_provider(prov, primary=True)
+                logger.info("llm_manager_claude_initialized", model=model)
+            elif provider == "deepseek":
+                # Default to deepseek-chat (V3.2) unless specified
+                model = kwargs.pop("model", "deepseek-chat")
+                prov = DeepSeekProvider(api_key=api_key, model=model, **kwargs)
+                self.add_provider(prov, primary=True)
+                logger.info("llm_manager_deepseek_initialized", model=model)
             elif provider == "azure":
                 prov = AzureOpenAIProvider(api_key=api_key, **kwargs)
                 self.add_provider(prov, primary=True)
+                logger.info("llm_manager_azure_initialized")
     
     def add_provider(self, provider: LLMProvider, primary: bool = False) -> None:
         """

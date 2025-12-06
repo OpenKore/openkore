@@ -290,12 +290,22 @@ class TestCreateDecisionEngine:
         assert isinstance(engine, ProgressionDecisionEngine)
     
     @patch('ai_sidecar.core.decision.get_settings')
-    def test_defaults_to_stub_for_unknown(self, mock_settings):
-        """Test defaults to stub for unknown engine type."""
+    def test_creates_ml_engine(self, mock_settings):
+        """Test creates ML engine when configured."""
+        mock_settings.return_value.decision.engine_type = "ml"
+        
+        engine = create_decision_engine()
+        # ML engine uses ProgressionDecisionEngine as base with ML-ready architecture
+        assert isinstance(engine, ProgressionDecisionEngine)
+    
+    @patch('ai_sidecar.core.decision.get_settings')
+    def test_defaults_to_progression_for_unknown(self, mock_settings):
+        """Test defaults to ProgressionDecisionEngine for unknown engine type."""
         mock_settings.return_value.decision.engine_type = "unknown"
         
         engine = create_decision_engine()
-        assert isinstance(engine, StubDecisionEngine)
+        # Fallback uses ProgressionDecisionEngine (functional) instead of stub
+        assert isinstance(engine, ProgressionDecisionEngine)
 
 
 # Test TickProcessor

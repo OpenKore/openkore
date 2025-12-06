@@ -291,6 +291,161 @@ class ZMQConnectionError(ConnectionError):
         )
 
 
+class PlatformCompatibilityError(SidecarError):
+    """
+    Platform compatibility error with platform-specific recovery suggestions.
+    
+    Raised when an operation is attempted that is not supported on the
+    current platform, such as:
+    - IPC sockets on Windows
+    - Unix-specific features on non-Unix systems
+    - Socket cleanup failures due to platform limitations
+    
+    Attributes:
+        platform_name: Name of the current platform
+        platform_type: Type of platform (windows, unix, wsl, etc.)
+        operation: The operation that failed
+        supported_platforms: List of platforms that support this operation
+        alternative_suggestion: Platform-specific alternative
+        original_error: The underlying exception
+    """
+    
+    def __init__(
+        self,
+        message: str,
+        platform_name: str,
+        platform_type: str,
+        operation: str,
+        supported_platforms: list[str] | None = None,
+        alternative_suggestion: str | None = None,
+        original_error: Exception | None = None,
+    ) -> None:
+        # Build recovery steps based on platform context
+        recovery_steps = [
+            f"Current platform: {platform_name} ({platform_type})",
+            f"Operation attempted: {operation}",
+        ]
+        
+        if supported_platforms:
+            recovery_steps.append(
+                f"Supported platforms: {', '.join(supported_platforms)}"
+            )
+        
+        if alternative_suggestion:
+            recovery_steps.append(f"Alternative: {alternative_suggestion}")
+        
+        # Platform-specific suggestions
+        if platform_type.lower() == "windows":
+            recovery_steps.extend([
+                "Windows does not support Unix IPC sockets",
+                "Use TCP endpoint instead: tcp://127.0.0.1:5555",
+                "Set AI_ZMQ_ENDPOINT=tcp://127.0.0.1:5555 in environment",
+            ])
+        elif platform_type.lower() == "wsl":
+            recovery_steps.extend([
+                "WSL has limited IPC support depending on version",
+                "WSL1: Use TCP endpoint for reliability",
+                "WSL2: IPC should work, check socket path permissions",
+            ])
+        
+        suggestions = [
+            RecoverySuggestion(
+                f"Platform compatibility issue on {platform_name}",
+                recovery_steps,
+                docs_link="https://github.com/openkore/openkore-ai/docs/cross-platform.md",
+            ),
+        ]
+        
+        # Build context dictionary
+        context = {
+            "platform_name": platform_name,
+            "platform_type": platform_type,
+            "operation": operation,
+        }
+        
+        if supported_platforms:
+            context["supported_platforms"] = supported_platforms
+        
+        if alternative_suggestion:
+            context["alternative"] = alternative_suggestion
+        
+        # Call SidecarError directly with CONFIGURATION category
+        super().__init__(
+            message=message,
+            category=ErrorCategory.CONFIGURATION,
+            suggestions=suggestions,
+            context=context,
+            original_error=original_error,
+        )
+        
+        # Store as instance attributes for easy access
+        self.platform_name = platform_name
+        self.platform_type = platform_type
+        self.operation = operation
+        self.supported_platforms = supported_platforms or []
+        self.alternative_suggestion = alternative_suggestion
+    
+    @classmethod
+    def ipc_not_supported(
+        cls,
+        platform_name: str,
+        platform_type: str,
+        endpoint: str,
+        tcp_alternative: str = "tcp://127.0.0.1:5555",
+    ) -> "PlatformCompatibilityError":
+        """
+        Factory method for IPC not supported errors.
+        
+        Args:
+            platform_name: Current platform name
+            platform_type: Platform type identifier
+            endpoint: The IPC endpoint that was attempted
+            tcp_alternative: Suggested TCP endpoint to use instead
+            
+        Returns:
+            PlatformCompatibilityError configured for IPC issues
+        """
+        return cls(
+            message=f"IPC endpoint '{endpoint}' is not supported on {platform_name}",
+            platform_name=platform_name,
+            platform_type=platform_type,
+            operation=f"bind to IPC endpoint: {endpoint}",
+            supported_platforms=["Linux", "macOS", "FreeBSD", "WSL2"],
+            alternative_suggestion=f"Use TCP endpoint: {tcp_alternative}",
+        )
+    
+    @classmethod
+    def socket_cleanup_failed(
+        cls,
+        platform_name: str,
+        platform_type: str,
+        socket_path: str,
+        reason: str,
+        original_error: Exception | None = None,
+    ) -> "PlatformCompatibilityError":
+        """
+        Factory method for socket cleanup failures.
+        
+        Args:
+            platform_name: Current platform name
+            platform_type: Platform type identifier
+            socket_path: Path to the socket that failed cleanup
+            reason: Reason for the cleanup failure
+            original_error: The underlying exception
+            
+        Returns:
+            PlatformCompatibilityError configured for cleanup failures
+        """
+        return cls(
+            message=f"Failed to clean up socket '{socket_path}': {reason}",
+            platform_name=platform_name,
+            platform_type=platform_type,
+            operation=f"cleanup stale socket: {socket_path}",
+            alternative_suggestion="Manually remove the socket file or use TCP endpoint",
+            original_error=original_error,
+        )
+
+
 class RedisConnectionError(ConnectionError):
     """Raised when Redis/DragonflyDB connection fails."""
     
