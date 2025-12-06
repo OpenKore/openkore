@@ -11,14 +11,14 @@
 
 ifeq ($(OS),Windows_NT)
 all:
-	@python src/scons-local-3.1.2/scons.py || echo -e "Compilation failed. Please read https://openkore.com/wiki/How_to_run_OpenKore for help."
+	@python3 src/scons-local-3.1.2/scons.py || echo -e "Compilation failed. Please read https://openkore.com/wiki/How_to_run_OpenKore for help."
 
 doc:
 	cd src/doc/ && createdoc.pl
 else
 
 all:
-	@python src/scons-local-3.1.2/scons.py || echo -e "\e[1;31mCompilation failed. Please read https://openkore.com/wiki/How_to_run_OpenKore for help.\e[0m"
+	@python3 src/scons-local-3.1.2/scons.py || echo -e "\e[1;31mCompilation failed. Please read https://openkore.com/wiki/How_to_run_OpenKore for help.\e[0m"
 
 doc:
 	cd src/doc/ && ./createdoc.pl
@@ -29,7 +29,7 @@ test:
 	cd src/test/ && perl unittests.pl
 
 clean:
-	python src/scons-local-3.1.2/scons.py -c
+	python3 src/scons-local-3.1.2/scons.py -c
 
 dist:
 	bash makedist.sh

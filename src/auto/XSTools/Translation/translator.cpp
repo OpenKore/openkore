@@ -47,9 +47,10 @@ Translator::~Translator ()
 const char *
 Translator::getOrigMessage (unsigned int index)
 {
-	int len, msgOffset;
+	int msgOffset;
 
-	len = reader->readInt (origTableOffset + index * 8);
+	// Length is read but not used - kept for binary format compatibility
+	(void)reader->readInt (origTableOffset + index * 8);
 	msgOffset = reader->readInt (origTableOffset + index * 8 + 4);
 	return reader->readStr (msgOffset);
 }

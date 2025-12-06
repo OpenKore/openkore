@@ -146,7 +146,8 @@ class TimeManager:
         Returns:
             Current server time
         """
-        utc_now = datetime.utcnow()
+        from datetime import timezone
+        utc_now = datetime.now(timezone.utc)
         server_offset = timedelta(hours=self.server_timezone)
         return utc_now + server_offset
 

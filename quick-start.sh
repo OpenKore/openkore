@@ -414,7 +414,8 @@ read -p 'Press Enter to exit...'"
     terminal_cmd=$(get_terminal_command "$terminal" "OpenKore AI - AI Sidecar" "$sidecar_command")
     
     # Launch the terminal
-    if eval "$terminal_cmd" &>/dev/null &; then
+    eval "$terminal_cmd" &>/dev/null &
+    if [ $? -eq 0 ]; then
         print_success "AI Sidecar started in new terminal"
         return 0
     else
@@ -467,7 +468,8 @@ start_openkore() {
     terminal_cmd=$(get_terminal_command "$terminal" "OpenKore AI - Bot" "$openkore_command")
     
     # Launch the terminal
-    if eval "$terminal_cmd" &>/dev/null &; then
+    eval "$terminal_cmd" &>/dev/null &
+    if [ $? -eq 0 ]; then
         print_success "OpenKore started in new terminal"
         return 0
     else

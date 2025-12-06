@@ -104,7 +104,7 @@ timeOut(r_time, compare_time = NULL)
 			HV *hash;
 			SV **sv_time, **sv_timeout;
 
-			if (!r_time || !SvOK (r_time) || !SvTYPE (r_time) == SVt_PV)
+			if (!r_time || !SvOK (r_time) || !(SvTYPE (r_time) == SVt_PV))
 				XSRETURN_YES;
 			if (!(hash = (HV *) SvRV (r_time)))
 				XSRETURN_YES;

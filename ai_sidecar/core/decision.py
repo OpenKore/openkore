@@ -447,7 +447,10 @@ class ProgressionDecisionEngine(DecisionEngine):
         if not hasattr(self, '_environment_coordinator') or self._environment_coordinator is None:
             try:
                 from ai_sidecar.environment.coordinator import EnvironmentCoordinator
-                self._environment_coordinator = EnvironmentCoordinator()
+                from pathlib import Path
+                # Use default data directory
+                data_dir = Path(__file__).parent.parent / "data"
+                self._environment_coordinator = EnvironmentCoordinator(data_dir=data_dir)
             except ImportError:
                 logger.warning("EnvironmentCoordinator not available")
                 self._environment_coordinator = None

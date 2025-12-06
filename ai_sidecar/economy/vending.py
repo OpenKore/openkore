@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 import structlog
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from ai_sidecar.economy.core import MarketManager
 from ai_sidecar.economy.price_analysis import PriceAnalyzer
@@ -25,6 +25,8 @@ logger = structlog.get_logger(__name__)
 
 class VendingLocation(BaseModel):
     """Vending location data"""
+    model_config = ConfigDict(populate_by_name=True)  # Allow both map and map_name
+    
     map_name: str = Field(alias="map")
     x: int
     y: int
@@ -32,9 +34,6 @@ class VendingLocation(BaseModel):
     competition_count: int = 0
     avg_sales_per_hour: float = 0.0
     category_preference: List[str] = Field(default_factory=list)
-    
-    class Config:
-        populate_by_name = True  # Allow both map and map_name
 
 
 class VendingItem(BaseModel):
