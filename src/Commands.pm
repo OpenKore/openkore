@@ -28,6 +28,7 @@ use utf8;
 use Modules 'register';
 use Globals;
 use Log qw(message debug error warning);
+use Field;
 use Misc;
 use Network;
 use Network::Send ();
@@ -492,6 +493,10 @@ sub initHandlers {
 			["use", T("use the Guillotine Cross Poisonous Weapon Skill")],
 			[T("<poison #>"), T("Apply poison using an item from the 'poison' list")],
 			], \&cmdPoison],
+		['privateairship', [
+			T("Use the Private Airship service."),
+			[T("<map name> [<item ID>]"), T("request teleport to <map name> using the specified item (default: Passport ID 25464)")],
+			], \&cmdPrivateAirship],
 		['portals', [
 			T("List portals that are on screen."),
 			["", T("list portals that are on screen")],
@@ -4929,6 +4934,53 @@ sub cmdPortalList {
 		error T("Syntax Error in function 'portals' (List portals)\n" .
 			"Usage: portals or portals <recompile|add>\n");
 	}
+}
+
+sub cmdPrivateAirship {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my (undef, $args) = @_;
+	my ($map, $item_id) = parseArgs($args, 2);
+
+	if (!defined $map || $map eq '') {
+		error T("Syntax Error in function 'privateairship' (Use Private Airship)\n" .
+			"Usage: privateairship <map name> [<item ID>]\n");
+		return;
+	}
+	$item_id = '25464' if (!defined $item_id || $item_id eq '');
+	if ($item_id !~ /^\d+$/) {
+		error T("Item ID must be numeric for 'privateairship'.\n");
+		return;
+	}
+	if ($item_id != '25464') {
+		my $requested_item = itemNameSimple($item_id);
+		my $required_item = itemNameSimple('25464');
+		error TF("%s cannot be used for Private Airship. Please use %s.\n", $requested_item, $required_item);
+		return;
+	}
+	my $map_name = $map;
+	$map_name .= '.gat' unless $map_name =~ /\.gat$/i;
+	my $field_name = $map_name;
+	$field_name =~ s/\.gat$//i;
+	unless (defined $maps_lut{"$field_name.rsw"}) {
+		error TF("Map '%s' does not exist for Private Airship.\n", $map_name);
+		return;
+	}
+	if (length($map_name) > 16) {
+		error TF("Map name '%s' is too long for Private Airship (maximum 16 characters including extension).\n", $map_name);
+		return;
+	}
+	my $item = $char->inventory->getByNameID($item_id);
+	unless ($item && $item->{amount}) {
+		error TF("You do not have %s required for Private Airship.\n", itemNameSimple($item_id));
+		return;
+	}
+	$char->{last_private_airship_item} = $item_id + 0;
+	$char->{last_private_airship_map} = $map_name;
+	$messageSender->sendPrivateAirshipRequest($map_name, $item_id + 0);
+	message TF("Requested Private Airship to %s using %s.\n", $map_name, itemNameSimple($item_id)), "info";
 }
 
 sub cmdPrivateMessage {
