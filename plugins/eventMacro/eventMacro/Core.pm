@@ -27,8 +27,9 @@ sub new {
 	$self->{Condition_Modules_Loaded} = {};
 	$self->{automacros_index_to_AI_check_state} = {};
 
-	$self->{Event_Related_Hooks} = {};
-	$self->{Hook_Handles} = {};
+        $self->{Event_Related_Hooks} = {};
+        $self->{Hook_Handles} = {};
+        $self->{Log_Hook_Handles} = {};
 
 	$self->{Event_Related_Static_Variables} = {};
 
@@ -81,6 +82,35 @@ sub new {
 	return $self;
 }
 
+sub get_log_hook_sub {
+        my ($self) = @_;
+
+        return $self->{Log_Event_Sub} if (exists $self->{Log_Event_Sub});
+
+        $self->{Log_Event_Sub} = sub {
+                my ($type, $domain, $level, $currentVerbosity, $message, $user_data, $near, $far) = @_;
+                return if (defined $domain && $domain eq 'eventMacro');
+                return if (defined $level && defined $currentVerbosity && $level > $currentVerbosity);
+                $message =~ s/[\r\n]+$//;
+
+                my $args = {
+                        type => $type,
+                        domain => $domain,
+                        level => $level,
+                        currentVerbosity => $currentVerbosity,
+                        message => $message,
+                        user_data => $user_data,
+                        near => $near,
+                        far => $far,
+                };
+
+                my $check_list_hash = $self->{Event_Related_Hooks}{log};
+                $self->manage_event_callbacks('hook', 'log', $args, $check_list_hash);
+        };
+
+        return $self->{Log_Event_Sub};
+}
+
 sub adapt_to_AI_state {
 	my ($self, $state) = @_;
 
@@ -113,8 +143,9 @@ sub unload {
 }
 
 sub clean_hooks {
-	my ($self) = @_;
-	foreach (values %{$self->{Hook_Handles}}) {Plugins::delHook($_)}
+        my ($self) = @_;
+        foreach (values %{$self->{Hook_Handles}}) {Plugins::delHook($_)}
+        foreach (values %{$self->{Log_Hook_Handles}}) {Log::delHook($_)}
 }
 
 sub set_automacro_checking_status {
@@ -509,16 +540,19 @@ sub create_callbacks {
 		}
 
 	}
-
-	my $event_sub = sub {
-		my $name = shift;
-		my $args = shift;
-		my $check_list_hash = $self->{Event_Related_Hooks}{$name};
-		$self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
-	};
-	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
-		$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
-	}
+        my $event_sub = sub {
+                my $name = shift;
+                my $args = shift;
+                my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+                $self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
+        };
+        foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
+                if ($hook_name eq 'log') {
+                        $self->{Log_Hook_Handles}{$hook_name} = Log::addHook( $self->get_log_hook_sub );
+                } else {
+                        $self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
+                }
+        }
 }
 
 sub manage_nested_automacro_var {
@@ -1418,7 +1452,7 @@ sub manage_event_callbacks {
 
 		my $automacro = $self->{Automacro_List}->get($event_type_automacro_call_index);
 
-		message "[eventMacro] Event of type '".$callback_type."', and of name '".$callback_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
+                message "[eventMacro] Event of type '".$callback_type."', and of name '".$callback_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "eventMacro";
 
 		$self->call_macro($automacro);
 	}
@@ -1426,49 +1460,58 @@ sub manage_event_callbacks {
 
 # For '$add_or_delete' value '0' is for delete and '1' is for add.
 sub manage_dynamic_hook_add_and_delete {
-	my ($self, $hook_name, $automacro_index, $condition_index, $add_or_delete) = @_;
+        my ($self, $hook_name, $automacro_index, $condition_index, $add_or_delete) = @_;
 
-	my $automacro = $self->{Automacro_List}->get($automacro_index);
+        my $automacro = $self->{Automacro_List}->get($automacro_index);
 
-	my $condition = $automacro->{conditionList}->get($condition_index);
+        my $condition = $automacro->{conditionList}->get($condition_index);
 
-	if ($add_or_delete == 1) {
-		if (exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
-			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to add hook '".$hook_name."' to callbacks but it already is in it.\n";
-			return;
-		}
+        if ($add_or_delete == 1) {
+                if (exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
+                        error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to add hook '".$hook_name."' to callbacks but it already is in it.\n";
+                        return;
+                }
 
-		debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' added hook '".$hook_name."' to callbacks.\n", "eventMacro", 3;
-		$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
+                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' added hook '".$hook_name."' to callbacks.\n", "eventMacro", 3;
+                $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
 
-		unless (exists $self->{Hook_Handles}{$hook_name}) {
-			my $event_sub = sub {
-				my $name = shift;
-				my $args = shift;
-				my $check_list_hash = $self->{Event_Related_Hooks}{$name};
-				$self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
-			};
-			$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
-		}
+                unless (exists $self->{Hook_Handles}{$hook_name} || exists $self->{Log_Hook_Handles}{$hook_name}) {
+                        if ($hook_name eq 'log') {
+                                $self->{Log_Hook_Handles}{$hook_name} = Log::addHook( $self->get_log_hook_sub );
+                        } else {
+                                my $event_sub = sub {
+                                        my $name = shift;
+                                        my $args = shift;
+                                        my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+                                        $self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
+                                };
+                                $self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
+                        }
+                }
 
-	} else {
-		if (!exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
-			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delete hook '".$hook_name."' from callbacks but it isn't in it.\n";
-			return;
-		}
+        } else {
+                if (!exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
+                        error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delete hook '".$hook_name."' from callbacks but it isn't in it.\n";
+                        return;
+                }
 
-		debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' deleted hook '".$hook_name."' from callbacks.\n", "eventMacro", 3;
-		delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index};
+                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' deleted hook '".$hook_name."' from callbacks.\n", "eventMacro", 3;
+                delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index};
 
-		unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}}) {
-			delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index};
-			unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}}) {
-				delete $self->{Event_Related_Hooks}{$hook_name};
-				Plugins::delHook($self->{Hook_Handles}{$hook_name});
-				delete $self->{Hook_Handles}{$hook_name};
-			}
-		}
-	}
+                unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}}) {
+                        delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index};
+                        unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}}) {
+                                delete $self->{Event_Related_Hooks}{$hook_name};
+                                if ($hook_name eq 'log') {
+                                        Log::delHook($self->{Log_Hook_Handles}{$hook_name});
+                                        delete $self->{Log_Hook_Handles}{$hook_name};
+                                } else {
+                                        Plugins::delHook($self->{Hook_Handles}{$hook_name});
+                                        delete $self->{Hook_Handles}{$hook_name};
+                                }
+                        }
+                }
+        }
 }
 
 sub AI_start_checker {

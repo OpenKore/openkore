@@ -54,11 +54,12 @@ our %parameters = (
 );
 
 our $macroKeywords = join '|', qw(
-	arg listlength
-	cartamount cart Cart
-	config
-	defined
-	eval
+        arg listlength
+        cartamount cart Cart
+        itemCard itemCardAmount itemOption itemOptAmount
+        config
+        defined
+        eval
 	exists
 	delete
 	invamount inventory Inventory InventoryType

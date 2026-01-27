@@ -6,13 +6,15 @@ use strict;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
-	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getInventoryTypeIDs getStorageIDs getSoldOut getInventoryAmount
-	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
-	getStorageAmountbyID getCartAmountbyID getQuestStatus get_pattern find_hash_and_get_keys find_hash_and_get_values);
+        getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getInventoryTypeIDs getStorageIDs getSoldOut getInventoryAmount
+        getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
+        getWord call_macro getArgFromList sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
+        getStorageAmountbyID getCartAmountbyID getQuestStatus get_pattern find_hash_and_get_keys find_hash_and_get_values
+        getEquipProperty getEquipCards getEquipCardAmount getEquipOptions getEquipOptionsAmount getEquipRefinement);
 
 use Utils;
 use Globals;
+use Misc qw(cardName);
 use AI;
 use Log qw(message error warning debug);
 use Utils qw(parseArgs);
@@ -414,15 +416,142 @@ sub getStorageAmount {
 # get amount of an item in storage by its ID
 # returns -1 if the storage is closed
 sub getStorageAmountbyID {
-	my $ID = $_[0];
-	return -1 unless ($char->storage->wasOpenedThisSession());
-	my $amount = 0;
-	foreach my $item (@{$char->storage->getItems}) {
-		if ($item->{nameID} == $ID) {
-			$amount += $item->{amount};
-		}
-	}
-	return $amount
+        my $ID = $_[0];
+        return -1 unless ($char->storage->wasOpenedThisSession());
+        my $amount = 0;
+        foreach my $item (@{$char->storage->getItems}) {
+                if ($item->{nameID} == $ID) {
+                        $amount += $item->{amount};
+                }
+        }
+        return $amount
+}
+
+sub get_equipped_item_by_bin_id {
+        my $identifier = $_[0];
+        return unless defined $identifier;
+        return unless $char->inventory->isReady();
+
+        my $item;
+        my $is_numeric = $identifier =~ /^\s*(\d+)\s*$/;
+        my $id = $1 if $is_numeric;
+
+        if ($is_numeric) {
+                $item = $char->inventory->getByNameID($id);
+                $item ||= $char->inventory->get($id);
+        } else {
+                $item = $char->inventory->getByName($identifier);
+        }
+
+        my $matched_item = $item if $item && $item->{equipped};
+
+        foreach my $equipped_item (@{$char->inventory->getItems}) {
+                next unless $equipped_item->{equipped};
+                if ($is_numeric && $equipped_item->{nameID} == $id) {
+                        $matched_item = $equipped_item;
+                        last;
+                } elsif (!$is_numeric && lc($equipped_item->{name}) eq lc($identifier)) {
+                        $matched_item = $equipped_item;
+                        last;
+                }
+        }
+
+        # If nothing equipped was found, fall back to the first matching item (even if unequipped)
+        return $matched_item || $item;
+}
+
+sub _split_cards_and_enchants {
+        my $item = shift;
+        return ([], []) unless $item;
+
+        my @cards = grep { $_ } unpack 'v*', $item->{cards} || '';
+        return ([], []) unless @cards;
+
+        # Strip sentinel entries such as element markers or zeroed options that
+        # do not represent real cards.
+        if ($cards[0] == 255 && @cards >= 2) {
+                splice @cards, 0, 2;
+        }
+        @cards = grep { $_ != 65280 } @cards;
+
+        my @card_names = map { cardName($_) } @cards;
+
+        my @options_like = grep { $_ !~ /carta/i } @card_names;
+        my @real_cards   = grep { $_ =~ /carta/i } @card_names;
+
+        return (\@real_cards, \@options_like);
+}
+
+sub getEquipProperty {
+        my $item = get_equipped_item_by_bin_id($_[0]);
+        return 0 unless $item;
+
+        my $element_id;
+
+        $element_id = $item->{attribute} if defined $item->{attribute};
+
+        if (!defined $element_id) {
+                my @cards = unpack 'v*', $item->{cards} || '';
+                if (@cards && $cards[0] == 255) {
+                        $element_id = $cards[1] % 10;
+                }
+        }
+
+        return 0 unless defined $element_id;
+
+        return $elements_lut{$element_id} || 0;
+}
+
+sub getEquipCards {
+        my $item = get_equipped_item_by_bin_id($_[0]);
+        return 0 unless $item;
+
+        my ($cards, undef) = _split_cards_and_enchants($item);
+        return @$cards ? join(',', @$cards) : 0;
+}
+
+sub getEquipCardAmount {
+        my $item = get_equipped_item_by_bin_id($_[0]);
+        return 0 unless $item;
+
+        my ($cards, undef) = _split_cards_and_enchants($item);
+        return scalar @$cards;
+}
+
+sub getEquipOptions {
+        my $item = get_equipped_item_by_bin_id($_[0]);
+        return 0 unless $item;
+
+        my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_; { type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+        my ($cards, $card_options) = _split_cards_and_enchants($item);
+
+        my @option_names = @$card_options;
+        foreach my $option (@options) {
+                if ($itemOptionHandle{$option->{type}} && $itemOption_lut{$itemOptionHandle{$option->{type}}}) {
+                        push @option_names, sprintf($itemOption_lut{$itemOptionHandle{$option->{type}}}, $option->{value});
+                } else {
+                        push @option_names, sprintf('Option (%d, %d, %d)', $option->{type}, $option->{value}, $option->{param});
+                }
+        }
+
+        return @option_names ? join(',', @option_names) : 0;
+}
+
+sub getEquipOptionsAmount {
+        my $item = get_equipped_item_by_bin_id($_[0]);
+        return 0 unless $item;
+
+        my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_; { type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+        my (undef, $card_options) = _split_cards_and_enchants($item);
+
+        return scalar(@options) + scalar(@$card_options);
+}
+
+sub getEquipRefinement {
+        my $item = get_equipped_item_by_bin_id($_[0]);
+        return 0 unless $item;
+
+        return $item->{upgrade} || 0;
 }
 
 # get amount of items for the specifical index in another venders shop
