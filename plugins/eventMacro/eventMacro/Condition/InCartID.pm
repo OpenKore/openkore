@@ -6,24 +6,43 @@ use base 'eventMacro::Condition::Base::InCart';
 use eventMacro::Utilities qw( getCartAmountbyID );
 
 sub _parse_syntax {
-	my ( $self, $condition_code ) = @_;
-	
-	$self->{wanted} = undef;
-	
-	if ($condition_code =~ /^(\d+)\s+(\S.*)$/) {
-		$self->{wanted} = $1;
-		$condition_code = $2;
-	} else {
-		$self->{error} = "Item ID must and a numeric comparison must be given";
-		return 0;
-	}
-	
-	$self->SUPER::_parse_syntax($condition_code);
+my ( $self, $condition_code ) = @_;
+
+$self->{member_list} = [];
+my $error_message = "Item ID must and a numeric comparison must be given";
+
+foreach my $member (split(/\s*,\s*/, $condition_code)) {
+next if ($member eq '');
+if ($member =~ /^(\d+)\s+(\S.*)$/) {
+my ($wanted, $comparison) = ($1, $2);
+my $validator = eventMacro::Validator::NumericComparison->new($comparison);
+
+if (defined $validator->error) {
+$self->{error} = $validator->error;
+return 0;
+}
+
+push ( @{ $self->{variables} }, @{$validator->variables} );
+push ( @{ $self->{member_list} }, { wanted => $wanted, validator => $validator } );
+} else {
+$self->{error} = $error_message;
+return 0;
+}
+}
+
+unless (@{ $self->{member_list} }) {
+$self->{error} = $error_message;
+return 0;
+}
+
+$self->{wanted} = $self->{member_list}[0]{wanted};
+$self->SUPER::_parse_syntax($condition_code);
 }
 
 sub _get_val {
-	my ( $self ) = @_;
-	getCartAmountbyID($self->{wanted});
+my ( $self, $wanted ) = @_;
+$wanted ||= $self->{wanted};
+getCartAmountbyID($wanted);
 }
 
 1;
