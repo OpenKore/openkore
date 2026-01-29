@@ -3807,19 +3807,224 @@ sub processDcOnPlayer {
 }
 
 ##### REPAIR AUTO #####
+sub repairAutoBrokenItems {
+    return [] unless $config{'repairAuto'};
+
+    my @broken;
+    for my $item (@{$char->inventory}) {
+        next unless $item->{broken};
+        my $name = itemNameSimple($item->{nameID});
+        next if ($config{'repairAuto_list'}
+                && !existsInList($config{'repairAuto_list'}, $name)
+                && !existsInList($config{'repairAuto_list'}, $item->{nameID}));
+
+        push @broken, $item;
+    }
+
+    return \@broken;
+}
+
+sub repairAutoEquipAfter {
+    my ($args) = @_;
+
+    return 1 unless ($config{repairAuto_equipAfter} && $args->{repairTargets});
+
+    $args->{equipQueue} ||= [@{$args->{repairTargets}}];
+
+    # Let pending equip requests finish before sending another.
+    return 0 if ($ai_v{temp}{waitForEquip});
+
+    while (my $itemID = shift @{$args->{equipQueue}}) {
+        my $item = $char->inventory->getByID($itemID);
+        next unless $item && $item->equippable;
+        next if $item->{broken} || $item->{equipped};
+
+        $item->equip;
+        return 0;
+    }
+
+    delete $args->{equipQueue};
+    $args->{equippedAfterRepair} = 1;
+    return 1;
+}
+
+sub repairAutoSkillHandle {
+    foreach my $handle (qw(NC_REPAIR BS_REPAIRWEAPON ABR_NET_REPAIR)) {
+        return $handle if ($char->{skills}{$handle}{lv});
+    }
+    return;
+}
+	
 sub processRepairAuto {
-	if ($config{'repairAuto'} && $conState == 5 && timeOut($timeout{ai_repair}) && $repairList) {
-		my $name;
-		foreach my $repairListItem (@{$repairList}) {
-			next if (!$repairListItem);
-			$name = itemNameSimple($repairListItem->{nameID});
-			if (existsInList($config{'repairAuto_list'}, $name) || !$config{'repairAuto_list'}) {
-				$messageSender->sendRepairItem($repairListItem);
-				$timeout{ai_repair}{time} = time;
-				return;
-			}
-		}
-	}
+	return if ($net->getState() != Network::IN_GAME);
+	
+	if ($config{repairAuto_inTownOnly} && !$field->isCity) {
+        AI::dequeue if (AI::action eq "repairAuto");
+        return;
+    }
+
+    my $brokenItems = repairAutoBrokenItems();
+
+    if ($config{'repairAuto'}
+            && @$brokenItems
+            && !AI::inQueue("storageAuto", "buyAuto", "sellAuto", "repairAuto")
+            && !$ai_v{sitAuto_forcedBySitCommand}
+            && !AI::is("repairAuto")) {
+        $timeout{ai_repair}{time} = time;
+        AI::queue("repairAuto", {useSkill => $config{'repairAuto_useSkill'}, repairTargets => [map { $_->{ID} } @$brokenItems]});
+    }
+
+    if (AI::action eq "repairAuto" && AI::args->{done}) {
+        AI::dequeue;
+        return;
+    }
+
+    if (AI::action eq "repairAuto" && timeOut($timeout{ai_repair})) {
+        my $args = AI::args;
+        $args->{useSkill} = $config{'repairAuto_useSkill'};
+
+        if (!@$brokenItems) {
+			return unless ($args->{equippedAfterRepair} || repairAutoEquipAfter($args));
+            $args->{done} = 1;
+            return;
+        }
+
+        if ($args->{useSkill}) {
+            my $handle = repairAutoSkillHandle();
+            unless ($handle) {
+                error T("Unable to auto repair: no repair skill available.\n");
+                $args->{done} = 1;
+                return;
+            }
+
+            if (!$repairList && !$args->{waitingForList}) {
+                my $level = $char->{skills}{$handle}{lv};
+                ai_skillUse($handle, $level, 0, 0, $accountID);
+                $args->{waitingForList} = 1;
+                $timeout{ai_repair}{time} = time;
+                return;
+            }
+        } else {
+            unless ($config{'repairAuto_npc'}) {
+                error T("Unable to auto repair: repairAuto_npc not configured.\n");
+                $args->{done} = 1;
+                return;
+            }
+
+            $args->{npc} = {} unless $args->{npc};
+            my $destination = $config{repairAuto_standpoint} || $config{repairAuto_npc};
+            getNPCInfo($destination, $args->{npc});
+            if (!defined($args->{npc}{ok})) {
+                $args->{done} = 1;
+                return;
+            }
+
+            if (!$args->{distance}) {
+                if ($config{'repairAuto_standpoint'}) {
+                    $args->{distance} = 1;
+                } elsif ($config{'repairAuto_maxDistance'} && $config{'repairAuto_distance'}) {
+                    $args->{distance} = $config{'repairAuto_distance'} + round(rand($config{'repairAuto_maxDistance'} - $config{'repairAuto_distance'}));
+                } else {
+                    $args->{distance} = $config{'repairAuto_distance'} || 3;
+                }
+            }
+
+            undef $ai_v{temp}{do_route};
+            if ($field->baseName ne $args->{npc}{map}) {
+                $ai_v{temp}{do_route} = 1;
+            } else {
+                my $found;
+                foreach my $actor (@{$npcsList->getItems()}) {
+                    my $pos = $actor->{pos};
+                    next if ($actor->{statuses}->{EFFECTSTATE_BURROW});
+                    if ($pos->{x} == $args->{npc}{pos}{x} && $pos->{y} == $args->{npc}{pos}{y}) {
+                        if (defined $actor->{name}) {
+                            $found = 1;
+                            last;
+                        }
+                    }
+                }
+                unless ($found) {
+                    $ai_v{temp}{distance} = blockDistance($args->{npc}{pos}, $chars[$config{'char'}]{pos_to});
+                    if ($ai_v{temp}{distance} > $args->{distance} && !defined($args->{sentRepair})) {
+                        $ai_v{temp}{do_route} = 1;
+                    }
+                }
+            }
+
+            if ($ai_v{temp}{do_route}) {
+                if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
+                    undef $args->{warpedToSave};
+                }
+
+                if ($config{'saveMap'} ne "" && $config{'repairAuto_warp'} && !$args->{warpedToSave}
+                    && !$field->isCity && $config{'saveMap'} ne $field->baseName) {
+                    if ($char->{sitting}) {
+                        message T("Standing up to auto-repair\n"), "teleport";
+                        ai_setSuspend(0);
+                        stand();
+                    } else {
+                        $args->{warpedToSave} = 1;
+                        $args->{warpStart} = time unless $args->{warpStart};
+                        message T("Teleporting to auto-repair\n"), "teleport";
+                        ai_useTeleport(2);
+                    }
+                    $timeout{ai_repair}{time} = time;
+                } else {
+                    ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+                            attackOnRoute => 1,
+                            distFromGoal => $args->{distance},
+                            noSitAuto => 1);
+                    $timeout{ai_repair}{time} = time;
+                }
+            } else {
+                if (!exists $args->{sentNpcTalk}) {
+                    my $realpos = {};
+                    getNPCInfo($config{"repairAuto_npc"}, $realpos);
+
+                    ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{repairAuto_npc_steps});
+
+                    $args->{sentNpcTalk} = 1;
+                    $args->{sentNpcTalk_time} = time;
+                    $timeout{ai_repair}{time} = time;
+                    return;
+
+                } elsif (!$repairList) {
+                    if (timeOut($args->{sentNpcTalk_time}, 20)) {
+                        $args->{error} = 'Npc did not respond';
+                        $args->{done} = 1;
+                    }
+                    return;
+                }
+            }
+        }
+
+        if ($repairList) {
+            $args->{waitingForList} = 0;
+            $args->{repairing} = 1;
+        } elsif ($args->{repairing} && !$repairList) {
+            if (@$brokenItems) {
+                delete @{$args}{qw(sentNpcTalk sentNpcTalk_time repairing sentRepair waitingForList distance)};
+                $timeout{ai_repair}{time} = time;
+            } else {
+				return unless ($args->{equippedAfterRepair} || repairAutoEquipAfter($args));
+                $args->{done} = 1;
+            }
+        }
+    }
+
+    if ($config{'repairAuto'} && $conState == 5 && timeOut($timeout{ai_repair}) && $repairList) {
+        my $name;
+        foreach my $repairListItem (@{$repairList}) {
+            next if (!$repairListItem);
+            $name = itemNameSimple($repairListItem->{nameID});
+            if (existsInList($config{'repairAuto_list'}, $name) || !$config{'repairAuto_list'}) {
+                $messageSender->sendRepairItem($repairListItem);
+                $timeout{ai_repair}{time} = time;
+                return;
+            }
+        }
+    }
 }
 
 sub processSendIgnoreAll {
