@@ -724,8 +724,8 @@ sub loadByName {
 	$self->{baseName} = $baseName;
 	my $file = $self->sourceName . ".fld2";
 
-	if ($Settings::fields_folder) {
-		$file = File::Spec->catfile($Settings::fields_folder, $file);
+	if (Settings::getFieldsFolders()) {
+		$file = File::Spec->catfile(File::Spec->splitdir(Settings::getFieldsFolders()), $file);
 	}
 	if (! -f $file) {
 		$file .= ".gz";
