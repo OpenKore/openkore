@@ -207,6 +207,7 @@ itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeGreed 0
 itemsCheckWeight 1
+itemShowOption 0
 
 lockMap
 lockMap_x

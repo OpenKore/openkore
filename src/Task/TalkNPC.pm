@@ -618,7 +618,7 @@ sub iterate {
 
 		# Send NPC talk text.
 		} elsif ($current_talk_step eq 'text') {
-			if ( $step =~ /^t=(.*)/i ) {
+			if ( $step =~ /^t="(.*)"$/i ) {
 				my $text = $1;
 				debug "$self->{target}: Sending the text: $text\n", "ai_npcTalk";
 				$messageSender->sendTalkText($talk{ID}, $text);
