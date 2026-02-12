@@ -26,6 +26,7 @@ use Exporter;
 use base qw(Exporter);
 use Encode qw(encode decode);
 use Encode::Alias qw(define_alias);
+use Plugins;
 
 our @EXPORT_OK = qw(bytesToString stringToBytes stringToUTF8 UTF8ToString isUTF8);
 
@@ -58,7 +59,9 @@ define_alias("Arabic"				=> "cp1256");
 #
 # This symbol is exportable.
 sub bytesToString {
-	return decode($masterServer->{serverEncoding} || "Western", $_[0]);
+	my $string = decode($masterServer->{serverEncoding} || "Western", $_[0]);
+	Plugins::callHook('bytesToString', { string => \$string });
+	return $string;
 }
 
 ##
