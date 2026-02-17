@@ -1,0 +1,10 @@
+{
+  "demo1234": {
+    "name": "farm-prontera",
+    "xkore_mode": "0",
+    "working_dir": "/workspace/openkore-neon",
+    "bot_command": "perl openkore.pl --control control",
+    "poseidon_command": "perl poseidon.pl",
+    "created_at": 1736000000
+  }
+}

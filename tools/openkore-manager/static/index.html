@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenKore Neon Manager</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="hero">
+        <h1>OpenKore Neon Manager</h1>
+        <p>Painel local para operar múltiplas instâncias e serviços Poseidon (foco em XKore 0).</p>
+      </header>
+
+      <section class="card">
+        <h2>Nova instância</h2>
+        <form id="create-form" class="grid">
+          <input name="name" placeholder="Nome da instância" required />
+          <input name="working_dir" placeholder="Diretório de trabalho (ex.: /workspace/openkore-neon)" required />
+          <input name="bot_command" placeholder="Comando bot (ex.: perl openkore.pl --control control)" />
+          <input name="poseidon_command" placeholder="Comando poseidon (ex.: perl poseidon.pl)" />
+          <select name="xkore_mode">
+            <option value="0" selected>XKore 0</option>
+            <option value="1">XKore 1</option>
+            <option value="2">XKore 2</option>
+          </select>
+          <button type="submit">Criar instância</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="row">
+          <h2>Instâncias</h2>
+          <button id="refresh">Atualizar</button>
+        </div>
+        <div id="instances"></div>
+      </section>
+    </main>
+
+    <template id="instance-template">
+      <article class="instance">
+        <div class="row">
+          <div>
+            <h3 class="name"></h3>
+            <p class="meta"></p>
+          </div>
+          <span class="pill"></span>
+        </div>
+        <div class="actions">
+          <button data-action="start-bot">Iniciar Bot</button>
+          <button data-action="stop-bot">Parar Bot</button>
+          <button data-action="restart-bot">Reiniciar Bot</button>
+          <button data-action="start-poseidon">Iniciar Poseidon</button>
+          <button data-action="stop-poseidon">Parar Poseidon</button>
+          <button data-action="restart-poseidon">Reiniciar Poseidon</button>
+          <button data-action="clone">Clonar</button>
+          <button data-action="logs">Ver logs</button>
+        </div>
+        <pre class="logs hidden"></pre>
+      </article>
+    </template>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
