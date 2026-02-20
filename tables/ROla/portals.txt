@@ -2136,9 +2136,11 @@ yuno_fild09 20 193 yuno_fild08 372 194
 yuno_fild11 368 361 yuno_fild12 27 336
 yuno_fild11 28 266 ein_fild07 378 264
 yuno_fild11 91 372 yuno_fild07 92 31
+yuno_fild11 364 218 yuno_fild12 26 230
 yuno_fild11 368 361 yuno_fild12 25 338
 yuno_fild12 193 372 yuno_fild08 134 33
 yuno_fild12 23 339 yuno_fild11 364 356
+yuno_fild12 23 226 yuno_fild11 364 218
 yuno_fild12 369 244 yuno_fild01 27 247
 yuno_fild12 23 338 yuno_fild11 366 361
 yuno_in01 32 36 yuno 196 138
@@ -4379,7 +4381,9 @@ malangdo 218 81 lasagna 206 297 2000 c c r0 n
 malangdo 219 86 alberta 192 150 1000 c c r1 n
 malangdo 219 86 izlude 86 159 1000 c c r0 n
 
-# Zonda Staff ******X Y Provisório******
+# Zonda Staff *X Y de destino provisório (pode levar a uma coordenada diferente/can lead to a different coordinate)*
+# Funciona apenas quando o personagem já tem acesso aos mapas de destino (Precisam de quest). 
+# Works only when the character already has access to the destination maps (quests required).
 alberta 35 239 bif_fild02 291 232 15000 c r0 c r0 n
 alberta 35 239 eclage 100 28 17000 c r1 c r0 n
 alberta 35 239 splendide 271 386 17000 c r2 c r0 n
