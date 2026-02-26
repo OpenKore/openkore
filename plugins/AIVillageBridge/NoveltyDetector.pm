@@ -175,6 +175,7 @@ sub analyze {
         elsif ($action_type eq 'flee') {
             debug("[AIVillageBridge::NoveltyDetector] Ruleset flee: $event_type\n");
             $self->{metrics}{events_flee}++;
+            $self->{metrics}{events_escalated}++;
             return { action => 'flee' };
         }
     }

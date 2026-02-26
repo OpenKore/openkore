@@ -39,8 +39,8 @@ my $buffer_size      = $ENV{AIVILLAGE_BUFFER_SIZE}      || $config{aiVillageBuff
 my $item_threshold   = $ENV{AIVILLAGE_ITEM_THRESHOLD}   || $config{aiVillageItemThreshold}  || 100;
 my $player_familiar  = $ENV{AIVILLAGE_PLAYER_FAMILIAR}  || $config{aiVillagePlayerFamiliar} || 5;
 my $monster_familiar = $ENV{AIVILLAGE_MONSTER_FAMILIAR} || $config{aiVillageMonsterFamiliar}|| 10;
-my $danger_hp_pct  = $ENV{AIVILLAGE_DANGER_HP_PCT}  || $config{aiVillageDangerHpPct}  || 25;
-my $idle_timeout   = $ENV{AIVILLAGE_IDLE_TIMEOUT}   || $config{aiVillageIdleTimeout}  || 300;
+my $danger_hp_pct  = $ENV{AIVILLAGE_DANGER_HP_PCT}  // $config{aiVillageDangerHpPct}  // 25;
+my $idle_timeout   = $ENV{AIVILLAGE_IDLE_TIMEOUT}   // $config{aiVillageIdleTimeout}  // 300;
 my $control_dir = 'control/ai-village';
 
 # ---------------------------------------------------------------------------
@@ -346,7 +346,7 @@ sub onAIPre {
         $executor->process_queue() if $executor;
 
         # HP danger detection
-        if ($char && $char->{hp_max} && $char->{hp_max} > 0) {
+        if ($char && defined $char->{hp} && $char->{hp_max} && $char->{hp_max} > 0) {
             my $hp_pct = ($char->{hp} / $char->{hp_max}) * 100;
             if ($hp_pct <= $danger_hp_pct && !$danger_reported) {
                 $danger_reported = 1;
@@ -397,7 +397,10 @@ sub onMainLoopPost {
             my $overflow = $filter->get_overflow_events(5);
             for my $ev (@$overflow) {
                 my $msg = $proto->build_event($ev->{event_type}, $ev->{priority}, $ev->{data});
-                $conn->send_message($msg) if $msg;
+                if ($msg) {
+                    $conn->send_message($msg);
+                    $last_significant_event = time();
+                }
             }
         }
 

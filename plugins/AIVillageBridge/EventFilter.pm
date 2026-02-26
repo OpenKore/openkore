@@ -62,6 +62,7 @@ sub new {
             events_critical_bypass     => 0,
             overflow_drained           => 0,
             overflow_expired           => 0,
+            overflow_dropped           => 0,
         },
     }, $class;
 
@@ -259,6 +260,7 @@ sub _enqueue_overflow {
         # Trim excess from the tail (lowest priority)
         my $dropped = scalar(@{$self->{overflow}}) - 100;
         splice @{$self->{overflow}}, 100;
+        $self->{metrics}{overflow_dropped} += $dropped;
         warning("[AIVillageBridge::EventFilter] Overflow queue full: dropped $dropped low-priority events\n");
     }
 }
