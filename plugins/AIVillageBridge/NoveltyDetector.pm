@@ -77,6 +77,47 @@ sub analyze {
     }
 
     # ------------------------------------------------------------------
+    # Step 1b: Chat-response patterns (pub_msg / priv_msg only)
+    # If a pattern matches, return a local 'say' command so the bot responds
+    # without escalating to the sidecar.
+    # ------------------------------------------------------------------
+    if ($event_type eq 'pub_msg' || $event_type eq 'priv_msg') {
+        my $patterns = $self->{chat_resp_patterns} // [];
+        my $msg_text = $data->{msg} // $data->{message} // '';
+        my $sender   = $data->{user} // '';
+
+        for my $p (@$patterns) {
+            next unless defined $p->{pattern} && length($p->{pattern});
+            next unless defined $p->{response} && length($p->{response});
+
+            # Type filter: 'pub' matches pub_msg, 'priv' matches priv_msg
+            my $pat_type = $p->{type} // 'pub';
+            next if $pat_type eq 'pub'  && $event_type ne 'pub_msg';
+            next if $pat_type eq 'priv' && $event_type ne 'priv_msg';
+
+            # Optional sender filter
+            if (length($p->{from} // '')) {
+                next unless $sender eq $p->{from};
+            }
+
+            my $matched = 0;
+            eval { $matched = 1 if $msg_text =~ /$p->{pattern}/i };
+            # Ignore regex compile errors silently
+            next unless $matched;
+
+            debug("[AIVillageBridge::NoveltyDetector] chat_resp match: pattern=$p->{pattern}\n");
+            return {
+                action  => 'local',
+                command => {
+                    type    => 'command',
+                    command => 'say',
+                    params  => { message => $p->{response} },
+                },
+            };
+        }
+    }
+
+    # ------------------------------------------------------------------
     # Step 2: Ruleset match
     # ------------------------------------------------------------------
     my $rules = $self->{ruleset}{rules} // [];
@@ -132,7 +173,7 @@ sub analyze {
             }
         }
         elsif ($event_type eq 'player_exist') {
-            my $player = $data->{user} // $data->{player} // '';
+            my $player = $data->{name} // '';
             if ($player && !exists $self->{seen_players}{$player}) {
                 debug("[AIVillageBridge::NoveltyDetector] First sighting of player $player: send\n");
                 $self->_init_player($player, $now);
@@ -175,7 +216,7 @@ sub analyze {
             }
         }
         elsif ($event_type eq 'player_exist') {
-            my $player = $data->{user} // $data->{player} // '';
+            my $player = $data->{name} // '';
             if ($player && exists $self->{seen_players}{$player}) {
                 if ($self->{seen_players}{$player}{count} <= $self->{player_familiar_threshold}) {
                     debug("[AIVillageBridge::NoveltyDetector] Unfamiliar player_exist $player: send\n");

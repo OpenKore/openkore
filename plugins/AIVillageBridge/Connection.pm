@@ -126,6 +126,7 @@ sub disconnect {
     my $prev_state = $self->{state};
     $self->{state}            = 'disconnected';
     $self->{recv_buf}         = '';
+    $self->{send_buf}         = '';
     $self->{handshake_pending} = 0;
 
     message "[AIVillageBridge::Connection] Disconnected: $reason\n";
@@ -330,7 +331,7 @@ sub _process_line {
     if ($type eq 'ping') {
         # Reply with pong and record timestamp
         $self->{last_ping_time} = time();
-        $self->send_message({ type => 'pong' });
+        $self->send_message({ type => 'pong', ts => $msg->{ts} });
         debug "[AIVillageBridge::Connection] Received ping; sent pong\n";
         return;
     }

@@ -153,11 +153,21 @@ sub cleanup_cache {
     }
 }
 
-# get_overflow_events() -> arrayref of event hashrefs
-# Drains and returns all queued overflow events for the caller to process.
+# get_overflow_events([$limit]) -> arrayref of event hashrefs
+# Drains and returns queued overflow events for the caller to process.
+# If $limit is provided, returns at most $limit events and keeps the rest queued.
 # Call periodically from the main plugin loop.
 sub get_overflow_events {
-    my ($self) = @_;
+    my ($self, $limit) = @_;
+
+    return [] unless @{$self->{overflow}};
+
+    if (defined $limit && $limit > 0 && scalar @{$self->{overflow}} > $limit) {
+        my @batch = splice(@{$self->{overflow}}, 0, $limit);
+        debug("[AIVillageBridge::EventFilter] Partial drain: returning $limit of "
+            . (scalar(@batch) + scalar @{$self->{overflow}}) . " overflow events\n");
+        return \@batch;
+    }
 
     my $events = $self->{overflow};
     $self->{overflow} = [];

@@ -213,6 +213,7 @@ sub _cmd_move {
         $self->_send_error($id, 'INVALID_PARAMS', "move: 'map' param is required");
         return;
     }
+    $map = $self->_sanitize($map, 40);
     unless (defined $x && $x =~ /^\d+$/) {
         $self->_send_error($id, 'INVALID_PARAMS', "move: 'x' param must be a non-negative integer");
         return;
@@ -233,19 +234,25 @@ sub _cmd_attack {
     my ($self, $id, $params) = @_;
 
     my $monster_id = $params->{monster_id};
-    unless (defined $monster_id) {
+    unless (defined $monster_id && length($monster_id)) {
         $self->_send_error($id, 'INVALID_PARAMS', "attack: 'monster_id' param is required");
         return;
     }
 
-    unless (exists $monsters{$monster_id}) {
-        $self->_send_error($id, 'TARGET_NOT_FOUND', "attack: monster_id '$monster_id' not found in current game state");
+    # monster_id is a hex string emitted by the plugin (e.g. "0a1b2c3d")
+    # %monsters is keyed by binary 4-byte actor IDs — convert before lookup
+    my $bin_id = eval { pack('H*', $monster_id) };
+    if ($@ || !defined $bin_id) {
+        $self->_send_error($id, 'INVALID_PARAMS', "attack: invalid monster_id format");
         return;
     }
 
-    # Clear existing attack to avoid conflict
-    eval { AI::clear('attack') };
-    eval { Commands::run("a $monster_id") };
+    unless (exists $monsters{$bin_id}) {
+        $self->_send_error($id, 'TARGET_NOT_FOUND', "attack: monster '$monster_id' not found in current game state");
+        return;
+    }
+
+    eval { AI::clear('attack'); attack($bin_id) };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed attack");
 }
@@ -261,6 +268,9 @@ sub _cmd_use_skill {
         return;
     }
 
+    $skill  = $self->_sanitize($skill, 50);
+    $target = $self->_sanitize($target, 50) if defined $target;
+
     my $cmd = "ss $skill";
     $cmd .= " $target" if defined $target && length($target) > 0;
 
@@ -273,17 +283,24 @@ sub _cmd_pick_item {
     my ($self, $id, $params) = @_;
 
     my $item_id = $params->{item_id};
-    unless (defined $item_id) {
+    unless (defined $item_id && length($item_id)) {
         $self->_send_error($id, 'INVALID_PARAMS', "pick_item: 'item_id' param is required");
         return;
     }
 
-    unless (exists $items{$item_id}) {
-        $self->_send_error($id, 'TARGET_NOT_FOUND', "pick_item: item_id '$item_id' not found in current game state");
+    # item_id is a hex string emitted by the plugin — convert to binary ground item ID
+    my $bin_id = eval { pack('H*', $item_id) };
+    if ($@ || !defined $bin_id) {
+        $self->_send_error($id, 'INVALID_PARAMS', "pick_item: invalid item_id format");
         return;
     }
 
-    eval { Commands::run("take $item_id") };
+    unless (exists $items{$bin_id}) {
+        $self->_send_error($id, 'TARGET_NOT_FOUND', "pick_item: item '$item_id' not found in current game state");
+        return;
+    }
+
+    eval { gather($bin_id) };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed pick_item");
 }

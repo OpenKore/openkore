@@ -3,7 +3,7 @@ package AIVillageBridge::ConfigUpdater;
 use strict;
 use warnings;
 
-use FileParsers qw(parseDataFile2);
+use FileParsers qw(parseMonControl parseItemsControl);
 use Globals qw(%config %mon_control %items_control);
 use Log qw(message error warning debug);
 use JSON::Tiny qw(from_json to_json);
@@ -98,7 +98,11 @@ sub apply_update {
 
 ##
 # _apply_mon_control($self, $id, $data)
-# data: [{monster=>'Poring', attack_auto=>1, teleport_auto=>0, party_auto=>1}, ...]
+# data: [{monster=>'Poring', attack_auto=>1, teleport_auto=>0}, ...]
+#
+# Writes in OpenKore's 10-column mon_control format:
+#   name attack teleport teleport_search skillcancel_auto lv joblv hp sp weight
+# Fields not provided by the sidecar default to 0.
 ##
 sub _apply_mon_control {
     my ($self, $id, $data) = @_;
@@ -112,12 +116,12 @@ sub _apply_mon_control {
     my $count   = 0;
     for my $entry (@{$data}) {
         next unless ref($entry) eq 'HASH';
-        my $monster      = $entry->{monster}      // '';
-        my $attack_auto  = $entry->{attack_auto}  // 0;
+        my $monster       = $entry->{monster}       // '';
+        my $attack_auto   = $entry->{attack_auto}   // 0;
         my $teleport_auto = $entry->{teleport_auto} // 0;
-        my $party_auto   = $entry->{party_auto}   // 1;
         next unless length($monster);
-        $content .= "$monster $attack_auto $teleport_auto $party_auto\n";
+        # Full 10-column format; unspecified fields default to 0
+        $content .= "$monster $attack_auto $teleport_auto 0 0 0 0 0 0 0\n";
         $count++;
     }
 
@@ -126,9 +130,9 @@ sub _apply_mon_control {
         return;
     };
 
-    # Reload into the live global hash
+    # Reload into the live global hash using the correct parser
     my $path = "$self->{control_dir}/mon_control.txt";
-    eval { FileParsers::parseDataFile2($path, \%mon_control) };
+    eval { parseMonControl($path, \%mon_control) };
     if ($@) {
         warning "[AIVillageBridge::ConfigUpdater] mon_control reload failed: $@\n";
         # Non-fatal: file was written, reload will retry on next restart
@@ -141,6 +145,10 @@ sub _apply_mon_control {
 ##
 # _apply_items_control($self, $id, $data)
 # data: [{item=>'Red Potion', keep=>30, storage=>0, sell=>1}, ...]
+#
+# Writes in OpenKore's 6-column items_control format:
+#   "item name" keep storage sell cart_add cart_get
+# Item names containing spaces are double-quoted.
 ##
 sub _apply_items_control {
     my ($self, $id, $data) = @_;
@@ -159,7 +167,10 @@ sub _apply_items_control {
         my $storage = $entry->{storage} // 0;
         my $sell    = $entry->{sell}    // 0;
         next unless length($item);
-        $content .= "$item $keep $storage $sell\n";
+        # Quote item names that contain spaces
+        my $quoted = ($item =~ /\s/) ? qq{"$item"} : $item;
+        # Full 6-column format; cart_add and cart_get default to 0
+        $content .= "$quoted $keep $storage $sell 0 0\n";
         $count++;
     }
 
@@ -168,9 +179,9 @@ sub _apply_items_control {
         return;
     };
 
-    # Reload into the live global hash
+    # Reload into the live global hash using the correct parser
     my $path = "$self->{control_dir}/items_control.txt";
-    eval { FileParsers::parseDataFile2($path, \%items_control) };
+    eval { parseItemsControl($path, \%items_control) };
     if ($@) {
         warning "[AIVillageBridge::ConfigUpdater] items_control reload failed: $@\n";
     }

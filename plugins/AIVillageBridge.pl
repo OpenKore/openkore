@@ -340,9 +340,9 @@ sub onMainLoopPost {
             $cleanup_timer = time();
         }
 
-        # Flush overflow events that passed the rate limiter
+        # Flush overflow events — cap at 5 per tick to avoid bursting the send buffer
         if ($filter) {
-            my $overflow = $filter->get_overflow_events();
+            my $overflow = $filter->get_overflow_events(5);
             for my $ev (@$overflow) {
                 my $msg = $proto->build_event($ev->{event_type}, $ev->{priority}, $ev->{data});
                 $conn->send_message($msg) if $msg;
@@ -476,15 +476,19 @@ sub onTargetDied {
 }
 
 # map_changed — character moved to a new map
+# hook args: {oldMap => $previous_map_name}
+# The new map name is read from $char->{map} which is set before the hook fires.
 sub onMapChanged {
     my ($hookName, $args) = @_;
     eval {
-        my $map = $args->{map} || '';
-        $novelty->track_map_visit($map) if $map;
+        my $old_map = $args->{oldMap} || '';
+        my $new_map = ($char && $char->{map}) ? $char->{map}
+                    : ($field ? $field->name() : '');
+        $novelty->track_map_visit($new_map) if $new_map;
         my $data = {
-            old_map => $args->{oldMap} || '',
-            new_map => $map,
-            map     => $map,   # alias for NoveltyDetector familiarity check
+            old_map => $old_map,
+            new_map => $new_map,
+            map     => $new_map,   # alias for NoveltyDetector familiarity check
         };
         _emit_event('map_changed', AIVillageBridge::Protocol::PRIORITY_MEDIUM, $data, 0);
     };
@@ -530,15 +534,15 @@ sub onJobLevelChanged {
 }
 
 # item_gathered — picked up an item from the ground
+# hook args: {item => $item_name_string, amount => $count}
 sub onItemGathered {
     my ($hookName, $args) = @_;
     eval {
-        my $item = $args->{item};
-        return unless $item;
+        my $item_name = $args->{item};
+        return unless defined $item_name && length($item_name);
         my $data = {
-            name   => $item->{name}  || 'unknown',
+            name   => $item_name,
             amount => $args->{amount} || 1,
-            value  => $item->{price} || $item->{buyValue} || 0,
         };
         _emit_event('item_gathered', AIVillageBridge::Protocol::PRIORITY_MEDIUM, $data, 0);
     };
@@ -624,11 +628,12 @@ sub onItemAppeared {
 }
 
 # party_invite — always escalate; LLM decides whether to accept
+# hook args: {partyName => $name_string, partyID => $id}
 sub onPartyInvite {
     my ($hookName, $args) = @_;
     eval {
         _emit_event('party_invite', AIVillageBridge::Protocol::PRIORITY_HIGH,
-            { name => $args->{name} || '', id => $args->{ID} || '' }, 1);
+            { name => $args->{partyName} || '', id => $args->{partyID} || '' }, 1);
     };
     error "[AIVillageBridge] onPartyInvite error: $@\n" if $@;
 }
