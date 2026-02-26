@@ -39,6 +39,8 @@ my $buffer_size      = $ENV{AIVILLAGE_BUFFER_SIZE}      || $config{aiVillageBuff
 my $item_threshold   = $ENV{AIVILLAGE_ITEM_THRESHOLD}   || $config{aiVillageItemThreshold}  || 100;
 my $player_familiar  = $ENV{AIVILLAGE_PLAYER_FAMILIAR}  || $config{aiVillagePlayerFamiliar} || 5;
 my $monster_familiar = $ENV{AIVILLAGE_MONSTER_FAMILIAR} || $config{aiVillageMonsterFamiliar}|| 10;
+my $danger_hp_pct  = $ENV{AIVILLAGE_DANGER_HP_PCT}  || $config{aiVillageDangerHpPct}  || 25;
+my $idle_timeout   = $ENV{AIVILLAGE_IDLE_TIMEOUT}   || $config{aiVillageIdleTimeout}  || 300;
 my $control_dir = 'control/ai-village';
 
 # ---------------------------------------------------------------------------
@@ -54,6 +56,8 @@ my $updater;  # AIVillageBridge::ConfigUpdater
 my $snap;     # AIVillageBridge::StateSnapshot
 my $hooks_handle;  # Plugins::HookHandles object returned by addHooks
 my $cleanup_timer = 0;  # last cleanup timestamp
+my $danger_reported = 0;           # flag: 1 = danger event already sent for this HP drop
+my $last_significant_event = time();  # timestamp of last event sent to sidecar
 
 # ---------------------------------------------------------------------------
 # Initialization
@@ -325,17 +329,39 @@ sub _emit_event {
     }
 
     my $msg = $proto->build_event($event_name, $priority, $data);
-    $conn->send_message($msg) if $msg;
+    if ($msg) {
+        $conn->send_message($msg);
+        $last_significant_event = time();
+    }
 }
 
 # ---------------------------------------------------------------------------
 # Hook callbacks
 # ---------------------------------------------------------------------------
 
-# AI_pre — process queued commands
+# AI_pre — process queued commands + HP danger detection
 sub onAIPre {
     my ($hookName, $args) = @_;
-    eval { $executor->process_queue() if $executor };
+    eval {
+        $executor->process_queue() if $executor;
+
+        # HP danger detection
+        if ($char && $char->{hp_max} && $char->{hp_max} > 0) {
+            my $hp_pct = ($char->{hp} / $char->{hp_max}) * 100;
+            if ($hp_pct <= $danger_hp_pct && !$danger_reported) {
+                $danger_reported = 1;
+                _emit_event('hp_critical', AIVillageBridge::Protocol::PRIORITY_CRITICAL, {
+                    hp     => $char->{hp},
+                    hp_max => $char->{hp_max},
+                    hp_pct => sprintf("%.1f", $hp_pct),
+                    map    => ($field ? $field->name() : ''),
+                }, 1);
+            }
+            elsif ($hp_pct > ($danger_hp_pct + 10)) {
+                $danger_reported = 0;  # Reset when HP recovers above threshold + 10%
+            }
+        }
+    };
     error "[AIVillageBridge] onAIPre error: $@\n" if $@;
 }
 
@@ -350,6 +376,19 @@ sub onMainLoopPost {
         if (time() - $cleanup_timer > 300) {
             $filter->cleanup_cache()      if $filter;
             $novelty->cleanup_context()   if $novelty;
+
+            # Log combined metrics
+            if ($filter && $novelty) {
+                my $fm = $filter->get_metrics();
+                my $nm = $novelty->get_metrics();
+                message "[AIVillageBridge] Metrics — Filter: recv=$fm->{events_received} passed=$fm->{events_passed} "
+                    . "dedup=$fm->{events_dedup_dropped} sig=$fm->{events_significance_dropped} "
+                    . "rate_limited=$fm->{events_rate_limited} critical=$fm->{events_critical_bypass} | "
+                    . "Novelty: analyzed=$nm->{events_analyzed} escalated=$nm->{events_escalated} "
+                    . "local=$nm->{events_local} ignored=$nm->{events_ignored} "
+                    . "social=$nm->{social_escalations} first_occ=$nm->{first_occurrence_escalations}\n", 'system';
+            }
+
             $cleanup_timer = time();
         }
 
@@ -360,6 +399,20 @@ sub onMainLoopPost {
                 my $msg = $proto->build_event($ev->{event_type}, $ev->{priority}, $ev->{data});
                 $conn->send_message($msg) if $msg;
             }
+        }
+
+        # Idle timeout detection
+        if ($idle_timeout > 0 && (time() - $last_significant_event) > $idle_timeout) {
+            my $idle_seconds = int(time() - $last_significant_event);
+            $last_significant_event = time();  # reset AFTER computing
+            my $idle_data = {
+                idle_seconds => $idle_seconds,
+                map => ($field ? $field->name() : ''),
+            };
+            # Direct send bypassing filter — idle is a meta-event, always significant
+            my $msg = $proto->build_event('idle_timeout', AIVillageBridge::Protocol::PRIORITY_MEDIUM, $idle_data);
+            $conn->send_message($msg) if $msg;
+            message "[AIVillageBridge] Idle timeout (${idle_seconds}s idle) — escalating\n", 'aivillage';
         }
     };
     error "[AIVillageBridge] onMainLoopPost error: $@\n" if $@;

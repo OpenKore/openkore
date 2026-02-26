@@ -51,6 +51,18 @@ sub new {
 
         # Overflow queue: arrayref of {event_type, dedup_key, priority, data, ts}
         overflow    => [],
+
+        # Metrics counters
+        metrics => {
+            events_received            => 0,
+            events_passed              => 0,
+            events_dedup_dropped       => 0,
+            events_significance_dropped => 0,
+            events_rate_limited        => 0,
+            events_critical_bypass     => 0,
+            overflow_drained           => 0,
+            overflow_expired           => 0,
+        },
     }, $class;
 
     debug("[AIVillageBridge::EventFilter] Initialized: rate=$rate_limit/s burst=$burst_limit item_threshold=$item_threshold\n");
@@ -72,6 +84,8 @@ sub should_send {
     $priority //= 'medium';
     $data     //= {};
 
+    $self->{metrics}{events_received}++;
+
     # ------------------------------------------------------------------
     # Stage 1: Deduplication
     # ------------------------------------------------------------------
@@ -81,6 +95,7 @@ sub should_send {
 
         if (defined $last_seen && (time() - $last_seen) < $window) {
             debug("[AIVillageBridge::EventFilter] Dedup drop: type=$event_type key=$dedup_key\n");
+            $self->{metrics}{events_dedup_dropped}++;
             return 0;
         }
 
@@ -97,6 +112,7 @@ sub should_send {
         my $value = $data->{value} // 0;
         if ($value < $self->{item_threshold}) {
             debug("[AIVillageBridge::EventFilter] Significance drop: type=$event_type value=$value threshold=$self->{item_threshold}\n");
+            $self->{metrics}{events_significance_dropped}++;
             return 0;
         }
     }
@@ -108,6 +124,8 @@ sub should_send {
     # Critical events always pass, no token consumed
     if ($priority eq 'critical') {
         debug("[AIVillageBridge::EventFilter] Critical bypass: type=$event_type\n");
+        $self->{metrics}{events_critical_bypass}++;
+        $self->{metrics}{events_passed}++;
         return 1;
     }
 
@@ -115,11 +133,13 @@ sub should_send {
 
     if ($self->{tokens} >= 1) {
         $self->{tokens} -= 1;
+        $self->{metrics}{events_passed}++;
         return 1;
     }
 
     # No tokens available — add to overflow queue
     $self->_enqueue_overflow($event_type, $dedup_key, $priority, $data);
+    $self->{metrics}{events_rate_limited}++;
     return 0;
 }
 
@@ -149,6 +169,7 @@ sub cleanup_cache {
         @{$self->{overflow}}
     ];
     my $overflow_pruned = $before - scalar @{$self->{overflow}};
+    $self->{metrics}{overflow_expired} += $overflow_pruned;
 
     if ($dedup_pruned || $overflow_pruned) {
         debug("[AIVillageBridge::EventFilter] cleanup_cache: removed $dedup_pruned dedup entries, $overflow_pruned overflow entries\n");
@@ -166,6 +187,7 @@ sub get_overflow_events {
 
     if (defined $limit && $limit > 0 && scalar @{$self->{overflow}} > $limit) {
         my @batch = splice(@{$self->{overflow}}, 0, $limit);
+        $self->{metrics}{overflow_drained} += scalar(@batch);
         debug("[AIVillageBridge::EventFilter] Partial drain: returning $limit of "
             . (scalar(@batch) + scalar @{$self->{overflow}}) . " overflow events\n");
         return \@batch;
@@ -174,10 +196,24 @@ sub get_overflow_events {
     my $events = $self->{overflow};
     $self->{overflow} = [];
 
+    $self->{metrics}{overflow_drained} += scalar(@$events);
+
     debug("[AIVillageBridge::EventFilter] Draining " . scalar(@$events) . " overflow events\n")
         if @$events;
 
     return $events;
+}
+
+# get_metrics() -> hashref (shallow copy)
+sub get_metrics {
+    my ($self) = @_;
+    return { %{$self->{metrics}} };
+}
+
+# reset_metrics()
+sub reset_metrics {
+    my ($self) = @_;
+    $self->{metrics}{$_} = 0 for keys %{$self->{metrics}};
 }
 
 # _refill()

@@ -44,6 +44,22 @@ sub new {
         seen_monsters    => {},   # "type:map"  => {count, first_seen, last_killed}
         visited_maps     => {},   # map_name    => {count, first_visit, last_visit}
         npc_interactions => {},   # "id:map"    => {count, last_interaction}
+
+        # Metrics counters
+        metrics => {
+            events_analyzed              => 0,
+            events_escalated             => 0,
+            events_local                 => 0,
+            events_ignored               => 0,
+            events_pickup                => 0,
+            events_flee                  => 0,
+            always_escalations           => 0,
+            first_occurrence_escalations => 0,
+            unfamiliar_escalations       => 0,
+            social_escalations           => 0,
+            chat_resp_local              => 0,
+            ruleset_matches              => 0,
+        },
     }, $class;
 
     debug("[AIVillageBridge::NoveltyDetector] Initialized with thresholds: "
@@ -68,11 +84,15 @@ sub analyze {
 
     $data //= {};
 
+    $self->{metrics}{events_analyzed}++;
+
     # ------------------------------------------------------------------
     # Step 1: Always-escalate events
     # ------------------------------------------------------------------
     if ($ALWAYS_ESCALATE{$event_type}) {
         debug("[AIVillageBridge::NoveltyDetector] Always-escalate: $event_type\n");
+        $self->{metrics}{always_escalations}++;
+        $self->{metrics}{events_escalated}++;
         return { action => 'send' };
     }
 
@@ -106,6 +126,8 @@ sub analyze {
             next unless $matched;
 
             debug("[AIVillageBridge::NoveltyDetector] chat_resp match: pattern=$p->{pattern}\n");
+            $self->{metrics}{chat_resp_local}++;
+            $self->{metrics}{events_local}++;
             return {
                 action  => 'local',
                 command => {
@@ -128,24 +150,31 @@ sub analyze {
         my $action_def  = $rule->{action} // {};
         my $action_type = $action_def->{type} // '';
 
+        $self->{metrics}{ruleset_matches}++;
+
         if ($action_type eq 'escalate') {
             debug("[AIVillageBridge::NoveltyDetector] Ruleset escalate: $event_type\n");
+            $self->{metrics}{events_escalated}++;
             return { action => 'send' };
         }
         elsif ($action_type eq 'respond' || $action_type eq 'attack') {
             debug("[AIVillageBridge::NoveltyDetector] Ruleset local ($action_type): $event_type\n");
+            $self->{metrics}{events_local}++;
             return { action => 'local', command => $action_def };
         }
         elsif ($action_type eq 'ignore') {
             debug("[AIVillageBridge::NoveltyDetector] Ruleset ignore: $event_type\n");
+            $self->{metrics}{events_ignored}++;
             return { action => 'ignore' };
         }
         elsif ($action_type eq 'pickup') {
             debug("[AIVillageBridge::NoveltyDetector] Ruleset pickup: $event_type item=$data->{id}\n");
+            $self->{metrics}{events_pickup}++;
             return { action => 'pickup', item_id => $data->{id} };
         }
         elsif ($action_type eq 'flee') {
             debug("[AIVillageBridge::NoveltyDetector] Ruleset flee: $event_type\n");
+            $self->{metrics}{events_flee}++;
             return { action => 'flee' };
         }
     }
@@ -161,6 +190,8 @@ sub analyze {
             if ($player && !exists $self->{seen_players}{$player}) {
                 debug("[AIVillageBridge::NoveltyDetector] First msg from $player: send\n");
                 $self->_init_player($player, $now);
+                $self->{metrics}{first_occurrence_escalations}++;
+                $self->{metrics}{events_escalated}++;
                 return { action => 'send' };
             }
         }
@@ -169,6 +200,8 @@ sub analyze {
             if ($map && !exists $self->{visited_maps}{$map}) {
                 debug("[AIVillageBridge::NoveltyDetector] First visit to map $map: send\n");
                 $self->_init_map($map, $now);
+                $self->{metrics}{first_occurrence_escalations}++;
+                $self->{metrics}{events_escalated}++;
                 return { action => 'send' };
             }
         }
@@ -177,6 +210,8 @@ sub analyze {
             if ($player && !exists $self->{seen_players}{$player}) {
                 debug("[AIVillageBridge::NoveltyDetector] First sighting of player $player: send\n");
                 $self->_init_player($player, $now);
+                $self->{metrics}{first_occurrence_escalations}++;
+                $self->{metrics}{events_escalated}++;
                 return { action => 'send' };
             }
         }
@@ -187,6 +222,8 @@ sub analyze {
             if ($type && !exists $self->{seen_monsters}{$key}) {
                 debug("[AIVillageBridge::NoveltyDetector] First sighting of monster $key: send\n");
                 $self->_init_monster($key, $now);
+                $self->{metrics}{first_occurrence_escalations}++;
+                $self->{metrics}{events_escalated}++;
                 return { action => 'send' };
             }
         }
@@ -197,6 +234,8 @@ sub analyze {
             if ($npc_id && !exists $self->{npc_interactions}{$key}) {
                 debug("[AIVillageBridge::NoveltyDetector] First NPC interaction $key: send\n");
                 $self->_init_npc($key, $now);
+                $self->{metrics}{first_occurrence_escalations}++;
+                $self->{metrics}{events_escalated}++;
                 return { action => 'send' };
             }
         }
@@ -211,6 +250,8 @@ sub analyze {
             if ($player && exists $self->{seen_players}{$player}) {
                 if ($self->{seen_players}{$player}{count} <= $self->{player_familiar_threshold}) {
                     debug("[AIVillageBridge::NoveltyDetector] Unfamiliar player $player (count=$self->{seen_players}{$player}{count}): send\n");
+                    $self->{metrics}{unfamiliar_escalations}++;
+                    $self->{metrics}{events_escalated}++;
                     return { action => 'send' };
                 }
             }
@@ -220,6 +261,8 @@ sub analyze {
             if ($player && exists $self->{seen_players}{$player}) {
                 if ($self->{seen_players}{$player}{count} <= $self->{player_familiar_threshold}) {
                     debug("[AIVillageBridge::NoveltyDetector] Unfamiliar player_exist $player: send\n");
+                    $self->{metrics}{unfamiliar_escalations}++;
+                    $self->{metrics}{events_escalated}++;
                     return { action => 'send' };
                 }
             }
@@ -231,6 +274,8 @@ sub analyze {
             if (exists $self->{seen_monsters}{$key}) {
                 if ($self->{seen_monsters}{$key}{count} <= $self->{monster_familiar_threshold}) {
                     debug("[AIVillageBridge::NoveltyDetector] Unfamiliar monster $key: send\n");
+                    $self->{metrics}{unfamiliar_escalations}++;
+                    $self->{metrics}{events_escalated}++;
                     return { action => 'send' };
                 }
             }
@@ -242,6 +287,8 @@ sub analyze {
             if (exists $self->{seen_monsters}{$key}) {
                 if ($self->{seen_monsters}{$key}{count} <= $self->{monster_familiar_threshold}) {
                     debug("[AIVillageBridge::NoveltyDetector] Unfamiliar kill $key: send\n");
+                    $self->{metrics}{unfamiliar_escalations}++;
+                    $self->{metrics}{events_escalated}++;
                     return { action => 'send' };
                 }
             }
@@ -251,6 +298,8 @@ sub analyze {
             if ($map && exists $self->{visited_maps}{$map}) {
                 if ($self->{visited_maps}{$map}{count} <= $self->{map_familiar_threshold}) {
                     debug("[AIVillageBridge::NoveltyDetector] Unfamiliar map $map: send\n");
+                    $self->{metrics}{unfamiliar_escalations}++;
+                    $self->{metrics}{events_escalated}++;
                     return { action => 'send' };
                 }
             }
@@ -262,6 +311,8 @@ sub analyze {
             if (exists $self->{npc_interactions}{$key}) {
                 if ($self->{npc_interactions}{$key}{count} <= $self->{npc_familiar_threshold}) {
                     debug("[AIVillageBridge::NoveltyDetector] Unfamiliar NPC $key: send\n");
+                    $self->{metrics}{unfamiliar_escalations}++;
+                    $self->{metrics}{events_escalated}++;
                     return { action => 'send' };
                 }
             }
@@ -269,9 +320,21 @@ sub analyze {
     }
 
     # ------------------------------------------------------------------
+    # Step 4.5: Social events — always escalate if no rule matched
+    # Chat messages are inherently novel in content even from familiar players.
+    # ------------------------------------------------------------------
+    if ($event_type eq 'pub_msg' || $event_type eq 'priv_msg') {
+        debug("[AIVillageBridge::NoveltyDetector] Social escalate (no rule matched): $event_type\n");
+        $self->{metrics}{social_escalations}++;
+        $self->{metrics}{events_escalated}++;
+        return { action => 'send' };
+    }
+
+    # ------------------------------------------------------------------
     # Step 5: Default — let OpenKore's native AI handle it
     # ------------------------------------------------------------------
     debug("[AIVillageBridge::NoveltyDetector] Default ignore: $event_type\n");
+    $self->{metrics}{events_ignored}++;
     return { action => 'ignore' };
 }
 
@@ -390,6 +453,18 @@ sub cleanup_context {
         . "monsters=" . scalar(keys %{$self->{seen_monsters}}) . " "
         . "maps=" . scalar(keys %{$self->{visited_maps}}) . " "
         . "npcs=" . scalar(keys %{$self->{npc_interactions}}) . "\n");
+}
+
+# get_metrics() -> hashref (shallow copy)
+sub get_metrics {
+    my ($self) = @_;
+    return { %{$self->{metrics}} };
+}
+
+# reset_metrics()
+sub reset_metrics {
+    my ($self) = @_;
+    $self->{metrics}{$_} = 0 for keys %{$self->{metrics}};
 }
 
 # ---------------------------------------------------------------------------
