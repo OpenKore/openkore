@@ -3,6 +3,8 @@ package AIVillageBridge::CommandExecutor;
 use strict;
 use warnings;
 
+use Time::HiRes qw(time);
+
 use Commands;
 use Globals qw($char %monsters %players %npcs %items @ai_seq @ai_seq_args);
 use AI;
@@ -28,6 +30,10 @@ my %SUPPORTED_ACTIONS = map { $_ => 1 } qw(
     use_item
     npc_talk
     npc_respond
+    emote
+    flee
+    buy
+    sell
 );
 
 ##
@@ -40,8 +46,10 @@ sub new {
     my ($class, %args) = @_;
 
     my $self = bless {
-        on_result => $args{on_result} // sub {},
-        queue     => [],
+        on_result      => $args{on_result} // sub {},
+        queue          => [],
+        cmd_delay      => $args{cmd_delay} // 0.5,  # seconds between commands
+        _last_cmd_time => 0,
     }, $class;
 
     return $self;
@@ -84,11 +92,22 @@ sub process_queue {
 
     return unless @{$self->{queue}};
 
+    # Enforce delay between commands
+    my $now = Time::HiRes::time();
+    if ($self->{cmd_delay} > 0 && ($now - $self->{_last_cmd_time}) < $self->{cmd_delay}) {
+        return;  # Too soon since last command, wait for next tick
+    }
+
     my $processed = 0;
     while (@{$self->{queue}} && $processed < MAX_CMDS_PER_TICK) {
         my $cmd = shift @{$self->{queue}};
         $self->_execute($cmd);
         $processed++;
+        $self->{_last_cmd_time} = Time::HiRes::time();
+
+        # If delay is configured, only process one command per tick
+        # (let the delay gate the next one on the following tick)
+        last if $self->{cmd_delay} > 0;
     }
 }
 
@@ -152,6 +171,10 @@ sub _execute {
         use_item    => \&_cmd_use_item,
         npc_talk    => \&_cmd_npc_talk,
         npc_respond => \&_cmd_npc_respond,
+        emote       => \&_cmd_emote,
+        flee        => \&_cmd_flee,
+        buy         => \&_cmd_buy,
+        sell        => \&_cmd_sell,
     };
 
     my $handler = $dispatch->{$action};
@@ -397,6 +420,78 @@ sub _cmd_npc_respond {
     eval { Commands::run("talk resp $response") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed npc_respond");
+}
+
+sub _cmd_emote {
+    my ($self, $id, $params) = @_;
+
+    my $emote_id = $params->{emote_id};
+    unless (defined $emote_id && length($emote_id) > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "emote: 'emote_id' param is required");
+        return;
+    }
+
+    $emote_id = $self->_sanitize($emote_id, 20);
+    eval { Commands::run("e $emote_id") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed emote");
+}
+
+sub _cmd_flee {
+    my ($self, $id, $params) = @_;
+
+    # Clear current combat/movement actions so the bot stops fighting
+    eval {
+        AI::clear('attack');
+        AI::clear('route');
+    };
+
+    eval { Commands::run("teleport") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed flee");
+}
+
+sub _cmd_buy {
+    my ($self, $id, $params) = @_;
+
+    my $item_index = $params->{item_index};
+    my $quantity   = $params->{quantity} // 1;
+
+    unless (defined $item_index && $item_index =~ /^\d+$/) {
+        $self->_send_error($id, 'INVALID_PARAMS', "buy: 'item_index' param must be a non-negative integer");
+        return;
+    }
+    unless ($quantity =~ /^\d+$/ && $quantity > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "buy: 'quantity' must be a positive integer");
+        return;
+    }
+
+    eval { Commands::run("buy $item_index $quantity") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed buy");
+}
+
+sub _cmd_sell {
+    my ($self, $id, $params) = @_;
+
+    my $item_index = $params->{item_index};
+    my $quantity   = $params->{quantity} // 1;
+
+    unless (defined $item_index && $item_index =~ /^\d+$/) {
+        $self->_send_error($id, 'INVALID_PARAMS', "sell: 'item_index' param must be a non-negative integer");
+        return;
+    }
+    unless ($quantity =~ /^\d+$/ && $quantity > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "sell: 'quantity' must be a positive integer");
+        return;
+    }
+
+    # Add item to sell list, then finalize
+    eval { Commands::run("sell $item_index $quantity") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    eval { Commands::run("sell done") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed sell");
 }
 
 # --- Helpers ---
