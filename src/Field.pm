@@ -708,6 +708,11 @@ sub loadDistanceMap {
 # determined based on the field name, the field files folder, whether the field file
 # is compressed, etc.
 #
+# Note: field data files (.fld2/.fld2.gz) are resolved via $Settings::fields_folder.
+# If masterServer fields_folder/fieldsFolder is set, it is used as first lookup folder,
+# then falls back to the global $Settings::fields_folder when the file is missing there.
+# $Settings::maps_folder is used by image() for generated/loaded map images.
+#
 # This method is like calling the constructor with the 'name' argument,
 # but allows you to load a field inside this Field object.
 #
@@ -724,15 +729,29 @@ sub loadByName {
 	$self->{baseName} = $baseName;
 	my $file = $self->sourceName . ".fld2";
 
-	if ($Settings::fields_folder) {
-		$file = File::Spec->catfile($Settings::fields_folder, $file);
+	my $fieldsFolder = $Settings::fields_folder;
+	if (defined $masterServer) {
+		$fieldsFolder = $masterServer->{fields_folder} if $masterServer->{fields_folder};
+		$fieldsFolder = $masterServer->{fieldsFolder} if $masterServer->{fieldsFolder};
 	}
-	if (! -f $file) {
-		$file .= ".gz";
+	my @fieldFolders = grep { defined $_ && $_ ne '' } ($fieldsFolder);
+	push @fieldFolders, $Settings::fields_folder if !defined($fieldsFolder) || $fieldsFolder ne $Settings::fields_folder;
+
+	my $resolvedFile;
+	for my $folder (@fieldFolders) {
+		my $candidate = File::Spec->catfile($folder, $file);
+		if (-f $candidate) {
+			$resolvedFile = $candidate;
+			last;
+		}
+		if (-f "$candidate.gz") {
+			$resolvedFile = "$candidate.gz";
+			last;
+		}
 	}
 
-	if (-f $file) {
-		$self->loadFile($file, $loadWeightMap);
+	if ($resolvedFile) {
+		$self->loadFile($resolvedFile, $loadWeightMap);
 		$self->{baseName} = $baseName;
 		$self->{name} = $name;
 	} else {
