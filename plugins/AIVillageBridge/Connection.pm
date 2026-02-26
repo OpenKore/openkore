@@ -247,7 +247,7 @@ sub _do_read {
     my ($self) = @_;
 
     return unless defined $self->{sock};
-    return unless dataWaiting(\$self->{sock}, 0);
+    return unless dataWaiting($self->{sock}, 0);
 
     my $bytes = sysread($self->{sock}, my $buf, 4096);
 

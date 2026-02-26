@@ -374,7 +374,11 @@ sub _cmd_npc_talk {
 
     # OpenKore's 'talk' command expects a display index; use the NPC's binID which
     # reflects its position in the visible list (set by OpenKore's NPC parser).
-    my $bin_idx = $npcs{$bin_id}{binID} // '';
+    my $bin_idx = $npcs{$bin_id}{binID};
+    unless (defined $bin_idx && $bin_idx =~ /^\d+$/) {
+        $self->_send_error($id, 'TARGET_NOT_FOUND', "npc_talk: npc '$npc_id' has no binID");
+        return;
+    }
     eval { Commands::run("talk $bin_idx") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed npc_talk");

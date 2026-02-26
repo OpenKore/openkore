@@ -284,20 +284,23 @@ sub _emit_event {
     # bypassed when the rate limiter adds events to the overflow queue.
     my $result = $novelty->analyze($event_name, $data);
 
-    if ($result->{action} eq 'local' && $result->{command}) {
-        # Map 'respond' ruleset action to the 'say' command
-        my $cmd_action = $result->{command}{command} || $result->{command}{type} || '';
-        my $cmd_params = $result->{command}{params}  || {};
-        if ($cmd_action eq 'respond') {
-            $cmd_action = 'say';
-            $cmd_params = { message => $result->{command}{response} || $cmd_params->{message} || '' };
+    if ($result->{action} eq 'local') {
+        if ($result->{command}) {
+            # Map 'respond' ruleset action to the 'say' command
+            my $cmd_action = $result->{command}{command} || $result->{command}{type} || '';
+            my $cmd_params = $result->{command}{params}  || {};
+            if ($cmd_action eq 'respond') {
+                $cmd_action = 'say';
+                $cmd_params = { message => $result->{command}{response} || $cmd_params->{message} || '' };
+            }
+            $executor->enqueue({
+                type   => 'command',
+                id     => 'local-' . time(),
+                action => $cmd_action,
+                params => $cmd_params,
+            });
         }
-        $executor->enqueue({
-            type   => 'command',
-            id     => 'local-' . time(),
-            action => $cmd_action,
-            params => $cmd_params,
-        });
+        # Always suppress sidecar send for 'local' actions, even with missing command
         return;
     }
     elsif ($result->{action} eq 'pickup' && $result->{item_id}) {
