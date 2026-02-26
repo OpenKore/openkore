@@ -252,7 +252,7 @@ sub _cmd_attack {
         return;
     }
 
-    eval { AI::clear('attack'); attack($bin_id) };
+    eval { AI::clear('attack'); AI::attack($bin_id) };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed attack");
 }
@@ -300,7 +300,7 @@ sub _cmd_pick_item {
         return;
     }
 
-    eval { gather($bin_id) };
+    eval { AI::gather($bin_id) };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed pick_item");
 }
@@ -355,17 +355,27 @@ sub _cmd_npc_talk {
     my ($self, $id, $params) = @_;
 
     my $npc_id = $params->{npc_id};
-    unless (defined $npc_id) {
+    unless (defined $npc_id && length($npc_id)) {
         $self->_send_error($id, 'INVALID_PARAMS', "npc_talk: 'npc_id' param is required");
         return;
     }
 
-    unless (exists $npcs{$npc_id}) {
-        $self->_send_error($id, 'TARGET_NOT_FOUND', "npc_talk: npc_id '$npc_id' not found in current game state");
+    # npc_id is a hex string emitted by the plugin — convert to binary actor ID
+    my $bin_id = eval { pack('H*', $npc_id) };
+    if ($@ || !defined $bin_id) {
+        $self->_send_error($id, 'INVALID_PARAMS', "npc_talk: invalid npc_id format");
         return;
     }
 
-    eval { Commands::run("talk $npc_id") };
+    unless (exists $npcs{$bin_id}) {
+        $self->_send_error($id, 'TARGET_NOT_FOUND', "npc_talk: npc '$npc_id' not found in current game state");
+        return;
+    }
+
+    # OpenKore's 'talk' command expects a display index; use the NPC's binID which
+    # reflects its position in the visible list (set by OpenKore's NPC parser).
+    my $bin_idx = $npcs{$bin_id}{binID} // '';
+    eval { Commands::run("talk $bin_idx") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed npc_talk");
 }

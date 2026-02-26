@@ -91,7 +91,9 @@ sub should_send {
     # ------------------------------------------------------------------
     # Stage 2: Significance check
     # ------------------------------------------------------------------
-    if ($event_type eq 'item_appeared' || $event_type eq 'item_gathered') {
+    # item_appeared: ground items are filtered by value (avoids spamming low-value drops)
+    # item_gathered: value is not available from the hook args, so no significance check
+    if ($event_type eq 'item_appeared') {
         my $value = $data->{value} // 0;
         if ($value < $self->{item_threshold}) {
             debug("[AIVillageBridge::EventFilter] Significance drop: type=$event_type value=$value threshold=$self->{item_threshold}\n");

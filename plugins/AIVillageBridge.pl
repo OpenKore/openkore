@@ -280,29 +280,25 @@ sub _emit_event {
     $data        //= {};
     $always_send //= 0;
 
-    # Build dedup key based on event type
-    my $dedup_key = _dedup_key($event_name, $data);
-
-    # Run through EventFilter (skip if always_send)
-    unless ($always_send) {
-        return unless $filter->should_send($event_name, $dedup_key, $priority, $data);
-    }
-
-    # Novelty analysis
+    # Novelty analysis runs FIRST so that ruleset/chat_resp decisions are not
+    # bypassed when the rate limiter adds events to the overflow queue.
     my $result = $novelty->analyze($event_name, $data);
 
-    if ($result->{action} eq 'send' || ($always_send && $result->{action} ne 'ignore')) {
-        my $msg = $proto->build_event($event_name, $priority, $data);
-        $conn->send_message($msg) if $msg;
-    }
-    elsif ($result->{action} eq 'local' && $result->{command}) {
-        # Execute locally via CommandExecutor
+    if ($result->{action} eq 'local' && $result->{command}) {
+        # Map 'respond' ruleset action to the 'say' command
+        my $cmd_action = $result->{command}{command} || $result->{command}{type} || '';
+        my $cmd_params = $result->{command}{params}  || {};
+        if ($cmd_action eq 'respond') {
+            $cmd_action = 'say';
+            $cmd_params = { message => $result->{command}{response} || $cmd_params->{message} || '' };
+        }
         $executor->enqueue({
             type   => 'command',
             id     => 'local-' . time(),
-            action => $result->{command}{command} || $result->{command}{type},
-            params => $result->{command}{params}  || {},
+            action => $cmd_action,
+            params => $cmd_params,
         });
+        return;
     }
     elsif ($result->{action} eq 'pickup' && $result->{item_id}) {
         $executor->enqueue({
@@ -311,8 +307,22 @@ sub _emit_event {
             action => 'pick_item',
             params => { item_id => $result->{item_id} },
         });
+        return;
     }
-    # 'ignore' and 'flee': ignore drops; flee handled by native AI config
+    elsif ($result->{action} eq 'ignore' && !$always_send) {
+        return;
+    }
+    # action 'send', action 'flee' (flee handled by native AI — event still sent),
+    # or $always_send overrides 'ignore'
+
+    # Build dedup key and run through rate filter
+    my $dedup_key = _dedup_key($event_name, $data);
+    unless ($always_send) {
+        return unless $filter->should_send($event_name, $dedup_key, $priority, $data);
+    }
+
+    my $msg = $proto->build_event($event_name, $priority, $data);
+    $conn->send_message($msg) if $msg;
 }
 
 # ---------------------------------------------------------------------------
