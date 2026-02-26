@@ -283,23 +283,58 @@ sub _cmd_attack {
 sub _cmd_use_skill {
     my ($self, $id, $params) = @_;
 
-    my $skill  = $params->{skill};
-    my $target = $params->{target};  # optional
+    my $skill       = $params->{skill};
+    my $level       = $params->{level};         # optional skill level
+    my $target_type = $params->{target_type};   # self, monster, player, location (default: self)
+    my $target      = $params->{target};        # target index (for monster/player)
+    my $x           = $params->{x};             # for location targeting
+    my $y           = $params->{y};             # for location targeting
 
     unless (defined $skill && length($skill) > 0) {
         $self->_send_error($id, 'INVALID_PARAMS', "use_skill: 'skill' param is required");
         return;
     }
 
-    $skill  = $self->_sanitize($skill, 50);
-    $target = $self->_sanitize($target, 50) if defined $target;
+    $skill = $self->_sanitize($skill, 50);
+    $target_type //= 'self';
 
-    my $cmd = "ss $skill";
-    $cmd .= " $target" if defined $target && length($target) > 0;
+    my $cmd;
+    if ($target_type eq 'self') {
+        $cmd = "ss $skill";
+        $cmd .= " $level" if defined $level && $level =~ /^\d+$/;
+    }
+    elsif ($target_type eq 'monster') {
+        unless (defined $target && $target =~ /^\d+$/) {
+            $self->_send_error($id, 'INVALID_PARAMS', "use_skill: 'target' (monster index) is required for target_type=monster");
+            return;
+        }
+        $cmd = "sm $skill $target";
+        $cmd .= " $level" if defined $level && $level =~ /^\d+$/;
+    }
+    elsif ($target_type eq 'player') {
+        unless (defined $target && $target =~ /^\d+$/) {
+            $self->_send_error($id, 'INVALID_PARAMS', "use_skill: 'target' (player index) is required for target_type=player");
+            return;
+        }
+        $cmd = "sp $skill $target";
+        $cmd .= " $level" if defined $level && $level =~ /^\d+$/;
+    }
+    elsif ($target_type eq 'location') {
+        unless (defined $x && $x =~ /^\d+$/ && defined $y && $y =~ /^\d+$/) {
+            $self->_send_error($id, 'INVALID_PARAMS', "use_skill: 'x' and 'y' coords are required for target_type=location");
+            return;
+        }
+        $cmd = "sl $skill $x $y";
+        $cmd .= " $level" if defined $level && $level =~ /^\d+$/;
+    }
+    else {
+        $self->_send_error($id, 'INVALID_PARAMS', "use_skill: invalid target_type '$target_type' (expected: self, monster, player, location)");
+        return;
+    }
 
     eval { Commands::run($cmd) };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
-    $self->_send_ack($id, "executed use_skill");
+    $self->_send_ack($id, "executed use_skill ($target_type)");
 }
 
 sub _cmd_pick_item {
@@ -354,7 +389,7 @@ sub _cmd_equip {
     }
 
     $item_name = $self->_sanitize($item_name, 100);
-    eval { Commands::run("equip $item_name") };
+    eval { Commands::run("eq $item_name") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed equip");
 }
@@ -425,14 +460,17 @@ sub _cmd_npc_respond {
 sub _cmd_emote {
     my ($self, $id, $params) = @_;
 
-    my $emote_id = $params->{emote_id};
-    unless (defined $emote_id && length($emote_id) > 0) {
-        $self->_send_error($id, 'INVALID_PARAMS', "emote: 'emote_id' param is required");
+    # OpenKore's 'e' command accepts emotion command strings from tables/emotions.txt
+    # (e.g., "lv" for heart, "!" for exclamation, "ho" for delight, "heh" for grin).
+    # The Temporal layer should send the command string, not a numeric ID.
+    my $emote_cmd = $params->{emote_command} // $params->{emote_id};
+    unless (defined $emote_cmd && length($emote_cmd) > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "emote: 'emote_command' param is required (e.g., 'lv', '!', 'ho')");
         return;
     }
 
-    $emote_id = $self->_sanitize($emote_id, 20);
-    eval { Commands::run("e $emote_id") };
+    $emote_cmd = $self->_sanitize($emote_cmd, 20);
+    eval { Commands::run("e $emote_cmd") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed emote");
 }
@@ -440,13 +478,16 @@ sub _cmd_emote {
 sub _cmd_flee {
     my ($self, $id, $params) = @_;
 
+    # Uses OpenKore's teleport command which requires Fly Wings in inventory.
+    # If no Fly Wings are available, the teleport will silently fail.
+
     # Clear current combat/movement actions so the bot stops fighting
     eval {
         AI::clear('attack');
         AI::clear('route');
     };
 
-    eval { Commands::run("teleport") };
+    eval { Commands::run("tele") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed flee");
 }
@@ -454,6 +495,9 @@ sub _cmd_flee {
 sub _cmd_buy {
     my ($self, $id, $params) = @_;
 
+    # PREREQUISITE: NPC store dialog must be open before calling this action.
+    # The Temporal workflow should send npc_talk + npc_respond first to navigate
+    # to the buy screen. This handler executes the actual purchase.
     my $item_index = $params->{item_index};
     my $quantity   = $params->{quantity} // 1;
 
@@ -474,6 +518,9 @@ sub _cmd_buy {
 sub _cmd_sell {
     my ($self, $id, $params) = @_;
 
+    # PREREQUISITE: NPC sell dialog must be open before calling this action.
+    # The Temporal workflow should send npc_talk + npc_respond first to navigate
+    # to the sell screen. This handler adds the item and finalizes the sale.
     my $item_index = $params->{item_index};
     my $quantity   = $params->{quantity} // 1;
 
