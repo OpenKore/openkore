@@ -1,0 +1,4 @@
+# AI Village items control — managed by AIVillageBridge::ConfigUpdater
+# Format: <item_name> <keep> <storage> <sell>
+# This file is overwritten at runtime by config_update messages from the sidecar.
+# Do not edit manually while the bot is running.
