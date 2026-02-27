@@ -224,6 +224,7 @@ route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_maxNpcTries 5
 route_teleport 0
+route_teleport_onMap 0
 route_teleport_minDistance 75
 route_teleport_maxTries 8
 route_teleport_notInMaps
