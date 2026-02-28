@@ -34,6 +34,19 @@ my %SUPPORTED_ACTIONS = map { $_ => 1 } qw(
     flee
     buy
     sell
+    party_chat
+    party_create
+    party_invite_player
+    party_accept
+    party_decline
+    party_leave
+    deal_initiate
+    deal_accept
+    deal_decline
+    deal_add_item
+    deal_add_zeny
+    deal_finalize
+    deal_cancel
 );
 
 ##
@@ -173,8 +186,21 @@ sub _execute {
         npc_respond => \&_cmd_npc_respond,
         emote       => \&_cmd_emote,
         flee        => \&_cmd_flee,
-        buy         => \&_cmd_buy,
-        sell        => \&_cmd_sell,
+        buy                 => \&_cmd_buy,
+        sell                => \&_cmd_sell,
+        party_chat          => \&_cmd_party_chat,
+        party_create        => \&_cmd_party_create,
+        party_invite_player => \&_cmd_party_invite_player,
+        party_accept        => \&_cmd_party_accept,
+        party_decline       => \&_cmd_party_decline,
+        party_leave         => \&_cmd_party_leave,
+        deal_initiate       => \&_cmd_deal_initiate,
+        deal_accept         => \&_cmd_deal_accept,
+        deal_decline        => \&_cmd_deal_decline,
+        deal_add_item       => \&_cmd_deal_add_item,
+        deal_add_zeny       => \&_cmd_deal_add_zeny,
+        deal_finalize       => \&_cmd_deal_finalize,
+        deal_cancel         => \&_cmd_deal_cancel,
     };
 
     my $handler = $dispatch->{$action};
@@ -539,6 +565,141 @@ sub _cmd_sell {
     eval { Commands::run("sell done") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed sell");
+}
+
+# --- Party commands ---
+
+sub _cmd_party_chat {
+    my ($self, $id, $params) = @_;
+    my $msg = $params->{message};
+    unless (defined $msg && length($msg) > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "party_chat: 'message' param is required");
+        return;
+    }
+    $msg = $self->_sanitize($msg, 80);
+    eval { Commands::run("p $msg") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed party_chat");
+}
+
+sub _cmd_party_create {
+    my ($self, $id, $params) = @_;
+    my $name = $params->{name};
+    unless (defined $name && length($name) > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "party_create: 'name' param is required");
+        return;
+    }
+    $name = $self->_sanitize($name, 24);
+    eval { Commands::run("party create \"$name\"") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed party_create");
+}
+
+sub _cmd_party_invite_player {
+    my ($self, $id, $params) = @_;
+    my $player = $params->{player};
+    unless (defined $player && length($player) > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "party_invite_player: 'player' param is required");
+        return;
+    }
+    $player = $self->_sanitize($player, 24);
+    eval { Commands::run("party request $player") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed party_invite_player");
+}
+
+sub _cmd_party_accept {
+    my ($self, $id, $params) = @_;
+    eval { Commands::run("party join 1") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed party_accept");
+}
+
+sub _cmd_party_decline {
+    my ($self, $id, $params) = @_;
+    eval { Commands::run("party join 0") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed party_decline");
+}
+
+sub _cmd_party_leave {
+    my ($self, $id, $params) = @_;
+    eval { Commands::run("party leave") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed party_leave");
+}
+
+# --- Trade (deal) commands ---
+
+sub _cmd_deal_initiate {
+    my ($self, $id, $params) = @_;
+    my $player = $params->{player};
+    unless (defined $player && length($player) > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "deal_initiate: 'player' param is required");
+        return;
+    }
+    $player = $self->_sanitize($player, 24);
+    eval { Commands::run("deal $player") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed deal_initiate");
+}
+
+sub _cmd_deal_accept {
+    my ($self, $id, $params) = @_;
+    eval { Commands::run("deal") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed deal_accept");
+}
+
+sub _cmd_deal_decline {
+    my ($self, $id, $params) = @_;
+    eval { Commands::run("deal no") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed deal_decline");
+}
+
+sub _cmd_deal_add_item {
+    my ($self, $id, $params) = @_;
+    my $item = $params->{item_name};
+    my $qty  = $params->{quantity} // 1;
+    unless (defined $item && length($item) > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "deal_add_item: 'item_name' param is required");
+        return;
+    }
+    unless ($qty =~ /^\d+$/ && $qty > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "deal_add_item: 'quantity' must be a positive integer");
+        return;
+    }
+    $item = $self->_sanitize($item, 100);
+    eval { Commands::run("deal add \"$item\" $qty") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed deal_add_item");
+}
+
+sub _cmd_deal_add_zeny {
+    my ($self, $id, $params) = @_;
+    my $amount = $params->{amount};
+    unless (defined $amount && $amount =~ /^\d+$/ && $amount > 0) {
+        $self->_send_error($id, 'INVALID_PARAMS', "deal_add_zeny: 'amount' must be a positive integer");
+        return;
+    }
+    eval { Commands::run("deal add z $amount") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed deal_add_zeny");
+}
+
+sub _cmd_deal_finalize {
+    my ($self, $id, $params) = @_;
+    eval { Commands::run("deal") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed deal_finalize");
+}
+
+sub _cmd_deal_cancel {
+    my ($self, $id, $params) = @_;
+    eval { Commands::run("deal no") };
+    if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
+    $self->_send_ack($id, "executed deal_cancel");
 }
 
 # --- Helpers ---
