@@ -246,7 +246,7 @@ sub _cmd_whisper {
 
     $player = $self->_sanitize($player, 24);
     $msg    = $self->_sanitize($msg, 80);
-    eval { Commands::run("pm \"$player\" $msg") };
+    eval { Commands::run("pm \"" . $self->_escape($player) . "\" $msg") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed whisper");
 }
@@ -590,7 +590,7 @@ sub _cmd_party_create {
         return;
     }
     $name = $self->_sanitize($name, 24);
-    eval { Commands::run("party create \"$name\"") };
+    eval { Commands::run("party create \"" . $self->_escape($name) . "\"") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed party_create");
 }
@@ -639,7 +639,7 @@ sub _cmd_deal_initiate {
         return;
     }
     $player = $self->_sanitize($player, 24);
-    eval { Commands::run("deal $player") };
+    eval { Commands::run("deal \"" . $self->_escape($player) . "\"") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed deal_initiate");
 }
@@ -671,7 +671,7 @@ sub _cmd_deal_add_item {
         return;
     }
     $item = $self->_sanitize($item, 100);
-    eval { Commands::run("deal add \"$item\" $qty") };
+    eval { Commands::run("deal add \"" . $self->_escape($item) . "\" $qty") };
     if ($@) { $self->_send_error($id, 'EXECUTION_FAILED', $@); return; }
     $self->_send_ack($id, "executed deal_add_item");
 }
@@ -703,6 +703,19 @@ sub _cmd_deal_cancel {
 }
 
 # --- Helpers ---
+
+##
+# $exec->_escape($str) -> string
+#
+# Escape backslashes and double-quotes so the string is safe to interpolate
+# inside a double-quoted argument to Commands::run().
+##
+sub _escape {
+    my ($self, $str) = @_;
+    $str =~ s/\\/\\\\/g;
+    $str =~ s/"/\\"/g;
+    return $str;
+}
 
 ##
 # $exec->_sanitize($str, $max_len) -> string
