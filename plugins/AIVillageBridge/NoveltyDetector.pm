@@ -24,7 +24,7 @@ use constant CONTEXT_TTL => 3600;
 # new(%args)
 # Args:
 #   player_familiar_threshold  => encounters before player is "familiar" (default 5)
-#   monster_familiar_threshold => kills before monster type is "routine"  (default 10)
+#   monster_familiar_threshold => sightings/kills before monster type is "routine" (default 10)
 #   map_familiar_threshold     => visits before map is "known"            (default 3)
 #   npc_familiar_threshold     => interactions before NPC is "known"      (default 2)
 sub new {
@@ -386,6 +386,7 @@ sub track_monster_kill {
 
     if (!exists $self->{seen_monsters}{$key}) {
         $self->_init_monster($key, $now);
+        $self->{seen_monsters}{$key}{last_killed} = $now;
     }
     else {
         $self->{seen_monsters}{$key}{count}++;
@@ -556,7 +557,7 @@ sub _init_monster {
         count       => 1,
         first_seen  => $now,
         last_seen   => $now,
-        last_killed => $now,
+        last_killed => 0,
     };
 }
 

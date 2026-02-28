@@ -672,7 +672,8 @@ sub onMonsterExist {
             map   => ($field ? $field->name() : ''),
         };
         _emit_event('monster_exist', AIVillageBridge::Protocol::PRIORITY_LOW, $data, 0);
-        $novelty->track_monster($data->{name}, $data->{map});
+        $novelty->track_monster($data->{name}, $data->{map})
+            if $data->{name} && $data->{name} ne 'unknown';
     };
     error "[AIVillageBridge] onMonsterExist error: $@\n" if $@;
 }
