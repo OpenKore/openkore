@@ -478,8 +478,8 @@ sub onPubMsg {
                 ? { x => $char->{pos_to}{x} || 0, y => $char->{pos_to}{y} || 0 }
                 : { x => 0, y => 0 }),
         };
-        $novelty->track_player($data->{user}) if $data->{user};
         _emit_event('pub_msg', AIVillageBridge::Protocol::PRIORITY_HIGH, $data, 0);
+        $novelty->track_player($data->{user}) if $data->{user};
     };
     error "[AIVillageBridge] onPubMsg error: $@\n" if $@;
 }
@@ -492,8 +492,8 @@ sub onPrivMsg {
             user => $args->{privMsgUser} || '',
             msg  => $args->{privMsg}     || '',
         };
-        $novelty->track_player($data->{user}) if $data->{user};
         _emit_event('priv_msg', AIVillageBridge::Protocol::PRIORITY_HIGH, $data, 0);
+        $novelty->track_player($data->{user}) if $data->{user};
     };
     error "[AIVillageBridge] onPrivMsg error: $@\n" if $@;
 }
@@ -538,8 +538,8 @@ sub onTargetDied {
         my $map  = $field ? $field->name() : '';
         my $name = $monster->{name} || 'unknown';
         my $data = { name => $name, map => $map };
-        $novelty->track_monster_kill($name, $map);
         _emit_event('target_died', AIVillageBridge::Protocol::PRIORITY_MEDIUM, $data, 0);
+        $novelty->track_monster_kill($name, $map);
     };
     error "[AIVillageBridge] onTargetDied error: $@\n" if $@;
 }
@@ -553,13 +553,13 @@ sub onMapChanged {
         my $old_map = $args->{oldMap} || '';
         my $new_map = ($char && $char->{map}) ? $char->{map}
                     : ($field ? $field->name() : '');
-        $novelty->track_map_visit($new_map) if $new_map;
         my $data = {
             old_map => $old_map,
             new_map => $new_map,
             map     => $new_map,   # alias for NoveltyDetector familiarity check
         };
         _emit_event('map_changed', AIVillageBridge::Protocol::PRIORITY_MEDIUM, $data, 0);
+        $novelty->track_map_visit($new_map) if $new_map;
     };
     error "[AIVillageBridge] onMapChanged error: $@\n" if $@;
 }
@@ -570,7 +570,6 @@ sub onNpcTalk {
     eval {
         my $npc_id = $args->{ID} ? unpack('H*', $args->{ID}) : '';
         my $map    = $field ? $field->name() : '';
-        $novelty->track_npc($npc_id, $map) if $npc_id;
         my $data = {
             npc_id => $npc_id,
             id     => $npc_id,   # alias for NoveltyDetector NPC key
@@ -578,6 +577,7 @@ sub onNpcTalk {
             map    => $map,
         };
         _emit_event('npc_talk', AIVillageBridge::Protocol::PRIORITY_MEDIUM, $data, 0);
+        $novelty->track_npc($npc_id, $map) if $npc_id;
     };
     error "[AIVillageBridge] onNpcTalk error: $@\n" if $@;
 }
@@ -625,7 +625,6 @@ sub onPlayerExist {
         my $player = $args->{player};
         return unless $player;
         my $name = $player->{name} || '';
-        $novelty->track_player($name) if $name;
         my $job_id  = $player->{jobID};
         my $job_str = defined($job_id)
             ? ($::jobs_lut{$job_id} || "Job $job_id")
@@ -639,6 +638,7 @@ sub onPlayerExist {
                         : { x => 0, y => 0 },
         };
         _emit_event('player_exist', AIVillageBridge::Protocol::PRIORITY_LOW, $data, 0);
+        $novelty->track_player($name) if $name;
     };
     error "[AIVillageBridge] onPlayerExist error: $@\n" if $@;
 }
@@ -672,6 +672,7 @@ sub onMonsterExist {
             map   => ($field ? $field->name() : ''),
         };
         _emit_event('monster_exist', AIVillageBridge::Protocol::PRIORITY_LOW, $data, 0);
+        $novelty->track_monster($data->{name}, $data->{map});
     };
     error "[AIVillageBridge] onMonsterExist error: $@\n" if $@;
 }

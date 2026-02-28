@@ -41,7 +41,7 @@ sub new {
 
         # Context tracking hashes
         seen_players     => {},   # player_name => {count, first_seen, last_seen}
-        seen_monsters    => {},   # "type:map"  => {count, first_seen, last_killed}
+        seen_monsters    => {},   # "type:map"  => {count, first_seen, last_seen, last_killed}
         visited_maps     => {},   # map_name    => {count, first_visit, last_visit}
         npc_interactions => {},   # "id:map"    => {count, last_interaction}
 
@@ -355,6 +355,25 @@ sub track_player {
     }
 }
 
+# track_monster($monster_type, $map)
+# Increments the sighting count for a monster type on a specific map.
+sub track_monster {
+    my ($self, $monster_type, $map) = @_;
+    return unless defined $monster_type && $monster_type ne '';
+
+    $map //= '';
+    my $key = "$monster_type:$map";
+    my $now = time();
+
+    if (!exists $self->{seen_monsters}{$key}) {
+        $self->_init_monster($key, $now);
+    }
+    else {
+        $self->{seen_monsters}{$key}{count}++;
+        $self->{seen_monsters}{$key}{last_seen} = $now;
+    }
+}
+
 # track_monster_kill($monster_type, $map)
 # Increments the kill count for a monster type on a specific map.
 sub track_monster_kill {
@@ -370,6 +389,7 @@ sub track_monster_kill {
     }
     else {
         $self->{seen_monsters}{$key}{count}++;
+        $self->{seen_monsters}{$key}{last_seen}   = $now;
         $self->{seen_monsters}{$key}{last_killed} = $now;
     }
 }
@@ -445,7 +465,7 @@ sub cleanup_context {
     my $max     = MAX_CONTEXT_ENTRIES;
 
     $self->{seen_players}     = _prune_hash($self->{seen_players},     $now, $expiry, $max, 'last_seen');
-    $self->{seen_monsters}    = _prune_hash($self->{seen_monsters},    $now, $expiry, $max, 'last_killed');
+    $self->{seen_monsters}    = _prune_hash($self->{seen_monsters},    $now, $expiry, $max, 'last_seen');
     $self->{visited_maps}     = _prune_hash($self->{visited_maps},     $now, $expiry, $max, 'last_visit');
     $self->{npc_interactions} = _prune_hash($self->{npc_interactions}, $now, $expiry, $max, 'last_interaction');
 
@@ -535,6 +555,7 @@ sub _init_monster {
     $self->{seen_monsters}{$key} = {
         count       => 1,
         first_seen  => $now,
+        last_seen   => $now,
         last_killed => $now,
     };
 }
