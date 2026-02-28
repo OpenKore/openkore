@@ -92,7 +92,8 @@ sub should_send {
     # ------------------------------------------------------------------
     if (exists $DEDUP_WINDOWS{$event_type}) {
         my $window    = $DEDUP_WINDOWS{$event_type};
-        my $last_seen = $self->{dedup_cache}{$dedup_key};
+        my $cache_key = "$event_type:$dedup_key";
+        my $last_seen = $self->{dedup_cache}{$cache_key};
 
         if (defined $last_seen && (time() - $last_seen) < $window) {
             debug("[AIVillageBridge::EventFilter] Dedup drop: type=$event_type key=$dedup_key\n");
@@ -101,7 +102,7 @@ sub should_send {
         }
 
         # Update last-seen timestamp
-        $self->{dedup_cache}{$dedup_key} = time();
+        $self->{dedup_cache}{$cache_key} = time();
     }
 
     # ------------------------------------------------------------------
