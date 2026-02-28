@@ -1,0 +1,4 @@
+# AI Village monster control — managed by AIVillageBridge::ConfigUpdater
+# Format: <monster_name> <attack_auto> <teleport_auto> <party_auto>
+# This file is overwritten at runtime by config_update messages from the sidecar.
+# Do not edit manually while the bot is running.
