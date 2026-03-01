@@ -3443,9 +3443,16 @@ sub updateDamageTables {
 						$monster, $player, $config{$player->{configPrefix}.'teleportAuto_maxDmgInLock'}), "teleport";
 					$teleport = 1;
 
-				} elsif (AI::inQueue("sitAuto") && $config{$player->{configPrefix}.'teleportAuto_attackedWhenSitting'}
+				} elsif (AI::inQueue("sitAuto")
+							&& $config{$player->{configPrefix}.'teleportAuto_attackedWhenSitting'} == 1
 							&& $damage) {
 					message TF("%s hit %s while you are sitting. Teleporting...\n",
+						$monster, $player), "teleport";
+					$teleport = 1;
+
+				} elsif (AI::inQueue("sitAuto")
+							&& $config{$player->{configPrefix}.'teleportAuto_attackedWhenSitting'} == 2) {
+					message TF("%s attacked %s while you are sitting. Teleporting...\n",
 						$monster, $player), "teleport";
 					$teleport = 1;
 
