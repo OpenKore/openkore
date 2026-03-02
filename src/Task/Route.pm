@@ -35,7 +35,7 @@ use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding);
+use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding existsInList);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -203,15 +203,68 @@ sub iterate {
 		debug "Route $self->{actor} - we spent too much time; bailing out.\n", "route";
 		$self->setError(TOO_MUCH_TIME, "Too much time spent on walking.");
 
-	} elsif ($field->baseName ne $self->{dest}{map}->baseName || $self->{mapChanged}) {
+	} elsif ($field->baseName ne $self->{dest}{map}->baseName) {
 		debug "Map changed: ".$self->{dest}{map}->baseName." -> ".$field->baseName."\n", "route";
 		$self->setDone();
+		
+	} elsif ($self->{mapChanged}) {
+		debug "Route $self->{actor}: Map changed within same map; recalculating route.\n", "route";
+		undef $self->{sentTeleport};
+		undef $self->{mapChanged};
+		$self->resetRoute();
 
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};
 		my $pos_to = $self->{actor}{pos_to};
 		
 		my $calc_pos = calcPosFromPathfinding($field, $self->{actor});
+
+		my $walk = 1;
+		if ($config{route_teleport} == 2
+			&& !$self->{isRandomWalk}
+			&& !$self->{disableOnMapTeleport}
+			&& !$field->isCity
+			&& !existsInList($config{route_teleport_notInMaps}, $field->baseName)
+			&& (!$config{route_teleport_maxTries} || $self->{teleportTries} <= $config{route_teleport_maxTries})) {
+			my $minDist = $config{route_teleport_minDistance};
+
+			if ($self->{mapChanged}) {
+				undef $self->{sentTeleport};
+				undef $self->{mapChanged};
+			}
+
+			if (!$self->{sentTeleport}) {
+				my $dist = new PathFinding(
+					start => $self->{actor}{pos_to},
+					dest => $self->{dest}{pos},
+					field => $field
+				)->runcount;
+				debug "Distance to destination ($self->{dest}{pos}{x},$self->{dest}{pos}{y}) is $dist\n", "route";
+
+				if ($dist < 0 || $dist > $minDist) {
+					if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
+						debug "Teleported $config{route_teleport_maxTries} times on same-map route. Falling back to walking.\n", "route";
+					} else {
+						message TF("Attempting to teleport near destination, try #%s\n", ($self->{teleportTries} + 1)), "route";
+						if (!canUseTeleport(1)) {
+							$self->{disableOnMapTeleport} = 1;
+						} else {
+							ai_useTeleport(1);
+							$walk = 0;
+							$self->{sentTeleport} = 1;
+							$self->{teleportTime} = time;
+							$self->{teleportTries}++;
+						}
+					}
+				}
+			} elsif (timeOut($self->{teleportTime}, 4)) {
+				debug "Unable to teleport; falling back to walking.\n", "route";
+				$self->{disableOnMapTeleport} = 1;
+			} else {
+				$walk = 0;
+			}
+		}
+		return unless $walk;
 		
 		debug "Route $self->{actor}: Calculating. Your pos ($pos->{x} $pos->{y}). Your pos_to ($pos_to->{x} $pos_to->{y}). calcPosFromPathfinding ($calc_pos->{x} $calc_pos->{y})\n", "route";
 		
