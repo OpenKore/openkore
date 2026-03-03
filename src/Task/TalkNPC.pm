@@ -531,6 +531,34 @@ sub iterate {
 		# Initiate NPC conversation.
 		} elsif ( $step =~ /^x/i ) {
 			debug "$self->{target}: Initiating the talk\n", "ai_npcTalk";
+			
+			my $target_pos = $self->{target} ? ($self->{target}{pos} || $self->{target}{pos_to}) : undef;
+			my $char_pos = $char->{pos} || $char->{pos_to};
+			if ($target_pos && $char_pos) {
+				my %vec;
+				getVector(\%vec, $target_pos, $char_pos);
+				my $target_body = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+
+				my $body = $char->{look}{body};
+				my $head = 0;
+				my $offset = ($target_body - $body + 8) % 8;
+				$offset -= 8 if ($offset > 4);
+
+				if ($offset != 0) {
+					if (abs($offset) <= 1) {
+						$head = $offset > 0 ? 2 : 1;
+					} else {
+						my $step = $offset > 0 ? 1 : -1;
+						$body = ($target_body - $step + 8) % 8;
+						$head = $step > 0 ? 2 : 1;
+					}
+				}
+
+				if ($body != $char->{look}{body} || $head != $char->{look}{head}) {
+					$messageSender->sendLook($body, $head);
+				}
+			}
+
 			$self->{target}->sendTalk;
 
 		# Select an answer
