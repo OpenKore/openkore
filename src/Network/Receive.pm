@@ -1256,6 +1256,7 @@ sub map_loaded {
 	# assertClass($char, 'Actor::You');
 	$syncMapSync = pack('V1',$args->{syncMapSync}); # unused, should we keep this for legacy compatibility?
 	main::initMapChangeVars();
+	%minimap_indicator_seen = ();
 
 	if ($net->version == 1) {
 		$net->setState(4);
@@ -3067,6 +3068,22 @@ sub homunculus_info {
 # Minimap indicator.
 sub minimap_indicator {
 	my ($self, $args) = @_;
+	
+	my $marker_type = defined $args->{type}
+		? "type:$args->{type}"
+		: "effect:" . (defined $args->{effect} ? $args->{effect} : '-');
+	my $marker_key = join(':',
+		$args->{show} ? 1 : 0,
+		$marker_type,
+		map { defined $_ ? $_ : '-' } @{$args}{qw(x y red green blue alpha)}
+	);
+
+	if ($minimap_indicator_seen{$marker_key}) {
+			$marker_key,
+			unpack('V1', $args->{npcID})), 'parseMsg';
+		return;
+	}
+	$minimap_indicator_seen{$marker_key} = 1;
 
 	my $color_str = "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]";
 	my $indicator = T("minimap indicator");
@@ -3087,11 +3104,11 @@ sub minimap_indicator {
 	if ($args->{show}) {
 		message TF("%s shown %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
-		'effect';
+		'minimap_indicator';
 	} else {
 		message TF("%s cleared %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
-		'effect';
+		'minimap_indicator';
 	}
 }
 
@@ -7216,6 +7233,7 @@ sub map_change {
 	}
 
 	main::initMapChangeVars();
+	%minimap_indicator_seen = ();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
@@ -7289,6 +7307,7 @@ sub map_changed {
 
 	undef $conState_tries;
 	main::initMapChangeVars();
+	%minimap_indicator_seen = ();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
