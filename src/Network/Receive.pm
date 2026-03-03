@@ -3079,8 +3079,6 @@ sub minimap_indicator {
 	);
 
 	if ($minimap_indicator_seen{$marker_key}) {
-			$marker_key,
-			unpack('V1', $args->{npcID})), 'parseMsg';
 		return;
 	}
 	$minimap_indicator_seen{$marker_key} = 1;
