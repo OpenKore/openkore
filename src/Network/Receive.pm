@@ -1256,6 +1256,7 @@ sub map_loaded {
 	# assertClass($char, 'Actor::You');
 	$syncMapSync = pack('V1',$args->{syncMapSync}); # unused, should we keep this for legacy compatibility?
 	main::initMapChangeVars();
+	$ai_v{minimap_indicator_context_time} = time;
 
 	if ($net->version == 1) {
 		$net->setState(4);
@@ -3067,7 +3068,22 @@ sub homunculus_info {
 # Minimap indicator.
 sub minimap_indicator {
 	my ($self, $args) = @_;
+	
+	my $is_recent_map_change = $ai_v{minimap_indicator_context_time}
+		&& !timeOut($ai_v{minimap_indicator_context_time}, 12);
+	my $is_npc_dialog_context = $ai_v{'npc_talk'} && $ai_v{'npc_talk'}{'time'}
+		&& !timeOut($ai_v{'npc_talk'}{'time'}, 8)
+		&& $talk{ID} && $args->{npcID} && $talk{ID} eq $args->{npcID};
 
+	unless ($is_recent_map_change || $is_npc_dialog_context) {
+		debug TF("Ignoring minimap indicator packet outside map change/matching NPC dialog context (npcID=%s, type=%s, effect=%s, show=%s)\n",
+			unpack('V1', $args->{npcID}),
+			defined $args->{type} ? $args->{type} : '-',
+			defined $args->{effect} ? $args->{effect} : '-',
+			$args->{show}), 'parseMsg';
+		return;
+	}
+	
 	my $color_str = "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]";
 	my $indicator = T("minimap indicator");
 	if (defined $args->{type}) {
@@ -7221,6 +7237,7 @@ sub map_change {
 	}
 	AI::SlaveManager::setMapChanged ();
 	$ai_v{portalTrace_mapChanged} = time;
+	$ai_v{minimap_indicator_context_time} = time;
 
 	my %coords = (
 		x => $args->{x},
@@ -7294,6 +7311,7 @@ sub map_changed {
 	}
 	AI::SlaveManager::setMapChanged ();
 	$ai_v{portalTrace_mapChanged} = time;
+	$ai_v{minimap_indicator_context_time} = time;
 
 	if ($args->{'url'} =~ /.*\:\d+/) {
 		$map_ip = $args->{url};
