@@ -413,6 +413,11 @@ sub processClientSuspend {
 }
 
 sub processLook {
+	if ($ai_v{sitAuto_scheduledLook} && time >= $ai_v{sitAuto_scheduledLook}{due}) {
+		my $scheduledLook = delete $ai_v{sitAuto_scheduledLook};
+		Misc::look($scheduledLook->{body}, $scheduledLook->{head});
+	}
+	
 	if (AI::action eq "look" && timeOut($timeout{'ai_look'})) {
 		$timeout{'ai_look'}{'time'} = time;
 		$messageSender->sendLook(AI::args->{'look_body'}, AI::args->{'look_head'});

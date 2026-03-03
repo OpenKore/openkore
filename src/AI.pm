@@ -758,27 +758,52 @@ sub sit {
 	require Task::SitStand;
 	my $task = new Task::SitStand(actor => $char, mode => 'sit', wait => $timeout{ai_sit_wait}{timeout});
 	AI::queue("sitting", $task);
+	my $lookDelay = $config{sitAuto_look_delay};
+	$lookDelay = 0 if (!defined $lookDelay || $lookDelay < 0);
+	delete $ai_v{sitAuto_pendingLook};
 	if (defined $config{sitAuto_look} && !$config{sitAuto_look_from_wall}) {
-		Misc::look($config{sitAuto_look});
+		$ai_v{sitAuto_pendingLook} = { body => $config{sitAuto_look}, delay => $lookDelay };
 	} elsif (defined $config{sitAuto_look} && $config{sitAuto_look_from_wall}) {
-		my $sitAutoLook = $config{sitAuto_look};
 		my $wallRange = $config{sitAuto_look_from_wall};
-		for (my $i=1;$i<=$wallRange;$i++) {
-			if ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}+$wallRange) && $sitAutoLook == 0)
-			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}+$wallRange) && $sitAutoLook == 1)
-			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}) && $sitAutoLook == 2)
-			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}-$wallRange) && $sitAutoLook == 3)
-			  ) {
-				$sitAutoLook += 4;
-			} elsif ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}-$wallRange) && $sitAutoLook == 4)
-			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}-$wallRange) && $sitAutoLook == 5)
-			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}) && $sitAutoLook == 6)
-			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}+$wallRange) && $sitAutoLook == 7)
-			  ) {
-				$sitAutoLook -= 4;
+		my $defaultLook = $config{sitAuto_look};
+		my $closestDistance;
+		my @closestWalls;
+		for (my $dx = -$wallRange; $dx <= $wallRange; $dx++) {
+			for (my $dy = -$wallRange; $dy <= $wallRange; $dy++) {
+				next if $dx == 0 && $dy == 0;
+				my $candidate = { x => $char->{pos}{x} + $dx, y => $char->{pos}{y} + $dy };
+				next if $field->isWalkable($candidate->{x}, $candidate->{y});
+				my $distance = Utils::distance($candidate, $char->{pos});
+				if (!defined $closestDistance || $distance < $closestDistance) {
+					$closestDistance = $distance;
+					@closestWalls = ($candidate);
+				} elsif (defined $closestDistance && $distance == $closestDistance) {
+					push @closestWalls, $candidate;
+				}
 			}
 		}
-		Misc::look($sitAutoLook);
+
+		if (@closestWalls) {
+			my $referenceWall = $closestWalls[int(rand(@closestWalls))];
+			my %vec;
+			Utils::getVector(\%vec, $referenceWall, $char->{pos});
+			my $direction = int(sprintf("%.0f", (360 - Utils::vectorToDegree(\%vec)) / 45)) % 8;
+			$direction = ($direction + 4) % 8;
+
+			my $bodyDirection;
+			my $headDirection;
+			if (rand() < 0.5) {
+				$bodyDirection = ($direction + 1) % 8;
+				$headDirection = 1; # look right relative to body
+			} else {
+				$bodyDirection = ($direction + 7) % 8;
+				$headDirection = 2; # look left relative to body
+			}
+
+			$ai_v{sitAuto_pendingLook} = { body => $bodyDirection, head => $headDirection, delay => $lookDelay };
+		} else {
+			$ai_v{sitAuto_pendingLook} = { body => $defaultLook, delay => $lookDelay };
+		}
 	}
 }
 

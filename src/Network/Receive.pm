@@ -2604,6 +2604,22 @@ sub actor_action {
 		if ($args->{sourceID} eq $accountID) {
 			message T("You are sitting.\n") if (!$char->{sitting});
 			$char->{sitting} = 1;
+			if ($ai_v{sitAuto_pendingLook}) {
+				my $pendingLook = delete $ai_v{sitAuto_pendingLook};
+				delete $ai_v{sitAuto_scheduledLook};
+				my $delay = ($pendingLook->{delay} && $pendingLook->{delay} > 0) ? $pendingLook->{delay} : 0;
+				if ($delay > 0) {
+					$ai_v{sitAuto_scheduledLook} = {
+						due => time + $delay,
+						body => $pendingLook->{body},
+						head => $pendingLook->{head},
+					};
+				} elsif (defined $pendingLook->{head}) {
+					Misc::look($pendingLook->{body}, $pendingLook->{head});
+				} elsif (defined $pendingLook->{body}) {
+					Misc::look($pendingLook->{body});
+				}
+			}
 			AI::queue("sitAuto") unless (AI::inQueue("sitAuto")) || $ai_v{sitAuto_forcedBySitCommand};
 		} else {
 			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
