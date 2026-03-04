@@ -1,0 +1,908 @@
+achievement_tbl = {
+	[300000] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Tesouro dos Céus!",
+		content = {
+			summary = "Receba uma recompensa especial caída do céu.",
+			details = "Benefícios do Título\n\t- VIT +3\n\t- HIT +5\n\nPrepare-se para ser agraciado com um presente celestial! Ao conquistar este título, você será recompensado com um bônus que vai elevar suas habilidades a um novo patamar. Não perca a chance de brilhar como nunca antes!"
+		},
+		resource = {},
+		reward = { title = 1048 },
+		score = 10
+	},
+	[300001] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Herói do Bronze",
+		content = {
+			summary = "Adquira o Pacote de Pré-venda Bronze",
+			details = "O título 'Glória' está disponível para os jogadores que adquiriram o Pacote de Pré-venda Bronze.\nBenefícios do Título\n\t- Todos os Stats +1"
+		},
+		resource = {},
+		reward = { title = 1049 },
+		score = 10
+	},
+	[300002] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Guardião de Midgard",
+		content = {
+			summary = "Adquira o Pacote de Pré-venda Nível Prata.",
+			details = "O título 'Guardião de Midgard' está disponível para os jogadores que adquirirem o Pacote de Pré-venda Nível Prata.\nBenefícios do Título\n\t- Todos os Stats +1"
+		},
+		resource = {},
+		reward = { title = 1050 },
+		score = 10
+	},
+	[300003] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Nobreza Suprema",
+		content = {
+			summary = "Adquira o Pacote de Pré-venda Ouro para desbloquear este título.",
+			details = "O título 'Nobreza Suprema' é concedido aos jogadores que adquiriram o Pacote de Pré-venda Ouro.\nBenefícios do Título\n\t- Todos os Stats +3"
+		},
+		resource = {},
+		reward = { title = 1051 },
+		score = 10
+	},
+	[300004] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Apoiador Lendário da Pré-venda",
+		content = {
+			summary = "Adquira o Pacote de Pré-venda Lendário",
+			details = "O título 'Fundador' está disponível para os jogadores que compraram o Pacote de Pré-venda Lendário.\nBenefícios do Título\n\t- Todos os Stats +5"
+		},
+		resource = {},
+		reward = { title = 1052 },
+		score = 10
+	},
+	[300005] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Pioneiro de Midgard",
+		content = {
+			summary = "Participou do CBT1 e alcançou o nível 60.",
+			details = "O título 'Pioneiro de Midgard' é reservado para os bravos aventureiros que desbravaram o CBT1 e chegaram ao nível 60. Mostre ao mundo que você foi um dos primeiros a explorar as terras de Midgard!\nBenefícios do Título\n\t- [lista de benefícios]"
+		},
+		resource = {},
+		reward = { title = 1053 },
+		score = 10
+	},
+	[300006] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Pioneiro Lendário",
+		content = {
+			summary = "Participou do CBT1 e alcançou o nível 90.",
+			details = "O título 'Beta Tester' é uma honra reservada aos bravos que desbravaram o CBT1 e chegaram ao nível 90. Mostre ao mundo que você foi um dos primeiros a explorar as terras de Midgard!\nBenefícios do Título\n\t- Exclusivo para os pioneiros do CBT1"
+		},
+		resource = {},
+		reward = { title = 1054 },
+		score = 10
+	},
+	[300007] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Mestre da Segurança",
+		content = {
+			summary = "Recompensa do Passe de Batalha SSI na Etapa 19",
+			details = "O título 'Mestre da Segurança' está disponível para os jogadores que alcançarem a Etapa 19 do Passe de Batalha SSI.\nBenefícios do Título\n\t- Todos os Stats +3"
+		},
+		resource = {},
+		reward = { title = 1055 },
+		score = 10
+	},
+	[300008] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Assassino Supremo",
+		content = {
+			summary = "Conquiste o topo no Evento Corrida de Níveis.",
+			details = "O título 'Assassino Supremo' é reservado para aqueles que alcançam a vitória no Evento Corrida de Níveis.\nBenefícios do Título\n\t- Nenhum, mas a glória é sua!"
+		},
+		resource = {},
+		reward = { title = 1056 },
+		score = 10
+	},
+	[300009] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Caçador Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título 'Caçador Supremo' é reservado para os jogadores que alcançam o topo no Evento Corrida de Níveis. Mostre a todos que você é o melhor dos melhores!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1057 },
+		score = 10
+	},
+	[300010] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Cavaleiro Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título 'Cavaleiro Supremo' é reservado para aqueles que alcançam o topo no Evento Corrida de Níveis. Mostre sua força e determinação para ser o número um!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1058 },
+		score = 10
+	},
+	[300011] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Sacerdote Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título 'Sacerdote Supremo' é reservado para aqueles que alcançam o topo no Evento Corrida de Níveis. Mostre seu poder e dedicação para ser o número 1!\nBenefícios do Título\n\t- Nenhum, além da glória eterna!"
+		},
+		resource = {},
+		reward = { title = 1059 },
+		score = 10
+	},
+	[300012] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Ferreiro Supremo",
+		content = {
+			summary = "Conquiste o topo no Evento Corrida de Níveis como Ferreiro.",
+			details = "O título 'Ferreiro Supremo' é reservado aos jogadores que alcançam o primeiro lugar no Evento Corrida de Níveis. Mostre sua habilidade e determinação para se tornar o melhor entre os ferreiros!\nBenefícios do Título\n\t- Nenhum, além da glória eterna!"
+		},
+		resource = {},
+		reward = { title = 1060 },
+		score = 10
+	},
+	[300013] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Arquimago Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título de 'Arquimago Supremo' é reservado para os jogadores que alcançam o topo no Evento Corrida de Níveis. Mostre seu poder e torne-se uma lenda entre os magos!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1061 },
+		score = 10
+	},
+	[300014] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Senhor das Terras I",
+		content = {
+			summary = "Conquiste o primeiro nível de propriedade de terras.",
+			details = "Alcance o primeiro patamar de domínio territorial e mostre seu poder em Midgard!\nBenefícios do Título\n\t- Todos os Stats + 3"
+		},
+		resource = {},
+		reward = { title = 1062 },
+		score = 0
+	},
+	[300015] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Senhor das Terras II",
+		content = {
+			summary = "Conquiste o segundo nível de domínio sobre suas terras.",
+			details = "Alcance o domínio absoluto sobre suas terras e desbloqueie o poder do segundo nível! \nBenefícios do Título\n\t- Todos os Stats + 4"
+		},
+		resource = {},
+		reward = { title = 1063 },
+		score = 0
+	},
+	[300016] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Senhor das Terras III",
+		content = {
+			summary = "Conquista o terceiro nível de domínio territorial.",
+			details = "Eleve seu status ao máximo e torne-se o verdadeiro Senhor das Terras! Alcance o nível 3 de propriedade e colha os frutos do seu império.\nBenefícios do Título\n\t- Todos os Stats + 5"
+		},
+		resource = {},
+		reward = { title = 1064 },
+		score = 0
+	},
+	[300017] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Mordida Glacial",
+		content = {
+			summary = "Obtenha o título 'Mordida Glacial' ao alcançar o Step-19 do Passe de Batalha - Premium SS II.",
+			details = "Desperte o poder do gelo e conquiste o título 'Mordida Glacial' ao atingir o Step-19 do Passe de Batalha - Premium SS II. \nBenefícios do Título\n\t- Todos os Stats +3"
+		},
+		resource = {},
+		reward = { title = 1065 },
+		score = 0
+	},
+	[300018] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "O Desbravador",
+		content = {
+			summary = "Conquista disponível para jogadores que possuem o Pacote Inicial 2-2.",
+			details = "O título 'O Desbravador' é reservado para aqueles que iniciam sua jornada com o Pacote Inicial 2-2. Mostre ao mundo que você está pronto para enfrentar qualquer desafio!\nBenefícios do Título\n\t- Todos os Stats +1\n\t- Exp & Drop +3%"
+		},
+		resource = {},
+		reward = { title = 1066 },
+		score = 0
+	},
+	[300019] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Monge Supremo",
+		content = {
+			summary = "Conquiste o primeiro lugar no Evento Corrida de Níveis.",
+			details = "O título 'Monge Supremo' é reservado para aqueles que alcançam o topo no Evento Corrida de Níveis. Mostre ao mundo que você é o melhor dos melhores!\nBenefícios do Título\n\t- Nenhum, além da glória eterna!"
+		},
+		resource = {},
+		reward = { title = 1067 },
+		score = 10
+	},
+	[300020] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Rogue Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título 'Rogue Supremo' é reservado para aqueles que alcançam o topo no Evento Corrida de Níveis. Mostre que você é o mais ágil e astuto de todos!\nBenefícios do Título\n\t- Nada (mas a glória é toda sua!)"
+		},
+		resource = {},
+		reward = { title = 1068 },
+		score = 10
+	},
+	[300021] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Alquimista Supremo",
+		content = {
+			summary = "Conquiste o topo no Evento Corrida de Níveis como Alquimista.",
+			details = "O título 'Alquimista Supremo' é reservado para aqueles que se destacam como vencedores no Evento Corrida de Níveis.\nBenefícios do Título\n\t- Nenhum, apenas a glória eterna!"
+		},
+		resource = {},
+		reward = { title = 1069 },
+		score = 10
+	},
+	[300022] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Maestro Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis como Bard ou Dancer.",
+			details = "O título 'Maestro Supremo' é reservado para aqueles que alcançam o topo no Evento Corrida de Níveis como Bard ou Dancer. Mostre que sua melodia é a mais poderosa de todas!\nBenefícios do Título\n\t- Nada, além da glória eterna!"
+		},
+		resource = {},
+		reward = { title = 1070 },
+		score = 10
+	},
+	[300023] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Sábio Supremo",
+		content = {
+			summary = "Conquiste o primeiro lugar no Evento Corrida de Níveis.",
+			details = "O título 'Sábio Supremo' é reservado para aqueles que alcançam o topo no Evento Corrida de Níveis. Mostre que você é o mestre dos níveis e conquiste seu lugar entre os lendários!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1071 },
+		score = 10
+	},
+	[300024] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Cruzado Supremo",
+		content = {
+			summary = "Conquiste o primeiro lugar no Evento Corrida de Níveis.",
+			details = "O título 'Cruzado Supremo' é concedido aos jogadores que triunfarem como vencedores do Evento Corrida de Níveis.\nBenefícios do Título\n\t- Nenhum, mas a glória é eterna!"
+		},
+		resource = {},
+		reward = { title = 1072 },
+		score = 10
+	},
+	[300025] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Rainha do Palco",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título 'Rainha do Palco' é concedido aos jogadores que se destacam como vencedores do Evento Corrida de Níveis.\nBenefícios do Título\n\t- Nenhum, mas a glória é toda sua!"
+		},
+		resource = {},
+		reward = { title = 1073 },
+		score = 10
+	},
+	[300026] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Arquitetor das Neves",
+		content = {
+			summary = "Participe do evento de construção de bonecos de neve.",
+			details = "O título 'Arquitetor das Neves' está disponível para os jogadores que participarem do evento de construção de bonecos de neve. Mostre suas habilidades artísticas e divirta-se com a neve!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1074 },
+		score = 10
+	},
+	[300027] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Escultor de Neves",
+		content = {
+			summary = "Participe do evento de construção de bonecos de neve.",
+			details = "O título 'Escultor de Neves' está disponível para os jogadores que participarem do evento de construção de bonecos de neve.\nBenefícios do Título\n\t- Nenhum, mas sua criatividade será reconhecida!"
+		},
+		resource = {},
+		reward = { title = 1075 },
+		score = 10
+	},
+	[300028] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Caçador de Geada",
+		content = {
+			summary = "Participe do evento de construção de Bonecos de Neve.",
+			details = "O título 'Caçador de Geada' está disponível para jogadores que participarem do evento de construção de Bonecos de Neve. Mostre seu talento para moldar o gelo e conquiste este título gelado!\nBenefícios do Título\n\t- Nenhum, mas seu estilo vai congelar os corações!"
+		},
+		resource = {},
+		reward = { title = 1076 },
+		score = 10
+	},
+	[300029] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Escultor das Neves",
+		content = {
+			summary = "Participe do evento de construção de bonecos de neve.",
+			details = "O título 'Escultor das Neves' está disponível para jogadores que participam do evento de construção de bonecos de neve.\nBenefícios do Título\n\t- Nenhum, mas a diversão é garantida!"
+		},
+		resource = {},
+		reward = { title = 1077 },
+		score = 10
+	},
+	[300030] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Mestre do Boneco de Neve",
+		content = {
+			summary = "Participe do evento de construção de bonecos de neve.",
+			details = "Desperte o espírito do inverno e mostre suas habilidades artísticas ao participar do evento de construção de bonecos de neve! Torne-se um verdadeiro Mestre do Boneco de Neve e celebre a magia do inverno em Midgard.\nBenefícios do Título\n\t- Nada, além do orgulho de ser um artista do gelo!"
+		},
+		resource = {},
+		reward = { title = 1078 },
+		score = 10
+	},
+	[300031] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Viajante do Caminho I",
+		content = {
+			summary = "Desbrave a Masmorra do Caminho e conquiste este título.",
+			details = "O título 'Viajante do Caminho I' pode ser adquirido na Loja do Caminho.\nBenefícios do Título\n\t- Nenhum, mas o prestígio é todo seu!"
+		},
+		resource = {},
+		reward = { title = 1079 },
+		score = 10
+	},
+	[300032] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Viajante do Destino II",
+		content = {
+			summary = "Desbrave a Masmorra do Caminho e conquiste o título lendário.",
+			details = "O título 'Viajante do Destino II' pode ser adquirido na Loja do Caminho.\nBenefícios do Título\n\t- Nenhum, mas a honra é inestimável!"
+		},
+		resource = {},
+		reward = { title = 1080 },
+		score = 10
+	},
+	[300033] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Viajante das Trilhas III",
+		content = {
+			summary = "Conquiste o título ao adquirir na Loja das Trilhas.",
+			details = "O título 'Viajante das Trilhas III' pode ser obtido na Loja das Trilhas.\nBenefícios do Título\n\t- Nenhum, mas a jornada é o que importa!"
+		},
+		resource = {},
+		reward = { title = 1081 },
+		score = 10
+	},
+	[300034] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Coração Grandioso",
+		content = {
+			summary = "Coração Grandioso",
+			details = "O título 'Coração Grandioso' está disponível para jogadores que alcançarem a recompensa Step-19 do Passe de Batalha - Premium SS III.\nBenefícios do Título\n\t- Todos os Stats +3"
+		},
+		resource = {},
+		reward = { title = 1082 },
+		score = 0
+	},
+	[300035] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "A Jornada Começa",
+		content = {
+			summary = "Desbloqueie o título 'A Jornada Começa' ao atingir 300 ION no Top Up.",
+			details = "O título 'A Jornada Começa' está disponível para aventureiros que alcançarem o marco de 300 ION no Top Up.\nBenefícios do Título\n\t- Nenhum, mas o verdadeiro prêmio é a jornada!"
+		},
+		resource = {},
+		reward = { title = 1083 },
+		score = 0
+	},
+	[300036] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Dividido e Conquistado",
+		content = {
+			summary = "Adquira o título 'Dividido' na Loja da Guilda.",
+			details = "O título 'Dividido' está disponível na Loja da Guilda. \nBenefícios do Título\n\t- Nenhum, mas o estilo é tudo!"
+		},
+		resource = {},
+		reward = { title = 1084 },
+		score = 0
+	},
+	[300037] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Mania do Esplendor",
+		content = {
+			summary = "Conquista disponível ao atingir o Passo-19 do Passe de Batalha - Premium SS IV.",
+			details = "Liberte o poder do título 'Mania do Esplendor' ao alcançar o Passo-19 do Passe de Batalha - Premium SS IV.\nBenefícios do Título\n\t- Todos os Stats +3\nDesperte a verdadeira força e brilhe como nunca antes!"
+		},
+		resource = {},
+		reward = { title = 1085 },
+		score = 0
+	},
+	[300038] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Ninja Supremo",
+		content = {
+			summary = "Conquiste o topo no Evento Corrida de Níveis.",
+			details = "O título 'Ninja Supremo' é reservado para aqueles que dominam o Evento Corrida de Níveis e alcançam o primeiro lugar. Mostre sua habilidade e agilidade para se tornar o ninja número um!\nBenefícios do Título\n\t- Nada"
+		},
+		resource = {},
+		reward = { title = 1086 },
+		score = 10
+	},
+	[300039] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Pistoleiro Supremo",
+		content = {
+			summary = "Conquiste o primeiro lugar no Evento Corrida de Níveis.",
+			details = "O título 'Pistoleiro Supremo' é reservado para aqueles que dominam o Evento Corrida de Níveis e se consagram como vencedores. Mostre que você é o mais rápido no gatilho e o mais ágil em Midgard!\nBenefícios do Título\n\t- Nenhum, mas o prestígio é inigualável!"
+		},
+		resource = {},
+		reward = { title = 1087 },
+		score = 10
+	},
+	[300040] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Mestre Taekwondo Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título 'Mestre Taekwondo Supremo' é reservado para os jogadores que alcançam o topo no Evento Corrida de Níveis. Mostre sua habilidade e dedicação para se tornar o número 1!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1088 },
+		score = 10
+	},
+	[300041] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Vínculo Supremo",
+		content = {
+			summary = "Conquiste o 1º lugar no Evento Corrida de Níveis.",
+			details = "O título 'Vínculo Supremo' é reservado para aqueles que alcançam o topo no Evento Corrida de Níveis como Soul Linker. Mostre a todos que você é o verdadeiro mestre dos vínculos espirituais!\nBenefícios do Título\n\t- Nenhum, além da glória eterna!"
+		},
+		resource = {},
+		reward = { title = 1089 },
+		score = 10
+	},
+	[300042] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Aventuras em Prontera",
+		content = {
+			summary = "Conquista disponível para jogadores com Passe de Batalha - Classe.",
+			details = "Desbrave os mistérios de Prontera e conquiste o título de aventureiro! Este título é reservado para aqueles que possuem o Passe de Batalha - Classe.\nBenefícios do Título\n\t- Exp & Drop +3%"
+		},
+		resource = {},
+		reward = { title = 1090 },
+		score = 10
+	},
+	[300043] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Guardião de Prontera",
+		content = {
+			summary = "Conquiste o título 'Guardião de Prontera' ao possuir o Passe de Batalha - Classe.",
+			details = "O título 'Guardião de Prontera' está disponível para os jogadores que possuem o Passe de Batalha - Classe.\nBenefícios do Título\n\t- Todos os Stats +3\nTorne-se uma lenda em Prontera e mostre seu valor com este título épico!"
+		},
+		resource = {},
+		reward = { title = 1091 },
+		score = 10
+	},
+	[300044] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Bem-vindo a Midgard!",
+		content = {
+			summary = "Desbloqueie ao atingir o marco de 300ION no TOPUP.",
+			details = "Parabéns, aventureiro! Você acaba de ser oficialmente recebido em Midgard ao atingir o marco de 300ION no TOPUP. Embora não haja benefícios diretos, o verdadeiro prêmio é a sua jornada e o que está por vir!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1092 },
+		score = 10
+	},
+	[300045] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Caçador de MVPs",
+		content = {
+			summary = "Torne-se um lendário Caçador de MVPs ao derrotar chefes poderosos durante eventos especiais.",
+			details = "O título de 'Caçador de MVPs' é concedido àqueles que se destacam na caça aos MVPs durante eventos épicos.\nBenefícios do Título\n\t- Nada, além do prestígio de ser um verdadeiro mestre dos MVPs!"
+		},
+		resource = {},
+		reward = { title = 1093 },
+		score = 10
+	},
+	[300046] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Soberano dos Caçadores",
+		content = {
+			summary = "Torne-se o Soberano dos Caçadores ao derrotar o MVP do evento.",
+			details = "Prove seu valor e conquiste o título de 'Soberano dos Caçadores' ao abater o MVP do evento. Mostre que você é o verdadeiro mestre da caça!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1094 },
+		score = 10
+	},
+	[300047] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Caçador Supremo",
+		content = {
+			summary = "Conquiste o título de Caçador Supremo ao derrotar MVPs durante eventos especiais.",
+			details = "Mostre sua supremacia nos campos de batalha e conquiste o título de 'Caçador Supremo' ao abater MVPs em eventos épicos. Prove que você é o predador mais temido de Midgard!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1095 },
+		score = 10
+	},
+	[300048] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Caçador de Corações",
+		content = {
+			summary = "Derrote o MVP do evento Caçador de Corações.",
+			details = "Prove seu valor como o lendário Caçador de Corações ao derrotar o MVP deste evento especial. Mostre que você é o verdadeiro mestre da caça!\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1096 },
+		score = 10
+	},
+	[300049] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Aniquilador de Glastheim Antiga",
+		content = {
+			summary = "Conquiste o título de Aniquilador de Glastheim Antiga ao atingir o marco de 300ION no TOPUP.",
+			details = "O título 'Aniquilador de Glastheim Antiga' é concedido aos bravos que alcançam o marco de 300ION no TOPUP. Mostre seu poder e torne-se uma lenda em Glastheim!\nBenefícios do Título\n\t- Nada, além da glória eterna!"
+		},
+		resource = {},
+		reward = { title = 1097 },
+		score = 10
+	},
+	[300050] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Portal para o Rift de Yggdrasil",
+		content = {
+			summary = "Desbloqueie o título ao atingir o marco de 300ION no TOPUP.",
+			details = "O título 'Portal para o Rift de Yggdrasil' é concedido aos aventureiros que alcançam o marco de 300ION no TOPUP. \nBenefícios do Título\n\t- Nenhum (mas a glória é toda sua!)"
+		},
+		resource = {},
+		reward = { title = 1098 },
+		score = 10
+	},
+	[300051] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Imperador das Chamas",
+		content = {
+			summary = "Torne-se o Imperador das Chamas ao alcançar o Step-30 do Passe de Batalha - Premium SS IV.",
+			details = "Ascenda ao trono flamejante e conquiste o título de 'Imperador das Chamas' ao atingir o Step-30 no Passe de Batalha - Premium SS IV. Mostre seu domínio sobre o fogo e brilhe como nunca antes!\nBenefícios do Título\n\t- Nada, além do prestígio ardente!"
+		},
+		resource = {},
+		reward = { title = 1099 },
+		score = 10
+	},
+	[300056] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Aventuras Inéditas",
+		content = {
+			summary = "Dê boas-vindas à sua nova jornada em Midgard!",
+			details = "A conquista 'Aventuras Inéditas' celebra o início da sua jornada épica em Ragnarok Online. Prepare-se para explorar terras desconhecidas e enfrentar desafios incríveis!\nBenefícios do Título\n\t- Nada (mas a aventura em si já é uma recompensa!)"
+		},
+		resource = {},
+		reward = { title = 1104 },
+		score = 10
+	},
+	[300057] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Vento Celestial",
+		content = {
+			summary = "Conquista o título 'Vento Celestial' ao alcançar o Passo 30 do Passe de Batalha - Premium.",
+			details = "Alcance o ápice do Passe de Batalha - Premium e seja agraciado com o título 'Vento Celestial'.\nBenefícios do Título\n\t- Nenhum, mas o prestígio é inestimável!"
+		},
+		resource = {},
+		reward = { title = 1105 },
+		score = 10
+	},
+	[300058] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Festa Épica de Ragnarok",
+		content = {
+			summary = "Participe do evento 'Ragnarok Festa' e celebre como um verdadeiro herói!",
+			details = "A 'Ragnarok Festa' é a celebração máxima dos aventureiros de Midgard. Junte-se a essa festa lendária e mostre seu espírito de camaradagem!\nBenefícios do Título\n\t- Nada, apenas a glória de participar!"
+		},
+		resource = {},
+		reward = { title = 1106 },
+		score = 10
+	},
+	[300059] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Olhar Desafiador",
+		content = {
+			summary = "Participe da lendária Ragnarok Festa e conquiste o olhar que desafia tudo!",
+			details = "A lendária Ragnarok Festa espera por você! Mostre sua coragem e estilo com o olhar que desafia qualquer oponente. \nBenefícios do Título\n\t- Nenhum, apenas o respeito dos aventureiros!"
+		},
+		resource = {},
+		reward = { title = 1107 },
+		score = 10
+	},
+	[300060] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Festa dos Emoticons!",
+		content = {
+			summary = "Participe da Festa Ragnarok com o emoticon especial (๐^_^๐).",
+			details = "A celebração está no ar! Entre na Festa Ragnarok usando o emoticon (๐^_^๐) e mostre seu espírito festivo. Benefícios do Título\n\t- Nenhum, mas a diversão é garantida!"
+		},
+		resource = {},
+		reward = { title = 1108 },
+		score = 10
+	},
+	[300063] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Fenda de Yggdrasil",
+		content = {
+			summary = "Participe do evento épico 'Fenda de Yggdrasil' no Ragnarok Festa.",
+			details = "Mergulhe na lendária 'Fenda de Yggdrasil' durante o Ragnarok Festa e prove seu valor em meio ao caos! \nBenefícios do Título\n\t- Nada (mas a glória é sua!)"
+		},
+		resource = {},
+		reward = { title = 1111 },
+		score = 10
+	},
+	[300064] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Festa Épica ROLC2024",
+		content = {
+			summary = "Participe da grandiosa Festa ROLC2024 em Ragnarok Online.",
+			details = "A lendária Festa ROLC2024 está de volta! Junte-se a outros aventureiros nesta celebração épica em Midgard. \nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1112 },
+		score = 10
+	},
+	[300067] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Sangue da Feiticeira",
+		content = {
+			summary = "Adquira o lendário 'Sangue da Feiticeira'.",
+			details = "O lendário 'Sangue da Feiticeira' agora corre em suas veias, mas não traz benefícios além do prestígio! Prove seu valor e conquiste este título místico.\nBenefícios do Título\n\t- Nenhum"
+		},
+		resource = {},
+		reward = { title = 1115 },
+		score = 10
+	},
+	[300130] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Nova Journey",
+		content = {
+			summary = "Nova Journey",
+			details = "The \'Nova Journey\' Nova Journey  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1178 },
+		score = 10
+	},
+}
+
+function main()
+	for achieveID, achieveInfo in pairs(achievement_tbl) do
+		result, msg = InsertAchieveInfo(achieveID, achieveInfo.title, achieveInfo.content.summary, achieveInfo.content.details, achieveInfo.score)
+		if not result then
+			return false, msg
+		end
+		if nil ~= achieveInfo.resource then
+			for index, resource in ipairs(achieveInfo.resource) do
+				if nil ~= resource.shortcut then
+					shortcut = resource.shortcut
+				else
+					shortcut = -1
+				end
+				if 0 == achieveInfo.UI_Type then
+					result, msg = InsertAchieveResource(achieveID, resource.text, 0, shortcut)
+				elseif 1 == achieveInfo.UI_Type then
+					result, msg = InsertAchieveResource(achieveID, resource.text, resource.count, shortcut)
+				end
+				if not result then
+					return false, msg
+				end
+			end
+		end
+		if nil ~= achieveInfo.reward then
+			if nil ~= achieveInfo.reward.item then
+				result, msg = InsertAchieveRewardItem(achieveID, achieveInfo.reward.item)
+			end
+			if nil ~= achieveInfo.reward.title then
+				result, msg = InsertAchieveRewardTitle(achieveID, achieveInfo.reward.title)
+				if not result then
+					return false, msg
+				end
+			end
+			if nil ~= achieveInfo.reward.buff then
+				result, msg = InsertAchieveRewardBuff(achieveID, achieveInfo.reward.buff)
+				if not result then
+					return false, msg
+				end
+			end
+		end
+		result, msg = InsertAchieveUIType(achieveID, achieveInfo.UI_Type, achieveInfo.group)
+		if not result then
+			return false, msg
+		end
+		result, msg = SetAchieveIDByTab(achieveID, achieveInfo.major, achieveInfo.minor)
+		if not result then
+			return false, msg
+		end
+	end
+	return true, "good"
+end
