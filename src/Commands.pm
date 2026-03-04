@@ -429,6 +429,10 @@ sub initHandlers {
 			], \&cmdNPCCreateRequest],
 		['nl', T("List NPCs that are on screen."), \&cmdNPCList],
 		['openbuyershop', undef, \&cmdOpenBuyerShop],
+        ['openpackage', [
+            T("Use package item with selection."),
+            [T("<item name> <boxIndex>"), T("use package item selecting option")]
+        ], \&cmdOpenPackage],
 		['openshop', T("Open your vending shop."), \&cmdOpenShop],
 		['p', [
 			T("Chat in the party chat."),
@@ -4227,6 +4231,38 @@ sub cmdNPCList {
 	}
 	$msg .= ('-'x57) . "\n";
 	message $msg, "list";
+}
+
+sub cmdOpenPackage {
+    my (undef, $args) = @_;
+
+    unless ($args) {
+        error "Usage: openpackage <item name> <boxIndex>\n";
+        return;
+    }
+
+    my @parts = split(/\s+/, $args);
+    my $boxIndex = pop @parts;
+    my $itemName = join(' ', @parts);
+
+    my $item = $char->inventory->getByName($itemName);
+
+    unless ($item) {
+        error "Item '$itemName' not found in inventory.\n";
+        return;
+    }
+
+    my $realIndex = unpack("v", $item->{ID});
+    my $nameID    = $item->{nameID};
+    $boxIndex = int($boxIndex);
+
+    message "Using package item: $item->{name} (slot $realIndex / binID $item->{binID}) option $boxIndex\n";
+
+    $messageSender->sendUsePackageItem(
+        $realIndex,
+        $nameID,
+        $boxIndex
+    );
 }
 
 sub cmdOpenShop {
