@@ -588,7 +588,9 @@ sub resolveSaveMapDestination {
 	if (defined $dest_x && defined $dest_y && $dest_x ne '' && $dest_y ne '') {
 		my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
 		if (hashSafeGetValue(\%portals_spawns, $dest, 'dest', $dest)) {
-			$candidates{"$dest_x $dest_y"} = { map => $dest_map, x => $dest_x, y => $dest_y };
+			my $fixedSaveMapDestination = { map => $dest_map, x => $dest_x, y => $dest_y };
+			$self->{saveMapDestinationCache} = { key => $cacheKey, value => $fixedSaveMapDestination };
+			return $fixedSaveMapDestination;
 		}
 	}
 
