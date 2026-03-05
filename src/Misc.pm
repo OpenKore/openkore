@@ -4778,6 +4778,23 @@ sub checkSelfCondition {
 		return 0 if !isSafe();
 	}
 
+	if (exists $config{$prefix."_nearPortal"} && defined $config{$prefix."_nearPortal"}) {
+		my $is_portal_near = 0;
+		my $pos = calcPosition($char);
+		for my $portal (@$portalsList) {
+			if (blockDistance($pos, $portal->{pos}) <= 2) {
+				$is_portal_near = 1;
+				last;
+			}
+		}
+		if ($config{$prefix."_nearPortal"} == 0) {
+			return 0 if ($is_portal_near);
+
+		} elsif ($config{$prefix."_nearPortal"} == 1) {
+			return 0 unless ($is_portal_near);
+		}
+	}
+
 	if ($config{$prefix."_inMap"}) {
 		return 0 unless (existsInList($config{$prefix . "_inMap"}, $field->baseName));
 	}

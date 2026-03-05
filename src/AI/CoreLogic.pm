@@ -85,6 +85,7 @@ sub iterate {
 	Benchmark::begin("AI (part 1.3)") if DEBUG;
 	processSkillUse();
 	processAutoCommandUse();
+	processAutoAttack() if AI::state == AI::AUTO;
 	$char->processTask("route", onError => sub {
 		my ($task, $error) = @_;
 		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
@@ -1320,7 +1321,7 @@ sub processAutoStorage {
 				} else {
 					if ($char->storage->wasOpenedThisSession() &&
 						!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
-						debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"});
+						debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"}), "storage", 2;
 						Plugins::callHook('AI_storage_item_out_of_stock', {
 								name => $config{"getAuto_$i"},
 								getAutoIndex => $i,
@@ -1759,7 +1760,7 @@ sub processAutoStorage {
 			return if ($hookArgs{return});
 
 			$messageSender->sendStorageClose() unless $config{storageAuto_keepOpen};
-			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
+			if ($args->{'forcedBySell'} == 1 && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
 				error T("Character is still overweight after storageAuto (storage is full?)\n");
 				if ($config{dcOnStorageFull}) {
 					$messageSender->sendQuit();

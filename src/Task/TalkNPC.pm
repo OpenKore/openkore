@@ -237,7 +237,7 @@ sub setTarget {
 	my ($self, $target) = @_;
 
 	if ($target) {
-		message "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID})."\n", "ai_npcTalk";
+		message "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID}).", sequence '".($self->{sequence})."'\n", "ai_npcTalk";
 		$self->{target} = $target;
 		$self->{ID} = $target->{ID};
 	}
@@ -417,6 +417,7 @@ sub iterate {
 
 		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and assume it's over
 		if ($self->{sent_talk_response_cancel}) {
+			return unless (timeOut($self->{sent_talk_resp_cancel_time}));
 			undef %talk;
 			if (defined $self->{error_code}) {
 				debug "Done talking with $self->{target}, but with conversation sequence errors\n", "ai_npcTalk";
@@ -841,7 +842,7 @@ sub target {
 }
 
 #only for testing
-my $default_text = "eye lol";
+my $default_text = "eyelol";
 my $default_number = 1234;
 
 sub cancelTalk {
@@ -854,6 +855,8 @@ sub cancelTalk {
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
 		$messageSender->sendTalkResponse($talk{ID}, $#{$talk{responses}});
 		$self->{sent_talk_response_cancel} = 1;
+		$self->{sent_talk_resp_cancel_time}{time} = time;
+		$self->{sent_talk_resp_cancel_time}{timeout} = 5;
 
 	} elsif ($ai_v{'npc_talk'}{'talk'} eq 'next') {
 		$messageSender->sendTalkContinue($talk{ID});
