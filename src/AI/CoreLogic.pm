@@ -4053,11 +4053,11 @@ sub shouldUseWarpToSaveMapForBuyOrSell {
 	return 0 if (!$config{'saveMap'} || !$config{'saveMap_warpToBuyOrSell'} || $args->{warpedToSave});
 	return 0 if ($config{'saveMap'} eq $field->baseName);
 
+	my $distance = getDistanceToSaveMapFromCurrentPosition($args);
+	return 0 unless defined $distance;
+
 	my $minDistance = int($config{'saveMap_warp_minDistance'} || 0);
 	return 1 if ($minDistance <= 0);
-
-	my $distance = getDistanceToSaveMapFromCurrentPosition($args);
-	return 1 unless defined $distance;
 
 	return $distance >= $minDistance;
 }

@@ -609,19 +609,30 @@ sub resolveSaveMapDestination {
 	return $candidates[0] if (@candidates == 1);
 
 	if ($target && $target->{map}) {
-		my $best;
-		my $bestWalk;
-		foreach my $candidate (@candidates) {
-			my $walk = $self->estimateWalkFromSaveMapSpawnToTarget($candidate, $target);
-			next unless defined $walk;
-			if (!defined $bestWalk || $walk < $bestWalk) {
-				$bestWalk = $walk;
-				$best = $candidate;
+		my $neighborMap = $self->getSaveMapNeighborFromWalkingRoute($dest_map, $target);
+		if (defined $neighborMap && $neighborMap ne '') {
+			my %neighborCandidates;
+			foreach my $portal (keys %portals_spawns) {
+				my ($portal_map) = split(/\s+/, $portal, 2);
+				next if (!defined $portal_map || $portal_map ne $neighborMap);
+				foreach my $dest (keys %{$portals_spawns{$portal}{dest}}) {
+					next if (hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'map') ne $dest_map);
+					my $x = hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'x');
+					my $y = hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'y');
+					next if (!defined $x || !defined $y || $x eq '' || $y eq '');
+					$neighborCandidates{"$x $y"} = { map => $dest_map, x => $x, y => $y };
+				}
 			}
-		}
-		if ($best) {
-			$self->{saveMapDestinationCache} = { key => $cacheKey, value => $best };
-			return $best;
+
+			if (%neighborCandidates) {
+				my @bestCandidates = sort {
+					$a->{x} <=> $b->{x}
+					|| $a->{y} <=> $b->{y}
+				} values %neighborCandidates;
+
+				$self->{saveMapDestinationCache} = { key => $cacheKey, value => $bestCandidates[0] };
+				return $bestCandidates[0];
+			}
 		}
 	}
 
@@ -634,14 +645,15 @@ sub resolveSaveMapDestination {
 	return $candidates[0];
 }
 
-sub estimateWalkFromSaveMapSpawnToTarget {
-	my ($self, $spawn, $target) = @_;
+sub getSaveMapNeighborFromWalkingRoute {
+	my ($self, $saveMap, $target) = @_;
+	return unless ($target && $target->{map});
 
 	my $task = Task::CalcMapRoute->new(
 		targets => [{ map => $target->{map}, x => $target->{x}, y => $target->{y} }],
-		sourceMap => $spawn->{map},
-		sourceX => $spawn->{x},
-		sourceY => $spawn->{y},
+		sourceMap => $self->{source}{map},
+		sourceX => $self->{source}{x},
+		sourceY => $self->{source}{y},
 		noGoCommand => 1,
 		noTeleSpawn => 1,
 		maxTime => 3,
@@ -654,8 +666,23 @@ sub estimateWalkFromSaveMapSpawnToTarget {
 
 	return if ($task->getError());
 	my $route = $task->getRoute();
-	return 0 if (!$route || !@{$route});
-	return $route->[-1]{walk};
+	return if (!$route || !@{$route});
+
+	foreach my $step (@{$route}) {
+		my ($from, $to) = split(/=/, $step->{portal} || '', 2);
+		next unless (defined $from && defined $to);
+		my ($from_map) = split(/\s+/, $from, 2);
+		my ($to_map) = split(/\s+/, $to, 2);
+		next unless (defined $from_map && defined $to_map);
+
+		if ($to_map eq $saveMap) {
+			return $from_map;
+		} elsif ($from_map eq $saveMap) {
+			return $to_map;
+		}
+	}
+
+	return;
 }
 
 1;
