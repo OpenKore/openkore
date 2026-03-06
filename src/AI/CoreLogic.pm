@@ -1426,8 +1426,7 @@ sub processAutoStorage {
 				}
 
 				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
-				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-				    && !$field->isCity && $config{'saveMap'} ne $field->baseName) {
+				if (shouldUseWarpToSaveMapForBuyOrSell($args)) {
 					if ($char->{sitting}) {
 						message T("Standing up to auto-storage\n"), "teleport";
 						ai_setSuspend(0);
@@ -1889,8 +1888,7 @@ sub processAutoSell {
 				undef $args->{'warpedToSave'};
 			}
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{'warpedToSave'}
-			&& !$field->isCity && $config{'saveMap'} ne $field->baseName) {
+			if (shouldUseWarpToSaveMapForBuyOrSell($args)) {
 				if ($char->{sitting}) {
 					message T("Standing up to auto-sell\n"), "teleport";
 					ai_setSuspend(0);
@@ -2164,12 +2162,7 @@ sub processAutoBuy {
 				}
 
 				my $msgneeditem;
-				if (
-					$config{'saveMap'} ne "" &&
-					$config{'saveMap_warpToBuyOrSell'} &&
-					!$args->{warpedToSave} &&
-					!$field->isCity && $config{'saveMap'} ne $field->baseName
-				) {
+				if (shouldUseWarpToSaveMapForBuyOrSell($args)) {
 					if ($char->{sitting}) {
 						message T($msgneeditem."Standing up to auto-buy\n"), "teleport";
 						ai_setSuspend(0);
@@ -4053,6 +4046,55 @@ sub processFeed {
 		$messageSender->sendPetMenu(1);
 		$timeout{ai_petFeed}{time} = time;
 	}
+}
+
+sub shouldUseWarpToSaveMapForBuyOrSell {
+	my ($args) = @_;
+
+	return 0 if (!$config{'saveMap'} || !$config{'saveMap_warpToBuyOrSell'} || $args->{warpedToSave});
+	return 0 if ($config{'saveMap'} eq $field->baseName);
+
+	my $distance = getDistanceToSaveMapFromCurrentPosition($args);
+	return 0 unless defined $distance;
+
+	my $minDistance = int($config{'saveMap_warp_minDistance'} || 0);
+	return 1 if ($minDistance <= 0);
+
+	return $distance >= $minDistance;
+}
+
+sub getDistanceToSaveMapFromCurrentPosition {
+	my ($args) = @_;
+
+	require Task::CalcMapRoute;
+	my $calcTask = Task::CalcMapRoute->new(
+		targets => [{ map => $field->baseName, x => $char->{pos_to}{x}, y => $char->{pos_to}{y} }],
+		sourceMap => $field->baseName,
+		sourceX => $char->{pos_to}{x},
+		sourceY => $char->{pos_to}{y},
+		noGoCommand => 1,
+		noTeleSpawn => 1,
+		maxTime => 3,
+	);
+
+	my $saveMapDestination = $calcTask->resolveSaveMapDestination();
+	return unless ($saveMapDestination);
+
+	my $cacheKey = join('|',
+		$field->baseName,
+		$char->{pos_to}{x},
+		$char->{pos_to}{y},
+		$saveMapDestination->{map},
+		$saveMapDestination->{x},
+		$saveMapDestination->{y},
+	);
+	if ($args && $args->{saveMapDistanceCache} && $args->{saveMapDistanceCache}{key} eq $cacheKey) {
+		return $args->{saveMapDistanceCache}{value};
+	}
+
+	my $distance = $calcTask->getDistanceToSaveMap($saveMapDestination->{map}, $saveMapDestination->{x}, $saveMapDestination->{y});
+	$args->{saveMapDistanceCache} = { key => $cacheKey, value => $distance } if ($args && defined $distance);
+	return $distance;
 }
 
 sub processPartyShareAuto {
