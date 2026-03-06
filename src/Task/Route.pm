@@ -463,10 +463,10 @@ sub iterate {
 
 			# Last move was to the cell we are already at, lag?, buggy code?
 			if ($self->{start}) {
-				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because we have not moved yet.\n", "route";
+				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because we have not moved yet.\n", "route", 2;
 				
 			} elsif ($best_pos_step == 0) {
-				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because best_pos_step is 0.\n", "route";
+				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because best_pos_step is 0.\n", "route", 2;
 
 			} else {
 				# Should we trimm only the known walk ones ($best_pos_step) or the known + the guessed (calcStepsWalkedFromTimeAndRoute)? Default was both.
@@ -524,7 +524,7 @@ sub iterate {
 			while (@cells) {
 				$index = int(rand(@cells));
 				my $cell = $cells[$index];
-				next if ((!$field->isWalkable($cell->{x}, $cell->{y})) || ($field->isCellOccupied($cell->{x}, $cell->{y})));
+				next if ((!$field->isWalkable($cell->{x}, $cell->{y})) || ($field->isCellOccupied($cell)));
 				
 				$walk_pos = $cell;
 				last;
@@ -691,7 +691,7 @@ sub iterate {
 				return if ($hookArgs{return});
 				
 				if (!$self->{start} && $current_pos_to->{x} == $self->{next_pos}{x} && $current_pos_to->{y} == $self->{next_pos}{y}) {
-					debug "[Route] Not sending next step ($self->{next_pos}{x}, $self->{next_pos}{y}) because our pos_to is the same as it.\n", "route";
+					debug "[Route] Not sending next step ($self->{next_pos}{x}, $self->{next_pos}{y}) because our pos_to is the same as it.\n", "route", 2;
 					if ($self->{lastStep} == 1 && !$self->{sendAttackWithMove} && $self->{meetingSubRoute}) {
 						debug "[Route] Also ending task now ang giving back control to AI::Attack.\n", "route";
 						Plugins::callHook('route', {status => 'success'});

@@ -1256,6 +1256,7 @@ sub map_loaded {
 	# assertClass($char, 'Actor::You');
 	$syncMapSync = pack('V1',$args->{syncMapSync}); # unused, should we keep this for legacy compatibility?
 	main::initMapChangeVars();
+	%minimap_indicator_seen = ();
 
 	if ($net->version == 1) {
 		$net->setState(4);
@@ -3067,6 +3068,20 @@ sub homunculus_info {
 # Minimap indicator.
 sub minimap_indicator {
 	my ($self, $args) = @_;
+	
+	my $marker_type = defined $args->{type}
+		? "type:$args->{type}"
+		: "effect:" . (defined $args->{effect} ? $args->{effect} : '-');
+	my $marker_key = join(':',
+		$args->{show} ? 1 : 0,
+		$marker_type,
+		map { defined $_ ? $_ : '-' } @{$args}{qw(x y red green blue alpha)}
+	);
+
+	if ($minimap_indicator_seen{$marker_key}) {
+		return;
+	}
+	$minimap_indicator_seen{$marker_key} = 1;
 
 	my $color_str = "[R:$args->{red}, G:$args->{green}, B:$args->{blue}, A:$args->{alpha}]";
 	my $indicator = T("minimap indicator");
@@ -3087,11 +3102,11 @@ sub minimap_indicator {
 	if ($args->{show}) {
 		message TF("%s shown %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
-		'effect';
+		'minimap_indicator';
 	} else {
 		message TF("%s cleared %s at location %d, %d " .
 		"with the color %s\n", $args->{actor}, $indicator, @{$args}{qw(x y)}, $color_str),
-		'effect';
+		'minimap_indicator';
 	}
 }
 
@@ -7216,6 +7231,7 @@ sub map_change {
 	}
 
 	main::initMapChangeVars();
+	%minimap_indicator_seen = ();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
@@ -7289,6 +7305,7 @@ sub map_changed {
 
 	undef $conState_tries;
 	main::initMapChangeVars();
+	%minimap_indicator_seen = ();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
@@ -8847,8 +8864,8 @@ sub rodex_get_zeny {
 
 	message T("The zeny of the rodex mail was requested with success.\n");
 
-	$rodexList->{mails}{$args->{mailID1}}{zeny1} = 0;
-	$rodexList->{mails}{$args->{mailID1}}{zeny1} = $rodexList->{mails}{$args->{mailID1}}{attach} eq 'z' ? 0 : 'i';
+	$rodexList->{mails}{ $args->{mailID1} }{zeny1} = 0;
+	$rodexList->{mails}{ $args->{mailID1} }{attach} = $rodexList->{mails}{ $args->{mailID1} }{attach} eq 'z' ? 0 : 'i';
 }
 
 sub rodex_get_item {
@@ -11818,39 +11835,40 @@ sub skill_use_failed {
 	);
 
 	my %failtype = (
-		0 => T('Basic'),
-		1 => T('Insufficient SP'),
-		2 => T('Insufficient HP'),
-		3 => T('No Memo'),
-		4 => T('Mid-Delay'),
-		5 => T('No Zeny'),
-		6 => T('Wrong Weapon Type'),
-		7 => T('Red Gem Needed'),
-		8 => T('Blue Gem Needed'),
-		9 => TF('%s Overweight', '90%'),
-		10 => T('Requirement'),
-		11 => T('Failed to use in Target'),
-		12 => T('Maximum Ancilla exceed'),
-		13 => T('Need this within the Holy water'),
-		14 => T('Missing Ancilla'),
-		19 => T('Full Amulet'),
-		24 => T('[Purchase Street Stall License] need 1'),
-		29 => TF('Must have at least %s of base XP', '1%'),
-		30 => T('Insufficient SP'),
-		33 => T('Failed to use Madogear'),
-		34 => T('Kunai is Required'),
-		37 => T('Canon ball is Required'),
-		43 => T('Failed to use Guillotine Poison'),
-		50 => T('Failed to use Madogear'),
-		71 => T('Missing Required Item'), # (item name) required x amount
-		72 => T('Equipment is required'),
-		73 => T('Combo Skill Failed'),
-		76 => T('Too many HP'),
-		77 => T('Need Royal Guard Branding'),
-		78 => T('Required Equiped Weapon Class'),
-		83 => T('Location not allowed to create chatroom/market'),
-		84 => T('Need more bullet'),
-		);
+		0  => T( 'Basic' ),
+		1  => T( 'Insufficient SP' ),
+		2  => T( 'Insufficient HP' ),
+		3  => T( 'No Memo' ),
+		4  => T( 'Mid-Delay' ),
+		5  => T( 'No Zeny' ),
+		6  => T( 'Wrong Weapon Type' ),
+		7  => T( 'Red Gem Needed' ),
+		8  => T( 'Blue Gem Needed' ),
+		9  => TF( '%s Overweight', '90%' ),
+		10 => T( 'Requirement' ),
+		11 => T( 'Failed to use in Target' ),
+		12 => T( 'Maximum Ancilla exceed' ),
+		13 => T( 'Need this within the Holy water' ),
+		14 => T( 'Missing Ancilla' ),
+		19 => T( 'Full Amulet' ),
+		24 => T( '[Purchase Street Stall License] need 1' ),
+		26 => T( 'Position error' ),
+		29 => TF( 'Must have at least %s of base XP', '1%' ),
+		30 => T( 'Insufficient SP' ),
+		33 => T( 'Failed to use Madogear' ),
+		34 => T( 'Kunai is Required' ),
+		37 => T( 'Canon ball is Required' ),
+		43 => T( 'Failed to use Guillotine Poison' ),
+		50 => T( 'Failed to use Madogear' ),
+		71 => T( 'Missing Required Item' ),                            # (item name) required x amount
+		72 => T( 'Equipment is required' ),
+		73 => T( 'Combo Skill Failed' ),
+		76 => T( 'Too many HP' ),
+		77 => T( 'Need Royal Guard Branding' ),
+		78 => T( 'Required Equiped Weapon Class' ),
+		83 => T( 'Location not allowed to create chatroom/market' ),
+		84 => T( 'Need more bullet' ),
+	);
 
 	my $errorMessage;
 	if ($args->{skillID} == 1 && $args->{cause} == 0 && exists $basefailtype{$args->{btype}}) {

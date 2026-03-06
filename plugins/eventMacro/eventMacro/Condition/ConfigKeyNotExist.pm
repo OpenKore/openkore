@@ -8,7 +8,7 @@ use Globals qw( %config );
 use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
-	['configModify','pos_load_config.txt','in_game'];
+	['post_configModify','pos_load_config.txt','in_game'];
 }
 
 sub _parse_syntax {
@@ -57,29 +57,22 @@ sub validate_condition {
 	
 	if ($callback_type eq 'variable') {
 		$self->update_vars($callback_name, $args);
-		
-	} elsif ($callback_type eq 'hook') {
-		if ($callback_name eq 'configModify') {
-			$self->check_keys($args->{key});
-			
-			return $self->SUPER::validate_condition if (defined $self->{fulfilled_key} && $args->{key} ne $self->{fulfilled_key});
-			return $self->SUPER::validate_condition if (!defined $args->{val});
-		}
 	}
+	
 	$self->check_keys;
 	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_key} ? 1 : 0) );
 }
 
 sub check_keys {
-	my ( $self, $key_from_arg ) = @_;
+	my ( $self ) = @_;
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
 	foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
 		my $key = $self->{members_array}->[$member_index];
 		next unless (defined $key);
 		$key = get_real_key($key) if ($key =~ /\./); #if have a dot, probably is a label
-		next if (exists $config{$key} || $key eq $key_from_arg );
+		next if (exists $config{$key});
 		$self->{fulfilled_key} = $key;
 		$self->{fulfilled_member_index} = $member_index;
 		last;
