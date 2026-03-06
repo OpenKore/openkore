@@ -139,6 +139,7 @@ our @EXPORT = (
 	itemLog_clear
 	look
 	lookAtPosition
+	lookAtPositionNaturally
 	manualMove
 	meetingPosition
 	objectAdded
@@ -2484,6 +2485,43 @@ sub lookAtPosition {
 	getVector(\%vec, $pos2, $char->{pos_to});
 	$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
 	look($direction, $headdir);
+}
+
+##
+# lookAtPositionNaturally(from_pos, to_pos, [current_body])
+# from_pos: source position hashref (character)
+# to_pos: target position hashref
+# current_body: optional current body direction, defaults to $char->{look}{body}
+#
+# Calculates and executes look change using partial-turn strategy.
+# Returns: (body, head) where body is 0-7 and head is 0-2.
+sub lookAtPositionNaturally {
+	my ($from_pos, $to_pos, $current_body) = @_;
+	return unless ($from_pos && $to_pos);
+
+	$current_body = $char->{look}{body} unless defined $current_body;
+
+	my %vec;
+	getVector(\%vec, $to_pos, $from_pos);
+	my $target_body = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+
+	my $body = $current_body;
+	my $head = 0;
+	my $offset = ($target_body - $body + 8) % 8;
+	$offset -= 8 if ($offset > 4);
+
+	if ($offset != 0) {
+		if (abs($offset) <= 1) {
+			$head = $offset > 0 ? 2 : 1;
+		} else {
+			my $step = $offset > 0 ? 1 : -1;
+			$body = ($target_body - $step + 8) % 8;
+			$head = $step > 0 ? 2 : 1;
+		}
+	}
+
+	look($body, $head) if ($body != $char->{look}{body} || $head != $char->{look}{head});
+	return ($body, $head);
 }
 
 ##
