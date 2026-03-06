@@ -76,6 +76,7 @@ use IO::Socket::INET;
 use Base::Server::Client;
 use Utils::ObjectList;
 use Utils::Exceptions;
+use Log qw(debug message);
 
 
 ################################
@@ -160,6 +161,10 @@ sub getPort {
 # program's main loop.
 sub iterate {
 	my ($self, $timeout) = @_;
+	if ($self->isa('Bus::Server::MainServer')) {
+		$self->{loop_i} = 1 if (!exists $self->{loop_i} || $self->{loop_i} > 100);
+		debug("[Base::Server] Iterate ".($self->{loop_i}++)."\n", "bus");
+	}
 	my $serverFD = fileno($self->{BS_server});
 
 	# Generate the bit field for select();

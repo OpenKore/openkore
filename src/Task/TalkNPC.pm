@@ -126,15 +126,15 @@ sub handleNPCTalk {
 
 	if ($hook_name eq 'npc_talk_done') {
 		if ($self->{stage} == NOT_STARTED) {
-			debug "Npc which started autotalk has automatically sent a 'npc_talk_done'.\n", "ai_npcTalk";
+			debug "[TalkNPC] Npc which started autotalk has automatically sent a 'npc_talk_done'.\n", "ai_npcTalk";
 			return;
 
 		} elsif ($self->{stage} != TALKING_TO_NPC || !$self->{target}) {
-			debug "[handleNPCTalk] We received an strange 'npc_talk_done', ignoring it.\n", "ai_npcTalk";
+			debug "[TalkNPC] We received an strange 'npc_talk_done', ignoring it.\n", "ai_npcTalk";
 			return;
 		}
 		$self->{stage} = AFTER_NPC_CLOSE;
-		message TF("%s: Done talking\n", $self->{target}), "ai_npcTalk";
+		message TF("[TalkNPC] %s: Done talking (close)\n", $self->{target}), "ai_npcTalk";
 
 	} elsif ($self->noMoreSteps) {
 		if ($hook_name eq 'packet/npc_talk_continue') {
@@ -237,7 +237,7 @@ sub setTarget {
 	my ($self, $target) = @_;
 
 	if ($target) {
-		message "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID})."\n", "ai_npcTalk";
+		message "[TalkNPC] Set to start talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID}).", sequence '".($self->{sequence})."'\n", "ai_npcTalk";
 		$self->{target} = $target;
 		$self->{ID} = $target->{ID};
 	}
@@ -281,9 +281,9 @@ sub iterate {
 
 		#A conversation started right after mapchange/disconnection (eg. payon guards)
 		if (%talk) {
-			debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", "ai_npcTalk";
+			debug "[TalkNPC] Done talking with $self->{target}, but another NPC initiated a talk instantly\n", "ai_npcTalk";
 			# TODO: maybe better create a new task and pass remaining steps to it
-			debug "Continuing the talk within the same task and remaining conversation steps\n", "ai_npcTalk";
+			debug "[TalkNPC] Continuing the talk within the same task and remaining conversation steps\n", "ai_npcTalk";
 			$self->{map_change} = 0;
 			$self->{disconnected} = 0;
 			$self->find_and_set_target;
@@ -292,7 +292,7 @@ sub iterate {
 
 		#If there's no conversation clear this task
 		} else {
-			debug "Ending Task::TalkNPC due to mapchange or disconnection, ", "ai_npcTalk";
+			debug "[TalkNPC] Ending Task::TalkNPC due to mapchange or disconnection, ", "ai_npcTalk";
 
 			if ($self->{stage} == TALKING_TO_NPC) {
 				debug "conversation interrupted and finished.\n";
@@ -417,6 +417,7 @@ sub iterate {
 
 		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and assume it's over
 		if ($self->{sent_talk_response_cancel}) {
+			return unless (timeOut($self->{sent_talk_resp_cancel_time}));
 			undef %talk;
 			if (defined $self->{error_code}) {
 				debug "Done talking with $self->{target}, but with conversation sequence errors\n", "ai_npcTalk";
@@ -530,7 +531,7 @@ sub iterate {
 
 		# Initiate NPC conversation.
 		} elsif ( $step =~ /^x/i ) {
-			debug "$self->{target}: Initiating the talk\n", "ai_npcTalk";
+			message "[TalkNPC] $self->{target}: Initiating the talk (sending start)\n", "ai_npcTalk";
 			$self->{target}->sendTalk;
 
 		# Select an answer
@@ -748,7 +749,7 @@ sub iterate {
 		$self->{stage} = AFTER_NPC_CANCEL;
 
 		my $id = $ai_v{'npc_talk'}{'ID'};
-		debug "$self->{target}: Sending talk cancel [id '".(unpack ('V', $id))."'] after NPC has done talking\n", "ai_npcTalk";
+		debug "[TalkNPC] $self->{target}: Sending talk cancel [id '".(unpack ('V', $id))."'] after NPC has done talking\n", "ai_npcTalk";
 		$messageSender->sendTalkCancel($id);
 
 	# After a 'npc_talk_cancel' and a timeout we decide what to do next
@@ -826,7 +827,7 @@ sub conversation_end {
 	$self->delHooks;
 	$self->setDone();
 	debug "Task::TalkNPC::conversation_end called at ai npc_talk '".$ai_v{'npc_talk'}{'talk'}."'.\n", "ai_npcTalk";
-	message TF("Done talking with %s.\n", $self->{target}), "ai_npcTalk";
+	message TF("[TalkNPC] Done talking with %s (end)\n", $self->{target}), "ai_npcTalk";
 }
 
 ##
@@ -841,19 +842,21 @@ sub target {
 }
 
 #only for testing
-my $default_text = "eye lol";
+my $default_text = "eyelol";
 my $default_number = 1234;
 
 sub cancelTalk {
 	my ($self) = @_;
 
 	if (defined $self->{error_message}) {
-		debug "Trying to auto close the conversation due to error.\n", "ai_npcTalk";
+		debug "[TalkNPC] Trying to auto close the conversation due to error.\n", "ai_npcTalk";
 	}
 
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
 		$messageSender->sendTalkResponse($talk{ID}, $#{$talk{responses}});
 		$self->{sent_talk_response_cancel} = 1;
+		$self->{sent_talk_resp_cancel_time}{time} = time;
+		$self->{sent_talk_resp_cancel_time}{timeout} = 5;
 
 	} elsif ($ai_v{'npc_talk'}{'talk'} eq 'next') {
 		$messageSender->sendTalkContinue($talk{ID});

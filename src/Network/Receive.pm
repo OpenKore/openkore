@@ -8864,8 +8864,8 @@ sub rodex_get_zeny {
 
 	message T("The zeny of the rodex mail was requested with success.\n");
 
-	$rodexList->{mails}{$args->{mailID1}}{zeny1} = 0;
-	$rodexList->{mails}{$args->{mailID1}}{zeny1} = $rodexList->{mails}{$args->{mailID1}}{attach} eq 'z' ? 0 : 'i';
+	$rodexList->{mails}{ $args->{mailID1} }{zeny1} = 0;
+	$rodexList->{mails}{ $args->{mailID1} }{attach} = $rodexList->{mails}{ $args->{mailID1} }{attach} eq 'z' ? 0 : 'i';
 }
 
 sub rodex_get_item {
@@ -11835,39 +11835,40 @@ sub skill_use_failed {
 	);
 
 	my %failtype = (
-		0 => T('Basic'),
-		1 => T('Insufficient SP'),
-		2 => T('Insufficient HP'),
-		3 => T('No Memo'),
-		4 => T('Mid-Delay'),
-		5 => T('No Zeny'),
-		6 => T('Wrong Weapon Type'),
-		7 => T('Red Gem Needed'),
-		8 => T('Blue Gem Needed'),
-		9 => TF('%s Overweight', '90%'),
-		10 => T('Requirement'),
-		11 => T('Failed to use in Target'),
-		12 => T('Maximum Ancilla exceed'),
-		13 => T('Need this within the Holy water'),
-		14 => T('Missing Ancilla'),
-		19 => T('Full Amulet'),
-		24 => T('[Purchase Street Stall License] need 1'),
-		29 => TF('Must have at least %s of base XP', '1%'),
-		30 => T('Insufficient SP'),
-		33 => T('Failed to use Madogear'),
-		34 => T('Kunai is Required'),
-		37 => T('Canon ball is Required'),
-		43 => T('Failed to use Guillotine Poison'),
-		50 => T('Failed to use Madogear'),
-		71 => T('Missing Required Item'), # (item name) required x amount
-		72 => T('Equipment is required'),
-		73 => T('Combo Skill Failed'),
-		76 => T('Too many HP'),
-		77 => T('Need Royal Guard Branding'),
-		78 => T('Required Equiped Weapon Class'),
-		83 => T('Location not allowed to create chatroom/market'),
-		84 => T('Need more bullet'),
-		);
+		0  => T( 'Basic' ),
+		1  => T( 'Insufficient SP' ),
+		2  => T( 'Insufficient HP' ),
+		3  => T( 'No Memo' ),
+		4  => T( 'Mid-Delay' ),
+		5  => T( 'No Zeny' ),
+		6  => T( 'Wrong Weapon Type' ),
+		7  => T( 'Red Gem Needed' ),
+		8  => T( 'Blue Gem Needed' ),
+		9  => TF( '%s Overweight', '90%' ),
+		10 => T( 'Requirement' ),
+		11 => T( 'Failed to use in Target' ),
+		12 => T( 'Maximum Ancilla exceed' ),
+		13 => T( 'Need this within the Holy water' ),
+		14 => T( 'Missing Ancilla' ),
+		19 => T( 'Full Amulet' ),
+		24 => T( '[Purchase Street Stall License] need 1' ),
+		26 => T( 'Position error' ),
+		29 => TF( 'Must have at least %s of base XP', '1%' ),
+		30 => T( 'Insufficient SP' ),
+		33 => T( 'Failed to use Madogear' ),
+		34 => T( 'Kunai is Required' ),
+		37 => T( 'Canon ball is Required' ),
+		43 => T( 'Failed to use Guillotine Poison' ),
+		50 => T( 'Failed to use Madogear' ),
+		71 => T( 'Missing Required Item' ),                            # (item name) required x amount
+		72 => T( 'Equipment is required' ),
+		73 => T( 'Combo Skill Failed' ),
+		76 => T( 'Too many HP' ),
+		77 => T( 'Need Royal Guard Branding' ),
+		78 => T( 'Required Equiped Weapon Class' ),
+		83 => T( 'Location not allowed to create chatroom/market' ),
+		84 => T( 'Need more bullet' ),
+	);
 
 	my $errorMessage;
 	if ($args->{skillID} == 1 && $args->{cause} == 0 && exists $basefailtype{$args->{btype}}) {

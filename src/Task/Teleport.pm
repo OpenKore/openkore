@@ -79,13 +79,14 @@ sub DESTROY {
 
 sub iterate {
 	my ($self) = @_;
-
+	
 	return unless $self->SUPER::iterate;
 	return unless $net->getState == Network::IN_GAME;
 
 	if ($self->{mapChanged}) {
 		# TODO respawn task may be not done, if a regular mapchange was occurred
 		debug "Teleport $self->{actor} - Map change occurred, marking teleport as done\n", "teleport";
+		Plugins::callHook('taskTeleport_mapChanged', { task => $self });
 		$self->setDone;
 
 	} elsif (timeOut($self->{giveup})) {
