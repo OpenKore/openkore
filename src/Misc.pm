@@ -416,6 +416,7 @@ sub saveConfigFile {
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
+	my $silent = shift;
 	my %args;
 
 	if (@_ == 1) {
@@ -440,17 +441,17 @@ sub setTimeout {
 
 		if ($timeout{$timeout}{timeout} eq $time) {
 			if ($time) {
-				message TF("Timeout '%s' is already %s\n", $timeout, $time), "info";
+				message TF("Timeout '%s' is already %s\n", $timeout, $time), "info" unless ($silent);
 			} else {
-				message TF("Timeout '%s' is already *None*\n", $timeout), "info";
+				message TF("Timeout '%s' is already *None*\n", $timeout), "info" unless ($silent);
 			}
 			return;
 		}
 
 		if (!defined $time) {
-			message TF("Timeout '%s' unset (was %s)\n", $timeout, $oldtime), "info";
+			message TF("Timeout '%s' unset (was %s)\n", $timeout, $oldtime), "info" unless ($silent);
 		} else {
-			message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $oldtime), "info";
+			message TF("Timeout '%s' set to %s (was %s)\n", $timeout, $time, $oldtime), "info" unless ($silent);
 		}
 	}
 	if ($args{autoCreate} && !exists $timeout{$timeout}{timeout}) {
@@ -4778,6 +4779,23 @@ sub checkSelfCondition {
 		return 0 if !isSafe();
 	}
 
+	if (exists $config{$prefix."_nearPortal"} && defined $config{$prefix."_nearPortal"}) {
+		my $is_portal_near = 0;
+		my $pos = calcPosition($char);
+		for my $portal (@$portalsList) {
+			if (blockDistance($pos, $portal->{pos}) <= 2) {
+				$is_portal_near = 1;
+				last;
+			}
+		}
+		if ($config{$prefix."_nearPortal"} == 0) {
+			return 0 if ($is_portal_near);
+
+		} elsif ($config{$prefix."_nearPortal"} == 1) {
+			return 0 unless ($is_portal_near);
+		}
+	}
+
 	if ($config{$prefix."_inMap"}) {
 		return 0 unless (existsInList($config{$prefix . "_inMap"}, $field->baseName));
 	}
@@ -5508,7 +5526,7 @@ sub solveMSG {
 		}
 	}
 	warning TF("Unknown msgid: %d. Need to update the file msgstringtable.txt (from data.grf)\n", --$id) if !$msgTable[$id];
-
+	Plugins::callHook('solveMSG', { msg => \$msg });
 	return $msg;
 }
 
@@ -5554,6 +5572,7 @@ sub solveMessage {
 	if ($msg =~ /<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/) {
 		$msg =~ s/<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/solveItemLink($1)/eg;
 	}
+	Plugins::callHook('solveMessage', { msg => \$msg });
 	return $msg;
 }
 
@@ -5618,6 +5637,33 @@ sub getButterflyWing {
 sub getEdenGroupMark {
 	# 22508 - Eden Group Mark
 	return $char->inventory->getByNameID(22508);
+}
+
+sub print_callers {
+	message "[print_callers] Printing start\n";
+    my @callers;
+    my $level = 1;
+    while (my @info = caller($level)) {
+        my $sub_name = $info[3] ? $info[3] : "TOP in $info[0]";
+        push @callers, {
+            package  => $info[0],
+            file     => $info[1],
+            line     => $info[2],
+            sub_name => $sub_name,
+        };
+        last if @callers >= 7;
+        $level++;
+    }
+    
+    message "Last " . scalar(@callers) . " callers:\n";
+    for my $i (0 .. $#callers) {
+        message TF("#%d: %s at %s line %d\n",
+            $i + 1,
+            $callers[$i]{sub_name},
+            $callers[$i]{file},
+            $callers[$i]{line});
+    }
+	message "[print_callers] Printing end\n";
 }
 
 return 1;

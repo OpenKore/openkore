@@ -189,7 +189,7 @@ sub iterate {
 		$self->populateOpenListWithGoCommands() unless ($self->{noGoCommand});
 
 		delete $self->{tempPortalsSaveMap} if (exists $self->{tempPortalsSaveMap});
-		if (!$self->{noTeleSpawn} && canUseTeleport(2) && isSaveMapSetAndValid()) {
+		if (!$self->{noTeleSpawn} && canUseTeleport(2) && $self->isSaveMapSetAndValid()) {
 			$self->populateOpenListWithWarpToSaveMap();
 		}
 
@@ -460,6 +460,11 @@ sub populateOpenListWithGoCommands {
 # Add teleport lv 2 (or butterfly wing) to openlist
 sub populateOpenListWithWarpToSaveMap {
 	my ($self) = @_;
+	
+	return unless ($config{saveMap_warp});
+	return unless ($self->isWarpToSaveMapMinDistanceReached());
+	my $saveMapDestination = $self->resolveSaveMapDestination();
+	return unless ($saveMapDestination);
 
 	# set current map vars
 	my $current_map = $self->{source}{map};
@@ -467,9 +472,9 @@ sub populateOpenListWithWarpToSaveMap {
 	my $current_y   = $self->{source}{y};
 	my $from_node   = "$current_map $current_x $current_y";
 	
-	my $dest_map = hashSafeGetValue(\%config, 'saveMap');
-	my $dest_x = hashSafeGetValue(\%config, 'saveMap_x');
-	my $dest_y = hashSafeGetValue(\%config, 'saveMap_y');
+	my $dest_map = $saveMapDestination->{map};
+	my $dest_x = $saveMapDestination->{x};
+	my $dest_y = $saveMapDestination->{y};
 	
 	my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
 
@@ -493,20 +498,191 @@ sub populateOpenListWithWarpToSaveMap {
 	$self->{tempPortalsSaveMap}{$dest}{dest}{$dest}{enabled} = 1;
 }
 
-sub isSaveMapSetAndValid {
-	my $dest_map = hashSafeGetValue(\%config, 'saveMap');
-	my $dest_x = hashSafeGetValue(\%config, 'saveMap_x');
-	my $dest_y = hashSafeGetValue(\%config, 'saveMap_y');
-	return 0 unless (defined $dest_map);
-	return 0 unless (defined $dest_x);
-	return 0 unless (defined $dest_y);
-	my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
+sub isWarpToSaveMapMinDistanceReached {
+	my ($self) = @_;
 
-	return 0 unless (hashSafeGetValue(\%portals_spawns, $dest, 'dest', $dest));
+	my $minDistance = int(hashSafeGetValue(\%config, 'saveMap_warp_minDistance') || 0);
+	return 1 if ($minDistance <= 0);
 
+	my $saveMapDestination = $self->resolveSaveMapDestination();
+	return 1 unless ($saveMapDestination);
+
+	my $dest_map = $saveMapDestination->{map};
+	my $dest_x = $saveMapDestination->{x};
+	my $dest_y = $saveMapDestination->{y};
+
+	my $distance = $self->getDistanceToSaveMap($dest_map, $dest_x, $dest_y);
+	return ($distance >= $minDistance) if (defined $distance);
+
+	# If route distance cannot be calculated, don't block warp usage.
 	return 1;
 }
 
+sub getDistanceToSaveMap {
+	my ($self, $dest_map, $dest_x, $dest_y) = @_;
 
+	my $cacheKey = join('|', $self->{source}{map}, $self->{source}{x}, $self->{source}{y}, $dest_map, $dest_x, $dest_y);
+	if ($self->{saveMapDistanceCache} && $self->{saveMapDistanceCache}{key} eq $cacheKey) {
+		return $self->{saveMapDistanceCache}{value};
+	}
+
+	if ($self->{source}{map} eq $dest_map) {
+		my @solution;
+		if (Task::Route->getRoute(\@solution, $self->{source}{field}, {x => $self->{source}{x}, y => $self->{source}{y}}, {x => $dest_x, y => $dest_y})) {
+			my $distance = scalar(@solution);
+			$self->{saveMapDistanceCache} = { key => $cacheKey, value => $distance };
+			return $distance;
+		}
+		return;
+	}
+
+	my $task = Task::CalcMapRoute->new(
+		targets => [{ map => $dest_map, x => $dest_x, y => $dest_y }],
+		sourceMap => $self->{source}{map},
+		sourceX => $self->{source}{x},
+		sourceY => $self->{source}{y},
+		noGoCommand => 1,
+		noTeleSpawn => 1,
+		maxTime => 3,
+	);
+	$task->activate();
+
+	while ($task->getStatus() != Task::DONE) {
+		$task->iterate();
+	}
+
+	return if ($task->getError());
+	my $route = $task->getRoute();
+	my $distance = (!$route || !@{$route}) ? 0 : $route->[-1]{walk};
+	$self->{saveMapDistanceCache} = { key => $cacheKey, value => $distance };
+	return $distance;
+}
+
+sub isSaveMapSetAndValid {
+	my ($self) = @_;
+	return defined $self->resolveSaveMapDestination();
+}
+
+sub resolveSaveMapDestination {
+	my ($self) = @_;
+
+	my $target = ($self->{targets} && ref($self->{targets}) eq 'ARRAY' && @{$self->{targets}}) ? $self->{targets}[0] : undef;
+	my $cacheKey = join('|',
+		hashSafeGetValue(\%config, 'saveMap') // '',
+		hashSafeGetValue(\%config, 'saveMap_x') // '',
+		hashSafeGetValue(\%config, 'saveMap_y') // '',
+		($target && defined $target->{map}) ? $target->{map} : '',
+		($target && defined $target->{x}) ? $target->{x} : '',
+		($target && defined $target->{y}) ? $target->{y} : '',
+	);
+	if ($self->{saveMapDestinationCache} && $self->{saveMapDestinationCache}{key} eq $cacheKey) {
+		return $self->{saveMapDestinationCache}{value};
+	}
+
+	my $dest_map = hashSafeGetValue(\%config, 'saveMap');
+	return unless (defined $dest_map && $dest_map ne '');
+
+	my %candidates;
+	my $dest_x = hashSafeGetValue(\%config, 'saveMap_x');
+	my $dest_y = hashSafeGetValue(\%config, 'saveMap_y');
+	if (defined $dest_x && defined $dest_y && $dest_x ne '' && $dest_y ne '') {
+		my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
+		if (hashSafeGetValue(\%portals_spawns, $dest, 'dest', $dest)) {
+			my $fixedSaveMapDestination = { map => $dest_map, x => $dest_x, y => $dest_y };
+			$self->{saveMapDestinationCache} = { key => $cacheKey, value => $fixedSaveMapDestination };
+			return $fixedSaveMapDestination;
+		}
+	}
+
+	foreach my $portal (keys %portals_spawns) {
+		foreach my $dest (keys %{$portals_spawns{$portal}{dest}}) {
+			next if (hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'map') ne $dest_map);
+			my $x = hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'x');
+			my $y = hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'y');
+			next if (!defined $x || !defined $y || $x eq '' || $y eq '');
+			$candidates{"$x $y"} = { map => $dest_map, x => $x, y => $y };
+		}
+	}
+
+	my @candidates = values %candidates;
+	return unless @candidates;
+	return $candidates[0] if (@candidates == 1);
+
+	if ($target && $target->{map}) {
+		my $neighborMap = $self->getSaveMapNeighborFromWalkingRoute($dest_map, $target);
+		if (defined $neighborMap && $neighborMap ne '') {
+			my %neighborCandidates;
+			foreach my $portal (keys %portals_spawns) {
+				my ($portal_map) = split(/\s+/, $portal, 2);
+				next if (!defined $portal_map || $portal_map ne $neighborMap);
+				foreach my $dest (keys %{$portals_spawns{$portal}{dest}}) {
+					next if (hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'map') ne $dest_map);
+					my $x = hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'x');
+					my $y = hashSafeGetValue(\%portals_spawns, $portal, 'dest', $dest, 'y');
+					next if (!defined $x || !defined $y || $x eq '' || $y eq '');
+					$neighborCandidates{"$x $y"} = { map => $dest_map, x => $x, y => $y };
+				}
+			}
+
+			if (%neighborCandidates) {
+				my @bestCandidates = sort {
+					$a->{x} <=> $b->{x}
+					|| $a->{y} <=> $b->{y}
+				} values %neighborCandidates;
+
+				$self->{saveMapDestinationCache} = { key => $cacheKey, value => $bestCandidates[0] };
+				return $bestCandidates[0];
+			}
+		}
+	}
+
+	@candidates = sort {
+		$a->{x} <=> $b->{x}
+		|| $a->{y} <=> $b->{y}
+	} @candidates;
+
+	$self->{saveMapDestinationCache} = { key => $cacheKey, value => $candidates[0] };
+	return $candidates[0];
+}
+
+sub getSaveMapNeighborFromWalkingRoute {
+	my ($self, $saveMap, $target) = @_;
+	return unless ($target && $target->{map});
+
+	my $task = Task::CalcMapRoute->new(
+		targets => [{ map => $target->{map}, x => $target->{x}, y => $target->{y} }],
+		sourceMap => $self->{source}{map},
+		sourceX => $self->{source}{x},
+		sourceY => $self->{source}{y},
+		noGoCommand => 1,
+		noTeleSpawn => 1,
+		maxTime => 3,
+	);
+	$task->activate();
+
+	while ($task->getStatus() != Task::DONE) {
+		$task->iterate();
+	}
+
+	return if ($task->getError());
+	my $route = $task->getRoute();
+	return if (!$route || !@{$route});
+
+	foreach my $step (@{$route}) {
+		my ($from, $to) = split(/=/, $step->{portal} || '', 2);
+		next unless (defined $from && defined $to);
+		my ($from_map) = split(/\s+/, $from, 2);
+		my ($to_map) = split(/\s+/, $to, 2);
+		next unless (defined $from_map && defined $to_map);
+
+		if ($to_map eq $saveMap) {
+			return $from_map;
+		} elsif ($from_map eq $saveMap) {
+			return $to_map;
+		}
+	}
+
+	return;
+}
 
 1;

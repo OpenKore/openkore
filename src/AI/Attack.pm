@@ -94,22 +94,21 @@ sub process {
 
 			my @aggressives = ai_getAggressives($attackOnRoute, $party);
 
-			if (!$target_is_aggressive && @aggressives) {
-				my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
-				if ($attackTarget && $attackTarget ne $target->{ID}) {
-					$char->sendAttackStop;
-					AI::dequeue 
-					while (AI::inQueue("attack"));
-					ai_setSuspend(0);
-					my $new_target = Actor::get($attackTarget);
-					warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
-					$target->{droppedForAggressive} = 1;
-					$char->attack($attackTarget);
-					AI::Attack::process();
-					return;
-				}
-			}
-		}
+            if (!$target_is_aggressive && @aggressives) {
+                my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
+                if ($attackTarget && $attackTarget ne $target->{ID}) {
+                    $char->sendAttackStop;
+                    AI::dequeue while ( AI::inQueue("attack") );
+                    ai_setSuspend(0);
+                    my $new_target = Actor::get($attackTarget);
+                    warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
+                    $target->{droppedForAggressive} = 1;
+                    $char->attack($attackTarget);
+                    AI::Attack::process();
+                    return;
+                }
+            }
+        }
 
 		my $cleanMonster = checkMonsterCleanness($ID);
 		if (!$cleanMonster) {
@@ -268,13 +267,14 @@ sub targetGone {
 }
 
 sub finishAttacking {
-	my ($args, $ID) = @_;
-	$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
-	AI::dequeue while (AI::inQueue("attack"));
-	if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-		message TF("Target %s died\n", $monsters_old{$ID}), "ai_attack";
-		Plugins::callHook('target_died', {monster => $monsters_old{$ID}});
-		monKilled();
+    my ($args, $ID) = @_;
+    $timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
+    AI::dequeue while (AI::inQueue("attack"));
+    message TF( "Finished attacking\n"), "ai_attack";
+    if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
+        message TF("Target %s died\n", $monsters_old{$ID}), "ai_attack";
+        Plugins::callHook('target_died', {monster => $monsters_old{$ID}});
+        monKilled();
 
     # Pickup loot when monster's dead
 		if (AI::state == AI::AUTO && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
@@ -382,6 +382,7 @@ sub main {
 		warning "ML Dump: " . Dumper(\@$monstersList);
 		warning "ai_seq Dump: " . Dumper(\@ai_seq);
 		warning "ai_seq_args Dump: " . Dumper(\@ai_seq_args);
+		Plugins::callHook('undefined_object_id');
 	}
 
 	my $target = Actor::get($ID);

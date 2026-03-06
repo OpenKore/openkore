@@ -173,6 +173,9 @@ sub iterate {
 		debug "Current map " . $field->baseName . " does not match solution [ $self->{mapSolution}[0]{portal} ].\n", "map_route";
 		delete $self->{substage};
 		delete $self->{timeout};
+		delete $timeout{'ai_portal_give_up'}{'time'};
+		delete $timeout{'ai_portal_wait'}{'time'};
+		delete $self->{teleportTime};
 		delete $self->{mapChanged};
 		delete $self->{missing_portal};
 		delete $self->{guess_portal};
@@ -226,6 +229,7 @@ sub iterate {
 			my $max_npc_dist = 10;
 			my $realPos = calcPosFromPathfinding($field, $self->{actor});
 			my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
+			return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
 
 			if ( $self->{mapSolution}[0]{steps} && $dist_to_npc > $max_npc_dist) {
 				if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
@@ -313,6 +317,7 @@ sub iterate {
 										$self->{mapSolution}[0]{pos}{y} = $plugin_args{y};
 										$self->setNpcTalk();
 									} else {
+										error TF("Failed to teleport using airship NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
 										# NPC sequence is a failure
 										if ($config{route_removeMissingPortals_NPC}) {
 											# We delete that portal and try again
@@ -322,9 +327,8 @@ sub iterate {
 											$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
 											push(@portals_lut_missed, $missed);
 											delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+											error TF("[route_removeMissingPortals_NPC] Deleting airship NPC.\n"), "map_route";
 										}
-
-										error TF("Failed to teleport using airship NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
 										$self->initMapCalculator();	# redo MAP router
 									}
 								}
@@ -374,6 +378,7 @@ sub iterate {
 		my $max_npc_dist = 10;
 		my $realPos = calcPosFromPathfinding($field, $self->{actor});
 		my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
+		return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
 		
 		if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
 			$self->{mapSolution}[0]{retry} = 0;
@@ -417,6 +422,8 @@ sub iterate {
 						$self->{mapSolution}[0]{pos}{y} = $plugin_args{y};
 						$self->setNpcTalk();
 					} else {
+						error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
+						
 						# NPC sequence is a failure
 						if ($config{route_removeMissingPortals_NPC}) {
 							# We delete that portal and try again
@@ -426,9 +433,9 @@ sub iterate {
 							$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
 							push(@portals_lut_missed, $missed);
 							delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+							error TF("[route_removeMissingPortals_NPC] Deleting portal NPC.\n"), "map_route";
 						}
 
-						error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
 						$self->initMapCalculator();	# redo MAP router
 					}
 				}
@@ -532,88 +539,60 @@ sub iterate {
 
 		if ($self->{missing_portal}) {
 
+			my $current_portal = portalExists($field->baseName, $self->{mapSolution}[0]{pos});
+			error TF("Bugged current portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+
+			my $missed = {
+				time => time,
+				name => "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}",
+				portal => $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"}
+			};
+			push(@portals_lut_missed, $missed);
+			
+			delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+			delete $self->{missing_portal};
+			delete $self->{guess_portal};
+			
 			if (!$config{route_tryToGuessMissingPortalByDistance}) {
-				my $missed = {};
-				$missed->{time} = time;
-				$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
-				$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-				push(@portals_lut_missed, $missed);
-				delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-				warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
-				delete $self->{missing_portal};
-				delete $self->{guess_portal};
 				$self->initMapCalculator();	# redo MAP router
-
-			} else {
-				my $closest_portal_binID;
-				my $closest_portal_dist;
-
-				my $current_portal = portalExists($field->baseName, $self->{mapSolution}[0]{pos});
-				my ($current_from,$current_to) = split /=/, $self->{mapSolution}[0]{portal};
-				my ($current_to_map,$current_to_x,$current_to_y) = split / /, $current_to;
-				my $current_pos = { x=>$current_to_x, y=>$current_to_y };
-				debug TF("Bugged current portal at %s (%s,%s) to %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $current_to_map, $current_to_x, $current_to_y), "map_route";
-				PORTAL: for my $portal (@$portalsList) {
-					my $exist_portal = portalExists($field->baseName, $portal->{pos});
-					if ($current_portal && $exist_portal) {
-						my $entry = $portals_lut{$exist_portal};
-						DEST: for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
-						debug TF("Possible exist portal at %s (%s,%s) to %s (%s,%s).\n", $field->baseName, $portal->{pos}{x}, $portal->{pos}{y}, $entry->{dest}{$dest}{map}, $entry->{dest}{$dest}{x}, $entry->{dest}{$dest}{y}), "map_route";
-							next DEST unless ($entry->{dest}{$dest}{map} eq $current_to_map);
-							next DEST unless ( ($entry->{dest}{$dest}{x} == $current_to_x && $entry->{dest}{$dest}{y} == $current_to_y) || (Task::Route->getRoute( \@solution, $field, $entry->{dest}{$dest}, $current_pos )) );
-							#next DEST unless (blockDistance($entry->{dest}{$dest}, $current_pos) < 20);
-
-							my $missed = {};
-							$missed->{time} = time;
-							$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
-							$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-							push(@portals_lut_missed, $missed);
-							delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-							warning TF("Unable to use portal at %s (%s,%s) but there is another similar close portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $field->baseName, $entry->{dest}{$dest}{x}, $entry->{dest}{$dest}{y}), "map_route";
-							delete $self->{missing_portal};
-							delete $self->{guess_portal};
-							$self->initMapCalculator();	# redo MAP router
-							return;
-						}
-						next PORTAL; # Only guess unknown portals
-					}
-
-					next PORTAL unless ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $portal->{pos} ) );
-
-					my $dist = blockDistance($self->{mapSolution}[0]{pos}, $portal->{pos});
-					next PORTAL if (defined $closest_portal_dist && $closest_portal_dist < $dist);
-
-					$closest_portal_binID = $portal->{binID};
-					$closest_portal_dist = $dist;
-				}
-
-				if (!defined $closest_portal_binID) {
-					my $missed = {};
-					$missed->{time} = time;
-					$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
-					$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-					push(@portals_lut_missed, $missed);
-					delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-					warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
-					delete $self->{missing_portal};
-					$self->initMapCalculator();	# redo MAP router
-
-				} else {
-					$self->{guess_portal} = $portalsList->get($closest_portal_binID);
-					warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "map_route";
-					my %params = (
-						field => $field,
-						solution => \@solution
-					);
-					$params{$_} = $self->{guess_portal}{pos}{$_} for qw(x y);
-					$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls randomFactor useManhattan);
-					my $task = new Task::Route(%params);
-					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
-					$self->setSubtask($task);
-				}
+				return;
 			}
 
-		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
+			my $closest_portal_binID;
+			my $closest_portal_dist;
+
+			for my $portal (@$portalsList) {
+				debug TF("Possible exist portal at %s (%s,%s).\n", $field->baseName, $portal->{pos}{x}, $portal->{pos}{y}), "map_route";
+				next unless ( Task::Route->getRoute( \@solution, $field, $portal->{pos}, $self->{actor}{pos} ) );
+				
+				my $distance_portals = blockDistance($portal->{pos}, $self->{mapSolution}[0]{pos});
+				next unless ($distance_portals <= 15);
+
+				next if (defined $closest_portal_dist && $closest_portal_dist < $distance_portals);
+				
+				$closest_portal_binID = $portal->{binID};
+				$closest_portal_dist = $distance_portals;
+			}
+
+			if (!defined $closest_portal_binID) {
+				warning TF("No close portals found.\n"), "map_route";
+				$self->initMapCalculator();	# redo MAP router
+				return;
+			}
+
+			$self->{guess_portal} = $portalsList->get($closest_portal_binID);
+			warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "map_route";
+			my %params = (
+				field => $field,
+				solution => \@solution
+			);
+			$params{$_} = $self->{guess_portal}{pos}{$_} for qw(x y);
+			$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls randomFactor useManhattan);
+			my $task = new Task::Route(%params);
+			$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
+			$self->setSubtask($task);
+
+		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 && timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})) ) {
 				if (!exists $timeout{ai_portal_give_up}{time}) {
 					$timeout{ai_portal_give_up}{time} = time;
 					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
@@ -628,6 +607,8 @@ sub iterate {
 				$plugin_args{return} = 1;
 				Plugins::callHook('Task::MapRoute::iterate::missing_portal', \%plugin_args);
 				return if (!$plugin_args{return});
+
+				error TF("Failed to teleport using portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
 
 				$self->{missing_portal} = 1;
 
@@ -849,7 +830,12 @@ sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
 	$self->{mapChanged} = 1;
+	delete $timeout{'ai_portal_give_up'}{'time'};
+	delete $timeout{'ai_portal_wait'}{'time'};
+	delete $self->{teleportTime};
 	undef $self->{localBroadcast};
+	delete $self->{missing_portal};
+	delete $self->{guess_portal};
 }
 
 sub localBroadcast {

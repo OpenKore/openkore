@@ -1754,6 +1754,12 @@ sub processCmd {
 
 sub clear_queue {
 	my ($self) = @_;
+	if ( defined $self->{Macro_Runner} ) {
+		message "[eventMacro] Macro '".$self->{Macro_Runner}->last_subcall_name."' ended.\n", "system";
+	} else {
+		message "[eventMacro] Undefined macro ended.\n", "system";
+	}
+	
 	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
 	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
 		debug "[eventMacro] Uninterruptible macro '".$self->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2;

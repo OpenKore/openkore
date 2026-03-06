@@ -9,7 +9,7 @@ use eventMacro::Data qw( $general_wider_variable_qr );
 use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
-	['configModify','pos_load_config.txt','in_game'];
+	['post_configModify','pos_load_config.txt','in_game'];
 }
 
 sub _parse_syntax {
@@ -131,46 +131,23 @@ sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'variable') {
-		
 		$self->update_vars($callback_name, $args);
-		
-	} elsif ($callback_type eq 'hook') {
-		
-		if ($callback_name eq 'configModify') {
-			
-			
-			return $self->SUPER::validate_condition if (defined $self->{fulfilled_key} && $args->{key} ne $self->{fulfilled_key});
-			return $self->SUPER::validate_condition if (!defined $self->{fulfilled_key} && !exists $self->{config_keys_member}->{$args->{key}});
-			
-			$self->check_keys($args->{key}, $args->{val});
-			
-		} elsif ($callback_name eq 'pos_load_config.txt' || $callback_name eq 'in_game') {
-			$self->check_keys;
-			
-		}
-		
-	} elsif ($callback_type eq 'recheck') {
-		$self->check_keys;
-		
 	}
+	
+	$self->check_keys;
 	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_key} ? 1 : 0) );
 }
 
 sub check_keys {
-	my ($self, $key_from_hook, $value_from_hook) = @_;
+	my ($self) = @_;
 	
 	$self->{fulfilled_key} = undef;
 	$self->{fulfilled_member_index} = undef;
 	$self->{fulfilled_value} = undef;
 	foreach my $key (keys %{$self->{config_keys_member}}) {
 		my $real_key = get_real_key($key); #when have a label, then key changes, else key is the same
-		my $config_key_value;
-		if (defined $key_from_hook && $real_key eq $key_from_hook) {
-			$config_key_value = (defined $value_from_hook ? $value_from_hook : 'none');
-		} else {
-			$config_key_value = (!exists $config{$real_key} ? 'none' : (!defined $config{$real_key} ? 'none' : $config{$real_key}));
-		}
+		my $config_key_value = (!exists $config{$real_key} ? 'none' : (!defined $config{$real_key} ? 'none' : $config{$real_key}));
 		foreach my $member (@{$self->{config_keys_member}{$key}}) {
 			next unless ($member->{value} eq $config_key_value);
 			$self->{fulfilled_key} = $real_key;
