@@ -140,6 +140,8 @@ our @EXPORT = (
 	look
 	lookAtPosition
 	lookAtPositionNaturally
+	getNaturalLookDirections
+	getClosestWalls
 	manualMove
 	meetingPosition
 	objectAdded
@@ -2488,14 +2490,14 @@ sub lookAtPosition {
 }
 
 ##
-# lookAtPositionNaturally(from_pos, to_pos, [current_body])
+# getNaturalLookDirections(from_pos, to_pos, [current_body])
 # from_pos: source position hashref (character)
 # to_pos: target position hashref
 # current_body: optional current body direction, defaults to $char->{look}{body}
 #
-# Calculates and executes look change using partial-turn strategy.
+# Calculates look change using partial-turn strategy.
 # Returns: (body, head) where body is 0-7 and head is 0-2.
-sub lookAtPositionNaturally {
+sub getNaturalLookDirections {
 	my ($from_pos, $to_pos, $current_body) = @_;
 	return unless ($from_pos && $to_pos);
 
@@ -2520,8 +2522,63 @@ sub lookAtPositionNaturally {
 		}
 	}
 
+	return ($body, $head);
+}
+
+##
+# lookAtPositionNaturally(from_pos, to_pos, [current_body])
+# from_pos: source position hashref (character)
+# to_pos: target position hashref
+# current_body: optional current body direction, defaults to $char->{look}{body}
+#
+# Calculates and executes look change using partial-turn strategy.
+# Returns: (body, head) where body is 0-7 and head is 0-2.
+sub lookAtPositionNaturally {
+	my ($from_pos, $to_pos, $current_body) = @_;
+	my ($body, $head) = getNaturalLookDirections($from_pos, $to_pos, $current_body);
+	return unless defined $body;
+
 	look($body, $head) if ($body != $char->{look}{body} || $head != $char->{look}{head});
 	return ($body, $head);
+}
+
+##
+# getClosestWalls(from_pos, wall_range, [field_obj])
+# from_pos: source position hashref
+# wall_range: search range around from_pos
+# field_obj: optional field object, defaults to current global field
+#
+# Returns: arrayref with all nearest non-walkable cells found in range.
+sub getClosestWalls {
+	my ($from_pos, $wall_range, $field_obj) = @_;
+	return [] unless ($from_pos && defined $wall_range && $wall_range > 0);
+
+	$field_obj ||= $field;
+	return [] unless $field_obj;
+
+	my $closest_distance;
+	my @closest_walls;
+	for (my $dx = -$wall_range; $dx <= $wall_range; $dx++) {
+		for (my $dy = -$wall_range; $dy <= $wall_range; $dy++) {
+			next if $dx == 0 && $dy == 0;
+
+			my $candidate = {
+				x => $from_pos->{x} + $dx,
+				y => $from_pos->{y} + $dy,
+			};
+			next if $field_obj->isWalkable($candidate->{x}, $candidate->{y});
+
+			my $distance = distance($candidate, $from_pos);
+			if (!defined $closest_distance || $distance < $closest_distance) {
+				$closest_distance = $distance;
+				@closest_walls = ($candidate);
+			} elsif ($distance == $closest_distance) {
+				push @closest_walls, $candidate;
+			}
+		}
+	}
+
+	return \@closest_walls;
 }
 
 ##
