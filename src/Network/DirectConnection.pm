@@ -477,6 +477,7 @@ sub checkConnection {
 				$quit = 1;
 				return;
 			}
+			Plugins::callHook('timeout_accountserver');
 			message TF("Timeout on Account Server, reconnecting. Wait %s seconds...\n", $timeout{'reconnect'}{'timeout'}), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -552,6 +553,7 @@ sub checkConnection {
 				return;
 			}
 		} elsif (timeOut($timeout{'gamelogin'}) && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
+			Plugins::callHook('timeout_characterserver');
 			error TF("Timeout on Character Server, reconnecting. Wait %s seconds...\n", $timeout{'reconnect'}{'timeout'}), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -574,6 +576,7 @@ sub checkConnection {
 			$timeout{'charlogin'}{'time'} = time;
 
 		} elsif (timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
+			Plugins::callHook('timeout_characterselectserver');
 			error T("Timeout on Character Select Server, reconnecting...\n"), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -616,6 +619,7 @@ sub checkConnection {
 
 		} elsif (timeOut($timeout{maplogin})) {
 			message T("Timeout on Map Server, connecting to Account Server...\n"), "connection";
+			Plugins::callHook('timeout_mapserver');
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$self->serverDisconnect;
 			$self->setState(Network::NOT_CONNECTED);

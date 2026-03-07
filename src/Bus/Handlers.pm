@@ -43,14 +43,14 @@ sub process {
 	my $MID = $args->{messageID};
 	$args = $args->{args};
 	if (my $handler = $self->can("handle$MID")) {
-		debug "Bus - handling message '$MID'.\n", "busHandlers";
+		debug "Bus - handling message '$MID'.\n", "busHandlers", 2;
 		$self->{currentFrom} = $args->{FROM};
 		$self->{currentSeq}  = $args->{SEQ};
 		$handler->($self, $args);
 		delete $self->{currentFrom};
 		delete $self->{currentSeq};
 	} else {
-		debug "Bus - unhandled message '$MID' received.\n", "busHandlers";
+		debug "Bus - unhandled message '$MID' received.\n", "busHandlers", 2;
 	}
 }
 

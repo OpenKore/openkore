@@ -10,25 +10,26 @@ use Log qw(message debug error warning);
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 
-Plugins::register('NewAStarAvoid', 'Enables smart pathing using the dynamic aspect of D* Lite pathfinding', \&onUnload);
+Plugins::register('NewAStarAvoid', 'Enables smart pathing using the dynamic aspect of A* Lite pathfinding', \&onUnload);
 
 use constant {
 	PLUGIN_NAME => 'NewAStarAvoid',
-	ENABLE_MOVE => 1,
+	ENABLE_MOVE => 0,
 	ENABLE_REMOVE => 1,
 };
 
 use constant {
 	ENABLE_AVOID_MONSTERS => 1,
 	ENABLE_AVOID_PLAYERS => 0,
-	ENABLE_AVOID_AREASPELLS => 0,
-	ENABLE_AVOID_PORTALS => 0,
+	ENABLE_AVOID_AREASPELLS => 1,
+	ENABLE_AVOID_PORTALS => 1,
 };
 
 my $hooks = Plugins::addHooks(
 	['PathFindingReset', \&on_PathFindingReset], # Changes args
 	['AI_pre/manual', \&on_AI_pre_manual],    # Recalls routing
 	['packet_mapChange', \&on_packet_mapChange],
+	['undefined_object_id', \&use_od],
 );
 
 my $obstacle_hooks = Plugins::addHooks(
@@ -49,25 +50,50 @@ my $obstacle_hooks = Plugins::addHooks(
 	# portals
 	['add_portal_list',		\&on_add_portal_list],
 	['portal_disappeared',	\&on_portal_disappeared],
+	
+	['actor_avoid_removal',	\&on_actor_avoid_removal],
 );
 
 my $mobhooks = Plugins::addHooks(
-	['checkMonsterAutoAttack',	\&on_checkMonsterAutoAttack],
+	['AI::Attack::process', \&on_getBestTarget, undef],
+	['getBestTarget',	\&on_getBestTarget],
+);
+
+my $chooks = Commands::register(
+	['od', 'obstacles dump', \&use_od],
 );
 
 sub onUnload {
     Plugins::delHooks($hooks);
 	Plugins::delHooks($obstacle_hooks);
     Plugins::delHooks($mobhooks);
+	Commands::unregister($chooks);
 }
 
 my %mob_nameID_obstacles = (
-	1368 => { # planta carnivora
+	# Geographer
+	1368 => {
 		weight => 2000,
 		dist => 12,
 		drop_target_near => 0,
-		drop_dest_near => 0,
-	}
+		drop_dest_near => 1,
+	},
+	
+	# Muscipular
+	1780 => {
+		weight => 2000,
+		dist => 12,
+		drop_target_near => 0,
+		drop_dest_near => 1,
+	},
+
+	# Drosera
+	1781 => {
+		weight => 2000,
+		dist => 12,
+		drop_target_near => 0,
+		drop_dest_near => 1,
+	},
 );
 
 my %player_name_obstacles = (
@@ -75,7 +101,18 @@ my %player_name_obstacles = (
 );
 
 my %area_spell_type_obstacles = (
-	
+	135 => {
+		weight => 2000,
+		dist => 12,
+		drop_target_near => 0,
+		drop_dest_near => 1,
+	},
+	136 => {
+		weight => 2000,
+		dist => 12,
+		drop_target_near => 0,
+		drop_dest_near => 1,
+	},
 );
 
 my %portals_obstacles = (
@@ -91,29 +128,60 @@ my $mustRePath = 0;
 
 my $weight_limit = 65000;
 
-my $teleport_soon = 0;
-my $teleport_soon_timeout;
+sub use_od {
+	warning "[NewAStarAvoid] [use_od] obstaclesList Dump: " . Dumper(\%obstaclesList);
+	warning "[NewAStarAvoid] [use_od] removed_obstacle_still_in_list Dump: " . Dumper(\%removed_obstacle_still_in_list);
+}
 
 sub on_packet_mapChange {
 	undef %obstaclesList;
+	undef %removed_obstacle_still_in_list;
 	$mustRePath = 0;
 }
 
-sub on_checkMonsterAutoAttack {
-	my (undef, $args) = @_;
+sub on_getBestTarget {
+	my ($hook, $args) = @_;
+
+	my $target = $args->{target};
+	my $targetPos = calcPosFromPathfinding($field, $target);
+
+	my $is_dropped = isTargetDroppedObstacle($target);
 	
-	my $realMonsterPos = calcPosition($args->{monster});
-	my $obstacle = is_there_an_obstacle_near_pos($realMonsterPos, 1);
+	my $drop_string;
+	if ($hook eq 'AI::Attack::process') {
+		$drop_string = 'Dropping';
+	} elsif ($hook eq 'getBestTarget') {
+		$drop_string = 'Not picking';
+	}
+	
+	my $obstacle = is_there_an_obstacle_near_pos($targetPos, 1);
 	if (defined $obstacle) {
-		debug "[avoidObstacle 2] Not picking target ".$args->{monster}." because there is an Obstacle outside the screen nearby.\n";
-		$args->{return} = 0;
+		warning "[NewAStarAvoid] [$hook] $drop_string target ".$args->{target}." because there is an Obstacle nearby.\n" if (!$is_dropped);;
+		if ($hook eq 'AI::Attack::process') {
+			AI::dequeue while (AI::inQueue("attack"))
+		}
+		$target->{attackFailedObstacle} = 1;
+		$args->{return} = 1;
 		return;
 	}
+	
+	if ($is_dropped) {
+		# Release mobs that are no longer near obstacles, we can do this to any mobs because we keep a list of distant obstacles saved
+		warning "[NewAStarAvoid] [$hook] Releasing target $target from block, it no longer meets blocking criteria.\n";
+		$target->{attackFailedObstacle} = 0;
+	}
+}
+
+sub isTargetDroppedObstacle {
+	my ($target) = @_;
+	return 1 if (exists $target->{attackFailedObstacle} && $target->{attackFailedObstacle} == 1);
+	return 0;
 }
 
 # 1 => target
 # 2 => dest
 sub is_there_an_obstacle_near_pos {
+	#warning "[".PLUGIN_NAME."] [is_there_an_obstacle_near_pos]\n";
 	my ($pos, $type) = @_;
 	foreach my $obstacle_ID (keys %obstaclesList) {
 		my $obstacle = $obstaclesList{$obstacle_ID};
@@ -131,62 +199,44 @@ sub is_there_an_obstacle_near_pos {
 	return undef;
 }
 
-sub on_AI_pre_manual_drop_target_near_Obstacle {
-	my @obstacles = keys(%obstaclesList);
-	return unless (@obstacles > 0);
-	if (
-		   (AI::action eq "attack" && AI::args->{ID})
-		|| (AI::action eq "route" && AI::action (1) eq "attack" && AI::args->{attackID})
-		|| (AI::action eq "move" && AI::action (2) eq "attack" && AI::args->{attackID})
-	) {
-		my $args = AI::args;
-		my $ID;
-		my $ataqArgs;
-		if (AI::action eq "attack") {
-			$ID = $args->{ID};
-			$ataqArgs = AI::args(0);
-		} else {
-			if (AI::action(1) eq "attack") {
-				$ataqArgs = AI::args(1);
-				
-			} elsif (AI::action(2) eq "attack") {
-				$ataqArgs = AI::args(2);
-			}
-			$ID = $args->{attackID};
+sub on_AI_pre_manual_adjust_route_step_near_obstacle {
+	return unless (scalar keys(%obstaclesList));
+
+	my $pos = calcPosFromPathfinding($field, $char);
+
+	my $min_found;
+
+	foreach my $obstacle_ID (keys %obstaclesList) {
+		my $obstacle = $obstaclesList{$obstacle_ID};
+		#next unless ($obstacle->{type} eq 'portal');
+
+		my $dist = blockDistance($pos, $obstacle->{pos_to});
+		if (!defined $min_found || $min_found > $dist) {
+			$min_found = $dist;
 		}
-		
-		my $target = Actor::get($ID);
-		return unless ($target);
-		my $target_is_aggressive = is_aggressive($target, undef, 0, 0);
-		
-		my $realMonsterPos = calcPosition($target);
-		
-		my $obstacle = is_there_an_obstacle_near_pos($realMonsterPos, 1);
-		
-		if (defined $obstacle) {
-			#$char->sendAttackStop;
-			if ($target_is_aggressive) {
-				warning "[avoidObstacle 3] Dropping agressive target ".$target." during attack because an Obstacle appeared near it.\n";
-				$teleport_soon = 1;
-				$teleport_soon_timeout->{time} = time;
-				$teleport_soon_timeout->{timeout} = 0.8;
-				
-			} else {
-				warning "[avoidObstacle 4] Dropping target ".$target." before attack because an Obstacle appeared near it.\n";
-				AI::dequeue while (AI::inQueue("attack"));
-			}
-		}
+	}
+
+	if ($min_found > 10) {
+		check_and_change_config_if_necessary('route_step', 13);
+
+	} elsif ($min_found <= 3) {
+		check_and_change_config_if_necessary('route_step', 5);
+
+	} else {
+		check_and_change_config_if_necessary('route_step', $min_found);
+	}
+
+}
+
+sub check_and_change_config_if_necessary {
+	my ($key, $value) = @_;
+	if ($config{$key} ne $value) {
+		Misc::configModify($key, $value, 1);
 	}
 }
 
-sub on_AI_pre_manual_teleport_soon {
-	return unless ($teleport_soon == 1);
-	return unless (main::timeOut($teleport_soon_timeout));
-	$teleport_soon = 0;
-	useTeleport(1);
-}
-
 sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
+	#warning "[".PLUGIN_NAME."] [on_AI_pre_manual_drop_route_dest_near_Obstacle]\n";
 	my @obstacles = keys(%obstaclesList);
 	return unless (@obstacles > 0);
 	
@@ -221,21 +271,26 @@ sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
 
 sub add_obstacle {
 	my ($actor, $obstacle, $type) = @_;
+	#warning "[".PLUGIN_NAME."] [add_obstacle]\n";
 	
 	if (exists $removed_obstacle_still_in_list{$actor->{ID}}) {
-		warning "[".PLUGIN_NAME."] New obstacle $actor on location ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}." already exists in removed_obstacle_still_in_list, deleting from it and updating position.\n";
+		debug "[".PLUGIN_NAME."] New obstacle $actor on location ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}." already exists in removed_obstacle_still_in_list, deleting from it and updating position.\n";
 		delete $obstaclesList{$actor->{ID}};
 		delete $removed_obstacle_still_in_list{$actor->{ID}};
 	}
 	
-	warning "[".PLUGIN_NAME."] Adding obstacle $actor on location ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}.".\n";
+	debug "[".PLUGIN_NAME."] Adding obstacle $actor on location ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}.".\n";
 	
 	my $weight_changes = create_changes_array($actor->{pos_to}, $obstacle);
 	
 	$obstaclesList{$actor->{ID}}{pos_to} = $actor->{pos_to};
 	$obstaclesList{$actor->{ID}}{weight} = $weight_changes;
 	$obstaclesList{$actor->{ID}}{type} = $type;
-	$obstaclesList{$actor->{ID}}{name} = $actor->name;
+	if ($type eq 'spell') {
+		$obstaclesList{$actor->{ID}}{name} = $actor->{'type'};
+	} else {
+		$obstaclesList{$actor->{ID}}{name} = $actor->name;
+	}
 	if ($type eq 'monster') {
 		$obstaclesList{$actor->{ID}}{nameID} = $actor->{nameID};
 	}
@@ -246,6 +301,7 @@ sub add_obstacle {
 }
 
 sub define_extras {
+	#warning "[".PLUGIN_NAME."] [define_extras]\n";
 	my ($ID, $obstacle) = @_;
 	
 	if (exists $obstacle->{drop_target_near} && defined $obstacle->{drop_target_near} && $obstacle->{drop_target_near} == 1) {
@@ -262,11 +318,12 @@ sub define_extras {
 }
 
 sub move_obstacle {
+	#warning "[".PLUGIN_NAME."] [move_obstacle]\n";
 	my ($actor, $obstacle, $type) = @_;
 	
 	return unless (ENABLE_MOVE);
 	
-	warning "[".PLUGIN_NAME."] Moving obstacle $actor (from ".$actor->{pos}{x}." ".$actor->{pos}{y}." to ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}.").\n";
+	debug "[".PLUGIN_NAME."] Moving obstacle $actor (from ".$actor->{pos}{x}." ".$actor->{pos}{y}." to ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}.").\n";
 	
 	my $weight_changes = create_changes_array($actor->{pos_to}, $obstacle);
 	
@@ -277,16 +334,18 @@ sub move_obstacle {
 }
 
 sub remove_obstacle {
+	#warning "[".PLUGIN_NAME."] [remove_obstacle]\n";
 	my ($actor, $type, $reason) = @_;
 	
 	return unless (ENABLE_REMOVE);
+	return if ($type eq 'portal');
 	
 	if (($type eq 'monster' || $type eq 'player') && $reason eq 'outofsight') {
 		$removed_obstacle_still_in_list{$actor->{ID}} = 1;
-		warning "[".PLUGIN_NAME."] Putting obstacle $actor from ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}." in to the removed_obstacle_still_in_list.\n";
+		debug "[".PLUGIN_NAME."] Putting obstacle $actor from ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}." in to the removed_obstacle_still_in_list.\n";
 	
 	} else {
-		warning "[".PLUGIN_NAME."] Removing obstacle $actor from ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}.".\n"; 
+		debug "[".PLUGIN_NAME."] Removing obstacle $actor from ".$actor->{pos_to}{x}." ".$actor->{pos_to}{y}.".\n"; 
 		delete $obstaclesList{$actor->{ID}};
 		$mustRePath = 1;
 	}
@@ -297,49 +356,37 @@ sub remove_obstacle {
 ###################################################
 
 sub on_AI_pre_manual {
-	on_AI_pre_manual_drop_target_near_Obstacle();
-	on_AI_pre_manual_teleport_soon();
+	on_AI_pre_manual_adjust_route_step_near_obstacle();
 	on_AI_pre_manual_drop_route_dest_near_Obstacle();
 	on_AI_pre_manual_removed_obstacle_still_in_list();
 	on_AI_pre_manual_repath();
 }
 
 sub on_AI_pre_manual_removed_obstacle_still_in_list {
+	#warning "[".PLUGIN_NAME."] [on_AI_pre_manual_removed_obstacle_still_in_list]\n";
 	my @obstacles = keys(%removed_obstacle_still_in_list);
 	return unless (@obstacles > 0);
+
+	my $sight = ($config{clientSight}-3); # 3 cell leeway?
 	
 	#warning "[".PLUGIN_NAME."] removed_obstacle_still_in_list: ".(scalar @obstacles)."\n";
+
+	my $realMyPos = calcPosition($char);
 	
 	OBSTACLE: foreach my $obstacle_ID (@obstacles) {
 		my $obstacle = $obstaclesList{$obstacle_ID};
 		
-		my $realMyPos = calcPosition($char);
-		
 		my $dist = blockDistance($realMyPos, $obstacle->{pos_to});
-		my $sight = ($config{clientSight}-2); # 2 cell leeway?
 		
 		next OBSTACLE unless ($dist < $sight);
 		
-		my $target;
-		#LIST: foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
-		
-		if ($obstacle->{type} eq 'monster') {
-			my $actor = $monstersList->getByID($obstacle_ID);
-			if ($actor) {
-				$target = $actor;
-			}
-		} elsif ($obstacle->{type} eq 'player') {
-			my $actor = $playersList->getByID($obstacle_ID);
-			if ($actor) {
-				$target = $actor;
-			}
-		}
+		my $target = findObstacleObjectUsingID($obstacle, $obstacle_ID);
 		
 		# Should never happen
 		if ($target) {
 			warning "[REMOVING TEST] wwwwttttffffff 1.\n";
 		} else {
-			warning "[removed_obstacle_still_in_list] Removing obstacle ".$obstacle->{name}." (".$obstacle->{type}.") from ".$obstacle->{pos_to}{x}." ".$obstacle->{pos_to}{y}." we at ($realMyPos->{x} $realMyPos->{y}) dist:$dist, sight:$sight.\n";
+			debug "[removed_obstacle_still_in_list] Removing obstacle ".$obstacle->{name}." (".$obstacle->{type}.") from ".$obstacle->{pos_to}{x}." ".$obstacle->{pos_to}{y}." we at ($realMyPos->{x} $realMyPos->{y}) dist:$dist, sight:$sight.\n";
 			delete $obstaclesList{$obstacle_ID};
 			delete $removed_obstacle_still_in_list{$obstacle_ID};
 			$mustRePath = 1;
@@ -347,7 +394,25 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 	}
 }
 
+sub findObstacleObjectUsingID {
+	my ($obstacle, $obstacle_ID) = @_;
+
+	#LIST: foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
+
+	if ($obstacle->{type} eq 'monster') {
+		my $actor = $monstersList->getByID($obstacle_ID);
+		return $actor if ($actor);
+	
+	} elsif ($obstacle->{type} eq 'player') {
+		my $actor = $playersList->getByID($obstacle_ID);
+		return $actor if ($actor);
+	}
+
+	return undef;
+}
+
 sub on_AI_pre_manual_repath {
+	#warning "[".PLUGIN_NAME."] [on_AI_pre_manual_repath]\n";
 	return unless ($mustRePath);
 	
 	my $arg_i;
@@ -381,9 +446,9 @@ sub on_AI_pre_manual_repath {
 	my $task = get_task($args);
 	if (defined $task) {
 		if (scalar @{$task->{solution}} == 0) {
-			Log::warning "[test1] Route already reseted.\n";
+			Log::debug "[NewAStarAvoid] [on_AI_pre_manual_repath] Route already reseted.\n";
 		} else {
-			Log::warning "[test2] Reseting route.\n";
+			Log::debug "[NewAStarAvoid] [on_AI_pre_manual_repath] Reseting route.\n";
 			$task->resetRoute;
 		}
 	}
@@ -394,15 +459,16 @@ sub on_AI_pre_manual_repath {
 	my $task2 = get_task($args2);
 	if (defined $task2) {
 		if (scalar @{$task2->{solution}} == 0) {
-			Log::warning "[test3] Route second already reseted.\n";
+			Log::debug "[NewAStarAvoid] [on_AI_pre_manual_repath] [args2] Route second already reseted.\n";
 		} else {
-			Log::warning "[test4] Reseting second route.\n";
+			Log::debug "[NewAStarAvoid] [on_AI_pre_manual_repath] [args2] Reseting second route.\n";
 			$task2->resetRoute;
 		}
 	}
 }
 
 sub get_task {
+	#warning "[".PLUGIN_NAME."] [get_task]\n";
 	my ($args) = @_;
 	if (UNIVERSAL::isa($args, 'Task::Route')) {
 		return $args;
@@ -414,6 +480,7 @@ sub get_task {
 }
 
 sub on_PathFindingReset {
+	#warning "[".PLUGIN_NAME."] [on_PathFindingReset]\n";
 	my (undef, $hookargs) = @_;
 	
 	return unless (exists $hookargs->{args}{getRoute} && $hookargs->{args}{getRoute} == 1);
@@ -448,6 +515,10 @@ sub on_PathFindingReset {
 	$args->{max_y} = ($args->{height}-1) unless (defined $args->{max_y});
 	
 	$hookargs->{return} = 0;
+
+	#warning "DUMP on_PathFindingReset - ".Dumper($args);
+
+	#warning "[".PLUGIN_NAME."] [end on_PathFindingReset]\n";
 }
 
 sub getOffset {
@@ -466,6 +537,12 @@ sub get_weight_for_block {
 		$dist = 1;
 	}
 	my $weight = int($ratio/($dist*$dist));
+	$weight = assertWeightBellowLimit($weight, $weight_limit);
+	return $weight;
+}
+
+sub assertWeightBellowLimit {
+	my ($weight, $weight_limit) = @_;
 	if ($weight >= $weight_limit) {
 		$weight = $weight_limit;
 	}
@@ -473,6 +550,7 @@ sub get_weight_for_block {
 }
 
 sub create_changes_array {
+	#warning "[".PLUGIN_NAME."] [create_changes_array]\n";
 	my ($obstacle_pos, $obstacle) = @_;
 	
 	my %obstacle = %{$obstacle};
@@ -513,6 +591,7 @@ sub create_changes_array {
 
 sub sum_all_changes {
 	my %changes_hash;
+	#warning "[".PLUGIN_NAME."] [sum_all_changes]\n";
 	
 	#warning "[".PLUGIN_NAME."] 1 obstaclesList: ". Data::Dumper::Dumper \%obstaclesList;
 	
@@ -530,7 +609,8 @@ sub sum_all_changes {
 	foreach my $x_keys (keys %changes_hash) {
 		foreach my $y_keys (keys %{$changes_hash{$x_keys}}) {
 			next if ($changes_hash{$x_keys}{$y_keys} == 0);
-			push(@rebuilt_array, { x => $x_keys, y => $y_keys, weight => $changes_hash{$x_keys}{$y_keys} });
+			my $weight = assertWeightBellowLimit($changes_hash{$x_keys}{$y_keys}, $weight_limit);
+			push(@rebuilt_array, { x => $x_keys, y => $y_keys, weight => $weight });
 		}
 	}
 	
@@ -618,7 +698,8 @@ sub on_monster_disappeared {
 	} else {
 		$reason = 'gone';
 	}
-	message ("[on_monster_disappeared] $actor type $args->{type} | reason $reason\n", "route");
+	
+	debug ("[on_monster_disappeared] $actor type $args->{type} | reason $reason\n", "route");
 	remove_obstacle($actor, 'monster', $reason);
 }
 
@@ -670,6 +751,36 @@ sub on_portal_disappeared {
 	my $actor = $args->{portal};
 	
 	#remove_obstacle($actor, 'portal');
+}
+
+###################################################
+######## portals avoiding
+###################################################
+
+sub on_actor_avoid_removal {
+	my (undef, $args) = @_;
+	my $actor = $args->{actor};
+	
+	return unless (exists $obstaclesList{$actor->{ID}});
+	
+	my $reason = 'outofsight';
+	my $type;
+
+	if ($actor->isa('Actor::Player')) {
+		$type = 'player';
+
+	} elsif ($actor->isa('Actor::Monster')) {
+		$type = 'monster';
+
+	} elsif ($actor->isa('Actor::Portal')) {
+		return;
+
+	} else {
+		return;
+	}
+	
+	debug ("[NewAStarAvoid] [on_actor_avoid_removal] $actor type $args->{type}\n", "route");
+	remove_obstacle($actor, $type, $reason);
 }
 
 return 1;
