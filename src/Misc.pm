@@ -2664,6 +2664,80 @@ sub get_meeting_position_config {
 	return \%cfg;
 }
 
+sub build_chasing_target_snapshot_for_spot {
+	my ($target, $realTargetPos, $targetSpeed, $spot) = @_;
+
+	my $targetAttackCell = getClosestAdjacentCell($spot, $realTargetPos);
+	return unless $targetAttackCell;
+
+	my $chase_solution = get_solution($field, $realTargetPos, $targetAttackCell);
+	return unless ($chase_solution && @{$chase_solution});
+
+	my $chase_snapshot = build_motion_snapshot(
+		$target,
+		$chase_solution,
+		$targetSpeed,
+		0,                # start from realTargetPos "now"
+		$targetAttackCell,
+	);
+
+	return {
+		attack_cell => $targetAttackCell,
+		snapshot    => $chase_snapshot,
+	};
+}
+
+sub getClosestAdjacentCell {
+	my ($center_pos, $from_pos) = @_;
+
+	my @blocks = $field->calcRectArea($center_pos->{x}, $center_pos->{y}, 1);
+	
+	my $best_block;
+	my $shortest_dist;
+
+	foreach my $block (@blocks) {
+		next if ($block->{x} == $center_pos->{x} && $block->{y} == $center_pos->{y});
+		next unless $field->isWalkable($block->{x}, $block->{y});
+
+		my $dist = adjustedBlockDistance($from_pos, $block);
+		if (!defined $shortest_dist || $shortest_dist > $dist) {
+			$shortest_dist = $dist;
+			$best_block = $block;
+		}
+	}
+
+	return $best_block;
+}
+
+sub isTargetProbablyComingToMe {
+	my ($actor, $actor_pos, $target, $target_pos) = @_;
+
+	return 0 unless $target && $target->{ID};
+
+	my $ID = $target->{ID};
+	my $target_is_aggressive = is_aggressive($target, undef, 0, 0);
+
+	# Already engaged with us in some way.
+	return 1 if (
+		($target->{dmgToYou} || 0) > 0
+		|| ($target->{missedYou} || 0) > 0
+		|| ($target->{castOnToYou} || 0) > 0
+		|| ($target->{dmgFromYou} || 0) > 0
+	);
+
+	# If the monster is aggressive, clean, and close enough, assume it will try to come.
+	return 1 if ($target_is_aggressive && blockDistance($actor_pos, $target_pos) <= 11);
+
+	# Optional extra hint: if its current move endpoint is getting closer to us, that is also suspicious.
+	if ($target_is_aggressive && $target->{pos} && $target->{pos_to}) {
+		my $dist_from = adjustedBlockDistance($actor_pos, $target->{pos});
+		my $dist_to   = adjustedBlockDistance($actor_pos, $target->{pos_to});
+		return 1 if $dist_to < $dist_from;
+	}
+
+	return 0;
+}
+
 ##
 # meetingPosition(actor, actorType, target_actor, attackMaxDistance, runFromTargetActive)
 # actor: current object.
@@ -2681,15 +2755,13 @@ sub meetingPosition {
 		return;
 	}
 
-	my $extra_time_actor = defined $timeout{'meetingPosition_extra_time_actor'}{'timeout'}
-		? $timeout{'meetingPosition_extra_time_actor'}{'timeout'}
-		: 0.2;
+	my $extra_time_actor = 0;
 
-	my $extra_time_target = defined $timeout{'meetingPosition_extra_time_target'}{'timeout'}
-		? $timeout{'meetingPosition_extra_time_target'}{'timeout'}
-		: 0.2;
+	my $extra_time_target = 0;
 
 	my $safety_margin = 0.15;
+	my $stability_lookahead = 0.2;
+	my $instability_penalty_value = 1.5;
 
 	my $mySpeed = ($actor->{walk_speed} || 0.12);
 	my $timeSinceActorMoved = time - $actor->{time_move} + $extra_time_actor;
@@ -2770,10 +2842,10 @@ sub meetingPosition {
 	my $actor_pf = build_dijkstra_map($realMyPos, $actor_max_cost);
 
 	my $target_pf;
-	if ($runFromTargetActive) {
-		my $target_max_cost = $max_path_dist * 14;
-		$target_pf = build_dijkstra_map($realTargetPos, $target_max_cost);
-	}
+	my $target_max_cost = $max_path_dist * 14;
+	$target_pf = build_dijkstra_map($realTargetPos, $target_max_cost);
+
+	my $being_chased = isTargetProbablyComingToMe($actor, $realMyPos, $target, $realTargetPos);
 
 	my %allspots;
 	my @blocks = calcRectArea2($realMyPos->{x}, $realMyPos->{y}, $max_path_dist, 0);
@@ -2799,7 +2871,6 @@ sub meetingPosition {
 				y => $y_spot,
 			};
 
-			next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
 			next unless $field->isWalkable($spot->{x}, $spot->{y});
 			next if $prohibitedSpots{$spot->{x}}{$spot->{y}};
 			next if positionNearPortal($spot, $config{'attackMinPortalDistance'});
@@ -2810,9 +2881,32 @@ sub meetingPosition {
 
 			my $time_actor_to_get_to_spot = calcTimeFromFloodCost($cost_actor_to_spot, $mySpeed);
 
-			my $targetPosNow = $target_snapshot->{moving}
-				? predict_position_after_delta($target_snapshot, $time_actor_to_get_to_spot)
-				: $realTargetPos;
+			my $targetPosNow;
+			my $time_target_to_get_to_spot;
+			my $target_chase_ctx;
+
+			if ($being_chased) {
+				$target_chase_ctx = build_chasing_target_snapshot_for_spot($target, $realTargetPos, $targetSpeed, $spot);
+
+				if ($target_chase_ctx) {
+					$targetPosNow = predict_position_after_delta(
+						$target_chase_ctx->{snapshot},
+						$time_actor_to_get_to_spot
+					);
+
+					# Time for the target to reach the adjacent attack cell for this candidate spot.
+					$time_target_to_get_to_spot = $target_chase_ctx->{snapshot}{finish_time};
+				} else {
+					# Fallback to current-route prediction if no chase path could be built.
+					$targetPosNow = $target_snapshot->{moving}
+						? predict_position_after_delta($target_snapshot, $time_actor_to_get_to_spot)
+						: $realTargetPos;
+				}
+			} else {
+				$targetPosNow = $target_snapshot->{moving}
+					? predict_position_after_delta($target_snapshot, $time_actor_to_get_to_spot)
+					: $realTargetPos;
+			}
 
 			next unless ($spot->{x} != $targetPosNow->{x} || $spot->{y} != $targetPosNow->{y});
 
@@ -2834,24 +2928,72 @@ sub meetingPosition {
 				next unless blockDistance($targetPosNow, $masterPosNow) <= $followDistanceMax;
 			}
 
-			my $time_target_to_get_to_spot;
 			if ($runFromTargetActive) {
-				my $cost_target_to_spot = $target_pf->floodfill_getdist($spot->{x}, $spot->{y});
-				next if $cost_target_to_spot < 0;
+				if ($being_chased) {
+					# If the target is coming for us, compare against the time it needs to reach
+					# the adjacent attack cell for this candidate spot.
+					if (!defined $time_target_to_get_to_spot) {
+						# Fallback: if chase model failed, compare against raw arrival to the spot.
+						my $cost_target_to_spot = $target_pf->floodfill_getdist($spot->{x}, $spot->{y});
+						next if $cost_target_to_spot < 0;
+						$time_target_to_get_to_spot = calcTimeFromFloodCost($cost_target_to_spot, $targetSpeed);
+					}
 
-				my $time_target_to_get_to_spot = calcTimeFromFloodCost($cost_target_to_spot, $targetSpeed);
-				next if ($time_actor_to_get_to_spot + $safety_margin) > $time_target_to_get_to_spot;
+					next if ($time_actor_to_get_to_spot + $safety_margin) > $time_target_to_get_to_spot;
+				} else {
+					my $cost_target_to_spot = $target_pf->floodfill_getdist($spot->{x}, $spot->{y});
+					next if $cost_target_to_spot < 0;
+
+					$time_target_to_get_to_spot = calcTimeFromFloodCost($cost_target_to_spot, $targetSpeed);
+					next if ($time_actor_to_get_to_spot + $safety_margin) > $time_target_to_get_to_spot;
+				}
 			}
 
 			my $range_penalty = abs($dist_to_target - $desired_dist) * 0.35;
 
-			my $danger_penalty = 0;
-			if ($runFromTargetActive) {
-				my $time_gap = $time_target_to_get_to_spot - $time_actor_to_get_to_spot;
-				$danger_penalty = ($time_gap < 0.25) ? (0.25 - $time_gap) * 2.0 : 0;
+			my $instability_penalty = 0;
+
+			my $future_targetPosNow;
+			if ($being_chased && $target_chase_ctx) {
+				$future_targetPosNow = predict_position_after_delta(
+					$target_chase_ctx->{snapshot},
+					$time_actor_to_get_to_spot + $stability_lookahead
+				);
+			} else {
+				$future_targetPosNow = $target_snapshot->{moving}
+					? predict_position_after_delta($target_snapshot, $time_actor_to_get_to_spot + $stability_lookahead)
+					: $realTargetPos;
 			}
 
-			my $score = $time_actor_to_get_to_spot + $range_penalty + $danger_penalty;
+			my $future_attack_ok = canAttack(
+				$field,
+				$spot,
+				$future_targetPosNow,
+				$attackCanSnipe,
+				$attackMaxDistance,
+				$config{clientSight}
+			) == 1;
+
+			if (!$future_attack_ok) {
+				$instability_penalty += $instability_penalty_value;
+			}
+
+			my $future_dist_to_target = blockDistance($spot, $future_targetPosNow);
+			if ($future_dist_to_target < $min_destination_dist) {
+				$instability_penalty += $instability_penalty_value;
+			}
+
+			my $chase_bonus = 0;
+			if ($being_chased && !$runFromTargetActive && $attackMaxDistance <= 1 && defined $time_target_to_get_to_spot) {
+				$chase_bonus = 0.5 if $time_target_to_get_to_spot <= ($time_actor_to_get_to_spot + 0.5);
+			}
+			
+			my $stay_bonus = 0;
+			if ($spot->{x} == $realMyPos->{x} && $spot->{y} == $realMyPos->{y}) {
+				$stay_bonus = 0.75;
+			}
+
+			my $score = $time_actor_to_get_to_spot + $range_penalty + $instability_penalty - $chase_bonus - $stay_bonus;
 
 			if (!defined($best_score) || $score < $best_score) {
 				$best_score = $score;
@@ -2864,7 +3006,7 @@ sub meetingPosition {
 	}
 
 	if (defined $best_spot) {
-		debug "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosNow->{x} $best_targetPosNow->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
+		debug "[mP] [Chase $being_chased] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosNow->{x} $best_targetPosNow->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
 		return $best_spot;
 	}
 }

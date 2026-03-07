@@ -73,7 +73,7 @@ attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
-attackAuto_considerDamagedAggressive 0
+attackAuto_considerDamagedAggressive 1
 attackDistance 1
 attackDistanceAuto 1
 attackMaxDistance 1
@@ -94,10 +94,10 @@ attackUpdateMonsterPos 1
 
 # the following attack keys are meant to work only in private server (rAthena/Hercules)
 # if you enable this in a official server you character will act weird, because character can't attack beyond the range
-attackBeyondMaxDistance_waitForAgressive 0
-attackBeyondMaxDistance_sendAttackWhileWaiting 0
+attackBeyondMaxDistance_waitForAgressive 1
+attackBeyondMaxDistance_sendAttackWhileWaiting 1
 attackSendAttackWithMove 0
-attackWaitApproachFinish 1
+attackWaitApproachFinish 0
 
 autoMoveOnDeath 0
 autoMoveOnDeath_x

@@ -574,11 +574,14 @@ sub main {
 
 	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
 
+	my $being_chased = Misc::isTargetProbablyComingToMe($char, $realMyPos, $target, $realMonsterPos);
+	debug TF("[attack - being_chased] (%d).\n", $being_chased), 'ai_attack';
+	
 	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
 	# If it is close enough delete the ai_attack_failed_waitForAgressive_give_up keys and loop attack logic
 	if (
 		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
-		$target->{dmgFromYou} > 0 &&
+		$being_chased &&
 		$canAttack == 1 &&
 		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
 		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
@@ -685,7 +688,7 @@ sub main {
 	if (
 		!$found_action &&
 		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
-		$target->{dmgFromYou} > 0 &&
+		$being_chased &&
 		($canAttack == 0 || $canAttack == -1) &&
 		!$hitTarget_when_not_possible
 	) {
@@ -695,6 +698,7 @@ sub main {
 			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
 			warning TF("[%s] Waited too long for target to get closer, dropping target. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 			giveUp($args, $ID, 0);
+			# TODO: Here add a move to target fallback
 		} else {
 			$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7) if ($config{"attackBeyondMaxDistance_sendAttackWhileWaiting"});
 			debug TF("[%s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
