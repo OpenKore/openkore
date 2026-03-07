@@ -712,7 +712,7 @@ sub received_characters_blockSize {
 sub received_characters_unpackString {
 	my $char_info;
 	for ($masterServer && $masterServer->{charBlockSize}) {
-        if ($_ == 247) { # PACKETVER >= 20211103? [extended char block: character name increased to 96 bytes]
+		if ($_ == 247) { # PACKETVER >= 20211103? [extended char block: character name increased to 96 bytes]
 			$char_info = {
 				types => 'a4 V2 V V2 V6 v V2 V2 V2 V2 v2 V v9 Z96 C8 v Z16 V4 C',
 				keys => [qw(charID exp exp_2 zeny exp_job exp_job_2 lv_job body_state health_state effect_state stance manner status_point hp hp_2 hp_max hp_max_2 sp sp_2 sp_max sp_max_2 walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
@@ -1062,12 +1062,12 @@ sub parse_account_server_info {
 			keys => [qw(ip port name state users property ip_port unknown)],
 		};
 
-    } elsif ($args->{switch} eq '0AC4' || $args->{switch} eq '0B07') { # kRO Zero 2017, kRO ST 201703+, vRO 2021
-        $server_info = {
-            len => 160,
-            types => 'a4 v Z20 v3 a128',
-            keys => [qw(ip port name users state property ip_port)],
-        };
+	} elsif ($args->{switch} eq '0AC4' || $args->{switch} eq '0B07') { # kRO Zero 2017, kRO ST 201703+, vRO 2021
+		$server_info = {
+			len => 160,
+			types => 'a4 v Z20 v3 a128',
+			keys => [qw(ip port name users state property ip_port)],
+		};
 
 	} elsif ($args->{switch} eq '0AC9') { # cRO 2017
 		$server_info = {
@@ -1108,7 +1108,6 @@ sub parse_account_server_info {
 			$server{ip} = inet_ntoa($server{ip});
 		}
 		$server{name} = bytesToString($server{name});
-        $server{name} =~ s/[^\x20-\x7E]//g; # Remove non-printable characters from server name
 		\%server
 	} unpack '(a'.$server_info->{len}.')*', $args->{serverInfo};
 

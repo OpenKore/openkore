@@ -130,19 +130,24 @@ sub readNext {
 
 	if ($nextMessageMightBeAccountID) {
 		if (length($$buffer) >= 4) {
-            $result = substr($$buffer, 0, 4);
-            
-            if ($masterServer->{accountIdFromBuffer} || 
-                unpack("V1",$result) == unpack("V1",$Globals::accountID)) {
-                $Globals::accountID = $result if $masterServer->{accountIdFromBuffer};
-                substr($$buffer, 0, 4, '');
-                $$type = ACCOUNT_ID;
-            } else {
-                return $self->readNext($type);
-            }
-        } else {
-            $self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
+
+		$result = substr($$buffer, 0, 4);
+
+        if ($masterServer->{accountIdFromBuffer}) {
+            $Globals::accountID = $result if $masterServer->{accountIdFromBuffer};
         }
+
+		if (unpack("V1",$result) == unpack("V1",$Globals::accountID)) {
+				substr($$buffer, 0, 4, '');
+				$$type = ACCOUNT_ID;
+			} else {
+				# Account ID is "hidden" in a packet (0283 is one of them)
+				return $self->readNext($type);
+			}
+
+		} else {
+			$self->{nextMessageMightBeAccountID} = $nextMessageMightBeAccountID;
+		}
 
 	} elsif ($size > 1) {
 		# Static length message.
