@@ -27,6 +27,57 @@ extern "C" {
 
 
 /*******************************************/
+/* Internal flood helpers                  */
+/*******************************************/
+
+static inline int
+is_walkable_cell(CalcPath_session *session, int x, int y)
+{
+	if (x < session->min_x || x > session->max_x || y < session->min_y || y > session->max_y) {
+		return 0;
+	}
+
+	long addr = (y * session->width) + x;
+	return (session->map_base_weight[addr] != -1);
+}
+
+static inline int
+can_step_to_neighbor(CalcPath_session *session, int fromX, int fromY, int toX, int toY)
+{
+	if (!is_walkable_cell(session, toX, toY)) {
+		return 0;
+	}
+
+	int dx = toX - fromX;
+	int dy = toY - fromY;
+
+	/* diagonal corner-cut prevention */
+	if (dx != 0 && dy != 0) {
+		if (!is_walkable_cell(session, fromX + dx, fromY)) {
+			return 0;
+		}
+		if (!is_walkable_cell(session, fromX, fromY + dy)) {
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
+static inline unsigned long
+flood_step_cost(CalcPath_session *session, int dx, int dy)
+{
+	if (dx == 0 || dy == 0) {
+		return session->flood_orthogonal_cost;
+	} else {
+		return session->flood_diagonal_cost;
+	}
+}
+
+
+/*******************************************/
+/* A* pathfinding                          */
+/*******************************************/
 
 // Create a new, empty pathfinding session.
 // You must initialize it with CalcPath_init()
@@ -39,6 +90,22 @@ CalcPath_new ()
 
 	session->initialized = 0;
 	session->run = 0;
+	session->openListSize = 0;
+
+	session->currentMap = NULL;
+	session->openList = NULL;
+	session->second_weight_map = NULL;
+
+	session->flood_initialized = 0;
+	session->flood_run = 0;
+	session->flood_max_distance = 0;
+	session->flood_reachable_count = 0;
+	session->flood_orthogonal_cost = 1;
+	session->flood_diagonal_cost = 1;
+	session->floodOpenListSize = 0;
+	session->floodMap = NULL;
+	session->floodOpenList = NULL;
+	session->floodQueue = NULL;
 
 	return session;
 }
@@ -53,6 +120,8 @@ CalcPath_init (CalcPath_session *session)
 	session->currentMap = (Node*) calloc(session->height * session->width, sizeof(Node));
 	if (session->customWeights) {
 		session->second_weight_map = (unsigned int*) calloc(session->height * session->width, sizeof(unsigned int));
+	} else {
+		session->second_weight_map = NULL;
 	}
 
 	long goalAdress = (session->endY * session->width) + session->endX;
@@ -126,22 +195,22 @@ CalcPath_pathStep (CalcPath_session *session)
 			return -1;
 		}
 
-		// Every 100th loop check if we have ran out if time
+		// Every 100th loop check if we have ran out of time
 		loop++;
 		if (loop == 100) {
 			if (GetTickCount() - timeout > session->time_max) {
 				printf("[pathfinding run error] Pathfinding ended before provided time.\n");
 				return -3;
-			} else
+			} else {
 				loop = 0;
+			}
 		}
 
 		// Set currentNode to the top node in openList, and remove it from openList.
 		currentNode = openListGetLowest (session);
 
 		// If currentNode is the goal we have reached the destination, reconstruct and return the path.
-		if (goal->predecessor) {
-			//return path
+		if (currentNode->nodeAdress == goal->nodeAdress) {
 			reconstruct_path(session, goal, start);
 			return 1;
 		}
@@ -170,20 +239,21 @@ CalcPath_pathStep (CalcPath_session *session)
 				continue;
 			}
 
-			// First 4 neighbors in the list are in a ortogonal path and the last 4 are in a diagonal path from currentNode.
+			// First 4 neighbors are orthogonal and last 4 diagonal.
 			if (i >= 4) {
-				// If neighborNode has a diagonal path from currentNode then we can only move to it if both ortogonal composite nodes are walkable. (example: To move to the northeast both north and east must be walkable)
-			   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
+				// To move diagonally, both orthogonal composite nodes must be walkable.
+				if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 ||
+					session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
 					continue;
 				}
 				// We use 14 as the diagonal movement weight
 				distanceFromCurrent = 14;
 			} else {
-				// We use 10 for ortogonal movement weight
+				// We use 10 for orthogonal movement weight
 				distanceFromCurrent = 10;
 			}
 
-			// If avoidWalls is true we add weight to cells near walls to disencourage the algorithm to move to them.
+			// If avoidWalls is true we add weight to cells near walls to discourage the algorithm to move to them.
 			if (session->avoidWalls) {
 				distanceFromCurrent += session->map_base_weight[neighbor_adress];
 			}
@@ -197,10 +267,10 @@ CalcPath_pathStep (CalcPath_session *session)
 				distanceFromCurrent += c_randomFactor;
 			}
 
-			// g_score is the summed weight of all nodes from start node to neighborNode, which is the g_score of currentNode + the weight to move from currentNode to neighborNode.
+			// g_score is the summed weight of all nodes from start node to neighborNode
 			g_score = currentNode->g + distanceFromCurrent;
 
-			// If neighborNode is not in openList neither in closedList it has not been reached yet, initialize it and add it to openList
+			// If neighborNode is not in openList nor in closedList it has not been reached yet
 			if (neighborNode->whichlist == NONE) {
 				neighborNode->x = neighbor_x;
 				neighborNode->y = neighbor_y;
@@ -210,15 +280,12 @@ CalcPath_pathStep (CalcPath_session *session)
 				neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY, session->useManhattan);
 				neighborNode->f = neighborNode->g + neighborNode->h;
 				openListAdd (session, neighborNode);
-
-			// If neighborNode is in a list it has to be in openList, since we cannot access nodes in closedList. 
 			} else {
-				// Check if we have found a shorter path to neighborNode, if so update it to have currentNode as its predecessor.
+				// If neighborNode is in OPEN, check whether we found a shorter path.
 				if (g_score < neighborNode->g) {
 					neighborNode->predecessor = currentNode->nodeAdress;
 					neighborNode->g = g_score;
 					neighborNode->f = neighborNode->g + neighborNode->h;
-					// Here we could remove neighborNode from openList and add it again to get it to the right position, but reajusting it saves time.
 					reajustOpenListItem (session, neighborNode);
 				}
 			}
@@ -236,8 +303,6 @@ heuristic_cost_estimate (int currentX, int currentY, int goalX, int goalY, bool 
 	if (xDistance < 0) xDistance = -xDistance;
 	if (yDistance < 0) yDistance = -yDistance;
 
-	// # Game client uses the inadmissible (overestimating) heuristic of Manhattan distance
-	// #define heuristic(currentX, currentY, goalX, goalY) (10 * (xDistance + yDistance)) // Manhattan distance
 	int hScore;
 	if (useManhattan == 1) {
 		hScore = (10 * (xDistance + yDistance));
@@ -263,48 +328,33 @@ reconstruct_path(CalcPath_session *session, Node* goal, Node* start)
 }
 
 // Openlist is a binary heap of min-heap type
-// Each member in openList is the adress (nodeAdress) of a node in the map (session->currentMap)
+// Each member in openList is the address (nodeAdress) of a node in the map (session->currentMap)
 
 // Add node 'currentNode' to openList
 void 
 openListAdd (CalcPath_session *session, Node* currentNode)
 {
-	// Index will be 1 + last index in openList, which is also its size
-	// Save in currentNode its index in openList
 	currentNode->openListIndex = session->openListSize;
 	currentNode->whichlist = OPEN;
 
-	// Defines openList[index] to currentNode adress
 	session->openList[currentNode->openListIndex] = currentNode->nodeAdress;
 
-	// Increses openListSize by 1, since we just added a new member
 	session->openListSize++;
 
 	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
 	Node* parentNode;
 
-	// Repeat while currentNode still has a parent node, otherwise currentNode is the top node in the heap
 	while (parentIndex >= 0) {
-
 		parentNode = &session->currentMap[session->openList[parentIndex]];
 
-		// If parent node is bigger than currentNode, exchange their positions
 		if (parentNode->f > currentNode->f) {
-			// Changes the node adress of openList[currentNode->openListIndex] (which is 'currentNode') to that of openList[parentIndex] (which is the current parent of 'currentNode')
 			session->openList[currentNode->openListIndex] = session->openList[parentIndex];
-
-			// Changes openListIndex of the current parent of 'currentNode' to that of 'currentNode' since they exchanged positions
 			parentNode->openListIndex = currentNode->openListIndex;
 
-			// Changes the node adress of openList[parentIndex] (which is the current parent of 'currentNode') to that of openList[currentNode->openListIndex] (which is 'currentNode')
 			session->openList[parentIndex] = currentNode->nodeAdress;
-
-			// Changes openListIndex of 'currentNode' to that of the current parent of 'currentNode' since they exchanged positions
 			currentNode->openListIndex = parentIndex;
 
-			// Updates parentIndex to that of the current parent of 'currentNode'
 			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
-
 		} else {
 			break;
 		}
@@ -317,28 +367,17 @@ reajustOpenListItem (CalcPath_session *session, Node* currentNode)
 	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
 	Node* parentNode;
 
-	// Repeat while currentNode still has a parent node, otherwise currentNode is the top node in the heap
 	while (parentIndex >= 0) {
-
 		parentNode = &session->currentMap[session->openList[parentIndex]];
 
-		// If parent node is bigger than currentNode, exchange their positions
 		if (parentNode->f > currentNode->f) {
-			// Changes the node adress of openList[currentNode->openListIndex] (which is 'currentNode') to that of openList[parentIndex] (which is the current parent of 'currentNode')
 			session->openList[currentNode->openListIndex] = session->openList[parentIndex];
-
-			// Changes openListIndex of the current parent of 'currentNode' to that of 'currentNode' since they exchanged positions
 			parentNode->openListIndex = currentNode->openListIndex;
 
-			// Changes the node adress of openList[parentIndex] (which is the current parent of 'currentNode') to that of openList[currentNode->openListIndex] (which is 'currentNode')
 			session->openList[parentIndex] = currentNode->nodeAdress;
-
-			// Changes openListIndex of 'currentNode' to that of the current parent of 'currentNode' since they exchanged positions
 			currentNode->openListIndex = parentIndex;
 
-			// Updates parentIndex to that of the current parent of 'currentNode'
 			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
-
 		} else {
 			break;
 		}
@@ -352,17 +391,11 @@ openListGetLowest (CalcPath_session *session)
 
 	Node* lowestNode = &session->currentMap[session->openList[0]];
 
-	// Since it was decreaased, but the node was not removed yet, session->openListSize is now also the index of the last node in openList
-	// We move the last node in openList to this position and adjust it down as necessary
 	session->openList[lowestNode->openListIndex] = session->openList[session->openListSize];
 
-	Node* movedNode;
-
-	// Saves in movedNode that it now is the top node in openList
-	movedNode = &session->currentMap[session->openList[lowestNode->openListIndex]];
+	Node* movedNode = &session->currentMap[session->openList[lowestNode->openListIndex]];
 	movedNode->openListIndex = lowestNode->openListIndex;
 
-	// Saves in lowestNode that it is no longer in openList
 	lowestNode->whichlist = CLOSED;
 	lowestNode->openListIndex = 0;
 
@@ -378,10 +411,7 @@ openListGetLowest (CalcPath_session *session)
 	long lastIndex = session->openListSize-1;
 
 	while (leftChildIndex <= lastIndex) {
-
-		//There are 2 children
 		if (rightChildIndex <= lastIndex) {
-
 			rightChildNode = &session->currentMap[session->openList[rightChildIndex]];
 			leftChildNode = &session->currentMap[session->openList[leftChildIndex]];
 
@@ -390,8 +420,6 @@ openListGetLowest (CalcPath_session *session)
 			} else {
 				smallerChildIndex = rightChildIndex;
 			}
-
-		//There is 1 children
 		} else {
 			smallerChildIndex = leftChildIndex;
 		}
@@ -399,23 +427,14 @@ openListGetLowest (CalcPath_session *session)
 		smallerChildNode = &session->currentMap[session->openList[smallerChildIndex]];
 
 		if (movedNode->f > smallerChildNode->f) {
-
-			// Changes the node adress of openList[movedNode->openListIndex] (which is 'movedNode') to that of openList[smallerChildIndex] (which is the current child of 'movedNode')
 			session->openList[movedNode->openListIndex] = smallerChildNode->nodeAdress;
-
-			// Changes openListIndex of the current child of 'movedNode' to that of 'movedNode' since they exchanged positions
 			smallerChildNode->openListIndex = movedNode->openListIndex;
 
-			// Changes the node adress of openList[smallerChildIndex] (which is the current child of 'movedNode') to that of openList[movedNode->openListIndex] (which is 'movedNode')
 			session->openList[smallerChildIndex] = movedNode->nodeAdress;
-
-			// Changes openListIndex of 'movedNode' to that of the current child of 'movedNode' since they exchanged positions
 			movedNode->openListIndex = smallerChildIndex;
 
-			// Updates rightChildIndex and leftChildIndex to those of the current children of 'movedNode'
 			rightChildIndex = 2 * movedNode->openListIndex + 2;
 			leftChildIndex = 2 * movedNode->openListIndex + 1;
-
 		} else {
 			break;
 		}
@@ -428,9 +447,13 @@ openListGetLowest (CalcPath_session *session)
 void
 free_currentMap (CalcPath_session *session)
 {
-	free(session->currentMap);
-	if (session->customWeights) {
+	if (session->currentMap) {
+		free(session->currentMap);
+		session->currentMap = NULL;
+	}
+	if (session->second_weight_map) {
 		free(session->second_weight_map);
+		session->second_weight_map = NULL;
 	}
 }
 
@@ -438,24 +461,338 @@ free_currentMap (CalcPath_session *session)
 void
 free_openList (CalcPath_session *session)
 {
-	free(session->openList);
+	if (session->openList) {
+		free(session->openList);
+		session->openList = NULL;
+	}
 }
 
-// Garantees that all memory allocations have been freed the pathfinding object is destroyed
+
+/*******************************************/
+/* Floodfill / Dijkstra open list          */
+/*******************************************/
+
+void
+floodOpenListAdd(CalcPath_session *session, FloodFillNode *currentNode, long nodeAddr)
+{
+	currentNode->openListIndex = session->floodOpenListSize;
+	currentNode->whichlist = OPEN;
+
+	session->floodOpenList[currentNode->openListIndex] = nodeAddr;
+	session->floodOpenListSize++;
+
+	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+	FloodFillNode *parentNode;
+	long parentAddr;
+
+	while (parentIndex >= 0) {
+		parentAddr = session->floodOpenList[parentIndex];
+		parentNode = &session->floodMap[parentAddr];
+
+		if (parentNode->dist > currentNode->dist) {
+			session->floodOpenList[currentNode->openListIndex] = parentAddr;
+			parentNode->openListIndex = currentNode->openListIndex;
+
+			session->floodOpenList[parentIndex] = nodeAddr;
+			currentNode->openListIndex = parentIndex;
+
+			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+		} else {
+			break;
+		}
+	}
+}
+
+void
+reajustFloodOpenListItem(CalcPath_session *session, FloodFillNode *currentNode)
+{
+	long currentAddr = (long)(currentNode - session->floodMap);
+
+	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+	FloodFillNode *parentNode;
+	long parentAddr;
+
+	while (parentIndex >= 0) {
+		parentAddr = session->floodOpenList[parentIndex];
+		parentNode = &session->floodMap[parentAddr];
+
+		if (parentNode->dist > currentNode->dist) {
+			session->floodOpenList[currentNode->openListIndex] = parentAddr;
+			parentNode->openListIndex = currentNode->openListIndex;
+
+			session->floodOpenList[parentIndex] = currentAddr;
+			currentNode->openListIndex = parentIndex;
+
+			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+		} else {
+			break;
+		}
+	}
+}
+
+long
+floodOpenListGetLowest(CalcPath_session *session)
+{
+	session->floodOpenListSize--;
+
+	long lowestAddr = session->floodOpenList[0];
+	FloodFillNode *lowestNode = &session->floodMap[lowestAddr];
+
+	session->floodOpenList[lowestNode->openListIndex] = session->floodOpenList[session->floodOpenListSize];
+
+	long movedAddr = session->floodOpenList[lowestNode->openListIndex];
+	FloodFillNode *movedNode = &session->floodMap[movedAddr];
+	movedNode->openListIndex = lowestNode->openListIndex;
+
+	lowestNode->whichlist = CLOSED;
+	lowestNode->openListIndex = 0;
+
+	long smallerChildIndex;
+	FloodFillNode *smallerChildNode;
+
+	long rightChildIndex = 2 * movedNode->openListIndex + 2;
+	FloodFillNode *rightChildNode;
+
+	long leftChildIndex = 2 * movedNode->openListIndex + 1;
+	FloodFillNode *leftChildNode;
+
+	long lastIndex = session->floodOpenListSize - 1;
+
+	while (leftChildIndex <= lastIndex) {
+		if (rightChildIndex <= lastIndex) {
+			rightChildNode = &session->floodMap[session->floodOpenList[rightChildIndex]];
+			leftChildNode  = &session->floodMap[session->floodOpenList[leftChildIndex]];
+
+			if (rightChildNode->dist > leftChildNode->dist) {
+				smallerChildIndex = leftChildIndex;
+			} else {
+				smallerChildIndex = rightChildIndex;
+			}
+		} else {
+			smallerChildIndex = leftChildIndex;
+		}
+
+		smallerChildNode = &session->floodMap[session->floodOpenList[smallerChildIndex]];
+
+		if (movedNode->dist > smallerChildNode->dist) {
+			session->floodOpenList[movedNode->openListIndex] = session->floodOpenList[smallerChildIndex];
+			smallerChildNode->openListIndex = movedNode->openListIndex;
+
+			session->floodOpenList[smallerChildIndex] = movedAddr;
+			movedNode->openListIndex = smallerChildIndex;
+
+			rightChildIndex = 2 * movedNode->openListIndex + 2;
+			leftChildIndex = 2 * movedNode->openListIndex + 1;
+		} else {
+			break;
+		}
+	}
+
+	return lowestAddr;
+}
+
+
+/*******************************************/
+/* Floodfill / Dijkstra                    */
+/*******************************************/
+
+void
+FloodFill_init(CalcPath_session *session, int maxDistance, int orthogonalCost, int diagonalCost)
+{
+	long mapSize = (long)session->width * (long)session->height;
+
+	if (session->flood_initialized) {
+		free_floodMap(session);
+		session->flood_initialized = 0;
+	}
+
+	if (session->flood_run) {
+		free_floodQueue(session);
+		session->flood_run = 0;
+	}
+
+	if (session->floodOpenList) {
+		free_floodOpenList(session);
+	}
+
+	session->floodMap = (FloodFillNode*) calloc(mapSize, sizeof(FloodFillNode));
+	session->floodQueue = (long*) malloc(mapSize * sizeof(long)); /* kept for compatibility / future use */
+	session->floodOpenList = (long*) malloc(mapSize * sizeof(long));
+
+	session->flood_max_distance = (unsigned long)maxDistance;
+	session->flood_reachable_count = 0;
+
+	session->flood_orthogonal_cost = (orthogonalCost > 0) ? (unsigned long)orthogonalCost : 1;
+	session->flood_diagonal_cost = (diagonalCost > 0) ? (unsigned long)diagonalCost : session->flood_orthogonal_cost;
+
+	session->floodOpenListSize = 0;
+	session->flood_initialized = 1;
+}
+
+int
+FloodFill_run(CalcPath_session *session)
+{
+	if (!session->flood_initialized) {
+		printf("[floodfill run error] You must call FloodFill_init before FloodFill_run.\n");
+		return -2;
+	}
+
+	if (session->startX < session->min_x || session->startX > session->max_x ||
+		session->startY < session->min_y || session->startY > session->max_y) {
+		printf("[floodfill run error] Start coordinate is out of bounds.\n");
+		return -2;
+	}
+
+	long startAddr = (session->startY * session->width) + session->startX;
+
+	if (session->map_base_weight[startAddr] == -1) {
+		printf("[floodfill run error] Start coordinate is not walkable.\n");
+		return -2;
+	}
+
+	short i_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
+	short i_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
+
+	FloodFillNode *startNode = &session->floodMap[startAddr];
+	startNode->x = session->startX;
+	startNode->y = session->startY;
+	startNode->predecessor = -1;
+	startNode->visited = 1;
+	startNode->whichlist = NONE;
+	startNode->openListIndex = 0;
+	startNode->dist = 0;
+
+	session->flood_reachable_count = 1;
+	session->flood_run = 1;
+	session->floodOpenListSize = 0;
+
+	floodOpenListAdd(session, startNode, startAddr);
+
+	while (session->floodOpenListSize > 0) {
+		long currentAddr = floodOpenListGetLowest(session);
+		FloodFillNode *currentNode = &session->floodMap[currentAddr];
+
+		if (currentNode->dist >= session->flood_max_distance) {
+			continue;
+		}
+
+		for (short i = 0; i <= 7; i++) {
+			int neighbor_x = currentNode->x + i_x[i];
+			int neighbor_y = currentNode->y + i_y[i];
+
+			if (!can_step_to_neighbor(session, currentNode->x, currentNode->y, neighbor_x, neighbor_y)) {
+				continue;
+			}
+
+			long neighborAddr = (neighbor_y * session->width) + neighbor_x;
+			FloodFillNode *neighborNode = &session->floodMap[neighborAddr];
+
+			unsigned long stepCost = flood_step_cost(session, i_x[i], i_y[i]);
+			unsigned long newDist = currentNode->dist + stepCost;
+
+			if (newDist > session->flood_max_distance) {
+				continue;
+			}
+
+			if (!neighborNode->visited) {
+				neighborNode->x = neighbor_x;
+				neighborNode->y = neighbor_y;
+				neighborNode->predecessor = currentAddr;
+				neighborNode->visited = 1;
+				neighborNode->whichlist = NONE;
+				neighborNode->openListIndex = 0;
+				neighborNode->dist = newDist;
+
+				floodOpenListAdd(session, neighborNode, neighborAddr);
+				session->flood_reachable_count++;
+			} else if (neighborNode->whichlist == OPEN && newDist < neighborNode->dist) {
+				neighborNode->predecessor = currentAddr;
+				neighborNode->dist = newDist;
+				reajustFloodOpenListItem(session, neighborNode);
+			}
+		}
+	}
+
+	return (int)session->flood_reachable_count;
+}
+
+void
+free_floodMap (CalcPath_session *session)
+{
+	if (session->floodMap) {
+		free(session->floodMap);
+		session->floodMap = NULL;
+	}
+}
+
+void
+free_floodQueue (CalcPath_session *session)
+{
+	if (session->floodQueue) {
+		free(session->floodQueue);
+		session->floodQueue = NULL;
+	}
+}
+
+void
+free_floodOpenList (CalcPath_session *session)
+{
+	if (session->floodOpenList) {
+		free(session->floodOpenList);
+		session->floodOpenList = NULL;
+	}
+}
+
+
+/*******************************************/
+/* Destroy                                 */
+/*******************************************/
+
+// Guarantees that all memory allocations have been freed when the pathfinding object is destroyed
 void
 CalcPath_destroy (CalcPath_session *session)
 {
 	if (session->initialized) {
-		free(session->currentMap);
-		if (session->customWeights) {
+		if (session->currentMap) {
+			free(session->currentMap);
+			session->currentMap = NULL;
+		}
+		if (session->second_weight_map) {
 			free(session->second_weight_map);
+			session->second_weight_map = NULL;
 		}
 	}
 	if (session->run) {
-		free(session->openList);
+		if (session->openList) {
+			free(session->openList);
+			session->openList = NULL;
+		}
 	}
+
+	if (session->flood_initialized) {
+		if (session->floodMap) {
+			free(session->floodMap);
+			session->floodMap = NULL;
+		}
+	}
+	if (session->flood_run) {
+		if (session->floodQueue) {
+			free(session->floodQueue);
+			session->floodQueue = NULL;
+		}
+	}
+	if (session->floodOpenList) {
+		free(session->floodOpenList);
+		session->floodOpenList = NULL;
+	}
+
 	free(session);
 }
+
+
+/*******************************************/
+/* Utility functions                       */
+/*******************************************/
 
 int
 checkTile_inner(int start_x, int start_y, int tile, int width, int height, char * rawMap_data) {
@@ -463,7 +800,6 @@ checkTile_inner(int start_x, int start_y, int tile, int width, int height, char 
 		return 0;
 	}
 	int offset;
-
 	int value;
 
 	offset = (start_y * width) + start_x;
@@ -489,7 +825,6 @@ checkLOS_inner(int start_x, int start_y, int end_x, int end_y, int tile, int wid
 	int weight;
 
 	int offset;
-
 	int value;
 
 	int temp;
@@ -563,7 +898,7 @@ canAttack_inner(int start_x, int start_y, int end_x, int end_y, int tile, int wi
 		return 0;
 	}
 	if (!checkLOS_inner(start_x, start_y, end_x, end_y, tile, width, height, rawMap_data)) {
-		return -1 ;
+		return -1;
 	}
 
 	return 1;
@@ -572,9 +907,7 @@ canAttack_inner(int start_x, int start_y, int end_x, int end_y, int tile, int wi
 int
 checkPathFree_inner(int start_x, int start_y, int end_x, int end_y, int tile, int width, int height, char * rawMap_data) {
 	int offset;
-
 	int value;
-
 	int stepX;
 	int stepY;
 
@@ -586,7 +919,6 @@ checkPathFree_inner(int start_x, int start_y, int end_x, int end_y, int tile, in
 	}
 
 	while (1) {
-
 		stepX = 0;
 		stepY = 0;
 
