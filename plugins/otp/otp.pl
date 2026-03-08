@@ -12,7 +12,7 @@ use lib $Plugins::current_plugin_folder;
 use OTP::TOTP;
 
 Plugins::register(
-    'otp',
+    'OTP',
     'Handles OTP requests by generating TOTP',
     \&unload
 );
