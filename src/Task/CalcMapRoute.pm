@@ -605,6 +605,7 @@ sub getWarpItemCandidatesForTarget {
 
 		my $item = $char->inventory->getByNameID($entry->{itemID});
 		next unless $item;
+		next unless Misc::isTeleportItemEquipRequirementSatisfied($entry);
 
 		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
 			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};

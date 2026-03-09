@@ -5705,6 +5705,18 @@ sub autoNpcTalk {
 	});
 }
 
+sub isTeleportItemEquipRequirementSatisfied {
+	my ($entry) = @_;
+	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+
+	my $required_slot = $entry->{requiredEquipSlot};
+	my $required_id = $entry->{requiredEquipItemID};
+	return 0 unless defined $equipSlot_rlut{$required_slot};
+	my $required_item = $char->inventory->getByNameID($required_id);
+	return 0 unless ($required_item && $required_item->{equipped});
+	return $required_item->equippedInSlot($required_slot);
+}
+
 sub getTeleportItemFromTable {
 	my ($mode, %args) = @_;
 	return unless $char && $char->inventory && $char->inventory->isReady();
@@ -5722,6 +5734,7 @@ sub getTeleportItemFromTable {
 
 		my $item = $char->inventory->getByNameID($entry->{itemID});
 		next unless $item;
+		next unless isTeleportItemEquipRequirementSatisfied($entry);
 
 		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
 			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};

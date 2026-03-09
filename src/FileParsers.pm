@@ -1090,10 +1090,22 @@ sub parseTeleportItems {
 			next;
 		}
 
-		my ($itemID, $mode, $dest_map, $dest_x, $dest_y, $min_level, $timeout_sec) = @args;
-		$timeout_sec = 0 unless defined $timeout_sec;
+		my ($itemID, $mode, $dest_map, $dest_x, $dest_y, $min_level, @optional_args) = @args;
+		my $timeout_sec = 0;
+		my ($required_equip_slot, $required_equip_item_id);
+
+		if (@optional_args) {
+			if ($optional_args[0] =~ /^\d+$/) {
+				$timeout_sec = shift @optional_args;
+			}
+
+			if (@optional_args >= 2) {
+				($required_equip_slot, $required_equip_item_id) = @optional_args[0, 1];
+			}
+		}
 
 		next unless ($itemID =~ /^\d+$/ && $dest_x =~ /^-?\d+$/ && $dest_y =~ /^-?\d+$/ && $min_level =~ /^\d+$/ && $timeout_sec =~ /^\d+$/);
+		next if (defined $required_equip_slot && (!defined $required_equip_item_id || $required_equip_item_id !~ /^\d+$/));
 
 		$mode = lc $mode;
 		$mode = 'any' unless $mode =~ /^(?:any|random|respawn|warp)$/;
@@ -1107,6 +1119,11 @@ sub parseTeleportItems {
 			minLevel => int($min_level),
 			timeoutSec => int($timeout_sec),
 		};
+
+		if (defined $required_equip_slot && defined $required_equip_item_id) {
+			$entry->{requiredEquipSlot} = lc $required_equip_slot;
+			$entry->{requiredEquipItemID} = int($required_equip_item_id);
+		}
 
 		push @{$r_hash->{list}}, $entry;
 		push @{$r_hash->{byMode}{$mode}}, $entry;

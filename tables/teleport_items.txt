@@ -1,7 +1,7 @@
 # Teleport/Warp items with destination metadata and optional cooldown.
 #
 # Syntax (space or comma separated):
-# itemID mode destMap destX destY minLvl timeoutSec
+# itemID mode destMap destX destY minLvl [timeoutSec] [requiredEquipSlot requiredEquipItemID]
 #
 # mode:
 #   random  - used by random teleport (ai_useTeleport 1)
@@ -15,7 +15,8 @@
 # Notes:
 # - This table is optional. OpenKore still supports default Fly Wing / Butterfly Wing logic.
 # - Entries are checked from top to bottom; first eligible item found in inventory is used.
-# - timeoutSec is item-specific anti-spam cooldown tracked by OpenKore.
+# - timeoutSec is item-specific anti-spam cooldown tracked by OpenKore (optional, default: 0).
+# - requiredEquipSlot + requiredEquipItemID are optional and require that item equipped in the given slot.
 #
 # Examples:
 # 22508 warp moc_para01 171 115 1 1200
@@ -64,4 +65,4 @@
 # 11515 warp dali 113 82 ... requires specific headgear (EQI_HEAD_MID == 15385)
 # 11563 warp xmas 233 296 ... requires specific headgear (EQI_HEAD_MID == 15385)
 # 12540 GM Warp Box -> getgroupitem(IG_GM_Warp_Box), no direct warp coords
-# 22611 Packed Envelope -> conditional warp: only warps to verus04 115 243 when EQI_HEAD_MID == 15385
+22611 warp verus04 115 243 1 0 midHead 15385 # Packed Envelope (requires Mid Headgear ID 15385 equipped)
