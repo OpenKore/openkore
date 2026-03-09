@@ -23,11 +23,11 @@ sub new {
             nameID
             identified
             broken
-            upgrade
             cards
             options
             location
             sprite_id
+            upgrade
             grade
         )
     ];
