@@ -1,24 +1,18 @@
 #############################################################################
 #
-# OTP Generator plugin by wizzello, alisonrag and pogramos
-#
-# Openkore: http://openkore.com/
-# Repository: https://github.com/wizzello/openkore-otp
-#
-# This source code is licensed under the MIT License.
-# See https://mit-license.org/
+# OTP Generator plugin by baphomello, alisonrag and pogramos
 #
 #############################################################################
 
-package OpenKore::Plugin::OTP;
+package OTP;
 
 use strict;
 use Plugins;
 use lib $Plugins::current_plugin_folder;
-use TOTP;
+use OTP::TOTP;
 
 Plugins::register(
-    'otp',
+    'OTP',
     'Handles OTP requests by generating TOTP',
     \&unload
 );
@@ -33,7 +27,7 @@ sub generate {
     my ($plugin, $args) = @_;
     my $otp = $args->{otp};
     my $seed = $args->{seed};
-    my $totp = TOTP->new(
+    my $totp = OTP::TOTP->new(
         digits   => 6,
         timestep => 30,
     );

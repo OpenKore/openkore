@@ -1,4 +1,10 @@
-package TOTP;
+#############################################################################
+#
+# OTP Generator plugin by baphomello, alisonrag and pogramos
+#
+#############################################################################
+
+package OTP::TOTP;
 
 use strict;
 
