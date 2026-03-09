@@ -121,6 +121,9 @@ sub iterate {
 			# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 			if (timeOut($timeout{ai_teleport})) {
 				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
+				if ($self->{teleportItemRule} && $self->{teleportItemRule}{timeoutSec}) {
+					$self->{actor}{last_teleport_item_use}{$self->{teleportItemRule}{itemID}} = time;
+				}
 				Plugins::callHook('teleport_sent' => $self->hookArgs);
 				$timeout{ai_teleport}{time} = time;
 

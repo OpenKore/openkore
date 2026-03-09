@@ -1,0 +1,67 @@
+# Teleport/Warp items with destination metadata and optional cooldown.
+#
+# Syntax (space or comma separated):
+# itemID mode destMap destX destY minLvl timeoutSec
+#
+# mode:
+#   random  - used by random teleport (ai_useTeleport 1)
+#   respawn - used by respawn teleport (ai_useTeleport 2)
+#   warp    - used by map-route optimization when route_warpByItem is enabled
+#   any     - can match any mode
+#
+# destMap:
+#   map name (ex: moc_para01), * / any for wildcard, or save for saveMap related items
+#
+# Notes:
+# - This table is optional. OpenKore still supports default Fly Wing / Butterfly Wing logic.
+# - Entries are checked from top to bottom; first eligible item found in inventory is used.
+# - timeoutSec is item-specific anti-spam cooldown tracked by OpenKore.
+#
+# Examples:
+# 22508 warp moc_para01 171 115 1 1200
+# 601 random * 0 0 1 0
+# 602 respawn save 0 0 1 0
+
+# -----------------------------------------------------------------------------
+# Curated from RateMyServer "iscript=warp" pages provided by user.
+# Format: itemID mode destMap destX destY minLvl timeoutSec
+# -----------------------------------------------------------------------------
+
+# --- Random teleport style items ---
+14645 random * 0 0 1 0              # Beelzebub Wing (random map location)
+102795 random for_dun01 0 0 1 0     # Crystal of Forgotten Time (Area 1)
+102796 random for_dun02 0 0 1 0     # Crystal of Forgotten Time (Area 2)
+
+# --- Fixed destination warp items ---
+12845 warp iz_ng01 26 57 1 0        # Amatsu Butterfly Wing
+100903 warp sp_cor 152 158 1 0      # Border Area Cor Teleport Wing
+23027 warp rachel 120 125 1 3600    # Dandelion Ring (60 min cooldown)
+22508 warp moc_para01 171 115 1 7200 # Eden Group Mark (120 min cooldown)
+100901 warp wolfvill 164 141 1 0    # Gray Wolf Village Transport Wing
+100900 warp icas_in 175 63 1 0      # Ice Castle Transport Wing
+12700 warp malaya 242 211 1 0       # Inside-out Shirt
+22670 warp niflheim 193 186 1 0     # Invitation of Darkness (random branch 1)
+22670 warp niflheim 347 255 1 0     # Invitation of Darkness (random branch 2)
+12636 warp malangdo 140 114 1 0     # Malangdo Canned Specialties
+100904 warp rebel_in 100 40 1 0     # Military Base Teleport Wing
+12561 warp bif_fild01 32 382 1 0    # Mysterious Seed
+22848 warp prt_prison 188 23 1 0    # Prison Key
+22847 warp prontera 159 192 1 0     # Prontera Badge
+22849 warp prt_q 155 27 1 0         # Prontera Time Crystal
+14528 warp pvp_n_room 52 25 1 0     # PVP Teleport Scroll
+22691 warp un_bk_q 98 143 1 0       # Record Fragment 1
+22692 warp un_bk_q 45 276 1 0       # Record Fragment 2
+22693 warp un_bk_q 217 346 1 0      # Record Fragment 3
+22694 warp un_bk_q 273 235 1 0      # Record Fragment 4
+22695 warp un_bk_q 275 290 1 0      # Record Fragment 5
+22980 warp cmd_fild07 83 270 1 0    # Return of Infinite Dungeon
+14505 warp dali02 117 69 1 0        # Sky Fortress Ticket (1h)
+14506 warp dali02 117 69 145 0      # Sky Fortress Ticket (Lv 145+ requirement)
+14595 warp yuno_fild09 255 127 1 0  # Unsealed Magic Spell
+100902 warp ba_in01 87 389 1 0      # Varmundt Mansion Teleport Wing
+
+# --- Conditional-script warps from source pages (left as comments for safety) ---
+# 11515 warp dali 113 82 ... requires specific headgear (EQI_HEAD_MID == 15385)
+# 11563 warp xmas 233 296 ... requires specific headgear (EQI_HEAD_MID == 15385)
+# 12540 GM Warp Box -> getgroupitem(IG_GM_Warp_Box), no direct warp coords
+# 22611 Packed Envelope -> conditional warp: only warps to verus04 115 243 when EQI_HEAD_MID == 15385

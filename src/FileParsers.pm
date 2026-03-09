@@ -66,6 +66,7 @@ our @EXPORT = qw(
 	parseShopControl
 	parseSkillsSPLUT
 	parseTimeouts
+	parseTeleportItems
 	parseWaypoint
 	parseItemStackLimit
 	processUltimate
@@ -1065,6 +1066,53 @@ sub parseSkillsSPLUT {
 		}
 	}
 	close FILE;
+	return 1;
+}
+
+sub parseTeleportItems {
+	my ($file, $r_hash) = @_;
+	undef %{$r_hash};
+	$r_hash->{list} = [];
+
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/^\s+|\s+$//g;
+		next if ($line eq '' || $line =~ /^#/);
+		$line =~ s/\s*#.*$//;
+		$line =~ s/,/ /g;
+		my @args = grep { length } split /\s+/, lc $line;
+
+		if (@args < 6) {
+			warning TF("Invalid teleport item entry at %s: %s\n", $file, $line);
+			next;
+		}
+
+		my ($itemID, $mode, $dest_map, $dest_x, $dest_y, $min_level, $timeout_sec) = @args;
+		$timeout_sec = 0 unless defined $timeout_sec;
+
+		next unless ($itemID =~ /^\d+$/ && $dest_x =~ /^-?\d+$/ && $dest_y =~ /^-?\d+$/ && $min_level =~ /^\d+$/ && $timeout_sec =~ /^\d+$/);
+
+		$mode = lc $mode;
+		$mode = 'any' unless $mode =~ /^(?:any|random|respawn|warp)$/;
+
+		my $entry = {
+			itemID => int($itemID),
+			mode => $mode,
+			destMap => $dest_map,
+			destX => int($dest_x),
+			destY => int($dest_y),
+			minLevel => int($min_level),
+			timeoutSec => int($timeout_sec),
+		};
+
+		push @{$r_hash->{list}}, $entry;
+		push @{$r_hash->{byMode}{$mode}}, $entry;
+		push @{$r_hash->{byItemID}{$entry->{itemID}}}, $entry;
+	}
+
 	return 1;
 }
 

@@ -60,6 +60,20 @@ sub start {
 			done_testing();
 		};
 
+
+		subtest 'teleport_items.txt' => sub {
+			my %teleport_items;
+			parseTeleportItems('teleport_items.txt', \%teleport_items);
+			is(scalar @{$teleport_items{list}}, 3, 'parses entries');
+			is($teleport_items{list}[0]{itemID}, 22508, 'itemID');
+			is($teleport_items{list}[0]{destMap}, 'moc_para01', 'destMap');
+			is($teleport_items{list}[0]{destX}, 171, 'destX');
+			is($teleport_items{list}[0]{destY}, 115, 'destY');
+			is($teleport_items{list}[0]{timeoutSec}, 1200, 'timeoutSec');
+			is($teleport_items{list}[1]{mode}, 'random', 'supports comma syntax');
+			done_testing();
+		};
+
 		subtest 'pickupitems.txt' => sub {
 			parseDataFile_lc('pickupitems.txt', \%pickupitems);
 

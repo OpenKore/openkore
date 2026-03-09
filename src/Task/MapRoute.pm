@@ -123,6 +123,7 @@ sub new {
 	$self->{noTeleSpawn} = 0 if (!defined $self->{noTeleSpawn});
 	$self->{noTeleSpawnMaps} = {} if (!defined $self->{noTeleSpawnMaps});
 	$self->{noRouteTeleportMaps} = {} if (!defined $self->{noRouteTeleportMaps});
+	$self->{noWarpItemMaps} = {} if (!defined $self->{noWarpItemMaps});
 	$self->{noAirship} = 0 if (!defined $self->{noAirship});
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
@@ -213,6 +214,34 @@ sub iterate {
 				error TF("Failed to move using go command after %s tries on map %s, recalculating route and forbidding go only on this map.\n", $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
 				$self->{noGoCommandMaps}{$field->baseName} = time;
 				$self->initMapCalculator();	# redo MAP router
+			}
+		}
+
+	} elsif ( $self->{mapSolution}[0]{is_teleportItemWarp} ) {
+
+		my $itemID = $self->{mapSolution}[0]{teleportItemID};
+		my $item = $self->{actor}->inventory->getByNameID($itemID);
+		my $timeoutSec = $self->{mapSolution}[0]{teleportItemTimeoutSec} || 0;
+		if ($item && $timeoutSec && $self->{actor}{last_teleport_item_use}{$itemID}) {
+			$item = undef if (time - $self->{actor}{last_teleport_item_use}{$itemID} < $timeoutSec);
+		}
+
+		if (!$item) {
+			debug "MapRoute - Cannot use teleport item warp now, recalculating\n", "route";
+			$self->{noWarpItemMaps}{$field->baseName} = time;
+			$self->initMapCalculator();
+
+		} else {
+			if ($self->{mapSolution}[0]{retry} < 5) {
+				$self->{mapSolution}[0]{retry}++;
+				debug "MapRoute - Using teleport item $itemID (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+				$self->{substage} = 'Waiting for Warp';
+				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
+				$self->{actor}{last_teleport_item_use}{$itemID} = time if $timeoutSec;
+			} else {
+				error TF("Failed to move using teleport item %s after %s tries on map %s, recalculating route and forbidding teleport item warp only on this map.\n", $itemID, $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
+				$self->{noWarpItemMaps}{$field->baseName} = time;
+				$self->initMapCalculator();
 			}
 		}
 
@@ -740,7 +769,7 @@ sub prunePerMapBlocks {
 	my ($self) = @_;
 	my $now = time;
 
-	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps)) {
+	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps)) {
 		my $bucket = $self->{$bucketName};
 		next unless ($bucket && ref $bucket eq 'HASH');
 
@@ -798,6 +827,7 @@ sub initMapCalculator {
 		noGoCommandMaps => $self->{noGoCommandMaps},
 		noTeleSpawn => $self->{noTeleSpawn},
 		noTeleSpawnMaps => $self->{noTeleSpawnMaps},
+		noWarpItemMaps => $self->{noWarpItemMaps},
 		noAirship => $self->{noAirship},
 	);
 	$self->setSubtask($task);

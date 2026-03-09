@@ -5705,6 +5705,34 @@ sub autoNpcTalk {
 	});
 }
 
+sub getTeleportItemFromTable {
+	my ($mode, %args) = @_;
+	return unless $char && $char->inventory && $char->inventory->isReady();
+	return unless $teleport_items{list} && @{$teleport_items{list}};
+
+	my $target_map = defined $args{destMap} ? lc $args{destMap} : '';
+	for my $entry (@{$teleport_items{list}}) {
+		next if ($entry->{mode} ne 'any' && $entry->{mode} ne $mode);
+		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
+
+		my $entry_map = lc($entry->{destMap} || '');
+		if ($target_map ne '' && $entry_map ne '' && $entry_map ne '*' && $entry_map ne 'any' && $entry_map ne 'save') {
+			next if $entry_map ne $target_map;
+		}
+
+		my $item = $char->inventory->getByNameID($entry->{itemID});
+		next unless $item;
+
+		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
+			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};
+		}
+
+		return ($item, $entry);
+	}
+
+	return;
+}
+
 sub getFlyWing {
 	# 12887 - Unlimited Fly Wing
 	# 23280 - Mosquito Wings (only if lv < 99)

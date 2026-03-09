@@ -23,6 +23,7 @@ sub chatCommand {
 # use nameID, names can be different for different servers
 sub getInventoryItem {
 	my ($self) =  @_;
+	delete $self->{teleportItemRule};
 	return undef unless ($self->{actor}->inventory->isReady());
 
 	my $item;
@@ -30,7 +31,10 @@ sub getInventoryItem {
 		$item = $self->{actor}->inventory->getByName($config{teleportAuto_item2});
 		$item = $self->{actor}->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 	}
+	my $rule;
+	($item, $rule) = Misc::getTeleportItemFromTable('respawn', destMap => $config{saveMap}) unless $item;
 	$item = Misc::getButterflyWing() unless $item;
+	$self->{teleportItemRule} = $rule if $rule;
 	return $item;
  }
 
