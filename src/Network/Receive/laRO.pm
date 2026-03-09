@@ -7,10 +7,7 @@ sub new {
     my ($class) = @_;
     my $self = $class->SUPER::new(@_);
 
-    my %packets = (
-        '0B3D' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]],
-        '0B62' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]],
-    );
+    my %packets = ();
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
     $self->{vender_items_list_item_pack} = 'V v2 C V C2 a16 a25 V v C2';
