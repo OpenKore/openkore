@@ -207,6 +207,23 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 pinCode 1
 gameGuard 0
 
+# https://rola.maxion.gg/
+[Landverse America - laRO: Muka]
+ip 103.234.239.1
+port 6900
+master_version 1
+version 55
+serverType laRO
+serverEncoding Western
+addTableFolders laRO
+charBlockSize 247
+charDeleteDateType 1
+blockingPlayerCancel 1
+accountIdFromBuffer 1
+rankingSystemType 1
+itemListType 1
+pinCode 0
+
 # https://ro.gnjoylatam.com/
 [Latam - ROla: Freya/Nidhogg/Yggdrasil]
 OTP_ip lt-account-01.gnjoylatam.com
