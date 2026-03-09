@@ -601,6 +601,7 @@ sub getWarpItemCandidatesForTarget {
 	for my $entry (@{$teleport_items{list}}) {
 		next unless ($entry->{mode} eq 'warp' || $entry->{mode} eq 'any');
 		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
+		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
 		next unless lc($entry->{destMap}) eq $target_map;
 
 		my $item = $char->inventory->getByNameID($entry->{itemID});

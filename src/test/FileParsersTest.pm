@@ -71,6 +71,7 @@ sub start {
 			is($teleport_items{list}[0]{destY}, 115, 'destY');
 			is($teleport_items{list}[0]{timeoutSec}, 1200, 'timeoutSec');
 			is($teleport_items{list}[1]{mode}, 'random', 'supports comma syntax');
+			is($teleport_items{list}[1]{maxLevel}, 99, 'parses maxLvl syntax');
 			is($teleport_items{list}[2]{requiredEquipSlot}, 'midhead', 'parses required equip slot');
 			is($teleport_items{list}[2]{requiredEquipItemID}, 15385, 'parses required equip item id');
 			done_testing();

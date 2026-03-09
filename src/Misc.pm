@@ -5726,6 +5726,7 @@ sub getTeleportItemFromTable {
 	for my $entry (@{$teleport_items{list}}) {
 		next if ($entry->{mode} ne 'any' && $entry->{mode} ne $mode);
 		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
+		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
 
 		my $entry_map = lc($entry->{destMap} || '');
 		if ($target_map ne '' && $entry_map ne '' && $entry_map ne '*' && $entry_map ne 'any' && $entry_map ne 'save') {

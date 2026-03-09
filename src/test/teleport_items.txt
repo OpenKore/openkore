@@ -1,4 +1,4 @@
 # test fixtures for parseTeleportItems
 22508 warp moc_para01 171 115 1 1200
-601,random,*,0,0,1,0
+601,random,*,0,0,1,99,0
 22611 warp verus04 115 243 1 0 midHead 15385

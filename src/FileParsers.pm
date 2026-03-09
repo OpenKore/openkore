@@ -1091,12 +1091,21 @@ sub parseTeleportItems {
 		}
 
 		my ($itemID, $mode, $dest_map, $dest_x, $dest_y, $min_level, @optional_args) = @args;
+		my $max_level = 0;
 		my $timeout_sec = 0;
 		my ($required_equip_slot, $required_equip_item_id);
 
 		if (@optional_args) {
-			if ($optional_args[0] =~ /^\d+$/) {
-				$timeout_sec = shift @optional_args;
+			my @numeric_optional_args;
+			while (@optional_args && $optional_args[0] =~ /^\d+$/) {
+				push @numeric_optional_args, shift @optional_args;
+			}
+
+			if (@numeric_optional_args >= 2) {
+				$max_level = shift @numeric_optional_args;
+				$timeout_sec = shift @numeric_optional_args;
+			} elsif (@numeric_optional_args == 1) {
+				$timeout_sec = $numeric_optional_args[0];
 			}
 
 			if (@optional_args >= 2) {
@@ -1104,7 +1113,7 @@ sub parseTeleportItems {
 			}
 		}
 
-		next unless ($itemID =~ /^\d+$/ && $dest_x =~ /^-?\d+$/ && $dest_y =~ /^-?\d+$/ && $min_level =~ /^\d+$/ && $timeout_sec =~ /^\d+$/);
+		next unless ($itemID =~ /^\d+$/ && $dest_x =~ /^-?\d+$/ && $dest_y =~ /^-?\d+$/ && $min_level =~ /^\d+$/ && $max_level =~ /^\d+$/ && $timeout_sec =~ /^\d+$/);
 		next if (defined $required_equip_slot && (!defined $required_equip_item_id || $required_equip_item_id !~ /^\d+$/));
 
 		$mode = lc $mode;
@@ -1117,6 +1126,7 @@ sub parseTeleportItems {
 			destX => int($dest_x),
 			destY => int($dest_y),
 			minLevel => int($min_level),
+			maxLevel => int($max_level),
 			timeoutSec => int($timeout_sec),
 		};
 
