@@ -3985,7 +3985,7 @@ sub vender_items_list {
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = Actor::Item->new;
 
-        @$item{@keys} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
+        @$item{@item_keys} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
 
 		$item->{name} = itemName($item);
 		$venderItemList->add($item);
