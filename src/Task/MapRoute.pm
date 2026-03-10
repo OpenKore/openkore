@@ -880,6 +880,21 @@ sub subtaskDone {
 	} elsif ($task->isa('Task::Route')) {
 		my $error = $task->getError();
 		if ($error) {
+			if (($error->{code} == Task::Route::CANNOT_CALCULATE_ROUTE || $error->{code} == Task::Route::STUCK)
+				&& $self->{mapChanged}
+				&& $self->{mapSolution}
+				&& @{$self->{mapSolution}}
+				&& $field->baseName eq $self->{mapSolution}[0]{map}
+				&& $self->{mapSolution}[0]{map} eq $self->{mapSolution}[0]{dest_map}) {
+				debug "MapRoute - Route subtask became stale after same-map warp; advancing to the next portal step.\n", "map_route";
+				shift @{$self->{mapSolution}};
+				delete $self->{mapChanged};
+				delete $self->{teleport};
+				delete $self->{sentTeleport};
+				delete $self->{teleportTime};
+				return;
+			}
+
 			my $code;
 			if ($error->{code} == Task::Route::TOO_MUCH_TIME) {
 				$code = TOO_MUCH_TIME;
