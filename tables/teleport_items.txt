@@ -3,6 +3,7 @@
 # Syntax (space or comma separated):
 # itemID mode destMap destX destY minLvl [maxLvl] [timeoutSec] [requiredEquipSlot requiredEquipItemID]
 # [syntax] = optional
+# Optional values are positional and must follow the exact order above.
 #
 # mode:
 #   random  - used by random teleport (ai_useTeleport 1)
@@ -18,6 +19,7 @@
 # - Entries are checked from top to bottom; first eligible item found in inventory is used.
 # - maxLvl is optional and limits usage to characters at or below that level (0 disables this check).
 # - timeoutSec is item-specific anti-spam cooldown tracked by OpenKore (optional, default: 0).
+# - If you want to define only timeoutSec, prefer using explicit maxLvl=0 before timeoutSec.
 # - requiredEquipSlot + requiredEquipItemID are optional and require that item equipped in the given slot.
 #
 # Examples:

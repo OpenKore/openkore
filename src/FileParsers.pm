@@ -32,6 +32,7 @@ use Utils;
 use Utils::TextReader;
 use Plugins;
 use Settings;
+use Globals qw(%equipSlot_rlut);
 use Log qw(warning error debug);
 use Translation qw/T TF/;
 
@@ -1094,27 +1095,52 @@ sub parseTeleportItems {
 		my $max_level = 0;
 		my $timeout_sec = 0;
 		my ($required_equip_slot, $required_equip_item_id);
+		my $invalid_entry = 0;
 
 		if (@optional_args) {
-			my @numeric_optional_args;
-			while (@optional_args && $optional_args[0] =~ /^\d+$/) {
-				push @numeric_optional_args, shift @optional_args;
+			# Strict positional optional syntax:
+			# [maxLvl] [timeoutSec] [requiredEquipSlot requiredEquipItemID]
+			if (@optional_args >= 1) {
+				$max_level = shift @optional_args;
 			}
-
-			if (@numeric_optional_args >= 2) {
-				$max_level = shift @numeric_optional_args;
-				$timeout_sec = shift @numeric_optional_args;
-			} elsif (@numeric_optional_args == 1) {
-				$timeout_sec = $numeric_optional_args[0];
+			if (@optional_args >= 1) {
+				$timeout_sec = shift @optional_args;
 			}
-
 			if (@optional_args >= 2) {
-				($required_equip_slot, $required_equip_item_id) = @optional_args[0, 1];
+				($required_equip_slot, $required_equip_item_id) = splice(@optional_args, 0, 2);
+			}
+
+			if (@optional_args) {
+				warning TF("Invalid teleport item entry at %s: unexpected trailing optional argument(s): %s\n", $file, join(' ', @optional_args));
+				$invalid_entry = 1;
+			}
+
+			if (defined $required_equip_slot xor defined $required_equip_item_id) {
+				warning TF("Invalid teleport item entry at %s: equipment requirement must include slot and itemID: %s\n", $file, $line);
+				$invalid_entry = 1;
 			}
 		}
 
-		next unless ($itemID =~ /^\d+$/ && $dest_x =~ /^-?\d+$/ && $dest_y =~ /^-?\d+$/ && $min_level =~ /^\d+$/ && $max_level =~ /^\d+$/ && $timeout_sec =~ /^\d+$/);
-		next if (defined $required_equip_slot && (!defined $required_equip_item_id || $required_equip_item_id !~ /^\d+$/));
+		next if $invalid_entry;
+
+		unless ($itemID =~ /^\d+$/ && $dest_x =~ /^-?\d+$/ && $dest_y =~ /^-?\d+$/ && $min_level =~ /^\d+$/ && $max_level =~ /^\d+$/ && $timeout_sec =~ /^\d+$/) {
+			warning TF("Invalid teleport item entry at %s: expected numeric values for item/coords/levels/timeout: %s\n", $file, $line);
+			next;
+		}
+		if (defined $required_equip_slot && (!defined $required_equip_item_id || $required_equip_item_id !~ /^\d+$/)) {
+			warning TF("Invalid teleport item entry at %s: required equip item id must be numeric: %s\n", $file, $line);
+			next;
+		}
+		if (defined $required_equip_slot) {
+			my $normalized_slot = lc $required_equip_slot;
+			my $slot_recognized = defined $equipSlot_rlut{$required_equip_slot}
+				|| defined $equipSlot_rlut{$normalized_slot}
+				|| scalar grep { lc($_) eq $normalized_slot } keys %equipSlot_rlut;
+			if (!$slot_recognized) {
+				warning TF("Invalid teleport item entry at %s: required equip slot is not recognized: %s\n", $file, $line);
+				next;
+			}
+		}
 
 		$mode = lc $mode;
 		$mode = 'any' unless $mode =~ /^(?:any|random|respawn|warp)$/;

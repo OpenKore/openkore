@@ -17,6 +17,7 @@ NetworkTest.pm
 ObjectListTest.pm
 pickupitems.txt
 teleport_items.txt
+teleport_items_invalid.txt
 PluginsHookTest.pm
 portals.txt
 resnametable.txt

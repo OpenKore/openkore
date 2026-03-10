@@ -365,6 +365,8 @@ sub searchStep {
 				$closelist->{$walk}{is_teleportItemWarp} = 0;
 				$closelist->{$walk}{teleportItemID} = undef;
 				$closelist->{$walk}{teleportItemTimeoutSec} = 0;
+				$closelist->{$walk}{teleportItemRequiredEquipSlot} = undef;
+				$closelist->{$walk}{teleportItemRequiredEquipItemID} = undef;
 				$closelist->{$walk}{is_airship} = 0;
 				$closelist->{$walk}{airship_message} = undef;
 			}
@@ -398,6 +400,8 @@ sub searchStep {
 					$arg{is_teleportItemWarp} = $closelist->{$this}{is_teleportItemWarp} || 0;
 					$arg{teleportItemID} = $closelist->{$this}{teleportItemID};
 					$arg{teleportItemTimeoutSec} = $closelist->{$this}{teleportItemTimeoutSec} || 0;
+					$arg{teleportItemRequiredEquipSlot} = $closelist->{$this}{teleportItemRequiredEquipSlot};
+					$arg{teleportItemRequiredEquipItemID} = $closelist->{$this}{teleportItemRequiredEquipItemID};
 					$arg{is_airship} = $closelist->{$this}{is_airship} || 0;
 					$arg{airship_message} = $closelist->{$this}{airship_message};
 
@@ -582,6 +586,8 @@ sub populateOpenListWithWarpByItems {
 			is_teleportItemWarp => 1,
 			teleportItemID => $entry->{itemID},
 			teleportItemTimeoutSec => $entry->{timeoutSec} || 0,
+			teleportItemRequiredEquipSlot => $entry->{requiredEquipSlot},
+			teleportItemRequiredEquipItemID => $entry->{requiredEquipItemID},
 		};
 
 		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'map'} = $entry->{destMap};
