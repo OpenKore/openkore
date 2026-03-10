@@ -1,8 +1,8 @@
 # invalid cases: each line should be ignored by parser
-601 random prontera 10 10 1 0 abc
-601 warp prontera 10 10 1 0 midHead abc
-601 warp prontera 10 10 1 0 madeUpSlot 15385
+601 random prontera 10 10 1 0 0 abc
+601 warp prontera 10 10 1 0 0 midHead abc
+601 warp prontera 10 10 1 0 0 madeUpSlot 15385
 601 warp prontera 10 10 1 0 0 midHead 15385 extra
-601 warp prontera 10 10 1 0 missingItemIdOnly
+601 warp prontera 10 10 1 0 0 missingItemIdOnly
 # valid control line
 602 respawn save 0 0 1 0 120
