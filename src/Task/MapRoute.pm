@@ -696,7 +696,7 @@ sub iterate {
 					my $portal;
 					for my $x (@{$self->{mapSolution}}) {
 						$portal = $x;
-						last unless $x->{map} eq $x->{dest_map};
+						last unless _isSameMapPortalStep($x);
 					}
 
 					my $dist = new PathFinding(
@@ -756,6 +756,7 @@ sub iterate {
 						useManhattan => $self->{useManhattan},
 						solution => \@solution
 					);
+					$task->{stopWhenMapChanged} = 1 if (_isSameMapPortalStep($self->{mapSolution}[0]));
 					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 					$self->setSubtask($task);
 
@@ -770,6 +771,26 @@ sub iterate {
 			}
 		}
 	}
+}
+
+sub _isSameMapPortalStep {
+	my ($step) = @_;
+	return 0 unless ($step && ref $step eq 'HASH');
+
+	if (defined $step->{dest_map} && defined $step->{map}) {
+		return $step->{map} eq $step->{dest_map};
+	}
+
+	# Some map-solution entries may miss either map or dest_map.
+	# Fall back to parsing the portal string in that case.
+	return 0 unless defined $step->{portal};
+	my ($from, $to) = split(/=/, $step->{portal}, 2);
+	return 0 unless (defined $from && defined $to);
+	my ($from_map) = split(/\s+/, $from, 2);
+	my ($to_map) = split(/\s+/, $to, 2);
+	return 0 unless (defined $from_map && defined $to_map);
+
+	return $from_map eq $to_map;
 }
 
 sub prunePerMapBlocks {
@@ -885,7 +906,7 @@ sub subtaskDone {
 				&& $self->{mapSolution}
 				&& @{$self->{mapSolution}}
 				&& $field->baseName eq $self->{mapSolution}[0]{map}
-				&& $self->{mapSolution}[0]{map} eq $self->{mapSolution}[0]{dest_map}) {
+				&& _isSameMapPortalStep($self->{mapSolution}[0])) {
 				debug "MapRoute - Route subtask became stale after same-map warp; advancing to the next portal step.\n", "map_route";
 				shift @{$self->{mapSolution}};
 				delete $self->{mapChanged};
@@ -936,6 +957,16 @@ sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
 	$self->{mapChanged} = 1;
+
+	my $subtask = $self->getSubtask();
+	if ($subtask
+		&& $subtask->isa('Task::Route')
+		&& $self->{mapSolution}
+		&& @{$self->{mapSolution}}
+		&& _isSameMapPortalStep($self->{mapSolution}[0])) {
+		debug "MapRoute - Same-map portal warp detected; waiting Route subtask to finish segment on its own mapChanged handling.\n", "map_route";
+	}
+
 	delete $timeout{'ai_portal_give_up'}{'time'};
 	delete $timeout{'ai_portal_wait'}{'time'};
 	delete $self->{teleportTime};
