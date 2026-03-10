@@ -28,7 +28,7 @@ use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
 use Plugins;
-use Misc qw(canUseTeleport portalExists isTeleportItemEquipRequirementSatisfied);
+use Misc qw(canUseTeleport portalExists);
 use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding);
 use Utils::PathFinding;
 use Utils::Exceptions;
@@ -224,7 +224,7 @@ sub iterate {
 		my $timeoutSec = $self->{mapSolution}[0]{teleportItemTimeoutSec} || 0;
 		my $requiredEquipSlot = $self->{mapSolution}[0]{teleportItemRequiredEquipSlot};
 		my $requiredEquipItemID = $self->{mapSolution}[0]{teleportItemRequiredEquipItemID};
-		my $equipRequirementSatisfied = isTeleportItemEquipRequirementSatisfied({
+		my $equipRequirementSatisfied = Misc::isTeleportItemEquipRequirementSatisfied({
 			requiredEquipSlot => $requiredEquipSlot,
 			requiredEquipItemID => $requiredEquipItemID,
 		});

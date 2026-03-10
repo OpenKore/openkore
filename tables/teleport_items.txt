@@ -27,54 +27,50 @@
 # 601 random * 0 0 1 0
 # 602 respawn save 0 0 1 0
 
-# -----------------------------------------------------------------------------
-# Format: itemID mode destMap destX destY minLvl [maxLvl] timeoutSec
-# -----------------------------------------------------------------------------
-
 # --- Random teleport style items ---
+12323 random * 0 0 1 0					# Novice Fly Wing
+23280 random * 0 0 1 98					# Novice Fly Wing
 601 random * 0 0 1 0					# Fly Wing
 12003 random * 0 0 1 0					# Level 1 Teleport  
-12323 random * 0 0 1 0					# Novice Fly Wing
 12887 random * 0 0 1 0					# Infinite Fly Wing
-23280 random * 0 0 1 98					# Novice Fly Wing
 23288 random * 0 0 1 0					# Compressed Fly Wing
-14645 random * 0 0 1 0              	# Beelzebub Wing (random map location)
-102795 random for_dun01 0 0 1 0     	# Crystal of Forgotten Time (Area 1)
-102796 random for_dun02 0 0 1 0     	# Crystal of Forgotten Time (Area 2)
+14645 random * 0 0 1 0					# Beelzebub Wing (random map location)
+102795 random for_dun01 0 0 1 0				# Crystal of Forgotten Time (Area 1)
+102796 random for_dun02 0 0 1 0				# Crystal of Forgotten Time (Area 2)
 
 # --- Fixed destination warp items ---
-602 respawn save 0 0 1 0				# Butterfly Wing
 12324 respawn save 0 0 1 0				# Novice Butterfly Wing
-12845 warp iz_ng01 26 57 1 0        	# Amatsu Butterfly Wing
-100903 warp sp_cor 152 158 1 0      	# Border Area Cor Teleport Wing
-23027 warp rachel 120 125 1 0 3600    	# Dandelion Ring (60 min cooldown)
-22508 warp moc_para01 171 115 1 0 7200 	# Eden Group Mark (120 min cooldown)
-100901 warp wolfvill 164 141 1 0    	# Gray Wolf Village Transport Wing
-100900 warp icas_in 175 63 1 0      	# Ice Castle Transport Wing
-12700 warp malaya 242 211 1 0       	# Inside-out Shirt
-22670 warp niflheim 193 186 1 0     	# Invitation of Darkness (random branch 1)
-22670 warp niflheim 347 255 1 0     	# Invitation of Darkness (random branch 2)
-12636 warp malangdo 140 114 1 0     	# Malangdo Canned Specialties
-100904 warp rebel_in 100 40 1 0     	# Military Base Teleport Wing
-12561 warp bif_fild01 32 382 1 0    	# Mysterious Seed
-22848 warp prt_prison 188 23 1 0    	# Prison Key
-22847 warp prontera 159 192 1 0     	# Prontera Badge
-22849 warp prt_q 155 27 1 0         	# Prontera Time Crystal
-14528 warp pvp_n_room 52 25 1 0     	# PVP Teleport Scroll
-22691 warp un_bk_q 98 143 1 0       	# Record Fragment 1
-22692 warp un_bk_q 45 276 1 0       	# Record Fragment 2
-22693 warp un_bk_q 217 346 1 0      	# Record Fragment 3
-22694 warp un_bk_q 273 235 1 0      	# Record Fragment 4
-22695 warp un_bk_q 275 290 1 0      	# Record Fragment 5
-22980 warp cmd_fild07 83 270 1 0    	# Return of Infinite Dungeon
-14505 warp dali02 117 69 1 0        	# Sky Fortress Ticket (1h)
-14506 warp dali02 117 69 145 0      	# Sky Fortress Ticket (Lv 145+ requirement)
-14595 warp yuno_fild09 255 127 1 0  	# Unsealed Magic Spell
-100902 warp ba_in01 87 389 1 0      	# Varmundt Mansion Teleport Wing
+602 respawn save 0 0 1 0				# Butterfly Wing
+22508 warp moc_para01 171 115 1 0 7200			# Eden Group Mark (120 min cooldown)
+12845 warp iz_ng01 26 57 1 0				# Amatsu Butterfly Wing
+100903 warp sp_cor 152 158 1 0				# Border Area Cor Teleport Wing
+23027 warp rachel 120 125 1 0 3600			# Dandelion Ring (60 min cooldown)
+100901 warp wolfvill 164 141 1 0			# Gray Wolf Village Transport Wing
+100900 warp icas_in 175 63 1 0				# Ice Castle Transport Wing
+12700 warp malaya 242 211 1 0				# Inside-out Shirt
+22670 warp niflheim 193 186 1 0				# Invitation of Darkness (random branch 1)
+22670 warp niflheim 347 255 1 0				# Invitation of Darkness (random branch 2)
+12636 warp malangdo 140 114 1 0				# Malangdo Canned Specialties
+100904 warp rebel_in 100 40 1 0				# Military Base Teleport Wing
+12561 warp bif_fild01 32 382 1 0			# Mysterious Seed
+22848 warp prt_prison 188 23 1 0			# Prison Key
+22847 warp prontera 159 192 1 0				# Prontera Badge
+22849 warp prt_q 155 27 1 0				# Prontera Time Crystal
+14528 warp pvp_n_room 52 25 1 0				# PVP Teleport Scroll
+22691 warp un_bk_q 98 143 1 0				# Record Fragment 1
+22692 warp un_bk_q 45 276 1 0				# Record Fragment 2
+22693 warp un_bk_q 217 346 1 0				# Record Fragment 3
+22694 warp un_bk_q 273 235 1 0				# Record Fragment 4
+22695 warp un_bk_q 275 290 1 0				# Record Fragment 5
+22980 warp cmd_fild07 83 270 1 0			# Return of Infinite Dungeon
+14505 warp dali02 117 69 1 0				# Sky Fortress Ticket (1h)
+14506 warp dali02 117 69 145 0				# Sky Fortress Ticket (Lv 145+ requirement)
+14595 warp yuno_fild09 255 127 1 0			# Unsealed Magic Spell
+100902 warp ba_in01 87 389 1 0				# Varmundt Mansion Teleport Wing
 
 # --- Conditional-script warps ---
-11515 warp dali 113 82 1 0 0 midHead 15385 # Coconut (requires Mid Headgear ID 15385 equipped)
-11563 warp xmas 233 296 1 0 0 midHead 15385 # Hot Tea (requires Mid Headgear ID 15385 equipped)
-22611 warp verus04 115 243 1 0 0 midHead 15385 # Packed Envelope (requires Mid Headgear ID 15385 equipped)
+11515 warp dali 113 82 1 0 0 midHead 15385 		# Coconut (requires Mid Headgear ID 15385 equipped)
+11563 warp xmas 233 296 1 0 0 midHead 15385 		# Hot Tea (requires Mid Headgear ID 15385 equipped)
+22611 warp verus04 115 243 1 0 0 midHead 15385 		# Packed Envelope (requires Mid Headgear ID 15385 equipped)
 # 12396 Gift Box? -> random effects, including teleport
 # 12540 GM Warp Box -> unknown use, no direct warp coords

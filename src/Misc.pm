@@ -167,6 +167,7 @@ our @EXPORT = (
 	updateDamageTables
 	updatePlayerNameCache
 	canUseTeleport
+	isTeleportItemEquipRequirementSatisfied
 	top10Listing
 	whenGroundStatus
 	writeStorageLog
