@@ -167,6 +167,7 @@ our @EXPORT = (
 	updateDamageTables
 	updatePlayerNameCache
 	canUseTeleport
+	isTeleportItemEquipRequirementSatisfied
 	top10Listing
 	whenGroundStatus
 	writeStorageLog
@@ -5703,6 +5704,48 @@ sub autoNpcTalk {
 	Plugins::callHook('npc_autotalk', {
 		task => $task
 	});
+}
+
+sub isTeleportItemEquipRequirementSatisfied {
+	my ($entry) = @_;
+	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+
+	my $required_slot = $entry->{requiredEquipSlot};
+	my $required_id = $entry->{requiredEquipItemID};
+	return 0 unless defined $equipSlot_rlut{$required_slot};
+	my $required_item = $char->inventory->getByNameID($required_id);
+	return 0 unless ($required_item && $required_item->{equipped});
+	return $required_item->equippedInSlot($required_slot);
+}
+
+sub getTeleportItemFromTable {
+	my ($mode, %args) = @_;
+	return unless $char && $char->inventory && $char->inventory->isReady();
+	return unless $teleport_items{list} && @{$teleport_items{list}};
+
+	my $target_map = defined $args{destMap} ? lc $args{destMap} : '';
+	for my $entry (@{$teleport_items{list}}) {
+		next if ($entry->{mode} ne 'any' && $entry->{mode} ne $mode);
+		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
+		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
+
+		my $entry_map = lc($entry->{destMap} || '');
+		if ($target_map ne '' && $entry_map ne '' && $entry_map ne '*' && $entry_map ne 'any' && $entry_map ne 'save') {
+			next if $entry_map ne $target_map;
+		}
+
+		my $item = $char->inventory->getByNameID($entry->{itemID});
+		next unless $item;
+		next unless isTeleportItemEquipRequirementSatisfied($entry);
+
+		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
+			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};
+		}
+
+		return ($item, $entry);
+	}
+
+	return;
 }
 
 sub getFlyWing {

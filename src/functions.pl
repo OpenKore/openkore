@@ -217,6 +217,10 @@ sub loadDataFiles {
 		internalName => 'recvpackets.txt',
  		loader => [\&parseRecvpackets, \%rpackets]);
 
+	Settings::addTableFile('teleport_items.txt',
+		internalName => 'teleport_items.txt',
+		loader => [\&parseTeleportItems, \%teleport_items]);
+
 	# Add 'Old' table pack, if user set
 	if ( $sys{locale_compat} == 1) {
 		# Holder for new path

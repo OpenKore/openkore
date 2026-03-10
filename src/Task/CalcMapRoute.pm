@@ -25,7 +25,7 @@ use Task;
 use base qw(Task);
 use Task::Route;
 use Field;
-use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships);
+use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships %teleport_items);
 use Translation qw(T TF);
 use Log qw(debug warning error);
 use Misc qw(canUseTeleport);
@@ -110,7 +110,14 @@ sub new {
 	} else {
 		$self->{noTeleSpawn} = 0;
 	}
-	$self->{noGoCommandMaps} = $args{noGoCommandMaps} || {};
+	$self->{noTeleSpawnMaps} = $args{noTeleSpawnMaps} || {};
+	$self->{noWarpItemMaps} = $args{noWarpItemMaps} || {};
+
+	if (exists $args{noWarpItem}) {
+		$self->{noWarpItem} = $args{noWarpItem}
+	} else {
+		$self->{noWarpItem} = 0;
+	}
 
 	if (exists $args{noAirship}) {
 		$self->{noAirship} = $args{noAirship}
@@ -195,8 +202,16 @@ sub iterate {
 		) unless ($self->{noGoCommand});
 
 		delete $self->{tempPortalsSaveMap} if (exists $self->{tempPortalsSaveMap});
+		delete $self->{tempPortalsWarpItems} if (exists $self->{tempPortalsWarpItems});
 		if (!$self->{noTeleSpawn} && canUseTeleport(2) && $self->isSaveMapSetAndValid()) {
 			$self->populateOpenListWithWarpToSaveMap(
+				"$self->{source}{map} $self->{source}{x} $self->{source}{y}",
+				{ walk => 0, zeny => 0, zeny_covered_by_tickets => 0, amount_of_tickets_used => 0 },
+				undef,
+			);
+		}
+		unless ($self->{noWarpItem}) {
+			$self->populateOpenListWithWarpByItems(
 				"$self->{source}{map} $self->{source}{x} $self->{source}{y}",
 				{ walk => 0, zeny => 0, zeny_covered_by_tickets => 0, amount_of_tickets_used => 0 },
 				undef,
@@ -322,12 +337,14 @@ sub searchStep {
 			my $map_name = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest, 'map')
 						|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest, 'map') 
 						|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest, 'map') 
+						|| hashSafeGetValue($self->{tempPortalsWarpItems}, $dest, 'dest', $dest, 'map')
 						|| hashSafeGetValue(\%portals_airships, $portal, 'dest', $dest, 'map')
 						|| undef;
 
 			my $map_destination = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest)
 							|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest)
 							|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest)
+							|| hashSafeGetValue($self->{tempPortalsWarpItems}, $dest, 'dest', $dest)
 							|| hashSafeGetValue(\%portals_airships, $portal, 'dest', $dest)
 							|| undef;
 
@@ -345,6 +362,11 @@ sub searchStep {
 				$closelist->{$walk}{is_command} = 0;
 				$closelist->{$walk}{command} = undef;
 				$closelist->{$walk}{is_teleportToSaveMap} = 0;
+				$closelist->{$walk}{is_teleportItemWarp} = 0;
+				$closelist->{$walk}{teleportItemID} = undef;
+				$closelist->{$walk}{teleportItemTimeoutSec} = 0;
+				$closelist->{$walk}{teleportItemRequiredEquipSlot} = undef;
+				$closelist->{$walk}{teleportItemRequiredEquipItemID} = undef;
 				$closelist->{$walk}{is_airship} = 0;
 				$closelist->{$walk}{airship_message} = undef;
 			}
@@ -375,6 +397,11 @@ sub searchStep {
 					$arg{is_command} =  $closelist->{$this}{is_command} || 0;
 					$arg{command} = $closelist->{$this}{command};
 					$arg{is_teleportToSaveMap} = $closelist->{$this}{is_teleportToSaveMap} || 0;
+					$arg{is_teleportItemWarp} = $closelist->{$this}{is_teleportItemWarp} || 0;
+					$arg{teleportItemID} = $closelist->{$this}{teleportItemID};
+					$arg{teleportItemTimeoutSec} = $closelist->{$this}{teleportItemTimeoutSec} || 0;
+					$arg{teleportItemRequiredEquipSlot} = $closelist->{$this}{teleportItemRequiredEquipSlot};
+					$arg{teleportItemRequiredEquipItemID} = $closelist->{$this}{teleportItemRequiredEquipItemID};
 					$arg{is_airship} = $closelist->{$this}{is_airship} || 0;
 					$arg{airship_message} = $closelist->{$this}{airship_message};
 
@@ -389,6 +416,9 @@ sub searchStep {
 		$self->populateOpenListWithGoCommands($dest, $closelist->{$parent}, $parent) unless ($self->{noGoCommand});
 		if (!$self->{noTeleSpawn} && canUseTeleport(2) && $self->isSaveMapSetAndValid()) {
 			$self->populateOpenListWithWarpToSaveMap($dest, $closelist->{$parent}, $parent);
+		}
+		if (!$self->{noWarpItem}) {
+			$self->populateOpenListWithWarpByItems($dest, $closelist->{$parent}, $parent);
 		}
 		
 		# explore connected portals and NPC warps
@@ -521,6 +551,83 @@ sub populateOpenListWithWarpToSaveMap {
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'x'} = $dest_x;
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'y'} = $dest_y;
 	$self->{tempPortalsSaveMap}{$dest}{dest}{$dest}{enabled} = 1;
+}
+
+
+sub populateOpenListWithWarpByItems {
+	my ($self, $from_node, $baseCost, $parent) = @_;
+	return unless $from_node;
+	return unless $config{route_warpByItem};
+
+	my ($current_map) = split / /, $from_node, 2;
+	return unless $self->isWarpByItemAllowedOnMap($current_map);
+
+	my $target = ($self->{targets} && ref $self->{targets} eq 'ARRAY' && @{$self->{targets}}) ? $self->{targets}[0] : undef;
+	return unless $target && $target->{map};
+
+	for my $entry ($self->getWarpItemCandidatesForTarget($target)) {
+		my $dest = $entry->{destMap} . ' ' . $entry->{destX} . ' ' . $entry->{destY};
+		my $key = "$from_node=$dest";
+		my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPITEM} || 80);
+		my $zeny = $baseCost->{zeny} || 0;
+		my $zeny_covered_by_tickets = $baseCost->{zeny_covered_by_tickets} || 0;
+		my $amount_of_tickets_used = $baseCost->{amount_of_tickets_used} || 0;
+
+		next if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
+		next if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
+
+		$self->{openlist}{$key} = {
+			parent => $parent,
+			walk => $walk,
+			zeny => $zeny,
+			allow_ticket => 0,
+			zeny_covered_by_tickets => $zeny_covered_by_tickets,
+			amount_of_tickets_used => $amount_of_tickets_used,
+			is_teleportItemWarp => 1,
+			teleportItemID => $entry->{itemID},
+			teleportItemTimeoutSec => $entry->{timeoutSec} || 0,
+			teleportItemRequiredEquipSlot => $entry->{requiredEquipSlot},
+			teleportItemRequiredEquipItemID => $entry->{requiredEquipItemID},
+		};
+
+		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'map'} = $entry->{destMap};
+		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'x'} = $entry->{destX};
+		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'y'} = $entry->{destY};
+		$self->{tempPortalsWarpItems}{$dest}{dest}{$dest}{enabled} = 1;
+	}
+}
+
+sub getWarpItemCandidatesForTarget {
+	my ($self, $target) = @_;
+	return unless ($char && $char->inventory && $char->inventory->isReady());
+	return unless ($teleport_items{list} && @{$teleport_items{list}});
+
+	my @matches;
+	my $target_map = lc($target->{map});
+	for my $entry (@{$teleport_items{list}}) {
+		next unless ($entry->{mode} eq 'warp' || $entry->{mode} eq 'any');
+		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
+		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
+		next unless lc($entry->{destMap}) eq $target_map;
+
+		my $item = $char->inventory->getByNameID($entry->{itemID});
+		next unless $item;
+		next unless Misc::isTeleportItemEquipRequirementSatisfied($entry);
+
+		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
+			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};
+		}
+
+		push @matches, $entry;
+	}
+	return @matches;
+}
+
+sub isWarpByItemAllowedOnMap {
+	my ($self, $map) = @_;
+	return 0 if !$map;
+	return 0 if hashSafeGetValue($self->{noWarpItemMaps}, $map);
+	return 1;
 }
 
 sub isGoCommandAllowedOnMap {
