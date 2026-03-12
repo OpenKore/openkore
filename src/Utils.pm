@@ -79,30 +79,51 @@ sub get_client_solution {
 	my ($field, $pos, $pos_to) = @_;
 
 	my $solution = [];
+	return $solution unless $field && $pos && $pos_to;
+	return $solution unless defined $pos->{x} && defined $pos->{y};
+	return $solution unless defined $pos_to->{x} && defined $pos_to->{y};
 
-	# Optimization so we don't need to call the Pathfinding just to get this cell
+	# Same cell: trivial solution
 	if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y}) {
-		push(@{$solution}, { x => $pos->{x}, y => $pos->{y} });
+		push @{$solution}, { x => $pos->{x}, y => $pos->{y} };
 		return $solution;
 	}
 
-	# Game client uses the same A* Pathfinding as openkore but uses and inadmissible heuristic (Manhattan distance)
-	# To better simulate the client pathfinding we tell openkore's pathfinding to use the same Manhattan heuristic
-	# We also deactivate any custom pathfinding weights (randomFactor, avoidWalls, customWeights)
-	# TODO: This 35 probably should be something dynamic like (max(abs(pos_x-posto_x),abs(pos_y-posto_y)))
-	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = $field->getSquareEdgesFromCoord($pos, 35);
-	my $dist_path = new PathFinding(
-		field => $field,
-		start => $pos,
-		dest => $pos_to,
-		avoidWalls => 0,
+	# Reject obviously invalid coordinates early
+	return $solution unless $field->isWalkable($pos->{x},    $pos->{y});
+	return $solution unless $field->isWalkable($pos_to->{x}, $pos_to->{y});
+
+	# Build a dynamic search box that always includes both start and dest.
+	my $dx = abs($pos->{x} - $pos_to->{x});
+	my $dy = abs($pos->{y} - $pos_to->{y});
+	my $margin = 8 + (($dx > $dy) ? $dx : $dy);
+
+	my $min_x = ($pos->{x} < $pos_to->{x} ? $pos->{x} : $pos_to->{x}) - $margin;
+	my $max_x = ($pos->{x} > $pos_to->{x} ? $pos->{x} : $pos_to->{x}) + $margin;
+	my $min_y = ($pos->{y} < $pos_to->{y} ? $pos->{y} : $pos_to->{y}) - $margin;
+	my $max_y = ($pos->{y} > $pos_to->{y} ? $pos->{y} : $pos_to->{y}) + $margin;
+
+	# Clamp to field bounds
+	$min_x = 0 if $min_x < 0;
+	$min_y = 0 if $min_y < 0;
+	$max_x = $field->width  - 1 if $max_x >= $field->width;
+	$max_y = $field->height - 1 if $max_y >= $field->height;
+
+	my $pf = PathFinding->new(
+		field        => $field,
+		start        => $pos,
+		dest         => $pos_to,
+		avoidWalls   => 0,
 		randomFactor => 0,
 		useManhattan => 1,
-		min_x => $min_pathfinding_x,
-		max_x => $max_pathfinding_x,
-		min_y => $min_pathfinding_y,
-		max_y => $max_pathfinding_y
-	)->run($solution);
+		min_x        => $min_x,
+		max_x        => $max_x,
+		min_y        => $min_y,
+		max_y        => $max_y,
+	);
+
+	eval { $pf->run($solution); 1 } or return [];
+
 	return $solution;
 }
 
