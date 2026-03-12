@@ -73,7 +73,7 @@ attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
-attackAuto_considerDamagedAggressive 0
+attackAuto_considerDamagedAggressive 1
 attackDistance 1
 attackDistanceAuto 1
 attackMaxDistance 1
@@ -84,17 +84,25 @@ attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 1
-attackRouteMaxPathDistance 20
+attackRouteMaxPathDistance 25
 attackLooters 0
 attackLooters_dist 1
 attackChangeTarget 1
 aggressiveAntiKS 0
 
-attackUpdateMonsterPos 1
+attackUpdateMonsterPos 0
+
+attackPreferredMinDistance 5
+attackRouteReajustTolerance 2
+
+runFromTarget 1
+runFromTargetSafety 0.3
+runFromTarget_inAdvance 0
+runFromTarget_maxPathDistance 25
 
 # the following attack keys are meant to work only in private server (rAthena/Hercules)
 # if you enable this in a official server you character will act weird, because character can't attack beyond the range
-attackBeyondMaxDistance_waitForAgressive 0
+attackBeyondMaxDistance_waitForAgressive 1
 attackBeyondMaxDistance_sendAttackWhileWaiting 0
 attackSendAttackWithMove 0
 attackWaitApproachFinish 1
@@ -237,15 +245,6 @@ route_randomFactor 0
 # Maximum walking path distance (client setting). Default: 17
 # This corresponds to max_walk_path in server configuration
 maxWalkPathDistance 17
-
-runFromTarget 0
-runFromTarget_inAdvance 0
-runFromTarget_dist 5
-runFromTarget_minStep 7
-runFromTarget_maxPathDistance 13
-runFromTarget_noAttackMethodFallback 0
-runFromTarget_noAttackMethodFallback_attackMaxDist 14
-runFromTarget_noAttackMethodFallback_minStep 8
 
 saveMap
 saveMap_x

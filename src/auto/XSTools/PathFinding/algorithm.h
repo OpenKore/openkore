@@ -22,6 +22,20 @@ typedef struct {
 } Node;
 
 typedef struct {
+	int x;
+	int y;
+
+	long predecessor;
+
+	unsigned short visited;
+
+	unsigned short whichlist;
+	long openListIndex;
+
+	unsigned long dist;
+} FloodFillNode;
+
+typedef struct {
 	bool avoidWalls;
 	const char *map_base_weight;
 
@@ -54,8 +68,23 @@ typedef struct {
 	long openListSize;
 
 	Node *currentMap;
-
 	long *openList;
+
+	/* Dijkstra floodfill state */
+	int flood_initialized;
+	int flood_run;
+
+	unsigned long flood_max_distance;
+	unsigned long flood_reachable_count;
+
+	unsigned long flood_orthogonal_cost;
+	unsigned long flood_diagonal_cost;
+
+	long floodOpenListSize;
+
+	FloodFillNode *floodMap;
+	long *floodOpenList;
+	long *floodQueue; /* kept for compatibility / future use */
 } CalcPath_session;
 
 CalcPath_session *CalcPath_new ();
@@ -77,6 +106,18 @@ Node* openListGetLowest (CalcPath_session *session);
 void free_currentMap (CalcPath_session *session);
 
 void free_openList (CalcPath_session *session);
+
+/* Dijkstra floodfill */
+void FloodFill_init(CalcPath_session *session, int maxDistance, int orthogonalCost, int diagonalCost);
+int FloodFill_run(CalcPath_session *session);
+
+void floodOpenListAdd(CalcPath_session *session, FloodFillNode *node, long nodeAddr);
+void reajustFloodOpenListItem(CalcPath_session *session, FloodFillNode *node);
+long floodOpenListGetLowest(CalcPath_session *session);
+
+void free_floodMap(CalcPath_session *session);
+void free_floodQueue(CalcPath_session *session);
+void free_floodOpenList(CalcPath_session *session);
 
 void CalcPath_destroy (CalcPath_session *session);
 

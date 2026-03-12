@@ -26,6 +26,37 @@ use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
 
+=pod
+sub get_meeting_position_config {
+	my ($actor, $actorType, $runFromTargetActive) = @_;
+
+	my %cfg;
+
+	if ($actorType == 2) {
+		my $prefix = $actor->{configPrefix} || '';
+
+		$cfg{attackRouteMaxPathDistance} = $config{$prefix . 'attackRouteMaxPathDistance'} || 20;
+		$cfg{runFromTarget_maxPathDistance} = $config{$prefix . 'runFromTarget_maxPathDistance'} || 20;
+		$cfg{runFromTarget} = $config{$prefix . 'runFromTarget'};
+
+		$cfg{attackPreferredMinDistance} = $config{$prefix . 'attackPreferredMinDistance'};
+		$cfg{attackRouteReajustTolerance} = $config{$prefix . 'attackRouteReajustTolerance'};
+		$cfg{runFromTargetSafety} = $config{$prefix . 'runFromTargetSafety'};
+
+		$cfg{followDistanceMax} = $config{$prefix . 'followDistanceMax'};
+		$cfg{attackCanSnipe} = $config{$prefix . 'attackCanSnipe'};
+		$cfg{master} = $char;
+		$cfg{masterPos} = 1;
+		$cfg{solution} = get_solution($field, $actor->{pos}, $actor->{pos_to});
+	} else {
+		error "Unknown actorType in meetingPosition ($actorType).\n";
+		return;
+	}
+
+	return \%cfg;
+}
+=cut
+
 ##### ATTACK #####
 sub process {
 	my $slave = shift;
