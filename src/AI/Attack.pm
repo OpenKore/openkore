@@ -46,6 +46,17 @@ use constant {
 	ATTACKING => 2,
 };
 
+# TODOs:
+# Block chasing check if target is unreachable
+# Limit runfromtarget safety bonus to an acceptable value
+# Check also route safety instead of only end cell safety - route_crosses_target_danger_zone_fast?? evaluate_route_safety_fast??
+# Check if casting / emoticons stop movement (casting Emotion on itself in spores makes mob stop)
+# Inverter valores de penalties and bonus
+# Fallback when no safe wroute allow for attack
+# Fallback when we don't want to attack (attackmethod = running)
+# Walls near score ? So don't get trapped easily
+# Threat near score ? Don't get moobed
+
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
