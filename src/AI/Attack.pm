@@ -246,7 +246,6 @@ use constant {
 };
 
 use strict;
-use Carp::Assert;
 use Time::HiRes qw(time);
 
 use Globals;
@@ -260,7 +259,6 @@ use Network::Send ();
 use Skill;
 use List::Util qw(max);
 use Utils;
-use Utils::Benchmark;
 use Utils::PathFinding;
 
 # Cached relative attack-cell offsets by target range.
@@ -283,7 +281,6 @@ use constant {
 # TARGET_ATTACK_OFFSETS_CACHE by map or clear on map change
 
 sub process {
-	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
 	my $action = AI::action;
 
@@ -424,8 +421,6 @@ sub process {
 
 		}
 	}
-
-	Benchmark::end("ai_attack") if DEBUG;
 }
 
 sub shouldAttack {
@@ -574,6 +569,43 @@ sub should_reposition_for_preferred_opening {
 	return ($realMonsterDist < $effective_min_dist) ? 1 : 0;
 }
 
+# Picks the cheapest already-known spot for kiting comparisons without recomputing meetingPosition.
+sub get_kiting_reference_spot {
+	my ($args) = @_;
+
+	return unless $args;
+	return $args->{meetingPositionBestSpot} if defined $args->{meetingPositionBestSpot};
+
+	my $ctx = get_meeting_position_ctx($args);
+	return unless $ctx;
+
+	if ($args->{approachTargetPos}) {
+		my $spot = {
+			x => $args->{approachTargetPos}{x},
+			y => $args->{approachTargetPos}{y},
+		};
+		if ($ctx->{actor_pf} && defined $ctx->{mySpeed}) {
+			my $cost = $ctx->{actor_pf}->floodfill_getdist($spot->{x}, $spot->{y});
+			if (defined $cost && $cost >= 0) {
+				$spot->{cost_actor_to_spot} = $cost;
+				$spot->{time_actor_to_get_to_spot} = calcTimeFromFloodCost($cost, $ctx->{mySpeed});
+				return $spot;
+			}
+		}
+	}
+
+	if ($ctx->{realMyPos}) {
+		return {
+			x => $ctx->{realMyPos}{x},
+			y => $ctx->{realMyPos}{y},
+			cost_actor_to_spot => 0,
+			time_actor_to_get_to_spot => 0,
+		};
+	}
+
+	return;
+}
+
 sub should_try_run_from_target {
 	my ($args, $actor, $target, $type) = @_;
 
@@ -588,7 +620,8 @@ sub should_try_run_from_target {
 	return 0 unless $args->{attackMethod}{type};
 	return 0 unless defined $args->{attackMethod}{maxDistance};
 
-	my $should_kite = should_kite_to_prevent_hit_before_kill($args, $actor, $target, $type);
+	my $reference_spot = get_kiting_reference_spot($args);
+	my $should_kite = should_kite_to_prevent_hit_before_kill($args, $actor, $target, $type, $reference_spot);
 	debug "[should_try_run_from_target] should_kite is $should_kite\n", "ai_attack";
 
 	return 1 if ($should_kite);
@@ -2052,9 +2085,10 @@ sub get_remaining_alive_time {
 }
 
 sub should_kite_to_prevent_hit_before_kill {
-	my ($args, $actor, $target, $type) = @_;
-	unless (defined $args->{meetingPositionBestSpot}) {
-		debug "[should_kite_to_prevent_hit_before_kill] Returning 0 because meetingPositionBestSpot is undefined\n", "ai_attack";
+	my ($args, $actor, $target, $type, $spot) = @_;
+	$spot ||= get_kiting_reference_spot($args);
+	unless ($spot) {
+		debug "[should_kite_to_prevent_hit_before_kill] Returning 0 because no reference spot is available\n", "ai_attack";
 		return 0;
 	}
 
@@ -2062,7 +2096,7 @@ sub should_kite_to_prevent_hit_before_kill {
 
 	return 0 unless $actor && $target && $args;
 
-	my $t_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 1, $args->{meetingPositionBestSpot});
+	my $t_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 1, $spot);
 	
 	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
 
@@ -2074,9 +2108,9 @@ sub should_kite_to_prevent_hit_before_kill {
 			return 1;
 		}
 	} else {
-		my $t_our_hit   = get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, $type, $args->{meetingPositionBestSpot});
+		my $t_our_hit   = get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, $type, $spot);
 
-		debug "[should_kite_to_prevent_hit_before_kill] [meetspot] $args->{meetingPositionBestSpot}{x} $args->{meetingPositionBestSpot}{y}\n", "ai_attack";
+		debug "[should_kite_to_prevent_hit_before_kill] [meetspot] $spot->{x} $spot->{y}\n", "ai_attack";
 		debug "[should_kite_to_prevent_hit_before_kill] [t_enemy_hit] $t_enemy_hit\n", "ai_attack";
 		debug "[should_kite_to_prevent_hit_before_kill] [t_our_hit] $t_our_hit\n", "ai_attack";
 
@@ -2091,32 +2125,6 @@ sub should_kite_to_prevent_hit_before_kill {
 
 		return 0;
 	}
-}
-
-sub invalidate_meeting_spot_if_stale {
-	my ($args, $realMyPos) = @_;
-	my $spot = $args->{meetingPositionBestSpot} or return;
-
-	my $same_cell = $realMyPos
-		&& $spot->{x} == $realMyPos->{x}
-		&& $spot->{y} == $realMyPos->{y};
-	return if ($same_cell);
-
-	my $heading_there = $char->{pos_to}
-		&& $char->{pos_to}{x} == $spot->{x}
-		&& $char->{pos_to}{y} == $spot->{y};
-	return if ($heading_there);
-
-	my $routeIndex = AI::findAction("route");
-	$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-	if (defined $routeIndex) {
-		my $routeArgs = AI::args($routeIndex);
-		return if ($routeArgs->{dest} && $routeArgs->{dest}{x} == $spot->{x} && $routeArgs->{dest}{y} == $spot->{y});
-	}
-
-	message TF("[attack] [invalidate_meeting_spot_if_stale] Clearing\n"), 'ai_attack';
-	delete $args->{meetingPositionBestSpot};
-	clear_approach_context($args);
 }
 
 # Caches the target movement state tied to the active approach route so we can detect route drift.
@@ -2280,9 +2288,368 @@ sub resolve_attack_method {
 	return $method;
 }
 
+# Prepares the per-cycle target state and hit/miss counters used by the attack loop.
+sub prepare_attack_cycle_state {
+	my ($args, $ID) = @_;
+
+	my $target = Actor::get($ID);
+	set_target_resolution_state($args, $target);
+
+	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
+		$args->{temporary_extra_range} = 0;
+	}
+
+	if (exists $char->{movetoattack_pos}) {
+		if (!exists $char->{movetoattack_targetID} || $char->{movetoattack_targetID} ne $ID || $char->{time_move} > $char->{movetoattack_time}) {
+			delete $char->{movetoattack_pos};
+			delete $char->{movetoattack_time};
+			delete $char->{movetoattack_targetID} if (exists $char->{movetoattack_targetID});
+		} else {
+			my $time_since_char_moved = time - $char->{time_move};
+			if ($time_since_char_moved > $char->{time_move_calc}) {
+				debug "[Attack] [Char] Fixing failed to attack target, setting char position to: $char->{movetoattack_pos}{x} $char->{movetoattack_pos}{y}\n", "ai_attack";
+				$char->{pos}{x} = $char->{movetoattack_pos}{x};
+				$char->{pos}{y} = $char->{movetoattack_pos}{y};
+				$char->{pos_to}{x} = $char->{movetoattack_pos}{x};
+				$char->{pos_to}{y} = $char->{movetoattack_pos}{y};
+				$char->{time_move} = time;
+				$char->{time_move_calc} = 0;
+				delete $char->{movetoattack_pos};
+				delete $char->{movetoattack_time};
+				delete $char->{movetoattack_targetID} if (exists $char->{movetoattack_targetID});
+			}
+		}
+	}
+
+	if ($target && exists $target->{movetoattack_pos}) {
+		if ($target->{time_move} > $target->{movetoattack_time}) {
+			delete $target->{movetoattack_pos};
+			delete $target->{movetoattack_time};
+		} else {
+			my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
+			my $target_time_to_move = calcTimeFromSolution($target_solution, $target->{walk_speed});
+			my $time_since_target_moved = time - $target->{time_move};
+			if ($time_since_target_moved > $target_time_to_move) {
+				debug "[Attack] [Target] Fixing failed to attack target, setting target $target position to: $target->{movetoattack_pos}{x} $target->{movetoattack_pos}{y}\n", "ai_attack";
+				$target->{pos}{x} = $target->{movetoattack_pos}{x};
+				$target->{pos}{y} = $target->{movetoattack_pos}{y};
+				$target->{pos_to}{x} = $target->{movetoattack_pos}{x};
+				$target->{pos_to}{y} = $target->{movetoattack_pos}{y};
+				$target->{time_move} = time;
+				$target->{time_move_calc} = 0;
+				delete $target->{movetoattack_pos};
+				delete $target->{movetoattack_time};
+			}
+		}
+	}
+
+	return {
+		target       => $target,
+		hitYou       => 0,
+		youHitTarget => 0,
+	} unless $target;
+
+	if ($args->{dmgToYou_last}   != $target->{dmgToYou}
+	 || $args->{missedYou_last}  != $target->{missedYou}
+	 || $args->{dmgFromYou_last} != $target->{dmgFromYou}
+	 || $args->{lastSkillTime} != $char->{last_skill_time}) {
+		$args->{ai_attack_giveup}{time} = time;
+		debug "Update attack giveup time\n", "ai_attack", 2;
+	}
+
+	if (!exists $args->{firstLoop}) {
+		$args->{firstLoop} = 1;
+	} else {
+		$args->{firstLoop} = 0;
+	}
+
+	my $hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou} || $args->{missedYou_last} != $target->{missedYou});
+	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromYou} || $args->{missedFromYou_last} != $target->{missedFromYou});
+
+	$args->{dmgToYou_last} = $target->{dmgToYou};
+	$args->{missedYou_last} = $target->{missedYou};
+	$args->{dmgFromYou_last} = $target->{dmgFromYou};
+	$args->{missedFromYou_last} = $target->{missedFromYou};
+	$args->{lastSkillTime} = $char->{last_skill_time};
+
+	return {
+		target       => $target,
+		hitYou       => $hitYou,
+		youHitTarget => $youHitTarget,
+	};
+}
+
+# Resolves the current attack method unless the target is already dying.
+sub sync_attack_method_for_cycle {
+	my ($args, $ID, $target) = @_;
+
+	resolve_attack_method($args, $target);
+
+	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
+		debug "Deleting ai_attack_failed_give_up time.\n";
+		delete $args->{ai_attack_failed_give_up}{time};
+	}
+
+	if (
+		!defined $args->{attackMethod}{type} || !defined $args->{attackMethod}{maxDistance}
+	) {
+		debug T("Can't determine a attackMethod (check attackUseWeapon, Skills, and plugin hooks)\n"), "ai_attack";
+		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
+		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
+		if (timeOut($args->{ai_attack_failed_give_up})) {
+			delete $args->{ai_attack_failed_give_up}{time};
+			warning T("Unable to determine a attackMethod (check attackUseWeapon, Skills, and plugin hooks), dropping target.\n"), "ai_attack";
+			giveUp($args, $ID, 0);
+			return {should_return => 1};
+		}
+	}
+
+	if ($args->{attackMethod}{type} eq "weapon" && $args->{temporary_extra_range}) {
+		$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
+		debug TF("[attack - main] [%d] Adding cached temporary_extra_range to weapon attack.\n", $args->{loop}), 'ai_attack';
+	} elsif ($args->{temporary_extra_range}) {
+		$args->{temporary_extra_range} = 0;
+		debug TF("[attack - main] [%d] Deleting cached temporary_extra_range.\n", $args->{loop}), 'ai_attack';
+	}
+
+	return {should_return => 0};
+}
+
+# Builds the per-cycle context shared by route, wait, and attack decisions.
+sub build_attack_cycle_context {
+	my ($args, $ID, $target) = @_;
+
+	prepare_meeting_position_context($args, $char, $target, $args->{attackMethod}{maxDistance});
+
+	unless ($args->{meetingPositionCtx}) {
+		warning T("prepare_meeting_position_context failed.\n"), "ai_attack";
+		giveUp($args, $ID, 0);
+		return {should_return => 1};
+	}
+
+	my $realMyPos = $args->{meetingPositionCtx}{realMyPos} if $args->{meetingPositionCtx}{realMyPos};
+	my $realMonsterPos = $args->{meetingPositionCtx}{realTargetPos} if $args->{meetingPositionCtx}{realTargetPos};
+	my $realMonsterDist = $args->{meetingPositionCtx}{realMonsterDist} if $args->{meetingPositionCtx}{realMonsterDist};
+	my $clientDist = $args->{meetingPositionCtx}{clientDist} if $args->{meetingPositionCtx}{clientDist};
+
+	my $being_chased = $args->{meetingPositionCtx}{being_chased};
+	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
+
+	debug TF("[attack - main] [%d] after prepare_meeting_position_context.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 2);
+	debug TF("[attack - main] [%d] realMyPos %d %d\n", $args->{loop}, $realMyPos->{x}, $realMyPos->{y}), 'ai_attack';
+	debug TF("[attack - main] [%d] realMonsterPos %d %d\n", $args->{loop}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+	debug TF("[attack - main] [%d] realMonsterDist %d\n", $args->{loop}, $realMonsterDist), 'ai_attack';
+	debug TF("[attack - main] [%d] clientDist %d\n", $args->{loop}, $clientDist), 'ai_attack';
+	debug TF("[attack - main] [%d] being_chased %d\n", $args->{loop}, $being_chased), 'ai_attack';
+	debug TF("[attack - main] [%d] target_can_reach_me %d\n", $args->{loop}, ($args->{meetingPositionCtx}{target_can_reach_me} ? 1 : 0)), 'ai_attack';
+	debug TF("[attack - main] [%d] {target_state}{has_unresolved_dmg} %d\n", $args->{loop}, $args->{target_state}{has_unresolved_dmg}), 'ai_attack';
+	debug TF("[attack - main] [%d] {target_state}{pending_death_1} %d\n", $args->{loop}, $args->{target_state}{pending_death_1}), 'ai_attack';
+	debug TF("[attack - main] [%d] {target_state}{pending_death_2} %d\n", $args->{loop}, $args->{target_state}{pending_death_2}), 'ai_attack';
+	debug TF("[attack - main] [%d] remaining_alive_time %s\n", $args->{loop}, (defined $remaining_alive_time ? $remaining_alive_time : 'undef')), 'ai_attack';
+
+	my $canAttack;
+	if (defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
+		$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+	} else {
+		$canAttack = -2;
+	}
+
+	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
+
+	if (
+		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
+		$being_chased &&
+		$canAttack == 1 &&
+		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
+		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
+	) {
+		debug "Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
+		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
+	}
+
+	return {
+		should_return       => 0,
+		realMyPos           => $realMyPos,
+		realMonsterPos      => $realMonsterPos,
+		realMonsterDist     => $realMonsterDist,
+		clientDist          => $clientDist,
+		being_chased        => $being_chased,
+		remaining_alive_time => $remaining_alive_time,
+		canAttack           => $canAttack,
+		canAttack_fail_string => $canAttack_fail_string,
+		hitTarget_when_not_possible => 0,
+		can_attack_now      => ($canAttack == 1 ? 1 : 0),
+	};
+}
+
+# Accepts one loop of "the server let us hit anyway" before forcing a route change.
+sub maybe_accept_server_attack_resolution {
+	my ($args, $target, $state, $youHitTarget) = @_;
+
+	return unless !$args->{firstLoop} && $state->{canAttack} == 0 && $youHitTarget;
+
+	debug TF("[%s] We were able to hit target even though it is out of range with LOS, accepting and continuing. (%s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], clientDist %d, maxDistance %d, dmgFromYou %d)\n",
+		$state->{canAttack_fail_string}, $char,
+		$state->{realMyPos}{x}, $state->{realMyPos}{y},
+		$target,
+		$state->{realMonsterPos}{x}, $state->{realMonsterPos}{y},
+		$target->{pos}{x}, $target->{pos}{y},
+		$target->{pos_to}{x}, $target->{pos_to}{y},
+		$state->{clientDist}, $args->{attackMethod}{maxDistance},
+		$target->{dmgFromYou}
+	), 'ai_attack';
+
+	if ($state->{clientDist} > $args->{attackMethod}{maxDistance} && $state->{clientDist} <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
+		debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $state->{canAttack_fail_string}), 'ai_attack';
+		$args->{temporary_extra_range} = 1;
+		$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
+		$state->{canAttack} = canAttack($field, $state->{realMyPos}, $state->{realMonsterPos}, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+	} else {
+		debug TF("[%s] Reason unknown, allowing once.\n", $state->{canAttack_fail_string}), 'ai_attack';
+		$state->{hitTarget_when_not_possible} = 1;
+	}
+
+	if (
+		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
+		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
+		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
+	) {
+		debug "[Accepting] Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
+		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
+	}
+
+	$state->{can_attack_now} = (($state->{canAttack} == 1) || $state->{hitTarget_when_not_possible}) ? 1 : 0;
+}
+
+# Finds the live route/mapRoute action that belongs to the current attack target.
+sub find_attack_route_action_index {
+	my ($attack_id) = @_;
+
+	return undef unless defined $attack_id;
+
+	foreach my $i (0 .. $#ai_seq) {
+		next unless ($ai_seq[$i] eq 'route' || $ai_seq[$i] eq 'mapRoute');
+
+		my $routeArgs = AI::args($i);
+		next unless $routeArgs;
+		next unless defined $routeArgs->{attackID};
+		return $i if $routeArgs->{attackID} eq $attack_id;
+	}
+
+	return undef;
+}
+
+# Decides whether the current approach route should be recalculated before we keep following it.
+# Returns a false value when the route can be kept as-is, or a short reason string when revalidation is needed.
+sub should_revalidate_active_approach_route {
+	my ($args, $target, $ID) = @_;
+
+	return 0 unless $args->{sentApproach};
+	return 'missing_target' unless $target;
+
+	my $routeIndex = find_attack_route_action_index($ID);
+	return 'missing_route_action' unless defined $routeIndex;
+
+	my $routeArgs = AI::args($routeIndex);
+	return 'route_destination_changed' unless (
+		$routeArgs->{dest}
+		&& $args->{approachTargetPos}
+		&& $routeArgs->{dest}{x} == $args->{approachTargetPos}{x}
+		&& $routeArgs->{dest}{y} == $args->{approachTargetPos}{y}
+	);
+
+	return 'target_move_time_changed' if defined $args->{monsterLastMoveTime} && $args->{monsterLastMoveTime} != $target->{time_move};
+
+	if ($args->{monsterLastMovePosTo} || $target->{pos_to}) {
+		return 'target_move_destination_changed' unless (
+			$args->{monsterLastMovePosTo}
+			&& $target->{pos_to}
+			&& $args->{monsterLastMovePosTo}{x} == $target->{pos_to}{x}
+			&& $args->{monsterLastMovePosTo}{y} == $target->{pos_to}{y}
+		);
+	}
+
+	return 0;
+}
+
+# Revalidates the currently active approach route and undefines it if it no longer makes sense.
+sub revalidate_active_approach_route {
+	my ($args, $ID, $target, $state, $reason) = @_;
+
+	debug TF("[attack - main] [%d] revalidating active approach route (%s).\n", $args->{loop}, ($reason || 'unknown')), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+	my $chosen_pos = meetingPosition(
+		$args,
+		$char,
+		$target,
+		$args->{attackMethod}{maxDistance},
+		$args->{approachTargetPos},
+	);
+
+	if (!$chosen_pos) {
+		debug TF(
+			"[%s - Route invalidated] no acceptable replacement found for current route target (%d %d), clearing route.\n",
+			($args->{avoiding} ? "Avoiding" : "Approaching"),
+			$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
+		), 'ai_attack';
+		clear_approach_context($args);
+		$args->{avoiding} = 0;
+		return {route_defined => 0};
+	}
+
+	if (
+		$args->{approachTargetPos}
+		&& $chosen_pos->{x} == $args->{approachTargetPos}{x}
+		&& $chosen_pos->{y} == $args->{approachTargetPos}{y}
+	) {
+		if ($reason && $reason eq 'missing_route_action') {
+			debug TF(
+				"[%s - Recreate missing live route] route target (%d %d) is still valid, recreating route action.\n",
+				($args->{avoiding} ? "Avoiding" : "Approaching"),
+				$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
+			), 'ai_attack';
+			route_to_meeting_position(
+				$args,
+				$ID,
+				$target,
+				$chosen_pos,
+				$state->{realMyPos},
+				$state->{realMonsterPos},
+				($args->{avoiding} ? "runFromTarget recreate" : "meetingPosition recreate"),
+				($chosen_pos->{route_choice_mode} || 'attack')
+			);
+			return {route_defined => 1, should_return => 1};
+		}
+
+		debug TF(
+			"[%s - Keep current route after revalidation] route target (%d %d) is still valid.\n",
+			($args->{avoiding} ? "Avoiding" : "Approaching"),
+			$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
+		), 'ai_attack';
+		store_target_route_progress($args, $target);
+		return {route_defined => 1, should_return => 1};
+	}
+
+	route_to_meeting_position(
+		$args,
+		$ID,
+		$target,
+		$chosen_pos,
+		$state->{realMyPos},
+		$state->{realMonsterPos},
+		($args->{avoiding} ? "runFromTarget readjust" : "meetingPosition readjust"),
+		($chosen_pos->{route_choice_mode} || 'attack')
+	);
+	return {route_defined => 1, should_return => 1};
+}
+
 # Keeps, clears, or refreshes the current approach route and tells main whether the loop is already spoken for.
 sub handle_active_approach_route {
-	my ($args, $ID, $target, $realMyPos, $realMonsterPos, $clientDist, $canAttack) = @_;
+	my ($args, $ID, $target, $state) = @_;
+
+	my $realMyPos = $state->{realMyPos};
+	my $realMonsterPos = $state->{realMonsterPos};
+	my $clientDist = $state->{clientDist};
+	my $canAttack = $state->{canAttack};
 
 	return { handled => 0 } unless $args->{sentApproach};
 
@@ -2317,54 +2684,11 @@ sub handle_active_approach_route {
 		return { handled => 0 };
 	}
 
-	if (defined $args->{monsterLastMoveTime} && $args->{monsterLastMoveTime} != $target->{time_move}) {
-		debug TF("[attack - main] [%d] call meetingPosition in sentApproach 1\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		my $chosen_pos = meetingPosition(
-			$args,
-			$char,
-			$target,
-			$args->{attackMethod}{maxDistance},
-			$args->{approachTargetPos},
-		);
-
-		if (!$chosen_pos) {
-			debug TF(
-				"[%s - Keep current route after target move] no better valid replacement found for current route target (%d %d).\n",
-				($args->{avoiding} ? "Avoiding" : "Approaching"),
-				$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
-			), 'ai_attack';
-
-			store_target_route_progress($args, $target);
-			return { handled => 1, should_return => 1 };
-		}
-
-		if (
-			$args->{approachTargetPos}
-			&& $chosen_pos->{x} == $args->{approachTargetPos}{x}
-			&& $chosen_pos->{y} == $args->{approachTargetPos}{y}
-		) {
-			debug TF(
-				"[%s - Keep current route after target move] route target (%d %d) still acceptable, mob route now (%d %d).\n",
-				($args->{avoiding} ? "Avoiding" : "Approaching"),
-				$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y},
-				$target->{pos_to}{x}, $target->{pos_to}{y}
-			), 'ai_attack';
-
-			store_target_route_progress($args, $target);
-			return { handled => 1, should_return => 1 };
-		}
-
-		route_to_meeting_position(
-			$args,
-			$ID,
-			$target,
-			$chosen_pos,
-			$realMyPos,
-			$realMonsterPos,
-			($args->{avoiding} ? "runFromTarget readjust" : "meetingPosition readjust"),
-			($chosen_pos->{route_choice_mode} || 'attack')
-		);
-		return { handled => 1, found_action => 1 };
+	my $revalidation_reason = should_revalidate_active_approach_route($args, $target, $ID);
+	if ($revalidation_reason) {
+		my $result = revalidate_active_approach_route($args, $ID, $target, $state, $revalidation_reason);
+		return { handled => 0 } unless $result->{route_defined};
+		return { handled => 1, found_action => 1 } if $result->{should_return};
 	}
 
 	debug TF(
@@ -2379,470 +2703,163 @@ sub handle_active_approach_route {
 	return { handled => 1, found_action => 1 };
 }
 
-sub main {
-	my $args = AI::args;
-	my $ID = $args->{ID};
+# Checks whether this cycle should create a new tactical route.
+sub determine_needed_attack_route {
+	my ($args, $target, $state) = @_;
 
-	Benchmark::begin("ai_attack (part 1)") if DEBUG;
-	Benchmark::begin("ai_attack (part 1.1)") if DEBUG;
-	# The attack sequence hasn't timed out and the monster is on screen
-
-	# Update information about the monster and the current situation
-
-	if (!exists $args->{loop} || !defined $args->{loop}) {
-		$args->{loop} = 0;
-	} elsif ($args->{loop} < 100) {
-		$args->{loop}++;
-	} else {
-		$args->{loop} = 0;
+	if (
+		should_reposition_for_preferred_opening($args, $target, $state->{realMyPos}, $state->{realMonsterPos}, $state->{being_chased}, $state->{canAttack})
+	) {
+		return {
+			needs_route   => 1,
+			debug_context => "should_reposition_for_preferred_opening",
+			debug_tag     => "attackPreferredMinDistance",
+			old_spot      => $args->{meetingPositionBestSpot},
+			allow_same_cell => 0,
+		};
 	}
 
-	debug TF("[attack - main] [%d] start.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-
-	if (!defined $ID) {
-		warning "[attack main] Bug where ID is undefined found.\n";
-		warning "Args Dump: " . Dumper($args);
-		warning "ML Dump: " . Dumper(\@$monstersList);
-		warning "ai_seq Dump: " . Dumper(\@ai_seq);
-		warning "ai_seq_args Dump: " . Dumper(\@ai_seq_args);
-		Plugins::callHook('undefined_object_id');
-	}
-
-	my $target = Actor::get($ID);
-	set_target_resolution_state($args, $target);
-
-	if ($args->{target_state}{pending_death_1}) {
-		debug TF("[attack - main] [%d] Returning because pending_death_1 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		return;
-	}
-
-	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
-		$args->{temporary_extra_range} = 0;
-	}
-
-	if (exists $char->{movetoattack_pos}) {
-		if (!exists $char->{movetoattack_targetID} || $char->{movetoattack_targetID} ne $ID || $char->{time_move} > $char->{movetoattack_time}) {
-			delete $char->{movetoattack_pos};
-			delete $char->{movetoattack_time};
-			delete $char->{movetoattack_targetID} if (exists $char->{movetoattack_targetID});
-		} else {
-			my $time_since_char_moved = time - $char->{time_move};
-			if ($time_since_char_moved > $char->{time_move_calc}) {
-				debug "[Attack] [Char] Fixing failed to attack target, setting char position to: $char->{movetoattack_pos}{x} $char->{movetoattack_pos}{y}\n", "ai_attack";
-				$char->{pos}{x} = $char->{movetoattack_pos}{x};
-				$char->{pos}{y} = $char->{movetoattack_pos}{y};
-				$char->{pos_to}{x} = $char->{movetoattack_pos}{x};
-				$char->{pos_to}{y} = $char->{movetoattack_pos}{y};
-				$char->{time_move} = time;
-				$char->{time_move_calc} = 0;
-				delete $char->{movetoattack_pos};
-				delete $char->{movetoattack_time};
-				delete $char->{movetoattack_targetID} if (exists $char->{movetoattack_targetID});
-			}
-		}
-	}
-
-	if (exists $target->{movetoattack_pos}) {
-		if ($target->{time_move} > $target->{movetoattack_time}) {
-			delete $target->{movetoattack_pos};
-			delete $target->{movetoattack_time};
-		} else {
-			my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
-			my $target_time_to_move = calcTimeFromSolution($target_solution, $target->{walk_speed});
-			my $time_since_target_moved = time - $target->{time_move};
-			if ($time_since_target_moved > $target_time_to_move) {
-				debug "[Attack] [Target] Fixing failed to attack target, setting target $target position to: $target->{movetoattack_pos}{x} $target->{movetoattack_pos}{y}\n", "ai_attack";
-				$target->{pos}{x} = $target->{movetoattack_pos}{x};
-				$target->{pos}{y} = $target->{movetoattack_pos}{y};
-				$target->{pos_to}{x} = $target->{movetoattack_pos}{x};
-				$target->{pos_to}{y} = $target->{movetoattack_pos}{y};
-				$target->{time_move} = time;
-				$target->{time_move_calc} = 0;
-				delete $target->{movetoattack_pos};
-				delete $target->{movetoattack_time};
-			}
-		}
-	}
-
-	# If the damage numbers have changed, update the giveup time so we don't timeout
-	if ($args->{dmgToYou_last}   != $target->{dmgToYou}
-	 || $args->{missedYou_last}  != $target->{missedYou}
-	 || $args->{dmgFromYou_last} != $target->{dmgFromYou}
-	 || $args->{lastSkillTime} != $char->{last_skill_time}) {
-		$args->{ai_attack_giveup}{time} = time;
-		debug "Update attack giveup time\n", "ai_attack", 2;
-	}
-
-	if (!exists $args->{firstLoop}) {
-		$args->{firstLoop} = 1;
-	} else {
-		$args->{firstLoop} = 0;
-	}
-
-	my $hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou} || $args->{missedYou_last} != $target->{missedYou});
-	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromYou} || $args->{missedFromYou_last} != $target->{missedFromYou});
-
-	$args->{dmgToYou_last} = $target->{dmgToYou};
-	$args->{missedYou_last} = $target->{missedYou};
-	$args->{dmgFromYou_last} = $target->{dmgFromYou};
-	$args->{missedFromYou_last} = $target->{missedFromYou};
-
-	$args->{lastSkillTime} = $char->{last_skill_time};
-
-	Benchmark::end("ai_attack (part 1.1)") if DEBUG;
-	Benchmark::begin("ai_attack (part 1.2)") if DEBUG;
-
-	resolve_attack_method($args, $target);
-
-	Benchmark::end("ai_attack (part 1.2)") if DEBUG;
-	Benchmark::end("ai_attack (part 1)") if DEBUG;
-
-	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
-		debug "Deleting ai_attack_failed_give_up time.\n";
-		delete $args->{ai_attack_failed_give_up}{time};
+	if ($args->{firstLoop} && $args->{attackMethod}{maxDistance} > 1) {
+		return {
+			needs_route   => 1,
+			debug_context => "Forced reposition firstLoop",
+			debug_tag     => "Forced ranged firstLoop reposition",
+			old_spot      => $args->{meetingPositionBestSpot},
+			allow_same_cell => 0,
+		};
 	}
 
 	if (
-		!defined $args->{attackMethod}{type} || !defined $args->{attackMethod}{maxDistance}
+		should_try_run_from_target($args, $char, $target, ($args->{sentApproach} ? 1 : 2))
 	) {
-		debug T("Can't determine a attackMethod (check attackUseWeapon, Skills, and plugin hooks)\n"), "ai_attack";
-		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
-		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
-		if (timeOut($args->{ai_attack_failed_give_up})) {
-			delete $args->{ai_attack_failed_give_up}{time};
-			warning T("Unable to determine a attackMethod (check attackUseWeapon, Skills, and plugin hooks), dropping target.\n"), "ai_attack";
-			giveUp($args, $ID, 0);
-			return;
-		}
+		return {
+			needs_route   => 1,
+			debug_context => "should_try_run_from_target",
+			debug_tag     => "runFromTarget",
+			old_spot      => $state->{realMyPos},
+			allow_same_cell => 0,
+			set_avoiding  => 1,
+		};
 	}
 
-	if ($args->{attackMethod}{type} eq "weapon" && $args->{temporary_extra_range}) {
-		$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
-		debug TF("[attack - main] [%d] Adding cached temporary_extra_range to weapon attack.\n", $args->{loop}), 'ai_attack';
-	} elsif ($args->{temporary_extra_range}) {
-		$args->{temporary_extra_range} = 0;
-		debug TF("[attack - main] [%d] Deleting cached temporary_extra_range.\n", $args->{loop}), 'ai_attack';
-	}
-
-	prepare_meeting_position_context($args, $char, $target, $args->{attackMethod}{maxDistance});
-	
-	unless ($args->{meetingPositionCtx}) {
-		warning T("prepare_meeting_position_context failed.\n"), "ai_attack";
-		giveUp($args, $ID, 0);
-		return;
-	}
-	
-	my $realMyPos = $args->{meetingPositionCtx}{realMyPos} if $args->{meetingPositionCtx}{realMyPos};
-	my $realMonsterPos = $args->{meetingPositionCtx}{realTargetPos} if $args->{meetingPositionCtx}{realTargetPos};
-	my $realMonsterDist = $args->{meetingPositionCtx}{realMonsterDist} if $args->{meetingPositionCtx}{realMonsterDist};
-	my $clientDist = $args->{meetingPositionCtx}{clientDist} if $args->{meetingPositionCtx}{clientDist};
-
-	my $being_chased = $args->{meetingPositionCtx}{being_chased};
-	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
-
-	debug TF("[attack - main] [%d] after prepare_meeting_position_context.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 2);
-
-	debug TF("[attack - main] [%d] realMyPos %d %d\n", $args->{loop}, $realMyPos->{x}, $realMyPos->{y}), 'ai_attack';
-	debug TF("[attack - main] [%d] realMonsterPos %d %d\n", $args->{loop}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-	debug TF("[attack - main] [%d] realMonsterDist %d\n", $args->{loop}, $realMonsterDist), 'ai_attack';
-	debug TF("[attack - main] [%d] clientDist %d\n", $args->{loop}, $clientDist), 'ai_attack';
-	debug TF("[attack - main] [%d] being_chased %d\n", $args->{loop}, $being_chased), 'ai_attack';
-	debug TF("[attack - main] [%d] target_can_reach_me %d\n", $args->{loop}, ($args->{meetingPositionCtx}{target_can_reach_me} ? 1 : 0)), 'ai_attack';
-	debug TF("[attack - main] [%d] {target_state}{has_unresolved_dmg} %d\n", $args->{loop}, $args->{target_state}{has_unresolved_dmg}), 'ai_attack';
-	debug TF("[attack - main] [%d] {target_state}{pending_death_1} %d\n", $args->{loop}, $args->{target_state}{pending_death_1}), 'ai_attack';
-	debug TF("[attack - main] [%d] {target_state}{pending_death_2} %d\n", $args->{loop}, $args->{target_state}{pending_death_2}), 'ai_attack';
-	debug TF("[attack - main] [%d] remaining_alive_time %s\n", $args->{loop}, (defined $remaining_alive_time ? $remaining_alive_time : 'undef')), 'ai_attack';
-
-	invalidate_meeting_spot_if_stale ($args, $realMyPos, $target);
-	
-	my $found_action = 0;
-	my $failed_runFromTarget = 0;
-	my $hitTarget_when_not_possible = 0;
-
-	# -2: undefined attackMethod
-	# -1: No LOS
-	#  0: out of range
-	#  1: success
-	my $canAttack;
-	if (defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
-		$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
-	} else {
-		$canAttack = -2;
-	}
-
-	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
-
-	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
-	# If it is close enough delete the ai_attack_failed_waitForAgressive_give_up keys and loop attack logic
 	if (
-		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
-		$being_chased &&
-		$canAttack == 1 &&
-		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
-		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
+		($state->{canAttack} == 0 || $state->{canAttack} == -1) &&
+		!$state->{hitTarget_when_not_possible}
 	) {
-		debug "Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
-		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
-	}
-	
-	my $preferredMinDistance = get_attack_preferred_min_distance($args);
-	
+		if ($config{"attackBeyondMaxDistance_waitForAgressive"} && $state->{being_chased}) {
+			return {
+				needs_route => 0,
+				wait_only   => 1,
+			};
+		}
 
-	my $approach_state = handle_active_approach_route(
+		return {
+			needs_route   => 1,
+			debug_context => "canAttack == 0 || canAttack == -1",
+			debug_tag     => "meetingPosition",
+			old_spot      => $args->{meetingPositionBestSpot},
+			allow_same_cell => 0,
+		};
+	}
+
+	return {
+		needs_route => 0,
+	};
+}
+
+# Builds and starts a new tactical route when the current cycle needs one.
+sub build_needed_attack_route {
+	my ($args, $ID, $target, $state, $route_request) = @_;
+
+	debug TF("[attack - main] [%d] call meetingPosition in %s\n", $args->{loop}, $route_request->{debug_context}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+	my $pos = meetingPosition(
+		$args,
+		$char,
+		$target,
+		$args->{attackMethod}{maxDistance},
+		$route_request->{old_spot},
+	);
+
+	if (!$pos) {
+		debug TF(
+			"[attack - main] [%d] no route candidate produced for %s, leaving route undefined this cycle.\n",
+			$args->{loop},
+			$route_request->{debug_tag},
+		), 'ai_attack';
+		clear_approach_context($args);
+		$args->{avoiding} = 0;
+		return { route_outcome => 'route_failed' };
+	}
+
+	if (
+		!$route_request->{allow_same_cell} &&
+		$pos->{x} == $state->{realMyPos}{x} &&
+		$pos->{y} == $state->{realMyPos}{y}
+	) {
+		if ($route_request->{set_avoiding}) {
+			debug TF(
+				"[runFromTarget] Keeping current tactical spot (%d %d), mob at (%d %d).\n",
+				$state->{realMyPos}{x}, $state->{realMyPos}{y},
+				$state->{realMonsterPos}{x}, $state->{realMonsterPos}{y}
+			), 'ai_attack';
+		}
+		return { route_outcome => 'stay_put' };
+	}
+
+	if ($route_request->{set_avoiding}) {
+		debug TF(
+			"[runFromTarget] %s kiting from (%d %d) to (%d %d), mob at (%d %d).\n",
+			$char,
+			$state->{realMyPos}{x}, $state->{realMyPos}{y},
+			$pos->{x}, $pos->{y},
+			$state->{realMonsterPos}{x}, $state->{realMonsterPos}{y}
+		), 'ai_attack';
+		$args->{avoiding} = 1;
+	}
+
+	route_to_meeting_position(
 		$args,
 		$ID,
 		$target,
-		$realMyPos,
-		$realMonsterPos,
-		$clientDist,
-		$canAttack,
+		$pos,
+		$state->{realMyPos},
+		$state->{realMonsterPos},
+		$route_request->{debug_tag},
+		($pos->{route_choice_mode} || 'attack')
 	);
-	if ($approach_state->{should_return}) {
-		return;
-	}
-	$found_action = 1 if $approach_state->{found_action};
+	return {
+		route_outcome => 'route_started',
+	};
+}
 
-	# Preferred opening range for non-chasing mobs:
-	# if we can already attack but we are too close, relocate before starting.
-	if (
-		!$found_action &&
-		should_reposition_for_preferred_opening($args, $target, $realMyPos, $realMonsterPos, $being_chased, $canAttack)
-	) {
-		debug TF("[attack - main] [%d] call meetingPosition in should_reposition_for_preferred_opening\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		my $pos = meetingPosition(
-			$args,
-			$char,
-			$target,
-			$args->{attackMethod}{maxDistance},
-			$args->{meetingPositionBestSpot}
-		);
+# Executes the attack action when this cycle does not need route work.
+sub perform_attack_without_route {
+	my ($args, $ID, $target, $state) = @_;
 
-		if ($pos && !($pos->{x} == $realMyPos->{x} && $pos->{y} == $realMyPos->{y})) {
-			route_to_meeting_position($args, $ID, $target, $pos, $realMyPos, $realMonsterPos, "attackPreferredMinDistance", ($pos->{route_choice_mode} || 'attack'));
-			$found_action = 1;
-		}
-	}
-
-	# Forced reposition
-	if (!$found_action && $args->{firstLoop} && $args->{attackMethod}{maxDistance} > 1) {
-		debug TF("[attack - main] [%d] call meetingPosition in Forced reposition firstLoop\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		my $pos = meetingPosition(
-			$args,
-			$char,
-			$target,
-			$args->{attackMethod}{maxDistance},
-			$args->{meetingPositionBestSpot},
-			$realMyPos
-		);
-
-		if ($pos && !($pos->{x} == $realMyPos->{x} && $pos->{y} == $realMyPos->{y})) {
-			route_to_meeting_position($args, $ID, $target, $pos, $realMyPos, $realMonsterPos, "Forced ranged firstLoop reposition", ($pos->{route_choice_mode} || 'attack'));
-			$found_action = 1;
-		}
-	}
-
-	if (!defined $args->{meetingPositionBestSpot}) {
-		debug TF("[attack - main] [%d] call meetingPosition in Force define meetingPositionBestSpot\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		my $pos = meetingPosition(
-			$args,
-			$char,
-			$target,
-			$args->{attackMethod}{maxDistance},
-			$realMyPos
-		);
-
-		if ($pos) {
-			route_to_meeting_position($args, $ID, $target, $pos, $realMyPos, $realMonsterPos, "attackPreferredMinDistance", ($pos->{route_choice_mode} || 'attack'));
-			$found_action = 1;
-		}
-	}
-
-	# Kiting mode:
-	# if runFromTarget is enabled and we are not near our preferred far range, try to kite first.
-	if (
-		!$found_action &&
-		should_try_run_from_target($args, $char, $target, ($args->{sentApproach} ? 1 : 2))
-	) {
-		debug TF("[attack - main] [%d] call meetingPosition in should_try_run_from_target\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		my $pos = meetingPosition(
-			$args,
-			$char,
-			$target,
-			$args->{attackMethod}{maxDistance},
-			$realMyPos,
-		);
-
-		if ($pos) {
-			if (
-				$pos->{x} == $realMyPos->{x}
-				&& $pos->{y} == $realMyPos->{y}
-			) {
-				debug TF(
-					"[runFromTarget] Keeping current tactical spot (%d %d), mob at (%d %d).\n",
-					$realMyPos->{x}, $realMyPos->{y},
-					$realMonsterPos->{x}, $realMonsterPos->{y}
-				), 'ai_attack';
-
-			} else {
-				debug TF(
-					"[runFromTarget] %s kiting from (%d %d) to (%d %d), mob at (%d %d).\n",
-					$char,
-					$realMyPos->{x}, $realMyPos->{y},
-					$pos->{x}, $pos->{y},
-					$realMonsterPos->{x}, $realMonsterPos->{y}
-				), 'ai_attack';
-
-				$args->{avoiding} = 1;
-				route_to_meeting_position(
-					$args,
-					$ID,
-					$target,
-					$pos,
-					$realMyPos,
-					$realMonsterPos,
-					"runFromTarget",
-					($pos->{route_choice_mode} || 'attack')
-				);
-				$found_action = 1;
-			}
-
-		} else {
-			debug TF(
-				"[runFromTarget] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n",
-				$char,
-				$realMyPos->{x}, $realMyPos->{y},
-				$realMonsterPos->{x}, $realMonsterPos->{y}
-			), 'ai_attack';
-			$failed_runFromTarget = 1;
-		}
-	}
-
-	if ($args->{target_state}{pending_death_2}) {
-		debug TF("[attack - main] [%d] Blocking attacking because pending_death_2 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		$found_action = 1;
-		return;
-	}
-	
-	if (!$args->{firstLoop} && $canAttack == 0 && $youHitTarget) {
-		debug TF("[%s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (%s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], clientDist %d, maxDistance %d, dmgFromYou %d)\n",
-			$canAttack_fail_string, $char,
-			$realMyPos->{x}, $realMyPos->{y},
-			$target,
-			$realMonsterPos->{x}, $realMonsterPos->{y},
-			$target->{pos}{x}, $target->{pos}{y},
-			$target->{pos_to}{x}, $target->{pos_to}{y},
-			$clientDist, $args->{attackMethod}{maxDistance},
-			$target->{dmgFromYou}
-		), 'ai_attack';
-		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
-			debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $canAttack_fail_string), 'ai_attack';
-			$args->{temporary_extra_range} = 1;
-			$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
-			$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
-		} else {
-			debug TF("[%s] Reason unknown, allowing once.\n", $canAttack_fail_string), 'ai_attack';
-			$hitTarget_when_not_possible = 1;
-		}
-		if (
-			$config{"attackBeyondMaxDistance_waitForAgressive"} &&
-			exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
-			defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
-		) {
-			debug "[Accepting] Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
-			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
-		}
-	}
-
-	# Here we decide what to do when a mob we have already hit is no longer in range or we have no LOS to it
-	# We also check if we have waited too long for the monster which we are waiting to get closer to us to approach
-	# TODO: Maybe we should separate this into 2 sections, one for out of range and another for no LOS - low priority
-	if (
-		!$found_action &&
-		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
-		$being_chased &&
-		($canAttack == 0 || $canAttack == -1) &&
-		!$hitTarget_when_not_possible
-	) {
-		$args->{ai_attack_failed_waitForAgressive_give_up}{timeout} = 6 if !$args->{ai_attack_failed_waitForAgressive_give_up}{timeout};
-		$args->{ai_attack_failed_waitForAgressive_give_up}{time} = time if !$args->{ai_attack_failed_waitForAgressive_give_up}{time};
-		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
-			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
-			warning TF("[%s] Waited too long for target to get closer, dropping target. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], clientDist %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
-			giveUp($args, $ID, 0);
-			# TODO: Here add a move to target fallback
-		} else {
-			$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7) if ($config{"attackBeyondMaxDistance_sendAttackWhileWaiting"});
-			debug TF("[%s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], clientDist %d, maxDistance %d, dmgFromYou %d.\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
-		}
-		$found_action = 1;
-	}
-
-	# Here we decide what to do with a mob which is out of range or we have no LOS to
-	if (
-		!$found_action &&
-		($canAttack == 0 || $canAttack == -1) &&
-		!$hitTarget_when_not_possible
-	) {
-		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y})\n";
-		if ($canAttack == 0) {
-			debug "[Attack] [No range] Too far from us to attack, clientDist is $clientDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
-
-		} elsif ($canAttack == -1) {
-			debug "[Attack] [No LOS] No LOS from player to mob\n", 'ai_attack';
-		}
-		debug TF("[attack - main] [%d] call meetingPosition in canAttack == 0 || canAttack == -1\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		my $pos = meetingPosition(
-			$args,
-			$char,
-			$target,
-			$args->{attackMethod}{maxDistance},
-			$args->{meetingPositionBestSpot}
-		);
-
-		if ($pos) {
-			route_to_meeting_position($args, $ID, $target, $pos, $realMyPos, $realMonsterPos, "meetingPosition", ($pos->{route_choice_mode} || 'attack'));
-		} else {
-			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
-			giveUp($args, $ID, 1);
-		}
-		$found_action = 1;
-	}
-
-	if (
-		!$found_action &&
-		(!$config{"tankMode"} || !$target->{dmgFromYou})
-	) {
-		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
+	if (!$config{"tankMode"} || !$target->{dmgFromYou}) {
 		if (!$args->{firstAttack}) {
 			$args->{firstAttack} = 1;
-			debug "Ready to attack target $target ($realMonsterPos->{x} $realMonsterPos->{y}) (clientDist $clientDist blocks away); we're at ($realMyPos->{x} $realMyPos->{y})\n", "ai_attack";
+			debug "Ready to attack target $target ($state->{realMonsterPos}{x} $state->{realMonsterPos}{y}) (clientDist $state->{clientDist} blocks away); we're at ($state->{realMyPos}{x} $state->{realMyPos}{y})\n", "ai_attack";
 		}
 
 		$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
 		if (!$target->{dmgFromYou} && timeOut($args->{unstuck})) {
-			# We are close enough to the target, and we're trying to attack it,
-			# but some time has passed and we still haven't dealed any damage.
-			# Our recorded position might be out of sync, so try to unstuck
 			$args->{unstuck}{time} = time;
 			debug("Attack - trying to unstuck\n", "ai_attack");
-			$char->move(@{$realMyPos}{qw(x y)});
+			$char->move(@{$state->{realMyPos}}{qw(x y)});
 			$args->{unstuck}{count}++;
 		}
 
-		# Attack with weapon logic
 		if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack}) && timeOut($timeout{ai_attack_after_skill})) {
 			if (Actor::Item::scanConfigAndCheck("attackEquip")) {
-				#check if item needs to be equipped
 				Actor::Item::scanConfigAndEquip("attackEquip");
 			} else {
-				debug "[Attack] Sending attack target $target ($realMonsterPos->{x} $realMonsterPos->{y}) (clientDist $clientDist blocks away); we're at ($realMyPos->{x} $realMyPos->{y})\n", "ai_attack";
+				debug "[Attack] Sending attack target $target ($state->{realMonsterPos}{x} $state->{realMonsterPos}{y}) (clientDist $state->{clientDist} blocks away); we're at ($state->{realMyPos}{x} $state->{realMyPos}{y})\n", "ai_attack";
 				$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
 			}
-			$found_action = 1;
 
-		# Attack with skill logic
 		} elsif ($args->{attackMethod}{type} eq "skill") {
 			my $slot = $args->{attackMethod}{skillSlot};
 			delete $args->{attackMethod};
@@ -2867,14 +2884,9 @@ sub main {
 				$config{"attackSkillSlot_${slot}_isStartSkill"} ? 1 : 0,
 			);
 			debug "[attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
-			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
-
 			$timeout{ai_attack_after_skill}{time} = time;
-
 			$args->{monsterID} = $ID;
-			$found_action = 1;
 
-		# Attack with combo logic
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
 			delete $args->{attackMethod};
@@ -2893,23 +2905,162 @@ sub main {
 				undef,
 				$config{"attackComboSlot_${slot}_waitBeforeUse"},
 			);
-
 			$args->{monsterID} = $ID;
-			$found_action = 1;
 		}
-
 	}
 
-	if (!$found_action && $config{tankMode}) {
+	if ($config{tankMode}) {
 		if ($args->{dmgTo_last} != $target->{dmgTo}) {
 			$args->{ai_attack_giveup}{time} = time;
 			$char->sendAttackStop;
 		}
 		$args->{dmgTo_last} = $target->{dmgTo};
-		$found_action = 1;
+	}
+}
+
+# Waits for the next cycle when we intentionally have no route and cannot attack right now.
+sub wait_attack_cycle_without_route {
+	my ($args, $ID, $target, $state) = @_;
+
+	my %hook_args = (
+		target                   => $target,
+		canAttack                => $state->{canAttack},
+		canAttackFailString      => $state->{canAttack_fail_string},
+		being_chased             => $state->{being_chased},
+		hitTargetWhenNotPossible => $state->{hitTarget_when_not_possible},
+		handled                  => 0,
+	);
+	Plugins::callHook('AI::Attack::wait_for_next_cycle', \%hook_args);
+	return if $hook_args{handled};
+
+	if (
+		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
+		$state->{being_chased} &&
+		($state->{canAttack} == 0 || $state->{canAttack} == -1) &&
+		!$state->{hitTarget_when_not_possible}
+	) {
+		$args->{ai_attack_failed_waitForAgressive_give_up}{timeout} = 6 if !$args->{ai_attack_failed_waitForAgressive_give_up}{timeout};
+		$args->{ai_attack_failed_waitForAgressive_give_up}{time} = time if !$args->{ai_attack_failed_waitForAgressive_give_up}{time};
+		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
+			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
+			warning TF("[%s] Waited too long for target to get closer, dropping target. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], clientDist %d, maxDistance %d, dmgFromYou %d)\n", $state->{canAttack_fail_string}, $char, $state->{realMyPos}{x}, $state->{realMyPos}{y}, $target, $state->{realMonsterPos}{x}, $state->{realMonsterPos}{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $state->{clientDist}, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			giveUp($args, $ID, 0);
+		} else {
+			$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7) if ($config{"attackBeyondMaxDistance_sendAttackWhileWaiting"});
+			debug TF("[%s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], clientDist %d, maxDistance %d, dmgFromYou %d.\n", $state->{canAttack_fail_string}, $char, $state->{realMyPos}{x}, $state->{realMyPos}{y}, $target, $state->{realMonsterPos}{x}, $state->{realMonsterPos}{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $state->{clientDist}, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+		}
+		return;
 	}
 
-	Plugins::callHook('AI::Attack::main', {target => $target})
+	debug TF(
+		"[attack - main] [%d] No route defined and cannot attack (%s), waiting until next cycle.\n",
+		$args->{loop},
+		$state->{canAttack_fail_string},
+	), 'ai_attack';
+}
+
+sub debug_undefined_object_id {
+	my ($args) = @_;
+	warning "[attack main] Bug where ID is undefined found.\n";
+	warning "Args Dump: " . Dumper($args);
+	warning "ML Dump: " . Dumper(\@$monstersList);
+	warning "ai_seq Dump: " . Dumper(\@ai_seq);
+	warning "ai_seq_args Dump: " . Dumper(\@ai_seq_args);
+	Plugins::callHook('undefined_object_id');
+}
+
+sub args_loop_handler {
+	my ($args, $loop_key, $min, $max) = @_;
+	if (!exists $args->{$loop_key} || !defined $args->{$loop_key} || $args->{$loop_key} >= $max) {
+		$args->{$loop_key} = $min;
+	} else {
+		$args->{$loop_key}++;
+	}
+}
+
+sub finalize_attack_main_cycle {
+	my ($args, $reason, %hook_args) = @_;
+
+	my %payload = (
+		args          => $args,
+		reason        => $reason,
+		%hook_args,
+	);
+	Plugins::callHook('AI::Attack::main_end', \%payload);
+	return;
+}
+
+sub main {
+	my $args = AI::args;
+	my $ID = $args->{ID};
+
+	args_loop_handler($args, 'loop', 1, 100);
+
+	debug TF("[attack - main] [%d] start.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+
+	if (!defined $ID) {
+		debug_undefined_object_id($args);
+	}
+
+	my $cycle_state = prepare_attack_cycle_state($args, $ID);
+	my $target = $cycle_state->{target};
+
+	return finalize_attack_main_cycle($args, 'missing_target') unless $target;
+
+	if ($args->{target_state}{pending_death_1}) {
+		debug TF("[attack - main] [%d] Returning because pending_death_1 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+		return finalize_attack_main_cycle($args, 'pending_death_1', target => $target);
+	}
+
+	my $method_state = { should_return => 0 };
+	if (!$args->{target_state}{pending_death_2}) {
+		$method_state = sync_attack_method_for_cycle($args, $ID, $target);
+	}
+
+	return finalize_attack_main_cycle($args, 'attack_method_sync_return', target => $target) if $method_state->{should_return};
+
+	if ($args->{target_state}{pending_death_2}) {
+		if ($args->{sentApproach} && !$args->{avoiding}) {
+			debug TF("[attack - main] [%d] pending_death_2 active, clearing attack approach route context.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+			clear_approach_context($args);
+		}
+		debug TF("[attack - main] [%d] Returning because pending_death_2 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+		return finalize_attack_main_cycle($args, 'pending_death_2', target => $target);
+	}
+
+	my $state = build_attack_cycle_context($args, $ID, $target);
+	return finalize_attack_main_cycle($args, 'build_attack_cycle_context_return', target => $target) if $state->{should_return};
+
+	maybe_accept_server_attack_resolution($args, $target, $state, $cycle_state->{youHitTarget});
+
+	my $approach_state = handle_active_approach_route($args, $ID, $target, $state);
+	if ($approach_state->{handled}) {
+		return finalize_attack_main_cycle($args, 'active_route_handled', target => $target, state => $state);
+	}
+	my $route_request = determine_needed_attack_route($args, $target, $state);
+	if ($route_request->{needs_route}) {
+		my $route_result = build_needed_attack_route($args, $ID, $target, $state, $route_request);
+		return finalize_attack_main_cycle($args, 'route_started', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'route_started';
+		return finalize_attack_main_cycle($args, 'route_failed', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'route_failed';
+		return finalize_attack_main_cycle($args, 'route_stay_put', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'stay_put';
+	}
+
+	if ($args->{sentApproach}) {
+		return finalize_attack_main_cycle($args, 'route_still_active', target => $target, state => $state);
+	}
+
+	if ($state->{can_attack_now}) {
+		perform_attack_without_route($args, $ID, $target, $state);
+	} else {
+		wait_attack_cycle_without_route($args, $ID, $target, $state);
+	}
+
+	return finalize_attack_main_cycle(
+		$args,
+		($state->{can_attack_now} ? 'attack_processed' : 'waiting_without_route'),
+		target => $target,
+		state  => $state,
+	);
 }
 
 1;
