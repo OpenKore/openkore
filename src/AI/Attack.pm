@@ -1209,6 +1209,21 @@ sub route_crosses_target_danger_zone_fast {
 	return 0;
 }
 
+# Rejects a route if any step lands on an exact portal cell.
+sub route_crosses_prohibited_cells {
+	my ($solution, $prohibited_cells) = @_;
+
+	return 0 unless $solution && @{$solution};
+	return 0 unless $prohibited_cells;
+
+	foreach my $node (@{$solution}) {
+		next unless $node;
+		return 1 if $prohibited_cells->{$node->{x}} && $prohibited_cells->{$node->{x}}{$node->{y}};
+	}
+
+	return 0;
+}
+
 # Precomputes the best attack cell and travel time the target would need for each candidate tile.
 sub build_target_attack_cell_cache_for_bbox {
 	my ($ctx, $bbox) = @_;
@@ -1265,6 +1280,17 @@ sub evaluate_route_safety_for_spot {
 		min_slack             => undef,
 		route_penalty         => 9999,
 	} unless ($solution && @{$solution});
+
+	if (route_crosses_prohibited_cells($solution, $ctx->{portal_route_prohibited_spots})) {
+		return {
+			has_route                 => 0,
+			is_attack_route_safe      => 0,
+			is_staging_route_safe     => 0,
+			min_slack                 => undef,
+			route_penalty             => 9999,
+			crosses_prohibited_portal => 1,
+		};
+	}
 
 	my $sample_idx = get_route_sample_indices(
 		$solution,
@@ -1453,6 +1479,7 @@ sub meetingPosition {
 	}
 
 	my %prohibitedSpots;
+	my %portalRouteProhibitedSpots;
 	foreach my $prohibited_actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
 		next unless ($prohibited_actor->{pos_to});
 		next unless (defined $prohibited_actor->{ID});
@@ -1464,11 +1491,13 @@ sub meetingPosition {
 
 	for my $portal (@$portalsList) {
 		next unless ($portal->{pos});
+		$portalRouteProhibitedSpots{$portal->{pos}{x}}{$portal->{pos}{y}} = 1;
 		my @portal_near_blocks = calcRectArea2($portal->{pos}{x}, $portal->{pos}{y}, $config{'attackMinPortalDistance'}, 0);
 		foreach my $near_block (@portal_near_blocks) {
 			$prohibitedSpots{$near_block->{x}}{$near_block->{y}} = 1;
 		}
 	}
+	$ctx->{portal_route_prohibited_spots} = \%portalRouteProhibitedSpots;
 
 	my ($best_attack_score, $best_attack_time, $best_attack_spot, $best_attack_targetPosNow, $best_attack_dist_to_target);
 	my ($best_staging_score, $best_staging_time, $best_staging_spot, $best_staging_targetPosNow, $best_staging_dist_to_target);
