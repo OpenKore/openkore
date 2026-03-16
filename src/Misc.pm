@@ -4712,6 +4712,9 @@ sub checkSelfCondition {
 							|| $config{$prefix."_equip_leftHand"}
 							|| $config{$prefix."_equip_rightHand"}
 							|| $config{$prefix."_equip_robe"}
+							|| $config{$prefix."_equip_topHead"}
+							|| $config{$prefix."_equip_midHead"}
+							|| $config{$prefix."_equip_lowHead"}
 							);
 			return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
 			
