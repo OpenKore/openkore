@@ -650,6 +650,12 @@ sub route_to_meeting_position {
 	), 'ai_attack';
 
 	$args->{move_start} = time;
+	my $cleared_routes = clear_attack_route_actions($ID);
+	debug TF(
+		"[%s] cleared %d stale tactical route task(s) before queueing the new one.\n",
+		$debugTag,
+		$cleared_routes,
+	), 'ai_attack' if $cleared_routes;
 	store_approach_context($args, $pos, $target);
 
 	my $sendAttackWithMove = 0;
@@ -673,7 +679,10 @@ sub route_to_meeting_position {
 		randomFactor => 0,
 		useManhattan => 1,
 		meetingSubRoute => 1,
-		noMapRoute => 1
+		noMapRoute => 1,
+		singleMovePacket => 1,
+		immediateStart => 1,
+		solution => ($pos->{route_eval} ? $pos->{route_eval}{solution} : undef),
 	);
 
 	return 1;
@@ -899,6 +908,7 @@ sub prepare_meeting_position_context {
 	$ctx->{attackRouteMaxPathDistance}    = $config{attackRouteMaxPathDistance} || 13;
 	$ctx->{runFromTarget_maxPathDistance} = $config{runFromTarget_maxPathDistance} || 13;
 	$ctx->{runFromTarget}                 = $config{runFromTarget};
+	$ctx->{maxWalkPathDistance}           = $config{maxWalkPathDistance} || 17;
 
 	$ctx->{attackPreferredMinDistance}     = $config{attackPreferredMinDistance};
 	$ctx->{attackRouteReajustTolerance} = $config{attackRouteReajustTolerance} || 0;
@@ -977,6 +987,7 @@ sub prepare_meeting_position_context {
 		? $ctx->{runFromTarget_maxPathDistance}
 		: $ctx->{attackRouteMaxPathDistance};
 	$ctx->{max_path_dist} += 1;
+	$ctx->{max_path_dist} = $ctx->{maxWalkPathDistance} if $ctx->{max_path_dist} > $ctx->{maxWalkPathDistance};
 
 	$ctx->{actor_max_cost} = $ctx->{max_path_dist} * 14;
 	$ctx->{actor_pf} = build_dijkstra_map($ctx->{realMyPos}, $ctx->{actor_max_cost});
@@ -1513,6 +1524,7 @@ sub meetingPosition {
 			$spot->{cost_actor_to_spot} = $actor_pf->floodfill_getdist($spot->{x}, $spot->{y});
 			next if ($spot->{cost_actor_to_spot} < 0);
 			next if ($spot->{cost_actor_to_spot} > $actor_max_cost);
+			next unless $field->canMove($realMyPos, $spot);
 			$spot->{time_actor_to_get_to_spot} = calcTimeFromFloodCost($spot->{cost_actor_to_spot}, $mySpeed);
 
 			my $cell = get_cached_target_attack_info_for_spot($ctx, $spot);
@@ -2568,6 +2580,38 @@ sub find_attack_route_action_index {
 	return undef;
 }
 
+sub clear_attack_route_actions {
+	my ($attack_id) = @_;
+
+	return 0 unless defined $attack_id;
+
+	my $cleared = 0;
+	for (my $i = $#ai_seq; $i >= 0; $i--) {
+		next unless ($ai_seq[$i] eq 'route' || $ai_seq[$i] eq 'mapRoute');
+
+		my $routeArgs = AI::args($i);
+		next unless $routeArgs;
+		next unless defined $routeArgs->{attackID};
+		next unless $routeArgs->{attackID} eq $attack_id;
+
+		splice(@ai_seq, $i, 1);
+		splice(@ai_seq_args, $i, 1);
+		$cleared++;
+	}
+
+	return $cleared;
+}
+
+sub get_route_task_destination_pos {
+	my ($routeArgs) = @_;
+
+	return unless $routeArgs;
+	return $routeArgs->{dest}{pos} if $routeArgs->{dest} && $routeArgs->{dest}{pos};
+	return $routeArgs->{dest} if $routeArgs->{dest} && defined $routeArgs->{dest}{x} && defined $routeArgs->{dest}{y};
+
+	return;
+}
+
 # Decides whether the current approach route should be recalculated before we keep following it.
 # Returns a false value when the route can be kept as-is, or a short reason string when revalidation is needed.
 sub should_revalidate_active_approach_route {
@@ -2580,11 +2624,12 @@ sub should_revalidate_active_approach_route {
 	return 'missing_route_action' unless defined $routeIndex;
 
 	my $routeArgs = AI::args($routeIndex);
+	my $routeDestPos = get_route_task_destination_pos($routeArgs);
 	return 'route_destination_changed' unless (
-		$routeArgs->{dest}
+		$routeDestPos
 		&& $args->{approachTargetPos}
-		&& $routeArgs->{dest}{x} == $args->{approachTargetPos}{x}
-		&& $routeArgs->{dest}{y} == $args->{approachTargetPos}{y}
+		&& $routeDestPos->{x} == $args->{approachTargetPos}{x}
+		&& $routeDestPos->{y} == $args->{approachTargetPos}{y}
 	);
 
 	return 'target_move_time_changed' if defined $args->{monsterLastMoveTime} && $args->{monsterLastMoveTime} != $target->{time_move};
