@@ -559,7 +559,8 @@ sub should_reposition_for_preferred_opening {
 	my ($args, $target, $realMyPos, $realMonsterPos, $being_chased, $canAttack) = @_;
 
 	return 0 unless $canAttack == 1;
-	return 0 if $config{runFromTarget};
+	my $ctx = get_meeting_position_ctx($args);
+	return 0 if $ctx && $ctx->{runFromTarget};
 	return 0 if $being_chased; # preferred opening range only for non-chasing mobs
 
 	my $effective_min_dist = get_effective_attack_min_distance($args);
@@ -567,6 +568,20 @@ sub should_reposition_for_preferred_opening {
 
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	return ($realMonsterDist < $effective_min_dist) ? 1 : 0;
+}
+
+sub should_disable_run_from_target {
+	my ($ctx) = @_;
+
+	return 0 unless $ctx;
+	return 0 unless $ctx->{runFromTargetConfigured};
+	return 0 unless $ctx->{being_chased_preliminary};
+	return 0 unless defined $ctx->{preferred_min_dist} && $ctx->{preferred_min_dist} > 0;
+	return 0 unless defined $ctx->{realMonsterDist} && $ctx->{realMonsterDist} < $ctx->{preferred_min_dist};
+	return 0 unless defined $ctx->{targetSpeed} && defined $ctx->{mySpeed};
+
+	# Lower walk_speed values mean faster movement.
+	return ($ctx->{targetSpeed} < $ctx->{mySpeed}) ? 1 : 0;
 }
 
 # Picks the cheapest already-known spot for kiting comparisons without recomputing meetingPosition.
@@ -619,6 +634,12 @@ sub should_try_run_from_target {
 	return 0 unless $args->{attackMethod};
 	return 0 unless $args->{attackMethod}{type};
 	return 0 unless defined $args->{attackMethod}{maxDistance};
+
+	my $ctx = get_meeting_position_ctx($args);
+	if ($ctx && $ctx->{runFromTargetDisabled}) {
+		debug "[should_try_run_from_target] runFromTarget disabled for this cycle because the target is already chasing, is closer than the preferred distance, and is faster than us.\n", "ai_attack";
+		return 0;
+	}
 
 	my $reference_spot = get_kiting_reference_spot($args);
 	my $should_kite = should_kite_to_prevent_hit_before_kill($args, $actor, $target, $type, $reference_spot);
@@ -703,6 +724,9 @@ sub store_approach_context {
 		y => $pos->{y},
 	};
 
+	my $ctx = get_meeting_position_ctx($args);
+	$args->{approachBeingChased} = $ctx ? ($ctx->{being_chased} ? 1 : 0) : 0;
+
 	$args->{monsterLastMoveTime} = $target->{time_move};
 
 	if ($target->{pos_to}) {
@@ -721,6 +745,7 @@ sub clear_approach_context {
 
 	$args->{sentApproach} = 0;
 	delete $args->{approachTargetPos};
+	delete $args->{approachBeingChased};
 	delete $args->{monsterLastMoveTime};
 	delete $args->{monsterLastMovePosTo};
 }
@@ -817,11 +842,34 @@ sub predict_position_after_delta {
 	return predict_position_at_total_elapsed($snapshot, $total_elapsed);
 }
 
+sub target_has_temporary_chase_blocker {
+	my ($target) = @_;
+
+	return 0 unless $target;
+
+	return 1 if exists $target->{casting} && defined $target->{casting} && $target->{casting};
+	return 1 if $target->statusActive('EFST_STONECURSE, EFST_FREEZE, EFST_STUN, EFST_SLEEP, EFST_DEEPSLEEP, EFST_WHITEIMPRISON, EFST_BLADESTOP, EFST_BITE, EFST_ANKLESNARE, EFST_SPIDERWEB, EFST_ELECTRICSHOCKER, EFST_WUGBITE, EFST_CRYSTALIZE');
+
+	# TODO: add hunter trap and shadow chaser painted hole here
+
+	if (defined $target->{last_movement_interrupted_time}) {
+		my $elapsed = time - $target->{last_movement_interrupted_time};
+		if ($target->{time_move} > $target->{last_movement_interrupted_time}) {
+			delete $target->{last_movement_interrupted_time};
+			return 0;
+		}
+		return 1 if $elapsed >= 0 && $elapsed <= 0.1;
+	}
+
+	return 0;
+}
+
 # Heuristic for deciding when a monster should be treated as already chasing us.
 sub isTargetProbablyChasingMe {
 	my ($actor, $actor_pos, $target, $target_pos) = @_;
 
 	return 0 unless $target && $target->{ID};
+	return 0 if target_has_temporary_chase_blocker($target);
 	my $target_is_aggressive = is_aggressive($target, undef, 0, 0);
 
 	# Already engaged with us in some way.
@@ -907,6 +955,7 @@ sub prepare_meeting_position_context {
 
 	$ctx->{attackRouteMaxPathDistance}    = $config{attackRouteMaxPathDistance} || 13;
 	$ctx->{runFromTarget_maxPathDistance} = $config{runFromTarget_maxPathDistance} || 13;
+	$ctx->{runFromTargetConfigured}       = $config{runFromTarget};
 	$ctx->{runFromTarget}                 = $config{runFromTarget};
 	$ctx->{maxWalkPathDistance}           = $config{maxWalkPathDistance} || 17;
 
@@ -979,6 +1028,21 @@ sub prepare_meeting_position_context {
 	$ctx->{effective_min_dist} = $ctx->{preferred_min_dist};
 	$ctx->{effective_min_dist} = 1 if ($ctx->{effective_min_dist} < 1);
 
+	$ctx->{realMonsterDist} = blockDistance($ctx->{realMyPos}, $ctx->{realTargetPos});
+	$ctx->{being_chased_preliminary} = isTargetProbablyChasingMe($actor, $ctx->{realMyPos}, $target, $ctx->{realTargetPos}) ? 1 : 0;
+	$ctx->{runFromTargetDisabled} = should_disable_run_from_target($ctx) ? 1 : 0;
+	if ($ctx->{runFromTargetDisabled}) {
+		debug TF(
+			"[prepare_meeting_position_context] disabling runFromTarget for %s because it is already chasing, is within preferred distance (%d < %d), and is faster than us (%.3f < %.3f).\n",
+			$target,
+			$ctx->{realMonsterDist},
+			$ctx->{preferred_min_dist},
+			$ctx->{targetSpeed},
+			$ctx->{mySpeed},
+		), 'ai_attack';
+	}
+	$ctx->{runFromTarget} = ($ctx->{runFromTargetConfigured} && !$ctx->{runFromTargetDisabled}) ? 1 : 0;
+
 	$ctx->{desired_dist} = $ctx->{runFromTarget}
 		? $attackMaxDistance
 		: ($ctx->{effective_min_dist} > 0 ? $ctx->{effective_min_dist} : $attackMaxDistance);
@@ -995,7 +1059,6 @@ sub prepare_meeting_position_context {
 	$ctx->{target_max_cost} = $ctx->{max_path_dist} * 14;
 	$ctx->{target_pf} = build_dijkstra_map($ctx->{realTargetPos}, $ctx->{target_max_cost});
 
-	$ctx->{realMonsterDist} = blockDistance($ctx->{realMyPos}, $ctx->{realTargetPos});
 	$ctx->{clientDist} = getClientDist($ctx->{realMyPos}, $ctx->{realTargetPos});
 
 	$ctx->{attack_resolve_buffer} = 0.1;
@@ -1014,7 +1077,7 @@ sub prepare_meeting_position_context {
 	);
 	$ctx->{target_can_reach_me} = can_target_reach_spot_to_attack($ctx, $ctx->{realMyPos});
 
-	my $being_chased = isTargetProbablyChasingMe($actor, $ctx->{realMyPos}, $target, $ctx->{realTargetPos});
+	my $being_chased = $ctx->{being_chased_preliminary};
 	if ($being_chased && !$ctx->{target_can_reach_me}) {
 		debug TF(
 			"[prepare_meeting_position_context] blocking being_chased for %s because it cannot reach an attack tile on us from (%d %d) to (%d %d).\n",
@@ -1212,9 +1275,15 @@ sub route_crosses_target_danger_zone_fast {
 	return 0 unless $target_pos;
 	$danger_dist = 1 unless defined $danger_dist;
 
+	my $left_initial_danger_zone = 0;
 	foreach my $node (@{$solution}) {
 		my $d = getClientDist($node, $target_pos);
-		return 1 if $d <= $danger_dist;
+		if ($d <= $danger_dist) {
+			# Allow routes that start inside threat range and immediately step out of it.
+			return 1 if $left_initial_danger_zone;
+		} else {
+			$left_initial_danger_zone = 1;
+		}
 	}
 
 	return 0;
@@ -1352,18 +1421,8 @@ sub evaluate_route_safety_for_spot {
 		$staging_route_penalty += 6;
 	}
 
-	my $keeps_outside_danger_zone = (
-		defined $spot->{blockDist_to_target}
-		&& $spot->{blockDist_to_target} > $danger_dist
-	) ? 1 : 0;
-
 	my $is_attack_route_safe = (defined $min_slack && $min_slack >= $required_attack_margin) ? 1 : 0;
 	my $is_staging_route_safe = (defined $min_slack && $min_slack >= $required_staging_margin) ? 1 : 0;
-
-	if ($crosses_target_danger_zone && $keeps_outside_danger_zone) {
-		$is_attack_route_safe = 0;
-		$is_staging_route_safe = 0;
-	}
 
 	return {
 		has_route             => 1,
@@ -2457,6 +2516,27 @@ sub sync_attack_method_for_cycle {
 	return {should_return => 0};
 }
 
+sub ensure_pending_death_defensive_method {
+	my ($args) = @_;
+
+	return unless $args;
+	return if (
+		$args->{attackMethod}
+		&& defined $args->{attackMethod}{type}
+		&& defined $args->{attackMethod}{maxDistance}
+	);
+
+	my $distance = $config{attackDistance} || 1;
+	my $maxDistance = $config{attackMaxDistance} || $distance;
+	$maxDistance = $distance if $maxDistance < $distance;
+
+	$args->{attackMethod} = {
+		type        => 'weapon',
+		distance    => $distance,
+		maxDistance => $maxDistance,
+	};
+}
+
 # Builds the per-cycle context shared by route, wait, and attack decisions.
 sub build_attack_cycle_context {
 	my ($args, $ID, $target) = @_;
@@ -2635,6 +2715,12 @@ sub should_revalidate_active_approach_route {
 
 	return 'target_move_time_changed' if defined $args->{monsterLastMoveTime} && $args->{monsterLastMoveTime} != $target->{time_move};
 
+	my $ctx = get_meeting_position_ctx($args);
+	if ($ctx && exists $args->{approachBeingChased}) {
+		my $current_being_chased = $ctx->{being_chased} ? 1 : 0;
+		return 'target_chase_state_changed' if $args->{approachBeingChased} != $current_being_chased;
+	}
+
 	if ($args->{monsterLastMovePosTo} || $target->{pos_to}) {
 		return 'target_move_destination_changed' unless (
 			$args->{monsterLastMovePosTo}
@@ -2748,7 +2834,7 @@ sub handle_active_approach_route {
 		return { handled => 0 };
 	}
 
-	if ($canAttack == 1 && !$config{attackWaitApproachFinish} && !$config{runFromTarget}) {
+	if ($canAttack == 1 && !$config{attackWaitApproachFinish} && !$args->{meetingPositionCtx}{runFromTarget}) {
 		debug TF(
 			"[Approaching - Can now attack] %s (%d %d), target %s (%d %d), clientDist %d, maxDistance %d, dmgFromYou %d.\n",
 			$char, $realMyPos->{x}, $realMyPos->{y},
@@ -2781,6 +2867,26 @@ sub handle_active_approach_route {
 # Checks whether this cycle should create a new tactical route.
 sub determine_needed_attack_route {
 	my ($args, $target, $state) = @_;
+
+	if ($args->{target_state}{pending_death_2}) {
+		if (
+			should_try_run_from_target($args, $char, $target, ($args->{sentApproach} ? 1 : 2))
+		) {
+			return {
+				needs_route     => 1,
+				debug_context   => "pending_death_2 should_try_run_from_target",
+				debug_tag       => "pendingDeath runFromTarget",
+				old_spot        => $state->{realMyPos},
+				allow_same_cell => 0,
+				set_avoiding    => 1,
+			};
+		}
+
+		return {
+			needs_route => 0,
+			wait_only   => 1,
+		};
+	}
 
 	if (
 		should_reposition_for_preferred_opening($args, $target, $state->{realMyPos}, $state->{realMonsterPos}, $state->{being_chased}, $state->{canAttack})
@@ -3090,18 +3196,11 @@ sub main {
 	my $method_state = { should_return => 0 };
 	if (!$args->{target_state}{pending_death_2}) {
 		$method_state = sync_attack_method_for_cycle($args, $ID, $target);
+	} else {
+		ensure_pending_death_defensive_method($args);
 	}
 
 	return finalize_attack_main_cycle($args, 'attack_method_sync_return', target => $target) if $method_state->{should_return};
-
-	if ($args->{target_state}{pending_death_2}) {
-		if ($args->{sentApproach} && !$args->{avoiding}) {
-			debug TF("[attack - main] [%d] pending_death_2 active, clearing attack approach route context.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-			clear_approach_context($args);
-		}
-		debug TF("[attack - main] [%d] Returning because pending_death_2 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		return finalize_attack_main_cycle($args, 'pending_death_2', target => $target);
-	}
 
 	my $state = build_attack_cycle_context($args, $ID, $target);
 	return finalize_attack_main_cycle($args, 'build_attack_cycle_context_return', target => $target) if $state->{should_return};
@@ -3122,6 +3221,11 @@ sub main {
 
 	if ($args->{sentApproach}) {
 		return finalize_attack_main_cycle($args, 'route_still_active', target => $target, state => $state);
+	}
+
+	if ($args->{target_state}{pending_death_2}) {
+		debug TF("[attack - main] [%d] Returning because pending_death_2 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+		return finalize_attack_main_cycle($args, 'pending_death_2', target => $target, state => $state);
 	}
 
 	if ($state->{can_attack_now}) {

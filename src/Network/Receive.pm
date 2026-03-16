@@ -2094,6 +2094,7 @@ sub actor_display {
 	$actor->{solution} = [];
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
+	delete $actor->{last_movement_interrupted_time};
 
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
@@ -8241,6 +8242,7 @@ sub actor_movement_interrupted {
 	$actor->{solution} = [];
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = 0;
+	$actor->{last_movement_interrupted_time} = time;
 	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
 		$actor->{sitting} = 0;
 	}
