@@ -19,6 +19,7 @@ package Task::CalcMapRoute;
 
 use strict;
 use Time::HiRes qw(time);
+use List::Util qw(reduce);
 
 use Modules 'register';
 use Task;
@@ -300,7 +301,10 @@ sub searchStep {
 	}
 
 	# selects the node with the lowest walk cost
-	my $parent = (sort {$openlist->{$a}{walk} <=> $openlist->{$b}{walk}} keys %{$openlist})[0];
+	# NOTE: avoid sorting the full list every step; just track the minimum.
+	my $parent = reduce {
+		$openlist->{$a}{walk} <= $openlist->{$b}{walk} ? $a : $b
+	} keys %{$openlist};
 	debug "[CalcMapRoute - searchStep - Loop] $parent, $openlist->{$parent}{walk}\n", "calc_map_route";
 
 	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
