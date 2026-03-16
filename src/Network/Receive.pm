@@ -1288,7 +1288,7 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -7273,7 +7273,7 @@ sub map_change {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -7327,7 +7327,7 @@ sub map_changed {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
