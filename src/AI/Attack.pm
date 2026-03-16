@@ -1127,7 +1127,7 @@ sub get_cached_target_attack_info_for_spot {
 	return $ctx->{target_attack_eval}{map}{$spot->{x}}{$spot->{y}};
 }
 
-# Returns whether the target can path to any tile from which it could attack the given spot.
+# Returns whether the target can path to any tile from which it could attack the given spot with LOS.
 sub can_target_reach_spot_to_attack {
 	my ($ctx, $spot) = @_;
 
@@ -1761,7 +1761,7 @@ sub meetingPosition {
 	return $best_spot;
 }
 
-# Finds the cheapest tile the target can stand on to attack a candidate spot at its own range.
+# Finds the cheapest tile the target can stand on to attack a candidate spot at its own range with LOS.
 sub get_best_attack_cell_by_pf {
 	my ($target_pf, $spot, $range, $max_cost, $attack_offsets) = @_;
 
@@ -1780,6 +1780,7 @@ sub get_best_attack_cell_by_pf {
 		my $cost = $target_pf->floodfill_getdist($ax, $ay);
 		next if $cost < 0;
 		next if defined $max_cost && $cost > $max_cost;
+		next unless $field->checkLOS({ x => $ax, y => $ay }, $spot, 0);
 		if (!defined $best_cost || $cost < $best_cost) {
 			$best_cost = $cost;
 			$best_block = { x => $ax, y => $ay };
