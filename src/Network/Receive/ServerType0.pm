@@ -1406,7 +1406,7 @@ sub skill_used_no_damage {
 		my $pos = calcPosFromPathfinding($field, $char);
 		%{$char->{pos}} = %{$pos};
 		%{$char->{pos_to}} = %{$pos};
-		$char->{time_move} = 0;
+		$char->{time_move} = time;
 		$char->{time_move_calc} = 0;
 		$char->{solution} = [];
 		push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
