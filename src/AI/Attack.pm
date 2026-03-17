@@ -1128,7 +1128,18 @@ sub evaluate_route_safety_for_spot {
 	);
 	my $time_to_act    = $ctx->{target_remaning_time_to_act};
 	my $time_to_attack = get_remaning_time_to_attack($target);
-	my $required_attack_margin  = defined $ctx->{run_safety_extra} ? $ctx->{run_safety_extra} : 0;
+	my $runFromTargetActive = (
+		$ctx->{runFromTarget}
+		&& (
+			$args->{avoiding}
+			|| $args->{meetingPositionUseRunFromTarget}
+			|| ($args->{attackMethod} && $args->{attackMethod}{type} && $args->{attackMethod}{type} eq 'running')
+		)
+	) ? 1 : 0;
+	my $defensive_route = ($runFromTargetActive) ? 1 : 0;
+	my $required_attack_margin  = $defensive_route && defined $ctx->{run_safety_extra}
+		? $ctx->{run_safety_extra}
+		: 0;
 	my $required_staging_margin = 0;
 
 	my ($min_slack, $worst_idx);
@@ -2653,6 +2664,7 @@ sub meetingPosition {
 			|| ($args->{attackMethod} && $args->{attackMethod}{type} && $args->{attackMethod}{type} eq 'running')
 		)
 	) ? 1 : 0;
+	my $offensive_melee_approach = (!$defensive_only && !$runFromTargetActive && $attackMaxDistance <= 1) ? 1 : 0;
 	my $followDistanceMax = $ctx->{followDistanceMax};
 	my $attackCanSnipe = $ctx->{attackCanSnipe};
 	my $realMyPos = $ctx->{realMyPos};
@@ -2929,7 +2941,7 @@ sub meetingPosition {
 			# cannot attack from it, keeping it as the best "staging" spot just traps us in place.
 			$can_use_as_staging = 0 if $is_current_spot && !$can_attack_from_spot;
 
-			$can_use_as_attack = 0 unless ($spot->{route_eval}{is_attack_route_safe});
+			$can_use_as_attack = 0 unless ($spot->{route_eval}{is_attack_route_safe} || $offensive_melee_approach);
 			$can_use_as_staging = 0 unless ($spot->{route_eval}{is_staging_route_safe});
 
 			if ($runFromTargetActive && defined $attack_safe_window) {
