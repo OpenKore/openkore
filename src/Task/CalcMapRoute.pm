@@ -562,11 +562,9 @@ sub populateOpenListWithWarpByItems {
 	my ($current_map) = split / /, $from_node, 2;
 	return unless $self->isWarpByItemAllowedOnMap($current_map);
 
-	my $target = ($self->{targets} && ref $self->{targets} eq 'ARRAY' && @{$self->{targets}}) ? $self->{targets}[0] : undef;
-	return unless $target && $target->{map};
-
-	for my $entry ($self->getWarpItemCandidatesForTarget($target)) {
+	for my $entry ($self->getWarpItemCandidates()) {
 		my $dest = $entry->{destMap} . ' ' . $entry->{destX} . ' ' . $entry->{destY};
+		next if ($dest eq $from_node);
 		my $key = "$from_node=$dest";
 		my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPITEM} || 80);
 		my $zeny = $baseCost->{zeny} || 0;
@@ -597,18 +595,17 @@ sub populateOpenListWithWarpByItems {
 	}
 }
 
-sub getWarpItemCandidatesForTarget {
-	my ($self, $target) = @_;
+sub getWarpItemCandidates {
+	my ($self) = @_;
 	return unless ($char && $char->inventory && $char->inventory->isReady());
 	return unless ($teleport_items{list} && @{$teleport_items{list}});
 
 	my @matches;
-	my $target_map = lc($target->{map});
 	for my $entry (@{$teleport_items{list}}) {
 		next unless ($entry->{mode} eq 'warp' || $entry->{mode} eq 'any');
 		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
 		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
-		next unless lc($entry->{destMap}) eq $target_map;
+		next unless $self->isWarpItemRoutingDestinationValid($entry);
 
 		my $item = $char->inventory->getByNameID($entry->{itemID});
 		next unless $item;
@@ -621,6 +618,15 @@ sub getWarpItemCandidatesForTarget {
 		push @matches, $entry;
 	}
 	return @matches;
+}
+
+sub isWarpItemRoutingDestinationValid {
+	my ($self, $entry) = @_;
+	return 0 unless ($entry && defined $entry->{destMap} && $entry->{destMap} ne '');
+
+	my $destMap = lc($entry->{destMap});
+	return 0 if ($destMap eq '*' || $destMap eq 'any' || $destMap eq 'save');
+	return 1;
 }
 
 sub isWarpByItemAllowedOnMap {
