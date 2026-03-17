@@ -2091,10 +2091,9 @@ sub actor_display {
 
 	$actor->{pos} = {%coordsFrom};
 	$actor->{pos_to} = {%coordsTo};
-	$actor->{solution} = [];
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
-	delete $actor->{last_movement_interrupted_time};
+	$actor->{solution} = [];
 
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
@@ -5541,13 +5540,13 @@ sub character_moves {
 	makeCoordsFromTo($char->{pos}, $char->{pos_to}, $args->{coords});
 	my $dist = blockDistance($char->{pos}, $char->{pos_to});
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
-	$char->{time_move} = time;
 
 	my $speed = ($char->{walk_speed} || 0.12);
 	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
 	my $time = calcTimeFromSolution($my_solution, $speed);
-	$char->{solution} = $my_solution;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = $time;
+	$char->{solution} = $my_solution;
 
 	# Correct the direction in which we're looking
 	my (%vec, $degree);
@@ -7214,12 +7213,11 @@ sub high_jump {
 
 	$actor->{pos} = {x => $args->{x}, y => $args->{y}};
 	$actor->{pos_to} = {x => $args->{x}, y => $args->{y}};
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = 0;
 	$actor->{solution} = [];
 
 	message TF("%s instantly moved to %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill', 2;
-
-	$actor->{time_move} = time;
-	$actor->{time_move_calc} = 0;
 }
 
 sub hp_sp_changed {
@@ -8253,10 +8251,9 @@ sub actor_movement_interrupted {
 	my $actor = Actor::get($args->{ID});
 	$actor->{pos} = {%coords};
 	$actor->{pos_to} = {%coords};
-	$actor->{solution} = [];
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = 0;
-	$actor->{last_movement_interrupted_time} = time;
+	$actor->{solution} = [];
 	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
 		$actor->{sitting} = 0;
 	}
