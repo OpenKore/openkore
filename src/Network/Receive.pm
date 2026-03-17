@@ -1288,7 +1288,7 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -2094,6 +2094,7 @@ sub actor_display {
 	$actor->{solution} = [];
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
+	delete $actor->{last_movement_interrupted_time};
 
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
@@ -2679,8 +2680,14 @@ sub actor_action {
 				Log::warning "[actor_action] Target $target will die when damage resolves in [$source->{lastAttackAttackMotion}] secs.\n";
 				$target->{pendingDeathTimer} = $target->{lastRecvAttackTime_resolve_calc};
 			}
+		} else {
+			if (
+				defined $target->{hp_max} && (($target->{deltaHp} + $target->{hp_max}) > 0)
+			) {
+				Log::warning "[actor_action] Target $target will no longer die when damage resolves as it healed.\n";
+				delete $target->{pendingDeathTimer};
+			}
 		}
-
 
 		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
 		Plugins::callHook('packet_attack', {
@@ -6044,6 +6051,14 @@ sub emoticon {
 		my $dist = distance($char->{pos_to}, $monster->{pos_to});
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 
+		if (exists $monster->{casting} && defined $monster->{casting} && $monster->{casting}) {
+			my $skillID = $monster->{casting}{skill}->getIDN();
+			if ($skillID == 197 || $skillID == 474) {
+				message TF("[Skill Emotion] %s: deleting cast state\n", $monster->nameIdx);
+				delete $monster->{casting};
+			}
+		}
+
 		# Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
 		message TF("[dist=%s] %s %s (%d): %s\n", $dist, $monster->{actorType}, $monster->name, $monster->{binID}, $emotion), "emotion";
 
@@ -7273,7 +7288,7 @@ sub map_change {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -7327,7 +7342,7 @@ sub map_changed {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -8241,6 +8256,7 @@ sub actor_movement_interrupted {
 	$actor->{solution} = [];
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = 0;
+	$actor->{last_movement_interrupted_time} = time;
 	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
 		$actor->{sitting} = 0;
 	}

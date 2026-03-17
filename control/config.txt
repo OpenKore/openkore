@@ -37,6 +37,11 @@ XKore_listenPort 6901
 XKore_publicIp 127.0.0.1
 XKore_ID
 
+# Xkore 3
+XKore_blockPacket_monster_ranged_attack 1
+
+attack_stopAttacking_pendingDeathMonsters 1
+
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
 adminPassword
@@ -97,7 +102,6 @@ attackRouteReajustTolerance 2
 
 runFromTarget 1
 runFromTargetSafety 0.3
-runFromTarget_inAdvance 0
 runFromTarget_maxPathDistance 25
 
 # the following attack keys are meant to work only in private server (rAthena/Hercules)
@@ -440,14 +444,12 @@ mercenary_route_randomWalk_rescueWhenLost 0
 mercenary_route_randomWalk_stopDuringAttack 0
 mercenary_route_randomWalk_waitMinDistance 0
 
+mercenary_attackPreferredMinDistance 1
+mercenary_attackRouteReajustTolerance 2
+
 mercenary_runFromTarget 0
-mercenary_runFromTarget_inAdvance 0
-mercenary_runFromTarget_dist 5
-mercenary_runFromTarget_minStep 7
+mercenary_runFromTargetSafety 0.3
 mercenary_runFromTarget_maxPathDistance 20
-mercenary_runFromTarget_noAttackMethodFallback 0
-mercenary_runFromTarget_noAttackMethodFallback_attackMaxDist 14
-mercenary_runFromTarget_noAttackMethodFallback_minStep 8
 
 mercenary_idleWalkType 1
 mercenary_followDistanceMin 3
@@ -509,13 +511,12 @@ homunculus_route_randomWalk_rescueWhenLost 0
 homunculus_route_randomWalk_stopDuringAttack 0
 homunculus_route_randomWalk_waitMinDistance 0
 
+homunculus_attackPreferredMinDistance 1
+homunculus_attackRouteReajustTolerance 2
+
 homunculus_runFromTarget 0
-homunculus_runFromTarget_dist 5
-homunculus_runFromTarget_minStep 7
+homunculus_runFromTargetSafety 0.3
 homunculus_runFromTarget_maxPathDistance 20
-homunculus_runFromTarget_noAttackMethodFallback 0
-homunculus_runFromTarget_noAttackMethodFallback_attackMaxDist 14
-homunculus_runFromTarget_noAttackMethodFallback_minStep 8
 
 homunculus_idleWalkType 1
 homunculus_followDistanceMin 3
