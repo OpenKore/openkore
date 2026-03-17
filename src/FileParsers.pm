@@ -1083,7 +1083,7 @@ sub parseTeleportItems {
 		next if ($line eq '' || $line =~ /^#/);
 		$line =~ s/\s*#.*$//;
 		$line =~ s/,/ /g;
-		my @args = grep { length } split /\s+/, lc $line;
+		my @args = grep { length } split /\s+/, $line;
 
 		if (@args < 6) {
 			warning TF("Invalid teleport item entry at %s: %s\n", $file, $line);
@@ -1131,12 +1131,8 @@ sub parseTeleportItems {
 			next;
 		}
 		if (defined $required_equip_slot) {
-			my $normalized_slot = lc $required_equip_slot;
-			my $slot_recognized = defined $equipSlot_rlut{$required_equip_slot}
-				|| defined $equipSlot_rlut{$normalized_slot}
-				|| scalar grep { lc($_) eq $normalized_slot } keys %equipSlot_rlut;
-			if (!$slot_recognized) {
-				warning TF("Invalid teleport item entry at %s: required equip slot is not recognized: %s\n", $file, $line);
+			if (!defined $equipSlot_rlut{$required_equip_slot}) {
+				warning TF("Invalid teleport item entry at %s: required equip slot is not recognized ($required_equip_slot): %s\n", $file, $line);
 				next;
 			}
 		}
@@ -1156,7 +1152,7 @@ sub parseTeleportItems {
 		};
 
 		if (defined $required_equip_slot && defined $required_equip_item_id) {
-			$entry->{requiredEquipSlot} = lc $required_equip_slot;
+			$entry->{requiredEquipSlot} = $required_equip_slot;
 			$entry->{requiredEquipItemID} = int($required_equip_item_id);
 		}
 
