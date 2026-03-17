@@ -2680,8 +2680,14 @@ sub actor_action {
 				Log::warning "[actor_action] Target $target will die when damage resolves in [$source->{lastAttackAttackMotion}] secs.\n";
 				$target->{pendingDeathTimer} = $target->{lastRecvAttackTime_resolve_calc};
 			}
+		} else {
+			if (
+				defined $target->{hp_max} && (($target->{deltaHp} + $target->{hp_max}) > 0)
+			) {
+				Log::warning "[actor_action] Target $target will no longer die when damage resolves as it healed.\n";
+				delete $target->{pendingDeathTimer};
+			}
 		}
-
 
 		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
 		Plugins::callHook('packet_attack', {
