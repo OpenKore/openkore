@@ -15,230 +15,6 @@
 #########################################################################
 #
 # This module contains the attack AI's code.
-
-
-
-# At Rathena
-# Explanation of the mob_db.yml file and structure.
-# AttackDelay: Attack Delay of the monster, also known as ASPD. Low value means faster attack speed, but don't make it too low or it will lag when a player got mobbed by several of these mobs.
-# AttackMotion: Attack animation motion. Low value means monster's attack will be displayed in higher FPS (making it shorter, too). (Thanks to Wallex for this)
-# DamageMotion: Damage animation motion, same as aMotion but used to display the "I am hit" animation. Coincidentally, this same value is used to determine how long it is before the monster/player can move again. Endure is dMotion = 0, obviously.
-
-# For players:
-# AttackMotion = 500 / (50/(200-ASPD))
-# AttackDelay = 2 * AttackMotion
-# DamageMotion = cap_value((800-agi*4), 400, 800)
-
-# at battle.ccp - battle_weapon_attack
-
-#wd.amotion = (skill_id && skill_get_inf(skill_id)&INF_GROUND_SKILL)?0:sstatus->amotion; //Amotion should be 0 for ground skills.
-
-#// ----- DMOTION -----
-#i =  800-base_status->agi*4;
-#base_status->dmotion = cap_value(i, 400, 800);
-#wd.dmotion = tstatus->dmotion;
-# clif_damage(*src, *target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_, wd.type, wd.damage2, wd.isspdamage);
-# at clif.cpp
-#clif_damage
-#/// 08c8 <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.L <IsSPDamage>.B <div>.W <type>.B <damage2>.L (ZC_NOTIFY_ACT3)
-#p.srcSpeed = sdelay;
-#p.dmgSpeed = ddelay;
-
-# At Openkore
-#'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
-
-# For mobs amotion and dmotion just use monster table
-# For players dmotion is sent by 08c8 when receiving damage, amotion can be calculated from stats and is also sent when dealing damage
-
-# When a source attacks a target we set these vars:
-#my $source = Actor::get($args->{sourceID});
-#my $target = Actor::get($args->{targetID});
-#my $dmgTime = time;
-
-#$source->{lastAttackTime} = $dmgTime;
-#$target->{lastRecvAttackTime} = $dmgTime;
-
-# Time until src can do anything again, moving, attacking, using skills (AttackMotion)
-# Time until src can actually attack again is AttackDelay, not sent by the server
-#$source->{lastAttackAttackMotion} = $args->{src_speed};
-
-# Time until target can do anything again, moving, attacking, using skills (DamageMotion)
-# TODO: check if it is 0 when endure is active
-#$target->{lastRecvDamageMotion} = $args->{dst_speed};
-
-# monsters table at %monstersTable holds these values - extracted from rathena
-# ID	Level	Hp	AttackRange	SkillRange	AttackDelay	AttackMotion	Size	Race	Element	ElementLevel	ChaseRange
-
-
-# Hercules unit.cpp unit_walktoxy_sub
-#
-#// Monsters always target an adjacent tile even if ranged, no need to shorten the path
-#	if (ud->target_to != 0 && ud->chaserange > 1 && bl->type != BL_MOB) {
-#		// Generally speaking, the walk path is already to an adjacent tile
-#		// so we only need to shorten the path if the range is greater than 1.
-#		// Trim the last part of the path to account for range,
-#		// but always move at least one cell when requested to move.
-#		for (i = (ud->chaserange*10)-10; i > 0 && ud->walkpath.path_len>1;) {
-#			ud->walkpath.path_len--;
-#			enum directions dir = ud->walkpath.path[ud->walkpath.path_len];
-#			if (direction_diagonal(dir))
-#				i -= MOVE_COST * 2; //When chasing, units will target a diamond-shaped area in range [Playtester]
-#			else
-#				i -= MOVE_COST;
-#			ud->to_x -= dirx[dir];
-#			ud->to_y -= diry[dir];
-#		}
-#	}
-
-=pod
-/**
- * Sets the delays that prevent attacks and skill usage considering the bl type
- * Makes sure that delays are not decreased in case they are already higher
- * Will also invoke bl type specific delay functions when required
- * @param bl Object to apply attack delay to
- * @param tick Current tick
- * @param event The event that resulted in calling this function
- */
-void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
-{
-	unit_data* ud = unit_bl2ud(&bl);
-
-	if (ud == nullptr)
-		return;
-
-	t_tick attack_delay = 0;
-	t_tick act_delay = 0;
-
-	switch (bl.type) {
-		case BL_PC:
-			switch (event) {
-				case DELAY_EVENT_CASTBEGIN_ID:
-				case DELAY_EVENT_CASTBEGIN_POS:
-					if (reinterpret_cast<map_session_data*>(&bl)->skillitem == ud->skill_id) {
-						// Skills used from items don't seem to give any attack or act delay
-						return;
-					}
-					[[fallthrough]];
-				case DELAY_EVENT_ATTACK:
-				case DELAY_EVENT_PARRY:
-					// Officially for players it just remembers the last attack time here and applies the delays during the comparison
-					// But we pre-calculate the delays instead and store them in attackabletime and canact_tick
-					attack_delay = status_get_adelay(&bl);
-					// A fixed delay is added here which is equal to the minimum attack motion you can get
-					// This ensures that at max ASPD attackabletime and canact_tick are equal
-					act_delay = status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
-					break;
-			}
-			break;
-		case BL_MOB:
-			switch (event) {
-				case DELAY_EVENT_ATTACK:
-				case DELAY_EVENT_CASTEND:
-				case DELAY_EVENT_CASTCANCEL:
-					// This represents setting of attack delay (recharge time) that happens for non-PCs
-					attack_delay = status_get_adelay(&bl);
-					break;
-				case DELAY_EVENT_CASTBEGIN_ID:
-				case DELAY_EVENT_CASTBEGIN_POS:
-					// When monsters use skills, they only get delays on cast end and cast cancel
-					break;
-			}
-			// Set monster-specific delays (inactive AI time, monster skill delays)
-			mob_set_delay(reinterpret_cast<mob_data&>(bl), tick, event);
-			break;
-		case BL_HOM:
-			switch (event) {
-				case DELAY_EVENT_ATTACK:
-					// This represents setting of attack delay (recharge time) that happens for non-PCs
-					attack_delay = status_get_adelay(&bl);
-					break;
-				case DELAY_EVENT_CASTBEGIN_ID:
-				case DELAY_EVENT_CASTBEGIN_POS:
-					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
-					// However to prevent tricks to use skills faster, we have a config to use amotion instead
-					if (battle_config.amotion_min_skill_delay == 1)
-						act_delay = status_get_amotion(&bl) + MAX_ASPD_NOPC;
-					else
-						act_delay = MIN_DELAY_SLAVE;
-					break;
-			}
-			break;
-		case BL_MER:
-			switch (event) {
-				case DELAY_EVENT_ATTACK:
-					// This represents setting of attack delay (recharge time) that happens for non-PCs
-					attack_delay = status_get_adelay(&bl);
-					break;
-				case DELAY_EVENT_CASTBEGIN_ID:
-					// For non-PCs that can be controlled from the client, there is a security delay of 200ms
-					// However to prevent tricks to use skills faster, we have a config to use amotion instead
-					if (battle_config.amotion_min_skill_delay == 1)
-						act_delay = status_get_amotion(&bl) + MAX_ASPD_NOPC;
-					else
-						act_delay = MIN_DELAY_SLAVE;
-					break;
-				case DELAY_EVENT_CASTBEGIN_POS:
-					// For ground skills, mercenaries work similar to players
-					attack_delay = status_get_adelay(&bl);
-					act_delay = status_get_amotion(&bl) + MAX_ASPD_NOPC;
-					break;
-			}
-			break;
-		default:
-			// Fallback to original behavior as unit type is not fully integrated yet
-			switch (event) {
-				case DELAY_EVENT_ATTACK:
-					attack_delay = status_get_adelay(&bl);
-					break;
-				case DELAY_EVENT_CASTBEGIN_ID:
-				case DELAY_EVENT_CASTBEGIN_POS:
-					act_delay = status_get_amotion(&bl);
-					break;
-			}
-			break;
-	}
-
-	// When setting delays, we need to make sure not to decrease them in case they've been set by another source already
-	if (attack_delay > 0)
-		ud->attackabletime = i64max(tick + attack_delay, ud->attackabletime);
-	if (act_delay > 0)
-		ud->canact_tick = i64max(tick + act_delay, ud->canact_tick);
-}
-
-/**
- * Gets the status data of the given bl
- * @param bl: Object whose status to get [PC|MOB|PET|HOM|MER|ELEM|NPC]
- * @return status or "dummy_status" if any other bl->type than noted above
- */
-status_data* status_get_status_data(block_list& bl){
-	switch (bl.type) {
-		case BL_PC:
-			return &reinterpret_cast<map_session_data*>( &bl )->battle_status;
-		case BL_MOB:
-			return &reinterpret_cast<mob_data*>( &bl )->status;
-		case BL_PET:
-			return &reinterpret_cast<pet_data*>( &bl )->status;
-		case BL_HOM:
-			return &reinterpret_cast<homun_data*>( &bl )->battle_status;
-		case BL_MER:
-			return &reinterpret_cast<s_mercenary_data*>( &bl )->battle_status;
-		case BL_ELEM:
-			return &reinterpret_cast<s_elemental_data*>( &bl )->battle_status;
-		case BL_NPC: {
-				npc_data* nd = reinterpret_cast<npc_data*>( &bl );
-
-				if( mobdb_checkid( nd->class_ ) == 0 ){
-					return &nd->status;
-				}else{
-					return &dummy_status;
-				}
-			}
-		default:
-			return &dummy_status;
-	}
-}
-
-=cut
 package AI::Attack;
 
 use constant {
@@ -523,36 +299,18 @@ sub finishAttacking {
 sub get_attack_preferred_min_distance {
 	my ($args) = @_;
 
-	return 0 unless $args;
-	return 0 unless $args->{attackMethod};
-	return 0 unless defined $args->{attackMethod}{maxDistance};
+	return 1 unless $args;
+	return 1 unless $args->{attackMethod};
+	return 1 unless defined $args->{attackMethod}{maxDistance};
 
 	my $preferred = $config{attackPreferredMinDistance};
-	return 0 unless defined $preferred;
-	return 0 if $preferred <= 0;
+	return 1 unless defined $preferred;
+	return 1 if $preferred <= 0;
 
 	my $max = $args->{attackMethod}{maxDistance};
 	$preferred = $max if $preferred > $max;
-	$preferred = 0 if $preferred < 0;
 
 	return $preferred;
-}
-
-sub get_effective_attack_min_distance {
-	my ($args) = @_;
-
-	my $ctx = get_meeting_position_ctx($args);
-	if ($ctx && defined $ctx->{effective_min_dist}) {
-		return $ctx->{effective_min_dist};
-	}
-
-	my $preferred = get_attack_preferred_min_distance($args);
-	return 1 unless $preferred > 0;
-
-	my $effective = $preferred - 1; # built-in 1-cell hysteresis
-	$effective = 1 if $effective < 1;
-
-	return $effective;
 }
 
 sub should_reposition_for_preferred_opening {
@@ -563,7 +321,7 @@ sub should_reposition_for_preferred_opening {
 	return 0 if $ctx && $ctx->{runFromTarget};
 	return 0 if $being_chased; # preferred opening range only for non-chasing mobs
 
-	my $effective_min_dist = get_effective_attack_min_distance($args);
+	my $effective_min_dist = get_attack_preferred_min_distance($args);
 	return 0 unless $effective_min_dist > 1;
 
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
@@ -582,43 +340,6 @@ sub should_disable_run_from_target {
 
 	# Lower walk_speed values mean faster movement.
 	return ($ctx->{targetSpeed} < $ctx->{mySpeed}) ? 1 : 0;
-}
-
-# Picks the cheapest already-known spot for kiting comparisons without recomputing meetingPosition.
-sub get_kiting_reference_spot {
-	my ($args) = @_;
-
-	return unless $args;
-	return $args->{meetingPositionBestSpot} if defined $args->{meetingPositionBestSpot};
-
-	my $ctx = get_meeting_position_ctx($args);
-	return unless $ctx;
-
-	if ($args->{approachTargetPos}) {
-		my $spot = {
-			x => $args->{approachTargetPos}{x},
-			y => $args->{approachTargetPos}{y},
-		};
-		if ($ctx->{actor_pf} && defined $ctx->{mySpeed}) {
-			my $cost = $ctx->{actor_pf}->floodfill_getdist($spot->{x}, $spot->{y});
-			if (defined $cost && $cost >= 0) {
-				$spot->{cost_actor_to_spot} = $cost;
-				$spot->{time_actor_to_get_to_spot} = calcTimeFromFloodCost($cost, $ctx->{mySpeed});
-				return $spot;
-			}
-		}
-	}
-
-	if ($ctx->{realMyPos}) {
-		return {
-			x => $ctx->{realMyPos}{x},
-			y => $ctx->{realMyPos}{y},
-			cost_actor_to_spot => 0,
-			time_actor_to_get_to_spot => 0,
-		};
-	}
-
-	return;
 }
 
 sub should_try_run_from_target {
@@ -640,14 +361,48 @@ sub should_try_run_from_target {
 		debug "[should_try_run_from_target] runFromTarget disabled for this cycle because the target is already chasing, is closer than the preferred distance, and is faster than us.\n", "ai_attack";
 		return 0;
 	}
+	
+	my $safety_buffer = defined $config{runFromTargetSafety} ? $config{runFromTargetSafety} : 0;
+	my $attack_buffer = 0.1;
 
-	my $reference_spot = get_kiting_reference_spot($args);
-	my $should_kite = should_kite_to_prevent_hit_before_kill($args, $actor, $target, $type, $reference_spot);
-	debug "[should_try_run_from_target] should_kite is $should_kite\n", "ai_attack";
+	my $spot;
+	my $t_enemy_hit;
+	my $t_our_hit;
+	if ($args->{approachTargetSpot}) {
+		$spot = $args->{approachTargetSpot};
+		$t_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 1, $spot);
+		$t_our_hit   = get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, 1, $spot);
+	} else {
+		$spot = $args->{meetingPositionCtx}{realMyPos};
+		$t_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 2, $spot);
+		$t_our_hit   = get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, 2, $spot);
+	}
 
-	return 1 if ($should_kite);
+	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
+	
+	debug "[should_try_run_from_target] [safety_buffer] $safety_buffer\n", "ai_attack";
+	debug "[should_try_run_from_target] [t_our_hit] $t_our_hit\n", "ai_attack";
+	debug "[should_try_run_from_target] [t_enemy_hit] $t_enemy_hit\n", "ai_attack";
+	debug "[should_try_run_from_target] [remaining_alive_time] $remaining_alive_time\n", "ai_attack";
 
-	return 1 if ($args->{attackMethod}{type} eq "running");
+	#return 1 if ($args->{attackMethod}{type} eq "running");
+	return 0 unless defined $t_enemy_hit && defined $t_our_hit;
+
+	if (defined $remaining_alive_time) {
+		if ($t_enemy_hit > ($remaining_alive_time + $safety_buffer)) {
+			debug "[should_try_run_from_target] remaining_alive_time [$remaining_alive_time] less than t_enemy_hit [$t_enemy_hit + $safety_buffer] early return\n", "ai_attack";
+			return 0;
+		} else {
+			return 1;
+		}
+	}
+
+	my $will_kill = will_our_next_attack_kill_target($target);
+	debug "[should_try_run_from_target] [will_kill] $will_kill\n", "ai_attack";
+
+	return 1 if $t_enemy_hit < $t_our_hit;
+	return 0 if $will_kill && ($t_our_hit + $attack_buffer) <= $t_enemy_hit;
+	return 1 if !$will_kill && $t_enemy_hit <= ($t_our_hit + $safety_buffer);
 
 	return 0;
 }
@@ -719,12 +474,10 @@ sub store_approach_context {
 
 	$args->{sentApproach} = 1;
 
-	$args->{approachTargetPos} = {
-		x => $pos->{x},
-		y => $pos->{y},
-	};
+	$args->{approachTargetSpot} = $pos;
 
 	my $ctx = get_meeting_position_ctx($args);
+
 	$args->{approachBeingChased} = $ctx ? ($ctx->{being_chased} ? 1 : 0) : 0;
 
 	$args->{monsterLastMoveTime} = $target->{time_move};
@@ -744,7 +497,7 @@ sub clear_approach_context {
 	return unless $args;
 
 	$args->{sentApproach} = 0;
-	delete $args->{approachTargetPos};
+	delete $args->{approachTargetSpot};
 	delete $args->{approachBeingChased};
 	delete $args->{monsterLastMoveTime};
 	delete $args->{monsterLastMovePosTo};
@@ -847,19 +600,16 @@ sub target_has_temporary_chase_blocker {
 
 	return 0 unless $target;
 
-	return 1 if exists $target->{casting} && defined $target->{casting} && $target->{casting};
-	return 1 if $target->statusActive('EFST_STONECURSE, EFST_FREEZE, EFST_STUN, EFST_SLEEP, EFST_DEEPSLEEP, EFST_WHITEIMPRISON, EFST_BLADESTOP, EFST_BITE, EFST_ANKLESNARE, EFST_SPIDERWEB, EFST_ELECTRICSHOCKER, EFST_WUGBITE, EFST_CRYSTALIZE');
+	if (exists $target->{casting} && defined $target->{casting} && $target->{casting}) {
+		debug TF("[target_has_temporary_chase_blocker] is casting.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+		return 1;
+	}
+	if ($target->statusActive('EFST_STONECURSE, EFST_FREEZE, EFST_STUN, EFST_SLEEP, EFST_DEEPSLEEP, EFST_WHITEIMPRISON, EFST_BLADESTOP, EFST_BITE, EFST_ANKLESNARE, EFST_SPIDERWEB, EFST_ELECTRICSHOCKER, EFST_WUGBITE, EFST_CRYSTALIZE')) {
+		debug TF("[target_has_temporary_chase_blocker] has status.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+		return 1;
+	}
 
 	# TODO: add hunter trap and shadow chaser painted hole here
-
-	if (defined $target->{last_movement_interrupted_time}) {
-		my $elapsed = time - $target->{last_movement_interrupted_time};
-		if ($target->{time_move} > $target->{last_movement_interrupted_time}) {
-			delete $target->{last_movement_interrupted_time};
-			return 0;
-		}
-		return 1 if $elapsed >= 0 && $elapsed <= 0.1;
-	}
 
 	return 0;
 }
@@ -869,8 +619,11 @@ sub isTargetProbablyChasingMe {
 	my ($actor, $actor_pos, $target, $target_pos) = @_;
 
 	return 0 unless $target && $target->{ID};
-	return 0 if target_has_temporary_chase_blocker($target);
-	my $target_is_aggressive = is_aggressive($target, undef, 0, 0);
+
+	if (target_has_temporary_chase_blocker($target)) {
+		debug TF("[isTargetProbablyChasingMe] target_has_temporary_chase_blocker == 1.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+		return 0;
+	}
 
 	# Already engaged with us in some way.
 	return 1 if (
@@ -880,15 +633,10 @@ sub isTargetProbablyChasingMe {
 		|| ($target->{dmgFromYou} || 0) > 0
 	);
 
+	my $target_is_aggressive = is_aggressive($target, undef, 0, 0);
+
 	# If the monster is aggressive, clean, and close enough, assume it will try to come.
 	return 1 if ($target_is_aggressive && blockDistance($actor_pos, $target_pos) <= 11);
-
-	# Optional extra hint: if its current move endpoint is getting closer to us, that is also suspicious.
-	if ($target_is_aggressive && $target->{pos} && $target->{pos_to}) {
-		my $dist_from = adjustedBlockDistance($actor_pos, $target->{pos});
-		my $dist_to   = adjustedBlockDistance($actor_pos, $target->{pos_to});
-		return 1 if $dist_to < $dist_from;
-	}
 
 	return 0;
 }
@@ -1102,6 +850,7 @@ sub get_target_attack_range {
 
 	my $mob = get_monster_table_data($target);
 	if ($mob) {
+		# This is here if we want to add skillrange later on
 		for my $key (qw(AttackRange)) {
 			if (defined $mob->{$key} && $mob->{$key} > 0) {
 				return $mob->{$key};
@@ -1175,6 +924,46 @@ sub build_target_attack_cache_bbox {
 		max_x => $max_x,
 		min_y => $min_y,
 		max_y => $max_y,
+	};
+}
+
+# Precomputes the best attack cell and travel time the target would need for each candidate tile.
+sub build_target_attack_cell_cache_for_bbox {
+	my ($ctx, $bbox) = @_;
+
+	return unless $ctx;
+	return unless $bbox;
+	return unless $ctx->{target_pf};
+
+	my $range = $ctx->{target_attack_range} || 1;
+	my $attack_offsets = get_attack_offsets_for_range($range);
+	my %map;
+
+	for my $x ($bbox->{min_x} .. $bbox->{max_x}) {
+		for my $y ($bbox->{min_y} .. $bbox->{max_y}) {
+			next unless $field->isWalkable($x, $y);
+			my $best = get_best_attack_cell_by_pf(
+				$ctx->{target_pf},
+				{ x => $x, y => $y },
+				$range,
+				$ctx->{target_max_cost},
+				$attack_offsets,
+			);
+			next unless $best;
+			$map{$x}{$y} = {
+				can_attack  => 1,
+				attack_cell => $best->{attack_cell},
+				cost        => $best->{cost},
+				time        => calcTimeFromFloodCost($best->{cost}, $ctx->{targetSpeed}),
+			};
+		}
+	}
+
+	return {
+		range          => $range,
+		bbox           => $bbox,
+		attack_offsets => $attack_offsets,
+		map            => \%map,
 	};
 }
 
@@ -1304,46 +1093,6 @@ sub route_crosses_prohibited_cells {
 	return 0;
 }
 
-# Precomputes the best attack cell and travel time the target would need for each candidate tile.
-sub build_target_attack_cell_cache_for_bbox {
-	my ($ctx, $bbox) = @_;
-
-	return unless $ctx;
-	return unless $bbox;
-	return unless $ctx->{target_pf};
-
-	my $range = $ctx->{target_attack_range} || 1;
-	my $attack_offsets = get_attack_offsets_for_range($range);
-	my %map;
-
-	for my $x ($bbox->{min_x} .. $bbox->{max_x}) {
-		for my $y ($bbox->{min_y} .. $bbox->{max_y}) {
-			next unless $field->isWalkable($x, $y);
-			my $best = get_best_attack_cell_by_pf(
-				$ctx->{target_pf},
-				{ x => $x, y => $y },
-				$range,
-				$ctx->{target_max_cost},
-				$attack_offsets,
-			);
-			next unless $best;
-			$map{$x}{$y} = {
-				can_attack  => 1,
-				attack_cell => $best->{attack_cell},
-				cost        => $best->{cost},
-				time        => calcTimeFromFloodCost($best->{cost}, $ctx->{targetSpeed}),
-			};
-		}
-	}
-
-	return {
-		range          => $range,
-		bbox           => $bbox,
-		attack_offsets => $attack_offsets,
-		map            => \%map,
-	};
-}
-
 # Scores whether the full route to a spot stays safe enough for an immediate attack or only for staging.
 sub evaluate_route_safety_for_spot {
 	my ($args, $actor, $target, $spot) = @_;
@@ -1444,7 +1193,7 @@ sub score_staging_spot {
 	my ($args, $spot) = @_;
 
 	my $ctx = get_meeting_position_ctx($args);
-	return 9999 unless $ctx && $spot;
+	return -9999 unless $ctx && $spot;
 
 	my $safe_bonus = 0;
 	if ($spot->{route_eval} && defined $spot->{route_eval}{min_slack}) {
@@ -1465,359 +1214,13 @@ sub score_staging_spot {
 	}
 
 	my $score =
-		  $spot->{time_actor_to_get_to_spot}
-		+ ($spot->{route_eval}{staging_route_penalty} || 0)
-		+ $dist_penalty
-		- $safe_bonus
-		- $progress_bonus;
+		  $safe_bonus
+		+ $progress_bonus
+		- $spot->{time_actor_to_get_to_spot}
+		- ($spot->{route_eval}{staging_route_penalty} || 0)
+		- $dist_penalty;
 
 	return $score;
-}
-
-sub get_my_amotion {
-	my ($actor) = @_;
-
-	return $actor->{lastAttackAttackMotion} if defined $actor->{lastAttackAttackMotion};
-
-	# fallback formula seconds
-	my $sec = (25/(200-$actor->{'attack_speed'}));
-
-	return $sec;
-}
-
-##
-# meetingPosition(actor, target_actor, attackMaxDistance)
-# actor: current object.
-# target_actor: actor to meet.
-# attackMaxDistance: attack distance based on attack method.
-#
-# Returns: the position where the character should go to meet a moving monster.
-# Prefers safe attack spots first, then falls back to safe staging spots when no attack route is acceptable.
-sub meetingPosition {
-	my ($args, $actor, $target, $attackMaxDistance, $oldSpot) = @_;
-
-	if ($attackMaxDistance < 1) {
-		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
-		return;
-	}
-
-	my $lookahead_count = 4;
-	my $weight_chase = 2;
-	my $weight_safer_start_distance = 3;
-	my $weight_safe_window = 5;
-	my $compare = 0;
-	my $defensive_only = $args->{target_state}{pending_death_2} ? 1 : 0;
-
-	debug TF("[meetingPosition] start.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-	debug TF("[meetingPosition] attackMaxDistance $attackMaxDistance.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-	if (defined $oldSpot && defined $oldSpot->{x} && defined $oldSpot->{y}) {
-		$compare = 1;
-		debug TF("[meetingPosition] oldSpot $oldSpot->{x} $oldSpot->{y}.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-	} else {
-		debug TF("[meetingPosition] No given oldSpot.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-	}
-
-	my $ctx = $args->{meetingPositionCtx};
-	my $run_safety_extra = $ctx->{run_safety_extra};
-	my $readjust_tolerance = $ctx->{readjust_tolerance};
-	my $mySpeed = $ctx->{mySpeed};
-	my $runFromTarget = $ctx->{runFromTarget};
-	my $followDistanceMax = $ctx->{followDistanceMax};
-	my $attackCanSnipe = $ctx->{attackCanSnipe};
-	my $realMyPos = $ctx->{realMyPos};
-	my $targetSpeed = $ctx->{targetSpeed};
-	my $target_snapshot = $ctx->{target_snapshot};
-	my $realTargetPos = $ctx->{realTargetPos};
-	my $master_snapshot = $ctx->{master_snapshot};
-	my $realMasterPos = $ctx->{realMasterPos};
-	my $effective_min_dist = $ctx->{effective_min_dist};
-	my $desired_dist = $ctx->{desired_dist};
-	my $max_path_dist = $ctx->{max_path_dist};
-	my $actor_max_cost = $ctx->{actor_max_cost};
-	my $actor_pf = $ctx->{actor_pf};
-	my $target_max_cost = $ctx->{target_max_cost};
-	my $target_pf = $ctx->{target_pf};
-	my $being_chased = $ctx->{being_chased};
-	my $masterPos = $ctx->{masterPos};
-	my $master = $ctx->{master};
-	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
-
-	my %allspots;
-	my @blocks = calcRectArea2($realMyPos->{x}, $realMyPos->{y}, $max_path_dist, 0);
-	foreach my $spot (@blocks) {
-		$allspots{$spot->{x}}{$spot->{y}} = 1;
-	}
-
-	my %prohibitedSpots;
-	my %portalRouteProhibitedSpots;
-	foreach my $prohibited_actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
-		next unless ($prohibited_actor->{pos_to});
-		next unless (defined $prohibited_actor->{ID});
-		next if ($target && defined $target->{ID} && $prohibited_actor->{ID} eq $target->{ID});
-		next if ($actor  && defined $actor->{ID}  && $prohibited_actor->{ID} eq $actor->{ID});
-		next if ($masterPos && $master && defined $master->{ID} && $prohibited_actor->{ID} eq $master->{ID});
-		$prohibitedSpots{$prohibited_actor->{pos_to}{x}}{$prohibited_actor->{pos_to}{y}} = 1;
-	}
-
-	for my $portal (@$portalsList) {
-		next unless ($portal->{pos});
-		$portalRouteProhibitedSpots{$portal->{pos}{x}}{$portal->{pos}{y}} = 1;
-		my @portal_near_blocks = calcRectArea2($portal->{pos}{x}, $portal->{pos}{y}, $config{'attackMinPortalDistance'}, 0);
-		foreach my $near_block (@portal_near_blocks) {
-			$prohibitedSpots{$near_block->{x}}{$near_block->{y}} = 1;
-		}
-	}
-	$ctx->{portal_route_prohibited_spots} = \%portalRouteProhibitedSpots;
-
-	my ($best_attack_score, $best_attack_time, $best_attack_spot, $best_attack_targetPosNow, $best_attack_dist_to_target);
-	my ($best_staging_score, $best_staging_time, $best_staging_spot, $best_staging_targetPosNow, $best_staging_dist_to_target);
-	my $old_spot_valid = 0;
-	my $EPS = 0.15;
-
-	foreach my $x_spot (sort { $a <=> $b } keys %allspots) {
-		foreach my $y_spot (sort { $a <=> $b } keys %{$allspots{$x_spot}}) {
-			my $spot = { x => $x_spot, y => $y_spot };
-			next if ($prohibitedSpots{$spot->{x}}{$spot->{y}});
-			next unless ($field->isWalkable($spot->{x}, $spot->{y}));
-
-			$spot->{cost_actor_to_spot} = $actor_pf->floodfill_getdist($spot->{x}, $spot->{y});
-			next if ($spot->{cost_actor_to_spot} < 0);
-			next if ($spot->{cost_actor_to_spot} > $actor_max_cost);
-			next unless $field->canMove($realMyPos, $spot);
-			$spot->{time_actor_to_get_to_spot} = calcTimeFromFloodCost($spot->{cost_actor_to_spot}, $mySpeed);
-
-			my $cell = get_cached_target_attack_info_for_spot($ctx, $spot);
-			unless ($cell) {
-				$cell = get_best_attack_cell_by_pf(
-					$target_pf,
-					$spot,
-					$ctx->{target_attack_range},
-					$target_max_cost,
-					get_attack_offsets_for_range($ctx->{target_attack_range}),
-				);
-			}
-			next unless $cell;
-
-			$spot->{attack_cell} = $cell->{attack_cell};
-			$spot->{attack_cell_cost} = $cell->{cost};
-			$spot->{time_target_to_reach_attack_cell} = defined $cell->{time}
-				? $cell->{time}
-				: calcTimeFromFloodCost($spot->{attack_cell_cost}, $targetSpeed);
-			$spot->{target_chase_ctx} = build_chasing_target_snapshot_to_attack_cell(
-				$target,
-				$realTargetPos,
-				$targetSpeed,
-				$spot->{attack_cell},
-			);
-
-			my $targetPosNow;
-			if ($being_chased) {
-				$targetPosNow = $spot->{target_chase_ctx}
-					? predict_position_after_delta($spot->{target_chase_ctx}{snapshot}, $spot->{time_actor_to_get_to_spot})
-					: $realTargetPos;
-			} else {
-				$targetPosNow = $target_snapshot->{moving}
-					? predict_position_after_delta($target_snapshot, $spot->{time_actor_to_get_to_spot})
-					: $realTargetPos;
-			}
-
-			next unless ($spot->{x} != $targetPosNow->{x} || $spot->{y} != $targetPosNow->{y});
-
-			if ($master_snapshot) {
-				my $masterPosNow = $master_snapshot->{moving}
-					? predict_position_after_delta($master_snapshot, $spot->{time_actor_to_get_to_spot})
-					: $realMasterPos;
-				next unless ($spot->{x} != $masterPosNow->{x} || $spot->{y} != $masterPosNow->{y});
-				next unless blockDistance($spot, $masterPosNow) <= $followDistanceMax;
-				next unless blockDistance($targetPosNow, $masterPosNow) <= $followDistanceMax;
-			}
-
-			my $snapshot;
-			if ($being_chased && $spot->{target_chase_ctx}) {
-				$snapshot = $spot->{target_chase_ctx}{snapshot};
-			} elsif ($target_snapshot->{moving}) {
-				$snapshot = $target_snapshot;
-			}
-
-			my $found_valid_attack_timeframe = 0;
-			my $can_attack_from_spot = 0;
-			my $wait_penalty = 0;
-			my $instability_penalty = 0;
-			my $too_close_too_soon_penalty = 0;
-
-			if ($snapshot) {
-				foreach my $offset (0..$lookahead_count) {
-					my $off_time = $offset/10;
-					$spot->{targetPos_lookahead}[$offset] = predict_position_after_delta(
-						$snapshot,
-						$spot->{time_actor_to_get_to_spot} + $off_time
-					);
-					if (canAttack($field, $spot, $spot->{targetPos_lookahead}[$offset], $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1) {
-						$found_valid_attack_timeframe++;
-					} else {
-						if (!$found_valid_attack_timeframe) {
-							$wait_penalty += $off_time;
-						} else {
-							$instability_penalty += $off_time;
-						}
-					}
-					my $adjustedBlockDistance = adjustedBlockDistance($spot, $spot->{targetPos_lookahead}[$offset]);
-					if ($adjustedBlockDistance < $effective_min_dist) {
-						$too_close_too_soon_penalty += (($lookahead_count - $offset)/10);
-					}
-				}
-				$can_attack_from_spot = $found_valid_attack_timeframe ? 1 : 0;
-			} else {
-				$can_attack_from_spot = (canAttack($field, $spot, $targetPosNow, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1) ? 1 : 0;
-			}
-
-			$spot->{blockDist_to_target} = blockDistance($spot, $targetPosNow);
-			$spot->{adjustedBlockDistance_to_target} = adjustedBlockDistance($spot, $targetPosNow);
-			$spot->{getClientDist_to_target} = getClientDist($spot, $targetPosNow);
-			$spot->{can_attack_from_here} = $can_attack_from_spot;
-
-			next if !$can_attack_from_spot
-				&& defined $ctx->{realMonsterDist}
-				&& abs($spot->{blockDist_to_target} - $desired_dist) > abs($ctx->{realMonsterDist} - $desired_dist)
-				&& !$runFromTarget;
-
-			my $runfromtarget_penalty = 0;
-				if ($runFromTarget && defined $remaining_alive_time) {
-					if ($remaining_alive_time > $spot->{time_target_to_reach_attack_cell}) {
-						next;
-					} else {
-						$runfromtarget_penalty -= 10;
-					}
-			} elsif ($runFromTarget) {
-				my $time_until_our_next_damage_hits = get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, 0, $spot);
-				if (!$being_chased) {
-					$runfromtarget_penalty -= $spot->{time_target_to_reach_attack_cell} * $weight_safer_start_distance;
-				} else {
-					my $time_until_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 0, $spot);
-					my $safe_window = $time_until_enemy_hit - $time_until_our_next_damage_hits;
-					if ($safe_window < $run_safety_extra) {
-						$runfromtarget_penalty += ($run_safety_extra - $safe_window) * 8;
-					} else {
-						$runfromtarget_penalty -= $safe_window * $weight_safe_window;
-					}
-				}
-			}
-
-			my $chase_bonus = 0;
-			if ($being_chased && !$runFromTarget && $attackMaxDistance <= 1 && defined $spot->{time_target_to_reach_attack_cell}) {
-				my $diff = abs($spot->{time_target_to_reach_attack_cell} - $spot->{time_actor_to_get_to_spot});
-				$chase_bonus += ($diff * $weight_chase);
-			}
-
-			my $old_spot_bonus = 0;
-			if ($compare && $spot->{x} == $oldSpot->{x} && $spot->{y} == $oldSpot->{y}) {
-				$old_spot_valid = 1;
-				$old_spot_bonus = $readjust_tolerance;
-			}
-
-			my $drag_bonus = 0;
-			if (((!$ctx->{actor_snapshot}{moving} && $spot->{x} == $ctx->{actor_snapshot}{real_pos}{x} && $spot->{y} == $ctx->{actor_snapshot}{real_pos}{y})
-				|| ($ctx->{actor_snapshot}{moving} && $spot->{x} == $ctx->{actor_snapshot}{final_pos}{x} && $spot->{y} == $ctx->{actor_snapshot}{final_pos}{y})
-				|| ($actor->{pos_to} && $spot->{x} == $actor->{pos_to}{x} && $spot->{y} == $actor->{pos_to}{y}))) {
-				$drag_bonus = 0.75;
-			}
-
-			$spot->{route_eval} = evaluate_route_safety_for_spot($args, $actor, $target, $spot);
-			next unless $spot->{route_eval}{has_route};
-			my $route_penalty = $spot->{route_eval}{route_penalty} || 0;
-
-			$spot->{spot_score} = $spot->{time_actor_to_get_to_spot}
-				+ $too_close_too_soon_penalty
-				+ $instability_penalty
-				+ $wait_penalty
-				+ $route_penalty
-				+ $runfromtarget_penalty
-				- $old_spot_bonus
-				- $drag_bonus
-				- $chase_bonus;
-
-			my $can_use_as_attack  = $spot->{route_eval}{is_attack_route_safe};
-			my $can_use_as_staging = $spot->{route_eval}{is_staging_route_safe};
-
-			if (!$defensive_only && $can_attack_from_spot && $can_use_as_attack) {
-				my $should_replace = 0;
-				if (!defined $best_attack_score || $spot->{spot_score} < $best_attack_score - $EPS) {
-					$should_replace = 1;
-				} elsif (defined $best_attack_score && abs($spot->{spot_score} - $best_attack_score) <= $EPS) {
-					if (!defined $best_attack_time || $spot->{time_actor_to_get_to_spot} < $best_attack_time) {
-						$should_replace = 1;
-					} elsif (defined $best_attack_dist_to_target) {
-						my $best_dist_error = abs($best_attack_dist_to_target - $desired_dist);
-						my $this_dist_error = abs($spot->{blockDist_to_target} - $desired_dist);
-						$should_replace = 1 if $this_dist_error < $best_dist_error;
-					}
-				}
-				if ($should_replace) {
-					$spot->{route_choice_mode} = 'attack';
-					$best_attack_score = $spot->{spot_score};
-					$best_attack_time  = $spot->{time_actor_to_get_to_spot};
-					$best_attack_spot  = $spot;
-					$best_attack_targetPosNow = $targetPosNow;
-					$best_attack_dist_to_target = $spot->{blockDist_to_target};
-				}
-			}
-
-			if ($can_use_as_staging) {
-				$spot->{staging_score} = score_staging_spot($args, $spot);
-				my $should_replace_staging = 0;
-				if (!defined $best_staging_score || $spot->{staging_score} < $best_staging_score - $EPS) {
-					$should_replace_staging = 1;
-				} elsif (defined $best_staging_score && abs($spot->{staging_score} - $best_staging_score) <= $EPS) {
-					if (!defined $best_staging_time || $spot->{time_actor_to_get_to_spot} < $best_staging_time) {
-						$should_replace_staging = 1;
-					}
-				}
-				if ($should_replace_staging) {
-					$spot->{route_choice_mode} = 'staging';
-					$best_staging_score = $spot->{staging_score};
-					$best_staging_time  = $spot->{time_actor_to_get_to_spot};
-					$best_staging_spot  = $spot;
-					$best_staging_targetPosNow = $targetPosNow;
-					$best_staging_dist_to_target = $spot->{blockDist_to_target};
-				}
-			}
-		}
-	}
-
-	my ($best_spot, $best_targetPosNow, $best_dist_to_target, $best_time, $best_mode, $best_score_log);
-	if ($best_attack_spot) {
-		$best_spot = $best_attack_spot;
-		$best_targetPosNow = $best_attack_targetPosNow;
-		$best_dist_to_target = $best_attack_dist_to_target;
-		$best_time = $best_attack_time;
-		$best_mode = 'attack';
-		$best_score_log = $best_attack_score;
-	} elsif ($best_staging_spot) {
-		$best_spot = $best_staging_spot;
-		$best_targetPosNow = $best_staging_targetPosNow;
-		$best_dist_to_target = $best_staging_dist_to_target;
-		$best_time = $best_staging_time;
-		$best_mode = 'staging';
-		$best_score_log = $best_staging_score;
-	}
-
-	if (!defined $best_spot) {
-		store_meeting_position_choice($args, undef);
-		debug "[mP] [Chase $being_chased] No good ATTACK or STAGING spot.\n";
-		return;
-	}
-
-	if ($compare && $old_spot_valid && $best_spot->{x} == $oldSpot->{x} && $best_spot->{y} == $oldSpot->{y}) {
-		$oldSpot->{route_choice_mode} = $best_spot->{route_choice_mode} || $best_mode;
-		debug "[mP] [Chase $being_chased] Keeping old spot $oldSpot->{x} $oldSpot->{y}, best spot $best_spot->{x} $best_spot->{y}, best score $best_score_log, tolerance $readjust_tolerance.\n";
-		store_meeting_position_choice($args, $oldSpot);
-		return $oldSpot;
-	}
-
-	$best_spot->{route_choice_mode} = $best_mode;
-	debug "[mP] [Chase $being_chased] Best $best_mode spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosNow->{x} $best_targetPosNow->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
-	store_meeting_position_choice($args, $best_spot);
-	return $best_spot;
 }
 
 # Finds the cheapest tile the target can stand on to attack a candidate spot at its own range with LOS.
@@ -1878,6 +1281,17 @@ sub estimate_next_attack_damage {
 	my $safe_damage = $mean_damage * $extra_safety;
 
 	return $safe_damage;
+}
+
+sub get_my_amotion {
+	my ($actor) = @_;
+
+	return $actor->{lastAttackAttackMotion} if defined $actor->{lastAttackAttackMotion};
+
+	# fallback formula seconds
+	my $sec = (25/(200-$actor->{'attack_speed'}));
+
+	return $sec;
 }
 
 sub get_remaning_time_to_act {
@@ -1998,52 +1412,6 @@ sub get_remaining_move_time {
 	return $remaining > 0 ? $remaining : 0;
 }
 
-# types
-# 0 - calculating meetingposition
-# 1 - route to attack
-# 2 - attacking
-sub get_estimate_time_my_next_damage_will_resolve {
-	my ($args, $actor, $target, $type, $spot) = @_;
-
-	my $time_to_act = $args->{meetingPositionCtx}{my_remaning_time_to_act};
-
-	my $total_time = 0;
-	
-	if ($type == 0) {
-		$total_time += $time_to_act + $spot->{time_actor_to_get_to_spot} + $args->{meetingPositionCtx}{attack_resolve_buffer} + $args->{meetingPositionCtx}{my_amotion};
-	
-	} elsif ($type == 1) {
-		my $remaining = 0;
-		if ($actor->{pos_to} && $actor->{pos_to}{x} == $spot->{x} && $actor->{pos_to}{y} == $spot->{y}) {
-			my $elapsed = time - $actor->{time_move};
-			my $left = $actor->{time_move_calc} - $elapsed;
-			$remaining = $left if $left > $remaining;
-		} else {
-			$remaining = $spot->{time_actor_to_get_to_spot};
-		}
-		$total_time += $time_to_act + $remaining + $args->{meetingPositionCtx}{attack_resolve_buffer} + $args->{meetingPositionCtx}{my_amotion};
-	
-	} elsif ($type == 2) {
-		my $remaining = 0;
-		if ($actor->{lastAttackTarget} && $actor->{lastAttackTarget} eq $target->{ID} && $actor->{lastAttackTime}) {
-			if (!$target->{hp_lastUpdateTime} || $target->{hp_lastUpdateTime} < $actor->{lastAttackTime}) {
-				my $now = time;
-				my $predicted = $actor->{lastAttackTime} + $args->{meetingPositionCtx}{my_amotion};
-				if ($predicted > $now) {
-					$remaining = $predicted - $now;
-				}
-			} else {
-				$remaining = get_remaning_time_to_attack($actor) + $args->{meetingPositionCtx}{my_amotion};
-			}
-		} else {
-			$remaining = get_remaning_time_to_attack($actor) + $args->{meetingPositionCtx}{my_amotion};
-		}
-		$total_time += $remaining;
-	}
-
-	return $total_time;
-}
-
 sub set_target_resolution_state {
 	my ($args, $target) = @_;
 
@@ -2133,7 +1501,8 @@ sub will_our_next_attack_kill_target {
 
 # types
 # 0 - calculating meetingposition
-# 1 - other
+# 1 - routing
+# 1 - attacking
 sub estimate_time_next_target_damage_will_trigger {
 	my ($args, $actor, $target, $type, $spot) = @_;
 
@@ -2145,7 +1514,7 @@ sub estimate_time_next_target_damage_will_trigger {
 	if ($type == 0) {
 		$total_time += max($time_to_attack, ($time_to_act + $spot->{time_target_to_reach_attack_cell}));
 	
-	} elsif ($type == 1) {
+	} elsif ($type == 1 || $type == 2) {
 		my $ctx = $args->{meetingPositionCtx};
 		my $cell = get_cached_target_attack_info_for_spot($ctx, $spot);
 		unless ($cell) {
@@ -2169,6 +1538,52 @@ sub estimate_time_next_target_damage_will_trigger {
 	return $total_time;
 }
 
+# types
+# 0 - calculating meetingposition
+# 1 - route to attack
+# 2 - attacking
+sub get_estimate_time_my_next_damage_will_resolve {
+	my ($args, $actor, $target, $type, $spot) = @_;
+
+	my $time_to_act = $args->{meetingPositionCtx}{my_remaning_time_to_act};
+
+	my $total_time = 0;
+	
+	if ($type == 0) {
+		$total_time += $time_to_act + $spot->{time_actor_to_get_to_spot} + $args->{meetingPositionCtx}{attack_resolve_buffer} + $args->{meetingPositionCtx}{my_amotion};
+	
+	} elsif ($type == 1) {
+		my $remaining = 0;
+		if ($actor->{pos_to} && $actor->{pos_to}{x} == $spot->{x} && $actor->{pos_to}{y} == $spot->{y}) {
+			my $elapsed = time - $actor->{time_move};
+			my $left = $actor->{time_move_calc} - $elapsed;
+			$remaining = $left if $left > $remaining;
+		} else {
+			$remaining = $spot->{time_actor_to_get_to_spot};
+		}
+		$total_time += $time_to_act + $remaining + $args->{meetingPositionCtx}{attack_resolve_buffer} + $args->{meetingPositionCtx}{my_amotion};
+	
+	} elsif ($type == 2) {
+		my $remaining = 0;
+		if ($actor->{lastAttackTarget} && $actor->{lastAttackTarget} eq $target->{ID} && $actor->{lastAttackTime}) {
+			if (!$target->{hp_lastUpdateTime} || $target->{hp_lastUpdateTime} < $actor->{lastAttackTime}) {
+				my $now = time;
+				my $predicted = $actor->{lastAttackTime} + $args->{meetingPositionCtx}{my_amotion};
+				if ($predicted > $now) {
+					$remaining = $predicted - $now;
+				}
+			} else {
+				$remaining = get_remaning_time_to_attack($actor) + $args->{meetingPositionCtx}{my_amotion};
+			}
+		} else {
+			$remaining = get_remaning_time_to_attack($actor) + $args->{meetingPositionCtx}{my_amotion};
+		}
+		$total_time += $remaining;
+	}
+
+	return $total_time;
+}
+
 # Raw timer calculation for targets that already have a pending death resolution timestamp.
 sub get_remaining_alive_time {
 	my ($target) = @_;
@@ -2183,49 +1598,6 @@ sub get_remaining_alive_time {
 	}
 
 	return $remaining_alive_time;
-}
-
-sub should_kite_to_prevent_hit_before_kill {
-	my ($args, $actor, $target, $type, $spot) = @_;
-	$spot ||= get_kiting_reference_spot($args);
-	unless ($spot) {
-		debug "[should_kite_to_prevent_hit_before_kill] Returning 0 because no reference spot is available\n", "ai_attack";
-		return 0;
-	}
-
-	my $safety_buffer = defined $config{runFromTargetSafety} ? $config{runFromTargetSafety} : 0;
-
-	return 0 unless $actor && $target && $args;
-
-	my $t_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 1, $spot);
-	
-	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
-
-	if (defined $remaining_alive_time) {
-		if ($t_enemy_hit > ($remaining_alive_time + $safety_buffer)) {
-			debug "[should_kite_to_prevent_hit_before_kill] remaining_alive_time [$remaining_alive_time] less than t_enemy_hit [$t_enemy_hit + $safety_buffer] early return\n", "ai_attack";
-			return 0;
-		} else {
-			return 1;
-		}
-	} else {
-		my $t_our_hit   = get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, $type, $spot);
-
-		debug "[should_kite_to_prevent_hit_before_kill] [meetspot] $spot->{x} $spot->{y}\n", "ai_attack";
-		debug "[should_kite_to_prevent_hit_before_kill] [t_enemy_hit] $t_enemy_hit\n", "ai_attack";
-		debug "[should_kite_to_prevent_hit_before_kill] [t_our_hit] $t_our_hit\n", "ai_attack";
-
-		return 0 unless defined $t_enemy_hit && defined $t_our_hit;
-
-		my $will_kill = will_our_next_attack_kill_target($target);
-		debug "[should_kite_to_prevent_hit_before_kill] [will_kill] $will_kill\n", "ai_attack";
-
-		return 1 if $t_enemy_hit < $t_our_hit;
-		return 0 if $will_kill && $t_our_hit <= $t_enemy_hit;
-		return 1 if !$will_kill && $t_enemy_hit <= ($t_our_hit + $safety_buffer);
-
-		return 0;
-	}
 }
 
 # Caches the target movement state tied to the active approach route so we can detect route drift.
@@ -2389,6 +1761,40 @@ sub resolve_attack_method {
 	return $method;
 }
 
+# Resolves attack methods in priority order: combo, skill, weapon, plugin, then running fallback.
+sub resolve_attack_method_pending_death_2 {
+	my ($args, $target) = @_;
+
+	delete $args->{attackMethod};
+
+	my $method;
+
+	if (!$method && $config{runFromTarget}) {
+		$method = {
+			type => "running",
+			distance => $config{attackMaxDistance},
+			maxDistance => $config{attackMaxDistance},
+		};
+		debug T("[Attack-pending_death_2] Can't determine a attackMethod but runFromTarget is active, so attackMethod is 'running'\n"), "ai_attack";
+	}
+
+	if (!$method) {
+		$method = {
+			type => "none",
+			distance => $config{attackMaxDistance},
+			maxDistance => $config{attackMaxDistance},
+		};
+		debug T("[Attack-pending_death_2] Can't determine a attackMethod so attackMethod is 'none'\n"), "ai_attack";
+	}
+
+	$method->{maxDistance} ||= $config{attackMaxDistance};
+	$method->{distance} ||= $config{attackDistance};
+	$method->{maxDistance} = $method->{distance} if $method->{maxDistance} < $method->{distance};
+
+	$args->{attackMethod} = $method;
+	return $method;
+}
+
 # Prepares the per-cycle target state and hit/miss counters used by the attack loop.
 sub prepare_attack_cycle_state {
 	my ($args, $ID) = @_;
@@ -2481,7 +1887,7 @@ sub prepare_attack_cycle_state {
 }
 
 # Resolves the current attack method unless the target is already dying.
-sub sync_attack_method_for_cycle {
+sub choose_attack_method_for_cycle {
 	my ($args, $ID, $target) = @_;
 
 	resolve_attack_method($args, $target);
@@ -2514,27 +1920,6 @@ sub sync_attack_method_for_cycle {
 	}
 
 	return {should_return => 0};
-}
-
-sub ensure_pending_death_defensive_method {
-	my ($args) = @_;
-
-	return unless $args;
-	return if (
-		$args->{attackMethod}
-		&& defined $args->{attackMethod}{type}
-		&& defined $args->{attackMethod}{maxDistance}
-	);
-
-	my $distance = $config{attackDistance} || 1;
-	my $maxDistance = $config{attackMaxDistance} || $distance;
-	$maxDistance = $distance if $maxDistance < $distance;
-
-	$args->{attackMethod} = {
-		type        => 'weapon',
-		distance    => $distance,
-		maxDistance => $maxDistance,
-	};
 }
 
 # Builds the per-cycle context shared by route, wait, and attack decisions.
@@ -2580,7 +1965,6 @@ sub build_attack_cycle_context {
 
 	if (
 		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
-		$being_chased &&
 		$canAttack == 1 &&
 		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
 		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
@@ -2607,6 +1991,8 @@ sub build_attack_cycle_context {
 # Accepts one loop of "the server let us hit anyway" before forcing a route change.
 sub maybe_accept_server_attack_resolution {
 	my ($args, $target, $state, $youHitTarget) = @_;
+
+	return unless ($args->{attackMethod}{type} eq "weapon");
 
 	return unless !$args->{firstLoop} && $state->{canAttack} == 0 && $youHitTarget;
 
@@ -2698,22 +2084,19 @@ sub get_route_task_destination_pos {
 sub should_revalidate_active_approach_route {
 	my ($args, $target, $ID) = @_;
 
-	return 0 unless $args->{sentApproach};
-	return 'missing_target' unless $target;
+	return 'target_move_time_changed' if defined $args->{monsterLastMoveTime} && $args->{monsterLastMoveTime} != $target->{time_move};
 
 	my $routeIndex = find_attack_route_action_index($ID);
-	return 'missing_route_action' unless defined $routeIndex;
-
-	my $routeArgs = AI::args($routeIndex);
-	my $routeDestPos = get_route_task_destination_pos($routeArgs);
-	return 'route_destination_changed' unless (
-		$routeDestPos
-		&& $args->{approachTargetPos}
-		&& $routeDestPos->{x} == $args->{approachTargetPos}{x}
-		&& $routeDestPos->{y} == $args->{approachTargetPos}{y}
-	);
-
-	return 'target_move_time_changed' if defined $args->{monsterLastMoveTime} && $args->{monsterLastMoveTime} != $target->{time_move};
+	if ($routeIndex) {
+		my $routeArgs = AI::args($routeIndex);
+		my $routeDestPos = get_route_task_destination_pos($routeArgs);
+		return 'route_destination_changed' unless (
+			$routeDestPos
+			&& $args->{approachTargetSpot}
+			&& $routeDestPos->{x} == $args->{approachTargetSpot}{x}
+			&& $routeDestPos->{y} == $args->{approachTargetSpot}{y}
+		);
+	}
 
 	my $ctx = get_meeting_position_ctx($args);
 	if ($ctx && exists $args->{approachBeingChased}) {
@@ -2721,11 +2104,9 @@ sub should_revalidate_active_approach_route {
 		return 'target_chase_state_changed' if $args->{approachBeingChased} != $current_being_chased;
 	}
 
-	if ($args->{monsterLastMovePosTo} || $target->{pos_to}) {
+	if ($args->{monsterLastMovePosTo} && $target->{pos_to}) {
 		return 'target_move_destination_changed' unless (
-			$args->{monsterLastMovePosTo}
-			&& $target->{pos_to}
-			&& $args->{monsterLastMovePosTo}{x} == $target->{pos_to}{x}
+			   $args->{monsterLastMovePosTo}{x} == $target->{pos_to}{x}
 			&& $args->{monsterLastMovePosTo}{y} == $target->{pos_to}{y}
 		);
 	}
@@ -2743,14 +2124,14 @@ sub revalidate_active_approach_route {
 		$char,
 		$target,
 		$args->{attackMethod}{maxDistance},
-		$args->{approachTargetPos},
+		$args->{approachTargetSpot},
 	);
 
 	if (!$chosen_pos) {
 		debug TF(
 			"[%s - Route invalidated] no acceptable replacement found for current route target (%d %d), clearing route.\n",
 			($args->{avoiding} ? "Avoiding" : "Approaching"),
-			$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
+			$args->{approachTargetSpot}{x}, $args->{approachTargetSpot}{y}
 		), 'ai_attack';
 		clear_approach_context($args);
 		$args->{avoiding} = 0;
@@ -2758,33 +2139,14 @@ sub revalidate_active_approach_route {
 	}
 
 	if (
-		$args->{approachTargetPos}
-		&& $chosen_pos->{x} == $args->{approachTargetPos}{x}
-		&& $chosen_pos->{y} == $args->{approachTargetPos}{y}
+		$args->{approachTargetSpot}
+		&& $chosen_pos->{x} == $args->{approachTargetSpot}{x}
+		&& $chosen_pos->{y} == $args->{approachTargetSpot}{y}
 	) {
-		if ($reason && $reason eq 'missing_route_action') {
-			debug TF(
-				"[%s - Recreate missing live route] route target (%d %d) is still valid, recreating route action.\n",
-				($args->{avoiding} ? "Avoiding" : "Approaching"),
-				$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
-			), 'ai_attack';
-			route_to_meeting_position(
-				$args,
-				$ID,
-				$target,
-				$chosen_pos,
-				$state->{realMyPos},
-				$state->{realMonsterPos},
-				($args->{avoiding} ? "runFromTarget recreate" : "meetingPosition recreate"),
-				($chosen_pos->{route_choice_mode} || 'attack')
-			);
-			return {route_defined => 1, should_return => 1};
-		}
-
 		debug TF(
 			"[%s - Keep current route after revalidation] route target (%d %d) is still valid.\n",
 			($args->{avoiding} ? "Avoiding" : "Approaching"),
-			$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
+			$args->{approachTargetSpot}{x}, $args->{approachTargetSpot}{y}
 		), 'ai_attack';
 		store_target_route_progress($args, $target);
 		return {route_defined => 1, should_return => 1};
@@ -2858,7 +2220,7 @@ sub handle_active_approach_route {
 		$char, $realMyPos->{x}, $realMyPos->{y},
 		$target, $realMonsterPos->{x}, $realMonsterPos->{y},
 		$clientDist, $args->{attackMethod}{maxDistance},
-		$args->{approachTargetPos}{x}, $args->{approachTargetPos}{y}
+		$args->{approachTargetSpot}{x}, $args->{approachTargetSpot}{y}
 	), 'ai_attack';
 
 	return { handled => 1, found_action => 1 };
@@ -2953,6 +2315,7 @@ sub build_needed_attack_route {
 	my ($args, $ID, $target, $state, $route_request) = @_;
 
 	debug TF("[attack - main] [%d] call meetingPosition in %s\n", $args->{loop}, $route_request->{debug_context}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+	local $args->{meetingPositionUseRunFromTarget} = $route_request->{set_avoiding} ? 1 : 0;
 	my $pos = meetingPosition(
 		$args,
 		$char,
@@ -3159,7 +2522,7 @@ sub args_loop_handler {
 	}
 }
 
-sub finalize_attack_main_cycle {
+sub end_attack_main {
 	my ($args, $reason, %hook_args) = @_;
 
 	my %payload = (
@@ -3186,46 +2549,47 @@ sub main {
 	my $cycle_state = prepare_attack_cycle_state($args, $ID);
 	my $target = $cycle_state->{target};
 
-	return finalize_attack_main_cycle($args, 'missing_target') unless $target;
+	return end_attack_main($args, 'missing_target') unless $target;
 
 	if ($args->{target_state}{pending_death_1}) {
 		debug TF("[attack - main] [%d] Returning because pending_death_1 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		return finalize_attack_main_cycle($args, 'pending_death_1', target => $target);
+		return end_attack_main($args, 'pending_death_1', target => $target);
 	}
 
 	my $method_state = { should_return => 0 };
-	if (!$args->{target_state}{pending_death_2}) {
-		$method_state = sync_attack_method_for_cycle($args, $ID, $target);
+
+	if ($args->{target_state}{pending_death_2} && $config{attack_stopAttacking_pendingDeathMonsters}) {
+		resolve_attack_method_pending_death_2($args, $target);
 	} else {
-		ensure_pending_death_defensive_method($args);
+		$method_state = choose_attack_method_for_cycle($args, $ID, $target);
+		return end_attack_main($args, 'attack_method_sync_return', target => $target) if $method_state->{should_return};
 	}
 
-	return finalize_attack_main_cycle($args, 'attack_method_sync_return', target => $target) if $method_state->{should_return};
-
 	my $state = build_attack_cycle_context($args, $ID, $target);
-	return finalize_attack_main_cycle($args, 'build_attack_cycle_context_return', target => $target) if $state->{should_return};
+	return end_attack_main($args, 'build_attack_cycle_context_return', target => $target) if $state->{should_return};
 
 	maybe_accept_server_attack_resolution($args, $target, $state, $cycle_state->{youHitTarget});
 
 	my $approach_state = handle_active_approach_route($args, $ID, $target, $state);
 	if ($approach_state->{handled}) {
-		return finalize_attack_main_cycle($args, 'active_route_handled', target => $target, state => $state);
+		return end_attack_main($args, 'active_route_handled', target => $target, state => $state);
 	}
+
 	my $route_request = determine_needed_attack_route($args, $target, $state);
 	if ($route_request->{needs_route}) {
 		my $route_result = build_needed_attack_route($args, $ID, $target, $state, $route_request);
-		return finalize_attack_main_cycle($args, 'route_started', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'route_started';
-		return finalize_attack_main_cycle($args, 'route_failed', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'route_failed';
-		return finalize_attack_main_cycle($args, 'route_stay_put', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'stay_put';
+		return end_attack_main($args, 'route_started', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'route_started';
+		return end_attack_main($args, 'route_failed', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'route_failed';
+		return end_attack_main($args, 'route_stay_put', target => $target, state => $state) if $route_result->{route_outcome} && $route_result->{route_outcome} eq 'stay_put';
 	}
 
 	if ($args->{sentApproach}) {
-		return finalize_attack_main_cycle($args, 'route_still_active', target => $target, state => $state);
+		return end_attack_main($args, 'route_still_active', target => $target, state => $state);
 	}
 
 	if ($args->{target_state}{pending_death_2}) {
 		debug TF("[attack - main] [%d] Returning because pending_death_2 == 1.\n", $args->{loop}), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
-		return finalize_attack_main_cycle($args, 'pending_death_2', target => $target, state => $state);
+		return end_attack_main($args, 'pending_death_2', target => $target, state => $state);
 	}
 
 	if ($state->{can_attack_now}) {
@@ -3234,12 +2598,428 @@ sub main {
 		wait_attack_cycle_without_route($args, $ID, $target, $state);
 	}
 
-	return finalize_attack_main_cycle(
+	return end_attack_main(
 		$args,
 		($state->{can_attack_now} ? 'attack_processed' : 'waiting_without_route'),
 		target => $target,
 		state  => $state,
 	);
+}
+
+##
+# meetingPosition(actor, target_actor, attackMaxDistance)
+# actor: current object.
+# target_actor: actor to meet.
+# attackMaxDistance: attack distance based on attack method.
+#
+# Returns: the position where the character should go to meet a moving monster.
+# Prefers safe attack spots first, then falls back to safe staging spots when no attack route is acceptable.
+sub meetingPosition {
+	my ($args, $actor, $target, $attackMaxDistance, $oldSpot) = @_;
+
+	if ($attackMaxDistance < 1) {
+		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
+		return;
+	}
+
+	my $lookahead_count = 5;
+	my @weight_offset = reverse(1..$lookahead_count);
+
+	my $weight_chase = 2;
+	my $weight_safer_start_distance = 3;
+	my $weight_safe_window = 5;
+	my $compare = 0;
+	my $defensive_only = $args->{target_state}{pending_death_2} ? 1 : 0;
+
+	debug TF("[meetingPosition] start.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+	debug TF("[meetingPosition] attackMaxDistance $attackMaxDistance.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+	if (defined $oldSpot && defined $oldSpot->{x} && defined $oldSpot->{y}) {
+		$compare = 1;
+		debug TF("[meetingPosition] oldSpot $oldSpot->{x} $oldSpot->{y}.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+	} else {
+		debug TF("[meetingPosition] No given oldSpot.\n"), 'ai_attack' if (LOCALDEBUGLEVEL >= 1);
+	}
+
+	my $ctx = $args->{meetingPositionCtx};
+	my $run_safety_extra = $ctx->{run_safety_extra};
+	my $readjust_tolerance = $ctx->{readjust_tolerance};
+	my $mySpeed = $ctx->{mySpeed};
+	my $runFromTarget = $ctx->{runFromTarget};
+	my $runFromTargetActive = (
+		$runFromTarget
+		&& (
+			$args->{avoiding}
+			|| $args->{meetingPositionUseRunFromTarget}
+			|| ($args->{attackMethod} && $args->{attackMethod}{type} && $args->{attackMethod}{type} eq 'running')
+		)
+	) ? 1 : 0;
+	my $followDistanceMax = $ctx->{followDistanceMax};
+	my $attackCanSnipe = $ctx->{attackCanSnipe};
+	my $realMyPos = $ctx->{realMyPos};
+	my $targetSpeed = $ctx->{targetSpeed};
+	my $target_snapshot = $ctx->{target_snapshot};
+	my $realTargetPos = $ctx->{realTargetPos};
+	my $master_snapshot = $ctx->{master_snapshot};
+	my $realMasterPos = $ctx->{realMasterPos};
+	my $effective_min_dist = $ctx->{effective_min_dist};
+	my $desired_dist = $ctx->{desired_dist};
+	my $max_path_dist = $ctx->{max_path_dist};
+	my $actor_max_cost = $ctx->{actor_max_cost};
+	my $actor_pf = $ctx->{actor_pf};
+	my $target_max_cost = $ctx->{target_max_cost};
+	my $target_pf = $ctx->{target_pf};
+	my $being_chased = $ctx->{being_chased};
+	my $masterPos = $ctx->{masterPos};
+	my $master = $ctx->{master};
+	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
+
+	my %allspots;
+	my @blocks = calcRectArea2($realMyPos->{x}, $realMyPos->{y}, $max_path_dist, 0);
+	foreach my $spot (@blocks) {
+		$allspots{$spot->{x}}{$spot->{y}} = 1;
+	}
+
+	my %prohibitedSpots;
+	my %portalRouteProhibitedSpots;
+	foreach my $prohibited_actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
+		next unless ($prohibited_actor->{pos_to});
+		next unless (defined $prohibited_actor->{ID});
+		next if ($target && defined $target->{ID} && $prohibited_actor->{ID} eq $target->{ID});
+		next if ($actor  && defined $actor->{ID}  && $prohibited_actor->{ID} eq $actor->{ID});
+		next if ($masterPos && $master && defined $master->{ID} && $prohibited_actor->{ID} eq $master->{ID});
+		$prohibitedSpots{$prohibited_actor->{pos_to}{x}}{$prohibited_actor->{pos_to}{y}} = 1;
+	}
+
+	for my $portal (@$portalsList) {
+		next unless ($portal->{pos});
+		$portalRouteProhibitedSpots{$portal->{pos}{x}}{$portal->{pos}{y}} = 1;
+		my @portal_near_blocks = calcRectArea2($portal->{pos}{x}, $portal->{pos}{y}, $config{'attackMinPortalDistance'}, 0);
+		foreach my $near_block (@portal_near_blocks) {
+			$prohibitedSpots{$near_block->{x}}{$near_block->{y}} = 1;
+		}
+	}
+	$ctx->{portal_route_prohibited_spots} = \%portalRouteProhibitedSpots;
+
+	my ($best_attack_score, $best_attack_time, $best_attack_spot, $best_attack_targetPosNow, $best_attack_dist_to_target);
+	my ($best_staging_score, $best_staging_time, $best_staging_spot, $best_staging_targetPosNow, $best_staging_dist_to_target);
+	my $EPS = 0.15;
+
+	foreach my $x_spot (sort { $a <=> $b } keys %allspots) {
+		foreach my $y_spot (sort { $a <=> $b } keys %{$allspots{$x_spot}}) {
+			my $spot = { x => $x_spot, y => $y_spot };
+			next if ($prohibitedSpots{$spot->{x}}{$spot->{y}});
+			next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+
+			$spot->{cost_actor_to_spot} = $actor_pf->floodfill_getdist($spot->{x}, $spot->{y});
+			next if ($spot->{cost_actor_to_spot} < 0);
+			next if ($spot->{cost_actor_to_spot} > $actor_max_cost);
+			next unless $field->canMove($realMyPos, $spot);
+			$spot->{time_actor_to_get_to_spot} = calcTimeFromFloodCost($spot->{cost_actor_to_spot}, $mySpeed);
+
+			my $cell = get_cached_target_attack_info_for_spot($ctx, $spot);
+			unless ($cell) {
+				$cell = get_best_attack_cell_by_pf(
+					$target_pf,
+					$spot,
+					$ctx->{target_attack_range},
+					$target_max_cost,
+					get_attack_offsets_for_range($ctx->{target_attack_range}),
+				);
+			}
+			next unless $cell;
+			
+			$spot->{attack_cell} = $cell->{attack_cell};
+			$spot->{attack_cell_cost} = $cell->{cost};
+			$spot->{time_target_to_reach_attack_cell} = defined $cell->{time}
+				? $cell->{time}
+				: calcTimeFromFloodCost($spot->{attack_cell_cost}, $targetSpeed);
+			$spot->{target_chase_ctx} = build_chasing_target_snapshot_to_attack_cell(
+				$target,
+				$realTargetPos,
+				$targetSpeed,
+				$spot->{attack_cell},
+			);
+
+			my $targetPosNow;
+			if ($being_chased) {
+				$targetPosNow = $spot->{target_chase_ctx}
+					? predict_position_after_delta($spot->{target_chase_ctx}{snapshot}, $spot->{time_actor_to_get_to_spot})
+					: $realTargetPos;
+			} else {
+				$targetPosNow = $target_snapshot->{moving}
+					? predict_position_after_delta($target_snapshot, $spot->{time_actor_to_get_to_spot})
+					: $realTargetPos;
+			}
+
+			next unless ($spot->{x} != $targetPosNow->{x} || $spot->{y} != $targetPosNow->{y});
+
+			if ($master_snapshot) {
+				my $masterPosNow = $master_snapshot->{moving}
+					? predict_position_after_delta($master_snapshot, $spot->{time_actor_to_get_to_spot})
+					: $realMasterPos;
+				next unless ($spot->{x} != $masterPosNow->{x} || $spot->{y} != $masterPosNow->{y});
+				next unless blockDistance($spot, $masterPosNow) <= $followDistanceMax;
+				next unless blockDistance($targetPosNow, $masterPosNow) <= $followDistanceMax;
+			}
+
+			my $snapshot;
+			if ($being_chased && $spot->{target_chase_ctx}) {
+				$snapshot = $spot->{target_chase_ctx}{snapshot};
+			} elsif ($target_snapshot->{moving}) {
+				$snapshot = $target_snapshot;
+			}
+
+			my $found_valid_attack_timeframe = 0;
+			my $can_attack_from_spot = 0;
+			my $wait_time_at_spot = 0;
+			my $instability_penalty = 0;
+			my $too_close_too_soon_penalty = 0;
+			my $too_far_too_soon_penalty = 0;
+
+			if ($snapshot) {
+				foreach my $offset (1..$lookahead_count) {
+					my $off_time = $offset/10;
+					$spot->{targetPos_lookahead}[$offset] = predict_position_after_delta(
+						$snapshot,
+						$spot->{time_actor_to_get_to_spot} + $off_time
+					);
+
+					my $weight = $weight_offset[$offset];
+
+
+					if (canAttack($field, $spot, $spot->{targetPos_lookahead}[$offset], $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1) {
+						$found_valid_attack_timeframe++;
+
+					} else {
+						if (!$found_valid_attack_timeframe) {
+							$wait_time_at_spot = $off_time;
+						} else {
+							$instability_penalty += $off_time*$weight;
+						}
+					}
+
+					my $blockDistance = blockDistance($spot, $spot->{targetPos_lookahead}[$offset]);
+					if ($blockDistance <= $effective_min_dist) {
+						$too_close_too_soon_penalty += $off_time*$weight;
+					} elsif ($blockDistance > $attackMaxDistance) {
+						$too_far_too_soon_penalty += $off_time*$weight;
+					}
+				}
+				$too_close_too_soon_penalty *= 2 if ($runFromTargetActive);
+				$too_far_too_soon_penalty *= 2 if (!$being_chased);
+				$can_attack_from_spot = $found_valid_attack_timeframe ? 1 : 0;
+
+			} else {
+				$can_attack_from_spot = (canAttack($field, $spot, $targetPosNow, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1) ? 1 : 0;
+			}
+
+			$spot->{blockDist_to_target} = blockDistance($spot, $targetPosNow);
+			$spot->{adjustedBlockDistance_to_target} = adjustedBlockDistance($spot, $targetPosNow);
+			$spot->{getClientDist_to_target} = getClientDist($spot, $targetPosNow);
+			$spot->{can_attack_from_here} = $can_attack_from_spot;
+			$spot->{wait_penalty} = $wait_time_at_spot * 5;
+			$spot->{instability_penalty} = $instability_penalty;
+			$spot->{too_close_too_soon_penalty} = $too_close_too_soon_penalty;
+			$spot->{too_far_too_soon_penalty} = $too_far_too_soon_penalty;
+
+			my $is_current_spot = (
+				$spot->{x} == $realMyPos->{x}
+				&& $spot->{y} == $realMyPos->{y}
+			) ? 1 : 0;
+
+			my $is_old_spot = 0;
+			if ($spot->{x} == $oldSpot->{x} && $spot->{y} == $oldSpot->{y}) {
+				$is_old_spot = 1;
+			}
+
+			next if !$can_attack_from_spot
+				&& defined $ctx->{realMonsterDist}
+				&& abs($spot->{blockDist_to_target} - $desired_dist) > abs($ctx->{realMonsterDist} - $desired_dist)
+				&& !$runFromTargetActive;
+
+			my $attack_runfromtarget_score = 0;
+			my $staging_runfromtarget_score = 0;
+			my $attack_safe_window;
+			my $staging_safe_window;
+
+			if ($runFromTargetActive && defined $remaining_alive_time) {
+				if ($remaining_alive_time > $spot->{time_target_to_reach_attack_cell}) {
+					next;
+				} else {
+					$attack_runfromtarget_score += 10;
+					$staging_runfromtarget_score += 10;
+				}
+			
+			} elsif ($runFromTargetActive) {
+				my $time_until_our_next_damage_hits = $wait_time_at_spot + get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, 0, $spot);
+				my $time_until_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 0, $spot);
+
+				$attack_safe_window = $time_until_enemy_hit - $time_until_our_next_damage_hits
+					if defined $time_until_enemy_hit && defined $time_until_our_next_damage_hits;
+				$staging_safe_window = $time_until_enemy_hit - $spot->{time_actor_to_get_to_spot}
+					if defined $time_until_enemy_hit;
+
+				if (!$being_chased) {
+					my $start_distance_bonus = $spot->{time_target_to_reach_attack_cell} * $weight_safer_start_distance;
+					$attack_runfromtarget_score += $start_distance_bonus;
+					$staging_runfromtarget_score += $start_distance_bonus;
+				}
+
+				if (defined $attack_safe_window) {
+					if ($attack_safe_window < $run_safety_extra) {
+						$attack_runfromtarget_score -= ($run_safety_extra - $attack_safe_window) * 18;
+					} else {
+						$attack_runfromtarget_score += $attack_safe_window * $weight_safe_window;
+					}
+				}
+
+				if (defined $staging_safe_window) {
+					if ($staging_safe_window < 0) {
+						$staging_runfromtarget_score -= (0 - $staging_safe_window) * 12;
+					} else {
+						$staging_runfromtarget_score += $staging_safe_window * 2;
+					}
+				}
+			}
+
+			$spot->{attack_safe_window} = $attack_safe_window if defined $attack_safe_window;
+			$spot->{staging_safe_window} = $staging_safe_window if defined $staging_safe_window;
+
+			$spot->{chase_bonus} = 0;
+			if ($being_chased && !$runFromTargetActive && $attackMaxDistance <= 1 && defined $spot->{time_target_to_reach_attack_cell}) {
+				my $diff = abs($spot->{time_target_to_reach_attack_cell} - $spot->{time_actor_to_get_to_spot});
+				$spot->{chase_bonus} += ($diff * $weight_chase);
+			}
+
+			$spot->{old_spot_bonus} = 0;
+			if ($compare && $is_old_spot) {
+				$spot->{old_spot_bonus} = $readjust_tolerance;
+			}
+
+			$spot->{drag_bonus} = 0;
+			if (((!$ctx->{actor_snapshot}{moving} && $spot->{x} == $ctx->{actor_snapshot}{real_pos}{x} && $spot->{y} == $ctx->{actor_snapshot}{real_pos}{y})
+				|| ($ctx->{actor_snapshot}{moving} && $spot->{x} == $ctx->{actor_snapshot}{final_pos}{x} && $spot->{y} == $ctx->{actor_snapshot}{final_pos}{y})
+				|| ($actor->{pos_to} && $spot->{x} == $actor->{pos_to}{x} && $spot->{y} == $actor->{pos_to}{y}))) {
+				$spot->{drag_bonus} = 0.75;
+			}
+
+			$spot->{route_eval} = evaluate_route_safety_for_spot($args, $actor, $target, $spot);
+			next unless $spot->{route_eval}{has_route};
+			my $base_score =
+				  $spot->{old_spot_bonus}
+				+ $spot->{drag_bonus}
+				+ $spot->{chase_bonus}
+				- $spot->{time_actor_to_get_to_spot}
+				- $spot->{too_close_too_soon_penalty}
+				- $spot->{too_far_too_soon_penalty}
+				- $spot->{instability_penalty}
+				- $spot->{wait_penalty};
+
+			$spot->{attack_score} = $base_score
+				- ($spot->{route_eval}{attack_route_penalty} || 0)
+				+ $attack_runfromtarget_score;
+
+			$spot->{staging_score} = score_staging_spot($args, $spot)
+				+ $staging_runfromtarget_score;
+
+			my $can_use_as_attack  = $can_attack_from_spot ? 1 : 0;
+			my $can_use_as_staging = 1;
+
+			# A staging tile is a place to move to. If we are already standing on this tile and still
+			# cannot attack from it, keeping it as the best "staging" spot just traps us in place.
+			$can_use_as_staging = 0 if $is_current_spot && !$can_attack_from_spot;
+
+			$can_use_as_attack = 0 unless ($spot->{route_eval}{is_attack_route_safe});
+			$can_use_as_staging = 0 unless ($spot->{route_eval}{is_staging_route_safe});
+
+			if ($runFromTargetActive && defined $attack_safe_window) {
+				$can_use_as_attack = 0 if $attack_safe_window < $run_safety_extra;
+			}
+			if ($runFromTargetActive && defined $staging_safe_window) {
+				$can_use_as_staging = 0 if $staging_safe_window < 0;
+			}
+
+			if ($compare && $is_old_spot) {
+				debug "[mP] Old spot $spot->{x} $spot->{y} found.\n";
+				debug "[Oldspot] can_use_as_attack $can_use_as_attack (score $spot->{attack_score}) | can_use_as_staging $can_use_as_staging (score $spot->{staging_score}).\n";
+				debug "[Oldspot] Mob will be at $targetPosNow->{x} $targetPosNow->{y}, dist $spot->{blockDist_to_target}, it will take $spot->{time_actor_to_get_to_spot} seconds to get there.\n";
+			}
+
+			next if (!$can_use_as_attack && !$can_use_as_staging);
+
+			if (!$defensive_only && $can_attack_from_spot && $can_use_as_attack) {
+				my $should_replace = 0;
+				if (!defined $best_attack_score || $spot->{attack_score} > $best_attack_score + $EPS) {
+					$should_replace = 1;
+				} elsif (defined $best_attack_score && abs($spot->{attack_score} - $best_attack_score) <= $EPS) {
+					if (!defined $best_attack_time || $spot->{time_actor_to_get_to_spot} < $best_attack_time) {
+						$should_replace = 1;
+					} elsif (defined $best_attack_dist_to_target) {
+						my $best_dist_error = abs($best_attack_dist_to_target - $desired_dist);
+						my $this_dist_error = abs($spot->{blockDist_to_target} - $desired_dist);
+						$should_replace = 1 if $this_dist_error < $best_dist_error;
+					}
+				}
+				if ($should_replace) {
+					$spot->{route_choice_mode} = 'attack';
+					$best_attack_score = $spot->{attack_score};
+					$best_attack_time  = $spot->{time_actor_to_get_to_spot};
+					$best_attack_spot  = $spot;
+					$best_attack_targetPosNow = $targetPosNow;
+					$best_attack_dist_to_target = $spot->{blockDist_to_target};
+				}
+			}
+
+			if ($can_use_as_staging) {
+				my $should_replace_staging = 0;
+				if (!defined $best_staging_score || $spot->{staging_score} > $best_staging_score + $EPS) {
+					$should_replace_staging = 1;
+				} elsif (defined $best_staging_score && abs($spot->{staging_score} - $best_staging_score) <= $EPS) {
+					if (!defined $best_staging_time || $spot->{time_actor_to_get_to_spot} < $best_staging_time) {
+						$should_replace_staging = 1;
+					}
+				}
+				if ($should_replace_staging) {
+					$spot->{route_choice_mode} = 'staging';
+					$best_staging_score = $spot->{staging_score};
+					$best_staging_time  = $spot->{time_actor_to_get_to_spot};
+					$best_staging_spot  = $spot;
+					$best_staging_targetPosNow = $targetPosNow;
+					$best_staging_dist_to_target = $spot->{blockDist_to_target};
+				}
+			}
+		}
+	}
+
+	my ($best_spot, $best_targetPosNow, $best_dist_to_target, $best_time, $best_mode, $best_score_log);
+	if (!$defensive_only && $best_attack_spot) {
+		$best_spot = $best_attack_spot;
+		$best_targetPosNow = $best_attack_targetPosNow;
+		$best_dist_to_target = $best_attack_dist_to_target;
+		$best_time = $best_attack_time;
+		$best_mode = 'attack';
+		$best_score_log = $best_attack_score;
+	} elsif ($best_staging_spot) {
+		$best_spot = $best_staging_spot;
+		$best_targetPosNow = $best_staging_targetPosNow;
+		$best_dist_to_target = $best_staging_dist_to_target;
+		$best_time = $best_staging_time;
+		$best_mode = 'staging';
+		$best_score_log = $best_staging_score;
+	}
+
+	if (!defined $best_spot) {
+		store_meeting_position_choice($args, undef);
+		debug "[mP] No good ATTACK or STAGING spot.\n";
+		return;
+	}
+
+	$best_spot->{route_choice_mode} = $best_mode;
+	debug "[mP] Best $best_mode spot is $best_spot->{x} $best_spot->{y} (score $best_score_log), mob will be at $best_targetPosNow->{x} $best_targetPosNow->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
+	debug "[mP] [old_spot_bonus $best_spot->{old_spot_bonus}] | [drag_bonus $best_spot->{drag_bonus}] | [chase_bonus $best_spot->{chase_bonus}]\n";
+	debug "[mP] [too_close_too_soon_penalty $best_spot->{too_close_too_soon_penalty}] | [too_far_too_soon_penalty $best_spot->{too_far_too_soon_penalty}] | [instability_penalty $best_spot->{instability_penalty}] | [wait_penalty $best_spot->{wait_penalty}]\n";
+	store_meeting_position_choice($args, $best_spot);
+	return $best_spot;
 }
 
 1;

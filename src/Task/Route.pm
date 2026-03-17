@@ -793,6 +793,13 @@ sub iterateSingleMovePacket {
 		return;
 	}
 
+	if ($self->{lastStep} == 1 && !$self->{sendAttackWithMove} && $self->{meetingSubRoute}) {
+		debug "[Route - SingleMovePacket] Also ending task now ang giving back control to AI::Attack.\n", "route";
+		Plugins::callHook('route', {status => 'success'});
+		$self->setDone();
+		return;
+	}
+
 	if (!$self->{singleMovePacketSent}) {
 		my %hookArgs = (
 			args => $self,
@@ -807,19 +814,10 @@ sub iterateSingleMovePacket {
 		@{$self->{last_current_calc_pos}}{qw(x y)} = @{$current_calc_pos}{qw(x y)};
 		$self->{time_step} = time;
 		$self->{singleMovePacketSent} = 1;
+		$self->{lastStep} = 1;
 
-		if ($current_pos_to{x} == $dest->{x} && $current_pos_to{y} == $dest->{y}) {
-			debug "Route $self->{actor} - single move packet already in flight to ($dest->{x}, $dest->{y}).\n", "route";
-			return;
-		}
+		$self->setMove();
 
-		$self->{actor}->sendStopSkillUse() if $self->{actor}->{last_skill_used_is_continuous};
-		debug "Route $self->{actor} - single move packet moving to ($dest->{x}, $dest->{y}).\n", "route";
-		$self->{actor}->sendMove(@{$dest}{qw(x y)});
-		if ($self->{attackID} && $self->{sendAttackWithMove}) {
-			debug "[Route] Sending attack with single move packet.\n", "route";
-			$self->{actor}->sendAttack($self->{attackID});
-		}
 		return;
 	}
 

@@ -37,6 +37,11 @@ XKore_listenPort 6901
 XKore_publicIp 127.0.0.1
 XKore_ID
 
+# Xkore 3
+XKore_blockPacket_monster_ranged_attack 1
+
+attack_stopAttacking_pendingDeathMonsters 1
+
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
 adminPassword
