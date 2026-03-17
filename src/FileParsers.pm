@@ -1073,7 +1073,6 @@ sub parseSkillsSPLUT {
 sub parseTeleportItems {
 	my ($file, $r_hash) = @_;
 	undef %{$r_hash};
-	$r_hash->{list} = [];
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -1161,9 +1160,13 @@ sub parseTeleportItems {
 			$entry->{requiredEquipItemID} = int($required_equip_item_id);
 		}
 
-		push @{$r_hash->{list}}, $entry;
-		push @{$r_hash->{byMode}{$mode}}, $entry;
-		push @{$r_hash->{byItemID}{$entry->{itemID}}}, $entry;
+		my $dest = $dest_map . " " . int($dest_x) . " " . int($dest_y);
+		$$r_hash{$dest}{'dest'}{'map'} = $dest_map;
+		$$r_hash{$dest}{'dest'}{'x'} = $dest_x;
+		$$r_hash{$dest}{'dest'}{'y'} = $dest_y;
+		$$r_hash{$dest}{'entry'} = $entry;
+
+		#push @{$r_hash->{list}}, $entry;
 	}
 
 	return 1;

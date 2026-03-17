@@ -4329,6 +4329,21 @@ sub compilePortals {
 		}
 	}
 
+	# teleport_items
+	#use Data::Dumper;
+	#Log:warning Dumper(\%teleport_items);
+	foreach my $portal (keys %teleport_items) {
+		#Log:warning "Portal [$portal] > ".Dumper($teleport_items{$portal});
+		next unless $teleport_items{$portal};
+		next unless $teleport_items{$portal}{dest};
+		next unless $teleport_items{$portal}{dest}{map};
+		next unless $teleport_items{$portal}{dest}{x};
+		next unless $teleport_items{$portal}{dest}{y};
+
+		$mapSpawns{$teleport_items{$portal}{dest}{map}}{$portal}{x} = $teleport_items{$portal}{dest}{x};
+		$mapSpawns{$teleport_items{$portal}{dest}{map}}{$portal}{y} = $teleport_items{$portal}{dest}{y};
+	}
+
 	$pathfinding = new PathFinding if (!$checkOnly);
 
 	# Calculate LOS values from each spawn point per map to other portals on same map
@@ -5721,10 +5736,15 @@ sub isTeleportItemEquipRequirementSatisfied {
 sub getTeleportItemFromTable {
 	my ($mode, %args) = @_;
 	return unless $char && $char->inventory && $char->inventory->isReady();
-	return unless $teleport_items{list} && @{$teleport_items{list}};
+	return unless (scalar keys %teleport_items);
 
 	my $target_map = defined $args{destMap} ? lc $args{destMap} : '';
-	for my $entry (@{$teleport_items{list}}) {
+
+	for my $key (keys %teleport_items) {
+		my $value = $teleport_items{$key};
+		next unless ($value);
+		my $entry = $value->{entry};
+		next unless ($entry);
 		next if ($entry->{mode} ne 'any' && $entry->{mode} ne $mode);
 		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
 		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});

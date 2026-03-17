@@ -435,17 +435,25 @@ sub searchStep {
 				if (!exists $closelist->{"$child=$subchild"}) { # check if node is already explorated
 					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) { # check the current node cost less
 						debug "[CalcMapRoute - searchStep - Add] from '$parent' to '$child=$subchild' cost '$thisWalk'\n", "calc_map_route", 2;
-						$openlist->{"$child=$subchild"}{parent} = $parent;
-						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
-						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
-						$openlist->{"$child=$subchild"}{allow_ticket} = $portals_lut{$child}{dest}{$subchild}{allow_ticket};
-						if ($openlist->{"$child=$subchild"}{allow_ticket} && $self->{tickets_amount} > $openlist->{"$child=$subchild"}{amount_of_tickets_used}) { # checks if route allow use ticket and how many we spent so far
-							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets} + $openlist->{"$child=$subchild"}{zeny};
-							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used} + 1;
+						my $key = "$child=$subchild";
+						my $value = {
+							parent => $parent,
+							walk => $thisWalk,
+							allow_ticket => $portals_lut{$child}{dest}{$subchild}{allow_ticket}
+						};
+
+						if ($value->{allow_ticket} && $self->{tickets_amount} > $closelist->{$parent}{amount_of_tickets_used}) {
+							$value->{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets} + $portals_lut{$child}{dest}{$subchild}{cost};
+							$value->{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used} + 1;
+							$value->{zeny} = $closelist->{$parent}{zeny};
+
 						} else {
-							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
-							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
+							$value->{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
+							$value->{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
+							$value->{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
 						}
+
+						$self->add_key_to_openList($key, $value);
 					}
 				}
 			}
@@ -460,11 +468,17 @@ sub searchStep {
 				my $thisWalk = $penalty + $closelist->{$parent}{walk} + $portals_los{$dest}{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
 				if (!exists $closelist->{"$child=$subchild"}) { # check if node is already explorated
 					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) { # check the current node cost less
-						$openlist->{"$child=$subchild"}{parent} = $parent;
-						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
-						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny};
-						$openlist->{"$child=$subchild"}{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
-						$openlist->{"$child=$subchild"}{is_airship} = 1;
+						my $key = "$child=$subchild";
+						my $value = {
+							parent => $parent,
+							walk => $thisWalk,
+							zeny => $closelist->{$parent}{zeny},
+							zeny_covered_by_tickets => $closelist->{$parent}{zeny_covered_by_tickets},
+							amount_of_tickets_used => $closelist->{$parent}{amount_of_tickets_used}
+						};
+						$value->{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
+						$value->{is_airship} = 1;
+						$self->add_key_to_openList($key, $value);
 					}
 				}
 			}
@@ -493,7 +507,7 @@ sub populateOpenListWithGoCommands {
 			next if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
 
 			# add @go option as a synthetic portal
-			$self->{openlist}{$key} = {
+			$self->add_key_to_openList($key, {
 				parent                   => $parent,
 				walk                     => $walk,
 				zeny                     => $zeny,
@@ -502,7 +516,7 @@ sub populateOpenListWithGoCommands {
 				amount_of_tickets_used   => $amount_of_tickets_used,
 				is_command               => 1,
 				command                  => $portals_commands{$portal}{dest}{$dest}{command},
-			};
+			});
 		}
 	}
 }
@@ -512,8 +526,8 @@ sub populateOpenListWithGoCommands {
 sub populateOpenListWithWarpToSaveMap {
 	my ($self, $from_node, $baseCost, $parent) = @_;
 	return unless $from_node;
-	
 	return unless ($config{saveMap_warp});
+
 	my ($current_map) = split / /, $from_node, 2;
 	return unless $self->isWarpToSaveMapAllowedOnMap($current_map);
 	return unless ($self->isWarpToSaveMapMinDistanceReached());
@@ -537,7 +551,7 @@ sub populateOpenListWithWarpToSaveMap {
 	return if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
 	return if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
 
-	$self->{openlist}{$key} = {
+	$self->add_key_to_openList($key, {
 		parent                   => $parent,
 		walk                     => $walk,
 		zeny                     => $zeny,
@@ -545,7 +559,7 @@ sub populateOpenListWithWarpToSaveMap {
 		zeny_covered_by_tickets  => $zeny_covered_by_tickets,
 		amount_of_tickets_used   => $amount_of_tickets_used,
 		is_teleportToSaveMap     => 1,
-	};
+	});
 
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'map'} = $dest_map;
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'x'} = $dest_x;
@@ -574,7 +588,7 @@ sub populateOpenListWithWarpByItems {
 		next if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
 		next if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
 
-		$self->{openlist}{$key} = {
+		$self->add_key_to_openList($key, {
 			parent => $parent,
 			walk => $walk,
 			zeny => $zeny,
@@ -586,7 +600,7 @@ sub populateOpenListWithWarpByItems {
 			teleportItemTimeoutSec => $entry->{timeoutSec} || 0,
 			teleportItemRequiredEquipSlot => $entry->{requiredEquipSlot},
 			teleportItemRequiredEquipItemID => $entry->{requiredEquipItemID},
-		};
+		});
 
 		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'map'} = $entry->{destMap};
 		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'x'} = $entry->{destX};
@@ -595,13 +609,24 @@ sub populateOpenListWithWarpByItems {
 	}
 }
 
+sub add_key_to_openList {
+	my ($self, $key, $value) = @_;
+	debug "[add_key_to_openList] Adding key [$key] to openlist (now has ".(scalar keys %{$self->{openlist}})." items)\n";
+	$self->{openlist}{$key} = $value;
+}
+
 sub getWarpItemCandidates {
 	my ($self) = @_;
 	return unless ($char && $char->inventory && $char->inventory->isReady());
-	return unless ($teleport_items{list} && @{$teleport_items{list}});
+	return unless (scalar keys %teleport_items);
 
 	my @matches;
-	for my $entry (@{$teleport_items{list}}) {
+	for my $key (keys %teleport_items) {
+		my $value = $teleport_items{$key};
+		next unless ($value);
+		my $entry = $value->{entry};
+		next unless ($entry);
+		
 		next unless ($entry->{mode} eq 'warp' || $entry->{mode} eq 'any');
 		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
 		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
