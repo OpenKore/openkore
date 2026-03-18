@@ -1073,6 +1073,8 @@ sub parseSkillsSPLUT {
 sub parseTeleportItems {
 	my ($file, $r_hash) = @_;
 	undef %{$r_hash};
+	$r_hash->{list} = [];
+	my %equipSlotLookupLC = map { lc($_) => 1 } keys %equipSlot_rlut;
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -1107,6 +1109,7 @@ sub parseTeleportItems {
 			}
 			if (@optional_args >= 2) {
 				($required_equip_slot, $required_equip_item_id) = splice(@optional_args, 0, 2);
+				$required_equip_slot = lc($required_equip_slot) if defined $required_equip_slot;
 			}
 
 			if (@optional_args) {
@@ -1131,7 +1134,7 @@ sub parseTeleportItems {
 			next;
 		}
 		if (defined $required_equip_slot) {
-			if (!defined $equipSlot_rlut{$required_equip_slot}) {
+			if (!$equipSlotLookupLC{$required_equip_slot}) {
 				warning TF("Invalid teleport item entry at %s: required equip slot is not recognized ($required_equip_slot): %s\n", $file, $line);
 				next;
 			}
@@ -1162,7 +1165,7 @@ sub parseTeleportItems {
 		$$r_hash{$dest}{'dest'}{'y'} = $dest_y;
 		$$r_hash{$dest}{'entry'} = $entry;
 
-		#push @{$r_hash->{list}}, $entry;
+		push @{$r_hash->{list}}, $entry;
 	}
 
 	return 1;

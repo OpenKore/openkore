@@ -530,22 +530,23 @@ sub populateOpenListWithWarpToSaveMap {
 
 	my ($current_map) = split / /, $from_node, 2;
 	return unless $self->isWarpToSaveMapAllowedOnMap($current_map);
-	
-	for my $entry ($self->getWarpItemCandidates()) {
-		
+
+	my @warpItemCandidates = $self->getWarpItemCandidates();
+	return unless @warpItemCandidates;
+
 	return unless ($self->isWarpToSaveMapMinDistanceReached());
 	my $saveMapDestination = $self->resolveSaveMapDestination();
 	return unless ($saveMapDestination);
-	
+
 	my $dest_map = $saveMapDestination->{map};
 	my $dest_x = $saveMapDestination->{x};
 	my $dest_y = $saveMapDestination->{y};
-	
+
 	my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
 
 	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route";
 
-	next if ($dest eq $from_node);
+	return if ($dest eq $from_node);
 	my $key = "$from_node=$dest";
 	my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPTOSAVEMAP} || 200);
 	my $zeny = $baseCost->{zeny} || 0;
