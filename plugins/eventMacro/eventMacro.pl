@@ -338,7 +338,7 @@ sub commandHandler {
 		my $macro = $eventMacro->{Macro_Runner};
 		if ( $macro ) {
 			message "Stopping macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
-			$eventMacro->clear_queue();
+			$eventMacro->clear_queue(1);
 		} else {
 			message "There's no macro currently running.\n";
 		}

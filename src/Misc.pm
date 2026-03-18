@@ -139,6 +139,9 @@ our @EXPORT = (
 	itemLog_clear
 	look
 	lookAtPosition
+	lookAtPositionNaturally
+	getNaturalLookDirections
+	getClosestWalls
 	manualMove
 	objectAdded
 	objectRemoved
@@ -2486,6 +2489,98 @@ sub lookAtPosition {
 }
 
 ##
+# getNaturalLookDirections(from_pos, to_pos, [current_body])
+# from_pos: source position hashref (character)
+# to_pos: target position hashref
+# current_body: optional current body direction, defaults to $char->{look}{body}
+#
+# Calculates look change using partial-turn strategy.
+# Returns: (body, head) where body is 0-7 and head is 0-2.
+sub getNaturalLookDirections {
+	my ($from_pos, $to_pos, $current_body) = @_;
+	return unless ($from_pos && $to_pos);
+
+	$current_body = $char->{look}{body} unless defined $current_body;
+
+	my %vec;
+	getVector(\%vec, $to_pos, $from_pos);
+	my $target_body = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+
+	my $body = $current_body;
+	my $head = 0;
+	my $offset = ($target_body - $body + 8) % 8;
+	$offset -= 8 if ($offset > 4);
+
+	if ($offset != 0) {
+		if (abs($offset) <= 1) {
+			$head = $offset > 0 ? 2 : 1;
+		} else {
+			my $step = $offset > 0 ? 1 : -1;
+			$body = ($target_body - $step + 8) % 8;
+			$head = $step > 0 ? 2 : 1;
+		}
+	}
+
+	return ($body, $head);
+}
+
+##
+# lookAtPositionNaturally(from_pos, to_pos, [current_body])
+# from_pos: source position hashref (character)
+# to_pos: target position hashref
+# current_body: optional current body direction, defaults to $char->{look}{body}
+#
+# Calculates and executes look change using partial-turn strategy.
+# Returns: (body, head) where body is 0-7 and head is 0-2.
+sub lookAtPositionNaturally {
+	my ($from_pos, $to_pos, $current_body) = @_;
+	my ($body, $head) = getNaturalLookDirections($from_pos, $to_pos, $current_body);
+	return unless defined $body;
+
+	look($body, $head) if ($body != $char->{look}{body} || $head != $char->{look}{head});
+	return ($body, $head);
+}
+
+##
+# getClosestWalls(from_pos, wall_range, [field_obj])
+# from_pos: source position hashref
+# wall_range: search range around from_pos
+# field_obj: optional field object, defaults to current global field
+#
+# Returns: arrayref with all nearest non-walkable cells found in range.
+sub getClosestWalls {
+	my ($from_pos, $wall_range, $field_obj) = @_;
+	return [] unless ($from_pos && defined $wall_range && $wall_range > 0);
+
+	$field_obj ||= $field;
+	return [] unless $field_obj;
+
+	my $closest_distance;
+	my @closest_walls;
+	for (my $dx = -$wall_range; $dx <= $wall_range; $dx++) {
+		for (my $dy = -$wall_range; $dy <= $wall_range; $dy++) {
+			next if $dx == 0 && $dy == 0;
+
+			my $candidate = {
+				x => $from_pos->{x} + $dx,
+				y => $from_pos->{y} + $dy,
+			};
+			next if $field_obj->isWalkable($candidate->{x}, $candidate->{y});
+
+			my $distance = distance($candidate, $from_pos);
+			if (!defined $closest_distance || $distance < $closest_distance) {
+				$closest_distance = $distance;
+				@closest_walls = ($candidate);
+			} elsif ($distance == $closest_distance) {
+				push @closest_walls, $candidate;
+			}
+		}
+	}
+
+	return \@closest_walls;
+}
+
+##
 # manualMove(dx, dy)
 #
 # Moves the character offset from its current position.
@@ -4338,6 +4433,9 @@ sub checkSelfCondition {
 							|| $config{$prefix."_equip_leftHand"}
 							|| $config{$prefix."_equip_rightHand"}
 							|| $config{$prefix."_equip_robe"}
+							|| $config{$prefix."_equip_topHead"}
+							|| $config{$prefix."_equip_midHead"}
+							|| $config{$prefix."_equip_lowHead"}
 							);
 			return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
 			

@@ -712,7 +712,12 @@ sub received_characters_blockSize {
 sub received_characters_unpackString {
 	my $char_info;
 	for ($masterServer && $masterServer->{charBlockSize}) {
-		if ($_ == 175) {  # PACKETVER >= 20201007 [hp, hp_max, sp and sp_max are now uint64]
+		if ($_ == 247) { # PACKETVER >= 20211103? [extended char block: character name increased to 96 bytes]
+			$char_info = {
+				types => 'a4 V2 V V2 V6 v V2 V2 V2 V2 v2 V v9 Z96 C8 v Z16 V4 C',
+				keys => [qw(charID exp exp_2 zeny exp_job exp_job_2 lv_job body_state health_state effect_state stance manner status_point hp hp_2 hp_max hp_max_2 sp sp_2 sp_max sp_max_2 walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
+			};
+		} elsif ($_ == 175) {  # PACKETVER >= 20201007 [hp, hp_max, sp and sp_max are now uint64]
 			$char_info = {
 				types => 'a4 V2 V V2 V6 v V2 V2 V2 V2 v2 V v9 Z24 C8 v Z16 V4 C',
 				keys => [qw(charID exp exp_2 zeny exp_job exp_job_2 lv_job body_state health_state effect_state stance manner status_point hp hp_2 hp_max hp_max_2 sp sp_2 sp_max sp_max_2 walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
@@ -2605,6 +2610,22 @@ sub actor_action {
 		if ($args->{sourceID} eq $accountID) {
 			message T("You are sitting.\n") if (!$char->{sitting});
 			$char->{sitting} = 1;
+			if ($ai_v{sitAuto_pendingLook}) {
+				my $pendingLook = delete $ai_v{sitAuto_pendingLook};
+				delete $ai_v{sitAuto_scheduledLook};
+				my $delay = ($pendingLook->{delay} && $pendingLook->{delay} > 0) ? $pendingLook->{delay} : 0;
+				if ($delay > 0) {
+					$ai_v{sitAuto_scheduledLook} = {
+						due => time + $delay,
+						body => $pendingLook->{body},
+						head => $pendingLook->{head},
+					};
+				} elsif (defined $pendingLook->{head}) {
+					Misc::look($pendingLook->{body}, $pendingLook->{head});
+				} elsif (defined $pendingLook->{body}) {
+					Misc::look($pendingLook->{body});
+				}
+			}
 			AI::queue("sitAuto") unless (AI::inQueue("sitAuto")) || $ai_v{sitAuto_forcedBySitCommand};
 		} else {
 			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
@@ -3981,6 +4002,7 @@ sub vender_items_list {
 	$venderCID = $args->{venderCID};
 
 	my $expireDate = 0;
+    my @item_keys = @{ $self->{vender_items_list_item_keys} || [ qw( price amount ID type nameID identified broken upgrade cards options location sprite_id ) ] };
 	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
 	my $item_len = length pack $item_pack;
 	my $item_list_len = length $args->{itemList};
@@ -3995,7 +4017,7 @@ sub vender_items_list {
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = Actor::Item->new;
 
- 		@$item{qw( price amount ID type nameID identified broken upgrade cards options location sprite_id )} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
+        @$item{@item_keys} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
 
 		$item->{name} = itemName($item);
 		$venderItemList->add($item);
@@ -6053,7 +6075,7 @@ sub emoticon {
 		if (exists $monster->{casting} && defined $monster->{casting} && $monster->{casting}) {
 			my $skillID = $monster->{casting}{skill}->getIDN();
 			if ($skillID == 197 || $skillID == 474) {
-				message TF("[Skill Emotion] %s: deleting cast state\n", $monster->nameIdx);
+				debug TF("[Monster used Skill Emotion] %s: deleting cast state from monster\n", $monster->nameIdx);
 				delete $monster->{casting};
 			}
 		}

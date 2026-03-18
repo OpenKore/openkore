@@ -36,6 +36,11 @@ use AI qw(ai_useTeleport);
 
 
 # Error constants.
+use constant {
+	MAP_BLOCK_EXPIRATION => 600,
+	MAP_BLOCK_MAX => 20,
+};
+
 use enum (
 	# Routing errors
 	qw(TOO_MUCH_TIME
@@ -114,7 +119,10 @@ sub new {
 	$self->{useManhattan} = 0 if (!defined $self->{useManhattan});
 
 	$self->{noGoCommand} = 0 if (!defined $self->{noGoCommand});
+	$self->{noGoCommandMaps} = {} if (!defined $self->{noGoCommandMaps});
 	$self->{noTeleSpawn} = 0 if (!defined $self->{noTeleSpawn});
+	$self->{noTeleSpawnMaps} = {} if (!defined $self->{noTeleSpawnMaps});
+	$self->{noRouteTeleportMaps} = {} if (!defined $self->{noRouteTeleportMaps});
 	$self->{noAirship} = 0 if (!defined $self->{noAirship});
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
@@ -159,6 +167,11 @@ sub iterate {
 	Plugins::callHook("MapRoute_iterate_start", \%hookArgs);
 	return if ($hookArgs{return});
 
+	if (!defined $self->{mapBlockPruneTime} || timeOut($self->{mapBlockPruneTime}, 60)) {
+		$self->prunePerMapBlocks();
+		$self->{mapBlockPruneTime} = time;
+	}
+	
 	my @solution;
 	if (!$self->{mapSolution}) {
 		$self->initMapCalculator();
@@ -175,7 +188,10 @@ sub iterate {
 		delete $self->{timeout};
 		delete $timeout{'ai_portal_give_up'}{'time'};
 		delete $timeout{'ai_portal_wait'}{'time'};
+		delete $self->{teleport};
 		delete $self->{teleportTime};
+		delete $self->{sentTeleport};
+		delete $self->{teleportTries};
 		delete $self->{mapChanged};
 		delete $self->{missing_portal};
 		delete $self->{guess_portal};
@@ -194,8 +210,8 @@ sub iterate {
 				$self->{substage} = 'Waiting for Warp';
 				$messageSender->sendChat($go_cmd);
 			} else {
-				error TF("Failed to move using go command after %s tries, recalculating route and forbidding it.\n", $self->{mapSolution}[0]{retry}), "map_route";
-				$self->{noGoCommand} = 1;
+				error TF("Failed to move using go command after %s tries on map %s, recalculating route and forbidding go only on this map.\n", $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
+				$self->{noGoCommandMaps}{$field->baseName} = time;
 				$self->initMapCalculator();	# redo MAP router
 			}
 		}
@@ -215,8 +231,8 @@ sub iterate {
 				$self->{substage} = 'Waiting for Warp';
 				ai_useTeleport(2);
 			} else {
-				error TF("Failed to move to savepoint using teleport/butterfly wing after %s tries, recalculating route and forbidding it.\n", $self->{mapSolution}[0]{retry}), "map_route";
-				$self->{noTeleSpawn} = 1;
+				error TF("Failed to move to savepoint using teleport/butterfly wing after %s tries on map %s, recalculating route and forbidding teleport only on this map.\n", $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
+				$self->{noTeleSpawnMaps}{$field->baseName} = time;
 				$self->initMapCalculator();	# redo MAP router
 			}
 		}
@@ -621,7 +637,9 @@ sub iterate {
 			my $walk = 1;
 
 			# Teleport until we're close enough to the portal
-			$self->{teleport} = $config{route_teleport} if (!defined $self->{teleport});
+			if (!defined $self->{teleport} || $self->{mapChanged}) {
+				$self->{teleport} = $self->isRouteTeleportAllowedOnMap($field->baseName) ? $config{route_teleport} : 0;
+			}
 
 			if ($self->{teleport} && !$field->isCity
 			&& !existsInList($config{route_teleport_notInMaps}, $field->baseName)
@@ -666,8 +684,11 @@ sub iterate {
 					}
 
 				} elsif (timeOut($self->{teleportTime}, 4)) {
-					debug "Unable to teleport; falling back to walking.\n", "map_route";
+					debug TF("Unable to teleport on map %s; falling back to walking on this map.\n", $field->baseName), "map_route";
+					$self->{noRouteTeleportMaps}{$field->baseName} = time;
 					$self->{teleport} = 0;
+					delete $self->{sentTeleport};
+					delete $self->{teleportTime};
 				} else {
 					$walk = 0;
 				}
@@ -710,6 +731,37 @@ sub iterate {
 	}
 }
 
+sub prunePerMapBlocks {
+	my ($self) = @_;
+	my $now = time;
+
+	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps)) {
+		my $bucket = $self->{$bucketName};
+		next unless ($bucket && ref $bucket eq 'HASH');
+
+		foreach my $map (keys %{$bucket}) {
+			my $blockedAt = $bucket->{$map};
+			if (!defined($blockedAt) || $blockedAt !~ /^\d+(?:\.\d+)?$/) {
+				$blockedAt = $bucket->{$map} = $now;
+			}
+			delete $bucket->{$map} if (($now - $blockedAt) > MAP_BLOCK_EXPIRATION);
+		}
+
+		my @maps = sort { $bucket->{$a} <=> $bucket->{$b} } keys %{$bucket};
+		while (@maps > MAP_BLOCK_MAX) {
+			my $oldest = shift @maps;
+			delete $bucket->{$oldest};
+		}
+	}
+}
+
+sub isRouteTeleportAllowedOnMap {
+	my ($self, $map) = @_;
+	return 0 if !$map;
+	return 0 if ($self->{noRouteTeleportMaps}{$map});
+	return 1;
+}
+
 sub setNpcTalk {
 	my ($self) = @_;
 
@@ -738,7 +790,9 @@ sub initMapCalculator {
 		x => $self->{dest}{pos}{x},
 		y => $self->{dest}{pos}{y},
 		noGoCommand => $self->{noGoCommand},
+		noGoCommandMaps => $self->{noGoCommandMaps},
 		noTeleSpawn => $self->{noTeleSpawn},
+		noTeleSpawnMaps => $self->{noTeleSpawnMaps},
 		noAirship => $self->{noAirship},
 	);
 	$self->setSubtask($task);

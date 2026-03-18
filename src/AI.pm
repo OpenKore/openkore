@@ -758,27 +758,27 @@ sub sit {
 	require Task::SitStand;
 	my $task = new Task::SitStand(actor => $char, mode => 'sit', wait => $timeout{ai_sit_wait}{timeout});
 	AI::queue("sitting", $task);
-	if (defined $config{sitAuto_look} && !$config{sitAuto_look_from_wall}) {
-		Misc::look($config{sitAuto_look});
-	} elsif (defined $config{sitAuto_look} && $config{sitAuto_look_from_wall}) {
-		my $sitAutoLook = $config{sitAuto_look};
-		my $wallRange = $config{sitAuto_look_from_wall};
-		for (my $i=1;$i<=$wallRange;$i++) {
-			if ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}+$wallRange) && $sitAutoLook == 0)
-			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}+$wallRange) && $sitAutoLook == 1)
-			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}) && $sitAutoLook == 2)
-			  || (!$field->isWalkable($char->{pos}{x}-$wallRange,$char->{pos}{y}-$wallRange) && $sitAutoLook == 3)
-			  ) {
-				$sitAutoLook += 4;
-			} elsif ((!$field->isWalkable($char->{pos}{x},$char->{pos}{y}-$wallRange) && $sitAutoLook == 4)
-			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}-$wallRange) && $sitAutoLook == 5)
-			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}) && $sitAutoLook == 6)
-			  || (!$field->isWalkable($char->{pos}{x}+$wallRange,$char->{pos}{y}+$wallRange) && $sitAutoLook == 7)
-			  ) {
-				$sitAutoLook -= 4;
+	my $lookDelay = $config{sitAuto_look_delay};
+	$lookDelay = 0 if (!defined $lookDelay || $lookDelay < 0);
+	delete $ai_v{sitAuto_pendingLook};
+	if (defined $config{sitAuto_look}) {
+		my $defaultLook = $config{sitAuto_look};
+		my $lookPlan = { body => $defaultLook, delay => $lookDelay };
+
+		if ($config{sitAuto_look_from_wall}) {
+			my $closestWalls = Misc::getClosestWalls($char->{pos}, $config{sitAuto_look_from_wall});
+			if (@{$closestWalls}) {
+				my $referenceWall = $closestWalls->[int(rand(@{$closestWalls}))];
+				my $oppositeDirectionPos = {
+					x => (2 * $char->{pos}{x}) - $referenceWall->{x},
+					y => (2 * $char->{pos}{y}) - $referenceWall->{y},
+				};
+				my ($bodyDirection, $headDirection) = Misc::getNaturalLookDirections($char->{pos}, $oppositeDirectionPos, $defaultLook);
+				$lookPlan = { body => $bodyDirection, head => $headDirection, delay => $lookDelay };
 			}
 		}
-		Misc::look($sitAutoLook);
+
+		$ai_v{sitAuto_pendingLook} = $lookPlan;
 	}
 }
 

@@ -136,7 +136,7 @@ sub adapt_to_AI_state {
 
 sub unload {
 	my ($self) = @_;
-	$self->clear_queue();
+	$self->clear_queue(1);
 	$self->clean_hooks();
 	Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}) if ($self->{AI_start_Automacros_Check_Hook_Handle});
 	Plugins::delHook($self->{AI_state_change_Hook_Handle}) if ($self->{AI_state_change_Hook_Handle});
@@ -1539,6 +1539,19 @@ sub AI_start_checker {
 	}
 }
 
+sub handoff_to_pending_automacros {
+	my ($self) = @_;
+
+	return if defined $self->{Macro_Runner};
+	return if $self->{number_of_triggered_automacros} == 0;
+
+	my $checking_status = $self->get_automacro_checking_status();
+	return if $checking_status != CHECKING_AUTOMACROS && $checking_status != CHECKING_FORCED_BY_USER;
+
+	debug "[eventMacro] Macro queue cleared. Checking triggered automacros before returning control to core AI.\n", "eventMacro", 2;
+	$self->AI_start_checker(AI::state);
+}
+
 sub disable_all_automacros {
 	my ($self) = @_;
 	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
@@ -1572,7 +1585,7 @@ sub enable_automacro {
 sub call_macro {
 	my ($self, $automacro) = @_;
 	if (defined $self->{Macro_Runner}) {
-		$self->clear_queue();
+		$self->clear_queue(1);
 	}
 
 	if ($automacro->get_parameter('call') =~ /\s+/) {
@@ -1753,7 +1766,7 @@ sub processCmd {
 }
 
 sub clear_queue {
-	my ($self) = @_;
+	my ($self, $skip_automacro_handoff) = @_;
 	if ( defined $self->{Macro_Runner} ) {
 		message "[eventMacro] Macro '".$self->{Macro_Runner}->last_subcall_name."' ended.\n", "system";
 	} else {
@@ -1768,6 +1781,10 @@ sub clear_queue {
 	$self->{Macro_Runner} = undef;
 	Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle}) if (defined $self->{AI_start_Macros_Running_Hook_Handle});
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
+
+	return if $skip_automacro_handoff;
+
+	$self->handoff_to_pending_automacros();
 }
 
 sub include {

@@ -302,6 +302,7 @@ sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
+sitAuto_look_delay
 sitTensionRelax 0
 
 statsAddAuto 0

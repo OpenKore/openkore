@@ -19,6 +19,7 @@ package Task::CalcMapRoute;
 
 use strict;
 use Time::HiRes qw(time);
+use List::Util qw(reduce);
 
 use Modules 'register';
 use Task;
@@ -103,12 +104,14 @@ sub new {
 	} else {
 		$self->{noGoCommand} = 0;
 	}
+	$self->{noGoCommandMaps} = $args{noGoCommandMaps} || {};
 
 	if (exists $args{noTeleSpawn}) {
 		$self->{noTeleSpawn} = $args{noTeleSpawn}
 	} else {
 		$self->{noTeleSpawn} = 0;
 	}
+	$self->{noGoCommandMaps} = $args{noGoCommandMaps} || {};
 
 	if (exists $args{noAirship}) {
 		$self->{noAirship} = $args{noAirship}
@@ -186,11 +189,19 @@ sub iterate {
 			}
 		}
 
-		$self->populateOpenListWithGoCommands() unless ($self->{noGoCommand});
+		$self->populateOpenListWithGoCommands(
+			"$self->{source}{map} $self->{source}{x} $self->{source}{y}",
+			{ walk => 0, zeny => 0, zeny_covered_by_tickets => 0, amount_of_tickets_used => 0 },
+			undef,
+		) unless ($self->{noGoCommand});
 
 		delete $self->{tempPortalsSaveMap} if (exists $self->{tempPortalsSaveMap});
 		if (!$self->{noTeleSpawn} && canUseTeleport(2) && $self->isSaveMapSetAndValid()) {
-			$self->populateOpenListWithWarpToSaveMap();
+			$self->populateOpenListWithWarpToSaveMap(
+				"$self->{source}{map} $self->{source}{x} $self->{source}{y}",
+				{ walk => 0, zeny => 0, zeny_covered_by_tickets => 0, amount_of_tickets_used => 0 },
+				undef,
+			);
 		}
 
 		# Initializes the openlist with airships walkable from the starting point.
@@ -290,7 +301,10 @@ sub searchStep {
 	}
 
 	# selects the node with the lowest walk cost
-	my $parent = (sort {$openlist->{$a}{walk} <=> $openlist->{$b}{walk}} keys %{$openlist})[0];
+	# NOTE: avoid sorting the full list every step; just track the minimum.
+	my $parent = reduce {
+		$openlist->{$a}{walk} <= $openlist->{$b}{walk} ? $a : $b
+	} keys %{$openlist};
 	debug "[CalcMapRoute - searchStep - Loop] $parent, $openlist->{$parent}{walk}\n", "calc_map_route";
 
 	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
@@ -376,6 +390,11 @@ sub searchStep {
 		}
 
 		# get all children of each openlist.
+		$self->populateOpenListWithGoCommands($dest, $closelist->{$parent}, $parent) unless ($self->{noGoCommand});
+		if (!$self->{noTeleSpawn} && canUseTeleport(2) && $self->isSaveMapSetAndValid()) {
+			$self->populateOpenListWithWarpToSaveMap($dest, $closelist->{$parent}, $parent);
+		}
+		
 		# explore connected portals and NPC warps
 		foreach my $child (keys %{$portals_los{$dest}}) {
 			next unless $portals_los{$dest}{$child}; # next if no child
@@ -428,28 +447,33 @@ sub searchStep {
 
 # Add @go commands to openlist
 sub populateOpenListWithGoCommands {
-	my ($self) = @_;
+	my ($self, $from_node, $baseCost, $parent) = @_;
+	return unless $from_node;
 
-	# set current map vars
-	my $current_map = $self->{source}{map};
-	my $current_x   = $self->{source}{x};
-	my $current_y   = $self->{source}{y};
-	my $from_node   = "$current_map $current_x $current_y";
+	my ($current_map) = split / /, $from_node, 2;
+	return unless $self->isGoCommandAllowedOnMap($current_map);
 
 	# iterate through the commands
 	foreach my $portal (keys %portals_commands) {
 		foreach my $dest (keys %{$portals_commands{$portal}{dest}}) {
 			my $to_node = $portals_commands{$portal}{dest}{$dest}{map} . " " . $portals_commands{$portal}{dest}{$dest}{x} . " " . $portals_commands{$portal}{dest}{$dest}{y};
 			my $key = "$from_node=$to_node";
+			my $walk = ($baseCost->{walk} || 0) + ($routeWeights{COMMAND} || 20);
+			my $zeny = $baseCost->{zeny} || 0;
+			my $zeny_covered_by_tickets = $baseCost->{zeny_covered_by_tickets} || 0;
+			my $amount_of_tickets_used = $baseCost->{amount_of_tickets_used} || 0;
+
+			next if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
+			next if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
 
 			# add @go option as a synthetic portal
 			$self->{openlist}{$key} = {
-				parent                   => undef,
-				walk                     => $routeWeights{COMMAND} || 20,
-				zeny                     => 0,
+				parent                   => $parent,
+				walk                     => $walk,
+				zeny                     => $zeny,
 				allow_ticket             => 0,
-				zeny_covered_by_tickets  => 0,
-				amount_of_tickets_used   => 0,
+				zeny_covered_by_tickets  => $zeny_covered_by_tickets,
+				amount_of_tickets_used   => $amount_of_tickets_used,
 				is_command               => 1,
 				command                  => $portals_commands{$portal}{dest}{$dest}{command},
 			};
@@ -457,20 +481,18 @@ sub populateOpenListWithGoCommands {
 	}
 }
 
+
 # Add teleport lv 2 (or butterfly wing) to openlist
 sub populateOpenListWithWarpToSaveMap {
-	my ($self) = @_;
+	my ($self, $from_node, $baseCost, $parent) = @_;
+	return unless $from_node;
 	
 	return unless ($config{saveMap_warp});
+	my ($current_map) = split / /, $from_node, 2;
+	return unless $self->isWarpToSaveMapAllowedOnMap($current_map);
 	return unless ($self->isWarpToSaveMapMinDistanceReached());
 	my $saveMapDestination = $self->resolveSaveMapDestination();
 	return unless ($saveMapDestination);
-
-	# set current map vars
-	my $current_map = $self->{source}{map};
-	my $current_x   = $self->{source}{x};
-	my $current_y   = $self->{source}{y};
-	my $from_node   = "$current_map $current_x $current_y";
 	
 	my $dest_map = $saveMapDestination->{map};
 	my $dest_x = $saveMapDestination->{x};
@@ -481,14 +503,21 @@ sub populateOpenListWithWarpToSaveMap {
 	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route";
 
 	my $key = "$from_node=$dest";
+	my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPTOSAVEMAP} || 200);
+	my $zeny = $baseCost->{zeny} || 0;
+	my $zeny_covered_by_tickets = $baseCost->{zeny_covered_by_tickets} || 0;
+	my $amount_of_tickets_used = $baseCost->{amount_of_tickets_used} || 0;
+
+	return if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
+	return if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
 
 	$self->{openlist}{$key} = {
-		parent                   => undef,
-		walk                     => $routeWeights{WARPTOSAVEMAP} || 200,
-		zeny                     => 0,
+		parent                   => $parent,
+		walk                     => $walk,
+		zeny                     => $zeny,
 		allow_ticket             => 0,
-		zeny_covered_by_tickets  => 0,
-		amount_of_tickets_used   => 0,
+		zeny_covered_by_tickets  => $zeny_covered_by_tickets,
+		amount_of_tickets_used   => $amount_of_tickets_used,
 		is_teleportToSaveMap     => 1,
 	};
 
@@ -496,6 +525,20 @@ sub populateOpenListWithWarpToSaveMap {
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'x'} = $dest_x;
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'y'} = $dest_y;
 	$self->{tempPortalsSaveMap}{$dest}{dest}{$dest}{enabled} = 1;
+}
+
+sub isGoCommandAllowedOnMap {
+	my ($self, $map) = @_;
+	return 0 if !$map;
+	return 0 if hashSafeGetValue($self->{noGoCommandMaps}, $map);
+	return 1;
+}
+
+sub isWarpToSaveMapAllowedOnMap {
+	my ($self, $map) = @_;
+	return 0 if !$map;
+	return 0 if hashSafeGetValue($self->{noTeleSpawnMaps}, $map);
+	return 1;
 }
 
 sub isWarpToSaveMapMinDistanceReached {

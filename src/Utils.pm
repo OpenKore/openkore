@@ -109,6 +109,10 @@ sub get_client_solution {
 	$max_x = $field->width  - 1 if $max_x >= $field->width;
 	$max_y = $field->height - 1 if $max_y >= $field->height;
 
+	# Game client uses the same A* Pathfinding as openkore but uses and inadmissible heuristic (Manhattan distance)
+	# To better simulate the client pathfinding we tell openkore's pathfinding to use the same Manhattan heuristic
+	# We also deactivate any custom pathfinding weights (randomFactor, avoidWalls, customWeights)
+
 	my $pf = PathFinding->new(
 		field        => $field,
 		start        => $pos,

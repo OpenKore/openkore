@@ -531,7 +531,14 @@ sub iterate {
 
 		# Initiate NPC conversation.
 		} elsif ( $step =~ /^x/i ) {
-			message "[TalkNPC] $self->{target}: Initiating the talk (sending start)\n", "ai_npcTalk";
+			debug "[TalkNPC] $self->{target}: Initiating the talk (sendTalk)\n", "ai_npcTalk";
+			
+			my $target_pos = $self->{target} ? ($self->{target}{pos} || $self->{target}{pos_to}) : undef;
+			my $char_pos = $char->{pos} || $char->{pos_to};
+			if ($target_pos && $char_pos) {
+				lookAtPositionNaturally($char_pos, $target_pos, $char->{look}{body});
+			}
+
 			$self->{target}->sendTalk;
 
 		# Select an answer
