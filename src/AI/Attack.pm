@@ -683,6 +683,41 @@ sub get_meeting_position_ctx {
 	return $args->{meetingPositionCtx};
 }
 
+# Reads configurable meeting-position score weights while preserving the current behavior as defaults.
+sub load_meeting_position_weights {
+	return {
+		oldSpot               => get_meeting_position_weight('oldSpot',               1),
+		drag                  => get_meeting_position_weight('drag',                  0.75),
+		chase                 => get_meeting_position_weight('chase',                 2),
+		timeToSpot            => get_meeting_position_weight('timeToSpot',            1),
+		tooCloseTooSoon       => get_meeting_position_weight('tooCloseTooSoon',       1),
+		tooFarTooSoon         => get_meeting_position_weight('tooFarTooSoon',         1),
+		stability             => get_meeting_position_weight('stability',             1),
+		wait                  => get_meeting_position_weight('wait',                  5),
+		attackRouteSlack      => get_meeting_position_weight('attackRouteSlack',      8),
+		stagingRouteSlack     => get_meeting_position_weight('stagingRouteSlack',     8),
+		attackRouteDangerZone => get_meeting_position_weight('attackRouteDangerZone', 6),
+		stagingRouteDangerZone => get_meeting_position_weight('stagingRouteDangerZone', 6),
+		stagingSafety         => get_meeting_position_weight('stagingSafety',         2),
+		progress              => get_meeting_position_weight('progress',              1),
+		distanceError         => get_meeting_position_weight('distanceError',         1),
+		runFromTargetSurvive  => get_meeting_position_weight('runFromTargetSurvive',  10),
+		saferStartDistance    => get_meeting_position_weight('saferStartDistance',    3),
+		attackSafeWindow      => get_meeting_position_weight('attackSafeWindow',      5),
+		attackUnsafeWindow    => get_meeting_position_weight('attackUnsafeWindow',    18),
+		stagingSafeWindow     => get_meeting_position_weight('stagingSafeWindow',     2),
+		stagingUnsafeWindow   => get_meeting_position_weight('stagingUnsafeWindow',   12),
+	};
+}
+
+sub get_meeting_position_weight {
+	my ($name, $default) = @_;
+
+	my $key = "attackRoute_weightFactor_$name";
+	return $default unless defined $config{$key} && $config{$key} ne '';
+	return $config{$key};
+}
+
 # Builds the motion/pathfinding snapshot reused while evaluating attack and staging spots.
 sub prepare_meeting_position_context {
 	my ($args, $actor, $target, $attackMaxDistance) = @_;
@@ -713,6 +748,7 @@ sub prepare_meeting_position_context {
 	$ctx->{followDistanceMax}           = $config{followDistanceMax};
 	$ctx->{attackCanSnipe}              = $config{attackCanSnipe};
 	$ctx->{attackMaxDistance}           = $attackMaxDistance;
+	$ctx->{weights}                     = load_meeting_position_weights();
 
 
 
@@ -1141,6 +1177,7 @@ sub evaluate_route_safety_for_spot {
 		? $ctx->{run_safety_extra}
 		: 0;
 	my $required_staging_margin = 0;
+	my $weights = $ctx->{weights};
 
 	my ($min_slack, $worst_idx);
 	my $attack_route_penalty = 0;
@@ -1162,10 +1199,10 @@ sub evaluate_route_safety_for_spot {
 			$worst_idx = $idx;
 		}
 		if ($slack < $required_attack_margin) {
-			$attack_route_penalty += ($required_attack_margin - $slack) * 8;
+			$attack_route_penalty += ($required_attack_margin - $slack) * $weights->{attackRouteSlack};
 		}
 		if ($slack < $required_staging_margin) {
-			$staging_route_penalty += ($required_staging_margin - $slack) * 8;
+			$staging_route_penalty += ($required_staging_margin - $slack) * $weights->{stagingRouteSlack};
 		}
 	}
 
@@ -1177,8 +1214,8 @@ sub evaluate_route_safety_for_spot {
 	) ? 1 : 0;
 
 	if ($crosses_target_danger_zone) {
-		$attack_route_penalty += 6;
-		$staging_route_penalty += 6;
+		$attack_route_penalty += $weights->{attackRouteDangerZone};
+		$staging_route_penalty += $weights->{stagingRouteDangerZone};
 	}
 
 	my $is_attack_route_safe = (defined $min_slack && $min_slack >= $required_attack_margin) ? 1 : 0;
@@ -1205,10 +1242,11 @@ sub score_staging_spot {
 
 	my $ctx = get_meeting_position_ctx($args);
 	return -9999 unless $ctx && $spot;
+	my $weights = $ctx->{weights};
 
 	my $safe_bonus = 0;
 	if ($spot->{route_eval} && defined $spot->{route_eval}{min_slack}) {
-		$safe_bonus = $spot->{route_eval}{min_slack} * 2;
+		$safe_bonus = $spot->{route_eval}{min_slack} * $weights->{stagingSafety};
 	}
 
 	my $dist_penalty = 0;
@@ -1223,11 +1261,13 @@ sub score_staging_spot {
 		$progress_bonus = $current_error - $spot_error;
 		$progress_bonus = 0 if $progress_bonus < 0;
 	}
+	$progress_bonus *= $weights->{progress};
+	$dist_penalty *= $weights->{distanceError};
 
 	my $score =
 		  $safe_bonus
 		+ $progress_bonus
-		- $spot->{time_actor_to_get_to_spot}
+		- ($spot->{time_actor_to_get_to_spot} * $weights->{timeToSpot})
 		- ($spot->{route_eval}{staging_route_penalty} || 0)
 		- $dist_penalty;
 
@@ -2636,9 +2676,6 @@ sub meetingPosition {
 	my $lookahead_count = 5;
 	my @weight_offset = reverse(1..$lookahead_count);
 
-	my $weight_chase = 2;
-	my $weight_safer_start_distance = 3;
-	my $weight_safe_window = 5;
 	my $compare = 0;
 	my $defensive_only = $args->{target_state}{pending_death_2} ? 1 : 0;
 
@@ -2684,6 +2721,7 @@ sub meetingPosition {
 	my $masterPos = $ctx->{masterPos};
 	my $master = $ctx->{master};
 	my $remaining_alive_time = $args->{target_state}{remaining_alive_time};
+	my $weights = $ctx->{weights};
 
 	my %allspots;
 	my @blocks = calcRectArea2($realMyPos->{x}, $realMyPos->{y}, $max_path_dist, 0);
@@ -2693,6 +2731,7 @@ sub meetingPosition {
 
 	my %prohibitedSpots;
 	my %portalRouteProhibitedSpots;
+	# Keep tactical candidates away from occupied cells and portal choke points before we score them.
 	foreach my $prohibited_actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
 		next unless ($prohibited_actor->{pos_to});
 		next unless (defined $prohibited_actor->{ID});
@@ -2789,6 +2828,7 @@ sub meetingPosition {
 			my $too_far_too_soon_penalty = 0;
 
 			if ($snapshot) {
+				# Sample a short future window so we can reject tiles that are only valid for a single frame.
 				foreach my $offset (1..$lookahead_count) {
 					my $off_time = $offset/10;
 					$spot->{targetPos_lookahead}[$offset] = predict_position_after_delta(
@@ -2796,7 +2836,7 @@ sub meetingPosition {
 						$spot->{time_actor_to_get_to_spot} + $off_time
 					);
 
-					my $weight = $weight_offset[$offset];
+					my $weight = $weight_offset[$offset - 1];
 
 
 					if (canAttack($field, $spot, $spot->{targetPos_lookahead}[$offset], $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1) {
@@ -2829,10 +2869,10 @@ sub meetingPosition {
 			$spot->{adjustedBlockDistance_to_target} = adjustedBlockDistance($spot, $targetPosNow);
 			$spot->{getClientDist_to_target} = getClientDist($spot, $targetPosNow);
 			$spot->{can_attack_from_here} = $can_attack_from_spot;
-			$spot->{wait_penalty} = $wait_time_at_spot * 5;
-			$spot->{instability_penalty} = $instability_penalty;
-			$spot->{too_close_too_soon_penalty} = $too_close_too_soon_penalty;
-			$spot->{too_far_too_soon_penalty} = $too_far_too_soon_penalty;
+			$spot->{wait_penalty} = $wait_time_at_spot * $weights->{wait};
+			$spot->{instability_penalty} = $instability_penalty * $weights->{stability};
+			$spot->{too_close_too_soon_penalty} = $too_close_too_soon_penalty * $weights->{tooCloseTooSoon};
+			$spot->{too_far_too_soon_penalty} = $too_far_too_soon_penalty * $weights->{tooFarTooSoon};
 
 			my $is_current_spot = (
 				$spot->{x} == $realMyPos->{x}
@@ -2840,7 +2880,7 @@ sub meetingPosition {
 			) ? 1 : 0;
 
 			my $is_old_spot = 0;
-			if ($spot->{x} == $oldSpot->{x} && $spot->{y} == $oldSpot->{y}) {
+			if ($compare && $spot->{x} == $oldSpot->{x} && $spot->{y} == $oldSpot->{y}) {
 				$is_old_spot = 1;
 			}
 
@@ -2858,11 +2898,12 @@ sub meetingPosition {
 				if ($remaining_alive_time > $spot->{time_target_to_reach_attack_cell}) {
 					next;
 				} else {
-					$attack_runfromtarget_score += 10;
-					$staging_runfromtarget_score += 10;
+					$attack_runfromtarget_score += $weights->{runFromTargetSurvive};
+					$staging_runfromtarget_score += $weights->{runFromTargetSurvive};
 				}
 			
 			} elsif ($runFromTargetActive) {
+				# Defensive kiting gets its own score terms so we can prefer tiles that buy time safely.
 				my $time_until_our_next_damage_hits = $wait_time_at_spot + get_estimate_time_my_next_damage_will_resolve($args, $actor, $target, 0, $spot);
 				my $time_until_enemy_hit = estimate_time_next_target_damage_will_trigger($args, $actor, $target, 0, $spot);
 
@@ -2872,24 +2913,24 @@ sub meetingPosition {
 					if defined $time_until_enemy_hit;
 
 				if (!$being_chased) {
-					my $start_distance_bonus = $spot->{time_target_to_reach_attack_cell} * $weight_safer_start_distance;
+					my $start_distance_bonus = $spot->{time_target_to_reach_attack_cell} * $weights->{saferStartDistance};
 					$attack_runfromtarget_score += $start_distance_bonus;
 					$staging_runfromtarget_score += $start_distance_bonus;
 				}
 
 				if (defined $attack_safe_window) {
 					if ($attack_safe_window < $run_safety_extra) {
-						$attack_runfromtarget_score -= ($run_safety_extra - $attack_safe_window) * 18;
+						$attack_runfromtarget_score -= ($run_safety_extra - $attack_safe_window) * $weights->{attackUnsafeWindow};
 					} else {
-						$attack_runfromtarget_score += $attack_safe_window * $weight_safe_window;
+						$attack_runfromtarget_score += $attack_safe_window * $weights->{attackSafeWindow};
 					}
 				}
 
 				if (defined $staging_safe_window) {
 					if ($staging_safe_window < 0) {
-						$staging_runfromtarget_score -= (0 - $staging_safe_window) * 12;
+						$staging_runfromtarget_score -= (0 - $staging_safe_window) * $weights->{stagingUnsafeWindow};
 					} else {
-						$staging_runfromtarget_score += $staging_safe_window * 2;
+						$staging_runfromtarget_score += $staging_safe_window * $weights->{stagingSafeWindow};
 					}
 				}
 			}
@@ -2900,28 +2941,29 @@ sub meetingPosition {
 			$spot->{chase_bonus} = 0;
 			if ($being_chased && !$runFromTargetActive && $attackMaxDistance <= 1 && defined $spot->{time_target_to_reach_attack_cell}) {
 				my $diff = abs($spot->{time_target_to_reach_attack_cell} - $spot->{time_actor_to_get_to_spot});
-				$spot->{chase_bonus} += ($diff * $weight_chase);
+				$spot->{chase_bonus} += ($diff * $weights->{chase});
 			}
 
 			$spot->{old_spot_bonus} = 0;
 			if ($compare && $is_old_spot) {
-				$spot->{old_spot_bonus} = $readjust_tolerance;
+				$spot->{old_spot_bonus} = $readjust_tolerance * $weights->{oldSpot};
 			}
 
 			$spot->{drag_bonus} = 0;
 			if (((!$ctx->{actor_snapshot}{moving} && $spot->{x} == $ctx->{actor_snapshot}{real_pos}{x} && $spot->{y} == $ctx->{actor_snapshot}{real_pos}{y})
 				|| ($ctx->{actor_snapshot}{moving} && $spot->{x} == $ctx->{actor_snapshot}{final_pos}{x} && $spot->{y} == $ctx->{actor_snapshot}{final_pos}{y})
 				|| ($actor->{pos_to} && $spot->{x} == $actor->{pos_to}{x} && $spot->{y} == $actor->{pos_to}{y}))) {
-				$spot->{drag_bonus} = 0.75;
+				$spot->{drag_bonus} = $weights->{drag};
 			}
 
+			# Route safety is evaluated separately so attack tiles and staging tiles can share the same search pass.
 			$spot->{route_eval} = evaluate_route_safety_for_spot($args, $actor, $target, $spot);
 			next unless $spot->{route_eval}{has_route};
 			my $base_score =
 				  $spot->{old_spot_bonus}
 				+ $spot->{drag_bonus}
 				+ $spot->{chase_bonus}
-				- $spot->{time_actor_to_get_to_spot}
+				- ($spot->{time_actor_to_get_to_spot} * $weights->{timeToSpot})
 				- $spot->{too_close_too_soon_penalty}
 				- $spot->{too_far_too_soon_penalty}
 				- $spot->{instability_penalty}

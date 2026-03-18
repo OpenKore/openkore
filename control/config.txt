@@ -100,6 +100,30 @@ attackUpdateMonsterPos 0
 attackPreferredMinDistance 5
 attackRouteReajustTolerance 2
 
+# Tactical meeting-position score weights.
+# Higher values make that factor influence spot selection more strongly.
+attackRoute_weightFactor_oldSpot 1
+attackRoute_weightFactor_drag 0.75
+attackRoute_weightFactor_chase 2
+attackRoute_weightFactor_timeToSpot 1
+attackRoute_weightFactor_tooCloseTooSoon 1
+attackRoute_weightFactor_tooFarTooSoon 1
+attackRoute_weightFactor_stability 1
+attackRoute_weightFactor_wait 5
+attackRoute_weightFactor_attackRouteSlack 8
+attackRoute_weightFactor_stagingRouteSlack 8
+attackRoute_weightFactor_attackRouteDangerZone 6
+attackRoute_weightFactor_stagingRouteDangerZone 6
+attackRoute_weightFactor_stagingSafety 2
+attackRoute_weightFactor_progress 1
+attackRoute_weightFactor_distanceError 1
+attackRoute_weightFactor_runFromTargetSurvive 10
+attackRoute_weightFactor_saferStartDistance 3
+attackRoute_weightFactor_attackSafeWindow 5
+attackRoute_weightFactor_attackUnsafeWindow 18
+attackRoute_weightFactor_stagingSafeWindow 2
+attackRoute_weightFactor_stagingUnsafeWindow 12
+
 runFromTarget 1
 runFromTargetSafety 0.3
 runFromTarget_maxPathDistance 25
