@@ -879,7 +879,7 @@ sub run {
 		my $handler;
 		$handler = $commands{$switch}{callback} if (exists $commands{$switch} && $commands{$switch});
 
-		if (($switch eq 'pause') && (!$cmdQueue) && AI::state() == AI::AUTO && ($net->getState() == Network::IN_GAME)) {
+		if (($switch eq 'pause') && (!$cmdQueue) && AI::state() == AI::AUTO() && ($net->getState() == Network::IN_GAME)) {
 			$cmdQueue = 1;
 			$cmdQueueStartTime = time;
 			if ($args > 0) {
@@ -890,7 +890,7 @@ sub run {
 			debug "Command queueing started\n", "ai";
 		} elsif (($switch eq 'pause') && ($cmdQueue > 0)) {
 			push(@cmdQueueList, $command);
-		} elsif (($switch eq 'pause') && (AI::state() != AI::AUTO || ($net->getState() != Network::IN_GAME))) {
+		} elsif (($switch eq 'pause') && (AI::state() != AI::AUTO() || ($net->getState() != Network::IN_GAME))) {
 			error T("Cannot use pause command now.\n");
 		} elsif (($handler) && ($cmdQueue > 0) && (!defined binFind(\@cmdQueuePriority,$switch) && ($command ne 'cart') && ($command ne 'storage'))) {
 			push(@cmdQueueList, $command);
@@ -1095,39 +1095,39 @@ sub cmdAI {
 
 	} elsif ($args eq 'on' || $args eq 'auto') {
 		# Set AI to auto mode
-		if (AI::state() == AI::AUTO) {
+		if (AI::state() == AI::AUTO()) {
 			message T("AI is already set to auto mode\n"), "success";
 		} else {
-			AI::state(AI::AUTO);
+			AI::state(AI::AUTO());
 			message T("AI set to auto mode\n"), "success";
 		}
 	} elsif ($args eq 'manual') {
 		# Set AI to manual mode
-		if (AI::state() == AI::MANUAL) {
+		if (AI::state() == AI::MANUAL()) {
 			message T("AI is already set to manual mode\n"), "success";
 		} else {
-			AI::state(AI::MANUAL);
+			AI::state(AI::MANUAL());
 			message T("AI set to manual mode\n"), "success";
 		}
 	} elsif ($args eq 'off') {
 		# Turn AI off
-		if (AI::state() == AI::OFF) {
+		if (AI::state() == AI::OFF()) {
 			message T("AI is already off\n"), "success";
 		} else {
-			AI::state(AI::OFF);
+			AI::state(AI::OFF());
 			message T("AI turned off\n"), "success";
 		}
 
 	} elsif ($args eq '') {
 		# Toggle AI
-		if (AI::state() == AI::AUTO) {
-			AI::state(AI::OFF);
+		if (AI::state() == AI::AUTO()) {
+			AI::state(AI::OFF());
 			message T("AI turned off\n"), "success";
-		} elsif (AI::state() == AI::OFF) {
-			AI::state(AI::MANUAL);
+		} elsif (AI::state() == AI::OFF()) {
+			AI::state(AI::MANUAL());
 			message T("AI set to manual mode\n"), "success";
-		} elsif (AI::state() == AI::MANUAL) {
-			AI::state(AI::AUTO);
+		} elsif (AI::state() == AI::MANUAL()) {
+			AI::state(AI::AUTO());
 			message T("AI set to auto mode\n"), "success";
 		}
 
@@ -1140,11 +1140,11 @@ sub cmdAI {
 sub cmdAIv {
 	# Display current AI sequences
 	my $on;
-	if (AI::state() == AI::OFF) {
+	if (AI::state() == AI::OFF()) {
 		message TF("ai_seq (off) = %s\n", "@ai_seq"), "list";
-	} elsif (AI::state() == AI::MANUAL) {
+	} elsif (AI::state() == AI::MANUAL()) {
 		message TF("ai_seq (manual) = %s\n", "@ai_seq"), "list";
-	} elsif (AI::state() == AI::AUTO) {
+	} elsif (AI::state() == AI::AUTO()) {
 		message TF("ai_seq (auto) = %s\n", "@ai_seq"), "list";
 	}
 	message T("solution\n"), "list" if (AI::args()->{'solution'});
@@ -3061,19 +3061,19 @@ sub cmdSlave {
 
 		} elsif ($args[1] eq 'on' || $args[1] eq 'auto') {
 			# Set AI to auto mode
-			if ($slave->{slave_AI} == AI::AUTO) {
+			if ($slave->{slave_AI} == AI::AUTO()) {
 				message T("Slave AI is already set to auto mode\n"), "success";
 			} else {
-				$slave->{slave_AI} = AI::AUTO;
+				$slave->{slave_AI} = AI::AUTO();
 				undef $slave->{slave_AI_forcedOff};
 				message T("Slave AI set to auto mode\n"), "success";
 			}
 		} elsif ($args[1] eq 'manual') {
 			# Set AI to manual mode
-			if ($slave->{slave_AI} == AI::MANUAL) {
+			if ($slave->{slave_AI} == AI::MANUAL()) {
 				message T("Slave AI is already set to manual mode\n"), "success";
 			} else {
-				$slave->{slave_AI} = AI::MANUAL;
+				$slave->{slave_AI} = AI::MANUAL();
 				$slave->{slave_AI_forcedOff} = 1;
 				message T("Slave AI set to manual mode\n"), "success";
 			}
@@ -3089,16 +3089,16 @@ sub cmdSlave {
 
 		} elsif ($args[1] eq '') {
 			# Toggle AI
-			if ($slave->{slave_AI} == AI::AUTO) {
+			if ($slave->{slave_AI} == AI::AUTO()) {
 				undef $slave->{slave_AI};
 				$slave->{slave_AI_forcedOff} = 1;
 				message T("Slave AI turned off\n"), "success";
 			} elsif (!$slave->{slave_AI}) {
-				$slave->{slave_AI} = AI::MANUAL;
+				$slave->{slave_AI} = AI::MANUAL();
 				$slave->{slave_AI_forcedOff} = 1;
 				message T("Slave AI set to manual mode\n"), "success";
-			} elsif ($slave->{slave_AI} == AI::MANUAL) {
-				$slave->{slave_AI} = AI::AUTO;
+			} elsif ($slave->{slave_AI} == AI::MANUAL()) {
+				$slave->{slave_AI} = AI::AUTO();
 				undef $slave->{slave_AI_forcedOff};
 				message T("Slave AI set to auto mode\n"), "success";
 			}
@@ -8784,4 +8784,5 @@ sub cmdEden {
 }
 
 1;
+
 

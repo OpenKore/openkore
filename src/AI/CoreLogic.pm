@@ -57,7 +57,7 @@ sub iterate {
 
 	Plugins::callHook('AI_start', {state => AI::state()});
 
-	return if AI::state() == AI::OFF;
+	return if AI::state() == AI::OFF();
 	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{welcomeText})) {
 		$messageSender->injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
 		$sentWelcomeMessage = 1;
@@ -85,7 +85,7 @@ sub iterate {
 	Benchmark::begin("AI (part 1.3)") if DEBUG;
 	processSkillUse();
 	processAutoCommandUse();
-	processAutoAttack() if AI::state() == AI::AUTO;
+	processAutoAttack() if AI::state() == AI::AUTO();
 	$char->processTask("route", onError => sub {
 		my ($task, $error) = @_;
 		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
@@ -112,7 +112,7 @@ sub iterate {
 
 
 	Misc::checkValidity("AI part 1");
-	return unless AI::state() == AI::AUTO;
+	return unless AI::state() == AI::AUTO();
 
 
 	##### AUTOMATIC AI STARTS HERE #####
@@ -640,7 +640,7 @@ sub processEscapeUnknownMaps {
 	# portal. With this, kore should automaticly go into the portal on the other side
 	# Todo: Make kore do a random walk searching for portal if there's no portal arround.
 
-	if (AI::action() eq "escape" && AI::state() == AI::AUTO) {
+	if (AI::action() eq "escape" && AI::state() == AI::AUTO()) {
 		my $skip = 0;
 		if (timeOut($timeout{ai_route_escape}) && $timeout{ai_route_escape}{time}){
 			AI::dequeue();

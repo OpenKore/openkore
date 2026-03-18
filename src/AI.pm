@@ -610,7 +610,7 @@ sub ai_skillUse {
 		$args{lv} = $lvl;
 	}
 	
-	if ($skill->getOwnerType == Skill::OWNER_CHAR) {
+	if ($skill->getOwnerType == Skill::OWNER_CHAR()) {
 		AI::queue("skill_use", \%args);
 	} else {
 		$owner->queue("skill_use", \%args);
@@ -633,8 +633,8 @@ sub ai_skillUse2 {
 		$lvl,
 		$maxCastTime,
 		$minCastTime,
-		$skill->getTargetType == Skill::TARGET_LOCATION ? (@{$target->{pos_to}}{qw(x y)})
-			: $skill->getTargetType == Skill::TARGET_SELF ? ($skill->getOwner->{ID}, undef)
+		$skill->getTargetType == Skill::TARGET_LOCATION() ? (@{$target->{pos_to}}{qw(x y)})
+			: $skill->getTargetType == Skill::TARGET_SELF() ? ($skill->getOwner->{ID}, undef)
 			: ($target->{ID}, undef),
 		$tag, undef, $waitBeforeUse, $prefix, $isStartSkill
 	)

@@ -599,7 +599,7 @@ sub processChatCommand {
 
 # Automatically reply to a chat message
 sub processChatResponse {
-	return unless (AI::state() == AI::AUTO);
+	return unless (AI::state() == AI::AUTO());
 	my $cmd = shift;
 	my $msg = lc $cmd->{msg};
 	my $reply;
@@ -651,4 +651,5 @@ sub processChatResponse {
 }
 
 1;
+
 

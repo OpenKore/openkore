@@ -164,7 +164,7 @@ sub iterate {
 	
 	return if $slave->processClientSuspend;
 	
-	return if ($slave->{slave_AI} == AI::OFF);
+	return if ($slave->{slave_AI} == AI::OFF());
 	
 	$slave->{master_dist} = $slave->blockDistance_master;
 
@@ -181,7 +181,7 @@ sub iterate {
 	});
 	$slave->processTask('move');
 
-	return unless ($slave->{slave_AI} == AI::AUTO);
+	return unless ($slave->{slave_AI} == AI::AUTO());
 
 	##### AUTOMATIC AI STARTS HERE #####
 	

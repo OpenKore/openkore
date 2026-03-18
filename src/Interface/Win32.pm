@@ -790,15 +790,15 @@ sub openMap {
 #
 #######
 sub menuAIAuto {
-	AI::state(AI::AUTO);
+	AI::state(AI::AUTO());
 }
 
 sub menuAIManual {
-	AI::state(AI::MANUAL);
+	AI::state(AI::MANUAL());
 }
 
 sub menuAIOff {
-	AI::state(AI::OFF);
+	AI::state(AI::OFF());
 }
 
 sub menuRespawn {
