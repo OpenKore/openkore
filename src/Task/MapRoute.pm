@@ -272,8 +272,7 @@ sub iterate {
 						avoidWalls => $self->{avoidWalls},
 						randomFactor => $self->{randomFactor},
 						useManhattan => $self->{useManhattan},
-						targetNpcPos => 1,
-						solution => \@solution
+						targetNpcPos => 1
 					);
 					$self->setSubtask($task);
 
@@ -368,8 +367,7 @@ sub iterate {
 								maxTime => $self->{maxTime},
 								avoidWalls => $self->{avoidWalls},
 								randomFactor => $self->{randomFactor},
-								useManhattan => $self->{useManhattan},
-								solution => \@solution
+								useManhattan => $self->{useManhattan}
 							);
 							$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 							$self->setSubtask($task);
@@ -493,8 +491,7 @@ sub iterate {
 				distFromGoal => $min_npc_dist,
 				avoidWalls => $self->{avoidWalls},
 				randomFactor => $self->{randomFactor},
-				useManhattan => $self->{useManhattan},
-				solution => \@solution
+				useManhattan => $self->{useManhattan}
 			);
 			$self->setSubtask($task);
 
@@ -532,8 +529,7 @@ sub iterate {
 				randomFactor => $self->{randomFactor},
 				useManhattan => $self->{useManhattan},
 				distFromGoal => $self->{distFromGoal},
-				pyDistFromGoal => $self->{pyDistFromGoal},
-				solution => \@solution
+				pyDistFromGoal => $self->{pyDistFromGoal}
 			);
 			$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 			$self->setSubtask($task);
@@ -717,8 +713,7 @@ sub iterate {
 						maxTime => $self->{maxTime},
 						avoidWalls => $self->{avoidWalls},
 						randomFactor => $self->{randomFactor},
-						useManhattan => $self->{useManhattan},
-						solution => \@solution
+						useManhattan => $self->{useManhattan}
 					);
 					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 					$self->setSubtask($task);

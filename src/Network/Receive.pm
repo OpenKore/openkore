@@ -1293,7 +1293,7 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -2098,6 +2098,7 @@ sub actor_display {
 	$actor->{pos_to} = {%coordsTo};
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
+	$actor->{solution} = [];
 
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
@@ -4101,6 +4102,8 @@ sub monster_hp_info {
 	if ($monster) {
 		$monster->{hp} = $args->{hp};
 		$monster->{hp_max} = $args->{hp_max};
+		$monster->{hp_percent} = $monster->{hp} * 100 / $monster->{hp_max};
+		$monster->{hp_lastUpdateTime} = time;
 
 		debug TF("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage";
 	}
@@ -5528,13 +5531,13 @@ sub character_moves {
 	makeCoordsFromTo($char->{pos}, $char->{pos_to}, $args->{coords});
 	my $dist = blockDistance($char->{pos}, $char->{pos_to});
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
-	$char->{time_move} = time;
 
 	my $speed = ($char->{walk_speed} || 0.12);
 	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
 	my $time = calcTimeFromSolution($my_solution, $speed);
-	$char->{solution} = $my_solution;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = $time;
+	$char->{solution} = $my_solution;
 
 	# Correct the direction in which we're looking
 	my (%vec, $degree);
@@ -6037,6 +6040,14 @@ sub emoticon {
 	} elsif (my $monster = $monstersList->getByID($args->{ID}) || $slavesList->getByID($args->{ID})) {
 		my $dist = distance($char->{pos_to}, $monster->{pos_to});
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+
+		if (exists $monster->{casting} && defined $monster->{casting} && $monster->{casting}) {
+			my $skillID = $monster->{casting}{skill}->getIDN();
+			if ($skillID == 197 || $skillID == 474) {
+				debug TF("[Monster used Skill Emotion] %s: deleting cast state from monster\n", $monster->nameIdx);
+				delete $monster->{casting};
+			}
+		}
 
 		# Translation Comment: "[dist=$dist] $monster->name ($monster->{binID}): $emotion\n"
 		message TF("[dist=%s] %s %s (%d): %s\n", $dist, $monster->{actorType}, $monster->name, $monster->{binID}, $emotion), "emotion";
@@ -7193,11 +7204,11 @@ sub high_jump {
 
 	$actor->{pos} = {x => $args->{x}, y => $args->{y}};
 	$actor->{pos_to} = {x => $args->{x}, y => $args->{y}};
-
-	message TF("%s instantly moved to %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill', 2;
-
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = 0;
+	$actor->{solution} = [];
+
+	message TF("%s instantly moved to %d, %d\n", $actor->nameString, $actor->{pos_to}{x}, $actor->{pos_to}{y}), 'skill', 2;
 }
 
 sub hp_sp_changed {
@@ -7266,7 +7277,7 @@ sub map_change {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -7320,7 +7331,7 @@ sub map_changed {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
-	$char->{time_move} = 0;
+	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
 	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -8233,6 +8244,7 @@ sub actor_movement_interrupted {
 	$actor->{pos_to} = {%coords};
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = 0;
+	$actor->{solution} = [];
 	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
 		$actor->{sitting} = 0;
 	}

@@ -436,6 +436,7 @@ sub canMove {
 		return 0;
 	}
 
+	# Rathena: // Official number of walkable cells is 14 if and only if there is an obstacle between.
 	# If there are obstacles and OFFICIAL_WALKPATH is defined (which is by default) then calculate a client pathfinding
 	my $solution = get_client_solution($self, $from, $to);
 	my $dist_path = scalar @{$solution};
@@ -444,6 +445,7 @@ sub canMove {
 		return 0;
 	}
 
+	# As stated above max walk path for obstructed paths is 14
 	# Pathfinding always returns the original cell in the solution, so remove 1 from it (or compare to 15 (14+1))
 	#$dist_path -= 1;
 	if ($dist_path > 15) {
