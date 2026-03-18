@@ -12,7 +12,7 @@ use Modules 'register';
 use Task::SitStand;
 use base 'Task::WithSubtask';
 use Globals qw($messageSender $net %timeout);
-use Log qw(debug);
+use Log qw(debug warning);
 use Translation qw(T TF);
 use Utils qw(timeOut);
 
@@ -45,6 +45,8 @@ sub new {
 	$self->{hooks} = Plugins::addHooks(
 		['packet/map_changed' => sub { $weak->{mapChanged} = 1 }],
 		['packet/map_change' => sub { $weak->{mapChanged} = 1 }],
+		['packet_useitem' => sub { $weak->onItemUseAck(@_) if $weak }],
+		['npc_chat' => sub { $weak->onNpcChat(@_) if $weak }],
 	);
 
 	$self
@@ -95,6 +97,8 @@ sub iterate {
 
 	} elsif (timeOut($self->{retry})) {
 		debug "Teleport $self->{actor} - (re)trying\n", "teleport";
+		my $item = $self->getInventoryItem;
+
 		if (my $chat_command = $self->chatCommand) { # 1 - try to use chat command
 			debug "Teleport $self->{actor} - Using chat command to teleport : $chat_command\n", "teleport";
 			Misc::sendMessage($messageSender, "c", $chat_command);
@@ -106,20 +110,41 @@ sub iterate {
 			debug "Teleport $self->{actor} - Equipping item to teleport\n", "teleport";
 			$self->useEquip;
 
-		} elsif($self->{actor}->{sitting}) { # 3 check if actor is sitting
+		} elsif ($item && !$self->isTeleportItemEquipRequirementSatisfied($item)) { # 3 - check whether item-specific equip requirement is met
+			if ($self->canEquipTeleportItem($item)) {
+				debug "Teleport $self->{actor} - Equipping teleport item before use: $item->{name}\n", "teleport";
+				$self->equipTeleportItem($item);
+			} else {
+				debug "Teleport $self->{actor} - Teleport item cannot be equipped right now: $item->{name}\n", "teleport";
+			}
+
+		} elsif($self->{actor}->{sitting}) { # 4 check if actor is sitting
 			my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
 			$self->setSubtask($task);
 
-		} elsif($self->canUseSkill) { # 4 - try to use teleport skill
+		} elsif($self->canUseSkill) { # 5 - try to use teleport skill
 			debug "Teleport $self->{actor} - Using skill to teleport\n", "teleport";
 			$self->useSkill;
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
-		} elsif(my $item = $self->getInventoryItem) { # 5 - try to use item
+		} elsif($item) { # 6 - try to use item
 			debug "Using item to teleport : $item->{name}\n", "teleport";
+			
+			if ($self->isTeleportItemOnCooldown($item)) {
+				debug "Teleport $self->{actor} - Teleport item still on cooldown: $item->{name}\n", "teleport";
+				$self->{retry}{time} = time;
+				return;
+			}
+			
 			# We have Fly Wing/Butterfly Wing.
 			# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 			if (timeOut($timeout{ai_teleport})) {
+				$self->{pendingTeleportItemUse} = {
+					index => $item->{ID},
+					nameID => $item->{nameID},
+					name => $item->{name},
+					time => time,
+				};
 				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
 				if ($self->{teleportItemRule} && $self->{teleportItemRule}{timeoutSec}) {
 					$self->{actor}{last_teleport_item_use}{$self->{teleportItemRule}{itemID}} = time;
@@ -136,6 +161,77 @@ sub iterate {
 
 		$self->{retry}{time} = time;
 	}
+}
+
+sub canEquipTeleportItem {
+	my ($self, $item) = @_;
+	return 0 unless $item;
+	return 0 unless $item->equippable;
+	return 0 unless $item->{type_equip};
+	return 0 unless $item->{identified};
+	return 1;
+}
+
+sub equipTeleportItem {
+	my ($self, $item) = @_;
+	return unless ($item && $self->canEquipTeleportItem($item));
+	$item->equip;
+	$self->{retry}{time} = time;
+}
+
+sub isTeleportItemEquipRequirementSatisfied {
+	my ($self, $item) = @_;
+	return 0 unless $item;
+	return 1 unless ($item->equippable && $item->{type_equip});
+	return $item->{equipped} ? 1 : 0;
+}
+
+sub isTeleportItemOnCooldown {
+	my ($self, $item) = @_;
+	return 0 unless $item;
+	my $entry = $self->{actor}{last_teleport_item_use}{$item->{nameID}};
+	return 0 unless ($entry && $entry->{timeout});
+	return !timeOut($entry->{time}, $entry->{timeout});
+}
+
+sub onItemUseAck {
+	my ($self, undef, $args) = @_;
+	my $pending = $self->{pendingTeleportItemUse} or return;
+	return if (!$args || !defined $args->{serverIndex});
+	return if ($args->{serverIndex} ne $pending->{index});
+
+	if ($args->{success}) {
+		$self->{actor}{last_teleport_item_use}{$pending->{nameID}} = {
+			time => time,
+			timeout => $self->{actor}{last_teleport_item_use}{$pending->{nameID}}{timeout} || 0,
+		};
+	} else {
+		debug "Teleport $self->{actor} - Teleport item use failed: $pending->{name}\n", "teleport";
+	}
+	delete $self->{pendingTeleportItemUse};
+}
+
+sub onNpcChat {
+	my ($self, undef, $args) = @_;
+	my $message = $args->{message} // return;
+	my $pending = $self->{pendingTeleportItemUse} || return;
+	return unless $message =~ /Item Failed/i;
+	return unless $message =~ /\Q[$pending->{name}]\E/i;
+
+	my $seconds;
+	if ($message =~ /Wait\s+([0-9]+(?:\.[0-9]+)?)\s*minutes?/i) {
+		$seconds = $1 * 60;
+	} elsif ($message =~ /Wait\s+([0-9]+(?:\.[0-9]+)?)\s*seconds?/i) {
+		$seconds = $1;
+	}
+	return unless defined $seconds;
+
+	$self->{actor}{last_teleport_item_use}{$pending->{nameID}} = {
+		time => time,
+		timeout => $seconds,
+	};
+	warning TF("Teleport item %s is cooling down for %.1f minutes.\n", $pending->{name}, $seconds / 60), "teleport";
+	delete $self->{pendingTeleportItemUse};
 }
 
 sub subtaskDone {

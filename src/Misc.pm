@@ -3659,7 +3659,7 @@ sub canUseTeleport {
 	# not in game
 	return 0 if $net && $net->getState != Network::IN_GAME; # $net check is to not crash test
 
-	# 1 - check for items
+	# 1 - check for usable items
 	my $item;
 	if($use_lvl == 1) {
 		if ($config{teleportAuto_item1}) {
@@ -3668,14 +3668,30 @@ sub canUseTeleport {
 		}
 		$item = getFlyWing() unless $item;
 	} else {
-		 if ($config{teleportAuto_item2}) {
+		if ($config{teleportAuto_item2}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item2});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 		}
 		$item = getButterflyWing() unless $item;
 	}
 
-	return 1 if $item;
+	if ($item) {
+		my $cooldown = $char->{last_teleport_item_use}{$item->{nameID}};
+		my $cooldownActive = (
+			$cooldown
+			&& $cooldown->{timeout}
+			&& !timeOut($cooldown->{time}, $cooldown->{timeout})
+		);
+
+		my $equipRequirementSatisfied = (
+			!$item->equippable
+			|| !$item->{type_equip}
+			|| $item->{equipped}
+			|| $item->{identified}
+		);
+
+		return 1 if (!$cooldownActive && $equipRequirementSatisfied);
+	}
 	
 	# Mute prevents talking, usage of skills, and commands.
 	return 0 if $char->{'muted'};
