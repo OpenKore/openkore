@@ -484,6 +484,12 @@ sub modifyPacketIn {
 
 	if ($switch eq "02AE") {
 		$msg = "";
+	} elsif ($switch eq "0139" && $config{XKore_blockPacket_monster_ranged_attack}) {
+		# In XKore3 the official client reacts to this packet by automatically
+		# issuing a move (035F). We still handle 0139 inside OpenKore, but we do
+		# not want to forward it to the client.
+		debug T("[modifyPacketIn] Blocking 0139 because XKore_blockPacket_monster_ranged_attack is 1.\n"), "connection";
+		return undef;
 	}
 
 	# packet replay check: reset status for every different packet received

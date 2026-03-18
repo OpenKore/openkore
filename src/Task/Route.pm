@@ -107,7 +107,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set(qw(targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
+	my $allowed = new Set(qw(targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget singleMovePacket solution));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -143,7 +143,7 @@ sub new {
 		$self->{useManhattan} = 0;
 	}
 	
-	$self->{solution} = [];
+	$self->{solution} = $args{solution} ? [@{$args{solution}}] : [];
 	$self->{stage} = NOT_INITIALIZED;
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
@@ -173,8 +173,50 @@ sub destCoords {
 sub activate {
 	my ($self) = @_;
 	$self->SUPER::activate();
-	$self->{stage} = CALCULATE_ROUTE;
+	$self->{stage} = (@{$self->{solution}} ? ROUTE_SOLUTION_READY : CALCULATE_ROUTE);
 	$self->{time_start} = time;
+}
+
+sub prepare_solution_for_walk_stage {
+	my ($self, $calc_pos, $pos_to) = @_;
+
+	@{$self->{last_pos}}{qw(x y)} = @{$calc_pos}{qw(x y)};
+	@{$self->{last_pos_to}}{qw(x y)} = @{$pos_to}{qw(x y)};
+	$self->{start} = 1;
+	$self->{confirmed_correct_vector} = 0;
+
+	if ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
+		$self->{anyDistFromGoal} = 1;
+
+		my $current_i = $#{$self->{solution}};
+
+		while (1) {
+			my $dest = $self->{solution}[$current_i];
+
+			if ($self->{distFromGoal}) {
+				if (blockDistance($dest, $self->{dest}{pos}) <= $self->{distFromGoal}) {
+					$self->{solution}[$current_i]{closeToEnd} = 1;
+				} else {
+					$self->{solution}[$current_i]{closeToEnd} = 0;
+					last;
+				}
+
+			} elsif ($self->{pyDistFromGoal}) {
+				if (distance($dest, $self->{dest}{pos}) <= $self->{pyDistFromGoal}) {
+					$self->{solution}[$current_i]{closeToEnd} = 1;
+				} else {
+					$self->{solution}[$current_i]{closeToEnd} = 0;
+					last;
+				}
+			}
+			last if ($current_i == 0);
+		} continue {
+			$current_i--;
+		}
+
+	} else {
+		$self->{anyDistFromGoal} = 0;
+	}
 }
 
 # Overrided method.
@@ -277,43 +319,7 @@ sub iterate {
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $calc_pos, $self->{dest}{pos}, $self->{avoidWalls}, $self->{randomFactor}, $self->{useManhattan}, 1)) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 
-			@{$self->{last_pos}}{qw(x y)} = @{$calc_pos}{qw(x y)};
-			@{$self->{last_pos_to}}{qw(x y)} = @{$pos_to}{qw(x y)};
-			$self->{start} = 1;
-			$self->{confirmed_correct_vector} = 0;
-			
-			if ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
-				$self->{anyDistFromGoal} = 1;
-				
-				my $current_i = $#{$self->{solution}};
-				
-				while (1) {
-					my $dest = $self->{solution}[$current_i];
-					
-					if ($self->{distFromGoal}) {
-						if (blockDistance($dest, $self->{dest}{pos}) <= $self->{distFromGoal}) {
-							$self->{solution}[$current_i]{closeToEnd} = 1;
-						} else {
-							$self->{solution}[$current_i]{closeToEnd} = 0;
-							last;
-						}
-						
-					} elsif ($self->{pyDistFromGoal}) {
-						if (distance($dest, $self->{dest}{pos}) <= $self->{pyDistFromGoal}) {
-							$self->{solution}[$current_i]{closeToEnd} = 1;
-						} else {
-							$self->{solution}[$current_i]{closeToEnd} = 0;
-							last;
-						}
-					}
-					last if ($current_i == 0);
-				} continue {
-					$current_i--;
-				}
-				
-			} else {
-				$self->{anyDistFromGoal} = 0;
-			}
+			$self->prepare_solution_for_walk_stage($calc_pos, $pos_to);
 
 			debug "Route $self->{actor} Solution Ready! Found path on ".$self->{dest}{map}->baseName." from ".$calc_pos->{x}." ".$calc_pos->{y}." to ".$self->{dest}{pos}{x}." ".$self->{dest}{pos}{y}.". Size: ".@{$self->{solution}}." steps.\n", "route";
 
@@ -327,6 +333,12 @@ sub iterate {
 	} elsif ($self->{stage} == ROUTE_SOLUTION_READY) {
 		my $begin = time;
 		my $solution = $self->{solution};
+		my $calc_pos = calcPosFromPathfinding($field, $self->{actor});
+		my $pos_to = $self->{actor}{pos_to};
+
+		if (!$self->{start}) {
+			$self->prepare_solution_for_walk_stage($calc_pos, $pos_to);
+		}
 		
 		# TODO: What is this Fractional route motion bellow?
 		if ($self->{maxDistance} > 0 && $self->{maxDistance} < 1) {
@@ -348,6 +360,7 @@ sub iterate {
 		undef $self->{last_best_pos_to_step};
 		undef $self->{next_pos};
 		undef $self->{time_step};
+		undef $self->{singleMovePacketSent};
 
 		$self->{stage} = WALK_ROUTE_SOLUTION;
 
@@ -362,6 +375,11 @@ sub iterate {
 	} elsif ($self->{stage} == WALK_ROUTE_SOLUTION) {
 		my $solution = $self->{solution};
 		$self->{route_out_time} = time if !exists $self->{route_out_time};
+
+		if ($self->{singleMovePacket}) {
+			$self->iterateSingleMovePacket();
+			return;
+		}
 
 		if (!defined $self->{step_index}) {
 			$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'};
@@ -728,6 +746,89 @@ sub iterate {
 		# This statement should never be reached.
 		debug "Unexpected route stage [".$self->{stage}."] occured.\n", "route";
 		$self->setError(UNEXPECTED_STATE, "Unexpected route stage [".$self->{stage}."] occured.\n");
+	}
+}
+
+sub finishRouteSuccess {
+	my ($self) = @_;
+
+	if ($self->{notifyUponArrival}) {
+		message TF("%s reached the destination.\n", $self->{actor}), "route";
+	} else {
+		debug "$self->{actor} reached the destination.\n", "route";
+	}
+
+	Plugins::callHook('route', {status => 'success'});
+	$self->setDone();
+}
+
+sub failSingleMoveRouteStuck {
+	my ($self, $current_calc_pos, $dest) = @_;
+
+	my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).",
+		$self->{dest}{map}->baseName, @{$self->{actor}{pos_to}}{qw(x y)},
+		$current_calc_pos->{x}, $current_calc_pos->{y}, $dest->{x}, $dest->{y}
+	);
+	$msg .= T(" Teleporting to unstuck.") if ($config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'});
+	$msg .= "\n";
+	warning $msg, "route";
+	ai_useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
+	$self->setError(STUCK, T("Stuck during route."));
+	Plugins::callHook('route', {status => 'stuck'});
+}
+
+sub iterateSingleMovePacket {
+	my ($self) = @_;
+
+	my $solution = $self->{solution};
+	return unless $solution && @{$solution};
+
+	my $dest = $solution->[-1];
+	my $current_calc_pos = calcPosFromPathfinding($field, $self->{actor});
+	my %current_pos = %{$self->{actor}{pos}};
+	my %current_pos_to = %{$self->{actor}{pos_to}};
+
+	if ($current_calc_pos->{x} == $dest->{x} && $current_calc_pos->{y} == $dest->{y}) {
+		$self->finishRouteSuccess();
+		return;
+	}
+
+	if ($self->{lastStep} == 1 && !$self->{sendAttackWithMove} && $self->{meetingSubRoute}) {
+		debug "[Route - SingleMovePacket] Also ending task now ang giving back control to AI::Attack.\n", "route";
+		Plugins::callHook('route', {status => 'success'});
+		$self->setDone();
+		return;
+	}
+
+	if (!$self->{singleMovePacketSent}) {
+		my %hookArgs = (
+			args => $self,
+			pos  => $current_calc_pos,
+		);
+		Plugins::callHook("route_before_move", \%hookArgs);
+		return if ($hookArgs{return});
+
+		@{$self->{next_pos}}{qw(x y)} = @{$dest}{qw(x y)};
+		@{$self->{last_pos}}{qw(x y)} = @current_pos{qw(x y)};
+		@{$self->{last_pos_to}}{qw(x y)} = @current_pos_to{qw(x y)};
+		@{$self->{last_current_calc_pos}}{qw(x y)} = @{$current_calc_pos}{qw(x y)};
+		$self->{time_step} = time;
+		$self->{singleMovePacketSent} = 1;
+		$self->{lastStep} = 1;
+
+		$self->setMove();
+
+		return;
+	}
+
+	if ($self->{last_current_calc_pos}{x} != $current_calc_pos->{x} || $self->{last_current_calc_pos}{y} != $current_calc_pos->{y}) {
+		@{$self->{last_current_calc_pos}}{qw(x y)} = @{$current_calc_pos}{qw(x y)};
+		$self->{time_step} = time;
+		return;
+	}
+
+	if (defined $self->{time_step} && timeOut($self->{time_step}, $timeout{ai_route_unstuck}{timeout})) {
+		$self->failSingleMoveRouteStuck($current_calc_pos, $dest);
 	}
 }
 

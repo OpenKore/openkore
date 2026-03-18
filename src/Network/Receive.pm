@@ -2669,7 +2669,7 @@ sub actor_action {
 
 		Misc::checkValidity("actor_action (attack 1)");
 
-		updateDamageTables($args->{sourceID}, $args->{targetID}, $totalDamage);
+		updateDamageTables($args->{sourceID}, $args->{targetID}, $totalDamage, 1);
 
 		Misc::checkValidity("actor_action (attack 2)");
 
@@ -2678,6 +2678,36 @@ sub actor_action {
 		my $verb = $source->verb('attack', 'attacks');
 
 		$target->{sitting} = 0 unless $args->{type} == ACTION_ATTACK_NOMOTION || $args->{type} == ACTION_ATTACK_MULTIPLE_NOMOTION || $totalDamage == 0;
+
+		my $dmgTime = time;
+
+		# Time until src can do anything again, moving, attacking, using skills (AttackMotion)
+		# Time until src can actually attack again is AttackDelay, not sent by the server
+		$source->{lastAttackAttackMotion} = $args->{src_speed}/1000;
+		$source->{lastAttackTime} = $dmgTime;
+		
+		# Time until target can do anything again, moving, attacking, using skills (DamageMotion)
+		# TODO: check if it is 0 when endure is active
+		$target->{lastRecvDamageMotion} = $args->{dst_speed}/1000;
+		$target->{lastRecvAttackTime} = $dmgTime;
+		$target->{lastRecvAttackTime_resolve_calc} = $dmgTime + $source->{lastAttackAttackMotion};
+		$target->{lastRecvAttackDamage} = $totalDamage;
+		if (!exists $target->{pendingDeathTimer}) {
+			if (
+				(defined $target->{hp_max} && (($target->{deltaHp} + $target->{hp_max}) <= 0)) ||
+				(defined $target->{hp} && ($target->{hp} <= $totalDamage))
+			) {
+				Log::warning "[actor_action] Target $target will die when damage resolves in [$source->{lastAttackAttackMotion}] secs.\n";
+				$target->{pendingDeathTimer} = $target->{lastRecvAttackTime_resolve_calc};
+			}
+		} else {
+			if (
+				defined $target->{hp_max} && (($target->{deltaHp} + $target->{hp_max}) > 0)
+			) {
+				Log::warning "[actor_action] Target $target will no longer die when damage resolves as it healed.\n";
+				delete $target->{pendingDeathTimer};
+			}
+		}
 
 		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
 		Plugins::callHook('packet_attack', {
@@ -2693,6 +2723,7 @@ sub actor_action {
 		Misc::checkValidity("actor_action (attack 3)");
 
 		if ($args->{sourceID} eq $accountID) {
+			$source->{lastAttackTarget} = $args->{targetID};
 			message("$status $msg", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 			if ($startedattack) {
 				$monstarttime = time();
