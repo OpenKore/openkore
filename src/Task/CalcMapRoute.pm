@@ -530,6 +530,9 @@ sub populateOpenListWithWarpToSaveMap {
 
 	my ($current_map) = split / /, $from_node, 2;
 	return unless $self->isWarpToSaveMapAllowedOnMap($current_map);
+	
+	for my $entry ($self->getWarpItemCandidates()) {
+		
 	return unless ($self->isWarpToSaveMapMinDistanceReached());
 	my $saveMapDestination = $self->resolveSaveMapDestination();
 	return unless ($saveMapDestination);
@@ -542,6 +545,7 @@ sub populateOpenListWithWarpToSaveMap {
 
 	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route";
 
+	next if ($dest eq $from_node);
 	my $key = "$from_node=$dest";
 	my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPTOSAVEMAP} || 200);
 	my $zeny = $baseCost->{zeny} || 0;
@@ -634,7 +638,7 @@ sub getWarpItemCandidates {
 
 		my $item = $char->inventory->getByNameID($entry->{itemID});
 		next unless $item;
-		next unless Misc::isTeleportItemEquipRequirementSatisfied($entry);
+		next unless Misc::canTeleportItemEquipRequirementBeSatisfied($entry);
 
 		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
 			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};
@@ -643,6 +647,15 @@ sub getWarpItemCandidates {
 		push @matches, $entry;
 	}
 	return @matches;
+}
+
+sub isWarpItemRoutingDestinationValid {
+	my ($self, $entry) = @_;
+	return 0 unless ($entry && defined $entry->{destMap} && $entry->{destMap} ne '');
+
+	my $destMap = lc($entry->{destMap});
+	return 0 if ($destMap eq '*' || $destMap eq 'any' || $destMap eq 'save');
+	return 1;
 }
 
 sub isWarpItemRoutingDestinationValid {

@@ -23,6 +23,7 @@ use Task::WithSubtask;
 use Task::Route;
 use Task::CalcMapRoute;
 use Task::TalkNPC;
+use Task::SitStand;
 use base qw(Task::WithSubtask);
 use Translation qw(T TF);
 use Log qw(message debug warning error);
@@ -224,14 +225,15 @@ sub iterate {
 		my $timeoutSec = $self->{mapSolution}[0]{teleportItemTimeoutSec} || 0;
 		my $requiredEquipSlot = $self->{mapSolution}[0]{teleportItemRequiredEquipSlot};
 		my $requiredEquipItemID = $self->{mapSolution}[0]{teleportItemRequiredEquipItemID};
-		my $equipRequirementSatisfied = Misc::isTeleportItemEquipRequirementSatisfied({
+		my $equipEntry = {
 			requiredEquipSlot => $requiredEquipSlot,
 			requiredEquipItemID => $requiredEquipItemID,
-		});
+		};
+
 		if ($item && $timeoutSec && $self->{actor}{last_teleport_item_use}{$itemID}) {
 			$item = undef if (time - $self->{actor}{last_teleport_item_use}{$itemID} < $timeoutSec);
 		}
-		$item = undef unless $equipRequirementSatisfied;
+		$item = undef unless Misc::canTeleportItemEquipRequirementBeSatisfied($equipEntry);
 
 		if (!$item) {
 			debug "MapRoute - Cannot use teleport item warp now, recalculating\n", "route";
@@ -239,10 +241,26 @@ sub iterate {
 			$self->initMapCalculator();
 
 		} else {
+			if ($self->{actor}{sitting}) {
+				my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
+				$self->setSubtask($task);
+				return;
+			}
+
+			if (!Misc::isTeleportItemEquipRequirementSatisfied($equipEntry)) {
+				if (Misc::tryEquipTeleportItemRequirement($equipEntry)) {
+					# already equipped
+				} else {
+					debug "MapRoute - Equipping required item before teleport item use\n", "route";
+					return;
+				}
+			}
+
 			if ($self->{mapSolution}[0]{retry} < 5) {
 				$self->{mapSolution}[0]{retry}++;
 				debug "MapRoute - Using teleport item $itemID (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
 				$self->{substage} = 'Waiting for Warp';
+				Misc::registerTeleportItemPendingUse($itemID);
 				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
 				$self->{actor}{last_teleport_item_use}{$itemID} = time if $timeoutSec;
 			} else {

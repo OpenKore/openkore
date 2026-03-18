@@ -145,10 +145,10 @@ sub iterate {
 					name => $item->{name},
 					time => time,
 				};
-				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
-				if ($self->{teleportItemRule} && $self->{teleportItemRule}{timeoutSec}) {
-					$self->{actor}{last_teleport_item_use}{$self->{teleportItemRule}{itemID}} = time;
+				if ($self->{teleportItemRule} && $self->{teleportItemRule}{itemID}) {
+					Misc::registerTeleportItemPendingUse($self->{teleportItemRule}{itemID});
 				}
+				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
 				Plugins::callHook('teleport_sent' => $self->hookArgs);
 				$timeout{ai_teleport}{time} = time;
 

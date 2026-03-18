@@ -3,4 +3,3 @@
 601,random,*,0,0,1,99,0
 22611 warp verus04 115 243 1 0 0 midHead 15385
 602 respawn save 0 0 1 1200
-100 random prontera 10 10 1 99 0 888 # invalid: unexpected trailing argument

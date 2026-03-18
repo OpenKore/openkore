@@ -168,6 +168,12 @@ our @EXPORT = (
 	updatePlayerNameCache
 	canUseTeleport
 	isTeleportItemEquipRequirementSatisfied
+	canTeleportItemEquipRequirementBeSatisfied
+	tryEquipTeleportItemRequirement
+	registerTeleportItemPendingUse
+	clearTeleportItemPendingUse
+	markTeleportItemUsed
+	setTeleportItemCooldownFromRemainingSeconds
 	top10Listing
 	whenGroundStatus
 	writeStorageLog
@@ -5747,6 +5753,88 @@ sub isTeleportItemEquipRequirementSatisfied {
 	my $required_item = $char->inventory->getByNameID($required_id);
 	return 0 unless ($required_item && $required_item->{equipped});
 	return $required_item->equippedInSlot($required_slot);
+}
+
+sub canTeleportItemEquipRequirementBeSatisfied {
+	my ($entry) = @_;
+	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+
+	my $required_slot = $entry->{requiredEquipSlot};
+	my $required_id = $entry->{requiredEquipItemID};
+	return 0 unless defined $equipSlot_rlut{$required_slot};
+	my $required_item = $char->inventory->getByNameID($required_id);
+	return 0 unless $required_item;
+	return 1 if $required_item->{equipped} && $required_item->equippedInSlot($required_slot);
+	return $required_item->equippable();
+}
+
+sub tryEquipTeleportItemRequirement {
+	my ($entry) = @_;
+	return 1 if isTeleportItemEquipRequirementSatisfied($entry);
+	return 0 unless canTeleportItemEquipRequirementBeSatisfied($entry);
+
+	my $required_item = $char->inventory->getByNameID($entry->{requiredEquipItemID});
+	return 0 unless $required_item;
+	$required_item->equipInSlot($entry->{requiredEquipSlot});
+	return 0;
+}
+
+sub registerTeleportItemPendingUse {
+	my ($itemID) = @_;
+	return unless $char && defined $itemID;
+	$char->{pending_teleport_item_use} = {
+		itemID => int($itemID),
+		time => time,
+	};
+}
+
+sub clearTeleportItemPendingUse {
+	my ($itemID) = @_;
+	return unless $char && $char->{pending_teleport_item_use};
+	if (!defined $itemID || $char->{pending_teleport_item_use}{itemID} == $itemID) {
+		delete $char->{pending_teleport_item_use};
+	}
+}
+
+sub _getTeleportItemTimeoutSec {
+	my ($itemID) = @_;
+	return 0 unless ($teleport_items{list} && @{$teleport_items{list}});
+
+	my $timeout = 0;
+	for my $entry (@{$teleport_items{list}}) {
+		next unless defined $entry->{itemID} && $entry->{itemID} == $itemID;
+		next unless $entry->{timeoutSec};
+		$timeout = $entry->{timeoutSec} if $entry->{timeoutSec} > $timeout;
+	}
+	return $timeout;
+}
+
+sub markTeleportItemUsed {
+	my ($itemID, $usedAt) = @_;
+	return unless ($char && defined $itemID);
+	$usedAt = time unless defined $usedAt;
+
+	my $timeout = _getTeleportItemTimeoutSec($itemID);
+	$char->{last_teleport_item_use}{$itemID} = $usedAt if $timeout > 0;
+	clearTeleportItemPendingUse($itemID);
+}
+
+sub setTeleportItemCooldownFromRemainingSeconds {
+	my ($remainingSec, $itemID) = @_;
+	return unless ($char && defined $remainingSec && $remainingSec > 0);
+
+	if (!defined $itemID && $char->{pending_teleport_item_use}) {
+		$itemID = $char->{pending_teleport_item_use}{itemID};
+	}
+	return unless defined $itemID;
+
+	my $timeout = _getTeleportItemTimeoutSec($itemID);
+	if ($timeout > 0) {
+		my $lastUse = time - $timeout + $remainingSec;
+		$lastUse = time if $lastUse > time;
+		$char->{last_teleport_item_use}{$itemID} = $lastUse;
+	}
+	clearTeleportItemPendingUse($itemID);
 }
 
 sub getTeleportItemFromTable {
