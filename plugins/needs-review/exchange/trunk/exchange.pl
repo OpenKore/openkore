@@ -54,10 +54,10 @@ sub itemexchange_command {
 }
 
 sub AI_pre {
-	if (AI::action eq "itemExchange") {
-		my $args = AI::args;
+	if (AI::action() eq "itemExchange") {
+		my $args = AI::args();
 		if ($args->{'stage'} eq 'end') {
-			AI::dequeue;
+			AI::dequeue();
 		} elsif ($args->{'stage'} eq 'route') {
 			my $npcMap = $args->{'npc'}{'map'};
 			my $npcX = $args->{'npc'}{'pos'}{'x'};
@@ -72,7 +72,7 @@ sub AI_pre {
 			main::ai_talkNPC($args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'}, $args->{'steps'}) if ($args->{'stage'} ne 'end');
 		}
 	}
-	exchange('poll') if ((AI::isIdle || AI::action eq "route") && !AI::inQueue("itemExchange"));
+	exchange('poll') if ((AI::isIdle() || AI::action() eq "route") && !AI::inQueue("itemExchange"));
 }
  
 sub exchange {

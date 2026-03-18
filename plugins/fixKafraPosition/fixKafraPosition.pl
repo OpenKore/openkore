@@ -29,7 +29,7 @@ sub onmissStorage {
 	
 	return if ($args->{plugin_retry} > 0);
 	
-	return unless (AI::action eq "NPC" && AI::inQueue("storageAuto") && AI::args->{'is_storageAuto'} == 1);
+	return unless (AI::action() eq "NPC" && AI::inQueue("storageAuto") && AI::args()->{'is_storageAuto'} == 1);
 	
 	my $closest;
 	my $closest_x;

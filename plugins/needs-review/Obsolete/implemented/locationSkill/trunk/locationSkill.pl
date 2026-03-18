@@ -68,10 +68,10 @@ sub packet_skilluse {
 }
 
 sub call {
-	if (AI::action eq 'locationSkill') {
-		my $args = AI::args;
+	if (AI::action() eq 'locationSkill') {
+		my $args = AI::args();
 		if ($args->{'stage'} eq 'end') {
-			AI::dequeue;
+			AI::dequeue();
 		} elsif ($args->{'stage'} eq 'skillUse') {
 			main::ai_skillUse(
 				$args->{'handle'}, 
@@ -83,7 +83,7 @@ sub call {
 			$args->{'stage'} = 'end';
 		}
 	}
-	locationSkill() if (AI::isIdle); 
+	locationSkill() if (AI::isIdle()); 
 }
 
 sub locationSkill {

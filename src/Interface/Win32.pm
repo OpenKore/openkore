@@ -1008,7 +1008,7 @@ sub updateStatusBar {
 			$xyText = $field->baseName . " $char->{pos}{x}, $char->{pos}{y}";
 		}
 
-		if (AI::state) {
+		if (AI::state()) {
 			if (@ai_seq) {
 				my @seqs = @ai_seq;
 				foreach (@seqs) {
@@ -1141,3 +1141,4 @@ sub UpdateCharacter {
 
 
 1;
+

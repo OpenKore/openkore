@@ -64,8 +64,8 @@ sub call {
 		$monsterDist = round(distance($myPos, $monsterPos));
 	}
 
-	if (AI::action eq "skill_use") {
-		my $args = AI::args(AI::action);
+	if (AI::action() eq "skill_use") {
+		my $args = AI::args(AI::action());
 		my $s = $args->{skillHandle};
 		if ($s eq "MG_FIREBOLT" || $s eq "MG_COLDBOLT" || $s eq "MG_LIGHTNINGBOLT" || $s eq "MG_THUNDERSTORM") {
 			cast();

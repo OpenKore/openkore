@@ -246,9 +246,9 @@ sub parseArguments {
 		}
 	}
 	if ($starting_ai) {
-		$AI::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
-		$AI::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
-		$AI::AI = AI::OFF()    if $starting_ai =~ /^off$/;
+		$AI::AI = AI::AUTO   if $starting_ai =~ /^(on|auto)$/;
+		$AI::AI = AI::MANUAL if $starting_ai =~ /^manual$/;
+		$AI::AI = AI::OFF    if $starting_ai =~ /^off$/;
 	}
 
 	return 0 if ($options{help});

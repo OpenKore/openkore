@@ -533,8 +533,12 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	$args{monID} = $monID;
 	$args{flag} = $flag;
 	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if $flag == ACTION_ATTACK || $flag == ACTION_ATTACK_REPEAT;
-	Plugins::callHook('packet_pre/sendSit', \%args) if $flag == ACTION_SIT || $flag == ACTION_STAND;
+	Plugins::callHook('packet_pre/sendAttack', \%args)
+		if $flag == Network::PacketParser::ACTION_ATTACK()
+		|| $flag == Network::PacketParser::ACTION_ATTACK_REPEAT();
+	Plugins::callHook('packet_pre/sendSit', \%args)
+		if $flag == Network::PacketParser::ACTION_SIT()
+		|| $flag == Network::PacketParser::ACTION_STAND();
 	if ($args{return}) {
 		$self->sendToServer($args{msg});
 		return;

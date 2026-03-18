@@ -463,10 +463,10 @@ sub sendSit {
 		my $skill = new Skill(handle => 'LK_TENSIONRELAX');
 		AI::ai_skillUse2($skill, $char->{skills}{LK_TENSIONRELAX}{lv}, 1, 0, $char, "LK_TENSIONRELAX");
 	} else {
-		$messageSender->sendAction(0, ACTION_SIT);
+		$messageSender->sendAction(0, Network::PacketParser::ACTION_SIT());
 	}
 }
-sub sendStand { $messageSender->sendAction(0, ACTION_STAND) }
+sub sendStand { $messageSender->sendAction(0, Network::PacketParser::ACTION_STAND()) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 sub sendStopSkillUse {
 	my ($self) = @_;

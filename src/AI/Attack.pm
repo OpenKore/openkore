@@ -43,14 +43,14 @@ use constant {
 
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
-	my $args = AI::args;
-	my $action = AI::action;
+	my $args = AI::args();
+	my $action = AI::action();
 
 	if (shouldAttack($action, $args)) {
 		my $ID;
 		my $ataqArgs;
 		my $stage; # 1 - moving to attack | 2 - attacking
-		if (AI::action eq "attack") {
+		if (AI::action() eq "attack") {
 			$ID = $args->{ID};
 			$ataqArgs = AI::args(0);
 			$stage = ATTACKING;
@@ -98,7 +98,7 @@ sub process {
                 my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
                 if ($attackTarget && $attackTarget ne $target->{ID}) {
                     $char->sendAttackStop;
-                    AI::dequeue while ( AI::inQueue("attack") );
+                    AI::dequeue() while ( AI::inQueue("attack") );
                     ai_setSuspend(0);
                     my $new_target = Actor::get($attackTarget);
                     warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
@@ -115,7 +115,7 @@ sub process {
 			message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
 			$char->sendAttackStop;
 			$target->{ignore} = 1;
-			AI::dequeue while (AI::inQueue("attack"));
+			AI::dequeue() while (AI::inQueue("attack"));
 			if ($config{teleportAuto_dropTargetKS}) {
 				message T("Teleport due to dropping attack target\n"), "teleport";
 				ai_useTeleport(1);
@@ -128,7 +128,7 @@ sub process {
 			message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
 			$char->sendAttackStop;
 				$target->{ignore} = 1;
-			AI::dequeue while (AI::inQueue("attack"));
+			AI::dequeue() while (AI::inQueue("attack"));
 			return;
 		}
 		
@@ -149,7 +149,7 @@ sub process {
 				$char->sendAttackStop;
 				$target->{ignore} = 1;
 
-				AI::dequeue while (AI::inQueue("attack"));
+				AI::dequeue() while (AI::inQueue("attack"));
 				if ($config{teleportAuto_dropTargetHidden}) {
 					message T("Teleport due to dropping hidden target\n");
 					ai_useTeleport(1);
@@ -173,7 +173,7 @@ sub process {
 					} else {
 						# Monster has moved; stop moving and let the attack AI readjust route
 						debug "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
-						AI::dequeue while (AI::is("move", "route"));
+						AI::dequeue() while (AI::is("move", "route"));
 
 						$ataqArgs->{ai_attack_giveup}{time} = time;
 						$ataqArgs->{sentApproach} = 0;
@@ -188,7 +188,7 @@ sub process {
 		}
 
 		if ($stage == ATTACKING) {
-			if (AI::args->{suspended}) {
+			if (AI::args()->{suspended}) {
 				$args->{ai_attack_giveup}{time} += time - $args->{suspended};
 				delete $args->{suspended};
 
@@ -246,7 +246,7 @@ sub giveUp {
 		}
 	}
 	$target->{dmgFromYou} = 0; # Hack | TODO: Fix me
-	AI::dequeue while (AI::inQueue("attack"));
+	AI::dequeue() while (AI::inQueue("attack"));
 	message T("Can't reach or damage target, dropping target\n"), "ai_attack";
 	if ($config{'teleportAuto_dropTarget'}) {
 		message T("Teleport due to dropping attack target\n");
@@ -269,7 +269,7 @@ sub targetGone {
 sub finishAttacking {
     my ($args, $ID) = @_;
     $timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
-    AI::dequeue while (AI::inQueue("attack"));
+    AI::dequeue() while (AI::inQueue("attack"));
     message TF( "Finished attacking\n"), "ai_attack";
     if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
         message TF("Target %s died\n", $monsters_old{$ID}), "ai_attack";
@@ -277,7 +277,7 @@ sub finishAttacking {
         monKilled();
 
     # Pickup loot when monster's dead
-		if (AI::state == AI::AUTO && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
+		if (AI::state() == AI::AUTO && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
 			AI::clear("items_take");
 			ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 				      $monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
@@ -366,14 +366,14 @@ sub find_kite_position {
 }
 
 sub main {
-	my $args = AI::args;
+	my $args = AI::args();
 
 	Benchmark::begin("ai_attack (part 1)") if DEBUG;
 	Benchmark::begin("ai_attack (part 1.1)") if DEBUG;
 	# The attack sequence hasn't timed out and the monster is on screen
 
 	# Update information about the monster and the current situation
-	my $args = AI::args;
+	my $args = AI::args();
 	my $ID = $args->{ID};
 
 	if (!defined $ID) {

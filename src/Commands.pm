@@ -879,7 +879,7 @@ sub run {
 		my $handler;
 		$handler = $commands{$switch}{callback} if (exists $commands{$switch} && $commands{$switch});
 
-		if (($switch eq 'pause') && (!$cmdQueue) && AI::state == AI::AUTO && ($net->getState() == Network::IN_GAME)) {
+		if (($switch eq 'pause') && (!$cmdQueue) && AI::state() == AI::AUTO && ($net->getState() == Network::IN_GAME)) {
 			$cmdQueue = 1;
 			$cmdQueueStartTime = time;
 			if ($args > 0) {
@@ -890,7 +890,7 @@ sub run {
 			debug "Command queueing started\n", "ai";
 		} elsif (($switch eq 'pause') && ($cmdQueue > 0)) {
 			push(@cmdQueueList, $command);
-		} elsif (($switch eq 'pause') && (AI::state != AI::AUTO || ($net->getState() != Network::IN_GAME))) {
+		} elsif (($switch eq 'pause') && (AI::state() != AI::AUTO || ($net->getState() != Network::IN_GAME))) {
 			error T("Cannot use pause command now.\n");
 		} elsif (($handler) && ($cmdQueue > 0) && (!defined binFind(\@cmdQueuePriority,$switch) && ($command ne 'cart') && ($command ne 'storage'))) {
 			push(@cmdQueueList, $command);
@@ -1095,7 +1095,7 @@ sub cmdAI {
 
 	} elsif ($args eq 'on' || $args eq 'auto') {
 		# Set AI to auto mode
-		if (AI::state == AI::AUTO) {
+		if (AI::state() == AI::AUTO) {
 			message T("AI is already set to auto mode\n"), "success";
 		} else {
 			AI::state(AI::AUTO);
@@ -1103,7 +1103,7 @@ sub cmdAI {
 		}
 	} elsif ($args eq 'manual') {
 		# Set AI to manual mode
-		if (AI::state == AI::MANUAL) {
+		if (AI::state() == AI::MANUAL) {
 			message T("AI is already set to manual mode\n"), "success";
 		} else {
 			AI::state(AI::MANUAL);
@@ -1111,7 +1111,7 @@ sub cmdAI {
 		}
 	} elsif ($args eq 'off') {
 		# Turn AI off
-		if (AI::state == AI::OFF) {
+		if (AI::state() == AI::OFF) {
 			message T("AI is already off\n"), "success";
 		} else {
 			AI::state(AI::OFF);
@@ -1120,13 +1120,13 @@ sub cmdAI {
 
 	} elsif ($args eq '') {
 		# Toggle AI
-		if (AI::state == AI::AUTO) {
+		if (AI::state() == AI::AUTO) {
 			AI::state(AI::OFF);
 			message T("AI turned off\n"), "success";
-		} elsif (AI::state == AI::OFF) {
+		} elsif (AI::state() == AI::OFF) {
 			AI::state(AI::MANUAL);
 			message T("AI set to manual mode\n"), "success";
-		} elsif (AI::state == AI::MANUAL) {
+		} elsif (AI::state() == AI::MANUAL) {
 			AI::state(AI::AUTO);
 			message T("AI set to auto mode\n"), "success";
 		}
@@ -1140,14 +1140,14 @@ sub cmdAI {
 sub cmdAIv {
 	# Display current AI sequences
 	my $on;
-	if (AI::state == AI::OFF) {
+	if (AI::state() == AI::OFF) {
 		message TF("ai_seq (off) = %s\n", "@ai_seq"), "list";
-	} elsif (AI::state == AI::MANUAL) {
+	} elsif (AI::state() == AI::MANUAL) {
 		message TF("ai_seq (manual) = %s\n", "@ai_seq"), "list";
-	} elsif (AI::state == AI::AUTO) {
+	} elsif (AI::state() == AI::AUTO) {
 		message TF("ai_seq (auto) = %s\n", "@ai_seq"), "list";
 	}
-	message T("solution\n"), "list" if (AI::args->{'solution'});
+	message T("solution\n"), "list" if (AI::args()->{'solution'});
 	message TF("Active tasks: %s\n", (defined $taskManager) ? $taskManager->activeTasksString() : ''), "info";
 	message TF("Inactive tasks: %s\n", (defined $taskManager) ? $taskManager->inactiveTasksString() : ''), "info";
 }
@@ -2406,7 +2406,7 @@ sub cmdDebug {
 			"\$timeout{ai}: %.2f secs ago  (value should be >%s)\n" .
 			"Last AI() call: %.2f secs ago\n" .
 			('-'x56) . "\n",
-		$conState, $connected, AI::state, "@ai_seq", $time, $ai_timeout,
+		$conState, $connected, AI::state(), "@ai_seq", $time, $ai_timeout,
 		$timeout{'ai'}{'timeout'}, $ai_time), "list";
 	} else {
 		error "Syntax Error in function 'debug' (Toggle debug on/off)\n";
@@ -7191,7 +7191,7 @@ sub cmdWeaponRefine {
 }
 
 sub cmdAnswerCaptcha {
-	if ($net->getState() == Network::IN_GAME()) {
+	if ($net->getState() == Network::IN_GAME) {
 		$messageSender->sendMacroDetectorAnswer($_[1]);
 	} else {
 		$messageSender->sendCaptchaAnswer($_[1]);
@@ -8784,3 +8784,4 @@ sub cmdEden {
 }
 
 1;
+
