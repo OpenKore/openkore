@@ -125,6 +125,7 @@ sub new {
 	$self->{noTeleSpawnMaps} = {} if (!defined $self->{noTeleSpawnMaps});
 	$self->{noRouteTeleportMaps} = {} if (!defined $self->{noRouteTeleportMaps});
 	$self->{noWarpItemMaps} = {} if (!defined $self->{noWarpItemMaps});
+	$self->{noWarpItemIDs} = {} if (!defined $self->{noWarpItemIDs});
 	$self->{noAirship} = 0 if (!defined $self->{noAirship});
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
@@ -231,13 +232,20 @@ sub iterate {
 		};
 
 		if ($item && $timeoutSec && $self->{actor}{last_teleport_item_use}{$itemID}) {
-			$item = undef if (time - $self->{actor}{last_teleport_item_use}{$itemID} < $timeoutSec);
+			my $elapsed = time - $self->{actor}{last_teleport_item_use}{$itemID};
+			if ($elapsed < $timeoutSec) {
+				$item = undef;
+			}
 		}
 		$item = undef unless Misc::canTeleportItemEquipRequirementBeSatisfied($equipEntry);
 
 		if (!$item) {
 			debug "MapRoute - Cannot use teleport item warp now, recalculating\n", "route";
-			$self->{noWarpItemMaps}{$field->baseName} = time;
+			delete $self->{substage};
+			delete $self->{timeout};
+			delete $timeout{'ai_portal_give_up'}{'time'};
+			delete $timeout{'ai_portal_wait'}{'time'};
+			$self->{noWarpItemIDs}{$itemID} = time;
 			$self->initMapCalculator();
 
 		} else {
@@ -815,7 +823,7 @@ sub prunePerMapBlocks {
 	my ($self) = @_;
 	my $now = time;
 
-	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps)) {
+	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps noWarpItemIDs)) {
 		my $bucket = $self->{$bucketName};
 		next unless ($bucket && ref $bucket eq 'HASH');
 
@@ -874,6 +882,7 @@ sub initMapCalculator {
 		noTeleSpawn => $self->{noTeleSpawn},
 		noTeleSpawnMaps => $self->{noTeleSpawnMaps},
 		noWarpItemMaps => $self->{noWarpItemMaps},
+		noWarpItemIDs => $self->{noWarpItemIDs},
 		noAirship => $self->{noAirship},
 	);
 	$self->setSubtask($task);

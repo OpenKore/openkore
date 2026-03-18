@@ -5748,7 +5748,7 @@ sub isTeleportItemEquipRequirementSatisfied {
 	my ($entry) = @_;
 	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
 
-	my $required_slot = $entry->{requiredEquipSlot};
+	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
 	my $required_id = $entry->{requiredEquipItemID};
 	return 0 unless defined $equipSlot_rlut{$required_slot};
 	my $required_item = $char->inventory->getByNameID($required_id);
@@ -5760,7 +5760,7 @@ sub canTeleportItemEquipRequirementBeSatisfied {
 	my ($entry) = @_;
 	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
 
-	my $required_slot = $entry->{requiredEquipSlot};
+	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
 	my $required_id = $entry->{requiredEquipItemID};
 	return 0 unless defined $equipSlot_rlut{$required_slot};
 	my $required_item = $char->inventory->getByNameID($required_id);
@@ -5776,8 +5776,23 @@ sub tryEquipTeleportItemRequirement {
 
 	my $required_item = $char->inventory->getByNameID($entry->{requiredEquipItemID});
 	return 0 unless $required_item;
-	$required_item->equipInSlot($entry->{requiredEquipSlot});
+	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
+	return 0 unless defined $equipSlot_rlut{$required_slot};
+	$required_item->equipInSlot($required_slot);
 	return 0;
+}
+
+sub _normalizeEquipSlotName {
+	my ($slot) = @_;
+	return $slot unless defined $slot;
+	return $slot if defined $equipSlot_rlut{$slot};
+
+	my $slot_lc = lc($slot);
+	for my $known_slot (keys %equipSlot_rlut) {
+		next unless defined $known_slot;
+		return $known_slot if lc($known_slot) eq $slot_lc;
+	}
+	return $slot;
 }
 
 sub registerTeleportItemPendingUse {

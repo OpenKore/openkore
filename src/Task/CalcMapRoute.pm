@@ -112,6 +112,7 @@ sub new {
 	}
 	$self->{noTeleSpawnMaps} = $args{noTeleSpawnMaps} || {};
 	$self->{noWarpItemMaps} = $args{noWarpItemMaps} || {};
+	$self->{noWarpItemIDs} = $args{noWarpItemIDs} || {};
 
 	if (exists $args{noWarpItem}) {
 		$self->{noWarpItem} = $args{noWarpItem}
@@ -626,15 +627,14 @@ sub getWarpItemCandidates {
 	return unless ($teleport_items{list} && @{$teleport_items{list}});
 
 	my @matches;
-	for my $entry (@{$teleport_items{list}}) {
-		my $value = $teleport_items{$key};
-		next unless ($value);
-		my $entry = $value->{entry};
-		next unless ($entry);
+	for my $value (@{$teleport_items{list}}) {
+		next unless ($value && ref($value) eq 'HASH');
+		my $entry = $value;
 		
 		next unless ($entry->{mode} eq 'warp' || $entry->{mode} eq 'any');
 		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
 		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
+		next if ($self->{noWarpItemIDs}{$entry->{itemID}});
 		next unless $self->isWarpItemRoutingDestinationValid($entry);
 
 		my $item = $char->inventory->getByNameID($entry->{itemID});
@@ -642,7 +642,16 @@ sub getWarpItemCandidates {
 		next unless Misc::canTeleportItemEquipRequirementBeSatisfied($entry);
 
 		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
-			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};
+			my $elapsed = time - $char->{last_teleport_item_use}{$entry->{itemID}};
+			if ($elapsed < $entry->{timeoutSec}) {
+				my $remaining = int($entry->{timeoutSec} - $elapsed);
+				$remaining = 1 if $remaining < 1;
+				if (!$self->{_warp_item_cooldown_warned}{$entry->{itemID}}) {
+					warning TF("Cannot use teleport item %s for route now: cooldown active (%s sec remaining).\n", $entry->{itemID}, $remaining), "route";
+					$self->{_warp_item_cooldown_warned}{$entry->{itemID}} = 1;
+				}
+				next;
+			}
 		}
 
 		push @matches, $entry;
