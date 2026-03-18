@@ -4357,6 +4357,7 @@ sub compilePortals {
 	foreach my $portal (keys %teleport_items) {
 		#Log:warning "Portal [$portal] > ".Dumper($teleport_items{$portal});
 		next unless $teleport_items{$portal};
+		next unless ref($teleport_items{$portal}) eq 'HASH';
 		next unless $teleport_items{$portal}{dest};
 		next unless $teleport_items{$portal}{dest}{map};
 		next unless $teleport_items{$portal}{dest}{x};
@@ -5840,14 +5841,11 @@ sub setTeleportItemCooldownFromRemainingSeconds {
 sub getTeleportItemFromTable {
 	my ($mode, %args) = @_;
 	return unless $char && $char->inventory && $char->inventory->isReady();
-	return unless (scalar keys %teleport_items);
+	return unless ($teleport_items{list} && @{$teleport_items{list}});
 
 	my $target_map = defined $args{destMap} ? lc $args{destMap} : '';
 
-	for my $key (keys %teleport_items) {
-		my $value = $teleport_items{$key};
-		next unless ($value);
-		my $entry = $value->{entry};
+	for my $entry (@{$teleport_items{list}}) {
 		next unless ($entry);
 		next if ($entry->{mode} ne 'any' && $entry->{mode} ne $mode);
 		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});

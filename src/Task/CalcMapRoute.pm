@@ -623,10 +623,10 @@ sub add_key_to_openList {
 sub getWarpItemCandidates {
 	my ($self) = @_;
 	return unless ($char && $char->inventory && $char->inventory->isReady());
-	return unless (scalar keys %teleport_items);
+	return unless ($teleport_items{list} && @{$teleport_items{list}});
 
 	my @matches;
-	for my $key (keys %teleport_items) {
+	for my $entry (@{$teleport_items{list}}) {
 		my $value = $teleport_items{$key};
 		next unless ($value);
 		my $entry = $value->{entry};
