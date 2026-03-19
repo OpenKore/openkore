@@ -2466,6 +2466,7 @@ sub processMoveNearSlave {
 sub processRandomWalk {
 	if (AI::isIdle() && (AI::SlaveManager::isIdle()) && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
 		&& (!$field->isCity || $config{route_randomWalk_inTown})
+		&& (!$config{route_randomWalk_inLockOnly} || ($config{'lockMap'} && $field->baseName eq $config{'lockMap'}))
 		&& length($field->{rawMap})
 		){
 		if ($char->{pos}{x} == $config{'lockMap_x'} && !($config{'lockMap_randX'} > 0) && ($char->{pos}{y} == $config{'lockMap_y'} && !($config{'lockMap_randY'} >0))) {
