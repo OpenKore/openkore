@@ -61,7 +61,7 @@ sub prohibitAttacking {
 	undef @_[0]->{dmgFromYou};
 	undef @_[0]->{missedFromYou};
 	@_[0]->{dmgFromPlayer}{$char->{ID}} = 1;
-	if (AI::action eq "attack" && AI::args()->{ID} eq @_[0]->{ID}) {
+	if (AI::action() eq "attack" && AI::args()->{ID} eq @_[0]->{ID}) {
 		$char->dequeue;
 		$char->stopAttack;
 	}

@@ -198,13 +198,13 @@ sub ingame {
 
 sub AI_hook {
 	if (AI_MODE) {
-		if (AI::action eq "leavemealone") {
-			return 0 unless (defined AI::args->{name});
+		if (AI::action() eq "leavemealone") {
+			return 0 unless (defined AI::args()->{name});
 			if (Time::HiRes::time >= ($lastblocktime + BLOCKDELAY)) {
 				$lastblocktime = Time::HiRes::time;
-				msg("[".PLUGINNAME."] Player ".AI::args->{name}." has been blocked.\n");
-				Commands::run("ignore 1 ".AI::args->{name});
-				AI::dequeue;
+				msg("[".PLUGINNAME."] Player ".AI::args()->{name}." has been blocked.\n");
+				Commands::run("ignore 1 ".AI::args()->{name});
+				AI::dequeue();
 			}
 		}
 	} else {

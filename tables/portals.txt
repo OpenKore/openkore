@@ -1317,6 +1317,14 @@ in_sphinx3 210 57 in_sphinx2 276 272
 in_sphinx4 10 224 in_sphinx3 12 69
 in_sphinx4 120 113 in_sphinx5 100 96
 in_sphinx5 100 96 in_sphinx4 120 113
+in_sphinx5 11 16 in_sphinx5 189 181
+in_sphinx5 11 183 in_sphinx5 11 18
+in_sphinx5 189 16 in_sphinx5 11 181
+in_sphinx5 16 188 in_sphinx5 181 188
+in_sphinx5 16 10 in_sphinx5 181 10
+in_sphinx5 183 10 in_sphinx5 18 188
+in_sphinx5 183 188 in_sphinx5 18 10
+in_sphinx5 189 183 in_sphinx5 189 18
 iz_dun00 39 41 iz_dun01 41 32
 iz_dun00 168 173 izlu2dun 108 83
 iz_dun00 352 342 iz_dun01 253 258
@@ -3030,6 +3038,15 @@ y_airport 145 63 yuno 59 244 0 c r0
 # Lighthalzen airport
 lhz_airport 143 43 lhz_airport 148 51 1200 c r0 c r0
 lhz_airport 143 49 lhz_airport 142 40 0 c r0 c r0
+lhz_airport 142 60 lighthalzen 294 76
+lhz_airport 142 13 lighthalzen 262 75
+
+# Einbroch Airport
+airport 143 43 airport 148 51 1200 c r0 c r0
+airport 143 49 airport 142 40 0 c r0 c r0
+einbroch 92 281 airplane 224 64
+einbroch 64 234 airport 138 51
+einbroch 64 207 airport 143 17
 
 # Izlude airship
 izlude 206 55 airplane_01 244 58 1200 c r0 c r0
@@ -3078,8 +3095,6 @@ aldebaran 53 65 alde_alche 42 175
 alde_alche 42 171 aldebaran 56 68
 alde_alche 41 186 alde_alche 113 178
 alde_alche 114 183 alde_alche 42 182
-
-lhz_airport 142 13 lighthalzen 262 75
 
 # Lighthalzen Rekenber HQ - entrance
 lighthalzen 106 248 lhz_in01 116 126
@@ -3131,11 +3146,6 @@ lou_in01 28 19 louyang 136 245
 moc_ruins 141 125 job_thief1 133 333 0 c # random endpoint
 job_thief1 180 15 moc_ruins 145 117
 
-# Hugel - Lighthalzen Airship (needs additional configuration)
-#airplane 243 73 einbroch 92 278
-#airplane 243 73 hugel 181 146
-#airplane 243 73 lighthalzen 302 75
-#airplane 243 73 yuno 92 260
 new_zone01 148 112 new_zone02 100 9
 new_zone02 126 106 new_zone02 160 171
 new_zone02 73 106 new_zone02 41 172

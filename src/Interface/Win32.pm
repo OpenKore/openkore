@@ -790,15 +790,15 @@ sub openMap {
 #
 #######
 sub menuAIAuto {
-	AI::state(AI::AUTO);
+	AI::state(AI::AUTO());
 }
 
 sub menuAIManual {
-	AI::state(AI::MANUAL);
+	AI::state(AI::MANUAL());
 }
 
 sub menuAIOff {
-	AI::state(AI::OFF);
+	AI::state(AI::OFF());
 }
 
 sub menuRespawn {
@@ -1008,7 +1008,7 @@ sub updateStatusBar {
 			$xyText = $field->baseName . " $char->{pos}{x}, $char->{pos}{y}";
 		}
 
-		if (AI::state) {
+		if (AI::state()) {
 			if (@ai_seq) {
 				my @seqs = @ai_seq;
 				foreach (@seqs) {
@@ -1141,3 +1141,4 @@ sub UpdateCharacter {
 
 
 1;
+

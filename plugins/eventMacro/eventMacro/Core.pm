@@ -64,7 +64,7 @@ sub new {
 
 	$self->{Currently_AI_state_Adapted_Automacros} = undef;
 
-	$self->adapt_to_AI_state(AI::state);
+	$self->adapt_to_AI_state(AI::state());
 
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
 	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
@@ -1549,7 +1549,7 @@ sub handoff_to_pending_automacros {
 	return if $checking_status != CHECKING_AUTOMACROS && $checking_status != CHECKING_FORCED_BY_USER;
 
 	debug "[eventMacro] Macro queue cleared. Checking triggered automacros before returning control to core AI.\n", "eventMacro", 2;
-	$self->AI_start_checker(AI::state);
+	$self->AI_start_checker(AI::state());
 }
 
 sub disable_all_automacros {
@@ -1710,7 +1710,7 @@ sub enforce_orphan {
 
 	# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
 	} elsif ($method eq 'reregister_safe') {
-		if (AI::isIdle || AI::is('deal')) {
+		if (AI::isIdle() || AI::is('deal')) {
 			my $macro = $self->{Macro_Runner};
 			while (defined $macro->{subcall}) {
 				$macro = $macro->{subcall};

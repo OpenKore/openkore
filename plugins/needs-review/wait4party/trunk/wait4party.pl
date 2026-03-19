@@ -130,7 +130,7 @@ package wait4party;
 				message TF("Party member %s found!\n", $char->{party}{users}{$_}{name}), NAME;
 				
                 ## party sit?
-                } elsif ($actor && $config{'wait4party_followSit'} && !(AI::inQueue(@notAI)) && AI::action ne "sitAuto") {
+                } elsif ($actor && $config{'wait4party_followSit'} && !(AI::inQueue(@notAI)) && AI::action() ne "sitAuto") {
 				# Salah trigger??
 				if ($actor->{sitting} && !$partySit{ID}) {
 					emulateCmdSit() if (!$char->{sitting});
@@ -166,7 +166,7 @@ package wait4party;
         return unless ($config{'wait4party'}
 		&& $config{'wait4party_cast'}
 		&& @partyUsersID
-		&& AI::action eq "route" && !AI::inQueue("attack"));
+		&& AI::action() eq "route" && !AI::inQueue("attack"));
 		
         my (undef,$actor) = @_;
         return unless existsInList($config{'wait4party_cast'}, $actor->{skill}->getName());

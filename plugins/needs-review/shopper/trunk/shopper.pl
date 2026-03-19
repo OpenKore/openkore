@@ -33,9 +33,9 @@ my $time = time;
 
 sub AI_pre {
 	if (AI::is('checkShop') && main::timeOut($time, $delay)) {
-		my $vendorID = AI::args->{vendorID};
+		my $vendorID = AI::args()->{vendorID};
 		$messageSender->sendEnteringVender($vendorID);
-		AI::dequeue;
+		AI::dequeue();
 	}
 	$time = time;
 }
@@ -93,4 +93,5 @@ sub storeList {
 }
 
 return 1;
+
 

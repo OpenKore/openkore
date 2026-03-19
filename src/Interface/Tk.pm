@@ -1868,7 +1868,7 @@ sub updatePos {
 		}
 		my ($i, $args, $routeTask, $solution);
 		if (
-			defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
+			defined ($i = AI::findAction ('route')) && ($args = AI::args($i)) && (
 				($routeTask = $args->getSubtask) && %{$routeTask} && ($solution = $routeTask->{solution}) && @$solution
 				||
 				$args->{dest} && $args->{dest}{pos} && ($solution = [{x => $args->{dest}{pos}{x}, y => $args->{dest}{pos}{y}}])
@@ -2010,3 +2010,4 @@ sub defineType {
 }
 
 1;
+
