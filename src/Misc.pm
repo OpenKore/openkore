@@ -195,6 +195,7 @@ our @EXPORT = (
 	avoidList_near
 	compilePortals
 	compilePortals_check
+	applyDynamicPortalStates
 	portalExists
 	portalExists2
 	portalExistsAirship
@@ -238,6 +239,48 @@ our @EXPORT = (
 # use SelfLoader; 1;
 # __DATA__
 
+my %dynamicPortalGroups = (
+	eden_portal_exit => {
+		config_key => 'EdenPortalExit',
+		source => 'moc_para01 30 10',
+		destinations => {
+			'prontera 116 72' => 1,
+			'moc_ruins 64 161' => 1,
+			'geffen 120 39' => 1,
+			'alberta 117 56' => 1,
+			'aldebaran 168 112' => 1,
+			'izlude_in 73 165' => 1,
+			'prt_church 99 78' => 1,
+			'geffen_in 162 99' => 1,
+			'moc_prydb1 51 118' => 1,
+			'alberta_in 73 43' => 1,
+			'payon_in02 64 60' => 1,
+			'payon 161 58' => 1,
+			'que_ng 33 63' => 1,
+			'que_ng 144 166' => 1,
+			'yuno 158 125' => 1,
+			'rachel 115 125' => 1,
+			'comodo 192 145' => 1,
+			'hugel 88 148' => 1,
+			'veins 216 104' => 1,
+			'einbroch 246 204' => 1,
+			'lighthalzen 159 95' => 1,
+			'amatsu 110 150' => 1,
+			'ayothaya 217 178' => 1,
+			'louyang 217 103' => 1,
+			'gonryun 155 120' => 1,
+			'moscovia 218 198' => 1,
+			'brasilis 190 220' => 1,
+			'dewata 192 182' => 1,
+			'morocc 161 97' => 1,
+			'izlude 134 118' => 1,
+			'umbala 94 154' => 1,
+			'malaya 234 199' => 1,
+			'verus04 115 243' => 1,
+		},
+	},
+);
+
 
 
 sub _checkActorHash($$$$) {
@@ -246,6 +289,61 @@ sub _checkActorHash($$$$) {
 		if (!UNIVERSAL::isa($actor, $type)) {
 			die "$name\nUnblessed item in $hashName list:\n" .
 				Dumper($hash);
+		}
+	}
+}
+
+sub _normalizeDynamicPortalSelection {
+	my ($selection) = @_;
+	return unless defined $selection;
+
+	$selection =~ s/^\s+|\s+$//g;
+	$selection =~ s/\s+/ /g;
+	return if $selection eq '';
+
+	my ($map, $x, $y) = split / /, $selection, 3;
+	($map) = Field::nameToBaseName(undef, $map);
+	$map = lc $map;
+
+	if (defined $x && defined $y && $x =~ /^\d+$/ && $y =~ /^\d+$/) {
+		return "$map $x $y";
+	}
+
+	return $map;
+}
+
+sub _dynamicPortalSelectionMatches {
+	my ($selection, $destID) = @_;
+	return 0 unless defined $selection && defined $destID;
+
+	my ($map, $x, $y) = split / /, $destID, 3;
+	my $normalizedDestID = join(' ', lc($map), $x, $y);
+	return 1 if $selection eq $normalizedDestID;
+	return 1 if $selection eq lc($map);
+	return 0;
+}
+
+sub applyDynamicPortalStates {
+	foreach my $group (values %dynamicPortalGroups) {
+		my $source = $group->{source};
+		next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
+
+		my $configuredValue = $config{$group->{config_key}};
+		my $selection = _normalizeDynamicPortalSelection($configuredValue);
+		my $matched = 0;
+
+		foreach my $destID (keys %{$group->{destinations}}) {
+			next unless exists $portals_lut{$source}{dest}{$destID};
+			my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
+			$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
+			$matched ||= $enabled;
+		}
+
+		if (defined $selection && !$matched) {
+			warning TF(
+				"Dynamic portal setting '%s' has no match for %s; all destinations from %s are disabled.\n",
+				$configuredValue, $group->{config_key}, $source
+			);
 		}
 	}
 }
@@ -352,6 +450,7 @@ sub configModify {
 		}
 	}
 	$config{$key} = $val;
+	applyDynamicPortalStates() if $key eq 'EdenPortalExit';
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 	
@@ -403,6 +502,7 @@ sub bulkConfigModify {
 		}
 	}
 
+	applyDynamicPortalStates() if exists $r_hash->{EdenPortalExit};
 	saveConfigFile();
 	
 	Plugins::callHook('post_configModify');
@@ -2046,13 +2146,15 @@ sub getPlayerNameFromCache {
 sub getPortalDestName {
 	my $ID = shift;
 	my %hash; # We only want unique names, so we use a hash
-	foreach (keys %{$portals_lut{$ID}{'dest'}}) {
+	my @destinations = grep { $portals_lut{$ID}{dest}{$_}{enabled} } keys %{$portals_lut{$ID}{dest}};
+	@destinations = keys %{$portals_lut{$ID}{dest}} unless @destinations;
+	foreach (@destinations) {
 		my $key = $portals_lut{$ID}{'dest'}{$_}{'map'};
 		$hash{$key} = 1;
 	}
 
-	my @destinations = sort keys %hash;
-	return join('/', @destinations);
+	my @destinationNames = sort keys %hash;
+	return join('/', @destinationNames);
 }
 
 sub getResponse {
@@ -5448,6 +5550,7 @@ sub parseReload {
 		} else {
 			Settings::loadByRegexp(qr/$args/, $progressHandler);
 		}
+		applyDynamicPortalStates();
 		Log::initLogFiles();
 		message T("All files were loaded\n"), "reload";
 	};

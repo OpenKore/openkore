@@ -3288,9 +3288,41 @@ mal_in02 137 53 mal_in02 139 33
 mal_in02 159 61 mal_in02 142 60
 mal_in02 142 60 mal_in02 162 61
 
-# following is a single warp, depends of entrance npc used
-# currently unsupported, do not enable that
-#moc_para01 30 10 prontera 116 72
+# Eden Group Headquarters exit portal.
+# Runtime selects a single destination through config.txt -> EdenPortalExit.
+moc_para01 30 10 prontera 116 72
+moc_para01 30 10 moc_ruins 64 161
+moc_para01 30 10 geffen 120 39
+moc_para01 30 10 alberta 117 56
+moc_para01 30 10 aldebaran 168 112
+moc_para01 30 10 izlude_in 73 165
+moc_para01 30 10 prt_church 99 78
+moc_para01 30 10 geffen_in 162 99
+moc_para01 30 10 moc_prydb1 51 118
+moc_para01 30 10 alberta_in 73 43
+moc_para01 30 10 payon_in02 64 60
+moc_para01 30 10 payon 161 58
+moc_para01 30 10 que_ng 33 63
+moc_para01 30 10 que_ng 144 166
+moc_para01 30 10 yuno 158 125
+moc_para01 30 10 rachel 115 125
+moc_para01 30 10 comodo 192 145
+moc_para01 30 10 hugel 88 148
+moc_para01 30 10 veins 216 104
+moc_para01 30 10 einbroch 246 204
+moc_para01 30 10 lighthalzen 159 95
+moc_para01 30 10 amatsu 110 150
+moc_para01 30 10 ayothaya 217 178
+moc_para01 30 10 louyang 217 103
+moc_para01 30 10 gonryun 155 120
+moc_para01 30 10 moscovia 218 198
+moc_para01 30 10 brasilis 190 220
+moc_para01 30 10 dewata 192 182
+moc_para01 30 10 morocc 161 97
+moc_para01 30 10 izlude 134 118
+moc_para01 30 10 umbala 94 154
+moc_para01 30 10 malaya 234 199
+moc_para01 30 10 verus04 115 243
 
 #------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1

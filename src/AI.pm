@@ -465,6 +465,7 @@ sub ai_mapRoute_searchStep {
 	#foreach my $parent (keys %{$$r_args{'openlist'}})
 	{
 		my ($portal,$dest) = split /=/, $parent;
+		next unless $portals_lut{$portal}{dest}{$dest}{enabled};
 		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zeny'} > $$r_args{'budget'}) {
 			#This link is too expensive
 			delete $$r_args{'openlist'}{$parent};
@@ -524,6 +525,7 @@ sub ai_mapRoute_searchStep {
 		foreach my $child (keys %{$portals_los{$dest}}) {
 			next unless $portals_los{$dest}{$child};
 			foreach my $subchild (keys %{$portals_lut{$child}{'dest'}}) {
+				next unless $portals_lut{$child}{dest}{$subchild}{enabled};
 				my $destID = $subchild;
 				my $mapName = $portals_lut{$child}{'source'}{'map'};
 				#############################################################
