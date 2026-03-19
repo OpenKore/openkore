@@ -967,7 +967,7 @@ sub mainLoop_initialized {
 			 || $oldMaster->{version} ne $master->{version}
 			 || $oldUsername ne $config{'username'}
 			 || $oldChar ne $config{'char'}) {
-				AI::clear;
+				AI::clear();
 				AI::SlaveManager::clear();
 				relog();
 			} else {

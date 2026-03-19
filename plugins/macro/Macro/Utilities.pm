@@ -37,7 +37,7 @@ sub ai_isIdle {
 			return 1
 		# 'reregister_safe' waits until AI is idle then re-inserts "macro"
 		} elsif ($method eq 'reregister_safe') {
-			if (AI::isIdle || AI::is('deal')) {
+			if (AI::isIdle() || AI::is('deal')) {
 				$queue->register;
 				return 1
 			}

@@ -2417,7 +2417,7 @@ sub actor_died_or_disappeared {
 	if ($ID eq $accountID) {
 		message T("You have died\n") if (!$char->{dead});
 		Plugins::callHook('self_died');
-		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || AI::state == AI::OFF;
+		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || AI::state() == AI::OFF();
 		$char->{deathCount}++;
 		$char->{dead} = 1;
 		$char->{dead_time} = time;
@@ -2435,7 +2435,7 @@ sub actor_died_or_disappeared {
 			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
 			$monster->{dead} = 1;
 
-			if ((AI::action ne "attack" || AI::args(0)->{ID} eq $ID) &&
+			if ((AI::action() ne "attack" || AI::args(0)->{ID} eq $ID) &&
 				($config{itemsTakeAuto_party} &&
 				($monster->{dmgFromParty} > 0 ||
 				 $monster->{dmgFromYou} > 0))) {
@@ -3587,8 +3587,8 @@ sub warp_portal_list {
 
 	if ($args->{type} == 26 && AI::inQueue('teleport')) {
 		# We have already successfully used the Teleport skill.
-		$messageSender->sendWarpTele(26, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
-		AI::dequeue;
+		$messageSender->sendWarpTele(26, AI::args()->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
+		AI::dequeue();
 	}
 }
 
@@ -3758,7 +3758,7 @@ sub inventory_item_added {
 
 		$args->{item} = $item;
 
-		if (AI::state == AI::AUTO) {
+		if (AI::state() == AI::AUTO()) {
 			# Auto-drop item
 			if (pickupitems($item->{name}, $item->{nameID}) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{ID}, $amount);
@@ -5550,7 +5550,7 @@ sub character_moves {
 	}
 
 	# Ugly; AI code in network subsystem! This must be fixed.
-	if (AI::action eq "mapRoute" && $config{route_escape_reachedNoPortal} && $dist eq "0.0"){
+	if (AI::action() eq "mapRoute" && $config{route_escape_reachedNoPortal} && $dist eq "0.0"){
 	   if (!$portalsID[0]) {
 		if ($config{route_escape_shout} ne "" && !defined($timeout{ai_route_escape}{time})){
 			sendMessage("c", $config{route_escape_shout});
@@ -7083,7 +7083,7 @@ sub item_appeared {
 	$itemsList->add($item) if ($mustAdd);
 
 	# Take item as fast as possible
-	if (AI::state == AI::AUTO && pickupitems($item->{name}, $item->{nameID}) == 2
+	if (AI::state() == AI::AUTO() && pickupitems($item->{name}, $item->{nameID}) == 2
 	 && ($config{'itemsTakeAuto'} || $config{'itemsGatherAuto'})
 	 && (!$config{itemsGatherAuto_notInTown} || !$field->isCity)
 	 && (percent_weight($char) < $config{'itemsMaxWeight'})
@@ -7139,7 +7139,7 @@ sub item_disappeared {
 
 	my $item = $itemsList->getByID( $args->{ID} );
 	if ( $item ) {
-		if ( $config{attackLooters} && AI::action ne "sitAuto" && pickupitems( $item->{name}, $item->{nameID} ) > 0 ) {
+		if ( $config{attackLooters} && AI::action() ne "sitAuto" && pickupitems( $item->{name}, $item->{nameID} ) > 0 ) {
 			for my Actor::Monster $monster ( @$monstersList ) {    # attack looter code
 				if ( my $control = mon_control( $monster->name, $monster->{nameID} ) ) {
 					next
@@ -7259,7 +7259,7 @@ sub map_change {
 	}
 
 	if ($ai_v{temp}{clear_aiQueue}) {
-		AI::clear;
+		AI::clear();
 		AI::SlaveManager::clear();
 	}
 
@@ -7674,7 +7674,7 @@ sub npc_store_info {
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
 
-	if (AI::action ne 'buyAuto') {
+	if (AI::action() ne 'buyAuto') {
 		Commands::run('store');
 	}
 }
@@ -7745,7 +7745,7 @@ sub buy_result {
 		error TF("Buy failed (failure code %s).\n", $args->{fail});
 	}
 	if (AI::is("buyAuto")) {
-		AI::args->{recv_buy_packet} = 1;
+		AI::args()->{recv_buy_packet} = 1;
 	}
 	Plugins::callHook('buy_result', {fail => $args->{fail}});
 }
@@ -7786,7 +7786,7 @@ sub npc_market_info {
 
 	return if !$storeList->size;
 
-	if (AI::action ne 'buyAuto') {
+	if (AI::action() ne 'buyAuto') {
 		Commands::run('store');
 	}
 
@@ -7828,7 +7828,7 @@ sub npc_market_purchase_result {
 	}
 
 	if (AI::is("buyAuto")) {
-		AI::args->{recv_buy_packet} = 1;
+		AI::args()->{recv_buy_packet} = 1;
 	}
 
 	my $pack = $self->{npc_market_info_pack} || 'v C V2 v';
@@ -7861,7 +7861,7 @@ sub npc_market_purchase_result {
 
 	return if !$storeList->size;
 
-	if (AI::action ne 'buyAuto') {
+	if (AI::action() ne 'buyAuto') {
 		Commands::run('store');
 	}
 
@@ -9450,20 +9450,20 @@ sub skills_list {
 	# TODO: per-actor, if needed at all
 	# Skill::DynamicInfo::clear;
 	my ($ownerType, $hook, $actor) = @{{
-		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
-		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
-		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
-		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
+		'010F' => [Skill::OWNER_CHAR(), 'packet_charSkills', $char],
+		'0235' => [Skill::OWNER_HOMUN(), 'packet_homunSkills', $char->{homunculus}],
+		'029D' => [Skill::OWNER_MERC(), 'packet_mercSkills', $char->{mercenary}],
+		'0B32' => [Skill::OWNER_CHAR(), 'packet_charSkills', $char],
 	}->{$args->{switch}}};
 
 	my $skillsIDref;
-	if ($ownerType == Skill::OWNER_CHAR) {
+	if ($ownerType == Skill::OWNER_CHAR()) {
 		$skillsIDref = \@skillsID;
 		delete @{$char->{skills}}{@$skillsIDref};
-	} elsif ($ownerType == Skill::OWNER_HOMUN) {
+	} elsif ($ownerType == Skill::OWNER_HOMUN()) {
 		$skillsIDref = \@{$char->{homunculus}->{slave_skillsID}};
 		delete @{$char->{homunculus}->{skills}}{@$skillsIDref};
-	} elsif ($ownerType == Skill::OWNER_MERC) {
+	} elsif ($ownerType == Skill::OWNER_MERC()) {
 		$skillsIDref = \@{$char->{mercenary}->{slave_skillsID}};
 		delete @{$char->{mercenary}->{skills}}{@$skillsIDref};
 	}
@@ -9506,7 +9506,7 @@ sub skill_update {
 	$char->{skills}{$handle}{range} = $range;
 	$char->{skills}{$handle}{up} = $up;
 
-	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR);
+	Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $skill->getTargetType(), Skill::OWNER_CHAR());
 
 	Plugins::callHook('packet_charSkills', {
 		ID => $ID,
@@ -9636,7 +9636,7 @@ sub sell_result {
 	}
 	@sellList = ();
 	if (AI::is("sellAuto")) {
-		AI::args->{recv_sell_packet} = 1;
+		AI::args()->{recv_sell_packet} = 1;
 	}
 }
 
@@ -11151,8 +11151,8 @@ sub storage_password_request {
 		my $index = AI::findAction('storageAuto');
 		if (defined $index) {
 			AI::args($index)->{done} = 1;
-			while (AI::action ne 'storageAuto') {
-				AI::dequeue;
+			while (AI::action() ne 'storageAuto') {
+				AI::dequeue();
 			}
 		}
 	} else {
@@ -11186,8 +11186,8 @@ sub storage_password_result {
 		my $index = AI::findAction('storageAuto');
 		if (defined $index) {
 			AI::args($index)->{done} = 1;
-			while (AI::action ne 'storageAuto') {
-				AI::dequeue;
+			while (AI::action() ne 'storageAuto') {
+				AI::dequeue();
 			}
 		}
 	} else {
@@ -11343,7 +11343,7 @@ sub private_message {
 		RawMsg => $privMsg,
 	});
 
-	if ($config{dcOnPM} && AI::state == AI::AUTO) {
+	if ($config{dcOnPM} && AI::state() == AI::AUTO()) {
 		message T("Auto disconnecting on PM!\n");
 		chatLog("k", T("*** You were PM'd, auto disconnect! ***\n"));
 		$messageSender->sendQuit();
@@ -11638,8 +11638,8 @@ sub skill_cast {
 	my $monster = $monstersList->getByID($sourceID);
 	my $control;
 	$control = mon_control($monster->name,$monster->{nameID}) if ($monster);
-	if (AI::state == AI::AUTO && $control->{skillcancel_auto}) {
-		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
+	if (AI::state() == AI::AUTO() && $control->{skillcancel_auto}) {
+		if ($targetID eq $accountID || $dist > 0 || (AI::action() eq "attack" && AI::args()->{ID} ne $sourceID)) {
 			message TF( "Monster Skill - %s (%d) - Adding it to monsterSkillCancel list to be attacked\n",
 				$monster->name, $monster->{binID} );
 			$monster->{monsterSkillCancel} = 1;
@@ -11647,7 +11647,7 @@ sub skill_cast {
 
 		# Skill area casting -> running to monster's back
 		my $ID;
-		if ($dist > 0 && AI::action eq "attack" && ($ID = AI::args->{ID}) && (my $monster2 = $monstersList->getByID($ID))) {
+		if ($dist > 0 && AI::action() eq "attack" && ($ID = AI::args()->{ID}) && (my $monster2 = $monstersList->getByID($ID))) {
 			# Calculate X axis
 			if ($char->{pos_to}{x} - $monster2->{pos_to}{x} < 0) {
 				$coords{x} = $monster2->{pos_to}{x} + 3;
@@ -11838,7 +11838,7 @@ sub skill_add {
 	#Fix bug , receive status "Night" 2 time
 	binAdd(\@skillsID, $handle) if (binFind(\@skillsID, $handle) eq "");
 
-	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR);
+	Skill::DynamicInfo::add($args->{skillID}, $handle, $args->{lv}, $args->{sp}, $args->{target}, $args->{target}, Skill::OWNER_CHAR());
 
 	Plugins::callHook('packet_charSkills', {
 		ID => $args->{skillID},
@@ -12577,3 +12577,5 @@ sub notify_accessible_mapname {
 }
 
 1;
+
+

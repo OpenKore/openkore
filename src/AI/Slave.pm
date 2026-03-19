@@ -164,7 +164,7 @@ sub iterate {
 	
 	return if $slave->processClientSuspend;
 	
-	return if ($slave->{slave_AI} == AI::OFF);
+	return if ($slave->{slave_AI} == AI::OFF());
 	
 	$slave->{master_dist} = $slave->blockDistance_master;
 
@@ -181,7 +181,7 @@ sub iterate {
 	});
 	$slave->processTask('move');
 
-	return unless ($slave->{slave_AI} == AI::AUTO);
+	return unless ($slave->{slave_AI} == AI::AUTO());
 
 	##### AUTOMATIC AI STARTS HERE #####
 	
@@ -208,7 +208,7 @@ sub processWasFound {
 sub processTeleportToMaster {
 	my $slave = shift;
 	if (
-		   !AI::args->{mapChanged}
+		   !AI::args()->{mapChanged}
 		&& $slave->{master_dist} >= MAX_DISTANCE
 		&& timeOut($timeout{$slave->{ai_standby_timeout}})
 		&& !$slave->{isLost}
@@ -230,9 +230,9 @@ sub processTeleportToMaster {
 sub processFollow {
 	my $slave = shift;
 	if (
-		   (AI::action eq "move" || AI::action eq "route")
+		   (AI::action() eq "move" || AI::action() eq "route")
 		&& !$char->{sitting}
-		&& !AI::args->{mapChanged}
+		&& !AI::args()->{mapChanged}
 		&& $slave->{master_dist} < MAX_DISTANCE
 		&& ($slave->isIdle || $slave->{master_dist} > $config{$slave->{configPrefix}.'followDistanceMax'} || blockDistance($char->{pos_to}, $slave->{pos_to}) > $config{$slave->{configPrefix}.'followDistanceMax'})
 		&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
@@ -377,16 +377,16 @@ sub processAutoAttack {
 	next unless ($slave->isIdle || $slave->is(qw/route/));
 
 	next unless (
-	    AI::isIdle ||
+	    AI::isIdle() ||
 	    AI::is(qw(follow sitAuto attack skill_use)) ||
-		(AI::action eq "route" && AI::action(1) eq "attack") ||
-		(AI::action eq "move" && AI::action(2) eq "attack") ||
+		(AI::action() eq "route" && AI::action(1) eq "attack") ||
+		(AI::action() eq "move" && AI::action(2) eq "attack") ||
 		($config{$slave->{configPrefix}.'attackAuto_duringItemsTake'} && AI::is(qw(take items_gather items_take))) ||
 		($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk})
 	);
 	next unless (timeOut($timeout{$slave->{ai_attack_auto_timeout}}));
 	next unless ($slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'});
-	#next unless ((AI::action ne "move" && AI::action ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'});
+	#next unless ((AI::action() ne "move" && AI::action() ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'});
 	next unless (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity);
 	next unless ($config{$slave->{configPrefix}.'attackAuto_inLockOnly'} <= 1 || $field->baseName eq $config{'lockMap'});
 	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"));
