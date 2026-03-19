@@ -299,29 +299,17 @@ sub _normalizeDynamicPortalSelection {
 	return unless defined $selection;
 
 	$selection =~ s/^\s+|\s+$//g;
+	$selection =~ s/^"(.*)"$/$1/;
+	$selection =~ s/^'(.*)'$/$1/;
 	$selection =~ s/\s+/ /g;
 	return if $selection eq '';
 
-	my ($map, $x, $y) = split / /, $selection, 3;
+	my $map;
 	($map) = Field::nameToBaseName(undef, $map);
 	$map = lc $map;
-
-	if (defined $x && defined $y && $x =~ /^\d+$/ && $y =~ /^\d+$/) {
-		return "$map $x $y";
-	}
+	return if $map eq '';
 
 	return $map;
-}
-
-sub _dynamicPortalSelectionMatches {
-	my ($selection, $destID) = @_;
-	return 0 unless defined $selection && defined $destID;
-
-	my ($map, $x, $y) = split / /, $destID, 3;
-	my $normalizedDestID = join(' ', lc($map), $x, $y);
-	return 1 if $selection eq $normalizedDestID;
-	return 1 if $selection eq lc($map);
-	return 0;
 }
 
 sub applyDynamicPortalStates {
@@ -330,21 +318,37 @@ sub applyDynamicPortalStates {
 		next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
 
 		my $configuredValue = $config{$group->{config_key}};
-		my $selection = _normalizeDynamicPortalSelection($configuredValue);
+		my $configMap = _normalizeDynamicPortalSelection($configuredValue);
+
+		if (!defined $configMap) {
+			warning TF(
+				"[applyDynamicPortalStates] Dynamic portal setting '%s' has no match for %s; all destinations from %s are disabled.\n",
+				$configuredValue, $group->{config_key}, $source
+			);
+		}
+
 		my $matched = 0;
 
 		foreach my $destID (keys %{$group->{destinations}}) {
-			next unless exists $portals_lut{$source}{dest}{$destID};
-			my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
-			$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
-			$matched ||= $enabled;
+			if (
+				defined $configMap &&
+				!$matched &&
+				exists $portals_lut{$source}{dest}{$destID} &&
+				exists $portals_lut{$source}{dest}{$destID}{map} &&
+				defined $portals_lut{$source}{dest}{$destID}{map} &&
+				lc($portals_lut{$source}{dest}{$destID}{map}) eq lc($configMap)
+			) {
+				$portals_lut{$source}{dest}{$destID}{enabled} = 1;
+				warning TF("[applyDynamicPortalStates] [From %s] Enabling %s\n", $source, $destID);
+				$matched = 1;
+			} else {
+				$portals_lut{$source}{dest}{$destID}{enabled} = 0;
+				warning TF("[applyDynamicPortalStates] [From %s] Disabling %s\n", $source, $destID);
+			}
 		}
 
-		if (defined $selection && !$matched) {
-			warning TF(
-				"Dynamic portal setting '%s' has no match for %s; all destinations from %s are disabled.\n",
-				$configuredValue, $group->{config_key}, $source
-			);
+		if (!$matched) {
+			warning TF("[applyDynamicPortalStates] [From %s] Found no matching portal.\n", $source);
 		}
 	}
 }

@@ -234,8 +234,9 @@ route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 route_randomFactor 0
+
 # Eden Group Headquarters exit portal.
-# Use a map name like "prontera" or a full destination like "que_ng 33 63".
+# Use only a map name, with or without quotes, like prontera or "payon"
 EdenPortalExit
 
 # Maximum walking path distance (client setting). Default: 17

@@ -42,7 +42,6 @@ our @EXPORT = (
 	ai_slave_getAggressives
 	ai_getPlayerAggressives
 	ai_getMonstersAttacking
-	ai_mapRoute_searchStep
 	ai_items_take
 	ai_route
 	ai_route_getRoute
@@ -448,99 +447,6 @@ sub ai_getMonstersAttacking {
 		push @agMonsters, $_ if $monster->{target} eq $ID;
 	}
 	return @agMonsters;
-}
-
-sub ai_mapRoute_searchStep {
-	my $r_args = shift;
-
-	unless ($r_args->{openlist} && %{$r_args->{openlist}}) {
-		$r_args->{done} = 1;
-		$r_args->{found} = '';
-		return 0;
-	}
-
-	my $parent = (sort {$$r_args{'openlist'}{$a}{'walk'} <=> $$r_args{'openlist'}{$b}{'walk'}} keys %{$$r_args{'openlist'}})[0];
-	debug "$parent, $$r_args{'openlist'}{$parent}{'walk'}\n", "route/path";
-	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
-	#foreach my $parent (keys %{$$r_args{'openlist'}})
-	{
-		my ($portal,$dest) = split /=/, $parent;
-		next unless $portals_lut{$portal}{dest}{$dest}{enabled};
-		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zeny'} > $$r_args{'budget'}) {
-			#This link is too expensive
-			delete $$r_args{'openlist'}{$parent};
-			next;
-		} else {
-			#MOVE this entry into the CLOSELIST
-			$$r_args{'closelist'}{$parent}{'walk'}   = $$r_args{'openlist'}{$parent}{'walk'};
-			$$r_args{'closelist'}{$parent}{'zeny'}  = $$r_args{'openlist'}{$parent}{'zeny'};
-			$$r_args{'closelist'}{$parent}{'parent'} = $$r_args{'openlist'}{$parent}{'parent'};
-			#Then delete in from OPENLIST
-			delete $$r_args{'openlist'}{$parent};
-		}
-
-		if ($portals_lut{$portal}{'dest'}{$dest}{'map'} eq $$r_args{'dest'}{'map'}) {
-			if ($$r_args{'dest'}{'pos'}{'x'} eq '' && $$r_args{'dest'}{'pos'}{'y'} eq '') {
-				$$r_args{'found'} = $parent;
-				$$r_args{'done'} = 1;
-				undef @{$$r_args{'mapSolution'}};
-				my $this = $$r_args{'found'};
-				while ($this) {
-					my %arg;
-					$arg{'portal'} = $this;
-					my ($from,$to) = split /=/, $this;
-					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
-					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
-					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zeny'} = $$r_args{'closelist'}{$this}{'zeny'};
-					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
-					unshift @{$$r_args{'mapSolution'}},\%arg;
-					$this = $$r_args{'closelist'}{$this}{'parent'};
-				}
-				return;
-			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, $$r_args{'dest'}{'field'}, $portals_lut{$portal}{'dest'}{$dest}, $$r_args{'dest'}{'pos'}) ) {
-				my $walk = "$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}=$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}";
-				$$r_args{'closelist'}{$walk}{'walk'} = scalar @{$$r_args{'solution'}} + $$r_args{'closelist'}{$parent}{$dest}{'walk'};
-				$$r_args{'closelist'}{$walk}{'parent'} = $parent;
-				$$r_args{'closelist'}{$walk}{'zeny'} = $$r_args{'closelist'}{$parent}{'zeny'};
-				$$r_args{'found'} = $walk;
-				$$r_args{'done'} = 1;
-				undef @{$$r_args{'mapSolution'}};
-				my $this = $$r_args{'found'};
-				while ($this) {
-					my %arg;
-					$arg{'portal'} = $this;
-					my ($from,$to) = split /=/, $this;
-					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
-					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zeny'} = $$r_args{'closelist'}{$this}{'zeny'};
-					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
-					unshift @{$$r_args{'mapSolution'}},\%arg;
-					$this = $$r_args{'closelist'}{$this}{'parent'};
-				}
-				return;
-			}
-		}
-		#get all children of each openlist
-		foreach my $child (keys %{$portals_los{$dest}}) {
-			next unless $portals_los{$dest}{$child};
-			foreach my $subchild (keys %{$portals_lut{$child}{'dest'}}) {
-				next unless $portals_lut{$child}{dest}{$subchild}{enabled};
-				my $destID = $subchild;
-				my $mapName = $portals_lut{$child}{'source'}{'map'};
-				#############################################################
-				my $penalty = int($routeWeights{lc($mapName)}) + int(($portals_lut{$child}{'dest'}{$subchild}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
-				my $thisWalk = $penalty + $$r_args{'closelist'}{$parent}{'walk'} + $portals_los{$dest}{$child};
-				if (!exists $$r_args{'closelist'}{"$child=$subchild"}) {
-					if ( !exists $$r_args{'openlist'}{"$child=$subchild"} || $$r_args{'openlist'}{"$child=$subchild"}{'walk'} > $thisWalk ) {
-						$$r_args{'openlist'}{"$child=$subchild"}{'parent'} = $parent;
-						$$r_args{'openlist'}{"$child=$subchild"}{'walk'} = $thisWalk;
-						$$r_args{'openlist'}{"$child=$subchild"}{'zeny'} = $$r_args{'closelist'}{$parent}{'zeny'} + $portals_lut{$child}{'dest'}{$subchild}{'cost'};
-					}
-				}
-			}
-		}
-	}
 }
 
 sub ai_items_take {
