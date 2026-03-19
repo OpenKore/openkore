@@ -64,6 +64,7 @@ sub start {
 		subtest 'teleport_items.txt' => sub {
 			my %teleport_items;
 			parseTeleportItems('teleport_items.txt', \%teleport_items);
+			is_deeply([sort keys %teleport_items], ['list'], 'stores only list structure for teleport items');
 			is(scalar @{$teleport_items{list}}, 4, 'parses entries');
 			is($teleport_items{list}[0]{itemID}, 22508, 'itemID');
 			is($teleport_items{list}[0]{destMap}, 'moc_para01', 'destMap');
@@ -73,7 +74,7 @@ sub start {
 			is($teleport_items{list}[0]{timeoutSec}, 1200, 'timeoutSec');
 			is($teleport_items{list}[1]{mode}, 'random', 'supports comma syntax');
 			is($teleport_items{list}[1]{maxLevel}, 99, 'parses maxLvl syntax');
-			is($teleport_items{list}[2]{requiredEquipSlot}, 'midhead', 'parses required equip slot');
+			is($teleport_items{list}[2]{requiredEquipSlot}, 'midHead', 'preserves required equip slot case from table');
 			is($teleport_items{list}[2]{requiredEquipItemID}, 15385, 'parses required equip item id');
 			is($teleport_items{list}[3]{maxLevel}, 1200, 'single optional numeric is maxLvl by positional syntax');
 			is($teleport_items{list}[3]{timeoutSec}, 0, 'timeoutSec defaults to 0 when omitted');
@@ -83,6 +84,7 @@ sub start {
 		subtest 'teleport_items_invalid.txt' => sub {
 			my %teleport_items;
 			parseTeleportItems('teleport_items_invalid.txt', \%teleport_items);
+			is_deeply([sort keys %teleport_items], ['list'], 'invalid file still keeps list-only structure');
 			is(scalar @{$teleport_items{list}}, 1, 'ignores malformed entries and keeps only valid ones');
 			is($teleport_items{list}[0]{itemID}, 602, 'valid control line itemID');
 			is($teleport_items{list}[0]{mode}, 'respawn', 'valid control line mode');

@@ -632,8 +632,7 @@ sub getWarpItemCandidates {
 		my $entry = $value;
 		
 		next unless ($entry->{mode} eq 'warp' || $entry->{mode} eq 'any');
-		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
-		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
+		next unless Misc::isTeleportItemEntryWithinLevelRange($entry, $char->{lv});
 		next if ($self->{noWarpItemIDs}{$entry->{itemID}});
 		next unless $self->isWarpItemRoutingDestinationValid($entry);
 
@@ -641,31 +640,18 @@ sub getWarpItemCandidates {
 		next unless $item;
 		next unless Misc::canTeleportItemEquipRequirementBeSatisfied($entry);
 
-		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
-			my $elapsed = time - $char->{last_teleport_item_use}{$entry->{itemID}};
-			if ($elapsed < $entry->{timeoutSec}) {
-				my $remaining = int($entry->{timeoutSec} - $elapsed);
-				$remaining = 1 if $remaining < 1;
-				if (!$self->{_warp_item_cooldown_warned}{$entry->{itemID}}) {
-					warning TF("Cannot use teleport item %s for route now: cooldown active (%s sec remaining).\n", $entry->{itemID}, $remaining), "route";
-					$self->{_warp_item_cooldown_warned}{$entry->{itemID}} = 1;
-				}
-				next;
+		my $remaining = Misc::getTeleportItemCooldownRemainingSec($entry);
+		if ($remaining > 0) {
+			if (!$self->{_warp_item_cooldown_warned}{$entry->{itemID}}) {
+				warning TF("Cannot use teleport item %s for route now: cooldown active (%s sec remaining).\n", $entry->{itemID}, $remaining), "route";
+				$self->{_warp_item_cooldown_warned}{$entry->{itemID}} = 1;
 			}
+			next;
 		}
 
 		push @matches, $entry;
 	}
 	return @matches;
-}
-
-sub isWarpItemRoutingDestinationValid {
-	my ($self, $entry) = @_;
-	return 0 unless ($entry && defined $entry->{destMap} && $entry->{destMap} ne '');
-
-	my $destMap = lc($entry->{destMap});
-	return 0 if ($destMap eq '*' || $destMap eq 'any' || $destMap eq 'save');
-	return 1;
 }
 
 sub isWarpItemRoutingDestinationValid {

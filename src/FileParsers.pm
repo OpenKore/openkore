@@ -1074,7 +1074,6 @@ sub parseTeleportItems {
 	my ($file, $r_hash) = @_;
 	undef %{$r_hash};
 	$r_hash->{list} = [];
-	my %equipSlotLookupLC = map { lc($_) => 1 } keys %equipSlot_rlut;
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -1109,7 +1108,6 @@ sub parseTeleportItems {
 			}
 			if (@optional_args >= 2) {
 				($required_equip_slot, $required_equip_item_id) = splice(@optional_args, 0, 2);
-				$required_equip_slot = lc($required_equip_slot) if defined $required_equip_slot;
 			}
 
 			if (@optional_args) {
@@ -1134,14 +1132,26 @@ sub parseTeleportItems {
 			next;
 		}
 		if (defined $required_equip_slot) {
-			if (!$equipSlotLookupLC{$required_equip_slot}) {
+			my $valid_slot = 0;
+			for my $known_slot (keys %equipSlot_rlut) {
+				next unless defined $known_slot;
+				if ($known_slot =~ /^\Q$required_equip_slot\E$/i) {
+					$valid_slot = 1;
+					last;
+				}
+			}
+
+			if (!$valid_slot) {
 				warning TF("Invalid teleport item entry at %s: required equip slot is not recognized ($required_equip_slot): %s\n", $file, $line);
 				next;
 			}
 		}
 
 		$mode = lc $mode;
-		$mode = 'any' unless $mode =~ /^(?:any|random|respawn|warp)$/;
+		if ($mode !~ /^(?:any|random|respawn|warp)$/) {
+			warning TF("Invalid teleport item entry at %s: unrecognized mode '%s', defaulting to 'any': %s\n", $file, $mode, $line);
+			$mode = 'any';
+		}
 
 		my $entry = {
 			itemID => int($itemID),
@@ -1158,12 +1168,6 @@ sub parseTeleportItems {
 			$entry->{requiredEquipSlot} = $required_equip_slot;
 			$entry->{requiredEquipItemID} = int($required_equip_item_id);
 		}
-
-		my $dest = $dest_map . " " . int($dest_x) . " " . int($dest_y);
-		$$r_hash{$dest}{'dest'}{'map'} = $dest_map;
-		$$r_hash{$dest}{'dest'}{'x'} = $dest_x;
-		$$r_hash{$dest}{'dest'}{'y'} = $dest_y;
-		$$r_hash{$dest}{'entry'} = $entry;
 
 		push @{$r_hash->{list}}, $entry;
 	}

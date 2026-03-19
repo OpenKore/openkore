@@ -4352,19 +4352,13 @@ sub compilePortals {
 	}
 
 	# teleport_items
-	#use Data::Dumper;
-	#Log:warning Dumper(\%teleport_items);
-	foreach my $portal (keys %teleport_items) {
-		#Log:warning "Portal [$portal] > ".Dumper($teleport_items{$portal});
-		next unless $teleport_items{$portal};
-		next unless ref($teleport_items{$portal}) eq 'HASH';
-		next unless $teleport_items{$portal}{dest};
-		next unless $teleport_items{$portal}{dest}{map};
-		next unless $teleport_items{$portal}{dest}{x};
-		next unless $teleport_items{$portal}{dest}{y};
+	for my $entry (@{$teleport_items{list} || []}) {
+		next unless $entry && ref($entry) eq 'HASH';
+		next unless ($entry->{destMap} && defined $entry->{destX} && defined $entry->{destY});
 
-		$mapSpawns{$teleport_items{$portal}{dest}{map}}{$portal}{x} = $teleport_items{$portal}{dest}{x};
-		$mapSpawns{$teleport_items{$portal}{dest}{map}}{$portal}{y} = $teleport_items{$portal}{dest}{y};
+		my $portal = join(' ', $entry->{destMap}, int($entry->{destX}), int($entry->{destY}));
+		$mapSpawns{$entry->{destMap}}{$portal}{x} = $entry->{destX};
+		$mapSpawns{$entry->{destMap}}{$portal}{y} = $entry->{destY};
 	}
 
 	$pathfinding = new PathFinding if (!$checkOnly);
@@ -5748,10 +5742,7 @@ sub isTeleportItemEquipRequirementSatisfied {
 	my ($entry) = @_;
 	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
 
-	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
-	my $required_id = $entry->{requiredEquipItemID};
-	return 0 unless defined $equipSlot_rlut{$required_slot};
-	my $required_item = $char->inventory->getByNameID($required_id);
+	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
 	return 0 unless ($required_item && $required_item->{equipped});
 	return $required_item->equippedInSlot($required_slot);
 }
@@ -5760,10 +5751,7 @@ sub canTeleportItemEquipRequirementBeSatisfied {
 	my ($entry) = @_;
 	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
 
-	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
-	my $required_id = $entry->{requiredEquipItemID};
-	return 0 unless defined $equipSlot_rlut{$required_slot};
-	my $required_item = $char->inventory->getByNameID($required_id);
+	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
 	return 0 unless $required_item;
 	return 1 if $required_item->{equipped} && $required_item->equippedInSlot($required_slot);
 	return $required_item->equippable();
@@ -5774,12 +5762,20 @@ sub tryEquipTeleportItemRequirement {
 	return 1 if isTeleportItemEquipRequirementSatisfied($entry);
 	return 0 unless canTeleportItemEquipRequirementBeSatisfied($entry);
 
-	my $required_item = $char->inventory->getByNameID($entry->{requiredEquipItemID});
+	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
 	return 0 unless $required_item;
-	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
-	return 0 unless defined $equipSlot_rlut{$required_slot};
 	$required_item->equipInSlot($required_slot);
 	return 0;
+}
+
+sub _getTeleportItemEquipRequirementContext {
+	my ($entry) = @_;
+	return unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+
+	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
+	return unless defined $equipSlot_rlut{$required_slot};
+	my $required_item = $char->inventory->getByNameID($entry->{requiredEquipItemID});
+	return ($required_slot, $required_item);
 }
 
 sub _normalizeEquipSlotName {
@@ -5787,10 +5783,9 @@ sub _normalizeEquipSlotName {
 	return $slot unless defined $slot;
 	return $slot if defined $equipSlot_rlut{$slot};
 
-	my $slot_lc = lc($slot);
 	for my $known_slot (keys %equipSlot_rlut) {
 		next unless defined $known_slot;
-		return $known_slot if lc($known_slot) eq $slot_lc;
+		return $known_slot if $known_slot =~ /^\Q$slot\E$/i;
 	}
 	return $slot;
 }
@@ -5853,6 +5848,29 @@ sub setTeleportItemCooldownFromRemainingSeconds {
 	clearTeleportItemPendingUse($itemID);
 }
 
+sub getTeleportItemCooldownRemainingSec {
+	my ($entry, $now) = @_;
+	return 0 unless ($entry && $entry->{timeoutSec} && defined $entry->{itemID});
+	return 0 unless ($char && $char->{last_teleport_item_use} && $char->{last_teleport_item_use}{$entry->{itemID}});
+
+	$now = time unless defined $now;
+	my $elapsed = $now - $char->{last_teleport_item_use}{$entry->{itemID}};
+	my $remaining = int($entry->{timeoutSec} - $elapsed);
+	return 0 if $remaining <= 0;
+	return $remaining;
+}
+
+sub isTeleportItemEntryWithinLevelRange {
+	my ($entry, $level) = @_;
+	return 0 unless $entry;
+
+	$level = $char->{lv} if !defined $level && $char;
+	return 0 unless defined $level;
+	return 0 if ($entry->{minLevel} && $level < $entry->{minLevel});
+	return 0 if ($entry->{maxLevel} && $level > $entry->{maxLevel});
+	return 1;
+}
+
 sub getTeleportItemFromTable {
 	my ($mode, %args) = @_;
 	return unless $char && $char->inventory && $char->inventory->isReady();
@@ -5863,8 +5881,7 @@ sub getTeleportItemFromTable {
 	for my $entry (@{$teleport_items{list}}) {
 		next unless ($entry);
 		next if ($entry->{mode} ne 'any' && $entry->{mode} ne $mode);
-		next if ($entry->{minLevel} && $char->{lv} < $entry->{minLevel});
-		next if ($entry->{maxLevel} && $char->{lv} > $entry->{maxLevel});
+		next unless isTeleportItemEntryWithinLevelRange($entry, $char->{lv});
 
 		my $entry_map = lc($entry->{destMap} || '');
 		if ($target_map ne '' && $entry_map ne '' && $entry_map ne '*' && $entry_map ne 'any' && $entry_map ne 'save') {
@@ -5875,9 +5892,7 @@ sub getTeleportItemFromTable {
 		next unless $item;
 		next unless isTeleportItemEquipRequirementSatisfied($entry);
 
-		if ($entry->{timeoutSec} && $char->{last_teleport_item_use}{$entry->{itemID}}) {
-			next if time - $char->{last_teleport_item_use}{$entry->{itemID}} < $entry->{timeoutSec};
-		}
+		next if getTeleportItemCooldownRemainingSec($entry) > 0;
 
 		return ($item, $entry);
 	}
