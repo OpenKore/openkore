@@ -2367,38 +2367,28 @@ sub processLockMap {
 			my %args;
 			Plugins::callHook('AI/lockMap', \%args);
 			unless ($args{'return'}) {
-				my ($lockX, $lockY, $i);
+				my ($cell, $i);
 				eval {
 					my $lockField = new Field(name => $config{'lockMap'}, loadWeightMap => 0);
-					$i = 500;
-					if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
-						do {
-							$lockX = int(rand($field->width + 1)) if (!$config{'lockMap_x'} && $config{'lockMap_y'});
-							$lockX = int($config{'lockMap_x'}) if ($config{'lockMap_x'});
-							$lockX += (int(rand(2*$config{'lockMap_randX'} + 1) - $config{'lockMap_randX'})) if ($config{'lockMap_x'} && $config{'lockMap_randX'});
-
-							$lockY = int(rand($field->width + 1)) if (!$config{'lockMap_y'} && $config{'lockMap_x'});
-							$lockY = int($config{'lockMap_y'}) if ($config{'lockMap_y'});
-							$lockY += (int(rand(2*$config{'lockMap_randY'} + 1) - $config{'lockMap_randY'})) if ($config{'lockMap_y'} && $config{'lockMap_randY'});
-						} while (--$i && !$lockField->isWalkable($lockX, $lockY));
-					}
+					$cell = get_lockMap_cell($lockField);
 				};
-				if (caught('FileNotFoundException') || !$i) {
+
+				if (caught('FileNotFoundException') || !defined $cell) {
 					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
 					$config{'lockMap'} = '';
 				} else {
 					my $attackOnRoute = 2;
 					$attackOnRoute = 1 if ($config{'attackAuto_inLockOnly'} == 1);
 					$attackOnRoute = 0 if ($config{'attackAuto_inLockOnly'} > 1);
-					if (defined $lockX || defined $lockY) {
-						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $lockX, $lockY), "route";
+					if (defined $cell->{x} || defined $cell->{y}) {
+						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $cell->{x}, $cell->{y}), "route";
 					} else {
 						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}), "route";
 					}
 					ai_route(
 						$config{'lockMap'},
-						$lockX,
-						$lockY,
+						$cell->{x},
+						$cell->{y},
 						attackOnRoute => $attackOnRoute,
 						isToLockMap => 1
 					);
@@ -2489,25 +2479,17 @@ sub processRandomWalk {
 		Plugins::callHook('ai_processRandomWalk' => \%plugin_args);
 		return if ($plugin_args{return});
 
-		my ($randX, $randY);
-		my $i = 500;
-		do {
-			$randX = int(rand($field->width-1)+1);
-			$randX = $config{'lockMap_x'} if ($char->{pos}{x} == $config{'lockMap_x'} && !($config{'lockMap_randX'} > 0));
-			$randX = $config{'lockMap_x'} - $config{'lockMap_randX'} + int(rand(2*$config{'lockMap_randX'}+1)) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} >= 0);
-			$randY = int(rand($field->height-1)+1);
-			$randY = $config{'lockMap_y'} if ($char->{pos}{y} == $config{'lockMap_y'} && !($config{'lockMap_randY'} > 0));
-			$randY = $config{'lockMap_y'} - $config{'lockMap_randY'} + int(rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} >= 0);
-		} while (--$i && (!$field->isWalkable($randX, $randY) || $randX == 0 || $randY == 0));
-		if (!$i) {
+		my $cell = get_lockMap_cell();
+
+		if (!defined $cell) {
 			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
 			$config{'route_randomWalk'} = 0;
 		} else {
-			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
+			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $cell->{x}, $cell->{y}), "route";
 			ai_route(
 				$field->baseName,
-				$randX,
-				$randY,
+				$cell->{x},
+				$cell->{y},
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
 				attackOnRoute => (defined $config{attackAuto}) ? $config{attackAuto} : 2,
 				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),

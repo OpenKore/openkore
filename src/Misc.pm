@@ -222,6 +222,7 @@ our @EXPORT = (
 	solveItemLink
 	solveMessage
 	solveMSG
+	get_lockMap_cell
 	absunit
 	autoNpcTalk/,
 
@@ -5762,6 +5763,35 @@ sub print_callers {
             $callers[$i]{line});
     }
 	message "[print_callers] Printing end\n";
+}
+
+sub get_lockMap_cell {
+	my $lockField = shift;
+	$lockField = $field if (!defined $lockField);
+
+	my $cell;
+
+	my $i = 500;
+	my $width = $field->width;
+	my $height = $field->height;
+
+	do {
+		if ($config{'lockMap_x'} ne '') {
+			$cell->{x} = $config{'lockMap_x'};
+			$cell->{x} += (int(rand(2*$config{'lockMap_randX'})) - $config{'lockMap_randX'}) if ($config{'lockMap_randX'} > 0);
+		} else {
+			$cell->{x} = int(rand($width));
+		}
+		if ($config{'lockMap_y'} ne '') {
+			$cell->{y} = $config{'lockMap_y'};
+			$cell->{y} += (int(rand(2*$config{'lockMap_randY'})) - $config{'lockMap_randY'}) if ($config{'lockMap_randY'} > 0);
+		} else {
+			$cell->{y} = int(rand($height));
+		}
+	} while (--$i && (!$field->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $width || $cell->{y} >= $height));
+
+	return undef if (!$i);
+	return $cell;
 }
 
 return 1;
