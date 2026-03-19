@@ -45,6 +45,7 @@ print $out join("\t",
 		Element
 		ElementLevel
 		ChaseRange
+		Ai
 	)
 ), "\n";
 
@@ -63,6 +64,7 @@ for my $mob (@{ $yaml->{Body} }) {
 	my $element       = defined $mob->{Element}       ? $mob->{Element}       : 'Neutral';
 	my $element_lv    = defined $mob->{ElementLevel}  ? $mob->{ElementLevel}  : 1;
 	my $chase_range   = defined $mob->{ChaseRange}    ? $mob->{ChaseRange}    : 0;
+	my $ai            = defined $mob->{Ai}            ? $mob->{Ai}            : '06';
 
 	print $out join("\t",
 		$id,
@@ -77,6 +79,7 @@ for my $mob (@{ $yaml->{Body} }) {
 		$element,
 		$element_lv,
 		$chase_range,
+		$ai,
 	), "\n";
 }
 
