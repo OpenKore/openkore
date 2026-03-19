@@ -87,7 +87,7 @@ our @EXPORT = qw(
 # monsters: Return hash
 #
 # Parses a monster DB file in the format:
-# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange
+# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange [Ai]
 sub parseMonstersTableFile {
 	my $file = shift;
 	my $r_hash = shift;
@@ -104,7 +104,10 @@ sub parseMonstersTableFile {
 		next if $line =~ /^#/;
 
 		# Skip optional header line
-		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange$/i;
+		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange(?:\s+Ai)?$/i;
+
+		my @fields = split /\s+/, $line;
+		next unless @fields >= 12;
 
 		my (
 			$id,
@@ -118,8 +121,9 @@ sub parseMonstersTableFile {
 			$race,
 			$element,
 			$elementLevel,
-			$chaseRange
-		) = split /\s+/, $line, 12;
+			$chaseRange,
+			$ai
+		) = @fields;
 
 		next unless defined $id && $id =~ /^\d+$/;
 
@@ -135,6 +139,7 @@ sub parseMonstersTableFile {
 		$r_hash->{$id}->{Element}       = $element;
 		$r_hash->{$id}->{ElementLevel}  = $elementLevel;
 		$r_hash->{$id}->{ChaseRange}    = $chaseRange;
+		$r_hash->{$id}->{Ai}            = defined $ai ? $ai : '06';
 	}
 
 	return 1;
