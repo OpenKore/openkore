@@ -294,36 +294,17 @@ sub _checkActorHash($$$$) {
 	}
 }
 
-sub _normalizeDynamicPortalSelection {
-	my ($selection) = @_;
-	return unless defined $selection;
-
-	$selection =~ s/^\s+|\s+$//g;
-	$selection =~ s/^"(.*)"$/$1/;
-	$selection =~ s/^'(.*)'$/$1/;
-	$selection =~ s/\s+/ /g;
-	return if $selection eq '';
-
-	my $map;
-	($map) = Field::nameToBaseName(undef, $map);
-	$map = lc $map;
-	return if $map eq '';
-
-	return $map;
-}
-
 sub applyDynamicPortalStates {
 	foreach my $group (values %dynamicPortalGroups) {
 		my $source = $group->{source};
 		next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
 
-		my $configuredValue = $config{$group->{config_key}};
-		my $configMap = _normalizeDynamicPortalSelection($configuredValue);
+		my $configMap = $config{$group->{config_key}};
 
 		if (!defined $configMap) {
 			warning TF(
 				"[applyDynamicPortalStates] Dynamic portal setting '%s' has no match for %s; all destinations from %s are disabled.\n",
-				$configuredValue, $group->{config_key}, $source
+				$configMap, $group->{config_key}, $source
 			);
 		}
 
@@ -343,7 +324,7 @@ sub applyDynamicPortalStates {
 				$matched = 1;
 			} else {
 				$portals_lut{$source}{dest}{$destID}{enabled} = 0;
-				warning TF("[applyDynamicPortalStates] [From %s] Disabling %s\n", $source, $destID);
+				debug TF("[applyDynamicPortalStates] [From %s] Disabling %s\n", $source, $destID);
 			}
 		}
 
