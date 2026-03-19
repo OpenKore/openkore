@@ -3771,6 +3771,31 @@ sub writeStorageLog {
 	}
 }
 
+sub _targetWillLeaveClientSightSoon {
+	my ($actor, $target) = @_;
+
+	return unless ($timeout{ai_future_reachability_lookup}{timeout});
+
+	return 0 unless ($field && $actor && $target);
+	return 0 unless ($actor->{pos} && $actor->{pos_to} && $target->{pos} && $target->{pos_to});
+
+	my $clientSight = $config{clientSight} || 17;
+
+	my $delta = $timeout{ai_future_reachability_lookup}{timeout};
+
+	my $futureActorPos = calcPosFromPathfinding($field, $actor, $delta);
+	my $futureTargetPos = calcPosFromPathfinding($field, $target, $delta);
+	my $futureDist = blockDistance($futureActorPos, $futureTargetPos);
+
+	if ($futureDist >= $clientSight) {
+		debug TF("[getBestTarget] Rejecting unstable edge target %s. Predicted dist in %.1fs %d.\n",
+			$target, $delta, $futureDist), 'ai_attack';
+		return 1;
+	}
+
+	return 0;
+}
+
 ##
 # getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe)
 # possibleTargets: reference to an array of monsters' IDs
@@ -3821,6 +3846,7 @@ sub getBestTarget {
 		$plugin_args{return} = 0;
 		Plugins::callHook('getBestTarget' => \%plugin_args);
 		next if ($plugin_args{return});
+		next if (_targetWillLeaveClientSightSoon($char, $monster));
 
 		if (!$field->checkLOS($myPos, $pos, $attackCanSnipe)) {
 			push(@noLOSMonsters, $_);

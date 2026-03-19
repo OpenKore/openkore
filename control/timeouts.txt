@@ -74,6 +74,8 @@ ai_attack_main 0.1
 ai_homunculus_attack_main 0.1
 ai_mercenary_attack_main 0.1
 
+ai_future_reachability_lookup 0.3
+
 ai_attack_unstuck 2.75
 ai_attack_unfail 12
 
