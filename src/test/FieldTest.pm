@@ -54,6 +54,29 @@ sub start {
 		my $solution = is_route_reachable(mesh @routeKeys, @route);
 		ok((!$solution or diag explain $solution), "Route $_ should be unreachable");
 	}
+
+	# Heap selection smoke tests for CalcMapRoute openlist internals.
+	my $heapTask = new Task::CalcMapRoute(
+		sourceMap => 'prontera',
+		sourceX => 150,
+		sourceY => 150,
+		map => 'aretnorp',
+		x => 150,
+		y => 150,
+	);
+	$heapTask->{openlist} = {};
+	$heapTask->{openlist_heap} = [];
+	$heapTask->add_key_to_openList('k1=k1', { walk => 30 });
+	$heapTask->add_key_to_openList('k2=k2', { walk => 10 });
+	$heapTask->add_key_to_openList('k3=k3', { walk => 20 });
+
+	is($heapTask->shiftOpenlistHeapMinKey(), 'k2=k2', 'heap returns lowest walk key first');
+	delete $heapTask->{openlist}{'k2=k2'};
+	is($heapTask->shiftOpenlistHeapMinKey(), 'k3=k3', 'heap skips removed stale entries and returns next lowest');
+
+	$heapTask->{openlist_heap} = [];
+	$heapTask->rebuildOpenlistHeap();
+	is($heapTask->shiftOpenlistHeapMinKey(), 'k3=k3', 'heap rebuild repopulates from openlist state');
 }
 
 sub is_route_reachable {
