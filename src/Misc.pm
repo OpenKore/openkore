@@ -5803,7 +5803,7 @@ sub _getTeleportItemEquipRequirementContext {
 	return unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
 
 	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
-	return unless defined $equipSlot_rlut{$required_slot};
+	return unless (exists $equipSlot_rlut{$required_slot} && defined $equipSlot_rlut{$required_slot});
 	my $required_item = $char->inventory->getByNameID($entry->{requiredEquipItemID});
 	return ($required_slot, $required_item);
 }
@@ -5811,7 +5811,7 @@ sub _getTeleportItemEquipRequirementContext {
 sub _normalizeEquipSlotName {
 	my ($slot) = @_;
 	return $slot unless defined $slot;
-	return $slot if defined $equipSlot_rlut{$slot};
+	return $slot if (exists $equipSlot_rlut{$slot} && defined $equipSlot_rlut{$slot});
 
 	for my $known_slot (keys %equipSlot_rlut) {
 		next unless defined $known_slot;
