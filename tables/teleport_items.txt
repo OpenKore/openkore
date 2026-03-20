@@ -41,7 +41,7 @@
 # --- Fixed destination warp items ---
 12324 respawn save 0 0 1 0				# Novice Butterfly Wing
 602 respawn save 0 0 1 0				# Butterfly Wing
-22508 warp moc_para01 171 115 1 0 7200			# Eden Group Mark (120 min cooldown)
+22508 warp moc_para01 171 115 1 0 720			# Eden Group Mark (120 min cooldown)
 12845 warp iz_ng01 26 57 1 0				# Amatsu Butterfly Wing
 100903 warp sp_cor 152 158 1 0				# Border Area Cor Teleport Wing
 23027 warp rachel 120 125 1 0 3600			# Dandelion Ring (60 min cooldown)
