@@ -23,7 +23,7 @@ newAStarAvoid_target_drop_dist 13
 newAStarAvoidMonster 1368 {
 	enabled 1
 	weight 2000
-	dist 12
+	penalty_dist 12
 	danger_dist 1
 	drop_target_near 0
 	drop_dest_near 1
@@ -32,7 +32,7 @@ newAStarAvoidMonster 1368 {
 newAStarAvoidMonster 1780 {
 	enabled 1
 	weight 2000
-	dist 12
+	penalty_dist 12
 	danger_dist 1
 	drop_target_near 0
 	drop_dest_near 1
@@ -41,7 +41,7 @@ newAStarAvoidMonster 1780 {
 newAStarAvoidMonster 1781 {
 	enabled 1
 	weight 2000
-	dist 12
+	penalty_dist 12
 	danger_dist 1
 	drop_target_near 0
 	drop_dest_near 1
@@ -50,7 +50,7 @@ newAStarAvoidMonster 1781 {
 newAStarAvoidSpell 135 {
 	enabled 1
 	weight 2000
-	dist 12
+	penalty_dist 12
 	danger_dist 1
 	drop_target_near 0
 	drop_dest_near 1
@@ -59,7 +59,7 @@ newAStarAvoidSpell 135 {
 newAStarAvoidSpell 136 {
 	enabled 1
 	weight 2000
-	dist 12
+	penalty_dist 12
 	danger_dist 1
 	drop_target_near 0
 	drop_dest_near 1
@@ -68,7 +68,7 @@ newAStarAvoidSpell 136 {
 newAStarAvoidPortal default {
 	enabled 1
 	weight 5000
-	dist 12
+	penalty_dist 12
 	danger_dist 0
 	drop_target_near 0
 	drop_dest_near 1
@@ -247,7 +247,7 @@ sub load_obstacle_blocks_from_config {
 			? %{ $target_hash->{$identifier} }
 			: default_obstacle_entry();
 
-		foreach my $option (qw(enabled weight dist danger_dist drop_target_near drop_dest_near)) {
+		foreach my $option (qw(enabled weight penalty_dist danger_dist drop_target_near drop_dest_near)) {
 			my $option_key = "${block_key}_${option}";
 			next unless defined $config{$option_key} && $config{$option_key} ne '';
 
@@ -313,8 +313,8 @@ sub default_obstacle_entry {
 	return (
 		enabled => 1,
 		weight => 2000,
-		dist => 12,
-		danger_dist => 1,
+		penalty_dist => 9,
+		danger_dist => 3,
 		drop_target_near => 0,
 		drop_dest_near => 1,
 	);
@@ -481,10 +481,16 @@ sub build_prohibited_cells {
 	foreach my $obstacle_ID (keys %obstaclesList) {
 		my $obstacle = $obstaclesList{$obstacle_ID};
 		next unless $obstacle->{type} eq 'portal';
-		next unless $obstacle->{pos_to};
-		$prohibited{$obstacle->{pos_to}{x}}{$obstacle->{pos_to}{y}} = 1;
+		my $obstacle_pos = get_actor_position($obstacle);
+		next unless $obstacle_pos;
+		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, 3);
+		foreach my $y ($min_y .. $max_y) {
+			foreach my $x ($min_x .. $max_x) {
+				next unless $field->isWalkable($x, $y);
+				$prohibited{$x}{$y} = 1;
+			}
+		}
 	}
-
 	return \%prohibited;
 }
 
@@ -625,11 +631,13 @@ sub add_obstacle {
 	$mustRePath = 1;
 }
 
-## Copies obstacle flags that influence target dropping and destination dropping.
+## Copies obstacle metadata that later logic needs for dropping and route-step scoring.
 sub define_extras {
 	my ($ID, $obstacle) = @_;
 	$obstaclesList{$ID}{drop_target_near} = $obstacle->{drop_target_near} ? 1 : 0;
 	$obstaclesList{$ID}{drop_dest_near} = $obstacle->{drop_dest_near} ? 1 : 0;
+	$obstaclesList{$ID}{danger_dist} = defined $obstacle->{danger_dist} ? $obstacle->{danger_dist} : 1;
+	$obstaclesList{$ID}{penalty_dist} = defined $obstacle->{penalty_dist} ? $obstacle->{penalty_dist} : 0;
 }
 
 ## Updates the position and weight grid of a moving obstacle when that mode is enabled.
@@ -855,7 +863,7 @@ sub create_changes_array {
 	return [] unless $field && $obstacle_pos && $obstacle;
 
 	my %local_obstacle = %{$obstacle};
-	my $max_distance = $local_obstacle{dist};
+	my $max_distance = $local_obstacle{penalty_dist};
 	my $ratio = $local_obstacle{weight};
 
 	my @changes_array;
