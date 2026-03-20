@@ -1,7 +1,10 @@
 # xConf plugin by 4epT (ICQ 2227733)
 # Based on Lims idea
-# Version: 4.1
-# Last changes 12.03.2017 by Mortimal
+# Version: 4.2
+# Latest changes
+# 20.03.2026 by Henrybk (added bulk_iconf and bulk_mconf)
+# 12.03.2017 by Mortimal
+#
 # Plug-in for change mon_control/pickupitems/items_control/priority files, using console commands.
 #
 # Examples of commands:
