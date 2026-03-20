@@ -195,7 +195,10 @@ our @EXPORT = (
 	avoidList_near
 	compilePortals
 	compilePortals_check
+	refreshDynamicPortalGroups
+	refreshDynamicPortalStates
 	applyDynamicPortalStates
+	getDynamicPortalDestinations
 	portalExists
 	portalExists2
 	portalExistsAirship
@@ -240,50 +243,6 @@ our @EXPORT = (
 # use SelfLoader; 1;
 # __DATA__
 
-my %dynamicPortalGroups = (
-	eden_portal_exit => {
-		config_key => 'EdenPortalExit',
-		source => 'moc_para01 30 10',
-		destinations => {
-			'prontera 116 72' => 1,
-			'moc_ruins 64 161' => 1,
-			'geffen 120 39' => 1,
-			'alberta 117 56' => 1,
-			'aldebaran 168 112' => 1,
-			'izlude_in 73 165' => 1,
-			'prt_church 99 78' => 1,
-			'geffen_in 162 99' => 1,
-			'moc_prydb1 51 118' => 1,
-			'alberta_in 73 43' => 1,
-			'payon_in02 64 60' => 1,
-			'payon 161 58' => 1,
-			'que_ng 33 63' => 1,
-			'que_ng 144 166' => 1,
-			'yuno 158 125' => 1,
-			'rachel 115 125' => 1,
-			'comodo 192 145' => 1,
-			'hugel 88 148' => 1,
-			'veins 216 104' => 1,
-			'einbroch 246 204' => 1,
-			'lighthalzen 159 95' => 1,
-			'amatsu 110 150' => 1,
-			'ayothaya 217 178' => 1,
-			'louyang 217 103' => 1,
-			'gonryun 155 120' => 1,
-			'moscovia 218 198' => 1,
-			'brasilis 190 220' => 1,
-			'dewata 192 182' => 1,
-			'morocc 161 97' => 1,
-			'izlude 134 118' => 1,
-			'umbala 94 154' => 1,
-			'malaya 234 199' => 1,
-			'verus04 115 243' => 1,
-		},
-	},
-);
-
-
-
 sub _checkActorHash($$$$) {
 	my ($name, $hash, $type, $hashName) = @_;
 	foreach my $actor (values %{$hash}) {
@@ -294,44 +253,119 @@ sub _checkActorHash($$$$) {
 	}
 }
 
+sub _normalizeDynamicPortalSelection {
+	my ($selection) = @_;
+	return unless defined $selection;
+
+	$selection =~ s/^\s+|\s+$//g;
+	$selection =~ s/\s+/ /g;
+	return if $selection eq '';
+
+	my ($map, $x, $y) = split / /, $selection, 3;
+	($map) = Field::nameToBaseName(undef, $map);
+	$map = lc $map;
+
+	if (defined $x && defined $y && $x =~ /^\d+$/ && $y =~ /^\d+$/) {
+		return "$map $x $y";
+	}
+
+	return $map;
+}
+
+sub _dynamicPortalSelectionMatches {
+	my ($selection, $destID) = @_;
+	return 0 unless defined $selection && defined $destID;
+
+	my ($map, $x, $y) = split / /, $destID, 3;
+	my $normalizedDestID = join(' ', lc($map), $x, $y);
+	return 1 if $selection eq $normalizedDestID;
+	return 1 if $selection eq lc($map);
+	return 0;
+}
+
+sub _isDynamicPortalConfigKey {
+	my ($key) = @_;
+	return 0 unless defined $key;
+
+	foreach my $group (values %dynamicPortalGroups) {
+		return 1 if defined $group->{config_key} && $group->{config_key} eq $key;
+	}
+
+	return 0;
+}
+
+sub refreshDynamicPortalStates {
+	refreshDynamicPortalGroups();
+	applyDynamicPortalStates();
+}
+
+sub refreshDynamicPortalGroups {
+	%dynamicPortalGroups = ();
+
+	foreach my $portal (keys %portals_lut) {
+		foreach my $destID (keys %{$portals_lut{$portal}{dest}}) {
+			my $dest = $portals_lut{$portal}{dest}{$destID};
+			next unless $dest;
+			next unless $dest->{dynamicPortalGroup};
+			next if $dest->{map} eq '';
+			next if defined $dest->{steps} && $dest->{steps} ne '';
+
+			my $groupName = $dest->{dynamicPortalGroup};
+			$dynamicPortalGroups{$groupName}{config_key} = $groupName;
+			$dynamicPortalGroups{$groupName}{sources}{$portal}{destinations}{$destID} = 1;
+		}
+	}
+}
+
 sub applyDynamicPortalStates {
 	foreach my $group (values %dynamicPortalGroups) {
-		my $source = $group->{source};
-		next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
+		next unless $group->{config_key};
+		next unless keys %{$group->{sources}};
 
-		my $configMap = $config{$group->{config_key}};
-
-		if (!defined $configMap) {
-			warning TF(
-				"[applyDynamicPortalStates] Dynamic portal setting '%s' has no match for %s; all destinations from %s are disabled.\n",
-				$configMap, $group->{config_key}, $source
-			);
-		}
-
+		my $selection = _normalizeDynamicPortalSelection($config{$group->{config_key}});
 		my $matched = 0;
+		my $hasDestinations = 0;
 
-		foreach my $destID (keys %{$group->{destinations}}) {
-			if (
-				defined $configMap &&
-				!$matched &&
-				exists $portals_lut{$source}{dest}{$destID} &&
-				exists $portals_lut{$source}{dest}{$destID}{map} &&
-				defined $portals_lut{$source}{dest}{$destID}{map} &&
-				lc($portals_lut{$source}{dest}{$destID}{map}) eq lc($configMap)
-			) {
-				$portals_lut{$source}{dest}{$destID}{enabled} = 1;
-				warning TF("[applyDynamicPortalStates] [From %s] Enabling %s\n", $source, $destID);
-				$matched = 1;
-			} else {
-				$portals_lut{$source}{dest}{$destID}{enabled} = 0;
-				debug TF("[applyDynamicPortalStates] [From %s] Disabling %s\n", $source, $destID);
+		foreach my $source (keys %{$group->{sources}}) {
+			my $sourceDestinations = $group->{sources}{$source}{destinations};
+			next unless $sourceDestinations && keys %{$sourceDestinations};
+			$hasDestinations = 1;
+
+			next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
+
+			foreach my $destID (keys %{$sourceDestinations}) {
+				next unless exists $portals_lut{$source}{dest}{$destID};
+				my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
+				$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
+				$matched ||= $enabled;
 			}
 		}
 
-		if (!$matched) {
-			warning TF("[applyDynamicPortalStates] [From %s] Found no matching portal.\n", $source);
+		next unless $hasDestinations;
+
+		if (defined $selection && !$matched) {
+			warning TF(
+				"Dynamic portal setting '%s' has no match for %s; all detected destinations are disabled.\n",
+				$config{$group->{config_key}}, $group->{config_key}
+			);
 		}
 	}
+}
+
+sub getDynamicPortalDestinations {
+	my ($groupName) = @_;
+	return {} unless exists $dynamicPortalGroups{$groupName};
+
+	my %destinations;
+
+	foreach my $source (keys %{$dynamicPortalGroups{$groupName}{sources}}) {
+		my $sourceDestinations = $dynamicPortalGroups{$groupName}{sources}{$source}{destinations};
+		next unless $sourceDestinations;
+
+		$destinations{$_} = 1 foreach keys %{$sourceDestinations};
+	}
+
+	return \%destinations;
 }
 
 # Checks whether the internal state of some variables are correct.
@@ -436,7 +470,9 @@ sub configModify {
 		}
 	}
 	$config{$key} = $val;
-	applyDynamicPortalStates() if $key eq 'EdenPortalExit';
+	if (_isDynamicPortalConfigKey($key)) {
+		applyDynamicPortalStates();
+	}
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 	
@@ -488,7 +524,9 @@ sub bulkConfigModify {
 		}
 	}
 
-	applyDynamicPortalStates() if exists $r_hash->{EdenPortalExit};
+	if (grep { _isDynamicPortalConfigKey($_) } keys %{$r_hash}) {
+		applyDynamicPortalStates();
+	}
 	saveConfigFile();
 	
 	Plugins::callHook('post_configModify');
@@ -5562,7 +5600,7 @@ sub parseReload {
 		} else {
 			Settings::loadByRegexp(qr/$args/, $progressHandler);
 		}
-		applyDynamicPortalStates();
+		refreshDynamicPortalStates();
 		Log::initLogFiles();
 		message T("All files were loaded\n"), "reload";
 	};

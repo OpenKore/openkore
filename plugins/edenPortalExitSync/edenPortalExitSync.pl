@@ -3,13 +3,12 @@ package edenPortalExitSync;
 use strict;
 
 use Plugins;
-use Globals qw(%config %portals_lut $char $field);
-use Misc qw(configModify);
-use Log qw(debug);
+use Globals qw(%config $char $field);
+use Misc qw(configModify getDynamicPortalDestinations);
 use AI;
 use Field;
-use Log qw(message debug warning);
-use Translation qw(T TF);
+use Log qw(warning);
+use Translation qw(TF);
 
 Plugins::register(
 	'edenPortalExitSync',
@@ -98,7 +97,7 @@ sub _getActiveMapRouteTask {
 }
 
 sub _getEdenExitDestinations {
-	return $portals_lut{'moc_para01 30 10'}{dest} || {};
+	return getDynamicPortalDestinations('EdenPortalExit');
 }
 
 sub _normalizeMap {

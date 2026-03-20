@@ -21,6 +21,7 @@ my @tests = qw(
 	TaskTalkNPCTest
 	PluginsHookTest
 	FileParsersTest
+	DynamicPortalGroupsTest
 	NetworkTest
 	FieldTest
 );
