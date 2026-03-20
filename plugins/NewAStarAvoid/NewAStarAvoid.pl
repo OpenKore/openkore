@@ -95,8 +95,8 @@ use constant {
 Plugins::register(PLUGIN_NAME, 'Enables smart pathing using config-driven dynamic obstacles', \&onUnload);
 
 my $hooks = Plugins::addHooks(
-	['start3', \&on_start3, undef],
 	['pos_load_config.txt', \&on_config_file_loaded, undef],
+	['post_configModify', \&on_post_config_modify, undef],
 	['PathFindingReset', \&on_PathFindingReset, undef],
 	['route_step', \&on_route_step, undef],
 	['AI_pre/manual', \&on_AI_pre_manual, undef],
@@ -207,6 +207,17 @@ sub plugin_config_key {
 	return 'newAStarAvoid_' . $key;
 }
 
+## Returns whether a config key belongs to this plugin's flat settings or obstacle blocks.
+sub is_plugin_config_key {
+	my ($key) = @_;
+
+	return 0 unless defined $key && $key ne '';
+	return 1 if $key =~ /^newAStarAvoid_/;
+	return 1 if $key =~ /^newAStarAvoid(?:Monster|Player|Spell|Portal)_/;
+
+	return 0;
+}
+
 ## Loads flat plugin settings from config.txt, falling back to built-in defaults when missing.
 sub load_settings_from_config {
 	foreach my $key (keys %plugin_settings) {
@@ -263,13 +274,16 @@ sub reload_plugin_configuration {
 	rebuild_obstacles_from_world();
 }
 
-## Initializes the plugin configuration on startup.
-sub on_start3 {
+## Rebuilds plugin settings after config.txt is reloaded.
+sub on_config_file_loaded {
 	reload_plugin_configuration();
 }
 
-## Rebuilds plugin settings after config.txt is reloaded.
-sub on_config_file_loaded {
+## Rebuilds plugin settings after config keys are modified at runtime.
+sub on_post_config_modify {
+	my (undef, $args) = @_;
+
+	return unless $args && is_plugin_config_key($args->{key});
 	reload_plugin_configuration();
 }
 
@@ -371,7 +385,6 @@ sub command_od {
 
 	if ($args eq 'reload') {
 		Misc::parseReload('config\.txt');
-		reload_plugin_configuration();
 		message "[" . PLUGIN_NAME . "] Reloaded settings from config.txt.\n", 'success';
 		return;
 	}

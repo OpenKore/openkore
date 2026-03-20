@@ -356,7 +356,9 @@ sub configModify {
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 	
-	Plugins::callHook('post_configModify');
+	Plugins::callHook('post_configModify', {
+		key => $key
+	});
 }
 
 ##
