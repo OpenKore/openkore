@@ -37,8 +37,14 @@ my $chooks = Commands::register(
 	['priconf', 'edit priority.txt', \&priconf],
 );
 
+my $Hooks = Plugins::addHooks(
+	['bulk_iconf', \&on_bulk_iconf],
+	['bulk_mconf', \&on_bulk_mconf],
+);
+
 sub Unload {
 	Commands::unregister($chooks);
+	Plugins::delHooks($Hooks);
 	message "xConf plugin reloading or unloading\n", 'success'
 }
 
@@ -293,6 +299,100 @@ sub filewrite {
 	print WRITE join ("\n", @lines);
 	close(WRITE);
 	message "$file: '$name' set to @value (was ". ($oldval || "*None*") .")\n", 'info';
+	parseReload($file);
+}
+
+sub on_bulk_iconf {
+	my ($hook, $args) = @_;
+	_bulk_write_control_entries('items_control.txt', $args->{changes}, \%items_control, sub {
+		my ($key) = @_;
+		return $items_lut{$key} . " [" . $itemSlotCount_lut{$key} . "]" if $items_lut{$key} && $itemSlotCount_lut{$key};
+		return $items_lut{$key} || $key;
+	});
+}
+
+sub on_bulk_mconf {
+	my ($hook, $args) = @_;
+	_bulk_write_control_entries('mon_control.txt', $args->{changes}, \%mon_control, sub {
+		my ($key) = @_;
+		return $monsters_lut{$key} || $key;
+	});
+}
+
+sub _bulk_write_control_entries {
+	my ($file, $changes, $ctrl_hash, $name_resolver) = @_;
+	return unless $changes && ref $changes eq 'HASH' && %{$changes};
+
+	my %new_values;
+	my %updates;
+	foreach my $key (keys %{$changes}) {
+		my $value = $changes->{$key};
+		my $name = $name_resolver->($key);
+		my $realKey;
+
+		if (exists $ctrl_hash->{$name}) {
+			$realKey = $name;
+		} elsif (exists $ctrl_hash->{lc($name)}) {
+			$realKey = lc($name);
+		} else {
+			$realKey = $key;
+		}
+
+		my $new_value = "$key $value #$name";
+		foreach my $alias ($key, $name, $realKey) {
+			next unless defined $alias && $alias ne '';
+			$updates{lc($alias)} = $new_value;
+		}
+
+		$new_values{$key} = $new_value;
+	}
+
+	my $controlfile = Settings::getControlFilename($file);
+	debug "[xConf] bulk write file: $controlfile\n";
+
+	open(my $fh, "<:encoding(UTF-8)", $controlfile) or do {
+		warning "[xConf] Unable to open $controlfile for reading: $!\n";
+		return;
+	};
+	my @lines = <$fh>;
+	close($fh);
+	chomp @lines;
+
+	my @new_lines;
+	my $modified = 0;
+	foreach my $line (@lines) {
+		my ($identifier) = $line =~ /([\s\S]+?)\s[\-\d\.]+[\s\S]*/;
+		if (!defined $identifier) {
+			push @new_lines, $line;
+			next;
+		}
+
+		$identifier =~ s/(^\s+|^\"|\"$|\s+$)//g;
+		my $lc_identifier = lc($identifier);
+
+		if (exists $updates{$lc_identifier}) {
+			debug "[xConf] Removing line '$line' for '$lc_identifier'\n";
+			$modified = 1;
+			next;
+		}
+
+		push @new_lines, $line;
+	}
+
+	foreach my $key (sort keys %new_values) {
+		push @new_lines, $new_values{$key};
+		debug "[xConf] Adding line $new_values{$key}\n";
+		$modified = 1;
+	}
+
+	return unless $modified;
+
+	open(my $wh, ">:utf8", $controlfile) or do {
+		warning "[xConf] Unable to open $controlfile for writing: $!\n";
+		return;
+	};
+	print $wh join("\n", @new_lines) . "\n";
+	close($wh);
 	parseReload($file);
 }
 
