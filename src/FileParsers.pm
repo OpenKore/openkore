@@ -37,6 +37,7 @@ use Log qw(warning error debug);
 use Translation qw/T TF/;
 
 our @EXPORT = qw(
+	parseMonstersTableFile
 	parseAchievementFile
 	parseAttendanceRewards
 	parseArrayFile
@@ -81,6 +82,70 @@ our @EXPORT = qw(
 	updatePortalLUT2
 	updateNPCLUT
 );
+
+##
+# parseMonstersTableFile(file, monsters)
+# file: Filename to parse
+# monsters: Return hash
+#
+# Parses a monster DB file in the format:
+# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange [Ai]
+sub parseMonstersTableFile {
+	my $file = shift;
+	my $r_hash = shift;
+
+	undef %{$r_hash};
+
+	my $reader = new Utils::TextReader($file);
+
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/^\s+|\s+$//g;
+
+		next if $line eq '';
+		next if $line =~ /^#/;
+
+		# Skip optional header line
+		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange(?:\s+Ai)?$/i;
+
+		my @fields = split /\s+/, $line;
+		next unless @fields >= 12;
+
+		my (
+			$id,
+			$level,
+			$hp,
+			$attackRange,
+			$skillRange,
+			$attackDelay,
+			$attackMotion,
+			$size,
+			$race,
+			$element,
+			$elementLevel,
+			$chaseRange,
+			$ai
+		) = @fields;
+
+		next unless defined $id && $id =~ /^\d+$/;
+
+		$r_hash->{$id}->{ID}            = $id;
+		$r_hash->{$id}->{Level}         = $level;
+		$r_hash->{$id}->{HP}            = $hp;
+		$r_hash->{$id}->{AttackRange}   = $attackRange;
+		$r_hash->{$id}->{SkillRange}    = $skillRange;
+		$r_hash->{$id}->{AttackDelay}   = $attackDelay;
+		$r_hash->{$id}->{AttackMotion}  = $attackMotion;
+		$r_hash->{$id}->{Size}          = $size;
+		$r_hash->{$id}->{Race}          = $race;
+		$r_hash->{$id}->{Element}       = $element;
+		$r_hash->{$id}->{ElementLevel}  = $elementLevel;
+		$r_hash->{$id}->{ChaseRange}    = $chaseRange;
+		$r_hash->{$id}->{Ai}            = defined $ai ? $ai : '06';
+	}
+
+	return 1;
+}
 
 ##
 # parseAchievementFile(file, achievments)

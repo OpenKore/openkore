@@ -231,7 +231,7 @@ sub autoshop {
 		return
 	}
 	# exit when ai is not idle
-	unless (AI::isIdle) {
+	unless (AI::isIdle()) {
 		$timeout{ai_shop}{time} = time;
 		return
 	}

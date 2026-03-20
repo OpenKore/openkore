@@ -19,6 +19,7 @@ package Task::CalcMapRoute;
 
 use strict;
 use Time::HiRes qw(time);
+use List::Util qw(reduce);
 
 use Modules 'register';
 use Task;

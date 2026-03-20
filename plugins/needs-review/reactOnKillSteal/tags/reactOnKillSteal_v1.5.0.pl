@@ -82,12 +82,12 @@ sub onParseMsg {
 	  && (unpack("V1", $ID1) ne "0")
 
 	  # We only trigger reaction on KS if we are currently attacking a monster
-	  && AI::action eq "attack"
+	  && AI::action() eq "attack"
 	  && $monsters{$ai_seq_args[0]{ID}} 
-	  && (!timeOut(AI::args->{ai_attack_giveup}) || $config{attackNoGiveup})
+	  && (!timeOut(AI::args()->{ai_attack_giveup}) || $config{attackNoGiveup})
 
 	  # If the monster is your target or you are the target of the monster
-	  && ($ID2 eq AI::args->{ID} || $monsters{$ID2}{target} eq $accountID)
+	  && ($ID2 eq AI::args()->{ID} || $monsters{$ID2}{target} eq $accountID)
 
 	  # And if the monster is previouly marked 'reactOnKillSteal'
 	  && $monsters{$ID2}{reactOnKillSteal}
@@ -284,7 +284,7 @@ sub checkKillStealCondition {
 			&& $chars[$config{'char'}]{'party'}{'users'}{$ID1} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}}); }
 	if ($config{$prefix . "_notTankModeTarget"} > 0) { 
 		return 0 if $config{'tankMode'} && $config{'tankModeTarget'} eq $players{$ID1}{'name'}; }
-	if ($config{$prefix . "_attackTargetOnly"} > 0) { return 0 unless AI::args->{ID} eq $ID2; }
+	if ($config{$prefix . "_attackTargetOnly"} > 0) { return 0 unless AI::args()->{ID} eq $ID2; }
 
 
 	if ($config{$prefix . "_monsters"}) {

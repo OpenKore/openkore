@@ -531,7 +531,7 @@ sub iterate {
 
 		# Initiate NPC conversation.
 		} elsif ( $step =~ /^x/i ) {
-			debug "$self->{target}: Initiating the talk\n", "ai_npcTalk";
+			debug "[TalkNPC] $self->{target}: Initiating the talk (sendTalk)\n", "ai_npcTalk";
 			
 			my $target_pos = $self->{target} ? ($self->{target}{pos} || $self->{target}{pos_to}) : undef;
 			my $char_pos = $char->{pos} || $char->{pos_to};

@@ -25,6 +25,7 @@ use Modules 'register';
 use bytes;
 no encoding 'utf8';
 use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
+use Globals qw($masterServer);
 
 ##
 # Network::MessageTokenizer->new(Hash* rpackets)
@@ -131,6 +132,11 @@ sub readNext {
 		if (length($$buffer) >= 4) {
 
 		$result = substr($$buffer, 0, 4);
+
+        if ($masterServer->{accountIdFromBuffer}) {
+            $Globals::accountID = $result if $masterServer->{accountIdFromBuffer};
+        }
+
 		if (unpack("V1",$result) == unpack("V1",$Globals::accountID)) {
 				substr($$buffer, 0, 4, '');
 				$$type = ACCOUNT_ID;

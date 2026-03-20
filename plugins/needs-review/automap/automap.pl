@@ -47,6 +47,7 @@ use Network;
 use Plugins;
 use Time::HiRes;
 use Utils qw( timeOut parseArgs );
+use AI:
 
 Plugins::register( 'autoMapChange', 'automatically change lockMap periodically', \&on_unload, \&on_unload );
 my $hooks = Plugins::addHooks(    #
@@ -95,7 +96,7 @@ sub on_configModify {
 
 sub on_mainLoop {
     return if $net->getState != Network::IN_GAME;
-    return if (AI::state != AI::AUTO);
+    return if (AI::state() != AI::AUTO());
     return if !$config{autoMapChange};
 
     my $timeout = $config{autoMapChange_time} + $time_seed;
@@ -216,3 +217,4 @@ sub lock_list {
 }
 
 1;
+

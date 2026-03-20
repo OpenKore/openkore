@@ -158,7 +158,7 @@ sub on_getBestTarget {
 	if (defined $obstacle) {
 		warning "[NewAStarAvoid] [$hook] $drop_string target ".$args->{target}." because there is an Obstacle nearby.\n" if (!$is_dropped);;
 		if ($hook eq 'AI::Attack::process') {
-			AI::dequeue while (AI::inQueue("attack"))
+			AI::dequeue() while (AI::inQueue("attack"))
 		}
 		$target->{attackFailedObstacle} = 1;
 		$args->{return} = 1;
@@ -243,10 +243,10 @@ sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
 	my $arg_i;
 	if (AI::is("route")) {
 		$arg_i = 0;
-		return if (AI::action (1) eq "attack");
-	} elsif (AI::action eq "move" && AI::action (1) eq "route") {
+		return if (AI::action(1) eq "attack");
+	} elsif (AI::action() eq "move" && AI::action(1) eq "route") {
 		$arg_i = 1;
-		return if (AI::action (2) eq "attack");
+		return if (AI::action(2) eq "attack");
 	} else {
 		return;
 	}
@@ -420,19 +420,19 @@ sub on_AI_pre_manual_repath {
 	
 	if (AI::is("route")) {
 		$arg_i = 0;
-		if (AI::action (1) eq "attack") {
-			if (AI::action (2) eq "route") {
+		if (AI::action(1) eq "attack") {
+			if (AI::action(2) eq "route") {
 				$arg_i2 = 2;
-			} elsif (AI::action (3) eq "route") {
+			} elsif (AI::action(3) eq "route") {
 				$arg_i2 = 3;
 			}
 		}
-	} elsif (AI::is("move") && AI::action (1) eq "route") {
+	} elsif (AI::is("move") && AI::action(1) eq "route") {
 		$arg_i = 1;
-		if (AI::action (2) eq "attack") {
-			if (AI::action (3) eq "route") {
+		if (AI::action(2) eq "attack") {
+			if (AI::action(3) eq "route") {
 				$arg_i2 = 3;
-			} elsif (AI::action (4) eq "route") {
+			} elsif (AI::action(4) eq "route") {
 				$arg_i2 = 4;
 			}
 		}

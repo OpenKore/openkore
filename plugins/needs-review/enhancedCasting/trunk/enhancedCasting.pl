@@ -181,12 +181,12 @@ sub onUnload {
 }
 
 sub choose {
-    if (AI::action eq 'enhancedCasting') {
-            my $args = AI::args;
+    if (AI::action() eq 'enhancedCasting') {
+            my $args = AI::args();
             if ($args->{'stage'} eq 'end') {
-                    AI::dequeue;
+                    AI::dequeue();
             } elsif (!$currentTarget) {
-                    AI::dequeue;
+                    AI::dequeue();
             } elsif (($args->{'stage'} eq 'skillUse')) {
                     main::ai_skillUse(
                         $args->{'handle'},
@@ -198,10 +198,10 @@ sub choose {
 					#$currentTarget = "";
                     $args->{'stage'} = 'end';
             } else {
-				AI::dequeue;
+				AI::dequeue();
 			}
     }
-    if ($currentTarget && AI::action eq "attack") {
+    if ($currentTarget && AI::action() eq "attack") {
             selectSkill();
     }
 }

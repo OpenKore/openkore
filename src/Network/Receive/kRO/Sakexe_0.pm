@@ -749,6 +749,7 @@ sub new {
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
+        '0B62' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], #-1
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
@@ -1380,7 +1381,7 @@ sub skill_used_no_damage {
 		my $pos = calcPosFromPathfinding($field, $char);
 		%{$char->{pos}} = %{$pos};
 		%{$char->{pos_to}} = %{$pos};
-		$char->{time_move} = 0;
+		$char->{time_move} = time;
 		$char->{time_move_calc} = 0;
 		$char->{solution} = [];
 		push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
@@ -1417,7 +1418,7 @@ sub skill_used_no_damage {
 		$timeout{ai_teleport_delay}{time} = time;
 	}
 
-	if (AI::state == AI::AUTO && $config{'autoResponseOnHeal'}) {
+	if (AI::state() == AI::AUTO() && $config{'autoResponseOnHeal'}) {
 		# Handle auto-response on heal
 		my $player = $playersList->getByID($args->{sourceID});
 		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {
@@ -1521,3 +1522,5 @@ sub inventory_expansion_info {
 *changeToInGameState = *Network::Receive::changeToInGameState;
 
 1;
+
+

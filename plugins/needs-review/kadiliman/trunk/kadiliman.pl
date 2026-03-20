@@ -198,7 +198,7 @@
                     my $rand = rand(100);
                     debug "[Kadiliman] $rand: " . $config{$prefix.$i."_replyRate"} . "\n";
                     AI::queue("chatBot", $args)
-                            if ((AI::action ne 'chatBot')
+                            if ((AI::action() ne 'chatBot')
                                     && ($rand < ($config{$prefix.$i."_replyRate"}))
                                     && ($bot{$i}->{reply})
                                     && (main::checkSelfCondition($prefix))
@@ -221,10 +221,10 @@
     }
 
     sub AI_post {
-            if (AI::action eq 'chatBot') {
-                    my $args = AI::args;
+            if (AI::action() eq 'chatBot') {
+                    my $args = AI::args();
                     if ($args->{stage} eq 'end') {
-                            AI::dequeue;
+                            AI::dequeue();
                     } elsif ($args->{stage} eq 'start') {
                             $args->{stage} = 'message' if (main::timeOut($args->{time}, $args->{timeout}));
                     } elsif ($args->{stage} eq 'message') {

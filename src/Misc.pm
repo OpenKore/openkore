@@ -229,6 +229,7 @@ our @EXPORT = (
 	solveItemLink
 	solveMessage
 	solveMSG
+	get_lockMap_cell
 	absunit
 	autoNpcTalk/,
 
@@ -1450,7 +1451,7 @@ sub chatLog_clear {
 sub checkAllowedMap {
 	my $map = shift;
 
-	return unless AI::state == AI::AUTO;
+	return unless AI::state() == AI::AUTO();
 	return unless $config{allowedMaps};
 	return if existsInList($config{allowedMaps}, $map);
 	return if $config{allowedMaps_reaction} == 0;
@@ -3482,7 +3483,7 @@ sub updateDamageTables {
 				ai_useTeleport(1);
 			}
 
-			if (AI::action eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3 && $damage) {
+			if (AI::action() eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3 && $damage) {
 				# Mob-training, you only need to attack the monster once to provoke it
 				message TF("%s (%s) has been provoked, searching another monster\n", $monster->{name}, $monster->{binID});
 				$char->sendAttackStop;
@@ -3518,7 +3519,7 @@ sub updateDamageTables {
 			$monster->{target} = $targetID;
 			OpenKoreMod::updateDamageTables($monster) if (defined &OpenKoreMod::updateDamageTables);
 
-			if (AI::state == AI::AUTO && ($accountID eq $targetID or $char->{slaves} && $char->{slaves}{$targetID})) {
+			if (AI::state() == AI::AUTO() && ($accountID eq $targetID or $char->{slaves} && $char->{slaves}{$targetID})) {
 				# object under our control
 				my $teleport = 0;
 				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
@@ -3794,6 +3795,31 @@ sub writeStorageLog {
 	}
 }
 
+sub _targetWillLeaveClientSightSoon {
+	my ($actor, $target) = @_;
+
+	return unless ($timeout{ai_future_reachability_lookup}{timeout});
+
+	return 0 unless ($field && $actor && $target);
+	return 0 unless ($actor->{pos} && $actor->{pos_to} && $target->{pos} && $target->{pos_to});
+
+	my $clientSight = $config{clientSight} || 17;
+
+	my $delta = $timeout{ai_future_reachability_lookup}{timeout};
+
+	my $futureActorPos = calcPosFromPathfinding($field, $actor, $delta);
+	my $futureTargetPos = calcPosFromPathfinding($field, $target, $delta);
+	my $futureDist = blockDistance($futureActorPos, $futureTargetPos);
+
+	if ($futureDist >= $clientSight) {
+		debug TF("[getBestTarget] Rejecting unstable edge target %s. Predicted dist in %.1fs %d.\n",
+			$target, $delta, $futureDist), 'ai_attack';
+		return 1;
+	}
+
+	return 0;
+}
+
 ##
 # getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe)
 # possibleTargets: reference to an array of monsters' IDs
@@ -3844,6 +3870,7 @@ sub getBestTarget {
 		$plugin_args{return} = 0;
 		Plugins::callHook('getBestTarget' => \%plugin_args);
 		next if ($plugin_args{return});
+		next if (_targetWillLeaveClientSightSoon($char, $monster));
 
 		if (!$field->checkLOS($myPos, $pos, $attackCanSnipe)) {
 			push(@noLOSMonsters, $_);
@@ -4569,9 +4596,9 @@ sub checkSelfCondition {
 	return 0 if (!$prefix);
 	return 0 if ($config{$prefix . "_disabled"});
 
-	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle);
+	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle());
 
-	return 0 if ($config{$prefix."_whenNotIdle"} && AI::isIdle);
+	return 0 if ($config{$prefix."_whenNotIdle"} && AI::isIdle());
 	
 	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here in these checks?
 
@@ -4579,11 +4606,11 @@ sub checkSelfCondition {
 	# *_manualAI 1 = manual only
 	# *_manualAI 2 = auto or manual
 	if ($config{$prefix . "_manualAI"} == 0 || !(defined $config{$prefix . "_manualAI"})) {
-		return 0 unless AI::state == AI::AUTO;
+		return 0 unless AI::state() == AI::AUTO();
 	} elsif ($config{$prefix . "_manualAI"} == 1){
-		return 0 unless AI::state == AI::MANUAL;
+		return 0 unless AI::state() == AI::MANUAL();
 	} else {
-		return 0 if AI::state == AI::OFF;
+		return 0 if AI::state() == AI::OFF();
 	}
 
 	if ($config{$prefix . "_hp"}) {
@@ -4745,6 +4772,9 @@ sub checkSelfCondition {
 							|| $config{$prefix."_equip_leftHand"}
 							|| $config{$prefix."_equip_rightHand"}
 							|| $config{$prefix."_equip_robe"}
+							|| $config{$prefix."_equip_topHead"}
+							|| $config{$prefix."_equip_midHead"}
+							|| $config{$prefix."_equip_lowHead"}
 							);
 			return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
 			
@@ -5980,4 +6010,34 @@ sub print_callers {
 	message "[print_callers] Printing end\n";
 }
 
+sub get_lockMap_cell {
+	my $lockField = shift;
+	$lockField = $field if (!defined $lockField);
+
+	my $cell;
+
+	my $i = 500;
+	my $width = $field->width;
+	my $height = $field->height;
+
+	do {
+		if ($config{'lockMap_x'} ne '') {
+			$cell->{x} = $config{'lockMap_x'};
+			$cell->{x} += (int(rand(2*$config{'lockMap_randX'})) - $config{'lockMap_randX'}) if ($config{'lockMap_randX'} > 0);
+		} else {
+			$cell->{x} = int(rand($width));
+		}
+		if ($config{'lockMap_y'} ne '') {
+			$cell->{y} = $config{'lockMap_y'};
+			$cell->{y} += (int(rand(2*$config{'lockMap_randY'})) - $config{'lockMap_randY'}) if ($config{'lockMap_randY'} > 0);
+		} else {
+			$cell->{y} = int(rand($height));
+		}
+	} while (--$i && (!$field->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $width || $cell->{y} >= $height));
+
+	return undef if (!$i);
+	return $cell;
+}
+
 return 1;
+
