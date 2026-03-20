@@ -1,5 +1,32 @@
 package edenPortalExitSync;
 
+# Plugin: edenPortalExitSync
+# Author: henrybk
+#
+# Keeps config.txt -> EdenPortalExit synchronized with real Eden Group travel.
+#
+# How to configure:
+# 1. Enable this plugin.
+# 2. Keep the dynamic Eden exit portals marked with [EdenPortalExit] in portals.txt.
+# 3. Add the config key in config.txt:
+#    EdenPortalExit prontera
+#    The plugin will keep this value updated automatically.
+#
+# How it works:
+# - When a routed TalkNPC warp sends the character into moc_para01, the plugin
+#   reads the current Task::MapRoute step and saves the source city as the
+#   EdenPortalExit value.
+# - When the character leaves moc_para01 through the exit portal, the plugin
+#   checks the map and landing position that was actually reached and updates
+#   EdenPortalExit if the configured value was wrong.
+# - The valid exit destinations come from the dynamic portal group generated
+#   from portals.txt, so the plugin stays aligned with the portal table.
+#
+# Notes:
+# - Unique destinations are stored as just the map name, like "prontera".
+# - Ambiguous destinations with multiple exits on the same map are stored as a
+#   full destination id, like "que_ng 33 63".
+
 use strict;
 
 use Plugins;
@@ -24,6 +51,7 @@ sub onUnload {
 	Plugins::delHooks($hooks);
 }
 
+# Track both entering and leaving Eden from map change events.
 sub onMapChanged {
 	my (undef, $args) = @_;
 	return unless $field;
@@ -39,6 +67,7 @@ sub onMapChanged {
 	}
 }
 
+# Save the city we used to enter Eden when the current route step is the NPC warp.
 sub _updateFromEdenArrival {
 	my ($oldMap) = @_;
 	return unless $oldMap;
@@ -71,6 +100,7 @@ sub _updateFromEdenArrival {
 	_setEdenPortalExit(_configValueForDestination($destID), "entered Eden from $fromMap");
 }
 
+# Correct the configured exit when the actual post-Eden destination differs.
 sub _updateFromEdenExit {
 	my ($newMap) = @_;
 	return unless _isValidEdenExitMap($newMap);
@@ -81,6 +111,7 @@ sub _updateFromEdenExit {
 	_setEdenPortalExit(_configValueForDestination($destID), "left Eden through the exit portal");
 }
 
+# Reuse the active Task::MapRoute so we only sync during intentional routed travel.
 sub _getActiveMapRouteTask {
 	foreach my $action (qw(route mapRoute)) {
 		my $index = AI::findAction($action);
@@ -100,6 +131,7 @@ sub _getEdenExitDestinations {
 	return getDynamicPortalDestinations('EdenPortalExit');
 }
 
+# Normalize aliases like prontera.gat or instance names down to a base map name.
 sub _normalizeMap {
 	my ($map) = @_;
 	return unless defined $map && $map ne '';
@@ -108,6 +140,7 @@ sub _normalizeMap {
 	return lc $map;
 }
 
+# Destination lookup helpers.
 sub _destinationMapCounts {
 	my %counts;
 
@@ -136,6 +169,7 @@ sub _isValidEdenExitMap {
 	return scalar _getDestinationsForMap($map);
 }
 
+# Resolve the most likely Eden exit entry for the source city that sent us in.
 sub _resolveExitDestinationForSource {
 	my ($sourceID) = @_;
 	return unless $sourceID;
@@ -162,6 +196,7 @@ sub _resolveExitDestinationForSource {
 	return $matches[0];
 }
 
+# Resolve the exit entry we actually landed on after leaving Eden.
 sub _resolveExitDestinationForPosition {
 	my ($map) = @_;
 	return unless $map && $char;
@@ -186,6 +221,7 @@ sub _resolveExitDestinationForPosition {
 	return $matches[0];
 }
 
+# Use plain map names when unique, otherwise store the full destination ID.
 sub _configValueForDestination {
 	my ($destID) = @_;
 	return unless $destID;
@@ -198,6 +234,7 @@ sub _configValueForDestination {
 	return $map;
 }
 
+# Write the config only when the effective value really changed.
 sub _setEdenPortalExit {
 	my ($value, $reason) = @_;
 	return unless defined $value && $value ne '';
