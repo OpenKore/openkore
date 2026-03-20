@@ -64,6 +64,68 @@ use constant {
 	TILE_CLIFF  => 8,
 };
 
+my %FIELD_FILE_RESOLUTION_CACHE;
+my %FIELD_FOLDER_CONTENTS_CACHE;
+
+sub _fieldFolderIndex {
+	my ($folder) = @_;
+	return {} if !defined $folder || $folder eq '' || !-d $folder;
+
+	return $FIELD_FOLDER_CONTENTS_CACHE{$folder}
+		if exists $FIELD_FOLDER_CONTENTS_CACHE{$folder};
+
+	my %entries;
+	if (opendir my $dh, $folder) {
+		while (my $entry = readdir $dh) {
+			next if $entry eq '.' || $entry eq '..';
+			next if $entry !~ /\.fld2(?:\.gz)?$/i;
+			$entries{$entry} = 1;
+		}
+		closedir $dh;
+	}
+
+	$FIELD_FOLDER_CONTENTS_CACHE{$folder} = \%entries;
+	return $FIELD_FOLDER_CONTENTS_CACHE{$folder};
+}
+
+sub _resolveFieldFileFromFolders {
+	my ($file, @fieldFolders) = @_;
+	my $cacheKey = join("\0", $file, @fieldFolders);
+
+	if (exists $FIELD_FILE_RESOLUTION_CACHE{$cacheKey}) {
+		return $FIELD_FILE_RESOLUTION_CACHE{$cacheKey} || undef;
+	}
+
+	my $resolvedFile;
+	for my $folder (@fieldFolders) {
+		my $index = _fieldFolderIndex($folder);
+		if ($index->{$file}) {
+			$resolvedFile = File::Spec->catfile($folder, $file);
+			last;
+		}
+
+		my $gzFile = "$file.gz";
+		if ($index->{$gzFile}) {
+			$resolvedFile = File::Spec->catfile($folder, $gzFile);
+			last;
+		}
+
+		# Fallback for race conditions or files created after cache was built.
+		my $candidate = File::Spec->catfile($folder, $file);
+		if (-f $candidate) {
+			$resolvedFile = $candidate;
+			last;
+		}
+		if (-f "$candidate.gz") {
+			$resolvedFile = "$candidate.gz";
+			last;
+		}
+	}
+
+	$FIELD_FILE_RESOLUTION_CACHE{$cacheKey} = $resolvedFile || '';
+	return $resolvedFile;
+}
+
 ##
 # Field->new(options...)
 #
@@ -738,18 +800,7 @@ sub loadByName {
 	my @fieldFolders = grep { defined $_ && $_ ne '' } ($fieldsFolder);
 	push @fieldFolders, $Settings::fields_folder if !defined($fieldsFolder) || $fieldsFolder ne $Settings::fields_folder;
 
-	my $resolvedFile;
-	for my $folder (@fieldFolders) {
-		my $candidate = File::Spec->catfile($folder, $file);
-		if (-f $candidate) {
-			$resolvedFile = $candidate;
-			last;
-		}
-		if (-f "$candidate.gz") {
-			$resolvedFile = "$candidate.gz";
-			last;
-		}
-	}
+	my $resolvedFile = _resolveFieldFileFromFolders($file, @fieldFolders);
 
 	if ($resolvedFile) {
 		$self->loadFile($resolvedFile, $loadWeightMap);
