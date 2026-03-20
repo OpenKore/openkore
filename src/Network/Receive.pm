@@ -5016,13 +5016,26 @@ sub npc_chat {
 	}
 
 	chatLog("npc", "$position $message\n") if ($config{logChat});
-	message TF("%s%s\n", $dist, $message), "npcchat";
-	
-	if ($message =~ /cooling\s+down\.\s*wait\s*([0-9]+(?:[\.,][0-9]+)?)\s*minutes?/i) {
+
+	my $cooldownWarning;
+	if ($message =~ /Item\s+Failed\.\s*\[([^\]]+)\]\s*is\s+cooling\s+down\.\s*Wait\s*([0-9]+(?:[\.,][0-9]+)?)\s*(minutes?|seconds?)\.?/i) {
+		my ($itemName, $remaining, $unit) = ($1, $2, lc $3);
+		$remaining =~ s/,/./g;
+		my $remaining_seconds = int($remaining * ($unit =~ /minute/ ? 60 : 1));
+		Misc::setTeleportItemCooldownFromRemainingSeconds($remaining_seconds);
+		my $cooldown = sprintf("%s (%s sec)", Utils::timeConvert($remaining_seconds), $remaining_seconds);
+		$cooldownWarning = TF("Teleport item %s: cooldown active, wait %s.\n", $itemName, $cooldown);
+	} elsif ($message =~ /cooling\s+down\.\s*wait\s*([0-9]+(?:[\.,][0-9]+)?)\s*minutes?/i) {
 		my $remaining_minutes = $1;
 		$remaining_minutes =~ s/,/./g;
 		my $remaining_seconds = int($remaining_minutes * 60);
 		Misc::setTeleportItemCooldownFromRemainingSeconds($remaining_seconds);
+	}
+
+	if (defined $cooldownWarning) {
+		warning $cooldownWarning, "teleport";
+	} else {
+		message TF("%s%s\n", $dist, $message), "npcchat";
 	}
 
 	Plugins::callHook('npc_chat', {
@@ -12591,5 +12604,4 @@ sub notify_accessible_mapname {
 }
 
 1;
-
 

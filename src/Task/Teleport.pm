@@ -225,7 +225,6 @@ sub onNpcChat {
 	return unless defined $seconds;
 
 	Misc::setTeleportItemCooldownEntry($pending->{nameID}, time, $seconds);
-	warning TF("Teleport item %s is cooling down for %.1f minutes.\n", $pending->{name}, $seconds / 60), "teleport";
 	delete $self->{pendingTeleportItemUse};
 }
 

@@ -29,8 +29,8 @@ use Field;
 use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships %teleport_items);
 use Translation qw(T TF);
 use Log qw(debug warning error);
-use Misc qw(canUseTeleport);
-use Utils qw(timeOut);
+use Misc qw(canUseTeleport itemNameSimple);
+use Utils qw(timeConvert timeOut);
 use Utils::Exceptions;
 use Utils::DataStructures qw(hashSafeGetValue);
 
@@ -601,6 +601,7 @@ sub populateOpenListWithWarpByItems {
 	my ($self, $from_node, $baseCost, $parent) = @_;
 	return unless $from_node;
 	return unless $config{route_warpByItem};
+	return unless $self->isWarpByItemMinDistanceReached();
 
 	my ($current_map) = split / /, $from_node, 2;
 	return unless $self->isWarpByItemAllowedOnMap($current_map);
@@ -614,29 +615,30 @@ sub populateOpenListWithWarpByItems {
 		$baselineNoWarpRouteCost = $self->getSourceRouteCostToTargetNoWarp();
 	}
 
-		for my $entry ($self->getWarpItemCandidates()) {
+	my $routeCostProbeEnabled = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostProbe_maxPerTick') || 6) > 0;
+
+	for my $entry ($self->getWarpItemCandidates()) {
 		my $dest = $entry->{destMap} . ' ' . $entry->{destX} . ' ' . $entry->{destY};
 		next if ($dest eq $from_node);
 		my $key = "$from_node=$dest";
-			my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPITEM} || 80);
+		my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPITEM} || 80);
 		# Optional ranking heuristic: incorporate estimated route cost from item destination
 		# to current targets so the heap can prefer warp items that actually shorten the route.
 		# Controlled by route_warpItem_routeCostProbe_maxPerTick (>0 enables probing),
 		# and bounded by route_warpItem_routeCostHeuristic_max (default: 10000).
-			my $probeBudget = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostProbe_maxPerTick') || 6);
-			if ($probeBudget > 0) {
-				my $heuristic = $self->getWarpItemRouteCostToTarget($entry);
-				if (defined $heuristic && $heuristic > 0) {
-					if (!defined $parent && defined $baselineNoWarpRouteCost) {
-						my $minGain = int(hashSafeGetValue(\%config, 'route_warpItem_minGain') || 0);
-						my $estimatedWarpTotal = ($routeWeights{WARPITEM} || 80) + $heuristic;
-						next if ($estimatedWarpTotal + $minGain >= $baselineNoWarpRouteCost);
-					}
-					my $heuristicMax = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostHeuristic_max') || 10000);
-					$heuristicMax = 0 if $heuristicMax < 0;
-					$heuristic = $heuristicMax if ($heuristicMax > 0 && $heuristic > $heuristicMax);
-					$walk += $heuristic;
+		if ($routeCostProbeEnabled) {
+			my $heuristic = $self->getWarpItemRouteCostToTarget($entry);
+			if (defined $heuristic && $heuristic > 0) {
+				if (!defined $parent && defined $baselineNoWarpRouteCost) {
+					my $minGain = int(hashSafeGetValue(\%config, 'route_warpItem_minGain') || 0);
+					my $estimatedWarpTotal = ($routeWeights{WARPITEM} || 80) + $heuristic;
+					next if ($estimatedWarpTotal + $minGain >= $baselineNoWarpRouteCost);
 				}
+				my $heuristicMax = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostHeuristic_max') || 10000);
+				$heuristicMax = 0 if $heuristicMax < 0;
+				$heuristic = $heuristicMax if ($heuristicMax > 0 && $heuristic > $heuristicMax);
+				$walk += $heuristic;
+			}
 		}
 		my $zeny = $baseCost->{zeny} || 0;
 		my $zeny_covered_by_tickets = $baseCost->{zeny_covered_by_tickets} || 0;
@@ -664,6 +666,19 @@ sub populateOpenListWithWarpByItems {
 		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'y'} = $entry->{destY};
 		$self->{tempPortalsWarpItems}{$dest}{dest}{$dest}{enabled} = 1;
 	}
+}
+
+sub isWarpByItemMinDistanceReached {
+	my ($self) = @_;
+
+	my $minDistance = int(hashSafeGetValue(\%config, 'route_warpByItem_minDistance') || 0);
+	return 1 if ($minDistance <= 0);
+
+	my $distance = $self->getSourceRouteCostToTargetNoWarp();
+	return ($distance >= $minDistance) if (defined $distance);
+
+	# If route distance cannot be calculated, don't block warp-item usage.
+	return 1;
 }
 
 sub getSourceRouteCostToTargetNoWarp {
@@ -845,7 +860,9 @@ sub getWarpItemCandidates {
 		}
 		my $entry = $candidate->{entry};
 		my $itemLabel = $self->formatWarpItemLabel($candidate);
-		warning TF("Cannot use teleport item %s for route now: cooldown active (%s sec remaining).\n", $itemLabel, $candidate->{remaining}), "route";
+		my $remaining = int(($candidate->{remaining} || 0) + 0.5);
+		my $cooldown = sprintf("%s (%s sec)", timeConvert($remaining), $remaining);
+		warning TF("Teleport item %s: cooldown active, wait %s.\n", $itemLabel, $cooldown), "route";
 		$self->{_warp_item_cooldown_warned}{$entry->{itemID}} = 1;
 		last;
 	}
@@ -901,8 +918,10 @@ sub formatWarpItemLabel {
 	my ($self, $candidate) = @_;
 	return '' unless ($candidate && $candidate->{entry});
 	my $entry = $candidate->{entry};
-	return $entry->{itemID} if (!defined $candidate->{itemName} || !defined $candidate->{itemInvIndex});
-	return sprintf("%s (%s) [%s]", $candidate->{itemName}, $candidate->{itemInvIndex}, $entry->{itemID});
+	my $itemName = $candidate->{itemName};
+	$itemName = itemNameSimple($entry->{itemID}) if (!defined $itemName || $itemName eq '');
+	return $itemName if (!defined $candidate->{itemInvIndex});
+	return sprintf("%s (%s)", $itemName, $candidate->{itemInvIndex});
 }
 
 sub setWarpItemCandidatesCache {
