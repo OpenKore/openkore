@@ -190,7 +190,7 @@ sub isTeleportItemOnCooldown {
 	my ($self, $item) = @_;
 	return 0 unless $item;
 	my $entry = $self->{actor}{last_teleport_item_use}{$item->{nameID}};
-	return 0 unless ($entry && $entry->{timeout});
+	return 0 unless (ref($entry) eq 'HASH' && $entry->{timeout});
 	return !timeOut($entry->{time}, $entry->{timeout});
 }
 
@@ -201,10 +201,8 @@ sub onItemUseAck {
 	return if ($args->{serverIndex} ne $pending->{index});
 
 	if ($args->{success}) {
-		$self->{actor}{last_teleport_item_use}{$pending->{nameID}} = {
-			time => time,
-			timeout => $self->{actor}{last_teleport_item_use}{$pending->{nameID}}{timeout} || 0,
-		};
+		my $timeout = Misc::getTeleportItemCooldownTimeoutSec($pending->{nameID});
+		Misc::setTeleportItemCooldownEntry($pending->{nameID}, time, $timeout);
 	} else {
 		debug "Teleport $self->{actor} - Teleport item use failed: $pending->{name}\n", "teleport";
 	}
@@ -226,10 +224,7 @@ sub onNpcChat {
 	}
 	return unless defined $seconds;
 
-	$self->{actor}{last_teleport_item_use}{$pending->{nameID}} = {
-		time => time,
-		timeout => $seconds,
-	};
+	Misc::setTeleportItemCooldownEntry($pending->{nameID}, time, $seconds);
 	warning TF("Teleport item %s is cooling down for %.1f minutes.\n", $pending->{name}, $seconds / 60), "teleport";
 	delete $self->{pendingTeleportItemUse};
 }

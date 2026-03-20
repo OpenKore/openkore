@@ -231,8 +231,8 @@ sub iterate {
 			requiredEquipItemID => $requiredEquipItemID,
 		};
 
-		if ($item && $timeoutSec && $self->{actor}{last_teleport_item_use}{$itemID}) {
-			my $elapsed = time - $self->{actor}{last_teleport_item_use}{$itemID};
+		if ($item && $timeoutSec && ref($self->{actor}{last_teleport_item_use}{$itemID}) eq 'HASH') {
+			my $elapsed = time - $self->{actor}{last_teleport_item_use}{$itemID}{time};
 			if ($elapsed < $timeoutSec) {
 				$item = undef;
 			}
@@ -264,18 +264,17 @@ sub iterate {
 				}
 			}
 
-			if ($self->{mapSolution}[0]{retry} < 5) {
-				$self->{mapSolution}[0]{retry}++;
-				debug "MapRoute - Using teleport item $itemID (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
-				$self->{substage} = 'Waiting for Warp';
-				Misc::registerTeleportItemPendingUse($itemID);
-				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
-				$self->{actor}{last_teleport_item_use}{$itemID} = time if $timeoutSec;
-			} else {
-				error TF("Failed to move using teleport item %s after %s tries on map %s, recalculating route and forbidding teleport item warp only on this map.\n", $itemID, $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
-				$self->{noWarpItemMaps}{$field->baseName} = time;
-				$self->initMapCalculator();
-			}
+				if ($self->{mapSolution}[0]{retry} < 5) {
+					$self->{mapSolution}[0]{retry}++;
+					debug "MapRoute - Using teleport item $itemID (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+					$self->{substage} = 'Waiting for Warp';
+					Misc::registerTeleportItemPendingUse($itemID);
+					$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
+				} else {
+					error TF("Failed to move using teleport item %s after %s tries on map %s, recalculating route and forbidding teleport item warp only on this map.\n", $itemID, $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
+					$self->{noWarpItemMaps}{$field->baseName} = time;
+					$self->initMapCalculator();
+				}
 		}
 
 	} elsif ( $self->{mapSolution}[0]{is_teleportToSaveMap} ) {

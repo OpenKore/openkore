@@ -3684,7 +3684,7 @@ sub canUseTeleport {
 	if ($item) {
 		my $cooldown = $char->{last_teleport_item_use}{$item->{nameID}};
 		my $cooldownActive = (
-			$cooldown
+			ref($cooldown) eq 'HASH'
 			&& $cooldown->{timeout}
 			&& !timeOut($cooldown->{time}, $cooldown->{timeout})
 		);
@@ -5820,13 +5820,36 @@ sub _getTeleportItemTimeoutSec {
 	return $timeout;
 }
 
+sub getTeleportItemCooldownTimeoutSec {
+	my ($itemID) = @_;
+	return 0 unless ($char && defined $itemID);
+
+	my $entry = $char->{last_teleport_item_use}{$itemID};
+	if (ref($entry) eq 'HASH' && $entry->{timeout}) {
+		return $entry->{timeout};
+	}
+	return _getTeleportItemTimeoutSec($itemID);
+}
+
+sub setTeleportItemCooldownEntry {
+	my ($itemID, $usedAt, $timeout) = @_;
+	return unless ($char && defined $itemID);
+	return unless ($timeout && $timeout > 0);
+	$usedAt = time unless defined $usedAt;
+
+	$char->{last_teleport_item_use}{$itemID} = {
+		time => $usedAt,
+		timeout => $timeout,
+	};
+}
+
 sub markTeleportItemUsed {
 	my ($itemID, $usedAt) = @_;
 	return unless ($char && defined $itemID);
 	$usedAt = time unless defined $usedAt;
 
 	my $timeout = _getTeleportItemTimeoutSec($itemID);
-	$char->{last_teleport_item_use}{$itemID} = $usedAt if $timeout > 0;
+	setTeleportItemCooldownEntry($itemID, $usedAt, $timeout);
 	clearTeleportItemPendingUse($itemID);
 }
 
@@ -5843,7 +5866,7 @@ sub setTeleportItemCooldownFromRemainingSeconds {
 	if ($timeout > 0) {
 		my $lastUse = time - $timeout + $remainingSec;
 		$lastUse = time if $lastUse > time;
-		$char->{last_teleport_item_use}{$itemID} = $lastUse;
+		setTeleportItemCooldownEntry($itemID, $lastUse, $timeout);
 	}
 	clearTeleportItemPendingUse($itemID);
 }
@@ -5852,9 +5875,10 @@ sub getTeleportItemCooldownRemainingSec {
 	my ($entry, $now) = @_;
 	return 0 unless ($entry && $entry->{timeoutSec} && defined $entry->{itemID});
 	return 0 unless ($char && $char->{last_teleport_item_use} && $char->{last_teleport_item_use}{$entry->{itemID}});
+	return 0 unless ref($char->{last_teleport_item_use}{$entry->{itemID}}) eq 'HASH';
 
 	$now = time unless defined $now;
-	my $elapsed = $now - $char->{last_teleport_item_use}{$entry->{itemID}};
+	my $elapsed = $now - $char->{last_teleport_item_use}{$entry->{itemID}}{time};
 	my $remaining = int($entry->{timeoutSec} - $elapsed);
 	return 0 if $remaining <= 0;
 	return $remaining;
