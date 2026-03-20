@@ -1265,6 +1265,7 @@ sub map_loaded {
 
 	if ($net->version == 1) {
 		$net->setState(4);
+		Misc::clearTeleportItemPendingUse();
 		message(T("Waiting for map to load...\n"), "connection");
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
 	} else {
@@ -5015,7 +5016,27 @@ sub npc_chat {
 	}
 
 	chatLog("npc", "$position $message\n") if ($config{logChat});
-	message TF("%s%s\n", $dist, $message), "npcchat";
+
+	my $cooldownWarning;
+	if ($message =~ /Item\s+Failed\.\s*\[([^\]]+)\]\s*is\s+cooling\s+down\.\s*Wait\s*([0-9]+(?:[\.,][0-9]+)?)\s*(minutes?|seconds?)\.?/i) {
+		my ($itemName, $remaining, $unit) = ($1, $2, lc $3);
+		$remaining =~ s/,/./g;
+		my $remaining_seconds = int($remaining * ($unit =~ /minute/ ? 60 : 1));
+		Misc::setTeleportItemCooldownFromRemainingSeconds($remaining_seconds);
+		my $cooldown = sprintf("%s (%s sec)", Utils::timeConvert($remaining_seconds), $remaining_seconds);
+		$cooldownWarning = TF("Teleport item %s: cooldown active, wait %s.\n", $itemName, $cooldown);
+	} elsif ($message =~ /cooling\s+down\.\s*wait\s*([0-9]+(?:[\.,][0-9]+)?)\s*minutes?/i) {
+		my $remaining_minutes = $1;
+		$remaining_minutes =~ s/,/./g;
+		my $remaining_seconds = int($remaining_minutes * 60);
+		Misc::setTeleportItemCooldownFromRemainingSeconds($remaining_seconds);
+	}
+
+	if (defined $cooldownWarning) {
+		warning $cooldownWarning, "teleport";
+	} else {
+		message TF("%s%s\n", $dist, $message), "npcchat";
+	}
 
 	Plugins::callHook('npc_chat', {
 		actor => $actor,
@@ -7019,6 +7040,7 @@ sub item_used {
 		my $item = $char->inventory->getByID($index);
 		if ($item) {
 			if ($success == 1) {
+				Misc::markTeleportItemUsed($itemID);
 				my $amount = $item->{amount} - $remaining;
 
 				message TF("You used Item: %s (%d) x %d - %d left\n", $item->{name}, $item->{binID},
@@ -7032,12 +7054,15 @@ sub item_used {
 				$hook_args{amount} = $amount;
 
 			} else {
+				Misc::clearTeleportItemPendingUse($itemID);
 				message TF("You failed to use item: %s (%d)\n", $item ? $item->{name} : "#$itemID", $remaining), "useItem", 1;
 			}
  		} else {
 			if ($success == 1) {
+				Misc::markTeleportItemUsed($itemID);
 				message TF("You used unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
 			} else {
+				Misc::clearTeleportItemPendingUse($itemID);
 				message TF("You failed to use unknown item #%d - %d left\n", $itemID, $remaining), "useItem", 1;
 			}
 		}
@@ -7239,6 +7264,7 @@ sub map_change {
 	return unless changeToInGameState();
 
 	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
+	Misc::clearTeleportItemPendingUse();
 
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
@@ -7306,6 +7332,7 @@ sub map_change {
 sub map_changed {
 	my ($self, $args) = @_;
 	$net->setState(4);
+	Misc::clearTeleportItemPendingUse();
 
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
@@ -12577,5 +12604,4 @@ sub notify_accessible_mapname {
 }
 
 1;
-
 

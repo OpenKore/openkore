@@ -208,10 +208,16 @@ sub iterate {
 		$self->setDone();
 		
 	} elsif ($self->{mapChanged}) {
-		debug "Route $self->{actor}: Map changed within same map; recalculating route.\n", "route";
-		undef $self->{sentTeleport};
-		undef $self->{mapChanged};
-		$self->resetRoute();
+		if ($self->{stopWhenMapChanged}) {
+			debug "Route $self->{actor}: Map changed within same map; finishing current segment.\n", "route";
+			undef $self->{mapChanged};
+			$self->setDone();
+		} else {
+			debug "Route $self->{actor}: Map changed within same map; recalculating route.\n", "route";
+			undef $self->{sentTeleport};
+			undef $self->{mapChanged};
+			$self->resetRoute();
+		}
 
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};
