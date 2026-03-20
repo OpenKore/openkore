@@ -1,5 +1,5 @@
 #########################################################################
-#  NewAStarAvoid plugin for OpenKore
+#  avoidObstacles plugin for OpenKore
 #
 #  Author: Henrybk
 #
@@ -7,20 +7,20 @@
 #  selection. Configure behavior in control/config.txt.
 #########################################################################
 =pod
-######## NewAStarAvoid ########
+######## avoidObstacles ########
 
-newAStarAvoid_enable_move 0
-newAStarAvoid_enable_remove 1
-newAStarAvoid_enable_avoid_monsters 1
-newAStarAvoid_enable_avoid_players 0
-newAStarAvoid_enable_avoid_area_spells 0
-newAStarAvoid_enable_avoid_portals 1
-newAStarAvoid_adjust_route_step 1
-newAStarAvoid_drop_route_dest_near_obstacle 1
-newAStarAvoid_weight_limit 65000
-newAStarAvoid_target_drop_dist 13
+avoidObstacles_enable_move 0
+avoidObstacles_enable_remove 1
+avoidObstacles_enable_avoid_monsters 1
+avoidObstacles_enable_avoid_players 0
+avoidObstacles_enable_avoid_area_spells 0
+avoidObstacles_enable_avoid_portals 1
+avoidObstacles_adjust_route_step 1
+avoidObstacles_drop_route_dest_near_obstacle 1
+avoidObstacles_weight_limit 65000
+avoidObstacles_target_drop_dist 13
 
-newAStarAvoidMonster 1368 {
+avoidObstaclesMonster 1368 {
 	enabled 1
 	weight 2000
 	penalty_dist 12
@@ -29,7 +29,7 @@ newAStarAvoidMonster 1368 {
 	drop_dest_near 1
 }
 
-newAStarAvoidMonster 1780 {
+avoidObstaclesMonster 1780 {
 	enabled 1
 	weight 2000
 	penalty_dist 12
@@ -38,7 +38,7 @@ newAStarAvoidMonster 1780 {
 	drop_dest_near 1
 }
 
-newAStarAvoidMonster 1781 {
+avoidObstaclesMonster 1781 {
 	enabled 1
 	weight 2000
 	penalty_dist 12
@@ -47,7 +47,7 @@ newAStarAvoidMonster 1781 {
 	drop_dest_near 1
 }
 
-newAStarAvoidSpell 135 {
+avoidObstaclesSpell 135 {
 	enabled 1
 	weight 2000
 	penalty_dist 12
@@ -56,7 +56,7 @@ newAStarAvoidSpell 135 {
 	drop_dest_near 1
 }
 
-newAStarAvoidSpell 136 {
+avoidObstaclesSpell 136 {
 	enabled 1
 	weight 2000
 	penalty_dist 12
@@ -65,7 +65,7 @@ newAStarAvoidSpell 136 {
 	drop_dest_near 1
 }
 
-newAStarAvoidPortal default {
+avoidObstaclesPortal default {
 	enabled 1
 	weight 5000
 	penalty_dist 12
@@ -75,7 +75,7 @@ newAStarAvoidPortal default {
 }
 =cut
 
-package NewAStarAvoid;
+package avoidObstacles;
 
 use strict;
 use AI;
@@ -89,7 +89,7 @@ use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 
 use constant {
-	PLUGIN_NAME => 'NewAStarAvoid',
+	PLUGIN_NAME => 'avoidObstacles',
 };
 
 Plugins::register(PLUGIN_NAME, 'Enables smart pathing using config-driven dynamic obstacles', \&onUnload);
@@ -124,7 +124,7 @@ my $mobhooks = Plugins::addHooks(
 );
 
 my $chooks = Commands::register(
-	['od', 'NewAStarAvoid controls: od [dump|reload|status]', \&command_od],
+	['od', 'avoidObstacles controls: od [dump|reload|status]', \&command_od],
 );
 
 my %plugin_settings;
@@ -204,7 +204,7 @@ sub reset_plugin_configuration {
 ## Converts a short plugin setting name into its config.txt key.
 sub plugin_config_key {
 	my ($key) = @_;
-	return 'newAStarAvoid_' . $key;
+	return 'avoidObstacles_' . $key;
 }
 
 ## Returns whether a config key belongs to this plugin's flat settings or obstacle blocks.
@@ -212,8 +212,8 @@ sub is_plugin_config_key {
 	my ($key) = @_;
 
 	return 0 unless defined $key && $key ne '';
-	return 1 if $key =~ /^newAStarAvoid_/;
-	return 1 if $key =~ /^newAStarAvoid(?:Monster|Player|Spell|Portal)_/;
+	return 1 if $key =~ /^avoidObstacles_/;
+	return 1 if $key =~ /^avoidObstacles(?:Monster|Player|Spell|Portal)_/;
 
 	return 0;
 }
@@ -266,10 +266,10 @@ sub load_obstacle_blocks_from_config {
 sub reload_plugin_configuration {
 	reset_plugin_configuration();
 	load_settings_from_config();
-	load_obstacle_blocks_from_config('newAStarAvoidMonster', 'monster', \%mob_nameID_obstacles);
-	load_obstacle_blocks_from_config('newAStarAvoidPlayer', 'player', \%player_name_obstacles);
-	load_obstacle_blocks_from_config('newAStarAvoidSpell', 'spell', \%area_spell_type_obstacles);
-	load_obstacle_blocks_from_config('newAStarAvoidPortal', 'portal', \%portals_obstacles);
+	load_obstacle_blocks_from_config('avoidObstaclesMonster', 'monster', \%mob_nameID_obstacles);
+	load_obstacle_blocks_from_config('avoidObstaclesPlayer', 'player', \%player_name_obstacles);
+	load_obstacle_blocks_from_config('avoidObstaclesSpell', 'spell', \%area_spell_type_obstacles);
+	load_obstacle_blocks_from_config('avoidObstaclesPortal', 'portal', \%portals_obstacles);
 
 	rebuild_obstacles_from_world();
 }
