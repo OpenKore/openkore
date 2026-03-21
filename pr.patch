@@ -1,0 +1,578 @@
+diff --git a/src/Misc.pm b/src/Misc.pm
+index 6134484b6dec151f416ffeb3d5106e6aa3f2a26f..4176b40f1c752cdea8509cadec7070c87c2b3290 100644
+--- a/src/Misc.pm
++++ b/src/Misc.pm
+@@ -5727,69 +5727,108 @@ sub solveMessage {
+ 	# <ITEML>.*</ITEML> to readable item name
+ 	# Sell<ITEML>0000y1kk&0g)00)00)00)00+05,00-01+0B,00-0m</ITEML>500k
+ 	# S><ITEML>0000y1nC&05)00)00+0h,00-0C+0F,00-0h</ITEML><ITEML>000021jM&01)00)00+0h,00-0N+0B,00-0g</ITEML><ITEML>000021jM&01)00)00+0f,00-02+0B,00-0e</ITEML>
+ 	if ($msg =~ /<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/) {
+ 		$msg =~ s/<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/solveItemLink($1)/eg;
+ 	}
+ 	Plugins::callHook('solveMessage', { msg => \$msg });
+ 	return $msg;
+ }
+ 
+ sub absunit {
+ 	my ($x) = @_;
+ 	if ($x == 0) {
+ 		return 0;
+ 	} elsif ($x > 0) {
+ 		return 1;
+ 	} else {
+ 		return -1;
+ 	}
+ }
+ 
+ sub autoNpcTalk {
+ 	my ($ID, $nameID) = @_;
+ 
+ 	return if (defined AI::findAction("NPC"));
+-
+-	my $routeIndex = AI::findAction("route");
+-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
+-
+-	my $routeIndex = AI::findAction("route", 1);
+-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
++	return if _routeActionHasTalkNpcSubtask(0) || _routeActionHasTalkNpcSubtask(1);
+ 
+ 	debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+-	my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
++	my $sequence = resolveAutoNpcTalkSequence($ID);
++	debug "[TalkNPC] AutoTalk resolved sequence '".($sequence // '')."'.\n", "ai_npcTalk";
++	my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID, sequence => $sequence);
+ 	AI::queue("NPC", $task);
+ 	# TODO: The following npc_talk hook is only added on activation.
+ 	# Make the task module or AI listen to the hook instead
+ 	# and wrap up all the logic.
+ 	$task->activate;
+ 	Plugins::callHook('npc_autotalk', {
+ 		task => $task
+ 	});
+ }
+ 
++sub _routeActionHasTalkNpcSubtask {
++	my ($offset) = @_;
++	$offset = 0 if !defined $offset;
++
++	my $routeIndex = AI::findAction("route", $offset);
++	return 0 if !defined $routeIndex;
++
++	my $routeSubtask = AI::args($routeIndex)->getSubtask;
++	return ($routeSubtask && UNIVERSAL::isa($routeSubtask, 'Task::TalkNPC')) ? 1 : 0;
++}
++
++sub resolveAutoNpcTalkSequence {
++	my ($ID) = @_;
++
++	my $routeIndex = AI::findAction("mapRoute");
++	$routeIndex = AI::findAction("route") if (!defined $routeIndex);
++	return '' if (!defined $routeIndex);
++
++	my $routeTask = AI::args($routeIndex);
++	return '' if (!$routeTask || !UNIVERSAL::isa($routeTask, 'Task::MapRoute'));
++	return '' if (!$routeTask->{mapSolution} || ref($routeTask->{mapSolution}) ne 'ARRAY' || !@{$routeTask->{mapSolution}});
++	return '' if (!$routeTask->{mapSolution}[0]{steps});
++
++	my $solution = $routeTask->{mapSolution}[0];
++	my $actor = $npcsList->getByID($ID) || $portalsList->getByID($ID) || $monstersList->getByID($ID);
++	return '' if (!$actor);
++
++	my $pos = $actor->{pos} || $actor->{pos_to};
++	return '' if (!$pos || !$solution->{pos});
++	return '' if ($pos->{x} != $solution->{pos}{x} || $pos->{y} != $solution->{pos}{y});
++
++	return _stripLeadingPortalApproachStep($solution->{steps});
++}
++
++sub _stripLeadingPortalApproachStep {
++	my ($sequence) = @_;
++	$sequence = '' if !defined $sequence;
++	$sequence =~ s/^\s*k(?:\s+|$)//i;
++	$sequence =~ s/^\s+|\s+$//g;
++	return $sequence;
++}
++
+ sub isTeleportItemEquipRequirementSatisfied {
+ 	my ($entry) = @_;
+ 	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+ 
+ 	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
+ 	return 0 unless ($required_item && $required_item->{equipped});
+ 	return $required_item->equippedInSlot($required_slot);
+ }
+ 
+ sub canTeleportItemEquipRequirementBeSatisfied {
+ 	my ($entry) = @_;
+ 	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+ 
+ 	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
+ 	return 0 unless $required_item;
+ 	return 1 if $required_item->{equipped} && $required_item->equippedInSlot($required_slot);
+ 	return $required_item->equippable();
+ }
+ 
+ sub tryEquipTeleportItemRequirement {
+ 	my ($entry) = @_;
+ 	return 1 if isTeleportItemEquipRequirementSatisfied($entry);
+ 	return 0 unless canTeleportItemEquipRequirementBeSatisfied($entry);
+ 
+ 	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
+diff --git a/src/Task/MapRoute.pm b/src/Task/MapRoute.pm
+index da013146c2f759e3b2d067241f4762d55173e2f6..48c996f5b132d563683c8b82ec673778b765056c 100644
+--- a/src/Task/MapRoute.pm
++++ b/src/Task/MapRoute.pm
+@@ -36,50 +36,58 @@ use Utils::Exceptions;
+ use AI qw(ai_useTeleport);
+ 
+ 
+ # Error constants.
+ use constant {
+ 	MAP_BLOCK_EXPIRATION => 600,
+ 	MAP_BLOCK_MAX => 20,
+ };
+ 
+ use enum (
+ 	# Routing errors
+ 	qw(TOO_MUCH_TIME
+ 	CANNOT_CALCULATE_ROUTE
+ 	STUCK
+ 	CANNOT_LOAD_FIELD),
+ 
+ 	# NPC errors
+ 	qw(NPC_NOT_FOUND
+ 	NPC_NO_RESPONSE
+ 	NO_SHOP_ITEM
+ 	WRONG_NPC_INSTRUCTIONS),
+ 
+ 	qw(UNKNOWN_ERROR)
+ );
+ 
++sub _npcRouteDistancesFromSteps {
++	my ($steps, $min_npc_dist, $max_npc_dist) = @_;
++	my $go_direct_to_npc = (defined $steps && $steps =~ /^\s*k(?:\s+|$)/i) ? 1 : 0;
++	my $route_dist_from_goal = $go_direct_to_npc ? 0 : $min_npc_dist;
++	my $talk_trigger_dist = $go_direct_to_npc ? 0 : $max_npc_dist;
++	return ($go_direct_to_npc, $route_dist_from_goal, $talk_trigger_dist);
++}
++
+ 
+ # TODO: this task should lock the 'npc' mutex when talking to NPCs!
+ 
+ 
+ ##
+ # Task::MapRoute->new(options...)
+ #
+ # Create a new Task::Route object. The following options are allowed:
+ # `l
+ # - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
+ # - map (required) - The map you want to go to, for example "prontera".
+ # - x, y - The coordinate on the destination map you want to walk to. On some maps this is
+ #          important because they're split by a river. Depending on which side of the river
+ #          you want to be, the route may be different.
+ # - maxDistance - The maximum distance (in blocks) that the route may be. If
+ #                 not specified, then there is no limit.
+ # - maxTime - The maximum time that may be spent on walking the route. If not
+ #             specified, then there is no time limit.
+ # - distFromGoal - Stop walking if we're within the specified distance (in blocks)
+ #                  from the goal. If not specified, then we'll walk until the
+ #                  destination is reached.
+ # - pyDistFromGoal - Same as distFromGoal, but this allows you to specify the
+ #                    Pythagorian distance instead of block distance.
+ # - avoidWalls - Whether to avoid walls. The default is true.
+ # - notifyUponArrival - Whether to print a message when we've reached the destination.
+@@ -282,76 +290,78 @@ sub iterate {
+ 		if (!canUseTeleport(2)) {
+ 			debug "MapRoute - Cannot use teleportToSaveMap now, recalculating\n", "route";
+ 			$self->{noTeleSpawn} = 1;
+ 			$self->initMapCalculator();	# redo MAP router
+ 			
+ 		} else {
+ 
+ 			if ($self->{mapSolution}[0]{retry} < 5) {
+ 				$self->{mapSolution}[0]{retry}++;
+ 				debug "MapRoute - Using go teleportToSaveMap (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+ 				$self->{substage} = 'Waiting for Warp';
+ 				ai_useTeleport(2);
+ 			} else {
+ 				error TF("Failed to move to savepoint using teleport/butterfly wing after %s tries on map %s, recalculating route and forbidding teleport only on this map.\n", $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
+ 				$self->{noTeleSpawnMaps}{$field->baseName} = time;
+ 				$self->initMapCalculator();	# redo MAP router
+ 			}
+ 		}
+ 
+ 	} elsif ( $self->{mapSolution}[0]{is_airship} ) {
+ 		if (!$self->{timeout} || timeOut($self->{timeout}, 0.5)) {
+ 			$self->{timeout} = time;
+ 			
+ 			my $min_npc_dist = 8;
+ 			my $max_npc_dist = 10;
++			my (undef, $route_dist_from_goal, $talk_trigger_dist) =
++				_npcRouteDistancesFromSteps($self->{mapSolution}[0]{steps}, $min_npc_dist, $max_npc_dist);
+ 			my $realPos = calcPosFromPathfinding($field, $self->{actor});
+ 			my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
+ 			return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
+ 
+-			if ( $self->{mapSolution}[0]{steps} && $dist_to_npc > $max_npc_dist) {
++			if ($dist_to_npc > $talk_trigger_dist) {
+ 				if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
+ 					$self->{mapSolution}[0]{retry} = 0;
+ 				}
+ 
+ 				if ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
+ 					# We spent too long a time.
+ 					debug "MapRoute - We spent too much time; bailing out.\n", "map_route";
+ 					$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
+ 
+ 				} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
+ 					# NPC is reachable from current position
+ 					# >> Then "route" to it
+ 
+-					debug "Walking towards the Airship NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route";
++					debug "Walking towards the Airship NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc, route_dist_from_goal $route_dist_from_goal\n", "map_route";
+ 					my $task = new Task::Route(
+ 						actor => $self->{actor},
+ 						x => $self->{mapSolution}[0]{pos}{x},
+ 						y => $self->{mapSolution}[0]{pos}{y},
+ 						field => $field,
+ 						maxTime => $self->{maxTime},
+-						distFromGoal => $min_npc_dist,
++						distFromGoal => $route_dist_from_goal,
+ 						avoidWalls => $self->{avoidWalls},
+ 						randomFactor => $self->{randomFactor},
+ 						useManhattan => $self->{useManhattan},
+ 						targetNpcPos => 1
+ 					);
+ 					$self->setSubtask($task);
+ 
+ 				} else {
+ 					# Error, NPC is not reachable from current pos
+ 					debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "map_route";
+ 					error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->baseName, @{$self->{actor}{pos}}{qw(x y)}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+ 					shift @{$self->{mapSolution}};
+ 				}
+ 
+ 				return;
+ 			}
+ 
+ 			if (!defined $self->{localBroadcast}) {
+ 				debug "MapRoute - Wainting for broadcast with message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+ 			} elsif ($self->{localBroadcast} !~ /$self->{mapSolution}[0]{airship_message}/) {
+ 				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' does not match expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+ 			} else {
+ 				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' matches expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+ 				
+ 				if ( $self->{mapSolution}[0]{steps}) {
+@@ -429,50 +439,52 @@ sub iterate {
+ 								avoidWalls => $self->{avoidWalls},
+ 								randomFactor => $self->{randomFactor},
+ 								useManhattan => $self->{useManhattan}
+ 							);
+ 							$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
+ 							$self->setSubtask($task);
+ 
+ 						} else {
+ 							warning TF("No LOS from %s (%s,%s) to Airship Portal at (%s,%s).\n",
+ 								$field->baseName, @{$self->{actor}{pos}}{qw(x y)},
+ 								$self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}),
+ 								"map_route";
+ 							error T("Cannot reach portal from current position\n"), "map_route";
+ 							shift @{$self->{mapSolution}};
+ 						}
+ 					}
+ 
+ 
+ 				
+ 			}
+ 		}
+ 
+ 	} elsif ( $self->{mapSolution}[0]{steps} ) {
+ 		my $min_npc_dist = 8;
+ 		my $max_npc_dist = 10;
++		my (undef, $route_dist_from_goal, $talk_trigger_dist) =
++			_npcRouteDistancesFromSteps($self->{mapSolution}[0]{steps}, $min_npc_dist, $max_npc_dist);
+ 		my $realPos = calcPosFromPathfinding($field, $self->{actor});
+ 		my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
+ 		return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
+ 		
+ 		if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
+ 			$self->{mapSolution}[0]{retry} = 0;
+ 		}
+ 
+ 		# If current solution has conversation steps specified
+ 		if ( $self->{substage} eq 'Waiting for Warp' ) {
+ 			$self->{timeout} = time unless $self->{timeout};
+ 
+ 			if (exists $self->{mapSolution}[0]{error} || timeOut($self->{timeout}, $timeout{ai_route_npcTalk}{timeout} || 10)) {
+ 				delete $self->{substage};
+ 				delete $self->{timeout};
+ 
+ 				warning TF("Failed to teleport using NPC at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+ 				warning TF("NPC error: %s.\n", $self->{mapSolution}[0]{error}), "map_route" if (exists $self->{mapSolution}[0]{error});
+ 
+ 				if ($self->{mapSolution}[0]{retry} < ($config{route_maxNpcTries} || 5)) {
+ 					$self->{mapSolution}[0]{retry}++;
+ 					warning "Retrying for the ".$self->{mapSolution}[0]{retry}."th time...\n", "map_route";
+ 					delete $self->{mapSolution}[0]{error};
+ 
+ 				} else {
+@@ -494,84 +506,84 @@ sub iterate {
+ 						$self->{mapSolution}[0]{retry} = 0;
+ 						$self->{mapSolution}[0]{plugin_retry}++;
+ 						$self->{mapSolution}[0]{pos}{x} = $plugin_args{x};
+ 						$self->{mapSolution}[0]{pos}{y} = $plugin_args{y};
+ 						$self->setNpcTalk();
+ 					} else {
+ 						error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
+ 						
+ 						# NPC sequence is a failure
+ 						if ($config{route_removeMissingPortals_NPC}) {
+ 							# We delete that portal and try again
+ 							my $missed = {};
+ 							$missed->{time} = time;
+ 							$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+ 							$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+ 							push(@portals_lut_missed, $missed);
+ 							delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+ 							error TF("[route_removeMissingPortals_NPC] Deleting portal NPC.\n"), "map_route";
+ 						}
+ 
+ 						$self->initMapCalculator();	# redo MAP router
+ 					}
+ 				}
+ 			}
+ 
+-		} elsif ($dist_to_npc <= $max_npc_dist) {
++		} elsif ($dist_to_npc <= $talk_trigger_dist) {
+ 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
+ 			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
+ 				debug TF("[mapRoute] Calling setNpcTalk to teleport using NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route";
+ 				# We have enough money for this service.
+ 				$self->setNpcTalk();
+ 
+ 			} else {
+ 				error TF("You need %sz to pay for warp service at %s (%s,%s), you have %sz.\n",
+ 					$portals_lut{$from}{dest}{$to}{cost},
+ 					$field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y},
+ 					$self->{actor}{zeny}), "map_route";
+ 					AI::clear(qw/move route mapRoute/);
+ 					message T("Stopped all movement\n"), "map_route";
+ 				$self->initMapCalculator();	# redo MAP router
+ 			}
+ 
+ 		} elsif ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
+ 			# We spent too long a time.
+ 			debug "MapRoute - We spent too much time; bailing out.\n", "map_route";
+ 			$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
+ 
+ 		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
+ 			# NPC is reachable from current position
+ 			# >> Then "route" to it
+ 
+-			debug "Walking towards the NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route";
++			debug "Walking towards the NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc, route_dist_from_goal $route_dist_from_goal\n", "map_route";
+ 			my $task = new Task::Route(
+ 				actor => $self->{actor},
+ 				x => $self->{mapSolution}[0]{pos}{x},
+ 				y => $self->{mapSolution}[0]{pos}{y},
+ 				field => $field,
+ 				maxTime => $self->{maxTime},
+-				distFromGoal => $min_npc_dist,
++				distFromGoal => $route_dist_from_goal,
+ 				avoidWalls => $self->{avoidWalls},
+ 				randomFactor => $self->{randomFactor},
+ 				useManhattan => $self->{useManhattan}
+ 			);
+ 			$self->setSubtask($task);
+ 
+ 		} else {
+ 			# Error, NPC is not reachable from current pos
+ 			debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "map_route";
+ 			error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->baseName, @{$self->{actor}{pos}}{qw(x y)}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+ 			shift @{$self->{mapSolution}};
+ 		}
+ 
+ 	} elsif ( $self->{mapSolution}[0]{portal} eq "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}=$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}" ) {
+ 		# This solution points to an X,Y coordinate
+ 		my $distFromGoal = $self->{pyDistFromGoal}
+ 			? $self->{pyDistFromGoal}
+ 			: ($self->{distFromGoal} ? $self->{distFromGoal} : 0);
+ 		if ( $self->{mapSolution}[0]{routed} || $distFromGoal + 2 > blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos})) {
+ 			# We need to specify +2 because sometimes the exact spot is occupied by someone else
+ 			shift @{$self->{mapSolution}};
+ 
+ 		} elsif ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
+ 			# We spent too long a time.
+ 			debug "We spent too much time; bailing out.\n", "map_route";
+diff --git a/src/Task/TalkNPC.pm b/src/Task/TalkNPC.pm
+index ebccbacb017813902e094566fd26511ff72b6c84..2e26f2d4f59f78350f0c353f13e10827389d98b6 100644
+--- a/src/Task/TalkNPC.pm
++++ b/src/Task/TalkNPC.pm
+@@ -339,50 +339,54 @@ sub iterate {
+ 					$self->{nameID}));
+ 			} else {
+ 				$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC at location (%d,%d).",
+ 					$self->{x}, $self->{y}));
+ 			}
+ 
+ 		} elsif (defined $self->{error_code}) {
+ 			debug "Can't talk with $self->{target}, because of errors\n", "ai_npcTalk";
+ 			$self->setError($self->{error_code}, $self->{error_message});
+ 
+ 		} else {
+ 
+ 			my $target = $self->find_and_set_target;
+ 			return if ($self->getStatus() == Task::DONE);
+ 
+ 			if (!%talk) {
+ 				debug "[TalkNPC] talk is not defined, setting to start conversation.\n", "ai_npcTalk";
+ 				unless ($self->{steps}[0] eq 'x' || $self->{steps}[0] eq 'k') {
+ 					$self->addSteps('x', 1);
+ 				}
+ 				undef $ai_v{'npc_talk'}{'time'};
+ 				undef $ai_v{'npc_talk'}{'talk'};
+ 
+ 			} elsif ($talk{nameID} eq $target->{nameID}) {
+ 				debug "[TalkNPC] talk is defined and nameID is right, just adding steps.\n", "ai_npcTalk";
++				if ($self->{steps}[0] && $self->{steps}[0] =~ /^k$/i) {
++					debug "[TalkNPC] Active conversation already started; dropping leading 'k' step.\n", "ai_npcTalk";
++					shift @{$self->{steps}};
++				}
+ 			} else {
+ 				debug "[TalkNPC] talk is defined and nameID is wrong, using manage_wrong_sequence.\n", "ai_npcTalk";
+ 				$self->manage_wrong_sequence(TF("Talking to wrong npc."));
+ 			}
+ 
+ 			return if ($self->getStatus() == Task::DONE);
+ 
+ 			if ($target || %talk) {
+ 				$self->{stage} = TALKING_TO_NPC;
+ 				$self->{time} = time;
+ 			
+ 			} else {
+ 				
+ 				if (!exists $self->{plugin_retry}) {
+ 					$self->{plugin_retry} = 0;
+ 				}
+ 				my %plugin_args = (
+ 					'x'            => $self->{x},
+ 					'y'            => $self->{y},
+ 					'nameID'       => $self->{nameID},
+ 					'sequence'     => $self->{sequence},
+ 					'plugin_retry' => $self->{plugin_retry},
+ 					'return'       => 0
+ 				);
+ 
+diff --git a/src/test/MapRouteKStepTest.pm b/src/test/MapRouteKStepTest.pm
+new file mode 100644
+index 0000000000000000000000000000000000000000..78b3a73be639f7e086c46884fb8cb69bcc3a68e3
+--- /dev/null
++++ b/src/test/MapRouteKStepTest.pm
+@@ -0,0 +1,107 @@
++package MapRouteKStepTest;
++use strict;
++use Test::More;
++use FindBin qw($RealBin);
++use lib "$RealBin/..";
++use lib "$RealBin/../deps";
++use lib "$RealBin/../auto/XSTools";
++use lib "$RealBin/../..";
++
++use Globals;
++use Settings;
++use FileParsers;
++use Misc qw(compilePortals);
++use Task::CalcMapRoute;
++use Task::MapRoute;
++use Utils qw(parse_portal_conversation_args);
++
++{
++	package MapRouteKStepTest::MockInventory;
++	sub new { bless {}, shift }
++	sub getByNameID { return undef }
++
++	package MapRouteKStepTest::MockChar;
++	sub new { bless { zeny => 9_999_999 }, shift }
++	sub inventory { MapRouteKStepTest::MockInventory->new() }
++
++	package MapRouteKStepTest::MockActorList;
++	sub new { bless { actor => $_[1] }, shift }
++	sub getByID {
++		my ($self, $id) = @_;
++		return unless $self->{actor};
++		return $self->{actor} if ($self->{actor}{ID} eq $id);
++		return;
++	}
++}
++
++sub start {
++	print "### Starting MapRouteKStepTest\n";
++
++	$Settings::tables_folder = "$RealBin/../../tables/iRO";
++	$Settings::fields_folder = "$RealBin/../../fields";
++
++	parseROLUT("$Settings::tables_folder/resnametable.txt", \%mapAlias_lut, 1, ".gat");
++	parseROLUT("$Settings::tables_folder/maps.txt", \%maps_lut);
++	parsePortals("$Settings::tables_folder/portals.txt", \%portals_lut);
++	{ local *Misc::writePortalsLOS = sub {} and compilePortals(); }
++
++	$char = MapRouteKStepTest::MockChar->new();
++	$timeout{ai_route_calcRoute}{timeout} = 5;
++
++	my $calc = Task::CalcMapRoute->new(
++		sourceMap => 'rachel',
++		sourceX   => 275,
++		sourceY   => 125,
++		map       => 'airplane_01',
++		x         => 245,
++		y         => 60,
++	);
++	$calc->activate;
++	my $max_iter = 15_000;
++	$calc->iterate while ($calc->getStatus != Task::DONE && --$max_iter > 0);
++	ok($max_iter > 0, 'CalcMapRoute finished within iteration limit');
++	ok(!$calc->getError, 'CalcMapRoute returned without error');
++
++	my $route = $calc->getRoute;
++	ok(ref($route) eq 'ARRAY' && @$route >= 2, 'CalcMapRoute produced inter-map route nodes');
++
++	my ($field_to_airship) = grep { $_->{map} eq 'ra_fild12' && $_->{pos}{x} == 295 && $_->{pos}{y} == 208 } @$route;
++	ok($field_to_airship, 'Route contains ra_fild12 airship transition node');
++	is($field_to_airship->{steps}, 'k c r0', 'Airship transition steps are k c r0');
++
++	my @parsed_steps = parse_portal_conversation_args($field_to_airship->{steps});
++	is_deeply(\@parsed_steps, [qw(k c r0)], 'TalkNPC parser reads k-step sequence correctly');
++
++	my ($go_direct_to_npc, $route_dist_from_goal, $talk_trigger_dist) =
++		Task::MapRoute::_npcRouteDistancesFromSteps($field_to_airship->{steps}, 8, 10);
++	is($go_direct_to_npc, 1, 'MapRoute helper marks k-step as direct-to-NPC');
++	is($route_dist_from_goal, 0, 'MapRoute helper sets distFromGoal=0 for k-step');
++	is($talk_trigger_dist, 0, 'MapRoute helper sets talk trigger distance=0 for k-step');
++
++	my @distances = (10, 5, 1, 0);
++	my @talk_allowed = grep { $_ <= $talk_trigger_dist } @distances;
++	is_deeply(\@talk_allowed, [0], 'With k-step, talk starts only at exact portal tile');
++
++	my $portal_id = pack('V', 24);
++	my $portal_actor = bless {
++		ID  => $portal_id,
++		pos => { x => 295, y => 208 },
++	}, 'Actor::Portal';
++	$portalsList = MapRouteKStepTest::MockActorList->new($portal_actor);
++	$npcsList = MapRouteKStepTest::MockActorList->new();
++	$monstersList = MapRouteKStepTest::MockActorList->new();
++	my $fake_maproute = bless {
++		mapSolution => [{
++			pos   => { x => 295, y => 208 },
++			steps => 'k c r0',
++		}],
++	}, 'Task::MapRoute';
++	{
++		no warnings 'redefine';
++		local *AI::findAction = sub { return 0 if $_[0] eq 'mapRoute'; return undef; };
++		local *AI::args = sub { return $fake_maproute; };
++		is(Misc::resolveAutoNpcTalkSequence($portal_id), 'c r0', 'autoNpcTalk resolves sequence from mapRoute and drops leading k for active dialog');
++	}
++}
++
++1;

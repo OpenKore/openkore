@@ -58,6 +58,14 @@ use enum (
 	qw(UNKNOWN_ERROR)
 );
 
+sub _npcRouteDistancesFromSteps {
+	my ($steps, $min_npc_dist, $max_npc_dist) = @_;
+	my $go_direct_to_npc = (defined $steps && $steps =~ /^\s*k(?:\s+|$)/i) ? 1 : 0;
+	my $route_dist_from_goal = $go_direct_to_npc ? 0 : $min_npc_dist;
+	my $talk_trigger_dist = $go_direct_to_npc ? 0 : $max_npc_dist;
+	return ($go_direct_to_npc, $route_dist_from_goal, $talk_trigger_dist);
+}
+
 
 # TODO: this task should lock the 'npc' mutex when talking to NPCs!
 
@@ -304,11 +312,13 @@ sub iterate {
 			
 			my $min_npc_dist = 8;
 			my $max_npc_dist = 10;
+			my (undef, $route_dist_from_goal, $talk_trigger_dist) =
+				_npcRouteDistancesFromSteps($self->{mapSolution}[0]{steps}, $min_npc_dist, $max_npc_dist);
 			my $realPos = calcPosFromPathfinding($field, $self->{actor});
 			my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
 			return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
 
-			if ( $self->{mapSolution}[0]{steps} && $dist_to_npc > $max_npc_dist) {
+			if ($dist_to_npc > $talk_trigger_dist) {
 				if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
 					$self->{mapSolution}[0]{retry} = 0;
 				}
@@ -322,14 +332,14 @@ sub iterate {
 					# NPC is reachable from current position
 					# >> Then "route" to it
 
-					debug "Walking towards the Airship NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route";
+					debug "Walking towards the Airship NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc, route_dist_from_goal $route_dist_from_goal\n", "map_route";
 					my $task = new Task::Route(
 						actor => $self->{actor},
 						x => $self->{mapSolution}[0]{pos}{x},
 						y => $self->{mapSolution}[0]{pos}{y},
 						field => $field,
 						maxTime => $self->{maxTime},
-						distFromGoal => $min_npc_dist,
+						distFromGoal => $route_dist_from_goal,
 						avoidWalls => $self->{avoidWalls},
 						randomFactor => $self->{randomFactor},
 						useManhattan => $self->{useManhattan},
@@ -451,6 +461,8 @@ sub iterate {
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
 		my $min_npc_dist = 8;
 		my $max_npc_dist = 10;
+		my (undef, $route_dist_from_goal, $talk_trigger_dist) =
+			_npcRouteDistancesFromSteps($self->{mapSolution}[0]{steps}, $min_npc_dist, $max_npc_dist);
 		my $realPos = calcPosFromPathfinding($field, $self->{actor});
 		my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
 		return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
@@ -516,7 +528,7 @@ sub iterate {
 				}
 			}
 
-		} elsif ($dist_to_npc <= $max_npc_dist) {
+		} elsif ($dist_to_npc <= $talk_trigger_dist) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
 			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
 				debug TF("[mapRoute] Calling setNpcTalk to teleport using NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route";
@@ -542,14 +554,14 @@ sub iterate {
 			# NPC is reachable from current position
 			# >> Then "route" to it
 
-			debug "Walking towards the NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route";
+			debug "Walking towards the NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc, route_dist_from_goal $route_dist_from_goal\n", "map_route";
 			my $task = new Task::Route(
 				actor => $self->{actor},
 				x => $self->{mapSolution}[0]{pos}{x},
 				y => $self->{mapSolution}[0]{pos}{y},
 				field => $field,
 				maxTime => $self->{maxTime},
-				distFromGoal => $min_npc_dist,
+				distFromGoal => $route_dist_from_goal,
 				avoidWalls => $self->{avoidWalls},
 				randomFactor => $self->{randomFactor},
 				useManhattan => $self->{useManhattan}

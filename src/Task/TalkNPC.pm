@@ -361,6 +361,10 @@ sub iterate {
 
 			} elsif ($talk{nameID} eq $target->{nameID}) {
 				debug "[TalkNPC] talk is defined and nameID is right, just adding steps.\n", "ai_npcTalk";
+				if ($self->{steps}[0] && $self->{steps}[0] =~ /^k$/i) {
+					debug "[TalkNPC] Active conversation already started; dropping leading 'k' step.\n", "ai_npcTalk";
+					shift @{$self->{steps}};
+				}
 			} else {
 				debug "[TalkNPC] talk is defined and nameID is wrong, using manage_wrong_sequence.\n", "ai_npcTalk";
 				$self->manage_wrong_sequence(TF("Talking to wrong npc."));
