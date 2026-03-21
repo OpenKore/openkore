@@ -1256,6 +1256,7 @@ sub processStartAutoStorage {
 		Plugins::callHook('AI_storage_auto_onStart' => \%plugin_args);
 		unless ($plugin_args{return}) {
 			message T("Auto-storaging due to storageAuto_onStart\n");
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
 			AI::queue("storageAuto");
 			Plugins::callHook('AI_storage_auto_queued');
 			$timeout{'ai_storageAuto'}{'time'} = time;
@@ -1276,6 +1277,7 @@ sub processStartAutoStorage {
 		Plugins::callHook('AI_storage_auto_limit_reached' => \%plugin_args);
 		unless ($plugin_args{return}) {
 			message TF("Auto-storaging due to %s\n", join('|', @reasons));
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
 			AI::queue("storageAuto");
 			Plugins::callHook('AI_storage_auto_queued');
 			$timeout{'ai_storageAuto'}{'time'} = time;
@@ -1347,6 +1349,7 @@ sub processStartAutoStorage {
 	Plugins::callHook('AI_storage_auto_getAuto_needitem' => \%plugin_args);
 	unless ($plugin_args{return}) {
 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
+		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
 		AI::queue("storageAuto");
 		Plugins::callHook('AI_storage_auto_queued');
 		$timeout{'ai_storageAuto'}{'time'} = time;
