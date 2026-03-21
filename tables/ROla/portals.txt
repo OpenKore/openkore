@@ -707,10 +707,6 @@ airplane 208 53 airplane 239 160
 airplane 245 160 airplane 214 54
 airplane 254 54 airplane 91 67
 airplane 87 67 airplane 250 54
-airplane_01 103 52 airplane_01 102 176
-airplane_01 103 72 airplane_01 102 199
-airplane_01 104 176 airplane_01 105 52
-airplane_01 104 199 airplane_01 105 72
 airplane_01 208 53 airplane_01 239 160
 airplane_01 245 160 airplane_01 214 54
 airplane_01 254 54 airplane_01 91 67
@@ -2819,6 +2815,7 @@ yuno_in03 96 62 yuno_in03 223 167
 # Castelo dos Sábios
 yuno_in02 172 61 yuno 87 321
 yuno_in02 82 14 yuno_in05 196 194
+yuno_in02 93 207 valkyrie 48 8 c c c c c c c r0 n
 
 # Biblioteca de Juno
 yuno_in04 103 22 yuno_in04 115 51
@@ -2893,6 +2890,8 @@ valkyrie 49 72 valkyrie 49 67
 
 # Aeroporto de Juno
 y_airport 143 16 yuno 52 207
+y_airport 128 46 airplane 244 58 1200 1 c r0 c r0 n
+y_airport 138 46 airplane 244 58 1200 1 c r0 c r0 n
 y_airport 148 46 airplane_01 244 58 1200 1 c r0 c r0 n
 y_airport 158 46 airplane_01 244 58 1200 1 c r0 c r0 n
 

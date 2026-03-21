@@ -844,8 +844,9 @@ sub parsePortalsAirship {
 		$line =~ s/(.*)[\s\t]+#.*$/$1/;
 
 		#airpship "airplane_01","We are heading to Izlude.","izlude",200,73;
-		if ($line =~ /^airpship\s+"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*,\s*"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*(.+)\s*)?;$/) {
-			my ($source_map, $source_x, $source_y, $message, $dest_map, $dest_x, $dest_y, $steps) = ($1, $2, $3, $4, $5, $6, $7, $9);
+		#airpship "airplane_01",243,73,"Welcome to Rachel.","ra_fild12",292,204,"236-248,67-79",x;
+		if ($line =~ /^airpship\s+"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*,\s*"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*"([^"]*)"\s*)?(?:,\s*(.+?)\s*)?;$/) {
+			my ($source_map, $source_x, $source_y, $message, $dest_map, $dest_x, $dest_y, $wait_area, $steps) = ($1, $2, $3, $4, $5, $6, $7, $8, $9);
 			my $portal = "$source_map $source_x $source_y";
 			my $dest = "$dest_map $dest_x $dest_y";
 			$$r_hash{$portal}{'source'}{'map'} = $source_map;
@@ -856,6 +857,23 @@ sub parsePortalsAirship {
 			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $dest_y;
 			$$r_hash{$portal}{'dest'}{$dest}{'message'} = $message;
 			$$r_hash{$portal}{'dest'}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
+			if (defined $wait_area && $wait_area ne '') {
+				if ($wait_area =~ /^\s*(\d+)\s*-\s*(\d+)\s*,\s*(\d+)\s*-\s*(\d+)\s*$/) {
+					my ($x1, $x2, $y1, $y2) = ($1, $2, $3, $4);
+					($x1, $x2) = ($x2, $x1) if ($x1 > $x2);
+					($y1, $y2) = ($y2, $y1) if ($y1 > $y2);
+					$$r_hash{$portal}{'dest'}{$dest}{'wait_area'} = {
+						x1 => $x1,
+						x2 => $x2,
+						y1 => $y1,
+						y2 => $y2,
+					};
+				} elsif (!defined $steps || $steps eq '') {
+					# Backwards compatibility with quoted legacy steps:
+					# airpship "...", "...", "x";
+					$steps = $wait_area;
+				}
+			}
 			if (defined $steps && $steps) {
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $steps;
 			}
