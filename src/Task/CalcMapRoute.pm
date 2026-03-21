@@ -250,11 +250,11 @@ sub iterate {
 							zeny => 0,
 							zeny_covered_by_tickets => 0,
 							amount_of_tickets_used => 0
-							};
-							$value->{airship_message} = $entry->{dest}{$dest}{message};
-							$value->{wait_area} = $entry->{dest}{$dest}{wait_area};
-							$value->{is_airship} = 1;
-							$self->add_key_to_openList($key, $value);
+						};
+						$value->{airship_message} = $entry->{dest}{$dest}{message};
+						$value->{wait_area} = $entry->{dest}{$dest}{wait_area};
+						$value->{is_airship} = 1;
+						$self->add_key_to_openList($key, $value);
 					}
 				}
 			}
@@ -440,10 +440,10 @@ sub searchStep {
 					$arg{teleportItemID} = $closelist->{$this}{teleportItemID};
 					$arg{teleportItemTimeoutSec} = $closelist->{$this}{teleportItemTimeoutSec} || 0;
 					$arg{teleportItemRequiredEquipSlot} = $closelist->{$this}{teleportItemRequiredEquipSlot};
-						$arg{teleportItemRequiredEquipItemID} = $closelist->{$this}{teleportItemRequiredEquipItemID};
-						$arg{is_airship} = $closelist->{$this}{is_airship} || 0;
-						$arg{airship_message} = $closelist->{$this}{airship_message};
-						$arg{wait_area} = $closelist->{$this}{wait_area};
+					$arg{teleportItemRequiredEquipItemID} = $closelist->{$this}{teleportItemRequiredEquipItemID};
+					$arg{is_airship} = $closelist->{$this}{is_airship} || 0;
+					$arg{airship_message} = $closelist->{$this}{airship_message};
+					$arg{wait_area} = $closelist->{$this}{wait_area};
 
 					unshift @{$self->{mapSolution}}, \%arg;
 					$this = $closelist->{$this}{parent};
@@ -516,11 +516,11 @@ sub searchStep {
 							zeny => $closelist->{$parent}{zeny},
 							zeny_covered_by_tickets => $closelist->{$parent}{zeny_covered_by_tickets},
 							amount_of_tickets_used => $closelist->{$parent}{amount_of_tickets_used}
-							};
-							$value->{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
-							$value->{wait_area} = $portals_airships{$child}{dest}{$subchild}{wait_area};
-							$value->{is_airship} = 1;
-							$self->add_key_to_openList($key, $value);
+						};
+						$value->{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
+						$value->{wait_area} = $portals_airships{$child}{dest}{$subchild}{wait_area};
+						$value->{is_airship} = 1;
+						$self->add_key_to_openList($key, $value);
 					}
 				}
 			}
