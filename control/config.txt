@@ -74,6 +74,7 @@ attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
 attackAuto_considerDamagedAggressive 0
+attackAllowStartStorageBuySell 1
 attackDistance 1
 attackDistanceAuto 1
 attackMaxDistance 1

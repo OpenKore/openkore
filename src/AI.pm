@@ -51,9 +51,10 @@ our @EXPORT = (
 	ai_setSuspend
 	ai_skillUse
 	ai_skillUse2
-	ai_storageAutoCheck
 	ai_useTeleport
+	ai_storageAutoCheck
 	ai_canOpenStorage
+	ai_canStartStorage
 	cartGet
 	cartAdd
 	ai_talkNPC
@@ -643,7 +644,8 @@ sub ai_skillUse2 {
 ##
 # ai_storageAutoCheck()
 #
-# Returns 1 if it is time to perform storageAuto sequence.
+# Returns 1 if we have items in the inventory that could be moved to storage
+# Check: amount in inventory is higher than the keep amount set in items control and storage is set to 1
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
 	return 0 unless ai_canOpenStorage();
@@ -659,6 +661,11 @@ sub ai_storageAutoCheck {
 	return 0;
 }
 
+##
+# ai_canOpenStorage()
+#
+# Returns 1 if can open storage (item, command, zeny, skill checks)
+# Returns 0 otherwise.
 sub ai_canOpenStorage {
 	# Check NV_BASIC and SU_BASIC_SKILL (Doram)
 	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6 && $char->getSkillLevel(new Skill(handle => 'SU_BASIC_SKILL')) < 1);
@@ -671,6 +678,27 @@ sub ai_canOpenStorage {
 	return 1;
 }
 
+##
+# ai_canStartStorage()
+#
+# Returns 1 if the AI queue allows storage
+# Returns 0 otherwise.
+sub ai_canStartStorage {
+	return 1 if (AI::isIdle());
+	return 0 if (AI::inQueue("storageAuto", "buyAuto", "sellAuto", "teleport", "NPC", "skill_use", "eventMacro"));
+	
+	my $routeIndex = AI::findAction("route");
+	$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
+	if (defined $routeIndex) {
+		my $args = AI::args($routeIndex);
+		return 0 if ($args->getSubtask && UNIVERSAL::isa($args->getSubtask, 'Task::TalkNPC'));
+		return 0 unless ($args->{attackOnRoute} > 1 || $args->{isRandomWalk} || $args->{isToLockMap});
+	}
+	
+	return 1 if (AI::is("sitAuto", "follow", "mapRoute", "route", "move"));
+	return 1 if (AI::is("attack") && $config{attackAllowStartStorageBuySell});
+	return 0;
+}
 
 ##
 # cartGet(items)

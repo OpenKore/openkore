@@ -142,6 +142,10 @@ sub new {
 	if (!defined $self->{useManhattan}) {
 		$self->{useManhattan} = 0;
 	}
+
+	if (!defined $self->{attackOnRoute}) {
+		$self->{attackOnRoute} = 0;
+	}
 	
 	$self->{solution} = [];
 	$self->{stage} = NOT_INITIALIZED;
