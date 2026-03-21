@@ -23,6 +23,7 @@ my @tests = qw(
 	FileParsersTest
 	NetworkTest
 	FieldTest
+	XConfTest
 );
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
