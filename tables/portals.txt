@@ -3298,9 +3298,41 @@ mal_in02 137 53 mal_in02 139 33
 mal_in02 159 61 mal_in02 142 60
 mal_in02 142 60 mal_in02 162 61
 
-# following is a single warp, depends of entrance npc used
-# currently unsupported, do not enable that
-#moc_para01 30 10 prontera 116 72
+# Eden Group Headquarters exit portal.
+# Runtime selects a single destination through config.txt -> EdenPortalExit.
+moc_para01 30 10 prontera 116 72 [EdenPortalExit]
+moc_para01 30 10 moc_ruins 64 161 [EdenPortalExit]
+moc_para01 30 10 geffen 120 39 [EdenPortalExit]
+moc_para01 30 10 alberta 117 56 [EdenPortalExit]
+moc_para01 30 10 aldebaran 168 112 [EdenPortalExit]
+moc_para01 30 10 izlude_in 73 165 [EdenPortalExit]
+moc_para01 30 10 prt_church 99 78 [EdenPortalExit]
+moc_para01 30 10 geffen_in 162 99 [EdenPortalExit]
+moc_para01 30 10 moc_prydb1 51 118 [EdenPortalExit]
+moc_para01 30 10 alberta_in 73 43 [EdenPortalExit]
+moc_para01 30 10 payon_in02 64 60 [EdenPortalExit]
+moc_para01 30 10 payon 161 58 [EdenPortalExit]
+moc_para01 30 10 que_ng 33 63 [EdenPortalExit]
+moc_para01 30 10 que_ng 144 166 [EdenPortalExit]
+moc_para01 30 10 yuno 158 125 [EdenPortalExit]
+moc_para01 30 10 rachel 115 125 [EdenPortalExit]
+moc_para01 30 10 comodo 192 145 [EdenPortalExit]
+moc_para01 30 10 hugel 88 148 [EdenPortalExit]
+moc_para01 30 10 veins 216 104 [EdenPortalExit]
+moc_para01 30 10 einbroch 246 204 [EdenPortalExit]
+moc_para01 30 10 lighthalzen 159 95 [EdenPortalExit]
+moc_para01 30 10 amatsu 110 150 [EdenPortalExit]
+moc_para01 30 10 ayothaya 217 178 [EdenPortalExit]
+moc_para01 30 10 louyang 217 103 [EdenPortalExit]
+moc_para01 30 10 gonryun 155 120 [EdenPortalExit]
+moc_para01 30 10 moscovia 218 198 [EdenPortalExit]
+moc_para01 30 10 brasilis 190 220 [EdenPortalExit]
+moc_para01 30 10 dewata 192 182 [EdenPortalExit]
+moc_para01 30 10 morocc 161 97 [EdenPortalExit]
+moc_para01 30 10 izlude 134 118 [EdenPortalExit]
+moc_para01 30 10 umbala 94 154 [EdenPortalExit]
+moc_para01 30 10 malaya 234 199 [EdenPortalExit]
+moc_para01 30 10 verus04 115 243 [EdenPortalExit]
 
 #------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1

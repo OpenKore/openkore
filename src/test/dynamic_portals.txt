@@ -1,0 +1,5 @@
+moc_para01 30 10 prontera 116 72 [EdenPortalExit]
+moc_para01 30 10 payon 161 58 [EdenPortalExit]
+moc_para01 40 20 geffen 120 39 [EdenPortalExit]
+moc_para01 40 20 alberta 117 56 [EdenPortalExit]
+moc_para01 50 50 morocc 160 97 [EdenPortalExit] c r0 n
