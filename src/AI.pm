@@ -191,12 +191,17 @@ sub findAction {
 
 sub inQueue {
 	foreach (@_) {
-		# Apparently using a loop is faster than calling
-		# binFind() (which is optimized in C), because
-		# of function call overhead.
-		#return 1 if defined binFind(\@ai_seq, $_);
 		foreach my $seq (@ai_seq) {
 			return 1 if ($_ eq $seq);
+		}
+	}
+	return 0;
+}
+
+sub inQueueNew {
+	for my $seq (@ai_seq) {
+		for my $want (@_) {
+			return 1 if $want eq $seq;
 		}
 	}
 	return 0;
