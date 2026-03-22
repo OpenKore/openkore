@@ -728,7 +728,7 @@ sub shouldStartAutoStorage {
 	
 	my @reasons;
 
-	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'});
+	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight'});
 	push(@reasons, 'itemsMaxWeight') if ($weightLimitReached);
 
 	my $itemNumLimitReached = ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'});
@@ -782,7 +782,7 @@ sub shouldStartAutoStorage {
 			 ($amount <= $config{"getAuto_${i}_minAmount"} &&
 			  $amount < $config{"getAuto_${i}_maxAmount"})
 		    ) &&
-			checkSelfCondition("getAuto_$i")
+			Misc::checkSelfCondition("getAuto_$i")
 		) {
 			if ($char->storage->isReady() &&
 				!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
@@ -828,7 +828,7 @@ sub shouldStartAutoSell {
 	
 	my @reasons;
 
-	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'});
+	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight'});
 	push(@reasons, 'itemsMaxWeight') if ($weightLimitReached);
 
 	my $itemNumLimitReached = ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'});
@@ -871,7 +871,7 @@ sub shouldStartAutoBuy {
 		if (
 			$config{"buyAuto_$i"."_minAmount"} ne "" &&
 			$config{"buyAuto_$i"."_maxAmount"} ne "" &&
-			(checkSelfCondition("buyAuto_$i")) &&
+			(Misc::checkSelfCondition("buyAuto_$i")) &&
 			$amount <= $config{"buyAuto_$i"."_minAmount"} &&
 			$amount < $config{"buyAuto_$i"."_maxAmount"}
 		) {
