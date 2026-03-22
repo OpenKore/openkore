@@ -149,16 +149,40 @@ sub route_crosses_target_danger_zone_fast {
 	return 0;
 }
 
-# Rejects a route if any step lands on an exact portal cell.
+# Rejects a route that enters a portal hard zone, re-enters after leaving,
+# or moves deeper while trying to escape from inside the initial hard zone.
 sub route_crosses_prohibited_cells {
 	my ($solution, $prohibited_cells) = @_;
 
 	return 0 unless $solution && @{$solution};
 	return 0 unless $prohibited_cells;
 
+	my $started_inside;
+	my $left_initial_zone = 0;
+	my $previous_inside_distance;
 	foreach my $node (@{$solution}) {
 		next unless $node;
-		return 1 if $prohibited_cells->{$node->{x}} && $prohibited_cells->{$node->{x}}{$node->{y}};
+
+		my $cell_distance = $prohibited_cells->{$node->{x}} && $prohibited_cells->{$node->{x}}{$node->{y}};
+		my $inside = defined $cell_distance;
+
+		if (!defined $started_inside) {
+			$started_inside = $inside ? 1 : 0;
+			if ($inside) {
+				$previous_inside_distance = $cell_distance;
+			} else {
+				$left_initial_zone = 1;
+			}
+			next;
+		}
+
+		if ($inside) {
+			return 1 if !$started_inside || $left_initial_zone;
+			return 1 if defined $previous_inside_distance && $cell_distance < $previous_inside_distance;
+			$previous_inside_distance = $cell_distance;
+		} else {
+			$left_initial_zone = 1 if $started_inside;
+		}
 	}
 
 	return 0;
@@ -488,7 +512,7 @@ sub is_there_an_obstacle_near_pos {
 	return;
 }
 
-## Builds a hash of exact prohibited cells that a client-side move should never cross.
+## Builds a hash of portal hard-zone cells keyed by their nearest portal distance.
 sub build_prohibited_cells {
 	my %prohibited;
 
@@ -501,7 +525,10 @@ sub build_prohibited_cells {
 		foreach my $y ($min_y .. $max_y) {
 			foreach my $x ($min_x .. $max_x) {
 				next unless $field->isWalkable($x, $y);
-				$prohibited{$x}{$y} = 1;
+				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
+				if (!defined $prohibited{$x}{$y} || $distance < $prohibited{$x}{$y}) {
+					$prohibited{$x}{$y} = $distance;
+				}
 			}
 		}
 	}
