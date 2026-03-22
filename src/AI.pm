@@ -55,6 +55,9 @@ our @EXPORT = (
 	ai_storageAutoCheck
 	ai_canOpenStorage
 	ai_canStartStorageSellBuy
+	shouldStartAutoStorage
+	shouldStartAutoSell
+	shouldStartAutoBuy
 	cartGet
 	cartAdd
 	ai_talkNPC
@@ -702,6 +705,199 @@ sub ai_canStartStorageSellBuy {
 	return 1 if (AI::is("sitAuto", "follow", "mapRoute", "route", "move"));
 	return 1 if (AI::is("attack") && $config{attackAllowStartStorageBuySell});
 	return 0;
+}
+
+sub shouldStartAutoStorage {
+	return unless (ai_canOpenStorage());
+	return unless ($config{storageAuto});
+	return unless ($config{'storageAuto_npc'} ne "" || $config{'storageAuto_useChatCommand'} || $config{'storageAuto_useItem'});
+
+	my $storageAutoOnStart = $config{'storageAuto_onStart'} && !$char->storage->wasOpenedThisSession();
+	if ($storageAutoOnStart) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook('AI_storage_auto_onStart' => \%plugin_args);
+		unless ($plugin_args{return}) {
+			message T("Auto-storaging due to storageAuto_onStart\n");
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			AI::queue("storageAuto");
+			Plugins::callHook('AI_storage_auto_queued');
+			$timeout{'ai_storageAuto'}{'time'} = time;
+			return 1;
+		}
+	}
+	
+	my @reasons;
+
+	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'});
+	push(@reasons, 'itemsMaxWeight') if ($weightLimitReached);
+
+	my $itemNumLimitReached = ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'});
+	push(@reasons, 'itemsMaxNum') if ($itemNumLimitReached);
+
+	if (scalar @reasons && ai_storageAutoCheck()) {
+		my %plugin_args = ( return => 0, reasons => \@reasons );
+		Plugins::callHook('AI_storage_auto_limit_reached' => \%plugin_args);
+		unless ($plugin_args{return}) {
+			message TF("Auto-storaging due to %s\n", join('|', @reasons));
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			AI::queue("storageAuto");
+			Plugins::callHook('AI_storage_auto_queued');
+			$timeout{'ai_storageAuto'}{'time'} = time;
+			return 1;
+		}
+	}
+
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('AI_storage_auto_get_auto_start' => \%plugin_args);
+	return if ($plugin_args{return});
+
+	return unless (timeOut($timeout{'ai_storageAuto_getAutoCheck'}));
+	$timeout{'ai_storageAuto_getAutoCheck'}{'time'} = time;
+
+	# Initiate autostorage when we're low on some item, and getAuto is set
+	my $needitem = "";
+	my $i;
+
+	Misc::checkValidity("AutoStorage part 1");
+	for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
+		next unless ($config{"getAuto_$i"});
+		next if ($config{"getAuto_$i"."_disabled"});
+		next if ($config{"getAuto_$i"."_minBase"} =~ /^\d+$/ && $char->{lv} <= $config{"getAuto_$i"."_minBase"});
+		next if ($config{"getAuto_$i"."_maxBase"} =~ /^\d+$/ && $char->{lv} >= $config{"getAuto_$i"."_maxBase"});
+		if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
+			foreach my $nameID (keys %items_lut) {
+				if (lc($items_lut{$nameID}) eq lc($config{"getAuto_$i"}) && $items_lut{$nameID} ne $config{"getAuto_$i"}) {
+					configModify("getAuto_$i", $items_lut{$nameID});
+				}
+			}
+		}
+
+		my $item = $char->inventory->getByName($config{"getAuto_$i"}) || $char->inventory->getByNameID($config{"getAuto_$i"});
+		# total amount of the same name items
+		my $amount = $char->inventory->sumByName($config{"getAuto_$i"}) || $char->inventory->sumByNameID($config{"getAuto_$i"});
+		if ($config{"getAuto_${i}_minAmount"} ne "" &&
+		    $config{"getAuto_${i}_maxAmount"} ne "" &&
+		    !$config{"getAuto_${i}_passive"} &&
+		    (!$item ||
+			 ($amount <= $config{"getAuto_${i}_minAmount"} &&
+			  $amount < $config{"getAuto_${i}_maxAmount"})
+		    ) &&
+			checkSelfCondition("getAuto_$i")
+		) {
+			if ($char->storage->isReady() &&
+				!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
+			} else {
+				if ($char->storage->wasOpenedThisSession() &&
+					!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
+					debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"}), "storage", 2;
+					Plugins::callHook('AI_storage_item_out_of_stock', {
+							name => $config{"getAuto_$i"},
+							getAutoIndex => $i,
+						}
+					);
+				} else {
+						my $sti = $config{"getAuto_$i"};
+						if ($needitem eq "") {
+							$needitem = "$sti";
+						} else {$needitem = "$needitem, $sti";}
+					}
+			}
+		}
+	}
+	Misc::checkValidity("AutoStorage part 2");
+
+	return unless ($needitem ne "");
+
+	my %plugin_args = ( return => 0, needitem => $needitem );
+	Plugins::callHook('AI_storage_auto_getAuto_needitem' => \%plugin_args);
+	unless ($plugin_args{return}) {
+		message TF("Auto-storaging due to insufficient %s\n", $needitem);
+		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+		AI::queue("storageAuto");
+		Plugins::callHook('AI_storage_auto_queued');
+		$timeout{'ai_storageAuto'}{'time'} = time;
+		return 1;
+	}
+
+	return;
+}
+
+sub shouldStartAutoSell {
+	return unless ($config{'sellAuto'});
+	return unless ($config{'sellAuto_npc'} ne "");
+	
+	my @reasons;
+
+	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'});
+	push(@reasons, 'itemsMaxWeight') if ($weightLimitReached);
+
+	my $itemNumLimitReached = ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'});
+	push(@reasons, 'itemsMaxNum') if ($itemNumLimitReached);
+
+	if (scalar @reasons && ai_sellAutoCheck()) {
+		my %plugin_args = ( return => 0, reasons => \@reasons );
+		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
+		unless ($plugin_args{return}) {
+			message TF("Auto-selling due to %s\n", join('|', @reasons));
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			AI::queue("sellAuto");
+			Plugins::callHook('AI_sell_auto_queued');
+			$timeout{'ai_sellAuto'}{'time'} = time;
+			return 1;
+		}
+	}
+	return;
+}
+
+sub shouldStartAutoBuy {
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
+	return if ($plugin_args{return});
+
+	return unless (timeOut($timeout{'ai_buyAuto'}));
+	$timeout{'ai_buyAuto'}{'time'} = time;
+
+	my $needitem;
+	undef $ai_v{'temp'}{'found'};
+	for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
+		next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
+		my $amount;
+		if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+			$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
+		}
+		else {
+			$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
+		}
+		if (
+			$config{"buyAuto_$i"."_minAmount"} ne "" &&
+			$config{"buyAuto_$i"."_maxAmount"} ne "" &&
+			(checkSelfCondition("buyAuto_$i")) &&
+			$amount <= $config{"buyAuto_$i"."_minAmount"} &&
+			$amount < $config{"buyAuto_$i"."_maxAmount"}
+		) {
+			$ai_v{'temp'}{'found'} = 1;
+			my $bai = $config{"buyAuto_$i"};
+			if ($needitem eq "") {
+				$needitem = "$bai";
+			} else {
+				$needitem = "$needitem, $bai";
+			}
+		}
+	}
+
+	return unless ($ai_v{'temp'}{'found'});
+
+	my %plugin_args = ( return => 0, needitem => $needitem );
+	Plugins::callHook('AI_buy_auto_needitem' => \%plugin_args);
+	unless ($plugin_args{return}) {
+		message TF("Auto-buying due to insufficient %s\n", $needitem);
+		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+		AI::queue("buyAuto");
+		Plugins::callHook('AI_buy_auto_queued');
+		return 1
+	}
+
+	return;
 }
 
 ##
