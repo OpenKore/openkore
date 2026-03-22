@@ -11,9 +11,6 @@
 
 avoidObstacles_enable_move 0
 avoidObstacles_enable_remove 1
-avoidObstacles_enable_avoid_monsters 1
-avoidObstacles_enable_avoid_players 0
-avoidObstacles_enable_avoid_area_spells 0
 avoidObstacles_enable_avoid_portals 1
 avoidObstacles_adjust_route_step 1
 avoidObstacles_drop_route_dest_near_obstacle 1
@@ -61,15 +58,6 @@ avoidObstaclesSpell 136 {
 	weight 2000
 	penalty_dist 12
 	danger_dist 1
-	drop_target_near 0
-	drop_dest_near 1
-}
-
-avoidObstaclesPortal default {
-	enabled 1
-	weight 5000
-	penalty_dist 12
-	danger_dist 0
 	drop_target_near 0
 	drop_dest_near 1
 }
@@ -132,7 +120,6 @@ my %plugin_settings;
 my %mob_nameID_obstacles;
 my %player_name_obstacles;
 my %area_spell_type_obstacles;
-my %portals_obstacles;
 
 my %obstaclesList;
 my %removed_obstacle_still_in_list;
@@ -182,9 +169,6 @@ sub default_settings {
 	return (
 		enable_move => 0,
 		enable_remove => 1,
-		enable_avoid_monsters => 1,
-		enable_avoid_players => 0,
-		enable_avoid_area_spells => 1,
 		enable_avoid_portals => 1,
 		adjust_route_step => 1,
 		drop_route_dest_near_obstacle => 1,
@@ -199,7 +183,6 @@ sub reset_plugin_configuration {
 	%mob_nameID_obstacles = ();
 	%player_name_obstacles = ();
 	%area_spell_type_obstacles = ();
-	%portals_obstacles = ();
 }
 
 ## Converts a short plugin setting name into its config.txt key.
@@ -214,7 +197,7 @@ sub is_plugin_config_key {
 
 	return 0 unless defined $key && $key ne '';
 	return 1 if $key =~ /^avoidObstacles_/;
-	return 1 if $key =~ /^avoidObstacles(?:Monster|Player|Spell|Portal)_/;
+	return 1 if $key =~ /^avoidObstacles(?:Monster|Player|Spell)_/;
 
 	return 0;
 }
@@ -282,7 +265,6 @@ sub reload_plugin_configuration {
 	load_obstacle_blocks_from_config('avoidObstaclesMonster', 'monster', \%mob_nameID_obstacles);
 	load_obstacle_blocks_from_config('avoidObstaclesPlayer', 'player', \%player_name_obstacles);
 	load_obstacle_blocks_from_config('avoidObstaclesSpell', 'spell', \%area_spell_type_obstacles);
-	load_obstacle_blocks_from_config('avoidObstaclesPortal', 'portal', \%portals_obstacles);
 
 	rebuild_obstacles_from_world();
 }
@@ -323,8 +305,6 @@ sub normalize_identifier {
 
 	if ($type eq 'player') {
 		return lc $identifier;
-	} elsif ($type eq 'portal') {
-		return 'default';
 	}
 
 	return $identifier;
@@ -338,6 +318,18 @@ sub default_obstacle_entry {
 		penalty_dist => 9,
 		danger_dist => 3,
 		drop_target_near => 0,
+		drop_dest_near => 1,
+	);
+}
+
+## Returns the built-in portal obstacle configuration used when portal avoidance is enabled.
+sub default_portal_obstacle_entry {
+	return (
+		enabled => 1,
+		weight => 10000,
+		penalty_dist => 12,
+		danger_dist => 4,
+		drop_target_near => 1,
 		drop_dest_near => 1,
 	);
 }
@@ -420,7 +412,7 @@ sub command_od {
 			scalar keys %mob_nameID_obstacles,
 			scalar keys %player_name_obstacles,
 			scalar keys %area_spell_type_obstacles,
-			scalar keys %portals_obstacles
+			$plugin_settings{enable_avoid_portals} ? 1 : 0
 		), 'info';
 		return;
 	}
@@ -938,7 +930,6 @@ sub sum_all_changes {
 ## Returns the configured obstacle entry for a player, if that player should be avoided.
 sub get_player_obstacle {
 	my ($actor) = @_;
-	return unless $plugin_settings{enable_avoid_players};
 	return unless $actor && defined $actor->{name};
 
 	my $obstacle = $player_name_obstacles{lc $actor->{name}};
@@ -973,7 +964,6 @@ sub on_player_disappeared {
 ## Returns the configured obstacle entry for a monster, if that monster should be avoided.
 sub get_monster_obstacle {
 	my ($actor) = @_;
-	return unless $plugin_settings{enable_avoid_monsters};
 	return unless $actor && defined $actor->{nameID};
 
 	my $obstacle = $mob_nameID_obstacles{$actor->{nameID}};
@@ -1008,7 +998,6 @@ sub on_monster_disappeared {
 ## Returns the configured obstacle entry for an area spell, if that spell type should be avoided.
 sub get_spell_obstacle {
 	my ($spell) = @_;
-	return unless $plugin_settings{enable_avoid_area_spells};
 	return unless $spell && defined $spell->{type};
 
 	my $obstacle = $area_spell_type_obstacles{$spell->{type}};
@@ -1040,11 +1029,9 @@ sub on_areaSpell_disappeared {
 ## Returns the configured obstacle entry for portals when portal avoidance is enabled.
 sub get_portal_obstacle {
 	return unless $plugin_settings{enable_avoid_portals};
-	return unless exists $portals_obstacles{default};
-	return unless defined $portals_obstacles{default};
-	my $obstacle = $portals_obstacles{default};
-	return unless $obstacle && exists $obstacle->{enabled} && $obstacle->{enabled};
-	return $obstacle;
+	my %obstacle = default_portal_obstacle_entry();
+	return \%obstacle if $obstacle{enabled};
+	return;
 }
 
 ## Adds portal obstacles when portals enter view.
