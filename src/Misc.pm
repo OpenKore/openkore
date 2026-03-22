@@ -321,43 +321,55 @@ sub configModify {
 	Plugins::callHook('configModify', {
 		key => $key,
 		val => $val,
+		bulk => 0,
 		additionalOptions => \%args
 	});
 
-	if (!$args{silent} && $key !~ /password/i) {
-		my $oldval = $config{$key};
-		if (!defined $oldval) {
-			$oldval = "not set";
-		}
-
-		if ($config{$key} eq $val) {
-			if ($val) {
-				message TF("Config '%s' is already %s\n", $key, $val), "info";
-			}else{
-				message TF("Config '%s' is already *None*\n", $key), "info";
-			}
-			return;
-		}
-
-		if (!defined $val) {
-			message TF("Config '%s' unset (was %s)\n", $key, $oldval), "info";
-		} else {
-			message TF("Config '%s' set to %s (was %s)\n", $key, $val, $oldval), "info";
-		}
-	}
-	if ($args{autoCreate} && !exists $config{$key}) {
+	my $silent = ($args{silent} || $key =~ /password/i) ? 1 : 0;
+	
+	if (!exists $config{$key}) {
+		return unless ($args{autoCreate});
 		my $f;
 		if (open($f, ">>", Settings::getConfigFilename())) {
 			print $f "$key\n";
 			close($f);
+			unless ($silent) {
+				message TF("Config '%s' autocreated\n", $key), "info";
+				if (!defined $val) {
+					message TF("Config '%s' set to *None*\n", $key), "info";
+				} else {
+					message TF("Config '%s' set to %s\n", $key, $val), "info";
+				}
+			}
+		} else {
+			error TF("Failed to autocreate config key '%s'\n", $key), "info";
+			return;
+		}
+	} elsif (!defined $config{$key}) {
+		if (!defined $val) {
+			message TF("Config '%s' is already *None*\n", $key), "info" unless ($silent);
+			return;
+		} else {
+			message TF("Config '%s' set to %s (was *None*)\n", $key, $val), "info" unless ($silent);
+		}
+	} else {
+		if (!defined $val) {
+			message TF("Config '%s' unset (was %s)\n", $key, $config{$key}), "info" unless ($silent);
+		} elsif ($config{$key} eq $val) {
+			message TF("Config '%s' is already %s\n", $key, $val), "info" unless ($silent);
+			return;
+		} else {
+			message TF("Config '%s' set to %s (was %s)\n", $key, $val, $config{$key}), "info" unless ($silent);
 		}
 	}
+
 	$config{$key} = $val;
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 	
 	Plugins::callHook('post_configModify', {
-		key => $key
+		key => $key,
+		bulk => 0
 	});
 }
 
@@ -374,26 +386,49 @@ sub bulkConfigModify {
 	
 	
 	my %create_keys;
+	my %changed_keys;
 	foreach my $key (keys %{$r_hash}) {
+		my $val = $r_hash->{$key};
 		Plugins::callHook('configModify', {
 			key => $key,
-			val => $r_hash->{$key},
-			silent => $silent
+			val => $val,
+			silent => $silent,
+			bulk => 1
 		});
 
-		$oldval = $config{$key};
+		my $local_silent = ($silent || $key =~ /password/i) ? 1 : 0;
 		
 		if (!exists $config{$key}) {
 			$create_keys{$key} = 1;
-		}
+			unless ($local_silent) {
+				message TF("Config '%s' autocreated\n", $key), "info";
+				if (!defined $val) {
+					message TF("Config '%s' set to *None*\n", $key), "info";
+				} else {
+					message TF("Config '%s' set to %s\n", $key, $val), "info";
+				}
+			}
+		} elsif (!defined $config{$key}) {
+			if (!defined $val) {
+				message TF("Config '%s' is already *None*\n", $key), "info" unless ($local_silent);
+				next;
+			} else {
+				message TF("Config '%s' set to %s (was *None*)\n", $key, $val), "info" unless ($local_silent);
+			}
 
-		$config{$key} = $r_hash->{$key};
-
-		if ($key =~ /password/i) {
-			message TF("Config '%s' set to %s (was *not-displayed*)\n", $key, $r_hash->{$key}), "info" unless ($silent);
 		} else {
-			message TF("Config '%s' set to %s (was %s)\n", $key, $r_hash->{$key}, $oldval), "info" unless ($silent);
+			if (!defined $val) {
+				message TF("Config '%s' unset (was %s)\n", $key, $config{$key}), "info" unless ($local_silent);
+			} elsif ($config{$key} eq $val) {
+				message TF("Config '%s' is already %s\n", $key, $val), "info" unless ($local_silent);
+				next;
+			} else {
+				message TF("Config '%s' set to %s (was %s)\n", $key, $val, $config{$key}), "info" unless ($local_silent);
+			}
 		}
+
+		$changed_keys{$key} = 1;
+		$config{$key} = $val;
 	}
 	
 	if (scalar keys %create_keys > 0) {
@@ -408,7 +443,9 @@ sub bulkConfigModify {
 
 	saveConfigFile();
 	
-	Plugins::callHook('post_configModify');
+	Plugins::callHook('post_bulkConfigModify', {
+		keys => \%changed_keys
+	});
 }
 
 ##

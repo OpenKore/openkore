@@ -97,6 +97,7 @@ Plugins::register(PLUGIN_NAME, 'Enables smart pathing using config-driven dynami
 my $hooks = Plugins::addHooks(
 	['pos_load_config.txt', \&on_config_file_loaded, undef],
 	['post_configModify', \&on_post_config_modify, undef],
+	['post_bulkConfigModify', \&on_post_bulk_config_modify, undef],
 	['PathFindingReset', \&on_PathFindingReset, undef],
 	['route_step', \&on_route_step, undef],
 	['AI_pre/manual', \&on_AI_pre_manual, undef],
@@ -218,6 +219,18 @@ sub is_plugin_config_key {
 	return 0;
 }
 
+## Returns whether a bulk config change set includes any avoidObstacles key.
+sub bulk_includes_plugin_config_keys {
+	my ($keys) = @_;
+
+	return 0 unless $keys;
+	foreach my $key (keys %{$keys}) {
+		return 1 if is_plugin_config_key($key);
+	}
+
+	return 0;
+}
+
 ## Loads flat plugin settings from config.txt, falling back to built-in defaults when missing.
 sub load_settings_from_config {
 	foreach my $key (keys %plugin_settings) {
@@ -284,6 +297,15 @@ sub on_post_config_modify {
 	my (undef, $args) = @_;
 
 	return unless $args && is_plugin_config_key($args->{key});
+	return if $args->{bulk};
+	reload_plugin_configuration();
+}
+
+## Rebuilds plugin settings once after a bulk runtime config update completes.
+sub on_post_bulk_config_modify {
+	my (undef, $args) = @_;
+
+	return unless $args && bulk_includes_plugin_config_keys($args->{keys});
 	reload_plugin_configuration();
 }
 
