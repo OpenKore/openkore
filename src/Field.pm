@@ -472,7 +472,7 @@ sub checkPathFree {
 #
 # Todo this should be used in a lot more places like Task::Route and Follow
 # Can probably be moved to XS-cpp
-sub canMove {
+sub canMove_perl {
 	my ($self, $from, $to) = @_;
 
 	return 0 unless ($self->isWalkable($from->{x}, $from->{y}));
@@ -482,8 +482,10 @@ sub canMove {
 
 	# This value is actually set at
 	# hercules conf\map\battle\client.conf max_walk_path (which is by default 17, can be higher)
-	my $maxWalkPath = $config{maxWalkPathDistance} || 17;
-	if ($dist > $maxWalkPath) {
+	my $maxUnobstructed = $config{maxWalkPathDistance_Unobstructed} || 17;
+	my $maxObstructed = $config{maxWalkPathDistance_Obstructed} || 14;
+
+	if ($dist > $maxUnobstructed) {
 		return 0;
 	}
 
@@ -494,7 +496,7 @@ sub canMove {
 	}
 	
 	# If there are obstacles and the path is walkable the max solution dist acceptable is 14 (double check to save time)
-	if ($dist > 14) {
+	if ($dist > $maxObstructed) {
 		return 0;
 	}
 
@@ -509,12 +511,19 @@ sub canMove {
 
 	# As stated above max walk path for obstructed paths is 14
 	# Pathfinding always returns the original cell in the solution, so remove 1 from it (or compare to 15 (14+1))
-	#$dist_path -= 1;
-	if ($dist_path > 15) {
+	$dist_path -= 1;
+	if ($dist_path > $maxObstructed) {
 		return 0;
 	}
 
 	return 1;
+}
+
+sub canMove {
+	my ($self, $from, $to) = @_;
+	my $maxUnobstructed = $config{maxWalkPathDistance_Unobstructed} || 17;
+	my $maxObstructed = $config{maxWalkPathDistance_Obstructed} || 14;
+	return PathFinding::canMove($from->{x}, $from->{y}, $to->{x}, $to->{y}, TILE_WALK, $self->{width}, $self->{height}, $maxUnobstructed, $maxObstructed, \$self->{rawMap});
 }
 
 ##

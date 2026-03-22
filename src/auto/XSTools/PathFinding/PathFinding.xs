@@ -665,6 +665,37 @@ PathFinding_checkPathFree(istart_x, istart_y, iend_x, iend_y, itile, iwidth, ihe
 	OUTPUT:
 		RETVAL
 
+int
+PathFinding_canMove(istart_x, istart_y, iend_x, iend_y, itile, iwidth, iheight, imaxUnobstructed, imaxObstructed, rawMap)
+		SV * istart_x
+		SV * istart_y
+		SV * iend_x
+		SV * iend_y
+		SV * itile
+		SV * iwidth
+		SV * iheight
+		SV * imaxUnobstructed
+		SV * imaxObstructed
+		SV * rawMap
+
+	CODE:
+		int start_x = (int) SvUV (istart_x);
+		int start_y = (int) SvUV (istart_y);
+		int end_x = (int) SvUV (iend_x);
+		int end_y = (int) SvUV (iend_y);
+		int tile = (int) SvUV (itile);
+		int width = (int) SvUV (iwidth);
+		int height = (int) SvUV (iheight);
+		int maxUnobstructed = (int) SvUV (imaxUnobstructed);
+		int maxObstructed = (int) SvUV (imaxObstructed);
+
+		char * rawMap_data = (char *) SvPVbyte_nolen (SvRV (rawMap));
+
+		RETVAL = canMove_inner(start_x, start_y, end_x, end_y, tile, width, height, maxUnobstructed, maxObstructed, rawMap_data);
+
+	OUTPUT:
+		RETVAL
+
 void
 PathFinding_getSquareEdgesFromCoord(i_x, i_y, iradius, iwidth, iheight, solution_array)
 		SV * i_x

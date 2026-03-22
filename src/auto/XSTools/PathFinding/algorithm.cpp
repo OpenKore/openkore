@@ -629,6 +629,194 @@ checkPathFree_inner(int start_x, int start_y, int end_x, int end_y, int tile, in
 	}
 }
 
+int
+canMove_inner(int start_x, int start_y, int end_x, int end_y, int tile, int width, int height, int maxUnobstructed, int maxObstructed, char * rawMap_data) {
+	if (!checkTile_inner(start_x, start_y, tile, width, height, rawMap_data)) {
+		return 0;
+	}
+	if (!checkTile_inner(end_x, end_y, tile, width, height, rawMap_data)) {
+		return 0;
+	}
+
+	int dist = blockDistance_inner(start_x, start_y, end_x, end_y);
+
+	if (dist > maxUnobstructed) {
+		return 0;
+	}
+
+	if (checkPathFree_inner(start_x, start_y, end_x, end_y, tile, width, height, rawMap_data)) {
+		return 1;
+	}
+
+	// For obstructed paths the acceptable maximum is 14 moves (15 cells including the start cell).
+	if (dist > maxObstructed) {
+		return 0;
+	}
+
+	// Build the same dynamic search box used by Utils::get_client_solution().
+	int dx = start_x - end_x;
+	if (dx < 0) dx = -dx;
+	int dy = start_y - end_y;
+	if (dy < 0) dy = -dy;
+	int margin = 8 + ((dx > dy) ? dx : dy);
+
+	int min_x = ((start_x < end_x) ? start_x : end_x) - margin;
+	int max_x = ((start_x > end_x) ? start_x : end_x) + margin;
+	int min_y = ((start_y < end_y) ? start_y : end_y) - margin;
+	int max_y = ((start_y > end_y) ? start_y : end_y) + margin;
+
+	if (min_x < 0) min_x = 0;
+	if (min_y < 0) min_y = 0;
+	if (max_x >= width) max_x = width - 1;
+	if (max_y >= height) max_y = height - 1;
+
+	int local_width = max_x - min_x + 1;
+	int local_height = max_y - min_y + 1;
+	int total_nodes = local_width * local_height;
+
+	int *g_score = (int *) malloc(total_nodes * sizeof(int));
+	int *steps = (int *) malloc(total_nodes * sizeof(int));
+	int *open_list = (int *) malloc(total_nodes * sizeof(int));
+	unsigned char *state = (unsigned char *) malloc(total_nodes * sizeof(unsigned char));
+
+	if (!g_score || !steps || !open_list || !state) {
+		if (g_score) free(g_score);
+		if (steps) free(steps);
+		if (open_list) free(open_list);
+		if (state) free(state);
+		return 0;
+	}
+
+	const int largeValue = 0x3FFFFFFF;
+	int i;
+	for (i = 0; i < total_nodes; i++) {
+		g_score[i] = largeValue;
+		steps[i] = largeValue;
+		state[i] = NONE;
+	}
+
+	int start_local_x = start_x - min_x;
+	int start_local_y = start_y - min_y;
+	int end_local_x = end_x - min_x;
+	int end_local_y = end_y - min_y;
+	int start_index = (start_local_y * local_width) + start_local_x;
+	int end_index = (end_local_y * local_width) + end_local_x;
+
+	int open_size = 0;
+	g_score[start_index] = 0;
+	steps[start_index] = 0;
+	open_list[open_size++] = start_index;
+	state[start_index] = OPEN;
+
+	short dir_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
+	short dir_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
+
+	while (open_size > 0) {
+		int best_open_pos = 0;
+		int current_index = open_list[0];
+		int current_local_x = current_index % local_width;
+		int current_local_y = current_index / local_width;
+		int current_global_x = current_local_x + min_x;
+		int current_global_y = current_local_y + min_y;
+		int current_f = g_score[current_index] +
+			heuristic_cost_estimate(current_global_x, current_global_y, end_x, end_y, 1);
+
+		for (i = 1; i < open_size; i++) {
+			int candidate_index = open_list[i];
+			int candidate_local_x = candidate_index % local_width;
+			int candidate_local_y = candidate_index / local_width;
+			int candidate_global_x = candidate_local_x + min_x;
+			int candidate_global_y = candidate_local_y + min_y;
+			int candidate_f = g_score[candidate_index] +
+				heuristic_cost_estimate(candidate_global_x, candidate_global_y, end_x, end_y, 1);
+
+			if (candidate_f < current_f ||
+				(candidate_f == current_f && g_score[candidate_index] < g_score[current_index])) {
+				best_open_pos = i;
+				current_index = candidate_index;
+				current_local_x = candidate_local_x;
+				current_local_y = candidate_local_y;
+				current_global_x = candidate_global_x;
+				current_global_y = candidate_global_y;
+				current_f = candidate_f;
+			}
+		}
+
+		open_size--;
+		open_list[best_open_pos] = open_list[open_size];
+		state[current_index] = CLOSED;
+
+		if (current_index == end_index) {
+			int result = (steps[current_index] <= maxObstructed) ? 1 : 0;
+			free(g_score);
+			free(steps);
+			free(open_list);
+			free(state);
+			return result;
+		}
+
+		if (steps[current_index] >= maxObstructed) {
+			continue;
+		}
+
+		for (i = 0; i < 8; i++) {
+			int neighbor_global_x = current_global_x + dir_x[i];
+			int neighbor_global_y = current_global_y + dir_y[i];
+
+			if (neighbor_global_x < min_x || neighbor_global_x > max_x ||
+				neighbor_global_y < min_y || neighbor_global_y > max_y) {
+				continue;
+			}
+
+			if (!checkTile_inner(neighbor_global_x, neighbor_global_y, tile, width, height, rawMap_data)) {
+				continue;
+			}
+
+			if (i >= 4) {
+				if (!checkTile_inner(current_global_x + dir_x[i], current_global_y, tile, width, height, rawMap_data) ||
+					!checkTile_inner(current_global_x, current_global_y + dir_y[i], tile, width, height, rawMap_data)) {
+					continue;
+				}
+			}
+
+			int neighbor_local_x = neighbor_global_x - min_x;
+			int neighbor_local_y = neighbor_global_y - min_y;
+			int neighbor_index = (neighbor_local_y * local_width) + neighbor_local_x;
+			int tentative_steps = steps[current_index] + 1;
+
+			if (tentative_steps > maxObstructed) {
+				continue;
+			}
+
+			int tentative_g = g_score[current_index] + ((i >= 4) ? 14 : 10);
+
+			if (state[neighbor_index] == CLOSED &&
+				tentative_g >= g_score[neighbor_index] &&
+				tentative_steps >= steps[neighbor_index]) {
+				continue;
+			}
+
+			if (tentative_g < g_score[neighbor_index] ||
+				(tentative_g == g_score[neighbor_index] && tentative_steps < steps[neighbor_index]) ||
+				state[neighbor_index] == NONE) {
+				g_score[neighbor_index] = tentative_g;
+				steps[neighbor_index] = tentative_steps;
+
+				if (state[neighbor_index] != OPEN) {
+					open_list[open_size++] = neighbor_index;
+					state[neighbor_index] = OPEN;
+				}
+			}
+		}
+	}
+
+	free(g_score);
+	free(steps);
+	free(open_list);
+	free(state);
+	return 0;
+}
+
 int *
 getSquareEdgesFromCoord_inner (int x, int y, int radius, int width, int height)
 {

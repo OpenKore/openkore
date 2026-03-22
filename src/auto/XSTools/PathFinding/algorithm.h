@@ -88,6 +88,8 @@ int canAttack_inner (int start_x, int start_y, int end_x, int end_y, int tile, i
 
 int checkPathFree_inner (int start_x, int start_y, int end_x, int end_y, int tile, int width, int height, char * rawMap_data);
 
+int canMove_inner (int start_x, int start_y, int end_x, int end_y, int tile, int width, int height, int maxUnobstructed, int maxObstructed, char * rawMap_data);
+
 int * getSquareEdgesFromCoord_inner (int x, int y, int radius, int width, int height);
 
 int blockDistance_inner (int start_x, int start_y, int end_x, int end_y);
