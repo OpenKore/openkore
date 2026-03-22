@@ -1251,12 +1251,18 @@ sub processStartAutoStorageBuySell {
 sub processAutoStorage {
 	# storageAuto - chobit aska 20030128
 	if (AI::action() eq "storageAuto" && AI::args()->{done}) {
+		undef $timeout{ai_storageAuto_wait_before_action}{time};
 		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
+		
+		message T("Auto-storage sequence completed.\n"), "success";
+		
 		my $forcedBySell = AI::args()->{forcedBySell};
 		my $forcedByBuy = AI::args()->{forcedByBuy};
-
-		undef $timeout{ai_storageAuto_wait_before_action}{time};
 		AI::dequeue();
+
+		my %plugin_args = ( return => 0, forcedBySell => $forcedBySell, forcedByBuy => $forcedByBuy );
+		Plugins::callHook('AI_storage_auto_completed' => \%plugin_args);
+		return if ($plugin_args{return});
 
 		if ($config{sellAuto} && ai_sellAutoCheck()) {
 			if ($forcedByBuy) {
@@ -1689,6 +1695,10 @@ sub processAutoSell {
 		my $forcedByStorage = AI::args()->{'forcedByStorage'};
 		AI::dequeue();
 
+		my %plugin_args = ( return => 0, forcedByBuy => $forcedByBuy, forcedByStorage => $forcedByStorage );
+		Plugins::callHook('AI_sell_auto_completed' => \%plugin_args);
+		return if ($plugin_args{return});
+
 		if ($forcedByStorage) {
 			AI::queue("buyAuto", {forcedByStorage => 1});
 			Plugins::callHook('AI_buy_auto_queued');
@@ -1845,61 +1855,6 @@ sub processAutoSell {
 	}
 }
 
-sub processStartAutoBuy {
-	return if ($shopstarted || $buyershopstarted);
-
-	return unless (timeOut($timeout{'ai_buyAuto'}));
-	$timeout{'ai_buyAuto'}{'time'} = time;
-
-	return if ($ai_v{sitAuto_forcedBySitCommand} || !$char->inventory->isReady());
-
-	return unless (ai_canStartStorageSellBuy());
-
-	my %plugin_args = ( return => 0 );
-	Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
-	return if ($plugin_args{return});
-
-	my $needitem;
-	undef $ai_v{'temp'}{'found'};
-	for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-		next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-		my $amount;
-		if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
-			$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
-		}
-		else {
-			$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
-		}
-		if (
-			$config{"buyAuto_$i"."_minAmount"} ne "" &&
-			$config{"buyAuto_$i"."_maxAmount"} ne "" &&
-			(checkSelfCondition("buyAuto_$i")) &&
-			$amount <= $config{"buyAuto_$i"."_minAmount"} &&
-			$amount < $config{"buyAuto_$i"."_maxAmount"}
-		) {
-			$ai_v{'temp'}{'found'} = 1;
-			my $bai = $config{"buyAuto_$i"};
-			if ($needitem eq "") {
-				$needitem = "$bai";
-			} else {
-				$needitem = "$needitem, $bai";
-			}
-		}
-	}
-
-	return unless ($ai_v{'temp'}{'found'});
-
-	my %plugin_args = ( return => 0, needitem => $needitem );
-	Plugins::callHook('AI_buy_auto_needitem' => \%plugin_args);
-	unless ($plugin_args{return}) {
-		message TF("Auto-buying due to insufficient %s\n", $needitem);
-		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
-		AI::queue("buyAuto");
-		Plugins::callHook('AI_buy_auto_queued');
-	}
-}
-
-
 #####AUTO BUY#####
 sub processAutoBuy {
 	return if ($shopstarted || $buyershopstarted);
@@ -1908,13 +1863,16 @@ sub processAutoBuy {
 		if (exists AI::args()->{'error'}) {
 			error AI::args()->{'error'}.".\n";
 		}
+		message T("Auto-buy sequence completed.\n"), "success";
 
 		# buyAuto finished
 		my $forcedBySell = AI::args()->{'forcedBySell'};
 		my $forcedByStorage = AI::args()->{'forcedByStorage'};
-
 		AI::dequeue();
-		Plugins::callHook('AI_buy_auto_done');
+
+		my %plugin_args = ( return => 0, forcedBySell => $forcedBySell, forcedByStorage => $forcedByStorage );
+		Plugins::callHook('AI_buy_auto_completed' => \%plugin_args);
+		return if ($plugin_args{return});
 
 		if ($forcedBySell && $config{storageAuto}) {
 			AI::queue("storageAuto", {forcedBySell => 1});
