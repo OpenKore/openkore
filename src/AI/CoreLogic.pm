@@ -145,8 +145,10 @@ sub iterate {
 	processStartAutoStorage();
 	processAutoStorage();
 	Misc::checkValidity("AI (autostorage)");
+	processStartAutoSell();
 	processAutoSell();
 	Misc::checkValidity("AI (autosell)");
+	processStartAutoBuy();
 	processAutoBuy();
 	Misc::checkValidity("AI (autobuy)");
 	processAutoCart();
@@ -1248,7 +1250,7 @@ sub processStartAutoStorage {
 
 	return unless ($config{'storageAuto_npc'} ne "" || $config{'storageAuto_useChatCommand'} || $config{'storageAuto_useItem'});
 
-	return unless (ai_canStartStorage());
+	return unless (ai_canStartStorageSellBuy());
 
 	my $storageAutoOnStart = $config{'storageAuto_onStart'} && !$char->storage->wasOpenedThisSession();
 	if ($storageAutoOnStart) {
@@ -1783,33 +1785,40 @@ sub processAutoStorage {
 	}
 }
 
+sub processStartAutoSell {
+	return if ($shopstarted || $buyershopstarted);
+
+	return if ($ai_v{sitAuto_forcedBySitCommand} || !$char->inventory->isReady());
+
+	return unless ($config{'sellAuto'});
+	return unless ($config{'sellAuto_npc'} ne "");
+
+	return unless (ai_canStartStorageSellBuy());
+	
+	my @reasons;
+
+	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'});
+	push(@reasons, 'itemsMaxWeight') if ($weightLimitReached);
+
+	my $itemNumLimitReached = ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'});
+	push(@reasons, 'itemsMaxNum') if ($itemNumLimitReached);
+
+	if (scalar @reasons && ai_sellAutoCheck()) {
+		my %plugin_args = ( return => 0, reasons => \@reasons );
+		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
+		unless ($plugin_args{return}) {
+			message TF("Auto-selling due to %s\n", join('|', @reasons));
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			AI::queue("sellAuto");
+			Plugins::callHook('AI_sell_auto_queued');
+			$timeout{'ai_sellAuto'}{'time'} = time;
+		}
+	}
+}
+
 #####AUTO SELL#####
 sub processAutoSell {
 	return if ($shopstarted || $buyershopstarted);
-	if ((AI::isIdle() || AI::action() eq "route" || AI::action() eq "sitAuto" || AI::action() eq "follow")
-		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-			|| ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'})
-			|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-			)
-	    && !AI::inQueue("storageAuto")
-	    && !AI::inQueue("buyAuto")
-		&& $config{'sellAuto'}
-		&& $config{'sellAuto_npc'} ne ""
-		&& !$ai_v{sitAuto_forcedBySitCommand}
-	  ) {
-		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
-		return if ($plugin_args{return});
-		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && ai_sellAutoCheck()) {
-			AI::queue("sellAuto");
-			Plugins::callHook('AI_sell_auto_queued');
-		}
-	}
-
 	if (AI::action() eq "sellAuto" && AI::args()->{'done'}) {
 
 		if (exists AI::args()->{'error'}) {
@@ -1977,59 +1986,64 @@ sub processAutoSell {
 	}
 }
 
+sub processStartAutoBuy {
+	return if ($shopstarted || $buyershopstarted);
+
+	return unless (timeOut($timeout{'ai_buyAuto'}));
+	$timeout{'ai_buyAuto'}{'time'} = time;
+
+	return if ($ai_v{sitAuto_forcedBySitCommand} || !$char->inventory->isReady());
+
+	return unless (ai_canStartStorageSellBuy());
+
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
+	return if ($plugin_args{return});
+
+	my $needitem;
+	undef $ai_v{'temp'}{'found'};
+	for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
+		next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
+		my $amount;
+		if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+			$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
+		}
+		else {
+			$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
+		}
+		if (
+			$config{"buyAuto_$i"."_minAmount"} ne "" &&
+			$config{"buyAuto_$i"."_maxAmount"} ne "" &&
+			(checkSelfCondition("buyAuto_$i")) &&
+			$amount <= $config{"buyAuto_$i"."_minAmount"} &&
+			$amount < $config{"buyAuto_$i"."_maxAmount"}
+		) {
+			$ai_v{'temp'}{'found'} = 1;
+			my $bai = $config{"buyAuto_$i"};
+			if ($needitem eq "") {
+				$needitem = "$bai";
+			} else {
+				$needitem = "$needitem, $bai";
+			}
+		}
+	}
+
+	return unless ($ai_v{'temp'}{'found'});
+
+	my %plugin_args = ( return => 0, needitem => $needitem );
+	Plugins::callHook('AI_buy_auto_needitem' => \%plugin_args);
+	unless ($plugin_args{return}) {
+		message TF("Auto-buying due to insufficient %s\n", $needitem);
+		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+		AI::queue("buyAuto");
+		Plugins::callHook('AI_buy_auto_queued');
+	}
+}
+
+
 #####AUTO BUY#####
 sub processAutoBuy {
 	return if ($shopstarted || $buyershopstarted);
-	my $needitem;
-	if (
-		 (AI::isIdle() || AI::action() eq "route" || AI::action() eq "follow")
-	  && timeOut($timeout{'ai_buyAuto'})
-	  && $char->inventory->isReady()
-	  && !AI::inQueue("sellAuto")
-	  && !AI::inQueue("storageAuto")
-	) {
-		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
-		return if ($plugin_args{return});
-
-		undef $ai_v{'temp'}{'found'};
-
-		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-			my $amount;
-			if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
-				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
-			}
-			else {
-				$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
-			}
-			if (
-				$config{"buyAuto_$i"."_minAmount"} ne "" &&
-				$config{"buyAuto_$i"."_maxAmount"} ne "" &&
-				(checkSelfCondition("buyAuto_$i")) &&
-				$amount <= $config{"buyAuto_$i"."_minAmount"} &&
-				$amount < $config{"buyAuto_$i"."_maxAmount"}
-			) {
-				$ai_v{'temp'}{'found'} = 1;
-				my $bai = $config{"buyAuto_$i"};
-				if ($needitem eq "") {
-					$needitem = "$bai";
-				} else {
-					$needitem = "$needitem, $bai";
-				}
-			}
-		}
-		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && AI::findAction("buyAuto")) && $ai_v{'temp'}{'found'}) {
-			AI::queue("buyAuto");
-			Plugins::callHook('AI_buy_auto_queued');
-		}
-		$timeout{'ai_buyAuto'}{'time'} = time;
-	}
-
 	if (AI::action() eq "buyAuto" && AI::args()->{'done'}) {
 
 		if (exists AI::args()->{'error'}) {
@@ -2166,29 +2180,22 @@ sub processAutoBuy {
 					undef $args->{warpedToSave};
 				}
 
-				my $msgneeditem;
 				if (shouldUseWarpToSaveMapForBuyOrSell($args)) {
 					if ($char->{sitting}) {
-						message T($msgneeditem."Standing up to auto-buy\n"), "teleport";
+						message T("Standing up to auto-buy\n"), "teleport";
 						ai_setSuspend(0);
 						stand();
 					} else {
 						$args->{warpedToSave} = 1;
-						if ($needitem ne "") {
-							$msgneeditem = "Auto-buy: $needitem\n";
-						}
 						# If we still haven't warped after a certain amount of time, fallback to walking
 						$args->{warpStart} = time unless $args->{warpStart};
-						message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
+						message T("Teleporting to auto-buy\n"), "teleport";
 						ai_useTeleport(2);
 					}
 					$timeout{ai_buyAuto_wait}{time} = time;
 
 				} else {
-					if ($needitem ne "") {
-						$msgneeditem = "Auto-buy: $needitem\n";
-					}
-					message TF($msgneeditem."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
+					message TF("Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 						attackOnRoute => 1,
 						distFromGoal => $args->{distance});

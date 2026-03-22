@@ -54,7 +54,7 @@ our @EXPORT = (
 	ai_useTeleport
 	ai_storageAutoCheck
 	ai_canOpenStorage
-	ai_canStartStorage
+	ai_canStartStorageSellBuy
 	cartGet
 	cartAdd
 	ai_talkNPC
@@ -679,11 +679,15 @@ sub ai_canOpenStorage {
 }
 
 ##
-# ai_canStartStorage()
+# ai_canStartStorageSellBuy()
 #
 # Returns 1 if the AI queue allows storage
 # Returns 0 otherwise.
-sub ai_canStartStorage {
+sub ai_canStartStorageSellBuy {
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('ai_canStartStorageSellBuy' => \%plugin_args);
+	return 0 if ($plugin_args{return});
+
 	return 1 if (AI::isIdle());
 	return 0 if (AI::inQueue("storageAuto", "buyAuto", "sellAuto", "teleport", "NPC", "skill_use", "eventMacro"));
 	
