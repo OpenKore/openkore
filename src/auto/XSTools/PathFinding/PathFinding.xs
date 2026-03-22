@@ -679,6 +679,62 @@ PathFinding_canMove(istart_x, istart_y, iend_x, iend_y, itile, iwidth, iheight, 
 		SV * rawMap
 
 	CODE:
+		/* Check for any missing arguments */
+		if (!istart_x || !istart_y || !iend_x || !iend_y || !itile || !iwidth || !iheight || !imaxUnobstructed || !imaxObstructed || !rawMap) {
+			printf("[pathfinding canMove error] missing argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(iwidth) || SvTYPE(iwidth) >= SVt_PVAV || !SvOK(iwidth)) {
+			printf("[pathfinding canMove error] bad width argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(iheight) || SvTYPE(iheight) >= SVt_PVAV || !SvOK(iheight)) {
+			printf("[pathfinding canMove error] bad iheight argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(istart_x) || SvTYPE(istart_x) >= SVt_PVAV || !SvOK(istart_x)) {
+			printf("[pathfinding canMove error] bad istart_x argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(istart_y) || SvTYPE(istart_y) >= SVt_PVAV || !SvOK(istart_y)) {
+			printf("[pathfinding canMove error] bad istart_y argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(iend_x) || SvTYPE(iend_x) >= SVt_PVAV || !SvOK(iend_x)) {
+			printf("[pathfinding canMove error] bad iend_x argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(iend_y) || SvTYPE(iend_y) >= SVt_PVAV || !SvOK(iend_y)) {
+			printf("[pathfinding canMove error] bad iend_y argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(itile) || SvTYPE(itile) >= SVt_PVAV || !SvOK(itile)) {
+			printf("[pathfinding canMove error] bad itile argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(imaxUnobstructed) || SvTYPE(imaxUnobstructed) >= SVt_PVAV || !SvOK(imaxUnobstructed)) {
+			printf("[pathfinding canMove error] bad imaxUnobstructed argument\n");
+			XSRETURN_NO;
+		}
+
+		if (SvROK(imaxObstructed) || SvTYPE(imaxObstructed) >= SVt_PVAV || !SvOK(imaxObstructed)) {
+			printf("[pathfinding canMove error] bad imaxObstructed argument\n");
+			XSRETURN_NO;
+		}
+
+		if (!SvROK(rawMap) || !SvOK(rawMap)) {
+			printf("[pathfinding canMove error] bad rawMap argument\n");
+			XSRETURN_NO;
+		}
+		
 		int start_x = (int) SvUV (istart_x);
 		int start_y = (int) SvUV (istart_y);
 		int end_x = (int) SvUV (iend_x);
@@ -687,11 +743,65 @@ PathFinding_canMove(istart_x, istart_y, iend_x, iend_y, itile, iwidth, iheight, 
 		int width = (int) SvUV (iwidth);
 		int height = (int) SvUV (iheight);
 		int maxUnobstructed = (int) SvUV (imaxUnobstructed);
-		int maxObstructed = (int) SvUV (imaxObstructed);
-
+		long maxObstructed = (int) SvUV (imaxObstructed);
 		char * rawMap_data = (char *) SvPVbyte_nolen (SvRV (rawMap));
+		
+		int firstPass = canMove_inner_firstPass(start_x, start_y, end_x, end_y, tile, width, height, maxUnobstructed, maxObstructed, rawMap_data);
+		if (firstPass < 2) {
+			RETVAL = firstPass;
+		} else {
+			PathFinding session = CalcPath_new ();
 
-		RETVAL = canMove_inner(start_x, start_y, end_x, end_y, tile, width, height, maxUnobstructed, maxObstructed, rawMap_data);
+			session->map_base_weight = rawMap_data;
+
+			session->width = width;
+			session->height = height;
+
+			int dx = start_x - end_x;
+			if (dx < 0) dx = -dx;
+			int dy = start_y - end_y;
+			if (dy < 0) dy = -dy;
+			int margin = 8 + ((dx > dy) ? dx : dy);
+
+			int min_x = ((start_x < end_x) ? start_x : end_x) - margin;
+			int max_x = ((start_x > end_x) ? start_x : end_x) + margin;
+			int min_y = ((start_y < end_y) ? start_y : end_y) - margin;
+			int max_y = ((start_y > end_y) ? start_y : end_y) + margin;
+
+			session->startX = start_x;
+			session->startY = start_y;
+			session->endX = end_x;
+			session->endY = end_y;
+
+			session->min_x = min_x;
+			session->max_x = max_x;
+			session->min_y = min_y;
+			session->max_y = max_y;
+
+			srand(time(0));
+			session->randomFactor = 0;
+			session->useManhattan = 1;
+			session->avoidWalls = 0;
+			session->customWeights = 0;
+			session->time_max = 1500;
+
+			CalcPath_init(session);
+
+			int status = CalcPath_pathStep_fast (session, tile);
+
+			if (status < 0) {
+				RETVAL = 0;
+			} else {
+				int size = (int) session->solution_size;
+
+				if (size > maxObstructed) {
+					RETVAL = 0;
+				} else {
+					RETVAL = 1;
+				}
+			}
+			CalcPath_destroy (session);
+		}
 
 	OUTPUT:
 		RETVAL

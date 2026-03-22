@@ -122,7 +122,12 @@ sub run_benchmark {
 	my $total_rows = scalar @row_definitions;
 	my $seed = int(time * 1_000_000) ^ $$;
 	my $measurement_order_counter = 0;
+
+	warning sprintf("[%s] Testing original callback: %s\n", PLUGIN_NAME, $benchmark->original_name());
 	my $original_sub = $benchmark->original_callback();
+
+
+	warning sprintf("[%s] Testing candidate callback: %s\n", PLUGIN_NAME, $benchmark->candidate_name());
 	my $candidate_sub = $benchmark->candidate_callback();
 
 	srand($seed);

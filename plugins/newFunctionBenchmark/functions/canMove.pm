@@ -16,8 +16,8 @@ use constant {
 };
 
 sub benchmark_name { 'Field::canMove' }
-sub original_name { resolve_original_name() }
-sub candidate_name { resolve_candidate_name() }
+sub original_name { 'Field::canMove_perl' }
+sub candidate_name { 'Field::canMove' }
 sub default_iterations { DEFAULT_ITERATIONS }
 sub samples_per_scenario { SAMPLES_PER_SCENARIO }
 sub token_length { TOKEN_LENGTH }
@@ -49,21 +49,11 @@ sub applicable_scenarios {
 }
 
 sub original_callback {
-	for my $name (qw(canMove_perl canMove)) {
-		my $callback = Field->can($name);
-		return $callback if $callback;
-	}
-
-	return;
+	return resolve_field_method('canMove_perl');
 }
 
 sub candidate_callback {
-	for my $name (qw(canMove_xscpp canMoveXSCPP canMove_cpp canMoveCPP canMove_new canMoveNew)) {
-		my $callback = Field->can($name);
-		return $callback if $callback;
-	}
-
-	return;
+	return resolve_field_method('canMove');
 }
 
 sub snapshot_state {
@@ -132,21 +122,25 @@ sub measure_case_pair {
 	return ($elapsed_original, $elapsed_candidate, scalar @{$targets_ref});
 }
 
-sub resolve_original_name {
-	for my $name (qw(canMove_perl)) {
-		return "Field::$name" if Field->can($name);
-	}
-}
-
-sub resolve_candidate_name {
-	for my $name (qw(canMove)) {
-		return "Field::$name" if Field->can($name);
-	}
-}
-
 sub current_field {
 	die "canMove benchmark requires a loaded field.\n" if !defined $field;
 	return $field;
+}
+
+sub resolve_field_method {
+	my ($method_name) = @_;
+	return if !$method_name;
+
+	my $field_method = Field->can($method_name);
+	return $field_method if $field_method;
+
+	if (defined $field) {
+		my $object_method = $field->can($method_name);
+		return $object_method if $object_method;
+	}
+
+	no strict 'refs';
+	return *{"Field::$method_name"}{CODE};
 }
 
 sub current_from {
@@ -209,6 +203,7 @@ sub validate_methods_match {
 		my $original = $original_sub->($live_field, $from, $to) ? 1 : 0;
 		my $candidate = $candidate_sub->($live_field, $from, $to) ? 1 : 0;
 		if ($original != $candidate) {
+			debugall($live_field, $from, $to);
 			die sprintf(
 				"canMove benchmark mismatch at target %d on map %s. from=(%d,%d) to=(%d,%d) perl=%d candidate=%d\n",
 				$index,
@@ -223,6 +218,76 @@ sub validate_methods_match {
 		}
 		$index++;
 	}
+}
+
+sub debugall {
+	my ($self, $from, $to) = @_;
+	Log::warning "[debugall] start from [$from->{x} $from->{y}] to [$to->{x} $to->{y}]\n";
+	
+
+	unless ($self->isWalkable($from->{x}, $from->{y})) {
+		Log::error "[debugall] Failed at isWalkable from\n";
+		return 0;
+	}
+	unless ($self->isWalkable($to->{x}, $to->{y})) {
+		Log::error "[debugall] Failed at isWalkable to\n";
+		return 0;
+	}
+
+	my $dist = blockDistance($from, $to);
+
+	# This value is actually set at
+	# hercules conf\map\battle\client.conf max_walk_path (which is by default 17, can be higher)
+	my $maxUnobstructed = $config{maxWalkPathDistance_Unobstructed} || 17;
+	my $maxObstructed = $config{maxWalkPathDistance_Obstructed} || 14;
+
+	Log::warning "[debugall] dist $dist\n";
+	Log::warning "[debugall] maxUnobstructed $maxUnobstructed\n";
+	Log::warning "[debugall] maxObstructed $maxObstructed\n";
+
+	if ($dist > $maxUnobstructed) {
+		Log::error "[debugall] Failed at maxUnobstructed (dist > maxUnobstructed)\n";
+		return 0;
+	}
+
+	# Actually uses CheckLos at rathena - TODO: check which is better, both work
+	# If there are no obstacles return success
+	if ($self->checkPathFree($from, $to)) {
+		Log::error "[debugall] passed checkPathFree\n";
+		return 1;
+	} else {
+		Log::warning "[debugall] did not pass checkPathFree, so we are obstructed\n";
+	}
+	
+	# If there are obstacles and the path is walkable the max solution dist acceptable is 14 (double check to save time)
+	if ($dist > $maxObstructed) {
+		Log::error "[debugall] Failed at maxObstructed (dist > maxObstructed)\n";
+		return 0;
+	}
+
+	# Rathena: // Official number of walkable cells is 14 if and only if there is an obstacle between.
+	# If there are obstacles and OFFICIAL_WALKPATH is defined (which is by default) then calculate a client pathfinding
+	my $solution = Utils::get_client_solution($self, $from, $to);
+	my $dist_path = scalar @{$solution};
+	Log::warning "[debugall] dist_path $dist_path\n";
+
+	if ($dist_path == 0) {
+		Log::error "[debugall] Failed at dist_path (dist_path is 0)\n";
+		return 0;
+	}
+
+	# As stated above max walk path for obstructed paths is 14
+	# Pathfinding always returns the original cell in the solution, so remove 1 from it (or compare to 15 (14+1))
+	$dist_path -= 1;
+	Log::warning "[debugall] dist_path after reduction $dist_path\n";
+	if ($dist_path > $maxObstructed) {
+		Log::error "[debugall] Failed at dist_path (dist_path > maxObstructed) printing solution\n";
+		Log::warning Data::Dumper::Dumper $solution;
+		return 0;
+	}
+
+	Log::warning "[debugall] passed\n";
+	return 1;
 }
 
 1;
