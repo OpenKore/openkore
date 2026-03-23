@@ -123,7 +123,7 @@ my $obstacle_hooks = Plugins::addHooks(
 );
 
 my $mobhooks = Plugins::addHooks(
-	['AI::Attack::process', \&on_getBestTarget, undef],
+	['shouldDropTarget', \&on_shouldDropTarget, undef],
 	['getBestTarget', \&on_getBestTarget, undef],
 );
 
@@ -583,33 +583,57 @@ sub on_packet_mapChange {
 	rebuild_static_cell_obstacles_for_current_map();
 }
 
-## Blocks targets that are too close to configured obstacles and releases them once the danger is gone.
-sub on_getBestTarget {
-	my ($hook, $args) = @_;
-	return unless $args->{target};
-	return unless $field;
+## Returns whether a target is close enough to an obstacle that it should be dropped.
+sub should_drop_target_from_obstacle {
+	my ($hook, $target, $drop_string) = @_;
+	return 0 unless $target;
+	return 0 unless $field;
 
-	my $target = $args->{target};
 	my $targetPos = calcPosFromPathfinding($field, $target);
-	return unless $targetPos;
+	return 0 unless $targetPos;
 
 	my $is_dropped = isTargetDroppedObstacle($target);
-	my $drop_string = ($hook eq 'AI::Attack::process') ? 'Dropping' : 'Not picking';
 	my $obstacle = is_there_an_obstacle_near_pos($targetPos, 1);
 	if ($obstacle) {
 		warning "[" . PLUGIN_NAME . "] [$hook] $drop_string target $target because there is an obstacle nearby.\n" if !$is_dropped;
-		if ($hook eq 'AI::Attack::process') {
-			AI::dequeue() while AI::inQueue('attack');
-		}
 		$target->{attackFailedObstacle} = 1;
-		$args->{return} = 1;
-		return;
+		return 1;
 	}
 
 	if ($is_dropped) {
 		warning "[" . PLUGIN_NAME . "] [$hook] Releasing target $target from obstacle block.\n";
 		$target->{attackFailedObstacle} = 0;
 	}
+
+	return 0;
+}
+
+## Blocks the currently attacked target when it moves too close to a configured obstacle.
+sub on_shouldDropTarget {
+	my ($hook, $args) = @_;
+	return unless $args->{target};
+
+	if (should_drop_target_from_obstacle($hook, $args->{target}, 'Dropping')) {
+		$args->{return} = 1;
+	}
+}
+
+## Removes obstacle-blocked entries from `possibleTargets` before the core target picker scores them.
+sub on_getBestTarget {
+	my ($hook, $args) = @_;
+	return unless $args->{possibleTargets} && ref $args->{possibleTargets} eq 'ARRAY';
+
+	my @filtered_targets;
+	foreach my $target_ID (@{ $args->{possibleTargets} }) {
+		my $target = $monsters{$target_ID};
+		if ($target && should_drop_target_from_obstacle($hook, $target, 'Not picking')) {
+			next;
+		}
+
+		push @filtered_targets, $target_ID;
+	}
+
+	@{ $args->{possibleTargets} } = @filtered_targets;
 }
 
 ## Returns whether a target was previously rejected because of nearby obstacles.

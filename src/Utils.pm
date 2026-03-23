@@ -38,7 +38,7 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
+	qw(getLimits get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
 	calcPosFromTime calcTime calcPosition
 	checkMovementDirection
 	distance blockDistance specifiedBlockDistance adjustedBlockDistance getClientDist canAttack
@@ -69,6 +69,33 @@ use constant {
 ################################
 ################################
 
+
+sub getLimits {
+	my ($field, $pos, $pos_to) = @_;
+
+	return unless $field && $pos && $pos_to;
+	return unless defined $pos->{x} && defined $pos->{y};
+	return unless defined $pos_to->{x} && defined $pos_to->{y};
+
+	# Build a dynamic search box that always includes both start and dest.
+	my $dx = abs($pos->{x} - $pos_to->{x});
+	my $dy = abs($pos->{y} - $pos_to->{y});
+	my $margin = 8 + (($dx > $dy) ? $dx : $dy);
+
+	my $min_x = ($pos->{x} < $pos_to->{x} ? $pos->{x} : $pos_to->{x}) - $margin;
+	my $max_x = ($pos->{x} > $pos_to->{x} ? $pos->{x} : $pos_to->{x}) + $margin;
+	my $min_y = ($pos->{y} < $pos_to->{y} ? $pos->{y} : $pos_to->{y}) - $margin;
+	my $max_y = ($pos->{y} > $pos_to->{y} ? $pos->{y} : $pos_to->{y}) + $margin;
+
+	# Clamp to field bounds
+	$min_x = 0 if $min_x < 0;
+	$min_y = 0 if $min_y < 0;
+	$max_x = $field->width  - 1 if $max_x >= $field->width;
+	$max_y = $field->height - 1 if $max_y >= $field->height;
+
+	return ($min_x, $max_x, $min_y, $max_y);
+}
+
 ##
 # get_client_solution(field, pos, pos_to)
 #
@@ -93,21 +120,7 @@ sub get_client_solution {
 	return $solution unless $field->isWalkable($pos->{x},    $pos->{y});
 	return $solution unless $field->isWalkable($pos_to->{x}, $pos_to->{y});
 
-	# Build a dynamic search box that always includes both start and dest.
-	my $dx = abs($pos->{x} - $pos_to->{x});
-	my $dy = abs($pos->{y} - $pos_to->{y});
-	my $margin = 8 + (($dx > $dy) ? $dx : $dy);
-
-	my $min_x = ($pos->{x} < $pos_to->{x} ? $pos->{x} : $pos_to->{x}) - $margin;
-	my $max_x = ($pos->{x} > $pos_to->{x} ? $pos->{x} : $pos_to->{x}) + $margin;
-	my $min_y = ($pos->{y} < $pos_to->{y} ? $pos->{y} : $pos_to->{y}) - $margin;
-	my $max_y = ($pos->{y} > $pos_to->{y} ? $pos->{y} : $pos_to->{y}) + $margin;
-
-	# Clamp to field bounds
-	$min_x = 0 if $min_x < 0;
-	$min_y = 0 if $min_y < 0;
-	$max_x = $field->width  - 1 if $max_x >= $field->width;
-	$max_y = $field->height - 1 if $max_y >= $field->height;
+	my ($min_x, $max_x, $min_y, $max_y) = getLimits($field, $pos, $pos_to);
 
 	# Game client uses the same A* Pathfinding as openkore but uses and inadmissible heuristic (Manhattan distance)
 	# To better simulate the client pathfinding we tell openkore's pathfinding to use the same Manhattan heuristic

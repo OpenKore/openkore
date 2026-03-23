@@ -35,7 +35,7 @@ use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding existsInList);
+use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding existsInList getLimits);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -792,13 +792,13 @@ sub resetRoute {
 }
 
 ##
-# boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true], [boolean self_call = false])
+# boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true], [boolean liveRoute = false])
 # $solution: The route solution will be stored in here.
 # field: the field on which a route must be calculated.
 # start: The is the start coordinate.
 # dest: The destination coordinate.
 # avoidWalls: 0 if you don't want to avoid walls on route.
-# self_call: 1 if it was called from inside this module.
+# liveRoute: 1 if it is a live calculation (intends to be walked in the live $field)
 # Returns: 1 if the calculation succeeded, 0 if not.
 #
 # Calculate how to walk from $start to $dest on field $field, or check whether there
@@ -810,7 +810,7 @@ sub resetRoute {
 # This function is a convenience wrapper function for the stuff
 # in Utils/PathFinding.pm
 sub getRoute {
-	my ($class, $solution, $field, $start, $dest, $avoidWalls, $randomFactor, $useManhattan, $self_call) = @_;
+	my ($class, $solution, $field, $start, $dest, $avoidWalls, $randomFactor, $useManhattan, $liveRoute, $addLimits) = @_;
 	assertClass($field, 'Field') if DEBUG;
 	if (!defined $dest->{x} || $dest->{y} eq '') {
 		@{$solution} = () if ($solution);
@@ -833,7 +833,7 @@ sub getRoute {
 
 	my %path_args;
 	$path_args{self} = $class;
-	$path_args{self_call} = $self_call;
+	$path_args{liveRoute} = $liveRoute;
 
 	$path_args{start} = $closest_start;
 	$path_args{dest} = $closest_dest;
@@ -843,6 +843,14 @@ sub getRoute {
 	$path_args{avoidWalls} = $avoidWalls;
 	$path_args{randomFactor} = $randomFactor;
 	$path_args{useManhattan} = $useManhattan;
+
+	if ($addLimits) {
+		my ($min_x, $max_x, $min_y, $max_y) = getLimits($path_args{field}, $path_args{start}, $path_args{dest});
+		$path_args{min_x} = $min_x if defined $min_x;
+		$path_args{max_x} = $max_x if defined $max_x;
+		$path_args{min_y} = $min_y if defined $min_y;
+		$path_args{max_y} = $max_y if defined $max_y;
+	}
 
 	Plugins::callHook('getRoute' => \%path_args);
 

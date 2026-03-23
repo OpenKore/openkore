@@ -68,9 +68,6 @@ sub process {
 		if (targetGone($ataqArgs, $ID)) {
 			finishAttacking($ataqArgs, $ID);
 			return;
-		} elsif (shouldGiveUp($ataqArgs, $ID)) {
-			giveUp($ataqArgs, $ID, 0);
-			return;
 		}
 
 		my $target = Actor::get($ID);
@@ -81,6 +78,27 @@ sub process {
 
 		my $party = $config{'attackAuto_party'} ? 1 : 0;
 		my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
+		my $control = mon_control($target->{name},$target->{nameID});
+		
+		my %plugin_args;
+		$plugin_args{target} = $target;
+		$plugin_args{control} = $control;
+		$plugin_args{stage} = $stage;
+		$plugin_args{party} = $party;
+		$plugin_args{target_is_aggressive} = $target_is_aggressive;
+		$plugin_args{return} = 0;
+		Plugins::callHook('shouldDropTarget' => \%plugin_args);
+		if ($plugin_args{return}) {
+			giveUp($ataqArgs, $ID, 2);
+			return;
+		}
+
+		if (shouldGiveUp($ataqArgs, $ID)) {
+			message T("Can't reach or damage target\n"), "ai_attack";
+			giveUp($ataqArgs, $ID, 0);
+			return;
+		}
+
 
 		if ($config{attackChangeTarget}) {
 			my $routeIndex = AI::findAction("route");
@@ -123,7 +141,6 @@ sub process {
 			return;
 		}
 		
-		my $control = mon_control($target->{name},$target->{nameID});
 		if ($control->{attack_auto} == 3 && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou})) {
 			message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
 			$char->sendAttackStop;
@@ -131,16 +148,6 @@ sub process {
 			AI::dequeue() while (AI::inQueue("attack"));
 			return;
 		}
-		
-		my %plugin_args;
-		$plugin_args{target} = $target;
-		$plugin_args{control} = $control;
-		$plugin_args{stage} = $stage;
-		$plugin_args{party} = $party;
-		$plugin_args{target_is_aggressive} = $target_is_aggressive;
-		$plugin_args{return} = 0;
-		Plugins::callHook('AI::Attack::process' => \%plugin_args);
-		return if ($plugin_args{return});
 		
 		if ($stage == MOVING_TO_ATTACK) {
 			# Check for hidden monsters
@@ -236,18 +243,18 @@ sub shouldGiveUp {
 }
 
 sub giveUp {
-	my ($args, $ID, $LOS) = @_;
+	my ($args, $ID, $reason) = @_;
 	my $target = Actor::get($ID);
 	if ($monsters{$ID}) {
-		if ($LOS) {
+		if ($reason == 1) {
 			$target->{attack_failedLOS} = time;
-		} else {
+		} elsif ($reason == 0) {
 			$target->{attack_failed} = time;
 		}
 	}
 	$target->{dmgFromYou} = 0; # Hack | TODO: Fix me
 	AI::dequeue() while (AI::inQueue("attack"));
-	message T("Can't reach or damage target, dropping target\n"), "ai_attack";
+	message T("Dropping target\n"), "ai_attack";
 	if ($config{'teleportAuto_dropTarget'}) {
 		message T("Teleport due to dropping attack target\n");
 		ai_useTeleport(1);
