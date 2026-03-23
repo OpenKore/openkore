@@ -151,6 +151,7 @@ sub new {
 	my @holder = ($self);
 	Scalar::Util::weaken($holder[0]);
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
+	$self->{routeRepathHook} = Plugins::addHook('routeRepath', \&routeRepath, \@holder);
 
 	return $self;
 }
@@ -158,7 +159,17 @@ sub new {
 sub DESTROY {
 	my ($self) = @_;
 	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};
+	Plugins::delHook($self->{routeRepathHook}) if $self->{routeRepathHook};
 	$self->SUPER::DESTROY();
+}
+
+sub routeRepath {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	return unless $self;
+
+	debug "[routeRepath] Repathing after hook routeRepath.\n", "route";
+	$self->resetRoute;
 }
 
 ##
@@ -819,36 +830,39 @@ sub getRoute {
 		return 0;
 	}
 
-	my %plugin_args;
-	$plugin_args{self} = $class;
-	$plugin_args{self_call} = $self_call;
-	$plugin_args{start} = $closest_start;
-	$plugin_args{dest} = $closest_dest;
-	$plugin_args{field} = $field;
-	$plugin_args{avoidWalls} = $avoidWalls;
-	$plugin_args{randomFactor} = $randomFactor;
-	$plugin_args{useManhattan} = $useManhattan;
-	$plugin_args{return} = 0;
 
-	Plugins::callHook('getRoute' => \%plugin_args);
+	my %path_args;
+	$path_args{self} = $class;
+	$path_args{self_call} = $self_call;
 
-	my $pathfinding;
-	if ($plugin_args{return}) {
-		$pathfinding = $plugin_args{pathfinding};
-	} else {
-		$pathfinding = new PathFinding();
+	$path_args{start} = $closest_start;
+	$path_args{dest} = $closest_dest;
+
+	$path_args{field} = $field;
+
+	$path_args{avoidWalls} = $avoidWalls;
+	$path_args{randomFactor} = $randomFactor;
+	$path_args{useManhattan} = $useManhattan;
+
+	Plugins::callHook('getRoute' => \%path_args);
+
+	my $pathfinding = new PathFinding();
+	my %reset_args = (
+		field => $path_args{field},
+		start => $path_args{start},
+		dest  => $path_args{dest},
+		avoidWalls => $path_args{avoidWalls},
+		randomFactor => $path_args{randomFactor},
+		useManhattan => $path_args{useManhattan},
+		getRoute => 1
+	);
+
+	foreach my $option (qw(weight_map customWeights secondWeightMap timeout width height min_x max_x min_y max_y)) {
+		$reset_args{$option} = $path_args{$option} if exists $path_args{$option};
 	}
 
 	# Calculate path
-	$pathfinding->reset(
-		start => $closest_start,
-		dest  => $closest_dest,
-		field => $field,
-		avoidWalls => $avoidWalls,
-		randomFactor => $randomFactor,
-		useManhattan => $useManhattan,
-		getRoute => 1
-	);
+	$pathfinding->reset(%reset_args);
 	return undef if (!$pathfinding);
 
 	my $ret;

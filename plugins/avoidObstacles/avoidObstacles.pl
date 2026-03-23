@@ -100,9 +100,10 @@ my $hooks = Plugins::addHooks(
 	['pos_load_config.txt', \&on_config_file_loaded, undef],
 	['post_configModify', \&on_post_config_modify, undef],
 	['post_bulkConfigModify', \&on_post_bulk_config_modify, undef],
-	['PathFindingReset', \&on_PathFindingReset, undef],
+	['getRoute', \&on_getRoute, undef],
 	['route_step', \&on_route_step, undef],
 	['AI_pre/manual', \&on_AI_pre_manual, undef],
+	['add_prohibitedCells', \&on_add_prohibited_cells, undef],
 	['packet_mapChange', \&on_packet_mapChange, undef],
 	['undefined_object_id', \&use_od, undef],
 );
@@ -125,6 +126,8 @@ my $mobhooks = Plugins::addHooks(
 	['AI::Attack::process', \&on_getBestTarget, undef],
 	['getBestTarget', \&on_getBestTarget, undef],
 );
+
+my $pathfinding_weight_map_override;
 
 my $chooks = Commands::register(
 	['od', 'avoidObstacles controls: od [dump|reload|status]', \&command_od],
@@ -643,24 +646,8 @@ sub is_there_an_obstacle_near_pos {
 ## Builds a hash of hard-zone cells keyed by their nearest obstacle distance.
 sub build_prohibited_cells {
 	my %prohibited;
-
-	foreach my $obstacle_ID (keys %obstaclesList) {
-		my $obstacle = $obstaclesList{$obstacle_ID};
-		next unless defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} >= 0;
-		my $obstacle_pos = get_actor_position($obstacle);
-		next unless $obstacle_pos;
-		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $obstacle->{prohibited_dist});
-		foreach my $y ($min_y .. $max_y) {
-			foreach my $x ($min_x .. $max_x) {
-				next unless $field->isWalkable($x, $y);
-				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
-				next if $distance > $obstacle->{prohibited_dist};
-				if (!defined $prohibited{$x}{$y} || $distance < $prohibited{$x}{$y}) {
-					$prohibited{$x}{$y} = $distance;
-				}
-			}
-		}
-	}
+	merge_prohibited_cells(\%prohibited, build_live_prohibited_cells());
+	merge_prohibited_cells(\%prohibited, build_static_prohibited_cells_for_field($field));
 	return \%prohibited;
 }
 
@@ -934,49 +921,9 @@ sub get_actor_disappearance_reason {
 ## Resets active route tasks whenever obstacle changes require a fresh path calculation.
 sub on_AI_pre_manual_repath {
 	return unless $mustRePath;
-
-	my ($arg_i, $arg_i2);
-	if (AI::is('route')) {
-		$arg_i = 0;
-		if (AI::action(1) eq 'attack') {
-			$arg_i2 = 2 if AI::action(2) eq 'route';
-			$arg_i2 = 3 if !defined $arg_i2 && AI::action(3) eq 'route';
-		}
-	} elsif (AI::is('move') && AI::action(1) eq 'route') {
-		$arg_i = 1;
-		if (AI::action(2) eq 'attack') {
-			$arg_i2 = 3 if AI::action(3) eq 'route';
-			$arg_i2 = 4 if !defined $arg_i2 && AI::action(4) eq 'route';
-		}
-	} else {
-		return;
-	}
-
+	debug "[" . PLUGIN_NAME . "] Requesting route repath if routing.\n";
+	Plugins::callHook('routeRepath', { source => PLUGIN_NAME });
 	$mustRePath = 0;
-
-	my $args = AI::args($arg_i);
-	my $task = get_task($args);
-	if ($task) {
-		if (!$task->{solution} || scalar @{ $task->{solution} } == 0) {
-			debug "[" . PLUGIN_NAME . "] Route already reset.\n";
-		} else {
-			debug "[" . PLUGIN_NAME . "] Resetting route.\n";
-			$task->resetRoute;
-		}
-	}
-
-	return unless defined $arg_i2;
-
-	my $args2 = AI::args($arg_i2);
-	my $task2 = get_task($args2);
-	if ($task2) {
-		if (!$task2->{solution} || scalar @{ $task2->{solution} } == 0) {
-			debug "[" . PLUGIN_NAME . "] Secondary route already reset.\n";
-		} else {
-			debug "[" . PLUGIN_NAME . "] Resetting secondary route.\n";
-			$task2->resetRoute;
-		}
-	}
 }
 
 ## Extracts the concrete Task::Route object from different AI task containers.
@@ -990,30 +937,21 @@ sub get_task {
 	return;
 }
 
-## Injects the obstacle weight grid into pathfinding calls for the current map.
-sub on_PathFindingReset {
-	my (undef, $hookargs) = @_;
-	return unless exists $hookargs->{args}{getRoute} && $hookargs->{args}{getRoute} == 1;
+## Injects the obstacle weight grid into getRoute pathfinding calls for the current map.
+sub on_getRoute {
+	my (undef, $args) = @_;
 	return unless scalar keys %obstaclesList;
-
-	my $args = $hookargs->{args};
 	return if !$field || $args->{field}->name ne $field->name;
+
+	my $prohibited_cells = build_prohibited_cells();
+	my $base_weight_map_ref = defined $args->{weight_map} ? $args->{weight_map} : \($args->{field}->{weightMap});
+	if ($prohibited_cells && scalar keys %{$prohibited_cells} && !pos_is_prohibited($args->{start}, $prohibited_cells) && !pos_is_prohibited($args->{dest}, $prohibited_cells)) {
+		$pathfinding_weight_map_override = build_weight_map_with_prohibited_cells($base_weight_map_ref, $args->{field}{width}, $prohibited_cells);
+		$args->{weight_map} = \$pathfinding_weight_map_override;
+	}
 
 	$args->{customWeights} = 1;
 	$args->{secondWeightMap} = get_final_grid();
-	$args->{avoidWalls} = 1 unless defined $args->{avoidWalls};
-	$args->{weight_map} = \($args->{field}->{weightMap}) unless defined $args->{weight_map};
-	$args->{randomFactor} = 0 unless defined $args->{randomFactor};
-	$args->{useManhattan} = 0 unless defined $args->{useManhattan};
-	$args->{timeout} = 1500 unless $args->{timeout};
-	$args->{width} = $args->{field}{width} unless $args->{width};
-	$args->{height} = $args->{field}{height} unless $args->{height};
-	$args->{min_x} = 0 unless defined $args->{min_x};
-	$args->{max_x} = ($args->{width} - 1) unless defined $args->{max_x};
-	$args->{min_y} = 0 unless defined $args->{min_y};
-	$args->{max_y} = ($args->{height} - 1) unless defined $args->{max_y};
-
-	$hookargs->{return} = 0;
 }
 
 ## Converts a 2D coordinate into a linear offset for weight maps.
@@ -1025,6 +963,131 @@ sub getOffset {
 ## Builds the final merged obstacle grid that pathfinding will consume.
 sub get_final_grid {
 	return sum_all_changes();
+}
+
+## Returns whether a coordinate is inside the current prohibited-cell set.
+sub pos_is_prohibited {
+	my ($pos, $prohibited_cells) = @_;
+	return 0 unless $pos && $prohibited_cells;
+	return 0 unless exists $prohibited_cells->{$pos->{x}};
+	return exists $prohibited_cells->{$pos->{x}}{$pos->{y}} ? 1 : 0;
+}
+
+## Clones a base weight map and turns prohibited cells into true unwalkable nodes for pathfinding.
+sub build_weight_map_with_prohibited_cells {
+	my ($base_weight_map_ref, $width, $prohibited_cells) = @_;
+	return unless $base_weight_map_ref && $width && $prohibited_cells;
+
+	my $blocked_weight_map = ${$base_weight_map_ref};
+
+	foreach my $x (keys %{$prohibited_cells}) {
+		foreach my $y (keys %{ $prohibited_cells->{$x} }) {
+			my $offset = getOffset($x, $width, $y);
+			substr($blocked_weight_map, $offset, 1) = pack('c', -1);
+		}
+	}
+
+	return $blocked_weight_map;
+}
+
+## Adds prohibited cells for the requested field to callers that need destination/meeting-position filtering.
+sub on_add_prohibited_cells {
+	my (undef, $args) = @_;
+	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
+
+	my $target_field = $args->{field};
+	$target_field = $field if !$target_field || !UNIVERSAL::isa($target_field, 'Field');
+	return unless $target_field;
+
+	merge_prohibited_cells($args->{cells}, build_prohibited_cells_for_field($target_field));
+}
+
+## Builds the prohibited-cell map for a specific field, using live obstacles on the current map and static configured cells anywhere.
+sub build_prohibited_cells_for_field {
+	my ($target_field) = @_;
+	return {} unless $target_field;
+
+	my %prohibited;
+
+	if ($field && $target_field->name eq $field->name) {
+		merge_prohibited_cells(\%prohibited, build_live_prohibited_cells());
+	}
+
+	merge_prohibited_cells(\%prohibited, build_static_prohibited_cells_for_field($target_field));
+	return \%prohibited;
+}
+
+## Builds prohibited cells from live dynamic obstacles on the current map only.
+sub build_live_prohibited_cells {
+	my %prohibited;
+	return \%prohibited unless $field;
+
+	foreach my $obstacle_ID (keys %obstaclesList) {
+		my $obstacle = $obstaclesList{$obstacle_ID};
+		next if $obstacle->{type} && $obstacle->{type} eq 'cell';
+		next unless defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} >= 0;
+		my $obstacle_pos = get_actor_position($obstacle);
+		next unless $obstacle_pos;
+		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $obstacle->{prohibited_dist});
+		foreach my $y ($min_y .. $max_y) {
+			foreach my $x ($min_x .. $max_x) {
+				next unless $field->isWalkable($x, $y);
+				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
+				next if $distance > $obstacle->{prohibited_dist};
+				if (!defined $prohibited{$x}{$y} || $distance < $prohibited{$x}{$y}) {
+					$prohibited{$x}{$y} = $distance;
+				}
+			}
+		}
+	}
+
+	return \%prohibited;
+}
+
+## Builds prohibited cells from configured static cell blocks for the given field.
+sub build_static_prohibited_cells_for_field {
+	my ($target_field) = @_;
+	return {} unless $target_field;
+
+	my %prohibited;
+	my $map_name = $target_field->baseName;
+	return \%prohibited unless defined $map_name && exists $cells_in_map_obstacles{$map_name};
+
+	foreach my $block (@{ $cells_in_map_obstacles{$map_name} }) {
+		next unless $block->{config} && $block->{config}{enabled};
+		next unless defined $block->{config}{prohibited_dist} && $block->{config}{prohibited_dist} >= 0;
+
+		foreach my $pos (@{ $block->{cells} || [] }) {
+			my ($min_x, $min_y, $max_x, $max_y) = $target_field->getSquareEdgesFromCoord($pos, $block->{config}{prohibited_dist});
+			foreach my $y ($min_y .. $max_y) {
+				foreach my $x ($min_x .. $max_x) {
+					next unless $target_field->isWalkable($x, $y);
+					my $distance = blockDistance({ x => $x, y => $y }, $pos);
+					next if $distance > $block->{config}{prohibited_dist};
+					if (!defined $prohibited{$x}{$y} || $distance < $prohibited{$x}{$y}) {
+						$prohibited{$x}{$y} = $distance;
+					}
+				}
+			}
+		}
+	}
+
+	return \%prohibited;
+}
+
+## Merges one prohibited-cell hash into another, preserving the nearest obstacle distance.
+sub merge_prohibited_cells {
+	my ($target, $source) = @_;
+	return unless $target && $source;
+
+	foreach my $x (keys %{$source}) {
+		foreach my $y (keys %{ $source->{$x} }) {
+			my $distance = $source->{$x}{$y};
+			if (!exists $target->{$x}{$y} || $distance < $target->{$x}{$y}) {
+				$target->{$x}{$y} = $distance;
+			}
+		}
+	}
 }
 
 ## Calculates the extra weight contributed by a single obstacle cell at a given distance.

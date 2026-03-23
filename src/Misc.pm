@@ -2639,6 +2639,43 @@ sub manualMove {
 	main::ai_route($field->baseName, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
+sub route_crosses_prohibited_cells {
+	my ($solution, $prohibited_cells) = @_;
+
+	return 0 unless $solution && @{$solution};
+	return 0 unless $prohibited_cells;
+
+	my $started_inside;
+	my $left_initial_zone = 0;
+	my $previous_inside_distance;
+	foreach my $node (@{$solution}) {
+		next unless $node;
+
+		my $cell_distance = $prohibited_cells->{$node->{x}} && $prohibited_cells->{$node->{x}}{$node->{y}};
+		my $inside = defined $cell_distance;
+
+		if (!defined $started_inside) {
+			$started_inside = $inside ? 1 : 0;
+			if ($inside) {
+				$previous_inside_distance = $cell_distance;
+			} else {
+				$left_initial_zone = 1;
+			}
+			next;
+		}
+
+		if ($inside) {
+			return 1 if !$started_inside || $left_initial_zone;
+			return 1 if defined $previous_inside_distance && $cell_distance < $previous_inside_distance;
+			$previous_inside_distance = $cell_distance;
+		} else {
+			$left_initial_zone = 1 if $started_inside;
+		}
+	}
+
+	return 0;
+}
+
 ##
 # meetingPosition(actor, actorType, target_actor, attackMaxDistance, runFromTargetActive)
 # actor: current object.
@@ -2827,6 +2864,10 @@ sub meetingPosition {
 		$prohibitedSpots{$prohibited_actor->{pos_to}{x}}{$prohibited_actor->{pos_to}{y}} = 1;
 	}
 
+	my %prohibitedCells;
+	my %plugin_args = ( cells => \%prohibitedCells, field => $field );
+	Plugins::callHook('add_prohibitedCells' => \%plugin_args);
+
 	my $best_spot;
 	my $best_targetPosInStep;
 	my $best_dist_to_target;
@@ -2848,6 +2889,8 @@ sub meetingPosition {
 			# 1.2 It must not be occupied
 			next if (exists $prohibitedSpots{$spot->{x}} && exists $prohibitedSpots{$spot->{x}}{$spot->{y}});
 
+			next if (exists $prohibitedCells{$spot->{x}} && exists $prohibitedCells{$spot->{x}}{$spot->{y}});
+			
 			# 2. It must not be close to a portal.
 			next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
 
@@ -2860,6 +2903,8 @@ sub meetingPosition {
 			
 			# 4. It must have at max $max_path_dist of route distance to it from our current position.
 			next if (scalar @{$solution} > $max_path_dist);
+
+			next if (route_crosses_prohibited_cells($solution, \%prohibitedCells));
 
 			$time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
 
@@ -5837,8 +5882,12 @@ sub get_lockMap_cell {
 	my $cell;
 
 	my $i = 500;
-	my $width = $field->width;
-	my $height = $field->height;
+	my $width = $lockField->width;
+	my $height = $lockField->height;
+
+	my %prohibitedCells;
+	my %plugin_args = ( cells => \%prohibitedCells, field => $lockField );
+	Plugins::callHook('add_prohibitedCells' => \%plugin_args);
 
 	do {
 		if ($config{'lockMap_x'} ne '') {
@@ -5853,7 +5902,7 @@ sub get_lockMap_cell {
 		} else {
 			$cell->{y} = int(rand($height));
 		}
-	} while (--$i && (!$field->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $width || $cell->{y} >= $height));
+	} while (--$i && (!$lockField->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $width || $cell->{y} >= $height || (exists $prohibitedCells{$cell->{x}} && exists $prohibitedCells{$cell->{x}}{$cell->{y}})));
 
 	return undef if (!$i);
 	return $cell;
