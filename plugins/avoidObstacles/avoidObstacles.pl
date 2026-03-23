@@ -105,7 +105,7 @@ my $hooks = Plugins::addHooks(
 	['AI_pre/manual', \&on_AI_pre_manual, undef],
 	['add_prohibitedCells', \&on_add_prohibited_cells, undef],
 	['packet_mapChange', \&on_packet_mapChange, undef],
-	['undefined_object_id', \&use_od, undef],
+	['undefined_object_id', \&use_dump, undef],
 );
 
 my $obstacle_hooks = Plugins::addHooks(
@@ -130,7 +130,7 @@ my $mobhooks = Plugins::addHooks(
 my $pathfinding_weight_map_override;
 
 my $chooks = Commands::register(
-	['od', 'avoidObstacles controls: od [dump|reload|status]', \&command_od],
+	['avoid', 'avoidObstacles controls: od [dump|reload|status]', \&command_avoid],
 );
 
 my %plugin_settings;
@@ -536,13 +536,13 @@ sub rebuild_static_cell_obstacles_for_current_map {
 }
 
 ## Handles the `od` console command for dumping, reloading, and summarizing plugin state.
-sub command_od {
+sub command_avoid {
 	my ($cmd, $args) = @_;
 	$args ||= '';
 	$args =~ s/^\s+|\s+$//g;
 
 	if ($args eq '' || $args eq 'dump') {
-		use_od();
+		use_dump();
 		return;
 	}
 
@@ -570,7 +570,7 @@ sub command_od {
 }
 
 ## Dumps the live obstacle caches for debugging.
-sub use_od {
+sub use_dump {
 	warning "[" . PLUGIN_NAME . "] obstaclesList Dump: " . Dumper(\%obstaclesList);
 	warning "[" . PLUGIN_NAME . "] removed_obstacle_still_in_list Dump: " . Dumper(\%removed_obstacle_still_in_list);
 }
