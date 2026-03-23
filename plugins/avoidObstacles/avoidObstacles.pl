@@ -131,6 +131,8 @@ my $mobhooks = Plugins::addHooks(
 my $pathfinding_weight_map_override;
 my $cached_prohibited_cells;
 my $cached_prohibited_cells_field_name;
+my $cached_danger_cells;
+my $cached_danger_cells_field_name;
 my $cached_weight_map_refaddr;
 my $cached_weight_map_field_name;
 my $cached_weight_map_with_prohibited;
@@ -156,6 +158,8 @@ my $mustRePath = 0;
 sub invalidate_pathfinding_caches {
 	undef $cached_prohibited_cells;
 	undef $cached_prohibited_cells_field_name;
+	undef $cached_danger_cells;
+	undef $cached_danger_cells_field_name;
 	undef $cached_weight_map_refaddr;
 	undef $cached_weight_map_field_name;
 	undef $cached_weight_map_with_prohibited;
@@ -731,31 +735,105 @@ sub get_cached_weight_map_with_prohibited_cells {
 	return $cached_weight_map_with_prohibited;
 }
 
-## Scores one client-side move solution based on danger zones and hard prohibited cells.
+sub build_danger_cells {
+	my %danger;
+	return \%danger unless $field;
+
+	foreach my $obstacle_id (keys %obstaclesList) {
+		my $obstacle = $obstaclesList{$obstacle_id};
+		next unless defined $obstacle->{danger_dist} && $obstacle->{danger_dist} >= 0;
+		my $obstacle_pos = get_actor_position($obstacle);
+		next unless $obstacle_pos;
+
+		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $obstacle->{danger_dist});
+		foreach my $y ($min_y .. $max_y) {
+			foreach my $x ($min_x .. $max_x) {
+				next unless $field->isWalkable($x, $y);
+				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
+				next if $distance > $obstacle->{danger_dist};
+				$danger{$x}{$y}++;
+			}
+		}
+	}
+
+	return \%danger;
+}
+
+sub get_cached_danger_cells {
+	return {} unless $field;
+
+	my $field_name = $field->name;
+	if (!$cached_danger_cells || !$cached_danger_cells_field_name || $cached_danger_cells_field_name ne $field_name) {
+		$cached_danger_cells = build_danger_cells();
+		$cached_danger_cells_field_name = $field_name;
+	}
+
+	return $cached_danger_cells;
+}
+
+sub route_danger_score_from_cells {
+	my ($solution, $danger_cells) = @_;
+	return 0 unless $solution && @{$solution};
+	return 0 unless $danger_cells;
+
+	my $started_inside;
+	my $left_initial_zone = 0;
+	my $current_region_max = 0;
+	my $score = 0;
+
+	foreach my $node (@{$solution}) {
+		next unless $node;
+
+		my $cell_score = ($danger_cells->{$node->{x}} && $danger_cells->{$node->{x}}{$node->{y}}) || 0;
+		my $inside = $cell_score > 0;
+
+		if (!defined $started_inside) {
+			$started_inside = $inside ? 1 : 0;
+			if ($inside) {
+				$current_region_max = $cell_score;
+			} else {
+				$left_initial_zone = 1;
+			}
+			next;
+		}
+
+		if ($inside) {
+			$current_region_max = $cell_score if $cell_score > $current_region_max;
+		} else {
+			if ($current_region_max && (!$started_inside || $left_initial_zone)) {
+				$score += $current_region_max;
+			}
+			$current_region_max = 0;
+			$left_initial_zone = 1;
+		}
+	}
+
+	if ($current_region_max && (!$started_inside || $left_initial_zone)) {
+		$score += $current_region_max;
+	}
+
+	return $score;
+}
+
+## Scores one client-side move solution based on cached danger zones and hard prohibited cells.
 sub score_client_solution {
-	my ($client_solution, $prohibited_cells) = @_;
+	my ($client_solution, $prohibited_cells, $danger_cells) = @_;
 	return 999999 unless $client_solution && @{$client_solution};
 
 	my $score = 0;
 
 	$score += 1000 if route_crosses_prohibited_cells($client_solution, $prohibited_cells);
-
-	foreach my $obstacle_ID (keys %obstaclesList) {
-		my $obstacle = $obstaclesList{$obstacle_ID};
-		next unless $obstacle->{pos_to};
-		next unless (defined $obstacle->{danger_dist} && $obstacle->{danger_dist} >= 0);
-
-		$score++ if route_crosses_target_danger_zone_fast($client_solution, $obstacle->{pos_to}, $obstacle->{danger_dist});
-	}
+	$score += route_danger_score_from_cells($client_solution, $danger_cells);
 
 	return $score;
 }
 
 ## Chooses the safest route_step by simulating the client's local move path for each candidate.
 sub choose_best_route_step {
-	my ($current_pos, $solution, $max_route_step, $prohibited_cells) = @_;
+	my ($current_pos, $solution, $max_route_step, $prohibited_cells, $danger_cells) = @_;
 	return unless $current_pos && $solution && @{$solution};
 	return unless defined $max_route_step && $max_route_step >= 1;
+	
 	my ($best_step, $best_score, $best_solution, $best_pos);
 
 	for (my $candidate_step = $max_route_step; $candidate_step >= 1; $candidate_step--) {
@@ -765,7 +843,7 @@ sub choose_best_route_step {
 		my $client_solution = get_client_solution($field, $current_pos, $candidate_pos);
 		next unless $client_solution && @{$client_solution};
 
-		my $score = score_client_solution($client_solution, $prohibited_cells);
+		my $score = score_client_solution($client_solution, $prohibited_cells, $danger_cells);
 
 		if (!defined $best_score || $score < $best_score) {
 			$best_step = $candidate_step;
@@ -870,7 +948,8 @@ sub on_route_step {
 
 	my $prohibited_cells = get_cached_prohibited_cells();
 	$prohibited_cells = filter_prohibited_cells_for_route_task($args->{task}, $prohibited_cells, $field);
-	my ($best_step, $best_score) = choose_best_route_step($args->{current_calc_pos}, $args->{solution}, $max_route_step, $prohibited_cells);
+	my $danger_cells = get_cached_danger_cells();
+	my ($best_step, $best_score) = choose_best_route_step($args->{current_calc_pos}, $args->{solution}, $max_route_step, $prohibited_cells, $danger_cells);
 	return unless defined $best_step;
 
 	if (defined $best_score && $best_score >= 1000) {
