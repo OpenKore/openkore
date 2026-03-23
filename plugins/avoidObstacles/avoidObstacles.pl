@@ -170,7 +170,6 @@ sub route_crosses_target_danger_zone_fast {
 
 	return 0 unless $solution && @{$solution};
 	return 0 unless $obstacle_pos;
-	$danger_dist = 1 unless defined $danger_dist;
 
 	my $left_initial_danger_zone = 0;
 	foreach my $node (@{$solution}) {
@@ -744,11 +743,9 @@ sub score_client_solution {
 	foreach my $obstacle_ID (keys %obstaclesList) {
 		my $obstacle = $obstaclesList{$obstacle_ID};
 		next unless $obstacle->{pos_to};
+		next unless (defined $obstacle->{danger_dist} && $obstacle->{danger_dist} >= 0);
 
-		my $danger_dist = defined $obstacle->{danger_dist} ? $obstacle->{danger_dist} : 1;
-		next if $danger_dist < 0;
-
-		$score++ if route_crosses_target_danger_zone_fast($client_solution, $obstacle->{pos_to}, $danger_dist);
+		$score++ if route_crosses_target_danger_zone_fast($client_solution, $obstacle->{pos_to}, $obstacle->{danger_dist});
 	}
 
 	return $score;
@@ -759,7 +756,7 @@ sub choose_best_route_step {
 	my ($current_pos, $solution, $max_route_step, $prohibited_cells) = @_;
 	return unless $current_pos && $solution && @{$solution};
 	return unless defined $max_route_step && $max_route_step >= 1;
-	my ($best_step, $best_score);
+	my ($best_step, $best_score, $best_solution, $best_pos);
 
 	for (my $candidate_step = $max_route_step; $candidate_step >= 1; $candidate_step--) {
 		my $candidate_pos = $solution->[$candidate_step];
@@ -769,15 +766,91 @@ sub choose_best_route_step {
 		next unless $client_solution && @{$client_solution};
 
 		my $score = score_client_solution($client_solution, $prohibited_cells);
+
 		if (!defined $best_score || $score < $best_score) {
 			$best_step = $candidate_step;
 			$best_score = $score;
+			$best_solution = $client_solution;
+			$best_pos = $candidate_pos;
 		}
 
 		last if defined $best_score && $best_score == 0;
 	}
 
+	if ($best_score < 1000) {
+		message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Client == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
+		message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n";
+	}
+
 	return ($best_step, $best_score);
+}
+
+sub remove_prohibited_zone_from_cells {
+	my ($filtered, $target_field, $center, $prohibited_dist) = @_;
+	return unless $filtered && $target_field && $center;
+	return unless defined $prohibited_dist && $prohibited_dist >= 0;
+
+	my ($min_x, $min_y, $max_x, $max_y) = $target_field->getSquareEdgesFromCoord($center, $prohibited_dist);
+	foreach my $y ($min_y .. $max_y) {
+		foreach my $x ($min_x .. $max_x) {
+			next unless exists $filtered->{$x} && exists $filtered->{$x}{$y};
+			my $distance = blockDistance({ x => $x, y => $y }, $center);
+			next if $distance > $prohibited_dist;
+			delete $filtered->{$x}{$y};
+			delete $filtered->{$x} unless scalar keys %{ $filtered->{$x} };
+		}
+	}
+}
+
+sub filter_prohibited_cells_for_route_task {
+	my ($task, $prohibited_cells, $target_field) = @_;
+	return $prohibited_cells unless $task && $prohibited_cells && $target_field;
+	return $prohibited_cells unless $task->{dest} && $task->{dest}{pos};
+
+	my $dest = $task->{dest}{pos};
+	my @matching_portals = grep {
+		my $obstacle = $obstaclesList{$_};
+		my $match_dist = 5;
+		$match_dist = $obstacle->{danger_dist} if defined $obstacle->{danger_dist} && $obstacle->{danger_dist} > $match_dist;
+		$match_dist = $obstacle->{prohibited_dist} if defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} > $match_dist;
+		$obstacle
+			&& $obstacle->{type}
+			&& $obstacle->{type} eq 'portal'
+			&& $obstacle->{pos_to}
+			&& blockDistance($obstacle->{pos_to}, $dest) <= $match_dist
+	} keys %obstaclesList;
+
+	my $destination_is_portal_route = 0;
+	my $portal_lut_key = $target_field->baseName . " $dest->{x} $dest->{y}";
+	$destination_is_portal_route = 1 if $portals_lut{$portal_lut_key} && $portals_lut{$portal_lut_key}{source};
+
+	my $needs_filter = 0;
+
+	my %filtered = map {
+		my $x = $_;
+		$x => { %{ $prohibited_cells->{$x} } }
+	} keys %{$prohibited_cells};
+
+	foreach my $obstacle_id (keys %obstaclesList) {
+		my $obstacle = $obstaclesList{$obstacle_id};
+		next unless defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} >= 0;
+		my $obstacle_pos = get_actor_position($obstacle);
+		next unless $obstacle_pos;
+		next if blockDistance($obstacle_pos, $dest) > $obstacle->{prohibited_dist};
+
+		remove_prohibited_zone_from_cells(\%filtered, $target_field, $obstacle_pos, $obstacle->{prohibited_dist});
+		$needs_filter = 1;
+	}
+
+	return $prohibited_cells unless $needs_filter || ($destination_is_portal_route && @matching_portals);
+
+	foreach my $portal_id (@matching_portals) {
+		my $portal = $obstaclesList{$portal_id};
+		next unless $destination_is_portal_route;
+		remove_prohibited_zone_from_cells(\%filtered, $target_field, $portal->{pos_to}, $portal->{prohibited_dist});
+	}
+
+	return \%filtered;
 }
 
 ## Adjusts the current route_step before Task::Route selects the next move packet target.
@@ -796,8 +869,15 @@ sub on_route_step {
 	return if $max_route_step < 1;
 
 	my $prohibited_cells = get_cached_prohibited_cells();
+	$prohibited_cells = filter_prohibited_cells_for_route_task($args->{task}, $prohibited_cells, $field);
 	my ($best_step, $best_score) = choose_best_route_step($args->{current_calc_pos}, $args->{solution}, $max_route_step, $prohibited_cells);
 	return unless defined $best_step;
+
+	if (defined $best_score && $best_score >= 1000) {
+		warning "[" . PLUGIN_NAME . "] No safe local route_step found; local client path would cross a prohibited cell. Requesting repath.\n";
+		$args->{task}{resetRoute} = 1;
+		return;
+	}
 
 	if ($best_step != $args->{route_step}) {
 		debug "[" . PLUGIN_NAME . "] route_step adjusted from $args->{route_step} to $best_step (danger score $best_score).\n", 'route';

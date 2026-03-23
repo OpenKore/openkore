@@ -223,6 +223,8 @@ sub iterate {
 		undef $self->{sentTeleport};
 		undef $self->{mapChanged};
 		$self->resetRoute();
+		$self->iterate();
+		return;
 
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};
@@ -463,8 +465,8 @@ sub iterate {
 			if ($best_pos_step > $best_pos_to_step) {
 				if ($self->{confirmed_correct_vector}) {
 					debug "Route $self->{actor} - movement interrupted: reset route (last change in pos and pos_to put us in a walk path oposite to the desired one)\n", "route";
-					$self->{solution} = [];
-					$self->{stage} = CALCULATE_ROUTE;
+					$self->resetRoute();
+					$self->iterate();
 					return;
 				}
 			} elsif (!$self->{confirmed_correct_vector}) {
@@ -560,6 +562,8 @@ sub iterate {
 				#
 				$self->{route_out_time} = time;
 				$self->resetRoute();
+				$self->iterate();
+				return;
 			}
 		} elsif (timeOut($self->{route_out_time}, 3)) {
 			# Because of attack monster, get item or something else we are out of our route for a long time
@@ -567,6 +571,8 @@ sub iterate {
 			debug "We are out of our route for a long time, recalculating...\n", "route";
 			$self->{route_out_time} = time;
 			$self->resetRoute();
+			$self->iterate();
+			return;
 		} elsif (!$self->{start} && $pos_changed == 0 && defined $self->{time_step} && timeOut($self->{time_step}, $timeout{ai_route_unstuck}{timeout})) {
 			# We tried to move for 3 seconds, but we are still on the same spot, decrease step size.
 			# However, if $self->{step_index} was already 0, then that means we were almost at the destination (only 1 more step is needed).
@@ -651,7 +657,14 @@ sub iterate {
 				route_step => $self->{step_index},
 			);
 			Plugins::callHook('route_step', \%routeStepHookArgs);
-			if (defined $routeStepHookArgs{route_step} && $routeStepHookArgs{route_step} != $self->{step_index}) {
+
+			if ($self->{resetRoute}) {
+				$self->resetRoute();
+				delete $self->{resetRoute};
+				$self->iterate();
+				return;
+
+			} elsif (defined $routeStepHookArgs{route_step} && $routeStepHookArgs{route_step} != $self->{step_index}) {
 				$self->{step_index} = $routeStepHookArgs{route_step};
 				$self->{step_index} = 0 if $self->{step_index} < 0;
 				if ($self->{step_index} >= $stepsleft) {
@@ -668,8 +681,9 @@ sub iterate {
 			my %nextPos = (x => $self->{next_pos}{x}, y => $self->{next_pos}{y});
 			if (blockDistance(\%nextPos, $current_calc_pos) > 17) {
 				debug "Route $self->{actor} - movement interrupted: reset route (the distance of the next point is abnormally large ($current_calc_pos->{x} $current_calc_pos->{y} -> $nextPos{x} $nextPos{y}))\n", "route";
-				$self->{solution} = [];
-				$self->{stage} = CALCULATE_ROUTE;
+				$self->resetRoute();
+				$self->iterate();
+				return;
 
 			} else {
 				

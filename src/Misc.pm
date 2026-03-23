@@ -2639,6 +2639,51 @@ sub manualMove {
 	main::ai_route($field->baseName, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
+sub getMeetingPositionCandidateSpots {
+	my ($realMyPos, $target_solution, $target_start_step, $max_path_dist, $attackMaxDistance, $min_destination_dist) = @_;
+
+	$target_start_step = 0 if (!defined $target_start_step || $target_start_step < 0);
+
+	my %seen;
+	foreach my $target_step ($target_start_step .. $#{$target_solution}) {
+		my $targetPos = $target_solution->[$target_step];
+		next if !$targetPos;
+
+		for (my $x = $targetPos->{x} - $attackMaxDistance; $x <= $targetPos->{x} + $attackMaxDistance; $x++) {
+			for (my $y = $targetPos->{y} - $attackMaxDistance; $y <= $targetPos->{y} + $attackMaxDistance; $y++) {
+				my %spot = (
+					x => $x,
+					y => $y,
+				);
+				my $key = "$x $y";
+				next if exists $seen{$key};
+
+
+				my $dist_to_target = blockDistance(\%spot, $targetPos);
+				next if $dist_to_target > $attackMaxDistance;
+				next if $dist_to_target < $min_destination_dist;
+
+				my $dist_to_spot = blockDistance($realMyPos, \%spot);
+				next if $dist_to_spot > $max_path_dist;
+
+				$seen{$key} = {
+					x => $x,
+					y => $y,
+					dist_to_spot => $dist_to_spot,
+					target_step => $target_step,
+				};
+			}
+		}
+	}
+
+	return sort {
+		$a->{dist_to_spot} <=> $b->{dist_to_spot}
+		|| $a->{target_step} <=> $b->{target_step}
+		|| $a->{x} <=> $b->{x}
+		|| $a->{y} <=> $b->{y}
+	} values %seen;
+}
+
 ##
 # meetingPosition(actor, actorType, target_actor, attackMaxDistance, runFromTargetActive)
 # actor: current object.
@@ -2650,6 +2695,8 @@ sub manualMove {
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
 	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive) = @_;
+
+	my $start_time = time;
 
 	if ($attackMaxDistance < 1) {
 		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
@@ -2749,29 +2796,16 @@ sub meetingPosition {
 	my $targetTotalSteps;
 	my $targetCurrentStep;
 
-	my @target_pos_to_check;
-
 	# Target has finished moving
 	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
 		$realTargetPos = $target->{pos_to};
-		$target_pos_to_check[0] = {
-			targetPosInStep => $realTargetPos
-		};
+		$targetCurrentStep = 0;
 
 	# Target is currently moving
 	} else {
 		$targetTotalSteps = $#{$target_solution};
 		$targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $timeSinceTargetMoved);
 		$realTargetPos = $target_solution->[$targetCurrentStep];
-
-		my $steps_count = 0;
-		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
-			$target_pos_to_check[$steps_count] = {
-				targetPosInStep => $target_solution->[$currentStep]
-			};
-		} continue {
-			$steps_count++;
-		}
 	}
 
 	my $master_moving;
@@ -2812,26 +2846,25 @@ sub meetingPosition {
 	}
 	# Add 1 here to account for pos from solution so we don't have to do it multiple times later
 	$max_path_dist += 1;
-	
-	my %allspots;
-	my @blocks = calcRectArea2($realMyPos->{x}, $realMyPos->{y}, $max_path_dist, 0);
-	foreach my $spot (@blocks) {
-		$allspots{$spot->{x}}{$spot->{y}} = 1;
-	}
-	my $allspots_count = scalar @blocks;
+
+	my @candidate_spots = getMeetingPositionCandidateSpots(
+		$realMyPos,
+		$target_solution,
+		$targetCurrentStep,
+		$max_path_dist,
+		$attackMaxDistance,
+		$min_destination_dist,
+	);
+	my $allspots_count = scalar @candidate_spots;
 
 	my %prohibitedSpots;
 	foreach my $prohibited_actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
 		$prohibitedSpots{$prohibited_actor->{pos_to}{x}}{$prohibited_actor->{pos_to}{y}} = 1;
 	}
 
-	debug "[meetingPosition] before add_prohibitedCells.\n";
-
 	my %prohibitedCells;
 	my %plugin_args = ( cells => \%prohibitedCells, field => $field );
 	Plugins::callHook('add_prohibitedCells' => \%plugin_args);
-
-	debug "[meetingPosition] after add_prohibitedCells.\n";
 
 	my $best_spot;
 	my $best_targetPosInStep;
@@ -2839,164 +2872,178 @@ sub meetingPosition {
 	my $best_dist_to_spot;
 	my $best_path_dist;
 	my $best_time;
+	my $best_solution;
 	my %meeting_rejections;
 
 	require Task::Route;
 	my $solution;
 
-	debug "[meetingPosition] before allspots. candidates=$allspots_count max_path_dist=$max_path_dist myPos=$realMyPos->{x} $realMyPos->{y} targetPos=$realTargetPos->{x} $realTargetPos->{y}\n";
-	my $start_time = time;
-	foreach my $x_spot (sort keys %allspots) {
-		foreach my $y_spot (sort keys %{$allspots{$x_spot}}) {
-			my $spot;
-			$spot->{x} = $x_spot;
-			$spot->{y} = $y_spot;
+	message "[meetingPosition] before allspots. candidates=$allspots_count max_path_dist=$max_path_dist myPos=$realMyPos->{x} $realMyPos->{y} targetPos=$realTargetPos->{x} $realTargetPos->{y}\n";
+	foreach my $candidate (@candidate_spots) {
+		my $spot = {
+			x => $candidate->{x},
+			y => $candidate->{y},
+		};
 
-			if ($spot->{x} == $realMyPos->{x} && $spot->{y} == $realMyPos->{y}) {
-				$meeting_rejections{same_as_self}++;
+		if ($spot->{x} == $realMyPos->{x} && $spot->{y} == $realMyPos->{y}) {
+			$meeting_rejections{same_as_self}++;
+			next;
+		}
+
+		# Is this spot acceptable?
+
+		# 1. It must be walkable.
+		unless ($field->isWalkable($spot->{x}, $spot->{y})) {
+			$meeting_rejections{not_walkable}++;
+			next;
+		}
+		
+		# 1.2 It must not be occupied
+		if (exists $prohibitedSpots{$spot->{x}} && exists $prohibitedSpots{$spot->{x}}{$spot->{y}}) {
+			$meeting_rejections{occupied}++;
+			next;
+		}
+
+		# 1.3 It must not be inside plugin-provided prohibited cells.
+		if (exists $prohibitedCells{$spot->{x}} && exists $prohibitedCells{$spot->{x}}{$spot->{y}}) {
+			$meeting_rejections{prohibited_cell}++;
+			next;
+		}
+
+		my $dist_to_spot = $candidate->{dist_to_spot};
+
+		if (defined $best_path_dist && $dist_to_spot >= $best_path_dist) {
+			$meeting_rejections{worse_than_best}++;
+			next;
+		}
+		
+		# 2. It must not be close to a portal.
+		if (positionNearPortal($spot, $config{'attackMinPortalDistance'})) {
+			$meeting_rejections{near_portal}++;
+			next;
+		}
+
+		@{$solution} = ();
+		unless (Task::Route->getRoute($solution, $field, $realMyPos, $spot, 0, 0, 0, 1, 1)) {
+			$meeting_rejections{route_failed}++;
+			next;
+		}
+
+		# 3. It must be reachable.
+		if (scalar @{$solution} == 0) {
+			$meeting_rejections{empty_solution}++;
+			next;
+		}
+		
+		my $path_dist = scalar @{$solution};
+		
+		# 4. It must have at max $max_path_dist of route distance to it from our current position.
+		if ($path_dist > $max_path_dist) {
+			$meeting_rejections{path_too_long}++;
+			next;
+		}
+
+		my $time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
+
+		my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
+
+		my $temp_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
+		# Position target would be at if it doesn't change route (and is not following us)
+		my $targetPosInStep = $target_solution->[$temp_targetCurrentStep];
+
+		# 5. It must not be the same position the target will be in
+		if ($spot->{x} == $targetPosInStep->{x} && $spot->{y} == $targetPosInStep->{y}) {
+			$meeting_rejections{same_as_target}++;
+			next;
+		}
+		
+		# 6. We must be able to attack the target from this spot
+		if (canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) != 1) {
+			$meeting_rejections{cannot_attack}++;
+			# TODO: Add a leeway here, if we cant attack right now, allow if we would be able to attack in a small window, like the meetingPosition_future_reachability_lookup check but in reverse
+			# That would also need to add a *wait a bit, target is closing in in Attack.pm main*
+			next;
+		}
+
+		if ($timeout{meetingPosition_future_reachability_lookup}{timeout}) {
+			my $future_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, ($total_time + $timeout{meetingPosition_future_reachability_lookup}{timeout}));
+			my $future_targetPosInStep = $target_solution->[$future_targetCurrentStep];
+
+			# 6.1. We must be able to attack the target from this spot in the near future (exclude very thin attack window)
+			if (canAttack($field, $spot, $future_targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) != 1) {
+				$meeting_rejections{cannot_attack_future}++;
 				next;
 			}
+		}
+		
+		# 7. It must not be too close to the target if we have runfromtarget set
+		# TODO: Maybe we should assume the target will keep following us after it reaches its destination and take that into consideration when runfromtarget is set
+		my $dist_to_target = blockDistance($spot, $targetPosInStep);
+		if ($dist_to_target < $min_destination_dist) {
+			$meeting_rejections{too_close_to_target}++;
+			next;
+		}
 
-			# Is this spot acceptable?
-
-			# 1. It must be walkable.
-			unless ($field->isWalkable($spot->{x}, $spot->{y})) {
-				$meeting_rejections{not_walkable}++;
+		# 8. It must be within $followDistanceMax of MasterPos, if we have a master.
+		if ($realMasterPos) {
+			my $masterPosNow;
+			if ($master_moving) {
+				my $totalTime = $timeSinceMasterMoved + $time_actor_to_get_to_spot;
+				my $master_CurrentStep = calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
+				$masterPosNow = $master_solution->[$master_CurrentStep];
+			} else {
+				$masterPosNow = $realMasterPos;
+			}
+			if ($spot->{x} == $masterPosNow->{x} && $spot->{y} == $masterPosNow->{y}) {
+				$meeting_rejections{same_as_master}++;
 				next;
 			}
-			
-			# 1.2 It must not be occupied
-			if (exists $prohibitedSpots{$spot->{x}} && exists $prohibitedSpots{$spot->{x}}{$spot->{y}}) {
-				$meeting_rejections{occupied}++;
+			if (blockDistance($spot, $masterPosNow) > $followDistanceMax) {
+				$meeting_rejections{too_far_from_master}++;
 				next;
 			}
-
-			# 1.3 It must not be inside plugin-provided prohibited cells.
-			if (exists $prohibitedCells{$spot->{x}} && exists $prohibitedCells{$spot->{x}}{$spot->{y}}) {
-				$meeting_rejections{prohibited_cell}++;
+			if (blockDistance($targetPosInStep, $masterPosNow) > $followDistanceMax) {
+				$meeting_rejections{target_too_far_from_master}++;
 				next;
 			}
+		}
 
-			my $dist_to_spot = blockDistance($realMyPos, $spot);
-
-			if (defined $best_path_dist && $dist_to_spot >= $best_path_dist) {
-				$meeting_rejections{worse_than_best}++;
+		# 8. We must be able to get to the spot before our target
+		# TODO: Fix me. The target does not need to get to the spot, but to at least 2 cells away to be able to attack us, so take that into account
+		if ($runFromTargetActive) {
+			my $time_target_to_get_to_spot = calcTimeFromPathfinding($field, $realTargetPos, $spot, $targetSpeed);
+			if ($time_actor_to_get_to_spot > $time_target_to_get_to_spot) {
+				$meeting_rejections{target_gets_there_first}++;
 				next;
 			}
-			
-			# 2. It must not be close to a portal.
-			if (positionNearPortal($spot, $config{'attackMinPortalDistance'})) {
-				$meeting_rejections{near_portal}++;
-				next;
-			}
+		}
 
-			@{$solution} = ();
-			unless (Task::Route->getRoute($solution, $field, $realMyPos, $spot, 0, 0, 0, 1, 1)) {
-				$meeting_rejections{route_failed}++;
-				next;
-			}
-
-			# 3. It must be reachable.
-			if (scalar @{$solution} == 0) {
-				$meeting_rejections{empty_solution}++;
-				next;
-			}
-			
-			my $path_dist = scalar @{$solution};
-			
-			# 4. It must have at max $max_path_dist of route distance to it from our current position.
-			if ($path_dist > $max_path_dist) {
-				$meeting_rejections{path_too_long}++;
-				next;
-			}
-
-			my $time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
-
-			my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
-			my $temp_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
-			# Position target would be at if it doesn't change route (and is not following us)
-			my $targetPosInStep = $target_solution->[$temp_targetCurrentStep];
-
-			# 5. It must not be the same position the target will be in
-			if ($spot->{x} == $targetPosInStep->{x} && $spot->{y} == $targetPosInStep->{y}) {
-				$meeting_rejections{same_as_target}++;
-				next;
-			}
-			
-			# 6. We must be able to attack the target from this spot
-			if (canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) != 1) {
-				$meeting_rejections{cannot_attack}++;
-				next;
-			}
-			
-			# 7. It must not be too close to the target if we have runfromtarget set
-			# TODO: Maybe we should assume the target will keep following us after it reaches its destination and take that into consideration when runfromtarget is set
-			my $dist_to_target = blockDistance($spot, $targetPosInStep);
-			if ($dist_to_target < $min_destination_dist) {
-				$meeting_rejections{too_close_to_target}++;
-				next;
-			}
-
-			# 8. It must be within $followDistanceMax of MasterPos, if we have a master.
-			if ($realMasterPos) {
-				my $masterPosNow;
-				if ($master_moving) {
-					my $totalTime = $timeSinceMasterMoved + $time_actor_to_get_to_spot;
-					my $master_CurrentStep = calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
-					$masterPosNow = $master_solution->[$master_CurrentStep];
-				} else {
-					$masterPosNow = $realMasterPos;
-				}
-				if ($spot->{x} == $masterPosNow->{x} && $spot->{y} == $masterPosNow->{y}) {
-					$meeting_rejections{same_as_master}++;
-					next;
-				}
-				if (blockDistance($spot, $masterPosNow) > $followDistanceMax) {
-					$meeting_rejections{too_far_from_master}++;
-					next;
-				}
-				if (blockDistance($targetPosInStep, $masterPosNow) > $followDistanceMax) {
-					$meeting_rejections{target_too_far_from_master}++;
-					next;
-				}
-			}
-
-			# 8. We must be able to get to the spot before our target
-			# TODO: Fix me. The target does not need to get to the spot, but to at least 2 cells away to be able to attack us, so take that into account
-			if ($runFromTargetActive) {
-				my $time_target_to_get_to_spot = calcTimeFromPathfinding($field, $realTargetPos, $spot, $targetSpeed);
-				if ($time_actor_to_get_to_spot > $time_target_to_get_to_spot) {
-					$meeting_rejections{target_gets_there_first}++;
-					next;
-				}
-			}
-
-			# We then choose the spot which takes the least amount of time to reach
-			# TODO: Maybe this is not the best idea when runfromtarget is set
-			if (!defined($best_time) || $time_actor_to_get_to_spot < $best_time) {
-				$best_time = $time_actor_to_get_to_spot;
-				$best_spot = $spot;
-				$best_dist_to_spot = $dist_to_spot;
-				$best_path_dist = $path_dist;
-				$best_targetPosInStep = $targetPosInStep;
-				$best_dist_to_target = $dist_to_target;
-			}
+		# We then choose the spot which takes the least amount of time to reach
+		# TODO: Maybe this is not the best idea when runfromtarget is set
+		if (!defined($best_time) || $time_actor_to_get_to_spot < $best_time) {
+			$best_time = $time_actor_to_get_to_spot;
+			$best_spot = $spot;
+			$best_dist_to_spot = $dist_to_spot;
+			$best_path_dist = $path_dist;
+			$best_targetPosInStep = $targetPosInStep;
+			$best_dist_to_target = $dist_to_target;
+			$best_solution = $solution;
 		}
 	}
 	my $end_time = time;
-	debug "[meetingPosition] after allspots.\n";
 
 	my $elapsed = $end_time - $start_time;
-	debug "[meetingPosition] Elapsed time $elapsed\n";
+	message "[meetingPosition] Elapsed time $elapsed\n";
 
-	debug "[meetingPosition] Rejections: " . join(', ', map { $_ . '=' . $meeting_rejections{$_} } sort keys %meeting_rejections) . "\n";
+	message "[meetingPosition] Rejections: " . join(', ', map { $_ . '=' . $meeting_rejections{$_} } sort keys %meeting_rejections) . "\n";
 
 	if (defined $best_spot) {
-		debug "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
+		message "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
+		message "[meetingPosition] Solution: ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
 		return $best_spot;
 	}
 
-	debug "[meetingPosition] No valid spot found.\n";
+	message "[meetingPosition] No valid spot found.\n";
 }
 
 sub objectAdded {
