@@ -360,6 +360,7 @@ sub iterate {
 		undef $self->{last_best_pos_step};
 		undef $self->{last_best_pos_to_step};
 		undef $self->{next_pos};
+		undef $self->{current_move_step_index};
 		undef $self->{time_step};
 
 		$self->{stage} = WALK_ROUTE_SOLUTION;
@@ -621,28 +622,9 @@ sub iterate {
 				}
 			}
 
-			# If there are less steps to cover than the step size move to the last step (the destination).
-			if ($self->{step_index} >= $stepsleft) {
-				$self->{step_index} = $stepsleft - 1;
-				$self->{lastStep} = 1;
-			}
-
-			# Here maybe we should also use pos_to (in the form of best_pos_to_step) to decide the next step index, as it can make the routing way more responsive
-
-			
-			if ($self->{anyDistFromGoal}) {
-				my $step = $solution->[$self->{step_index}];
-				# We are close enough to the destination
-				if (exists $step->{closeToEnd} && $step->{closeToEnd}) {
-					my $current_i = $self->{step_index};
-					while (1) {
-						last if ($current_i == 0);
-						last if ($solution->[($current_i-1)]{closeToEnd} == 0);
-						$current_i--;
-					}
-					$self->{step_index} = $current_i;
-				}
-			}
+			# Keep step_index as the persistent safeguard/unstuck step size.
+			# Hook-driven route_step changes should only affect the move we send now.
+			my $move_step_index = $self->{step_index};
 
 			# Give plugins a chance to shrink the local move packet distance if the
 			# client-side path to the lookahead cell would cut through danger.
@@ -654,7 +636,7 @@ sub iterate {
 				current_calc_pos => $current_calc_pos,
 				stepsleft => $stepsleft,
 				config_route_step => $config{$self->{actor}{configPrefix}.'route_step'},
-				route_step => $self->{step_index},
+				route_step => $move_step_index,
 			);
 			Plugins::callHook('route_step', \%routeStepHookArgs);
 
@@ -663,17 +645,34 @@ sub iterate {
 				delete $self->{resetRoute};
 				$self->iterate();
 				return;
+			}
 
-			} elsif (defined $routeStepHookArgs{route_step} && $routeStepHookArgs{route_step} != $self->{step_index}) {
-				$self->{step_index} = $routeStepHookArgs{route_step};
-				$self->{step_index} = 0 if $self->{step_index} < 0;
-				if ($self->{step_index} >= $stepsleft) {
-					$self->{step_index} = $stepsleft - 1;
-					$self->{lastStep} = 1;
+			if (defined $routeStepHookArgs{route_step} && $routeStepHookArgs{route_step} != $move_step_index) {
+				$move_step_index = $routeStepHookArgs{route_step};
+			}
+
+			if ($self->{anyDistFromGoal}) {
+				my $step = $solution->[$move_step_index];
+				# We are close enough to the destination
+				if (exists $step->{closeToEnd} && $step->{closeToEnd}) {
+					my $current_i = $move_step_index;
+					while (1) {
+						last if ($current_i == 0);
+						last if ($solution->[($current_i-1)]{closeToEnd} == 0);
+						$current_i--;
+					}
+					$move_step_index = $current_i;
 				}
 			}
 
-			@{$self->{next_pos}}{qw(x y)} = @{$solution->[$self->{step_index}]}{qw(x y)};
+			$move_step_index = 0 if $move_step_index < 0;
+			if ($move_step_index >= $stepsleft) {
+				$move_step_index = $stepsleft - 1;
+				$self->{lastStep} = 1;
+			}
+
+			$self->{current_move_step_index} = $move_step_index;
+			@{$self->{next_pos}}{qw(x y)} = @{$solution->[$move_step_index]}{qw(x y)};
 
 			# But first, check whether the distance of the next point isn't abnormally large.
 			# If it is, then we've moved to an unexpected place. This could be caused by auto-attack, for example.
@@ -766,7 +765,7 @@ sub iterate {
 				@{$self->{last_pos_to}}{qw(x y)} = @{$current_pos_to}{qw(x y)};
 				@{$self->{last_current_calc_pos}}{qw(x y)} = @{$current_calc_pos}{qw(x y)};
 
-				debug "Route $self->{actor} at ($current_calc_pos->{x} $current_calc_pos->{y}) - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
+				debug "Route $self->{actor} at ($current_calc_pos->{x} $current_calc_pos->{y}) - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $move_step_index, $stepsleft steps left\n", "route";
 				
 				$self->setMove();
 			}
