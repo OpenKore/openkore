@@ -13,17 +13,14 @@ avoidObstacles_enable_move 0
 avoidObstacles_enable_remove 1
 avoidObstacles_enable_avoid_portals 1
 avoidObstacles_adjust_route_step 1
-avoidObstacles_drop_route_dest_near_obstacle 1
 avoidObstacles_weight_limit 65000
-avoidObstacles_target_drop_dist 13
 
 avoidObstaclesMonster 1368 {
 	enabled 1
 	weight 2000
 	penalty_dist 12
 	danger_dist 1
-	drop_target_near 0
-	drop_dest_near 1
+	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesMonster 1780 {
@@ -31,8 +28,7 @@ avoidObstaclesMonster 1780 {
 	weight 2000
 	penalty_dist 12
 	danger_dist 1
-	drop_target_near 0
-	drop_dest_near 1
+	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesMonster 1781 {
@@ -40,8 +36,7 @@ avoidObstaclesMonster 1781 {
 	weight 2000
 	penalty_dist 12
 	danger_dist 1
-	drop_target_near 0
-	drop_dest_near 1
+	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesSpell 135 {
@@ -49,8 +44,7 @@ avoidObstaclesSpell 135 {
 	weight 2000
 	penalty_dist 12
 	danger_dist 1
-	drop_target_near 0
-	drop_dest_near 1
+	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesSpell 136 {
@@ -58,8 +52,28 @@ avoidObstaclesSpell 136 {
 	weight 2000
 	penalty_dist 12
 	danger_dist 1
-	drop_target_near 0
-	drop_dest_near 1
+	drop_destination_when_near_dist 13
+}
+
+avoidObstaclesDefaultPortals {
+	enabled 1
+	weight 10000
+	penalty_dist 12
+	danger_dist 4
+	prohibited_dist 2
+	drop_target_when_near_dist 13
+	drop_destination_when_near_dist 13
+}
+
+avoidObstaclesCellsInMap job_hunte {
+	enabled 1
+	cells 52 140, 53 140
+	weight 500
+	penalty_dist 2
+	danger_dist 2
+	prohibited_dist 1
+	drop_target_when_near_dist 13
+	drop_destination_when_near_dist 13
 }
 =cut
 
@@ -120,6 +134,8 @@ my %plugin_settings;
 my %mob_nameID_obstacles;
 my %player_name_obstacles;
 my %area_spell_type_obstacles;
+my %cells_in_map_obstacles;
+my %default_portal_obstacle;
 
 my %obstaclesList;
 my %removed_obstacle_still_in_list;
@@ -149,7 +165,7 @@ sub route_crosses_target_danger_zone_fast {
 	return 0;
 }
 
-# Rejects a route that enters a portal hard zone, re-enters after leaving,
+# Rejects a route that enters a hard zone, re-enters after leaving,
 # or moves deeper while trying to escape from inside the initial hard zone.
 sub route_crosses_prohibited_cells {
 	my ($solution, $prohibited_cells) = @_;
@@ -195,9 +211,7 @@ sub default_settings {
 		enable_remove => 1,
 		enable_avoid_portals => 1,
 		adjust_route_step => 1,
-		drop_route_dest_near_obstacle => 1,
 		weight_limit => 65000,
-		target_drop_dist => 13,
 	);
 }
 
@@ -207,6 +221,8 @@ sub reset_plugin_configuration {
 	%mob_nameID_obstacles = ();
 	%player_name_obstacles = ();
 	%area_spell_type_obstacles = ();
+	%cells_in_map_obstacles = ();
+	%default_portal_obstacle = default_portal_obstacle_entry();
 }
 
 ## Converts a short plugin setting name into its config.txt key.
@@ -221,7 +237,8 @@ sub is_plugin_config_key {
 
 	return 0 unless defined $key && $key ne '';
 	return 1 if $key =~ /^avoidObstacles_/;
-	return 1 if $key =~ /^avoidObstacles(?:Monster|Player|Spell)_/;
+	return 1 if $key =~ /^avoidObstacles(?:Monster|Player|Spell|CellsInMap)_/;
+	return 1 if $key =~ /^avoidObstaclesDefaultPortals(?:_|$)/;
 
 	return 0;
 }
@@ -244,7 +261,7 @@ sub load_settings_from_config {
 		my $config_key = plugin_config_key($key);
 		next unless defined $config{$config_key} && $config{$config_key} ne '';
 
-		if ($key =~ /^enable_|^adjust_route_step$|^drop_route_dest_near_obstacle$/) {
+		if ($key =~ /^enable_|^adjust_route_step$/) {
 			$plugin_settings{$key} = normalize_bool($config{$config_key}, 'config.txt', $config_key);
 		} else {
 			$plugin_settings{$key} = normalize_number($config{$config_key}, 'config.txt', $config_key);
@@ -267,11 +284,11 @@ sub load_obstacle_blocks_from_config {
 			? %{ $target_hash->{$identifier} }
 			: default_obstacle_entry();
 
-		foreach my $option (qw(enabled weight penalty_dist danger_dist drop_target_near drop_dest_near)) {
+		foreach my $option (qw(enabled weight penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
 			my $option_key = "${block_key}_${option}";
 			next unless defined $config{$option_key} && $config{$option_key} ne '';
 
-			if ($option eq 'enabled' || $option eq 'drop_target_near' || $option eq 'drop_dest_near') {
+			if ($option eq 'enabled') {
 				$entry{$option} = normalize_bool($config{$option_key}, 'config.txt', $option_key);
 			} else {
 				$entry{$option} = normalize_number($config{$option_key}, 'config.txt', $option_key);
@@ -282,6 +299,84 @@ sub load_obstacle_blocks_from_config {
 	}
 }
 
+## Parses a comma-separated `x y` cell list from one avoidObstaclesCellsInMap block.
+sub parse_cells_in_map_list {
+	my ($cells_text, $map_name, $block_key) = @_;
+
+	my @cells;
+	my %seen_cells;
+	return @cells unless defined $cells_text && $cells_text ne '';
+
+	foreach my $cell_text (split /\s*,\s*/, $cells_text) {
+		next unless defined $cell_text && $cell_text ne '';
+
+		my ($x, $y) = $cell_text =~ /^\s*(\d+)\s+(\d+)\s*$/;
+		if (!defined $x || !defined $y) {
+			warning "[" . PLUGIN_NAME . "] Invalid cell '$cell_text' in block $block_key for map $map_name. Expected 'x y'.\n";
+			next;
+		}
+
+		my $cell_key = "$x,$y";
+		next if $seen_cells{$cell_key}++;
+		push @cells, { x => 0 + $x, y => 0 + $y };
+	}
+
+	return @cells;
+}
+
+## Loads static cell obstacles keyed by map name from config.txt.
+sub load_cells_in_map_obstacles_from_config {
+	foreach my $block_key (sort keys %config) {
+		next unless $block_key =~ /^avoidObstaclesCellsInMap_\d+$/;
+
+		my $map_name = $config{$block_key};
+		next unless defined $map_name && $map_name ne '';
+
+		my %entry = default_obstacle_entry();
+
+		foreach my $option (qw(enabled weight penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
+			my $option_key = "${block_key}_${option}";
+			next unless defined $config{$option_key} && $config{$option_key} ne '';
+
+			if ($option eq 'enabled') {
+				$entry{$option} = normalize_bool($config{$option_key}, 'config.txt', $option_key);
+			} else {
+				$entry{$option} = normalize_number($config{$option_key}, 'config.txt', $option_key);
+			}
+		}
+
+		my @cells = parse_cells_in_map_list($config{"${block_key}_cells"}, $map_name, $block_key);
+		next unless @cells;
+
+		push @{ $cells_in_map_obstacles{$map_name} }, {
+			config => \%entry,
+			cells => \@cells,
+		};
+	}
+}
+
+## Loads the default portal obstacle configuration from config.txt.
+sub load_default_portal_obstacle_from_config {
+	my %entry = default_portal_obstacle_entry();
+
+	foreach my $block_key (sort keys %config) {
+		next unless $block_key =~ /^avoidObstaclesDefaultPortals_\d+$/;
+
+		foreach my $option (qw(enabled weight penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
+			my $option_key = "${block_key}_${option}";
+			next unless defined $config{$option_key} && $config{$option_key} ne '';
+
+			if ($option eq 'enabled') {
+				$entry{$option} = normalize_bool($config{$option_key}, 'config.txt', $option_key);
+			} else {
+				$entry{$option} = normalize_number($config{$option_key}, 'config.txt', $option_key);
+			}
+		}
+	}
+
+	%default_portal_obstacle = %entry;
+}
+
 ## Loads or reloads the plugin configuration from config.txt and rebuilds runtime obstacles from the visible world.
 sub reload_plugin_configuration {
 	reset_plugin_configuration();
@@ -289,6 +384,8 @@ sub reload_plugin_configuration {
 	load_obstacle_blocks_from_config('avoidObstaclesMonster', 'monster', \%mob_nameID_obstacles);
 	load_obstacle_blocks_from_config('avoidObstaclesPlayer', 'player', \%player_name_obstacles);
 	load_obstacle_blocks_from_config('avoidObstaclesSpell', 'spell', \%area_spell_type_obstacles);
+	load_cells_in_map_obstacles_from_config();
+	load_default_portal_obstacle_from_config();
 
 	rebuild_obstacles_from_world();
 }
@@ -341,8 +438,9 @@ sub default_obstacle_entry {
 		weight => 2000,
 		penalty_dist => 9,
 		danger_dist => 3,
-		drop_target_near => 0,
-		drop_dest_near => 1,
+		prohibited_dist => -1,
+		drop_target_when_near_dist => -1,
+		drop_destination_when_near_dist => -1,
 	);
 }
 
@@ -353,8 +451,9 @@ sub default_portal_obstacle_entry {
 		weight => 10000,
 		penalty_dist => 12,
 		danger_dist => 4,
-		drop_target_near => 1,
-		drop_dest_near => 1,
+		prohibited_dist => 2,
+		drop_target_when_near_dist => 2,
+		drop_destination_when_near_dist => 2,
 	);
 }
 
@@ -385,6 +484,8 @@ sub rebuild_obstacles_from_world {
 	%removed_obstacle_still_in_list = ();
 	return unless $field;
 
+	rebuild_static_cell_obstacles_for_current_map();
+
 	foreach my $monster (@{ $monstersList ? $monstersList->getItems : [] }) {
 		my $obstacle = get_monster_obstacle($monster);
 		add_obstacle($monster, $obstacle, 'monster') if $obstacle;
@@ -408,6 +509,27 @@ sub rebuild_obstacles_from_world {
 	}
 
 	$mustRePath = 1 if $had_obstacles || scalar keys %obstaclesList;
+}
+
+## Adds all configured static cell obstacles for the current map into the live obstacle cache.
+sub rebuild_static_cell_obstacles_for_current_map {
+	return unless $field;
+
+	my $map_name = $field->baseName;
+	return unless defined $map_name && exists $cells_in_map_obstacles{$map_name};
+
+	my $block_index = 0;
+	foreach my $block (@{ $cells_in_map_obstacles{$map_name} }) {
+		next unless $block->{config} && $block->{config}{enabled};
+
+		my $cell_index = 0;
+		foreach my $pos (@{ $block->{cells} || [] }) {
+			add_static_cell_obstacle($map_name, $block_index, $cell_index, $pos, $block->{config});
+			$cell_index++;
+		}
+
+		$block_index++;
+	}
 }
 
 ## Handles the `od` console command for dumping, reloading, and summarizing plugin state.
@@ -455,6 +577,7 @@ sub on_packet_mapChange {
 	%obstaclesList = ();
 	%removed_obstacle_still_in_list = ();
 	$mustRePath = 0;
+	rebuild_static_cell_obstacles_for_current_map();
 }
 
 ## Blocks targets that are too close to configured obstacles and releases them once the danger is gone.
@@ -502,9 +625,14 @@ sub is_there_an_obstacle_near_pos {
 		my $obstacle = $obstaclesList{$obstacle_ID};
 		next unless $obstacle->{pos_to};
 
-		if (($type == 1 && $obstacle->{drop_target_near}) || ($type == 2 && $obstacle->{drop_dest_near})) {
-			my $dist = blockDistance($pos, $obstacle->{pos_to});
-			next unless $dist <= $plugin_settings{target_drop_dist};
+		my $dist = blockDistance($pos, $obstacle->{pos_to});
+		if ($type == 1) {
+			next unless defined $obstacle->{drop_target_when_near_dist} && $obstacle->{drop_target_when_near_dist} >= 0;
+			next unless $dist <= $obstacle->{drop_target_when_near_dist};
+			return $obstacle;
+		} else {
+			next unless defined $obstacle->{drop_destination_when_near_dist} && $obstacle->{drop_destination_when_near_dist} >= 0;
+			next unless $dist <= $obstacle->{drop_destination_when_near_dist};
 			return $obstacle;
 		}
 	}
@@ -512,20 +640,21 @@ sub is_there_an_obstacle_near_pos {
 	return;
 }
 
-## Builds a hash of portal hard-zone cells keyed by their nearest portal distance.
+## Builds a hash of hard-zone cells keyed by their nearest obstacle distance.
 sub build_prohibited_cells {
 	my %prohibited;
 
 	foreach my $obstacle_ID (keys %obstaclesList) {
 		my $obstacle = $obstaclesList{$obstacle_ID};
-		next unless $obstacle->{type} eq 'portal';
+		next unless defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} >= 0;
 		my $obstacle_pos = get_actor_position($obstacle);
 		next unless $obstacle_pos;
-		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, 3);
+		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $obstacle->{prohibited_dist});
 		foreach my $y ($min_y .. $max_y) {
 			foreach my $x ($min_x .. $max_x) {
 				next unless $field->isWalkable($x, $y);
 				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
+				next if $distance > $obstacle->{prohibited_dist};
 				if (!defined $prohibited{$x}{$y} || $distance < $prohibited{$x}{$y}) {
 					$prohibited{$x}{$y} = $distance;
 				}
@@ -535,7 +664,7 @@ sub build_prohibited_cells {
 	return \%prohibited;
 }
 
-## Scores one client-side move solution based on danger zones and prohibited cells.
+## Scores one client-side move solution based on danger zones and hard prohibited cells.
 sub score_client_solution {
 	my ($client_solution, $prohibited_cells) = @_;
 	return 999999 unless $client_solution && @{$client_solution};
@@ -547,10 +676,9 @@ sub score_client_solution {
 	foreach my $obstacle_ID (keys %obstaclesList) {
 		my $obstacle = $obstaclesList{$obstacle_ID};
 		next unless $obstacle->{pos_to};
-		next if $obstacle->{type} eq 'portal';
 
 		my $danger_dist = defined $obstacle->{danger_dist} ? $obstacle->{danger_dist} : 1;
-		next if $danger_dist <= 0;
+		next if $danger_dist < 0;
 
 		$score++ if route_crosses_target_danger_zone_fast($client_solution, $obstacle->{pos_to}, $danger_dist);
 	}
@@ -612,7 +740,6 @@ sub on_route_step {
 
 ## Drops random-walk or lock-map route destinations when an obstacle appears too close to them.
 sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
-	return unless $plugin_settings{drop_route_dest_near_obstacle};
 	return unless scalar keys %obstaclesList;
 
 	my $arg_i;
@@ -672,13 +799,31 @@ sub add_obstacle {
 	$mustRePath = 1;
 }
 
+## Adds one static cell obstacle to the live obstacle cache.
+sub add_static_cell_obstacle {
+	my ($map_name, $block_index, $cell_index, $pos, $obstacle) = @_;
+	return unless $field && $pos && $obstacle;
+
+	my $id = join(':', 'cell', $map_name, $block_index, $cell_index, $pos->{x}, $pos->{y});
+	my $weight_changes = create_changes_array($pos, $obstacle);
+
+	$obstaclesList{$id}{pos_to} = { x => $pos->{x}, y => $pos->{y} };
+	$obstaclesList{$id}{weight} = $weight_changes;
+	$obstaclesList{$id}{type} = 'cell';
+	$obstaclesList{$id}{name} = "$map_name $pos->{x} $pos->{y}";
+	$obstaclesList{$id}{map} = $map_name;
+
+	define_extras($id, $obstacle);
+}
+
 ## Copies obstacle metadata that later logic needs for dropping and route-step scoring.
 sub define_extras {
 	my ($ID, $obstacle) = @_;
-	$obstaclesList{$ID}{drop_target_near} = $obstacle->{drop_target_near} ? 1 : 0;
-	$obstaclesList{$ID}{drop_dest_near} = $obstacle->{drop_dest_near} ? 1 : 0;
+	$obstaclesList{$ID}{drop_target_when_near_dist} = defined $obstacle->{drop_target_when_near_dist} ? $obstacle->{drop_target_when_near_dist} : -1;
+	$obstaclesList{$ID}{drop_destination_when_near_dist} = defined $obstacle->{drop_destination_when_near_dist} ? $obstacle->{drop_destination_when_near_dist} : -1;
 	$obstaclesList{$ID}{danger_dist} = defined $obstacle->{danger_dist} ? $obstacle->{danger_dist} : 1;
-	$obstaclesList{$ID}{penalty_dist} = defined $obstacle->{penalty_dist} ? $obstacle->{penalty_dist} : 0;
+	$obstaclesList{$ID}{prohibited_dist} = defined $obstacle->{prohibited_dist} ? $obstacle->{prohibited_dist} : -1;
+	$obstaclesList{$ID}{penalty_dist} = defined $obstacle->{penalty_dist} ? $obstacle->{penalty_dist} : -1;
 }
 
 ## Updates the position and weight grid of a moving obstacle when that mode is enabled.
@@ -905,6 +1050,7 @@ sub create_changes_array {
 
 	my %local_obstacle = %{$obstacle};
 	my $max_distance = $local_obstacle{penalty_dist};
+	return [] unless defined $max_distance && $max_distance >= 0;
 	my $ratio = $local_obstacle{weight};
 
 	my @changes_array;
@@ -1056,7 +1202,7 @@ sub on_areaSpell_disappeared {
 ## Returns the configured obstacle entry for portals when portal avoidance is enabled.
 sub get_portal_obstacle {
 	return unless $plugin_settings{enable_avoid_portals};
-	my %obstacle = default_portal_obstacle_entry();
+	my %obstacle = %default_portal_obstacle;
 	return \%obstacle if $obstacle{enabled};
 	return;
 }
