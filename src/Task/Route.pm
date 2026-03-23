@@ -752,7 +752,7 @@ sub iterate {
 				@{$self->{last_pos_to}}{qw(x y)} = @{$current_pos_to}{qw(x y)};
 				@{$self->{last_current_calc_pos}}{qw(x y)} = @{$current_calc_pos}{qw(x y)};
 
-				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
+				debug "Route $self->{actor} at ($current_calc_pos->{x} $current_calc_pos->{y}) - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
 				
 				$self->setMove();
 			}
