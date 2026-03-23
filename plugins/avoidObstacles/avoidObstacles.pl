@@ -804,56 +804,61 @@ sub route_danger_score_from_cells {
 	return 0 unless $solution && @{$solution};
 	return 0 unless $danger_cells;
 
-	my $started_inside;
-	my $left_initial_zone = 0;
-	my $current_region_max = 0;
 	my $score = 0;
 
 	foreach my $node (@{$solution}) {
 		next unless $node;
-
-		my $cell_score = ($danger_cells->{$node->{x}} && $danger_cells->{$node->{x}}{$node->{y}}) || 0;
-		my $inside = $cell_score > 0;
-
-		if (!defined $started_inside) {
-			$started_inside = $inside ? 1 : 0;
-			if ($inside) {
-				$current_region_max = $cell_score;
-			} else {
-				$left_initial_zone = 1;
-			}
-			next;
-		}
-
-		if ($inside) {
-			$current_region_max = $cell_score if $cell_score > $current_region_max;
-		} else {
-			if ($current_region_max && (!$started_inside || $left_initial_zone)) {
-				$score += $current_region_max;
-			}
-			$current_region_max = 0;
-			$left_initial_zone = 1;
-		}
-	}
-
-	if ($current_region_max && (!$started_inside || $left_initial_zone)) {
-		$score += $current_region_max;
+		$score += ($danger_cells->{$node->{x}} && $danger_cells->{$node->{x}}{$node->{y}}) || 0;
 	}
 
 	return $score;
 }
 
-## Scores one client-side move solution based on cached danger zones and hard prohibited cells.
-sub score_client_solution {
-	my ($client_solution, $prohibited_cells, $danger_cells) = @_;
-	return 999999 unless $client_solution && @{$client_solution};
+sub route_danger_score_for_slice {
+	my ($solution, $danger_cells, $from_idx, $to_idx) = @_;
+	return 0 unless $solution && @{$solution};
+	return 0 unless defined $from_idx && defined $to_idx;
+	return 0 if $from_idx > $to_idx;
 
-	my $score = 0;
+	my $slice = [ @{$solution}[$from_idx .. $to_idx] ];
+	return route_danger_score_from_cells($slice, $danger_cells);
+}
 
-	$score += 1000 if route_crosses_prohibited_cells($client_solution, $prohibited_cells);
-	$score += route_danger_score_from_cells($client_solution, $danger_cells);
+sub build_route_step_candidates {
+	my ($solution, $max_route_step) = @_;
+	my @candidates;
+	return \@candidates unless $solution && @{$solution};
+	return \@candidates unless defined $max_route_step && $max_route_step >= 1;
 
-	return $score;
+	my %seen;
+	my $last_index = @{$solution} - 1;
+	$max_route_step = $last_index if $max_route_step > $last_index;
+	return \@candidates if $max_route_step < 1;
+
+	if ($max_route_step >= 2) {
+		my $prev_dx = $solution->[1]{x} - $solution->[0]{x};
+		my $prev_dy = $solution->[1]{y} - $solution->[0]{y};
+
+		for (my $i = 2; $i <= $max_route_step; $i++) {
+			my $dx = $solution->[$i]{x} - $solution->[$i - 1]{x};
+			my $dy = $solution->[$i]{y} - $solution->[$i - 1]{y};
+			if ($dx != $prev_dx || $dy != $prev_dy) {
+				my $boundary = $i - 1;
+				if ($boundary >= 1 && !$seen{$boundary}) {
+					push @candidates, $boundary;
+					$seen{$boundary} = 1;
+				}
+			}
+			$prev_dx = $dx;
+			$prev_dy = $dy;
+		}
+	}
+
+	if (!$seen{$max_route_step}) {
+		push @candidates, $max_route_step;
+	}
+
+	return \@candidates;
 }
 
 ## Chooses the safest route_step by simulating the client's local move path for each candidate.
@@ -861,31 +866,58 @@ sub choose_best_route_step {
 	my ($current_pos, $solution, $max_route_step, $prohibited_cells, $danger_cells) = @_;
 	return unless $current_pos && $solution && @{$solution};
 	return unless defined $max_route_step && $max_route_step >= 1;
+
+	my $last_index = @{$solution} - 1;
+	$max_route_step = $last_index if $max_route_step > $last_index;
+	return unless $max_route_step >= 1;
 	
 	my ($best_step, $best_score, $best_solution, $best_pos);
+	my $candidate_steps = build_route_step_candidates($solution, $max_route_step);
+	my $expected_route_danger = route_danger_score_for_slice($solution, $danger_cells, 0, $max_route_step);
 
-	for (my $candidate_step = $max_route_step; $candidate_step >= 1; $candidate_step--) {
+	message "[" . PLUGIN_NAME . "] >>>>> Before best step candidates ". (scalar @{$candidate_steps}) ."\n", 'route';
+	message "[" . PLUGIN_NAME . "] max_route_step $max_route_step | expected_route_danger $expected_route_danger\n", 'route';
+
+	foreach my $candidate_step (reverse @{$candidate_steps}) {
 		my $candidate_pos = $solution->[$candidate_step];
 		next unless $candidate_pos;
 
 		my $client_solution = get_client_solution($field, $current_pos, $candidate_pos);
 		next unless $client_solution && @{$client_solution};
 
-		my $score = score_client_solution($client_solution, $prohibited_cells, $danger_cells);
+		if (route_crosses_prohibited_cells($client_solution, $prohibited_cells)) {
+			message "[" . PLUGIN_NAME . "] Dropped [step $candidate_step] [$candidate_pos->{x} $candidate_pos->{y}] bc prohibited_cells \n", 'route';
+			next;
+		}
 
+		my $score = route_danger_score_from_cells($client_solution, $danger_cells);
+		if ($candidate_step < $max_route_step) {
+			$score += route_danger_score_for_slice($solution, $danger_cells, $candidate_step + 1, $max_route_step);
+		}
+
+		message "[" . PLUGIN_NAME . "] [step $candidate_step] [$candidate_pos->{x} $candidate_pos->{y}] Danger $score\n", 'route';
+=pod
+		if ($score <= $expected_route_danger) {
+			$best_step = $candidate_step;
+			$best_score = $score;
+			$best_solution = $client_solution;
+			$best_pos = $candidate_pos;
+			last;
+		}
+=cut
 		if (!defined $best_score || $score < $best_score) {
 			$best_step = $candidate_step;
 			$best_score = $score;
 			$best_solution = $client_solution;
 			$best_pos = $candidate_pos;
 		}
-
-		last if defined $best_score && $best_score == 0;
 	}
 
-	if ($best_score < 1000) {
-		message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Client == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
-		message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n";
+	if (defined $best_score) {
+	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Client == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
+	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n";
+		warning "[" . PLUGIN_NAME . "] chose route_step $best_step (max $max_route_step [same? ". (($best_step == $max_route_step) ? 1 : 0) ."]) at [$best_pos->{x} $best_pos->{y}].\n", 'route';
+		warning "[" . PLUGIN_NAME . "] Danger score $best_score (expected route danger $expected_route_danger).\n", 'route';
 	}
 
 	return ($best_step, $best_score);
@@ -979,9 +1011,7 @@ sub on_route_step {
 	$prohibited_cells = filter_prohibited_cells_for_route_task($args->{task}, $prohibited_cells, $field);
 	my $danger_cells = get_cached_danger_cells();
 	my ($best_step, $best_score) = choose_best_route_step($args->{current_calc_pos}, $args->{solution}, $max_route_step, $prohibited_cells, $danger_cells);
-	return unless defined $best_step;
-
-	if (defined $best_score && $best_score >= 1000) {
+	if (!defined $best_step) {
 		warning "[" . PLUGIN_NAME . "] No safe local route_step found; local client path would cross a prohibited cell. Requesting repath.\n";
 		$args->{task}{resetRoute} = 1;
 		return;
