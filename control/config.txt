@@ -1039,6 +1039,15 @@ avoidObstacles_enable_move 0
 avoidObstacles_enable_remove 1
 avoidObstacles_enable_avoid_portals 1
 avoidObstacles_adjust_route_step 1
-avoidObstacles_drop_route_dest_near_obstacle 1
 avoidObstacles_weight_limit 65000
-avoidObstacles_target_drop_dist 13
+
+avoidObstaclesDefaultPortals {
+	enabled 1
+	penalty_dist 1000, 1000, 1000
+	danger_dist 10, 10, 10
+	prohibited_dist 2
+	drop_target_when_near_dist 3
+	drop_destination_when_near_dist 3
+}
+
+
