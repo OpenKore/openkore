@@ -4,7 +4,8 @@
 #  Author: Henrybk
 #
 #  Config-driven dynamic obstacle avoidance for routing and target
-#  selection. Configure behavior in control/config.txt.
+#  selection using per-distance penalty and danger profiles.
+#  Configure behavior in control/config.txt.
 #########################################################################
 =pod
 ######## avoidObstacles ########
@@ -17,49 +18,43 @@ avoidObstacles_weight_limit 65000
 
 avoidObstaclesMonster 1368 {
 	enabled 1
-	weight 2000
-	penalty_dist 12
-	danger_dist 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
 	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesMonster 1780 {
 	enabled 1
-	weight 2000
-	penalty_dist 12
-	danger_dist 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
 	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesMonster 1781 {
 	enabled 1
-	weight 2000
-	penalty_dist 12
-	danger_dist 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
 	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesSpell 135 {
 	enabled 1
-	weight 2000
-	penalty_dist 12
-	danger_dist 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
 	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesSpell 136 {
 	enabled 1
-	weight 2000
-	penalty_dist 12
-	danger_dist 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
 	drop_destination_when_near_dist 13
 }
 
 avoidObstaclesDefaultPortals {
 	enabled 1
-	weight 10000
-	penalty_dist 12
-	danger_dist 4
+	penalty_dist 10000, 10000, 2500, 1111, 625, 400, 277, 204, 156, 123, 100, 82, 69
+	danger_dist 1, 1, 1, 1, 1
 	prohibited_dist 2
 	drop_target_when_near_dist 13
 	drop_destination_when_near_dist 13
@@ -68,9 +63,8 @@ avoidObstaclesDefaultPortals {
 avoidObstaclesCellsInMap job_hunte {
 	enabled 1
 	cells 52 140, 53 140
-	weight 500
-	penalty_dist 2
-	danger_dist 2
+	penalty_dist 500, 500, 125
+	danger_dist 1, 1, 1
 	prohibited_dist 1
 	drop_target_when_near_dist 13
 	drop_destination_when_near_dist 13
@@ -167,28 +161,6 @@ sub invalidate_pathfinding_caches {
 	undef $cached_final_grid_field_name;
 }
 
-
-# Fast path-level guard: spots outside melee range are still penalized if the route cuts through threat range.
-sub route_crosses_target_danger_zone_fast {
-	my ($solution, $obstacle_pos, $danger_dist) = @_;
-
-	return 0 unless $solution && @{$solution};
-	return 0 unless $obstacle_pos;
-
-	my $left_initial_danger_zone = 0;
-	foreach my $node (@{$solution}) {
-		my $d = blockDistance($node, $obstacle_pos);
-		if ($d <= $danger_dist) {
-			# Allow routes that start inside threat range and immediately step out of it.
-			return 1 if $left_initial_danger_zone;
-		} else {
-			$left_initial_danger_zone = 1;
-		}
-	}
-
-	return 0;
-}
-
 # Rejects a route that enters a hard zone, re-enters after leaving,
 # or moves deeper while trying to escape from inside the initial hard zone.
 sub route_crosses_prohibited_cells {
@@ -232,9 +204,9 @@ sub route_crosses_prohibited_cells {
 sub default_settings {
 	return (
 		enable_move => 0,
-		enable_remove => 1,
-		enable_avoid_portals => 1,
-		adjust_route_step => 1,
+		enable_remove => 0,
+		enable_avoid_portals => 0,
+		adjust_route_step => 0,
 		weight_limit => 65000,
 	);
 }
@@ -308,14 +280,14 @@ sub load_obstacle_blocks_from_config {
 			? %{ $target_hash->{$identifier} }
 			: default_obstacle_entry();
 
-		foreach my $option (qw(enabled weight penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
+		foreach my $option (qw(enabled penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
 			my $option_key = "${block_key}_${option}";
 			next unless defined $config{$option_key} && $config{$option_key} ne '';
 
 			if ($option eq 'enabled') {
 				$entry{$option} = normalize_bool($config{$option_key}, 'config.txt', $option_key);
 			} else {
-				$entry{$option} = normalize_number($config{$option_key}, 'config.txt', $option_key);
+				$entry{$option} = normalize_obstacle_number_or_profile($option, $config{$option_key}, 'config.txt', $option_key);
 			}
 		}
 
@@ -358,14 +330,14 @@ sub load_cells_in_map_obstacles_from_config {
 
 		my %entry = default_obstacle_entry();
 
-		foreach my $option (qw(enabled weight penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
+		foreach my $option (qw(enabled penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
 			my $option_key = "${block_key}_${option}";
 			next unless defined $config{$option_key} && $config{$option_key} ne '';
 
 			if ($option eq 'enabled') {
 				$entry{$option} = normalize_bool($config{$option_key}, 'config.txt', $option_key);
 			} else {
-				$entry{$option} = normalize_number($config{$option_key}, 'config.txt', $option_key);
+				$entry{$option} = normalize_obstacle_number_or_profile($option, $config{$option_key}, 'config.txt', $option_key);
 			}
 		}
 
@@ -386,14 +358,14 @@ sub load_default_portal_obstacle_from_config {
 	foreach my $block_key (sort keys %config) {
 		next unless $block_key =~ /^avoidObstaclesDefaultPortals_\d+$/;
 
-		foreach my $option (qw(enabled weight penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
+		foreach my $option (qw(enabled penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
 			my $option_key = "${block_key}_${option}";
 			next unless defined $config{$option_key} && $config{$option_key} ne '';
 
 			if ($option eq 'enabled') {
 				$entry{$option} = normalize_bool($config{$option_key}, 'config.txt', $option_key);
 			} else {
-				$entry{$option} = normalize_number($config{$option_key}, 'config.txt', $option_key);
+				$entry{$option} = normalize_obstacle_number_or_profile($option, $config{$option_key}, 'config.txt', $option_key);
 			}
 		}
 	}
@@ -459,9 +431,8 @@ sub normalize_identifier {
 sub default_obstacle_entry {
 	return (
 		enabled => 1,
-		weight => 2000,
-		penalty_dist => 9,
-		danger_dist => 3,
+		penalty_dist => -1,
+		danger_dist => -1,
 		prohibited_dist => -1,
 		drop_target_when_near_dist => -1,
 		drop_destination_when_near_dist => -1,
@@ -472,9 +443,8 @@ sub default_obstacle_entry {
 sub default_portal_obstacle_entry {
 	return (
 		enabled => 1,
-		weight => 10000,
-		penalty_dist => 12,
-		danger_dist => 4,
+		penalty_dist => build_default_penalty_profile(10000, 12),
+		danger_dist => build_uniform_profile(4, 1),
 		prohibited_dist => 2,
 		drop_target_when_near_dist => 2,
 		drop_destination_when_near_dist => 2,
@@ -498,6 +468,62 @@ sub normalize_number {
 	}
 	warning "[" . PLUGIN_NAME . "] Invalid numeric value '$value' for $key on line $line_no. Using 0.\n";
 	return 0;
+}
+
+sub normalize_obstacle_number_or_profile {
+	my ($option, $value, $line_no, $key) = @_;
+
+	if ($option eq 'penalty_dist' || $option eq 'danger_dist') {
+		my @parts = split /\s*,\s*/, $value;
+		my @profile;
+
+		for (my $i = 0; $i < @parts; $i++) {
+			if (!defined $parts[$i] || $parts[$i] eq '') {
+				warning "[" . PLUGIN_NAME . "] Invalid empty profile value for $key\[$i\] on line $line_no. Using 0.\n";
+				push @profile, 0;
+				next;
+			}
+			push @profile, normalize_number($parts[$i], $line_no, "$key\[$i\]");
+		}
+
+		return \@profile;
+	}
+
+	return normalize_number($value, $line_no, $key);
+}
+
+sub build_uniform_profile {
+	my ($max_distance, $value) = @_;
+	my @profile = map { $value } (0 .. $max_distance);
+	return \@profile;
+}
+
+sub build_default_penalty_profile {
+	my ($ratio, $max_distance) = @_;
+	my @profile = map { get_weight_for_block($ratio, $_) } (0 .. $max_distance);
+	return \@profile;
+}
+
+sub profile_max_distance {
+	my ($profile) = @_;
+	return undef unless $profile && ref($profile) eq 'ARRAY';
+	return $#{$profile};
+}
+
+sub danger_profile_value_at_distance {
+	my ($profile, $distance) = @_;
+	return 0 unless $profile && ref($profile) eq 'ARRAY';
+	return 0 unless defined $distance && $distance >= 0;
+	return 0 if $distance > $#{$profile};
+	return $profile->[$distance] || 0;
+}
+
+sub penalty_profile_value_at_distance {
+	my ($profile, $distance) = @_;
+	return undef unless $profile && ref($profile) eq 'ARRAY';
+	return undef unless defined $distance && $distance >= 0;
+	return undef if $distance > $#{$profile};
+	return $profile->[$distance];
 }
 
 ## Rebuilds the active obstacle list from actors that are currently visible in the world.
@@ -741,17 +767,19 @@ sub build_danger_cells {
 
 	foreach my $obstacle_id (keys %obstaclesList) {
 		my $obstacle = $obstaclesList{$obstacle_id};
-		next unless defined $obstacle->{danger_dist} && $obstacle->{danger_dist} >= 0;
+		my $max_distance = profile_max_distance($obstacle->{danger_dist});
+		next unless defined $max_distance && $max_distance >= 0;
 		my $obstacle_pos = get_actor_position($obstacle);
 		next unless $obstacle_pos;
 
-		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $obstacle->{danger_dist});
+		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $max_distance);
 		foreach my $y ($min_y .. $max_y) {
 			foreach my $x ($min_x .. $max_x) {
 				next unless $field->isWalkable($x, $y);
 				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
-				next if $distance > $obstacle->{danger_dist};
-				$danger{$x}{$y}++;
+				my $value = danger_profile_value_at_distance($obstacle->{danger_dist}, $distance);
+				next unless $value > 0;
+				$danger{$x}{$y} += $value;
 			}
 		}
 	}
@@ -889,7 +917,8 @@ sub filter_prohibited_cells_for_route_task {
 	my @matching_portals = grep {
 		my $obstacle = $obstaclesList{$_};
 		my $match_dist = 5;
-		$match_dist = $obstacle->{danger_dist} if defined $obstacle->{danger_dist} && $obstacle->{danger_dist} > $match_dist;
+		my $danger_distance = profile_max_distance($obstacle->{danger_dist});
+		$match_dist = $danger_distance if defined $danger_distance && $danger_distance > $match_dist;
 		$match_dist = $obstacle->{prohibited_dist} if defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} > $match_dist;
 		$obstacle
 			&& $obstacle->{type}
@@ -1049,7 +1078,7 @@ sub define_extras {
 	my ($ID, $obstacle) = @_;
 	$obstaclesList{$ID}{drop_target_when_near_dist} = defined $obstacle->{drop_target_when_near_dist} ? $obstacle->{drop_target_when_near_dist} : -1;
 	$obstaclesList{$ID}{drop_destination_when_near_dist} = defined $obstacle->{drop_destination_when_near_dist} ? $obstacle->{drop_destination_when_near_dist} : -1;
-	$obstaclesList{$ID}{danger_dist} = defined $obstacle->{danger_dist} ? $obstacle->{danger_dist} : 1;
+	$obstaclesList{$ID}{danger_dist} = defined $obstacle->{danger_dist} ? $obstacle->{danger_dist} : -1;
 	$obstaclesList{$ID}{prohibited_dist} = defined $obstacle->{prohibited_dist} ? $obstacle->{prohibited_dist} : -1;
 	$obstaclesList{$ID}{penalty_dist} = defined $obstacle->{penalty_dist} ? $obstacle->{penalty_dist} : -1;
 }
@@ -1370,9 +1399,9 @@ sub create_changes_array {
 	return [] unless $field && $obstacle_pos && $obstacle;
 
 	my %local_obstacle = %{$obstacle};
-	my $max_distance = $local_obstacle{penalty_dist};
+	my $penalty_profile = $local_obstacle{penalty_dist};
+	my $max_distance = profile_max_distance($penalty_profile);
 	return [] unless defined $max_distance && $max_distance >= 0;
-	my $ratio = $local_obstacle{weight};
 
 	my @changes_array;
 	my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $max_distance);
@@ -1381,8 +1410,10 @@ sub create_changes_array {
 		foreach my $x ($min_x .. $max_x) {
 			next unless $field->isWalkable($x, $y);
 			my $pos = { x => $x, y => $y };
-			my $distance = adjustedBlockDistance($pos, $obstacle_pos);
-			my $delta_weight = get_weight_for_block($ratio, $distance);
+			my $distance = blockDistance($pos, $obstacle_pos);
+			my $delta_weight = penalty_profile_value_at_distance($penalty_profile, $distance);
+			next unless defined $delta_weight && $delta_weight > 0;
+			$delta_weight = assertWeightBelowLimit($delta_weight, $plugin_settings{weight_limit});
 			push @changes_array, {
 				x => $x,
 				y => $y,
