@@ -632,6 +632,29 @@ sub iterate {
 					$self->{step_index} = $current_i;
 				}
 			}
+
+			# Give plugins a chance to shrink the local move packet distance if the
+			# client-side path to the lookahead cell would cut through danger.
+			my %routeStepHookArgs = (
+				task => $self,
+				solution => $solution,
+				current_pos => $current_pos,
+				current_pos_to => $current_pos_to,
+				current_calc_pos => $current_calc_pos,
+				stepsleft => $stepsleft,
+				config_route_step => $config{$self->{actor}{configPrefix}.'route_step'},
+				route_step => $self->{step_index},
+			);
+			Plugins::callHook('route_step', \%routeStepHookArgs);
+			if (defined $routeStepHookArgs{route_step} && $routeStepHookArgs{route_step} != $self->{step_index}) {
+				$self->{step_index} = $routeStepHookArgs{route_step};
+				$self->{step_index} = 0 if $self->{step_index} < 0;
+				if ($self->{step_index} >= $stepsleft) {
+					$self->{step_index} = $stepsleft - 1;
+					$self->{lastStep} = 1;
+				}
+			}
+
 			@{$self->{next_pos}}{qw(x y)} = @{$solution->[$self->{step_index}]}{qw(x y)};
 
 			# But first, check whether the distance of the next point isn't abnormally large.

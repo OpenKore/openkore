@@ -1040,3 +1040,11 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
+
+avoidObstacles_enable_move 0
+avoidObstacles_enable_remove 1
+avoidObstacles_enable_avoid_portals 1
+avoidObstacles_adjust_route_step 1
+avoidObstacles_drop_route_dest_near_obstacle 1
+avoidObstacles_weight_limit 65000
+avoidObstacles_target_drop_dist 13
