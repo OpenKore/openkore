@@ -87,6 +87,7 @@ use Plugins;
 use Utils;
 use Log qw(message debug warning);
 use Data::Dumper;
+use Scalar::Util qw(refaddr);
 
 $Data::Dumper::Sortkeys = 1;
 
@@ -128,6 +129,13 @@ my $mobhooks = Plugins::addHooks(
 );
 
 my $pathfinding_weight_map_override;
+my $cached_prohibited_cells;
+my $cached_prohibited_cells_field_name;
+my $cached_weight_map_refaddr;
+my $cached_weight_map_field_name;
+my $cached_weight_map_with_prohibited;
+my $cached_final_grid;
+my $cached_final_grid_field_name;
 
 my $chooks = Commands::register(
 	['avoid', 'avoidObstacles controls: od [dump|reload|status]', \&command_avoid],
@@ -144,6 +152,16 @@ my %obstaclesList;
 my %removed_obstacle_still_in_list;
 
 my $mustRePath = 0;
+
+sub invalidate_pathfinding_caches {
+	undef $cached_prohibited_cells;
+	undef $cached_prohibited_cells_field_name;
+	undef $cached_weight_map_refaddr;
+	undef $cached_weight_map_field_name;
+	undef $cached_weight_map_with_prohibited;
+	undef $cached_final_grid;
+	undef $cached_final_grid_field_name;
+}
 
 
 # Fast path-level guard: spots outside melee range are still penalized if the route cuts through threat range.
@@ -485,6 +503,7 @@ sub rebuild_obstacles_from_world {
 
 	%obstaclesList = ();
 	%removed_obstacle_still_in_list = ();
+	invalidate_pathfinding_caches();
 	return unless $field;
 
 	rebuild_static_cell_obstacles_for_current_map();
@@ -580,6 +599,7 @@ sub on_packet_mapChange {
 	%obstaclesList = ();
 	%removed_obstacle_still_in_list = ();
 	$mustRePath = 0;
+	invalidate_pathfinding_caches();
 	rebuild_static_cell_obstacles_for_current_map();
 }
 
@@ -675,6 +695,43 @@ sub build_prohibited_cells {
 	return \%prohibited;
 }
 
+## Returns the current-map prohibited-cell cache, rebuilding it only when obstacle state changed.
+sub get_cached_prohibited_cells {
+	return {} unless $field;
+
+	my $field_name = $field->name;
+	if (!$cached_prohibited_cells || !$cached_prohibited_cells_field_name || $cached_prohibited_cells_field_name ne $field_name) {
+		$cached_prohibited_cells = build_prohibited_cells();
+		$cached_prohibited_cells_field_name = $field_name;
+	}
+
+	return $cached_prohibited_cells;
+}
+
+## Returns a cached blocked weight map for the current field and base weight map source.
+sub get_cached_weight_map_with_prohibited_cells {
+	my ($base_weight_map_ref, $target_field, $prohibited_cells) = @_;
+	return unless $base_weight_map_ref && $target_field && $prohibited_cells;
+
+	my $field_name = $target_field->name;
+	my $ref_key = refaddr($base_weight_map_ref);
+	return unless $ref_key;
+
+	if (
+		!defined $cached_weight_map_with_prohibited
+		|| !defined $cached_weight_map_refaddr
+		|| !defined $cached_weight_map_field_name
+		|| $cached_weight_map_refaddr != $ref_key
+		|| $cached_weight_map_field_name ne $field_name
+	) {
+		$cached_weight_map_with_prohibited = build_weight_map_with_prohibited_cells($base_weight_map_ref, $target_field->{width}, $prohibited_cells);
+		$cached_weight_map_refaddr = $ref_key;
+		$cached_weight_map_field_name = $field_name;
+	}
+
+	return $cached_weight_map_with_prohibited;
+}
+
 ## Scores one client-side move solution based on danger zones and hard prohibited cells.
 sub score_client_solution {
 	my ($client_solution, $prohibited_cells) = @_;
@@ -699,11 +756,9 @@ sub score_client_solution {
 
 ## Chooses the safest route_step by simulating the client's local move path for each candidate.
 sub choose_best_route_step {
-	my ($current_pos, $solution, $max_route_step) = @_;
+	my ($current_pos, $solution, $max_route_step, $prohibited_cells) = @_;
 	return unless $current_pos && $solution && @{$solution};
 	return unless defined $max_route_step && $max_route_step >= 1;
-
-	my $prohibited_cells = build_prohibited_cells();
 	my ($best_step, $best_score);
 
 	for (my $candidate_step = $max_route_step; $candidate_step >= 1; $candidate_step--) {
@@ -740,7 +795,8 @@ sub on_route_step {
 	$max_route_step = $max_index if $max_route_step > $max_index;
 	return if $max_route_step < 1;
 
-	my ($best_step, $best_score) = choose_best_route_step($args->{current_calc_pos}, $args->{solution}, $max_route_step);
+	my $prohibited_cells = get_cached_prohibited_cells();
+	my ($best_step, $best_score) = choose_best_route_step($args->{current_calc_pos}, $args->{solution}, $max_route_step, $prohibited_cells);
 	return unless defined $best_step;
 
 	if ($best_step != $args->{route_step}) {
@@ -807,6 +863,7 @@ sub add_obstacle {
 	}
 
 	define_extras($actor->{ID}, $obstacle);
+	invalidate_pathfinding_caches();
 	$mustRePath = 1;
 }
 
@@ -825,6 +882,7 @@ sub add_static_cell_obstacle {
 	$obstaclesList{$id}{map} = $map_name;
 
 	define_extras($id, $obstacle);
+	invalidate_pathfinding_caches();
 }
 
 ## Copies obstacle metadata that later logic needs for dropping and route-step scoring.
@@ -852,6 +910,7 @@ sub move_obstacle {
 	$obstaclesList{$actor->{ID}}{pos_to} = $pos;
 	$obstaclesList{$actor->{ID}}{weight} = $weight_changes;
 
+	invalidate_pathfinding_caches();
 	$mustRePath = 1;
 }
 
@@ -871,6 +930,7 @@ sub remove_obstacle {
 		debug "[" . PLUGIN_NAME . "] Removing obstacle $actor from " . ($pos ? "$pos->{x} $pos->{y}" : 'unknown position') . ".\n";
 		delete $obstaclesList{$actor->{ID}};
 		delete $removed_obstacle_still_in_list{$actor->{ID}};
+		invalidate_pathfinding_caches();
 		$mustRePath = 1;
 	}
 }
@@ -913,6 +973,7 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 		debug "[" . PLUGIN_NAME . "] Removing cached obstacle $obstacle->{name} ($obstacle->{type}) from $obstacle->{pos_to}{x} $obstacle->{pos_to}{y}.\n";
 		delete $obstaclesList{$obstacle_ID};
 		delete $removed_obstacle_still_in_list{$obstacle_ID};
+		invalidate_pathfinding_caches();
 		$mustRePath = 1;
 	}
 }
@@ -967,11 +1028,13 @@ sub on_getRoute {
 	return unless scalar keys %obstaclesList;
 	return if !$field || $args->{field}->name ne $field->name;
 
-	my $prohibited_cells = build_prohibited_cells();
+	return unless ($args->{liveRoute});
+
+	my $prohibited_cells = get_cached_prohibited_cells();
 	my $base_weight_map_ref = defined $args->{weight_map} ? $args->{weight_map} : \($args->{field}->{weightMap});
 	if ($prohibited_cells && scalar keys %{$prohibited_cells} && !pos_is_prohibited($args->{start}, $prohibited_cells) && !pos_is_prohibited($args->{dest}, $prohibited_cells)) {
-		$pathfinding_weight_map_override = build_weight_map_with_prohibited_cells($base_weight_map_ref, $args->{field}{width}, $prohibited_cells);
-		$args->{weight_map} = \$pathfinding_weight_map_override;
+		$pathfinding_weight_map_override = get_cached_weight_map_with_prohibited_cells($base_weight_map_ref, $args->{field}, $prohibited_cells);
+		$args->{weight_map} = \$pathfinding_weight_map_override if defined $pathfinding_weight_map_override;
 	}
 
 	$args->{customWeights} = 1;
@@ -986,7 +1049,15 @@ sub getOffset {
 
 ## Builds the final merged obstacle grid that pathfinding will consume.
 sub get_final_grid {
-	return sum_all_changes();
+	return [] unless $field;
+
+	my $field_name = $field->name;
+	if (!$cached_final_grid || !$cached_final_grid_field_name || $cached_final_grid_field_name ne $field_name) {
+		$cached_final_grid = sum_all_changes();
+		$cached_final_grid_field_name = $field_name;
+	}
+
+	return $cached_final_grid;
 }
 
 ## Returns whether a coordinate is inside the current prohibited-cell set.
@@ -1023,7 +1094,11 @@ sub on_add_prohibited_cells {
 	$target_field = $field if !$target_field || !UNIVERSAL::isa($target_field, 'Field');
 	return unless $target_field;
 
-	merge_prohibited_cells($args->{cells}, build_prohibited_cells_for_field($target_field));
+	if ($field && $target_field->name eq $field->name) {
+		merge_prohibited_cells($args->{cells}, get_cached_prohibited_cells());
+	} else {
+		merge_prohibited_cells($args->{cells}, build_prohibited_cells_for_field($target_field));
+	}
 }
 
 ## Builds the prohibited-cell map for a specific field, using live obstacles on the current map and static configured cells anywhere.
