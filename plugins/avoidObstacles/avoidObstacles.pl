@@ -149,6 +149,9 @@ my %removed_obstacle_still_in_list;
 
 my $mustRePath = 0;
 
+# TODO: When adding/removing/moving one obstacle at a time we could just alter these values intead of recalculating them from scratch
+# for example in job_hunte we have 602 obstacles, when a 603th one is found we could just add it, instead of recalculating all 603
+# then we just call this for reset events, like a map changed event
 sub invalidate_pathfinding_caches {
 	undef $cached_prohibited_cells;
 	undef $cached_prohibited_cells_field_name;
@@ -633,6 +636,11 @@ sub on_packet_mapChange {
 }
 
 ## Returns whether a target is close enough to an obstacle that it should be dropped.
+# TODO: This now only drops targets whose calc pos is within blockdist of obstacles drop_dist
+# We should also drop targets that will be inside blockdist of obstacles drop_dist in a short while
+# maybe just check pos_to?, if calc pos is safe and pos_to is safe then target is clearly safe
+# if calc pos is safe but pos_to is not safe then it is moving to an unsafe area, we could reach it before it gets there
+# but this calculation might be too calculation intensive and failprone
 sub should_drop_target_from_obstacle {
 	my ($hook, $target, $drop_string) = @_;
 	return 0 unless $target;
@@ -862,6 +870,12 @@ sub build_route_step_candidates {
 }
 
 ## Chooses the safest route_step by simulating the client's local move path for each candidate.
+# TODO: $current_pos might not match perfectly $solution[0], it usually lags behing 1 to 2 cells but in
+# curve heavy routes it can lag 3-5 cells behind
+# calculate the blockdist from $current_pos to $solution[0]
+# We should check if we do not need to ask for a path reset (make $current_pos == $solution[0] and revalidade $solution)
+# the critearia for asking must be decided (maybe compare danger of $best_score (which is danger ($current_pos to $best_pos) to danger of ($solution[0] to $best_pos))
+# if D($current_pos to $best_pos) > D($solution[0] to $best_pos) we should recalc 
 sub choose_best_route_step {
 	my ($current_pos, $solution, $max_route_step, $prohibited_cells, $danger_cells) = @_;
 	return unless $current_pos && $solution && @{$solution};
@@ -940,6 +954,10 @@ sub remove_prohibited_zone_from_cells {
 	}
 }
 
+# TODO: Should filter all prohibited cells from any obstacle that adds adds prohibited cells via prohibited_dist to $task->{dest}{pos}, but keep danger cells intact
+# Eg: There is a Geographer near a portal, we should keep the danger, as we could reach the portal through a safer route with it
+# But if there is a blocker in the portal destination cell (trap, player portal, another portal near) we have to clear ir or pathfinding fails
+# Alternative: This could be fixed if portals stopped being pointlike and became an area
 sub filter_prohibited_cells_for_route_task {
 	my ($task, $prohibited_cells, $target_field) = @_;
 	return $prohibited_cells unless $task && $prohibited_cells && $target_field;
@@ -1020,33 +1038,6 @@ sub on_route_step {
 	if ($best_step != $args->{route_step}) {
 		debug "[" . PLUGIN_NAME . "] route_step adjusted from $args->{route_step} to $best_step (danger score $best_score).\n", 'route';
 		$args->{route_step} = $best_step;
-	}
-}
-
-## Drops random-walk or lock-map route destinations when an obstacle appears too close to them.
-sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
-	return unless scalar keys %obstaclesList;
-
-	my $arg_i;
-	if (AI::is('route')) {
-		$arg_i = 0;
-		return if AI::action(1) eq 'attack';
-	} elsif (AI::action() eq 'move' && AI::action(1) eq 'route') {
-		$arg_i = 1;
-		return if AI::action(2) eq 'attack';
-	} else {
-		return;
-	}
-
-	my $args = AI::args($arg_i);
-	my $task = get_task($args);
-	return unless $task;
-	return unless $task->{isRandomWalk} || ($task->{isToLockMap} && $field->baseName eq $config{lockMap});
-
-	my $obstacle = is_there_an_obstacle_near_pos($task->{dest}{pos}, 2);
-	if ($obstacle) {
-		warning "[" . PLUGIN_NAME . "] Dropping current route destination because an obstacle appeared near it.\n";
-		AI::clear('move', 'route');
 	}
 }
 
@@ -1169,13 +1160,40 @@ sub on_AI_pre_manual {
 	on_AI_pre_manual_repath();
 }
 
+## Drops random-walk or lock-map route destinations when an obstacle appears too close to them.
+sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
+	return unless scalar keys %obstaclesList;
+
+	my $arg_i;
+	if (AI::is('route')) {
+		$arg_i = 0;
+		return if AI::action(1) eq 'attack';
+	} elsif (AI::action() eq 'move' && AI::action(1) eq 'route') {
+		$arg_i = 1;
+		return if AI::action(2) eq 'attack';
+	} else {
+		return;
+	}
+
+	my $args = AI::args($arg_i);
+	my $task = get_task($args);
+	return unless $task;
+	return unless $task->{isRandomWalk} || ($task->{isToLockMap} && $field->baseName eq $config{lockMap});
+
+	my $obstacle = is_there_an_obstacle_near_pos($task->{dest}{pos}, 2);
+	if ($obstacle) {
+		warning "[" . PLUGIN_NAME . "] Dropping current route destination because an obstacle appeared near it.\n";
+		AI::clear('move', 'route');
+	}
+}
+
 ## Purges cached out-of-sight obstacles once they should be visible again but are no longer present.
 sub on_AI_pre_manual_removed_obstacle_still_in_list {
 	my @obstacles = keys %removed_obstacle_still_in_list;
 	return unless @obstacles;
 
-	my $sight = ($config{clientSight} || 17) - 3;
-	my $realMyPos = calcPosition($char);
+	my $sight = ($config{clientSight} || 17) - 2;
+	my $realMyPos = calcPosFromPathfinding($field, $char);
 	return unless $realMyPos;
 
 	OBSTACLE: foreach my $obstacle_ID (@obstacles) {
@@ -1185,7 +1203,7 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 		my $dist = blockDistance($realMyPos, $obstacle->{pos_to});
 		next OBSTACLE unless $dist < $sight;
 
-		my $target = findObstacleObjectUsingID($obstacle, $obstacle_ID);
+		my $target = Actor::get($obstacle_ID);
 		next OBSTACLE if $target;
 
 		debug "[" . PLUGIN_NAME . "] Removing cached obstacle $obstacle->{name} ($obstacle->{type}) from $obstacle->{pos_to}{x} $obstacle->{pos_to}{y}.\n";
@@ -1196,18 +1214,12 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 	}
 }
 
-## Looks up a live actor for an obstacle that is still cached after leaving sight.
-sub findObstacleObjectUsingID {
-	my ($obstacle, $obstacle_ID) = @_;
-	return unless $obstacle;
-
-	if ($obstacle->{type} eq 'monster') {
-		return $monstersList->getByID($obstacle_ID);
-	} elsif ($obstacle->{type} eq 'player') {
-		return $playersList->getByID($obstacle_ID);
-	}
-
-	return;
+## Resets active route tasks whenever obstacle changes require a fresh path calculation.
+sub on_AI_pre_manual_repath {
+	return unless $mustRePath;
+	debug "[" . PLUGIN_NAME . "] Requesting route repath if routing.\n";
+	Plugins::callHook('routeRepath', { source => PLUGIN_NAME });
+	$mustRePath = 0;
 }
 
 ## Infers why an actor left view based on the flags populated by Network::Receive.
@@ -1220,15 +1232,6 @@ sub get_actor_disappearance_reason {
 	return 'disappeared' if $actor->{disappeared};
 	return 'gone';
 }
-
-## Resets active route tasks whenever obstacle changes require a fresh path calculation.
-sub on_AI_pre_manual_repath {
-	return unless $mustRePath;
-	debug "[" . PLUGIN_NAME . "] Requesting route repath if routing.\n";
-	Plugins::callHook('routeRepath', { source => PLUGIN_NAME });
-	$mustRePath = 0;
-}
-
 ## Extracts the concrete Task::Route object from different AI task containers.
 sub get_task {
 	my ($args) = @_;
@@ -1307,7 +1310,14 @@ sub build_weight_map_with_prohibited_cells {
 }
 
 ## Adds prohibited cells for the requested field to callers that need destination/meeting-position filtering.
-sub on_add_prohibited_cells {
+# TODO: for the get_lockMap_cell should actually be cells that would be dropped by drop_destination_when_near_dist
+#for meetingposition it is trickier, the target already passed a drop_target_when_near_dist check at on_shouldDropTarget, so it is safe in that regard
+#we only care (in meetingposition) that we dont choose a bad spot, maybe we should add add danger cells to the block?
+#so if we are targeting a poring which is 5 cells away from a geographer which as dangerdist of 4 and drop_target_when_near_dist 4
+#using danger cells block would make us not choose a cell which is dangerous (on the side of the geographer)
+#there could be situations rarely where all valid spots from meeting position are dangerous tho, and that could lead to a recalc-fail-drop loop
+#so keep it only prohibited cells in meetingposition for now
+#sub on_add_prohibited_cells {
 	my (undef, $args) = @_;
 	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
 
