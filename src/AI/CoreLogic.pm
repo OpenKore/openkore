@@ -2368,10 +2368,12 @@ sub processLockMap {
 			Plugins::callHook('AI/lockMap', \%args);
 			unless ($args{'return'}) {
 				my ($cell, $i);
-				eval {
-					my $lockField = new Field(name => $config{'lockMap'}, loadWeightMap => 0);
-					$cell = get_lockMap_cell($lockField);
-				};
+				if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
+					eval {
+						my $lockField = new Field(name => $config{'lockMap'}, loadWeightMap => 0);
+						$cell = get_lockMap_cell($lockField);
+					};
+				}
 
 				if (caught('FileNotFoundException') || !defined $cell) {
 					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");

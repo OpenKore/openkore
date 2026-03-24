@@ -87,6 +87,13 @@ use enum qw(
 # - pyDistFromGoal - Same as distFromGoal, but this allows you to specify the
 #                    Pythagorian distance instead of block distance.
 # - avoidWalls - Whether to avoid walls. The default is yes.
+# - attackOnRoute - Controls how much normal route-time AI stays enabled while
+#                   this route is active:
+#                   0 = do not auto-attack while routing;
+#                   1 = allow route-time combat checks, but still block
+#                       route-triggered sell/storage automation;
+#                   2 = full "normal route" behavior, including route-time
+#                       combat and route-compatible sell/storage checks.
 # - notifyUponArrival - Whether to print a message when we've reached the destination.
 #                       The default is no.
 # `l`

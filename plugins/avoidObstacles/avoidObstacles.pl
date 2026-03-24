@@ -99,6 +99,7 @@ my $hooks = Plugins::addHooks(
 	['route_step', \&on_route_step, undef],
 	['AI_pre/manual', \&on_AI_pre_manual, undef],
 	['add_prohibitedCells', \&on_add_prohibited_cells, undef],
+	['add_dropDestinationCells', \&on_add_drop_destination_cells, undef],
 	['packet_mapChange', \&on_packet_mapChange, undef],
 	['undefined_object_id', \&use_dump, undef],
 );
@@ -146,12 +147,13 @@ my %default_portal_obstacle;
 
 my %obstaclesList;
 my %removed_obstacle_still_in_list;
+my %live_prohibited_distance_counts;
+my %live_prohibited_cells;
+my %live_danger_cells;
+my %live_weight_sums;
 
 my $mustRePath = 0;
 
-# TODO: When adding/removing/moving one obstacle at a time we could just alter these values intead of recalculating them from scratch
-# for example in job_hunte we have 602 obstacles, when a 603th one is found we could just add it, instead of recalculating all 603
-# then we just call this for reset events, like a map changed event
 sub invalidate_pathfinding_caches {
 	undef $cached_prohibited_cells;
 	undef $cached_prohibited_cells_field_name;
@@ -162,6 +164,14 @@ sub invalidate_pathfinding_caches {
 	undef $cached_weight_map_with_prohibited;
 	undef $cached_final_grid;
 	undef $cached_final_grid_field_name;
+}
+
+sub reset_live_aggregate_state {
+	%live_prohibited_distance_counts = ();
+	%live_prohibited_cells = ();
+	%live_danger_cells = ();
+	%live_weight_sums = ();
+	invalidate_pathfinding_caches();
 }
 
 # Rejects a route that enters a hard zone, re-enters after leaving,
@@ -535,7 +545,7 @@ sub rebuild_obstacles_from_world {
 
 	%obstaclesList = ();
 	%removed_obstacle_still_in_list = ();
-	invalidate_pathfinding_caches();
+	reset_live_aggregate_state();
 	return unless $field;
 
 	rebuild_static_cell_obstacles_for_current_map();
@@ -631,30 +641,33 @@ sub on_packet_mapChange {
 	%obstaclesList = ();
 	%removed_obstacle_still_in_list = ();
 	$mustRePath = 0;
-	invalidate_pathfinding_caches();
+	reset_live_aggregate_state();
 	rebuild_static_cell_obstacles_for_current_map();
 }
 
 ## Returns whether a target is close enough to an obstacle that it should be dropped.
-# TODO: This now only drops targets whose calc pos is within blockdist of obstacles drop_dist
-# We should also drop targets that will be inside blockdist of obstacles drop_dist in a short while
-# maybe just check pos_to?, if calc pos is safe and pos_to is safe then target is clearly safe
-# if calc pos is safe but pos_to is not safe then it is moving to an unsafe area, we could reach it before it gets there
-# but this calculation might be too calculation intensive and failprone
 sub should_drop_target_from_obstacle {
 	my ($hook, $target, $drop_string) = @_;
 	return 0 unless $target;
 	return 0 unless $field;
 
-	my $targetPos = calcPosFromPathfinding($field, $target);
-	return 0 unless $targetPos;
+	my @target_positions;
+	my $target_calc_pos = calcPosFromPathfinding($field, $target);
+	push @target_positions, $target_calc_pos if $target_calc_pos;
+
+	my $same_as_calc = $target_calc_pos
+		&& $target_calc_pos->{x} == $target->{pos_to}{x}
+		&& $target_calc_pos->{y} == $target->{pos_to}{y};
+	push (@target_positions, $target->{pos_to}) unless $same_as_calc;
 
 	my $is_dropped = isTargetDroppedObstacle($target);
-	my $obstacle = is_there_an_obstacle_near_pos($targetPos, 1);
-	if ($obstacle) {
-		warning "[" . PLUGIN_NAME . "] [$hook] $drop_string target $target because there is an obstacle nearby.\n" if !$is_dropped;
-		$target->{attackFailedObstacle} = 1;
-		return 1;
+	foreach my $target_pos (@target_positions) {
+		my $obstacle = is_there_an_obstacle_near_pos($target_pos, 1);
+		if ($obstacle) {
+			warning "[" . PLUGIN_NAME . "] [$hook] $drop_string target $target because there is an obstacle nearby (" . ($obstacle->{name}) . ").\n" if !$is_dropped;
+			$target->{attackFailedObstacle} = 1;
+			return 1;
+		}
 	}
 
 	if ($is_dropped) {
@@ -693,6 +706,42 @@ sub on_getBestTarget {
 	@{ $args->{possibleTargets} } = @filtered_targets;
 }
 
+sub getObstacleName {
+	my ($obstacle) = @_;
+	return 'Unknown obstacle' unless $obstacle;
+	return $obstacle unless ref $obstacle;
+
+	my $pos = get_actor_position($obstacle);
+	my $type = $obstacle->{type};
+
+	if (defined $type && $type eq 'cell') {
+		my $map_name = $obstacle->{map} || ($field ? $field->baseName : 'unknownField');
+		return "CellsInMap $map_name $pos->{x} $pos->{y}";
+	}
+
+	if (defined $type && $type eq 'portal') {
+		return "Portal $pos->{x} $pos->{y}";
+	}
+
+	if (defined $obstacle->{name} && $obstacle->{name} ne '' && $obstacle->{name} !~ /^Unknown \#/) {
+		return $obstacle->{name};
+	}
+
+	if (UNIVERSAL::can($obstacle, 'name')) {
+		my $name = eval { $obstacle->name };
+		return $name if defined $name && $name ne '' && $name !~ /^Unknown \#/;
+	}
+
+	if (defined $obstacle->{type} && !ref $obstacle->{type} && $obstacle->{type} ne '') {
+		return "Spell $obstacle->{type}" if $obstacle->{type} =~ /^\d+$/;
+		return $obstacle->{type};
+	}
+
+	return "Unknown at $pos->{x} $pos->{y}" if $pos;
+	return $obstacle->{name} if defined $obstacle->{name} && $obstacle->{name} ne '';
+	return 'Unknown obstacle';
+}
+
 ## Returns whether a target was previously rejected because of nearby obstacles.
 sub isTargetDroppedObstacle {
 	my ($target) = @_;
@@ -726,23 +775,13 @@ sub is_there_an_obstacle_near_pos {
 
 ## Builds a hash of hard-zone cells keyed by their nearest obstacle distance.
 sub build_prohibited_cells {
-	my %prohibited;
-	merge_prohibited_cells(\%prohibited, build_live_prohibited_cells());
-	merge_prohibited_cells(\%prohibited, build_static_prohibited_cells_for_field($field));
-	return \%prohibited;
+	return build_live_prohibited_cells();
 }
 
 ## Returns the current-map prohibited-cell cache, rebuilding it only when obstacle state changed.
 sub get_cached_prohibited_cells {
 	return {} unless $field;
-
-	my $field_name = $field->name;
-	if (!$cached_prohibited_cells || !$cached_prohibited_cells_field_name || $cached_prohibited_cells_field_name ne $field_name) {
-		$cached_prohibited_cells = build_prohibited_cells();
-		$cached_prohibited_cells_field_name = $field_name;
-	}
-
-	return $cached_prohibited_cells;
+	return build_prohibited_cells();
 }
 
 ## Returns a cached blocked weight map for the current field and base weight map source.
@@ -770,41 +809,12 @@ sub get_cached_weight_map_with_prohibited_cells {
 }
 
 sub build_danger_cells {
-	my %danger;
-	return \%danger unless $field;
-
-	foreach my $obstacle_id (keys %obstaclesList) {
-		my $obstacle = $obstaclesList{$obstacle_id};
-		my $max_distance = profile_max_distance($obstacle->{danger_dist});
-		next unless defined $max_distance && $max_distance >= 0;
-		my $obstacle_pos = get_actor_position($obstacle);
-		next unless $obstacle_pos;
-
-		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $max_distance);
-		foreach my $y ($min_y .. $max_y) {
-			foreach my $x ($min_x .. $max_x) {
-				next unless $field->isWalkable($x, $y);
-				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
-				my $value = danger_profile_value_at_distance($obstacle->{danger_dist}, $distance);
-				next unless $value > 0;
-				$danger{$x}{$y} += $value;
-			}
-		}
-	}
-
-	return \%danger;
+	return \%live_danger_cells;
 }
 
 sub get_cached_danger_cells {
 	return {} unless $field;
-
-	my $field_name = $field->name;
-	if (!$cached_danger_cells || !$cached_danger_cells_field_name || $cached_danger_cells_field_name ne $field_name) {
-		$cached_danger_cells = build_danger_cells();
-		$cached_danger_cells_field_name = $field_name;
-	}
-
-	return $cached_danger_cells;
+	return build_danger_cells();
 }
 
 sub route_danger_score_from_cells {
@@ -954,10 +964,7 @@ sub remove_prohibited_zone_from_cells {
 	}
 }
 
-# TODO: Should filter all prohibited cells from any obstacle that adds adds prohibited cells via prohibited_dist to $task->{dest}{pos}, but keep danger cells intact
-# Eg: There is a Geographer near a portal, we should keep the danger, as we could reach the portal through a safer route with it
-# But if there is a blocker in the portal destination cell (trap, player portal, another portal near) we have to clear ir or pathfinding fails
-# Alternative: This could be fixed if portals stopped being pointlike and became an area
+## Removes hard-prohibited zones that cover the route destination while leaving danger scoring intact.
 sub filter_prohibited_cells_for_route_task {
 	my ($task, $prohibited_cells, $target_field) = @_;
 	return $prohibited_cells unless $task && $prohibited_cells && $target_field;
@@ -1057,22 +1064,22 @@ sub add_obstacle {
 
 	debug "[" . PLUGIN_NAME . "] Adding obstacle $actor on location $pos->{x} $pos->{y}.\n";
 
+	remove_obstacle_contributions($actor->{ID}) if exists $obstaclesList{$actor->{ID}};
+
 	my $weight_changes = create_changes_array($pos, $obstacle);
 
 	$obstaclesList{$actor->{ID}}{pos_to} = $pos;
 	$obstaclesList{$actor->{ID}}{weight} = $weight_changes;
+	$obstaclesList{$actor->{ID}}{prohibited_cells} = build_prohibited_cells_contribution($pos, $obstacle, $field);
+	$obstaclesList{$actor->{ID}}{danger_cells} = build_danger_cells_contribution($pos, $obstacle, $field);
 	$obstaclesList{$actor->{ID}}{type} = $type;
-	if ($type eq 'spell') {
-		$obstaclesList{$actor->{ID}}{name} = $actor->{type};
-	} else {
-		$obstaclesList{$actor->{ID}}{name} = $actor->name;
-	}
+	$obstaclesList{$actor->{ID}}{name} = getObstacleName($actor);
 	if ($type eq 'monster') {
 		$obstaclesList{$actor->{ID}}{nameID} = $actor->{nameID};
 	}
 
 	define_extras($actor->{ID}, $obstacle);
-	invalidate_pathfinding_caches();
+	apply_obstacle_contributions($actor->{ID});
 	$mustRePath = 1;
 }
 
@@ -1086,12 +1093,14 @@ sub add_static_cell_obstacle {
 
 	$obstaclesList{$id}{pos_to} = { x => $pos->{x}, y => $pos->{y} };
 	$obstaclesList{$id}{weight} = $weight_changes;
+	$obstaclesList{$id}{prohibited_cells} = build_prohibited_cells_contribution($pos, $obstacle, $field);
+	$obstaclesList{$id}{danger_cells} = build_danger_cells_contribution($pos, $obstacle, $field);
 	$obstaclesList{$id}{type} = 'cell';
-	$obstaclesList{$id}{name} = "$map_name $pos->{x} $pos->{y}";
 	$obstaclesList{$id}{map} = $map_name;
+	$obstaclesList{$id}{name} = getObstacleName($obstaclesList{$id});
 
 	define_extras($id, $obstacle);
-	invalidate_pathfinding_caches();
+	apply_obstacle_contributions($id);
 }
 
 ## Copies obstacle metadata that later logic needs for dropping and route-step scoring.
@@ -1115,11 +1124,14 @@ sub move_obstacle {
 
 	debug "[" . PLUGIN_NAME . "] Moving obstacle $actor to $pos->{x} $pos->{y}.\n";
 
+	remove_obstacle_contributions($actor->{ID});
+
 	my $weight_changes = create_changes_array($pos, $obstacle);
 	$obstaclesList{$actor->{ID}}{pos_to} = $pos;
 	$obstaclesList{$actor->{ID}}{weight} = $weight_changes;
-
-	invalidate_pathfinding_caches();
+	$obstaclesList{$actor->{ID}}{prohibited_cells} = build_prohibited_cells_contribution($pos, $obstacle, $field);
+	$obstaclesList{$actor->{ID}}{danger_cells} = build_danger_cells_contribution($pos, $obstacle, $field);
+	apply_obstacle_contributions($actor->{ID});
 	$mustRePath = 1;
 }
 
@@ -1137,9 +1149,9 @@ sub remove_obstacle {
 		debug "[" . PLUGIN_NAME . "] Keeping obstacle $actor cached after it moved out of sight.\n";
 	} else {
 		debug "[" . PLUGIN_NAME . "] Removing obstacle $actor from " . ($pos ? "$pos->{x} $pos->{y}" : 'unknown position') . ".\n";
+		remove_obstacle_contributions($actor->{ID});
 		delete $obstaclesList{$actor->{ID}};
 		delete $removed_obstacle_still_in_list{$actor->{ID}};
-		invalidate_pathfinding_caches();
 		$mustRePath = 1;
 	}
 }
@@ -1164,26 +1176,21 @@ sub on_AI_pre_manual {
 sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
 	return unless scalar keys %obstaclesList;
 
-	my $arg_i;
-	if (AI::is('route')) {
-		$arg_i = 0;
-		return if AI::action(1) eq 'attack';
-	} elsif (AI::action() eq 'move' && AI::action(1) eq 'route') {
-		$arg_i = 1;
-		return if AI::action(2) eq 'attack';
-	} else {
-		return;
-	}
-
-	my $args = AI::args($arg_i);
-	my $task = get_task($args);
-	return unless $task;
-	return unless $task->{isRandomWalk} || ($task->{isToLockMap} && $field->baseName eq $config{lockMap});
-
-	my $obstacle = is_there_an_obstacle_near_pos($task->{dest}{pos}, 2);
-	if ($obstacle) {
-		warning "[" . PLUGIN_NAME . "] Dropping current route destination because an obstacle appeared near it.\n";
+	my $skip = 0;
+	while (1) {
+		my $index = AI::findAction ('route', $skip);
+		last unless (defined $index);
+		my $args = AI::args($index);
+		my $task = get_task($args);
+		next unless $task;
+		next unless $task->{isRandomWalk} || ($task->{isToLockMap} && $field->baseName eq $config{lockMap});
+		my $obstacle = is_there_an_obstacle_near_pos($task->{dest}{pos}, 2);
+		next unless $obstacle;
+		warning "[" . PLUGIN_NAME . "] Dropping current route because an obstacle appeared near its destination ($task->{dest}{pos}{x} $task->{dest}{pos}{y}) close to (" . ($obstacle->{name}) . ").\n";
 		AI::clear('move', 'route');
+		last;
+	} continue {
+		$skip++;
 	}
 }
 
@@ -1207,9 +1214,9 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 		next OBSTACLE if $target;
 
 		debug "[" . PLUGIN_NAME . "] Removing cached obstacle $obstacle->{name} ($obstacle->{type}) from $obstacle->{pos_to}{x} $obstacle->{pos_to}{y}.\n";
+		remove_obstacle_contributions($obstacle_ID);
 		delete $obstaclesList{$obstacle_ID};
 		delete $removed_obstacle_still_in_list{$obstacle_ID};
-		invalidate_pathfinding_caches();
 		$mustRePath = 1;
 	}
 }
@@ -1310,14 +1317,7 @@ sub build_weight_map_with_prohibited_cells {
 }
 
 ## Adds prohibited cells for the requested field to callers that need destination/meeting-position filtering.
-# TODO: for the get_lockMap_cell should actually be cells that would be dropped by drop_destination_when_near_dist
-#for meetingposition it is trickier, the target already passed a drop_target_when_near_dist check at on_shouldDropTarget, so it is safe in that regard
-#we only care (in meetingposition) that we dont choose a bad spot, maybe we should add add danger cells to the block?
-#so if we are targeting a poring which is 5 cells away from a geographer which as dangerdist of 4 and drop_target_when_near_dist 4
-#using danger cells block would make us not choose a cell which is dangerous (on the side of the geographer)
-#there could be situations rarely where all valid spots from meeting position are dangerous tho, and that could lead to a recalc-fail-drop loop
-#so keep it only prohibited cells in meetingposition for now
-#sub on_add_prohibited_cells {
+sub on_add_prohibited_cells {
 	my (undef, $args) = @_;
 	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
 
@@ -1332,6 +1332,75 @@ sub build_weight_map_with_prohibited_cells {
 	}
 }
 
+sub merge_marked_cells {
+	my ($target, $source) = @_;
+	return unless $target && $source;
+
+	foreach my $x (keys %{$source}) {
+		foreach my $y (keys %{ $source->{$x} }) {
+			$target->{$x}{$y} = 1;
+		}
+	}
+}
+
+sub build_drop_destination_cells_around_pos {
+	my ($target_field, $center, $distance) = @_;
+	return {} unless $target_field && $center;
+	return {} unless defined $distance && $distance >= 0;
+
+	my %cells;
+	my ($min_x, $min_y, $max_x, $max_y) = $target_field->getSquareEdgesFromCoord($center, $distance);
+	foreach my $y ($min_y .. $max_y) {
+		foreach my $x ($min_x .. $max_x) {
+			next unless $target_field->isWalkable($x, $y);
+			next if blockDistance({ x => $x, y => $y }, $center) > $distance;
+			$cells{$x}{$y} = 1;
+		}
+	}
+
+	return \%cells;
+}
+
+sub build_drop_destination_cells_for_field {
+	my ($target_field) = @_;
+	return {} unless $target_field;
+
+	my %cells;
+	if ($field && $target_field->name eq $field->name) {
+		foreach my $obstacle_id (keys %obstaclesList) {
+			my $obstacle = $obstaclesList{$obstacle_id};
+			next unless defined $obstacle->{drop_destination_when_near_dist} && $obstacle->{drop_destination_when_near_dist} >= 0;
+			my $obstacle_pos = get_actor_position($obstacle);
+			next unless $obstacle_pos;
+			merge_marked_cells(\%cells, build_drop_destination_cells_around_pos($target_field, $obstacle_pos, $obstacle->{drop_destination_when_near_dist}));
+		}
+		return \%cells;
+	}
+
+	my $map_name = $target_field->baseName;
+	return \%cells unless defined $map_name && exists $cells_in_map_obstacles{$map_name};
+	foreach my $block (@{ $cells_in_map_obstacles{$map_name} }) {
+		next unless $block->{config} && $block->{config}{enabled};
+		next unless defined $block->{config}{drop_destination_when_near_dist} && $block->{config}{drop_destination_when_near_dist} >= 0;
+		foreach my $pos (@{ $block->{cells} || [] }) {
+			merge_marked_cells(\%cells, build_drop_destination_cells_around_pos($target_field, $pos, $block->{config}{drop_destination_when_near_dist}));
+		}
+	}
+
+	return \%cells;
+}
+
+sub on_add_drop_destination_cells {
+	my (undef, $args) = @_;
+	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
+
+	my $target_field = $args->{field};
+	$target_field = $field if !$target_field || !UNIVERSAL::isa($target_field, 'Field');
+	return unless $target_field;
+
+	merge_marked_cells($args->{cells}, build_drop_destination_cells_for_field($target_field));
+}
+
 ## Builds the prohibited-cell map for a specific field, using live obstacles on the current map and static configured cells anywhere.
 sub build_prohibited_cells_for_field {
 	my ($target_field) = @_;
@@ -1341,37 +1410,15 @@ sub build_prohibited_cells_for_field {
 
 	if ($field && $target_field->name eq $field->name) {
 		merge_prohibited_cells(\%prohibited, build_live_prohibited_cells());
+	} else {
+		merge_prohibited_cells(\%prohibited, build_static_prohibited_cells_for_field($target_field));
 	}
-
-	merge_prohibited_cells(\%prohibited, build_static_prohibited_cells_for_field($target_field));
 	return \%prohibited;
 }
 
 ## Builds prohibited cells from live dynamic obstacles on the current map only.
 sub build_live_prohibited_cells {
-	my %prohibited;
-	return \%prohibited unless $field;
-
-	foreach my $obstacle_ID (keys %obstaclesList) {
-		my $obstacle = $obstaclesList{$obstacle_ID};
-		next if $obstacle->{type} && $obstacle->{type} eq 'cell';
-		next unless defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} >= 0;
-		my $obstacle_pos = get_actor_position($obstacle);
-		next unless $obstacle_pos;
-		my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $obstacle->{prohibited_dist});
-		foreach my $y ($min_y .. $max_y) {
-			foreach my $x ($min_x .. $max_x) {
-				next unless $field->isWalkable($x, $y);
-				my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
-				next if $distance > $obstacle->{prohibited_dist};
-				if (!defined $prohibited{$x}{$y} || $distance < $prohibited{$x}{$y}) {
-					$prohibited{$x}{$y} = $distance;
-				}
-			}
-		}
-	}
-
-	return \%prohibited;
+	return \%live_prohibited_cells;
 }
 
 ## Builds prohibited cells from configured static cell blocks for the given field.
@@ -1469,21 +1516,168 @@ sub create_changes_array {
 	return \@changes_array;
 }
 
-## Sums the influence of all live obstacles into one consolidated weight map.
-sub sum_all_changes {
-	my %changes_hash;
+sub build_prohibited_cells_contribution {
+	my ($obstacle_pos, $obstacle, $target_field) = @_;
+	return {} unless $obstacle_pos && $obstacle && $target_field;
+	return {} unless defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} >= 0;
 
-	foreach my $key (keys %obstaclesList) {
-		foreach my $change (@{ $obstaclesList{$key}{weight} || [] }) {
-			$changes_hash{$change->{x}}{$change->{y}} += $change->{weight};
+	my %prohibited;
+	my ($min_x, $min_y, $max_x, $max_y) = $target_field->getSquareEdgesFromCoord($obstacle_pos, $obstacle->{prohibited_dist});
+	foreach my $y ($min_y .. $max_y) {
+		foreach my $x ($min_x .. $max_x) {
+			next unless $target_field->isWalkable($x, $y);
+			my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
+			next if $distance > $obstacle->{prohibited_dist};
+			$prohibited{$x}{$y} = $distance;
 		}
 	}
 
+	return \%prohibited;
+}
+
+sub build_danger_cells_contribution {
+	my ($obstacle_pos, $obstacle, $target_field) = @_;
+	return {} unless $obstacle_pos && $obstacle && $target_field;
+
+	my $max_distance = profile_max_distance($obstacle->{danger_dist});
+	return {} unless defined $max_distance && $max_distance >= 0;
+
+	my %danger;
+	my ($min_x, $min_y, $max_x, $max_y) = $target_field->getSquareEdgesFromCoord($obstacle_pos, $max_distance);
+	foreach my $y ($min_y .. $max_y) {
+		foreach my $x ($min_x .. $max_x) {
+			next unless $target_field->isWalkable($x, $y);
+			my $distance = blockDistance({ x => $x, y => $y }, $obstacle_pos);
+			my $value = danger_profile_value_at_distance($obstacle->{danger_dist}, $distance);
+			next unless $value > 0;
+			$danger{$x}{$y} = $value;
+		}
+	}
+
+	return \%danger;
+}
+
+sub add_weight_contribution {
+	my ($changes) = @_;
+	return unless $changes;
+
+	foreach my $change (@{$changes}) {
+		next unless $change;
+		$live_weight_sums{$change->{x}}{$change->{y}} += $change->{weight};
+	}
+}
+
+sub remove_weight_contribution {
+	my ($changes) = @_;
+	return unless $changes;
+
+	foreach my $change (@{$changes}) {
+		next unless $change;
+		next unless exists $live_weight_sums{$change->{x}} && exists $live_weight_sums{$change->{x}}{$change->{y}};
+		$live_weight_sums{$change->{x}}{$change->{y}} -= $change->{weight};
+		delete $live_weight_sums{$change->{x}}{$change->{y}} if $live_weight_sums{$change->{x}}{$change->{y}} <= 0;
+		delete $live_weight_sums{$change->{x}} unless scalar keys %{ $live_weight_sums{$change->{x}} };
+	}
+}
+
+sub add_grid_sum_contribution {
+	my ($target, $source) = @_;
+	return unless $target && $source;
+
+	foreach my $x (keys %{$source}) {
+		foreach my $y (keys %{ $source->{$x} }) {
+			$target->{$x}{$y} += $source->{$x}{$y};
+		}
+	}
+}
+
+sub remove_grid_sum_contribution {
+	my ($target, $source) = @_;
+	return unless $target && $source;
+
+	foreach my $x (keys %{$source}) {
+		next unless exists $target->{$x};
+		foreach my $y (keys %{ $source->{$x} }) {
+			next unless exists $target->{$x}{$y};
+			$target->{$x}{$y} -= $source->{$x}{$y};
+			delete $target->{$x}{$y} if $target->{$x}{$y} <= 0;
+		}
+		delete $target->{$x} unless scalar keys %{ $target->{$x} };
+	}
+}
+
+sub add_prohibited_contribution {
+	my ($source) = @_;
+	return unless $source;
+
+	foreach my $x (keys %{$source}) {
+		foreach my $y (keys %{ $source->{$x} }) {
+			my $distance = $source->{$x}{$y};
+			$live_prohibited_distance_counts{$x}{$y}{$distance}++;
+			if (!exists $live_prohibited_cells{$x}{$y} || $distance < $live_prohibited_cells{$x}{$y}) {
+				$live_prohibited_cells{$x}{$y} = $distance;
+			}
+		}
+	}
+}
+
+sub remove_prohibited_contribution {
+	my ($source) = @_;
+	return unless $source;
+
+	foreach my $x (keys %{$source}) {
+		next unless exists $live_prohibited_distance_counts{$x};
+		foreach my $y (keys %{ $source->{$x} }) {
+			next unless exists $live_prohibited_distance_counts{$x}{$y};
+			my $distance = $source->{$x}{$y};
+			next unless exists $live_prohibited_distance_counts{$x}{$y}{$distance};
+			$live_prohibited_distance_counts{$x}{$y}{$distance}--;
+			delete $live_prohibited_distance_counts{$x}{$y}{$distance} if $live_prohibited_distance_counts{$x}{$y}{$distance} <= 0;
+
+			if (!scalar keys %{ $live_prohibited_distance_counts{$x}{$y} }) {
+				delete $live_prohibited_distance_counts{$x}{$y};
+				delete $live_prohibited_cells{$x}{$y} if exists $live_prohibited_cells{$x};
+			} elsif (exists $live_prohibited_cells{$x} && exists $live_prohibited_cells{$x}{$y} && $live_prohibited_cells{$x}{$y} == $distance) {
+				my ($nearest) = sort { $a <=> $b } keys %{ $live_prohibited_distance_counts{$x}{$y} };
+				$live_prohibited_cells{$x}{$y} = $nearest;
+			}
+
+			delete $live_prohibited_distance_counts{$x} unless scalar keys %{ $live_prohibited_distance_counts{$x} };
+			delete $live_prohibited_cells{$x} if exists $live_prohibited_cells{$x} && !scalar keys %{ $live_prohibited_cells{$x} };
+		}
+	}
+}
+
+sub apply_obstacle_contributions {
+	my ($obstacle_id) = @_;
+	my $obstacle = $obstaclesList{$obstacle_id};
+	return unless $obstacle;
+
+	add_prohibited_contribution($obstacle->{prohibited_cells});
+	add_grid_sum_contribution(\%live_danger_cells, $obstacle->{danger_cells});
+	add_weight_contribution($obstacle->{weight});
+	invalidate_pathfinding_caches();
+}
+
+sub remove_obstacle_contributions {
+	my ($obstacle_id) = @_;
+	my $obstacle = $obstaclesList{$obstacle_id};
+	return unless $obstacle;
+
+	remove_prohibited_contribution($obstacle->{prohibited_cells});
+	remove_grid_sum_contribution(\%live_danger_cells, $obstacle->{danger_cells});
+	remove_weight_contribution($obstacle->{weight});
+	invalidate_pathfinding_caches();
+}
+
+## Sums the influence of all live obstacles into one consolidated weight map.
+sub sum_all_changes {
 	my @rebuilt_array;
-	foreach my $x_keys (keys %changes_hash) {
-		foreach my $y_keys (keys %{ $changes_hash{$x_keys} }) {
-			next if $changes_hash{$x_keys}{$y_keys} == 0;
-			my $weight = assertWeightBelowLimit($changes_hash{$x_keys}{$y_keys}, $plugin_settings{weight_limit});
+
+	foreach my $x_keys (keys %live_weight_sums) {
+		foreach my $y_keys (keys %{ $live_weight_sums{$x_keys} }) {
+			next if $live_weight_sums{$x_keys}{$y_keys} == 0;
+			my $weight = assertWeightBelowLimit($live_weight_sums{$x_keys}{$y_keys}, $plugin_settings{weight_limit});
 			push @rebuilt_array, {
 				x => $x_keys,
 				y => $y_keys,

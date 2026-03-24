@@ -2863,7 +2863,7 @@ sub meetingPosition {
 	}
 
 	my %prohibitedCells;
-	my %plugin_args = ( cells => \%prohibitedCells, field => $field );
+	my %plugin_args = ( cells => \%prohibitedCells, field => $field, caller => 'meetingPosition' );
 	Plugins::callHook('add_prohibitedCells' => \%plugin_args);
 
 	my $best_spot;
@@ -5966,9 +5966,9 @@ sub get_lockMap_cell {
 	my $width = $lockField->width;
 	my $height = $lockField->height;
 
-	my %prohibitedCells;
-	my %plugin_args = ( cells => \%prohibitedCells, field => $lockField );
-	Plugins::callHook('add_prohibitedCells' => \%plugin_args);
+	my %dropDestinationCells;
+	my %plugin_args = ( cells => \%dropDestinationCells, field => $lockField, caller => 'get_lockMap_cell' );
+	Plugins::callHook('add_dropDestinationCells' => \%plugin_args);
 
 	do {
 		if ($config{'lockMap_x'} ne '') {
@@ -5983,7 +5983,7 @@ sub get_lockMap_cell {
 		} else {
 			$cell->{y} = int(rand($height));
 		}
-	} while (--$i && (!$lockField->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $width || $cell->{y} >= $height || (exists $prohibitedCells{$cell->{x}} && exists $prohibitedCells{$cell->{x}}{$cell->{y}})));
+	} while (--$i && (!$lockField->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $width || $cell->{y} >= $height || (exists $dropDestinationCells{$cell->{x}} && exists $dropDestinationCells{$cell->{x}}{$cell->{y}})));
 
 	return undef if (!$i);
 	return $cell;
