@@ -65,10 +65,11 @@ allowedMaps
 allowedMaps_reaction 1
 
 attackAuto 2
+attackAuto_routeToLock 1
+attackAuto_outOfLock 1
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
-attackAuto_inLockOnly 1
 attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
@@ -412,9 +413,10 @@ monster_filter
 ######## Mercenary Support ########
 
 mercenary_attackAuto 2
+mercenary_attackAuto_routeToLock 1
+mercenary_attackAuto_outOfLock 1
 mercenary_attackAuto_party 1
 mercenary_attackAuto_notInTown 1
-mercenary_attackAuto_inLockOnly 1
 mercenary_attackAuto_notWhile_storageAuto 1
 mercenary_attackAuto_notWhile_buyAuto 1
 mercenary_attackAuto_notWhile_sellAuto 1
@@ -482,9 +484,10 @@ mercenary_teleportAuto_attackedWhenSitting 0
 ######## Homunculus Support ########
 
 homunculus_attackAuto 2
+homunculus_attackAuto_routeToLock 1
+homunculus_attackAuto_outOfLock 1
 homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
-homunculus_attackAuto_inLockOnly 1
 homunculus_attackAuto_notWhile_storageAuto 1
 homunculus_attackAuto_notWhile_buyAuto 1
 homunculus_attackAuto_notWhile_sellAuto 1

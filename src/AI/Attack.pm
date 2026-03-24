@@ -79,20 +79,15 @@ sub process {
 			return;
 		}
 
-		my $party = $config{'attackAuto_party'} ? 1 : 0;
-		my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
-
 		if ($config{attackChangeTarget}) {
 			my $routeIndex = AI::findAction("route");
 			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-			my $attackOnRoute;
-			if (defined $routeIndex) {
-				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
-			} else {
-				$attackOnRoute = 2;
-			}
-
-			my @aggressives = ai_getAggressives($attackOnRoute, $party);
+			my $routeArgs = defined $routeIndex ? AI::args($routeIndex) : undef;
+			my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs);
+			my $assistParty = ($effectiveAttackMode >= 1 && $config{'attackAuto_party'}) ? 1 : 0;
+			my $target_is_aggressive = is_aggressive($target, undef, 0, $assistParty);
+			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+			my @aggressives = $effectiveAttackMode >= 0 ? ai_getAggressives($aggressiveType, $assistParty) : ();
 
             if (!$target_is_aggressive && @aggressives) {
                 my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});

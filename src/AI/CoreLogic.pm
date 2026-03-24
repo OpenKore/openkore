@@ -2201,9 +2201,8 @@ sub processLockMap {
 					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
 					$config{'lockMap'} = '';
 				} else {
-					my $attackOnRoute = 2;
-					$attackOnRoute = 1 if ($config{'attackAuto_inLockOnly'} == 1);
-					$attackOnRoute = 0 if ($config{'attackAuto_inLockOnly'} > 1);
+					my $attackAuto = getAttackAutoModeForContext('routeToLock');
+					my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
 					if (defined $cell->{x} || defined $cell->{y}) {
 						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $cell->{x}, $cell->{y}), "route";
 					} else {
@@ -2310,13 +2309,15 @@ sub processRandomWalk {
 			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
 			$config{'route_randomWalk'} = 0;
 		} else {
+			my $attackAuto = getAttackAutoMode();
+			my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
 			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $cell->{x}, $cell->{y}), "route";
 			ai_route(
 				$field->baseName,
 				$cell->{x},
 				$cell->{y},
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
-				attackOnRoute => (defined $config{attackAuto}) ? $config{attackAuto} : 2,
+				attackOnRoute => $attackOnRoute,
 				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
 				isRandomWalk => 1
 			);
@@ -3002,8 +3003,8 @@ sub processAutoEquip {
 
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
-	# Don't even think about attacking if attackAuto is -1.
-	return if $config{attackAuto} && $config{attackAuto} eq -1;
+	my $attackAuto = getAttackAutoMode();
+	return if defined $attackAuto && $attackAuto == -1;
 
 	# The auto-attack logic is as follows:
 	# 1. Generate a list of monsters that we are allowed to attack.
@@ -3021,7 +3022,6 @@ sub processAutoAttack {
 	  && timeOut($timeout{ai_attack_auto})
 	  && $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search}
 	  && (!$config{attackAuto_notInTown} || !$field->isCity)
-	  && ($config{attackAuto_inLockOnly} <= 1 || $field->baseName eq $config{'lockMap'})
 	  && (!$config{attackAuto_notWhile_storageAuto} || !AI::inQueue("storageAuto"))
 	  && (!$config{attackAuto_notWhile_buyAuto} || !AI::inQueue("buyAuto"))
 	  && (!$config{attackAuto_notWhile_sellAuto} || !AI::inQueue("sellAuto"))
@@ -3055,12 +3055,8 @@ sub processAutoAttack {
 
 			my $routeIndex = AI::findAction("route");
 			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-			my $attackOnRoute;
-			if (defined $routeIndex) {
-				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
-			} else {
-				$attackOnRoute = 2;
-			}
+			my $routeArgs = defined $routeIndex ? AI::args($routeIndex) : undef;
+			my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs);
 
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 
@@ -3074,8 +3070,9 @@ sub processAutoAttack {
 			my @droppedMonsters;
 
 			# List aggressive monsters
-			my $party = $config{'attackAuto_party'} ? 1 : 0;
-			@aggressives = ai_getAggressives($attackOnRoute, $party) if $attackOnRoute;
+			my $party = ($effectiveAttackMode >= 1 && $config{'attackAuto_party'}) ? 1 : 0;
+			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+			@aggressives = ai_getAggressives($aggressiveType, $party) if $effectiveAttackMode >= 0;
 
 			# List party monsters
 			foreach (@monstersID) {
@@ -3106,7 +3103,7 @@ sub processAutoAttack {
 				# List monsters that our slaves are attacking
 				if (
 					   $config{attackAuto_party}
-					&& $attackOnRoute && !AI::is("take", "items_take")
+					&& $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
 					&& !$ai_v{sitAuto_forcedBySitCommand}
 					&& timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
 					&& (
@@ -3123,7 +3120,7 @@ sub processAutoAttack {
 				}
 
 				# List monsters that party members are attacking
-				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
+				if ($config{attackAuto_party} && $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
 				     $monster->{dmgToParty} || $monster->{missedToParty})
@@ -3133,7 +3130,7 @@ sub processAutoAttack {
 				}
 
 				# List monsters that the master is attacking
-				if ($following && $config{'attackAuto_followTarget'} && $attackOnRoute && !AI::is("take", "items_take")
+				if ($following && $config{'attackAuto_followTarget'} && $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
 				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
@@ -3143,19 +3140,18 @@ sub processAutoAttack {
 				my $control = mon_control($monster->{name}, $monster->{nameID});
 				# List dropped targets and already engaged targets
 				if(
-					$monster->{droppedForAggressive} || # check for dropped target
-					($monster->{dmgFromYou} && $config{'attackAuto'} >= 1 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)) # if received damage then check if we can continue the attack
+					($effectiveAttackMode >= 0 && $monster->{droppedForAggressive}) || # check for dropped target
+					($monster->{dmgFromYou} && $effectiveAttackMode >= 0 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)) # if received damage then check if we can continue the attack
 				) {
 					push @droppedMonsters, $_;
 					next;
 				}
 
 				next unless (!AI::is(qw/sitAuto take items_gather items_take/)
-				 && $config{'attackAuto'} >= 2
+				 && $effectiveAttackMode >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())
 				 && !$ai_v{sitAuto_forcedBySitCommand}
-				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
 				);
 

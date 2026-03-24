@@ -694,16 +694,18 @@ sub ai_canStartStorageSellBuy {
 	return 1 if (AI::isIdle());
 	return 0 if (AI::inQueue("storageAuto", "buyAuto", "sellAuto", "teleport", "NPC", "skill_use", "eventMacro"));
 	
+	return 0 if (AI::inQueue("attack") && !$config{attackAllowStartStorageBuySell});
+	
 	my $routeIndex = AI::findAction("route");
 	$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
 	if (defined $routeIndex) {
 		my $args = AI::args($routeIndex);
 		return 0 if ($args->getSubtask && UNIVERSAL::isa($args->getSubtask, 'Task::TalkNPC'));
-		return 0 unless ($args->{attackOnRoute} > 1 || $args->{isRandomWalk} || $args->{isToLockMap});
+		return 0 unless ($args->{isRandomWalk} || $args->{isToLockMap} || $args->{attackID} || $args->{meetingSubRoute});
 	}
 	
-	return 1 if (AI::is("sitAuto", "follow", "mapRoute", "route", "move"));
-	return 1 if (AI::is("attack") && $config{attackAllowStartStorageBuySell});
+	return 1 if (AI::is("attack", "sitAuto", "follow", "mapRoute", "route", "move"));
+
 	return 0;
 }
 

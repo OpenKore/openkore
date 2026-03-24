@@ -62,9 +62,13 @@ sub process {
 			finishAttacking($slave, $ataqArgs, $ID);
 			return;
 		}
-		my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
-		my $target_is_aggressive = is_aggressive_slave($slave, $target, undef, 0, $party);
-		my @aggressives = ai_slave_getAggressives($slave, 0, $party);
+		my $routeIndex = $slave->findAction("route");
+		my $routeArgs = defined $routeIndex ? $slave->args($routeIndex) : undef;
+		my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs, $slave->{configPrefix});
+		my $assistParty = ($effectiveAttackMode >= 1 && $config{$slave->{configPrefix}.'attackAuto_party'}) ? 1 : 0;
+		my $target_is_aggressive = is_aggressive_slave($slave, $target, undef, 0, $assistParty);
+		my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+		my @aggressives = $effectiveAttackMode >= 0 ? ai_slave_getAggressives($slave, $aggressiveType, $assistParty) : ();
 		if ($config{$slave->{configPrefix}.'attackChangeTarget'} && !$target_is_aggressive && @aggressives) {
 			my $attackTarget = getBestTarget(\@aggressives, $config{$slave->{configPrefix}.'attackCheckLOS'}, $config{$slave->{configPrefix}.'attackCanSnipe'});
 			if ($attackTarget) {

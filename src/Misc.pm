@@ -222,6 +222,9 @@ our @EXPORT = (
 	openBuyerShop
 	closeBuyerShop
 	inLockMap
+	getAttackAutoModeForContext
+	getAttackAutoMode
+	getEffectiveAttackOnRoute
 	parseReload
 	setCharDeleteDate
 	toBase62
@@ -5494,6 +5497,177 @@ sub inLockMap {
 	} else {
 		return 0;
 	}
+}
+
+##
+# int|undef _normalizeAttackAutoMode(value)
+# value: raw config value to normalize.
+#
+# Normalizes an attackAuto-style value into the supported range.
+# This helper is intended for internal use by the attack-mode selectors.
+#
+# Returns:
+#  undef if the value is undefined or blank.
+#  -1 if the value is below -1.
+#  0, 1 or 2 if the value is inside the supported range.
+#  2 if the value is above 2.
+sub _normalizeAttackAutoMode {
+	my ($value) = @_;
+
+	return undef if !defined $value || $value eq '';
+	$value = int($value);
+	$value = -1 if $value < -1;
+	$value = 2 if $value > 2;
+
+	return $value;
+}
+
+##
+# int|undef _normalizeAttackOnRoute(value)
+# value: raw route attack mode to normalize.
+#
+# Normalizes an attackOnRoute-style value into the supported range.
+# Unlike attackAuto, route attack values are clamped to 0..2.
+#
+# Returns:
+#  undef if the value is undefined or blank.
+#  0, 1 or 2 if the value is inside the supported range.
+#  0 if the value is below 0.
+#  2 if the value is above 2.
+sub _normalizeAttackOnRoute {
+	my ($value) = @_;
+
+	return undef if !defined $value || $value eq '';
+	$value = int($value);
+	$value = 0 if $value < 0;
+	$value = 2 if $value > 2;
+
+	return $value;
+}
+
+##
+# int|undef getAttackAutoModeForContext(context, [prefix])
+# context: logical attack context name. Supported values are
+#          'routeToLock' and 'outOfLock'.
+# prefix: optional config prefix, such as 'mercenary_' or 'homunculus_'.
+#
+# Resolves the configured attackAuto mode for a specific context.
+# The function prefers the new context-specific keys first, then falls back
+# to legacy behavior based on attackAuto_inLockOnly, and finally to the
+# base attackAuto setting.
+#
+# Returns:
+#  undef if the resolved config value is blank or undefined.
+#  -1, 0, 1 or 2 for the resolved attack mode.
+#  The base attackAuto mode immediately if no lockMap is configured.
+#  For 'routeToLock':
+#    attackAuto_routeToLock when present;
+#    otherwise 1 if attackAuto_inLockOnly == 1;
+#    otherwise 0 if attackAuto_inLockOnly > 1;
+#    otherwise the base attackAuto mode.
+#  For 'outOfLock':
+#    attackAuto_outOfLock when present;
+#    otherwise 0 if attackAuto_inLockOnly > 1;
+#    otherwise the base attackAuto mode.
+sub getAttackAutoModeForContext {
+	my ($context, $prefix) = @_;
+
+	$prefix ||= '';
+	my $defaultMode = _normalizeAttackAutoMode($config{$prefix . 'attackAuto'});
+	return $defaultMode if !$config{'lockMap'};
+
+	if ($context eq 'routeToLock') {
+		my $mode = _normalizeAttackAutoMode($config{$prefix . 'attackAuto_routeToLock'});
+		return $mode if defined $mode;
+
+		return 1 if defined $config{$prefix . 'attackAuto_inLockOnly'} && $config{$prefix . 'attackAuto_inLockOnly'} == 1;
+		return 0 if defined $config{$prefix . 'attackAuto_inLockOnly'} && $config{$prefix . 'attackAuto_inLockOnly'} > 1;
+	} elsif ($context eq 'outOfLock') {
+		my $mode = _normalizeAttackAutoMode($config{$prefix . 'attackAuto_outOfLock'});
+		return $mode if defined $mode;
+
+		return 0 if defined $config{$prefix . 'attackAuto_inLockOnly'} && $config{$prefix . 'attackAuto_inLockOnly'} > 1;
+	}
+
+	return $defaultMode;
+}
+
+##
+# int|undef getAttackAutoMode([prefix], [routeArgs])
+# prefix: optional config prefix, such as 'mercenary_' or 'homunculus_'.
+# routeArgs: optional current route task args hash.
+#
+# Resolves the effective attackAuto mode for the actor's current situation.
+# If the actor is in lockMap, or no lockMap is configured, this returns the
+# base attackAuto setting. Outside lockMap it determines whether the actor
+# is currently routing to lockMap and delegates to getAttackAutoModeForContext().
+#
+# If routeArgs is omitted, the function inspects the current player route or
+# mapRoute task to determine whether isToLockMap is active.
+#
+# Returns:
+#  undef if the resolved config value is blank or undefined.
+#  -1, 0, 1 or 2 for the effective attack mode.
+#  The base attackAuto mode when there is no lockMap or when already in lockMap.
+#  The 'routeToLock' context mode when outside lockMap and routing to it.
+#  The 'outOfLock' context mode when outside lockMap and not routing to it.
+sub getAttackAutoMode {
+	my ($prefix, $routeArgs) = @_;
+
+	$prefix ||= '';
+	return _normalizeAttackAutoMode($config{$prefix . 'attackAuto'}) if !$config{'lockMap'} || inLockMap();
+
+	if (!$routeArgs) {
+		my $routeIndex = AI::findAction("route");
+		$routeIndex = AI::findAction("mapRoute") if !defined $routeIndex;
+		$routeArgs = AI::args($routeIndex) if defined $routeIndex;
+	}
+
+	my $context = ($routeArgs && $routeArgs->{isToLockMap}) ? 'routeToLock' : 'outOfLock';
+	return getAttackAutoModeForContext($context, $prefix);
+}
+
+##
+# int getEffectiveAttackOnRoute([routeArgs], [prefix])
+# routeArgs: optional route or mapRoute args hash. The function reads the
+#            attackOnRoute key from it when available.
+# prefix: optional config prefix, such as 'mercenary_' or 'homunculus_'.
+#
+# Computes the effective auto-attack mode after combining:
+#  1. the current context-sensitive attackAuto mode, and
+#  2. the route task's attackOnRoute permission.
+#
+# attackAuto modes use the semantic scale:
+#  -1 = never attack
+#   0 = retaliate only when attacked by the monster itself
+#   1 = assist self/master/party/slaves
+#   2 = aggressive auto-attack
+#
+# attackOnRoute permissions use the routing scale:
+#   0 = never stop routing to attack
+#   1 = allow reactive/assist attacks while routing
+#   2 = allow aggressive attacks while routing
+#
+# Returns:
+#  -1 if the resolved attackAuto mode is undefined or below 0.
+#  -1 if routeArgs explicitly disables route attacks with attackOnRoute <= 0.
+#  0, 1 or 2 otherwise, using the lower of the attackAuto mode and the
+#  route permission.
+#  If routeArgs is omitted or lacks attackOnRoute, the route side defaults to 2.
+sub getEffectiveAttackOnRoute {
+	my ($routeArgs, $prefix) = @_;
+
+	$prefix ||= '';
+	my $attackOnRoute = defined $routeArgs
+		? _normalizeAttackOnRoute($routeArgs->{attackOnRoute})
+		: 2;
+	$attackOnRoute = 2 if !defined $attackOnRoute;
+
+	my $attackAuto = getAttackAutoMode($prefix, $routeArgs);
+	return -1 if !defined $attackAuto || $attackAuto < 0;
+	return -1 if $attackOnRoute <= 0;
+
+	return $attackOnRoute > $attackAuto ? $attackAuto : $attackOnRoute;
 }
 
 sub parseReload {
