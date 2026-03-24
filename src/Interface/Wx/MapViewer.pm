@@ -327,6 +327,7 @@ sub parsePortals {
 	foreach my $portal (keys %portals_lut) {
 		foreach my $dest (keys %{$portals_lut{$portal}{dest}}) {
 			next if $portals_lut{$portal}{dest}{$dest}{map} eq '';
+			next unless $portals_lut{$portal}{dest}{$dest}{enabled};
 			if ($portals_lut{$portal}{dest}{$dest}{steps}) {
 				# this is a Warp NPC
 				push (@{$self->{portals}->{$portals_lut{$portal}{source}{map}}}, {

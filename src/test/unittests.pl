@@ -21,8 +21,10 @@ my @tests = qw(
 	TaskTalkNPCTest
 	PluginsHookTest
 	FileParsersTest
+	DynamicPortalGroupsTest
 	NetworkTest
 	FieldTest
+	XConfTest
 );
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);

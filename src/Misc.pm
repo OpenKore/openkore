@@ -62,6 +62,7 @@ our @EXPORT = (
 	qw/auth
 	configModify
 	bulkConfigModify
+	bulkSetTimeout
 	setTimeout
 	saveConfigFile/,
 
@@ -205,6 +206,10 @@ our @EXPORT = (
 	avoidList_near
 	compilePortals
 	compilePortals_check
+	refreshDynamicPortalGroups
+	refreshDynamicPortalStates
+	applyDynamicPortalStates
+	getDynamicPortalDestinations
 	portalExists
 	portalExists2
 	portalExistsAirship
@@ -279,6 +284,121 @@ sub _checkActorHash($$$$) {
 				Dumper($hash);
 		}
 	}
+}
+
+sub _normalizeDynamicPortalSelection {
+	my ($selection) = @_;
+	return unless defined $selection;
+
+	$selection =~ s/^\s+|\s+$//g;
+	$selection =~ s/\s+/ /g;
+	return if $selection eq '';
+
+	my ($map, $x, $y) = split / /, $selection, 3;
+	($map) = Field::nameToBaseName(undef, $map);
+	$map = lc $map;
+
+	if (defined $x && defined $y && $x =~ /^\d+$/ && $y =~ /^\d+$/) {
+		return "$map $x $y";
+	}
+
+	return $map;
+}
+
+sub _dynamicPortalSelectionMatches {
+	my ($selection, $destID) = @_;
+	return 0 unless defined $selection && defined $destID;
+
+	my ($map, $x, $y) = split / /, $destID, 3;
+	my $normalizedDestID = join(' ', lc($map), $x, $y);
+	return 1 if $selection eq $normalizedDestID;
+	return 1 if $selection eq lc($map);
+	return 0;
+}
+
+sub _isDynamicPortalConfigKey {
+	my ($key) = @_;
+	return 0 unless defined $key;
+
+	foreach my $group (values %dynamicPortalGroups) {
+		return 1 if defined $group->{config_key} && $group->{config_key} eq $key;
+	}
+
+	return 0;
+}
+
+sub refreshDynamicPortalStates {
+	refreshDynamicPortalGroups();
+	applyDynamicPortalStates();
+}
+
+sub refreshDynamicPortalGroups {
+	%dynamicPortalGroups = ();
+
+	foreach my $portal (keys %portals_lut) {
+		foreach my $destID (keys %{$portals_lut{$portal}{dest}}) {
+			my $dest = $portals_lut{$portal}{dest}{$destID};
+			next unless $dest;
+			next unless $dest->{dynamicPortalGroup};
+			next if $dest->{map} eq '';
+			next if defined $dest->{steps} && $dest->{steps} ne '';
+
+			my $groupName = $dest->{dynamicPortalGroup};
+			$dynamicPortalGroups{$groupName}{config_key} = $groupName;
+			$dynamicPortalGroups{$groupName}{sources}{$portal}{destinations}{$destID} = 1;
+		}
+	}
+}
+
+sub applyDynamicPortalStates {
+	foreach my $group (values %dynamicPortalGroups) {
+		next unless $group->{config_key};
+		next unless keys %{$group->{sources}};
+
+		my $selection = _normalizeDynamicPortalSelection($config{$group->{config_key}});
+		my $matched = 0;
+		my $hasDestinations = 0;
+
+		foreach my $source (keys %{$group->{sources}}) {
+			my $sourceDestinations = $group->{sources}{$source}{destinations};
+			next unless $sourceDestinations && keys %{$sourceDestinations};
+			$hasDestinations = 1;
+
+			next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
+
+			foreach my $destID (keys %{$sourceDestinations}) {
+				next unless exists $portals_lut{$source}{dest}{$destID};
+				my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
+				$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
+				$matched ||= $enabled;
+			}
+		}
+
+		next unless $hasDestinations;
+
+		if (defined $selection && !$matched) {
+			warning TF(
+				"Dynamic portal setting '%s' has no match for %s; all detected destinations are disabled.\n",
+				$config{$group->{config_key}}, $group->{config_key}
+			);
+		}
+	}
+}
+
+sub getDynamicPortalDestinations {
+	my ($groupName) = @_;
+	return {} unless exists $dynamicPortalGroups{$groupName};
+
+	my %destinations;
+
+	foreach my $source (keys %{$dynamicPortalGroups{$groupName}{sources}}) {
+		my $sourceDestinations = $dynamicPortalGroups{$groupName}{sources}{$source}{destinations};
+		next unless $sourceDestinations;
+
+		$destinations{$_} = 1 foreach keys %{$sourceDestinations};
+	}
+
+	return \%destinations;
 }
 
 # Checks whether the internal state of some variables are correct.
@@ -383,6 +503,9 @@ sub configModify {
 		}
 	}
 	$config{$key} = $val;
+	if (_isDynamicPortalConfigKey($key)) {
+		applyDynamicPortalStates();
+	}
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 	
@@ -434,9 +557,57 @@ sub bulkConfigModify {
 		}
 	}
 
+	if (grep { _isDynamicPortalConfigKey($_) } keys %{$r_hash}) {
+		applyDynamicPortalStates();
+	}
 	saveConfigFile();
 	
 	Plugins::callHook('post_configModify');
+}
+
+##
+# bulkSetTimeout (r_hash, [silent])
+# r_hash: key => value to change
+# silent: if set to 1, do not print a message to the console.
+#
+# like setTimeout but for more than one value at the same time.
+sub bulkSetTimeout {
+	my $r_hash = shift;
+	my $silent = shift;
+	my $oldtime;
+
+	my %create_keys;
+	foreach my $name (keys %{$r_hash}) {
+		Plugins::callHook('setTimeout', {
+			timeout => $name,
+			time => $r_hash->{$name},
+			additionalOptions => {
+				silent => $silent
+			}
+		});
+
+		$oldtime = $timeout{$name}{timeout};
+
+		if (!exists $timeout{$name}{timeout}) {
+			$create_keys{$name} = 1;
+		}
+
+		$timeout{$name}{timeout} = $r_hash->{$name};
+
+		message TF("Timeout '%s' set to %s (was %s)\n", $name, $r_hash->{$name}, $oldtime), "info" unless ($silent);
+	}
+
+	if (scalar keys %create_keys > 0) {
+		my $f;
+		if (open($f, ">>", Settings::getControlFilename("timeouts.txt"))) {
+			foreach my $name (keys %create_keys) {
+				print $f "$name\n";
+			}
+			close($f);
+		}
+	}
+
+	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
 ##
@@ -2077,13 +2248,15 @@ sub getPlayerNameFromCache {
 sub getPortalDestName {
 	my $ID = shift;
 	my %hash; # We only want unique names, so we use a hash
-	foreach (keys %{$portals_lut{$ID}{'dest'}}) {
+	my @destinations = grep { $portals_lut{$ID}{dest}{$_}{enabled} } keys %{$portals_lut{$ID}{dest}};
+	@destinations = keys %{$portals_lut{$ID}{dest}} unless @destinations;
+	foreach (@destinations) {
 		my $key = $portals_lut{$ID}{'dest'}{$_}{'map'};
 		$hash{$key} = 1;
 	}
 
-	my @destinations = sort keys %hash;
-	return join('/', @destinations);
+	my @destinationNames = sort keys %hash;
+	return join('/', @destinationNames);
 }
 
 sub getResponse {
@@ -5510,6 +5683,7 @@ sub parseReload {
 		} else {
 			Settings::loadByRegexp(qr/$args/, $progressHandler);
 		}
+		refreshDynamicPortalStates();
 		Log::initLogFiles();
 		message T("All files were loaded\n"), "reload";
 	};

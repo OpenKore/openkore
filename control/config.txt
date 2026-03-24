@@ -237,6 +237,10 @@ route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 route_randomFactor 0
 
+# Eden Group Headquarters exit portal.
+# Use only a map name, with or without quotes, like prontera or "payon"
+EdenPortalExit
+
 # Maximum walking path distance (client setting). Default: 17
 # This corresponds to max_walk_path in server configuration
 maxWalkPathDistance 17
