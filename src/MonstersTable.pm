@@ -56,6 +56,13 @@ my %AI_MODE = (
 	'27' => 0x8084, 'ABR_PASSIVE' => 0x21, 'ABR_OFFENSIVE' => 0xA5
 );
 
+sub _as_number {
+	my ($value, $fallback) = @_;
+	$fallback = 0 unless defined $fallback;
+	return $fallback unless defined $value && $value ne '';
+	return $value + 0;
+}
+
 sub _ai_mode_value {
 	my ($ai) = @_;
 	$ai = defined $ai ? uc($ai) : '06';
@@ -66,7 +73,7 @@ sub _rebuild_ai_flags_cache {
 	%ai_flags = ();
 	if ($use_compact_backend) {
 		for my $id (keys %compact_rows) {
-			my $ai = $compact_enums{'Ai'}{ids}[$compact_rows{$id}[11]];
+			my $ai = $compact_enums{'Ai'}{ids}[$compact_rows{$id}[$FIELD_INDEX{Ai}]];
 			my $mode = _ai_mode_value($ai);
 			$ai_flags{$id}{looter} = ($mode & 0x2) ? 1 : 0;
 			$ai_flags{$id}{aggressive} = ($mode & 0x4) ? 1 : 0;
@@ -120,17 +127,17 @@ sub initialize_compact_backend {
 		next unless ref $entry eq 'HASH';
 
 		$compact_rows{$id} = [
-			defined $entry->{Level} ? $entry->{Level} : 0,
-			defined $entry->{HP} ? $entry->{HP} : 0,
-			defined $entry->{AttackRange} ? $entry->{AttackRange} : 0,
-			defined $entry->{SkillRange} ? $entry->{SkillRange} : 0,
-			defined $entry->{AttackDelay} ? $entry->{AttackDelay} : 0,
-			defined $entry->{AttackMotion} ? $entry->{AttackMotion} : 0,
+			_as_number($entry->{Level}),
+			_as_number($entry->{HP}),
+			_as_number($entry->{AttackRange}),
+			_as_number($entry->{SkillRange}),
+			_as_number($entry->{AttackDelay}),
+			_as_number($entry->{AttackMotion}),
 			_enum_id('Size', defined $entry->{Size} ? $entry->{Size} : 'Small'),
 			_enum_id('Race', defined $entry->{Race} ? $entry->{Race} : 'Formless'),
 			_enum_id('Element', defined $entry->{Element} ? $entry->{Element} : 'Neutral'),
-			defined $entry->{ElementLevel} ? $entry->{ElementLevel} : 1,
-			defined $entry->{ChaseRange} ? $entry->{ChaseRange} : 0,
+			_as_number($entry->{ElementLevel}, 1),
+			_as_number($entry->{ChaseRange}),
 			_enum_id('Ai', defined $entry->{Ai} ? uc($entry->{Ai}) : '06'),
 		];
 	}
@@ -185,17 +192,17 @@ sub load_compact_backend_from_file {
 		next unless defined $id && $id =~ /^\d+$/;
 
 		$compact_rows{$id} = [
-			defined $level ? $level : 0,
-			defined $hp ? $hp : 0,
-			defined $attackRange ? $attackRange : 0,
-			defined $skillRange ? $skillRange : 0,
-			defined $attackDelay ? $attackDelay : 0,
-			defined $attackMotion ? $attackMotion : 0,
+			_as_number($level),
+			_as_number($hp),
+			_as_number($attackRange),
+			_as_number($skillRange),
+			_as_number($attackDelay),
+			_as_number($attackMotion),
 			_enum_id('Size', defined $size ? $size : 'Small'),
 			_enum_id('Race', defined $race ? $race : 'Formless'),
 			_enum_id('Element', defined $element ? $element : 'Neutral'),
-			defined $elementLevel ? $elementLevel : 1,
-			defined $chaseRange ? $chaseRange : 0,
+			_as_number($elementLevel, 1),
+			_as_number($chaseRange),
 			_enum_id('Ai', defined $ai ? uc($ai) : '06'),
 		];
 	}
