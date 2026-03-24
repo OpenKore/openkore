@@ -76,6 +76,7 @@ use Misc qw(bulkConfigModify isCellOccupied);
 use Translation qw(T TF);
 use Utils;
 use AI;
+use MonstersTable qw(monster_exists monster_field monster_hp monster_level);
 use POSIX qw(floor);
 
 use constant {
@@ -109,7 +110,8 @@ sub onUnload {
 	Plugins::delHooks($hooks);
 }
 
-# TODO: Revisar
+# Extends default monster condition checks with additional database/runtime
+# filters used by attackSkillSlot, equipAuto, attackComboSlot and monsterSkill.
 sub extendedCheck {
 	my (undef, $args) = @_;
 	
@@ -129,18 +131,17 @@ sub extendedCheck {
 		}
 	}
 
-	if (!exists $monstersTable{$args->{monster}->{nameID}}) {
+	if (!monster_exists($args->{monster}->{nameID})) {
 		Log::warning("eCast: Monster {name '$args->{monster}->{name}'} {ID '$args->{monster}->{nameID}'} not found\n", 'eCast');
 		return 0;
 	}
 
 	my $ID = $args->{monster}->{nameID};
-	my $mob = $monstersTable{$args->{monster}->{nameID}};
 	
-	my $element = $mob->{Element};
-	my $element_lvl = $mob->{ElementLevel};
-	my $race = $mob->{Race};
-	my $size = $mob->{Size};
+	my $element = monster_field($ID, 'Element');
+	my $element_lvl = monster_field($ID, 'ElementLevel');
+	my $race = monster_field($ID, 'Race');
+	my $size = monster_field($ID, 'Size');
 
 	if ($args->{monster}->{element} && $args->{monster}->{element} ne '') {
 		$element = $args->{monster}->{element};
@@ -192,12 +193,12 @@ sub extendedCheck {
 	}
 
 	if ($config{$args->{prefix} . '_hpLeft'}
-	&& !inRange(($mob->{HP} + $args->{monster}->{deltaHp}),$config{$args->{prefix} . '_hpLeft'})) {
+	&& !inRange((monster_hp($ID) + $args->{monster}->{deltaHp}),$config{$args->{prefix} . '_hpLeft'})) {
 	return $args->{return} = 0;
 	}
 
 	if ($config{$args->{prefix} . '_Level'}
-	&& !inRange(($mob->{Level}),$config{$args->{prefix} . '_Level'})) {
+	&& !inRange((monster_level($ID)),$config{$args->{prefix} . '_Level'})) {
 	return $args->{return} = 0;
 	}
 
@@ -210,7 +211,7 @@ sub hasFreeCellBehind {
 	my $charPos = calcPosFromPathfinding($field, $char);
 	my $targetPos = calcPosFromPathfinding($field, $monster);
 	
-	my $dir = map_calc_dir_xy($charPos->{x}, $charPos->{y}, $targetPos->{x}, $targetPos->{x}); 
+	my $dir = map_calc_dir_xy($charPos->{x}, $charPos->{y}, $targetPos->{x}, $targetPos->{y}); 
 
 	my ($x, $y);
 
@@ -275,11 +276,11 @@ sub map_calc_dir_xy {
     }
 }
 
-# TODO: Revisar
+# Add live HP information to packet messages when possible.
 sub onPacketSkillUse { monsterHp($monsters{$_[1]->{targetID}}, $_[1]->{disp}) if $_[1]->{disp} }
 
-# TODO: Revisar
-sub onPacketSkillUseNoDmg {
+# Track element changes from self-targeted NPC_CHANGE* skills.
+sub onPacketSkillUseNoDamage {
 	my (undef,$args) = @_;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
 	if (
@@ -292,16 +293,17 @@ sub onPacketSkillUseNoDmg {
 	}
 }
 
-# TODO: Revisar
+# Add live HP information to normal attack packet messages when possible.
 sub onPacketAttack { monsterHp($monsters{$_[1]->{targetID}}, $_[1]->{msg}) if $_[1]->{msg} }
 
-# TODO: Revisar
+# Inject current/base HP information into a packet message buffer.
 sub monsterHp {
 	my ($monster, $message) = @_;
 	return 1 unless $monster && $monster->{nameID};
 	my $ID = int($monster->{nameID});
-	return 1 unless my $monsterInfo = $monstersTable{$ID};
-	$$message =~ s~(?=\n)~TF(" (Hp: %d/%d)", $monsterInfo->{HP} + $monster->{deltaHp}, $monsterInfo->{HP})~se;
+	my $base_hp = monster_hp($ID);
+	return 1 unless defined $base_hp;
+	$$message =~ s~(?=\n)~TF(" (Hp: %d/%d)", $base_hp + $monster->{deltaHp}, $base_hp)~se;
 }
 
 1;

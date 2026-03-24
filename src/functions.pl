@@ -416,6 +416,10 @@ sub loadDataFiles {
 
 	Settings::update_log_filenames();
 
+	require MonstersTable;
+	my $rows = MonstersTable::initialize_compact_backend(purge_legacy => 1);
+	message TF("MonstersTable compact backend enabled by default (%d rows) [legacy table purged]\n", $rows);
+
 	Plugins::callHook('start3');
 
 	if ($config{'secureAdminPassword'} eq '1') {
