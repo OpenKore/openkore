@@ -19,6 +19,7 @@ our @EXPORT_OK = qw(
 	monster_is_looter_by_ai
 	monster_is_aggressive_by_ai
 	initialize_compact_backend
+	load_compact_backend_from_file
 	using_compact_backend
 	reset_backend_state
 );
@@ -29,6 +30,7 @@ my $use_compact_backend = 0;
 my $loaded = 0;
 my $loading = 0;
 my %ai_flags;
+my $warned_monster_get_compact = 0;
 
 my %FIELD_INDEX = (
 	Level        => 0,
@@ -142,6 +144,72 @@ sub initialize_compact_backend {
 	return scalar(keys %compact_rows);
 }
 
+sub load_compact_backend_from_file {
+	my %args = @_;
+	my $file = $args{file};
+	my $purge_legacy = $args{purge_legacy} ? 1 : 0;
+	return 0 unless defined $file && $file ne '';
+
+	require Utils::TextReader;
+
+	%compact_rows = ();
+	%compact_enums = ();
+
+	my $reader = Utils::TextReader->new($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/^\s+|\s+$//g;
+		next if $line eq '';
+		next if $line =~ /^#/;
+		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange(?:\s+Ai)?$/i;
+
+		my @fields = split /\s+/, $line;
+		next unless @fields >= 12;
+
+		my (
+			$id,
+			$level,
+			$hp,
+			$attackRange,
+			$skillRange,
+			$attackDelay,
+			$attackMotion,
+			$size,
+			$race,
+			$element,
+			$elementLevel,
+			$chaseRange,
+			$ai
+		) = @fields;
+
+		next unless defined $id && $id =~ /^\d+$/;
+
+		$compact_rows{$id} = [
+			defined $level ? $level : 0,
+			defined $hp ? $hp : 0,
+			defined $attackRange ? $attackRange : 0,
+			defined $skillRange ? $skillRange : 0,
+			defined $attackDelay ? $attackDelay : 0,
+			defined $attackMotion ? $attackMotion : 0,
+			_enum_id('Size', defined $size ? $size : 'Small'),
+			_enum_id('Race', defined $race ? $race : 'Formless'),
+			_enum_id('Element', defined $element ? $element : 'Neutral'),
+			defined $elementLevel ? $elementLevel : 1,
+			defined $chaseRange ? $chaseRange : 0,
+			_enum_id('Ai', defined $ai ? uc($ai) : '06'),
+		];
+	}
+
+	if ($purge_legacy) {
+		%monstersTable = ();
+	}
+
+	$use_compact_backend = 1;
+	$loaded = 1;
+	_rebuild_ai_flags_cache();
+	return scalar(keys %compact_rows);
+}
+
 sub using_compact_backend {
 	return $use_compact_backend;
 }
@@ -158,7 +226,13 @@ sub monster_get {
 	_ensure_loaded();
 	return unless defined $id && $id ne '';
 	return unless _exists_raw($id);
-	return unless !$use_compact_backend;
+	if ($use_compact_backend) {
+		if (!$warned_monster_get_compact) {
+			warn "MonstersTable::monster_get is deprecated when compact backend is enabled; use monster_field()/helper APIs instead.\n";
+			$warned_monster_get_compact = 1;
+		}
+		return;
+	}
 	return $monstersTable{$id};
 }
 
@@ -249,6 +323,7 @@ sub reset_backend_state {
 	$use_compact_backend = 0;
 	$loaded = 0;
 	$loading = 0;
+	$warned_monster_get_compact = 0;
 }
 
 1;
