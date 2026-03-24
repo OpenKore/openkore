@@ -2878,7 +2878,7 @@ sub meetingPosition {
 	require Task::Route;
 	my $solution;
 
-	message "[meetingPosition] before allspots. candidates=$allspots_count max_path_dist=$max_path_dist myPos=$realMyPos->{x} $realMyPos->{y} targetPos=$realTargetPos->{x} $realTargetPos->{y}\n";
+	debug "[meetingPosition] before allspots. candidates=$allspots_count max_path_dist=$max_path_dist myPos=$realMyPos->{x} $realMyPos->{y} targetPos=$realTargetPos->{x} $realTargetPos->{y}\n", "ai_attack", 2;
 	foreach my $candidate (@candidate_spots) {
 		my $spot = {
 			x => $candidate->{x},
@@ -3033,17 +3033,17 @@ sub meetingPosition {
 	my $end_time = time;
 
 	my $elapsed = $end_time - $start_time;
-	message "[meetingPosition] Elapsed time $elapsed\n";
+	debug "[meetingPosition] Elapsed time $elapsed\n", "ai_attack", 2;
 
-	message "[meetingPosition] Rejections: " . join(', ', map { $_ . '=' . $meeting_rejections{$_} } sort keys %meeting_rejections) . "\n";
+	debug "[meetingPosition] Rejections: " . join(', ', map { $_ . '=' . $meeting_rejections{$_} } sort keys %meeting_rejections) . "\n", "ai_attack", 2;
 
 	if (defined $best_spot) {
-		message "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
-		message "[meetingPosition] Solution: ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
+		debug "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n", "ai_attack", 1;
+		debug "[meetingPosition] Solution: ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n", "ai_attack", 3;
 		return $best_spot;
 	}
 
-	message "[meetingPosition] No valid spot found.\n";
+	debug "[meetingPosition] No valid spot found.\n", "ai_attack", 1;
 }
 
 sub objectAdded {
