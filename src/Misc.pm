@@ -181,6 +181,9 @@ our @EXPORT = (
 	getBestTarget
 	isSafe
 	isSafeActorQuery
+	getActorNameSafe
+	itemNameSimpleWithSlots
+	sumByNameID_all
 	isCellOccupied/,
 
 	# Actor's Actions Text
@@ -250,6 +253,28 @@ our @EXPORT = (
 
 # use SelfLoader; 1;
 # __DATA__
+
+# sumByNameID_all
+# Returns how many units of an item we own across inventory, cart and/or storage.
+sub sumByNameID_all {
+	my ($itemID, $useInventory, $useCart, $useStorage) = @_;
+	
+	my $total = 0;
+
+	if ($useInventory && $char->inventory->isReady()) {
+		$total += $char->inventory->sumByNameID($itemID, 1);
+	}
+
+	if ($useCart && $char->cart->isReady()) {
+		$total += $char->cart->sumByNameID($itemID, 1);
+	}
+
+	if ($useStorage && $char->storage->wasOpenedThisSession()) {
+		$total += $char->storage->sumByNameID($itemID, 1);
+	}
+	
+	return $total;
+}
 
 sub _checkActorHash($$$$) {
 	my ($name, $hash, $type, $hashName) = @_;
@@ -2377,12 +2402,26 @@ sub monsterName {
 	return $monsters_lut{$ID} || "Unknown #$ID";
 }
 
-# Resolve the name of a simple item
+# Resolve the name of a simple item with ID
 sub itemNameSimple {
 	my $ID = shift;
 	return T("Unknown") unless defined($ID);
 	return T("None") unless $ID;
 	return $items_lut{$ID} || T("Unknown #")."$ID";
+}
+
+# Resolve the name of a simple item with ID, also adds slots
+sub itemNameSimpleWithSlots {
+	my $ID = shift;
+	return T("Unknown") unless defined($ID);
+	return T("None") unless $ID;
+	return (T("Unknown #")."$ID") unless (exists $items_lut{$ID} && defined $items_lut{$ID});
+	
+	my $name = $items_lut{$ID};
+	my $numSlots = $itemSlotCount_lut{$ID};
+	$name .= " [$numSlots]" if $numSlots;
+
+	return $name;
 }
 
 ##
@@ -3444,57 +3483,6 @@ sub setStatus {
 			}
 		}
 	}
-=pod
-	foreach (keys %stateHandle) {
-		if ($opt1 == $_) {
-			if (!$actor->{statuses}{$stateHandle{$_}}) {
-				$actor->{statuses}{$stateHandle{$_}} = 1;
-				message TF("%s %s in %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$stateHandle{$_}}) {
-			delete $actor->{statuses}{$stateHandle{$_}};
-			message TF("%s %s out of %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-
-	foreach (keys %ailmentHandle) {
-		if (($opt2 & $_) == $_) {
-			if (!$actor->{statuses}{$ailmentHandle{$_}}) {
-				$actor->{statuses}{$ailmentHandle{$_}} = 1;
-				if ($actor->isa('Actor::You')) {
-					message TF("%s have ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-				} else {
-					message TF("%s has ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-				}
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$ailmentHandle{$_}}) {
-			delete $actor->{statuses}{$ailmentHandle{$_}};
-			message TF("%s %s out of %s ailment.\n", $actor, $actor->verb('are', 'is'), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-
-	foreach (keys %lookHandle) {
-		if (($option & $_) == $_) {
-			if (!$actor->{statuses}{$lookHandle{$_}}) {
-				$actor->{statuses}{$lookHandle{$_}} = 1;
-				if ($actor->isa('Actor::You')) {
-					message TF("%s have look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-				} else {
-					message TF("%s has look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-				}
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$lookHandle{$_}}) {
-			delete $actor->{statuses}{$lookHandle{$_}};
-			message TF("%s %s out of %s look.\n", $actor, $actor->verb('are', 'is'), $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-=cut
 	Plugins::callHook('changed_status',{
 		actor => $actor,
 		changed => $changed
@@ -4690,6 +4678,22 @@ sub monKilled {
 	} else {
 		$dmgpsec = $totaldmg / $totalelasped;
 	}
+}
+
+# Resolves an actor ID into a name, getActorName returns nameString and this is also safer
+# as it checks for ID definition
+sub getActorNameSafe {
+	my ($id) = @_;
+
+	return unless (defined $id);
+
+	my $actor = Actor::get($id);
+	return unless ($actor);
+
+	my $name = $actor->name;
+	return unless ($name);
+
+	return $name;
 }
 
 # Resolves a player or monster ID into a name

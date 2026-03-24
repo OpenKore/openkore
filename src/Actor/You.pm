@@ -148,6 +148,27 @@ sub getSkillLevel {
 	}
 }
 
+###############################################################################################################
+# Sub: getSkillLevelByHandle
+#
+# Purpose:
+#   Returns the learned level for a skill handle, defaulting to zero when the skill is absent.
+#
+# Inputs / Outside State:
+# First arg = `skillhandle`.
+###############################################################################################################
+sub getSkillLevelByHandle {
+	my ($self, $skillhandle) = @_;
+	
+	return 0 unless (exists $self->{skills} && $self->{skills});
+	
+	if (exists $self->{skills}{$skillhandle} && $self->{skills}{$skillhandle}{lv}) {
+		return $self->{skills}{$skillhandle}{lv};
+	} else {
+		return 0;
+	}
+}
+
 ##
 # InventoryList $char->inventory()
 # Ensures: defined(result)
