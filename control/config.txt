@@ -217,7 +217,6 @@ lockMap_randY
 route_escape_reachedNoPortal 1
 route_escape_randomWalk 1
 route_escape_shout
-route_avoidWalls 1
 route_randomWalk 1
 route_randomWalk_inLockOnly 0
 route_randomWalk_inTown 0
@@ -233,6 +232,7 @@ route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
+route_avoidWalls 1
 route_randomFactor 0
 
 # Maximum walking path distance (client setting). Default: 17

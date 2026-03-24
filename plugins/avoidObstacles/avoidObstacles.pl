@@ -875,8 +875,8 @@ sub choose_best_route_step {
 	my $candidate_steps = build_route_step_candidates($solution, $max_route_step);
 	my $expected_route_danger = route_danger_score_for_slice($solution, $danger_cells, 0, $max_route_step);
 
-	message "[" . PLUGIN_NAME . "] >>>>> Before best step candidates ". (scalar @{$candidate_steps}) ."\n", 'route';
-	message "[" . PLUGIN_NAME . "] max_route_step $max_route_step | expected_route_danger $expected_route_danger\n", 'route';
+	#message "[" . PLUGIN_NAME . "] >>>>> Before best step candidates ". (scalar @{$candidate_steps}) ."\n", 'route';
+	#message "[" . PLUGIN_NAME . "] max_route_step $max_route_step | expected_route_danger $expected_route_danger\n", 'route';
 
 	foreach my $candidate_step (reverse @{$candidate_steps}) {
 		my $candidate_pos = $solution->[$candidate_step];
@@ -886,7 +886,7 @@ sub choose_best_route_step {
 		next unless $client_solution && @{$client_solution};
 
 		if (route_crosses_prohibited_cells($client_solution, $prohibited_cells)) {
-			message "[" . PLUGIN_NAME . "] Dropped [step $candidate_step] [$candidate_pos->{x} $candidate_pos->{y}] bc prohibited_cells \n", 'route';
+			#message "[" . PLUGIN_NAME . "] Dropped [step $candidate_step] [$candidate_pos->{x} $candidate_pos->{y}] bc prohibited_cells \n", 'route';
 			next;
 		}
 
@@ -895,7 +895,7 @@ sub choose_best_route_step {
 			$score += route_danger_score_for_slice($solution, $danger_cells, $candidate_step + 1, $max_route_step);
 		}
 
-		message "[" . PLUGIN_NAME . "] [step $candidate_step] [$candidate_pos->{x} $candidate_pos->{y}] Danger $score\n", 'route';
+		#message "[" . PLUGIN_NAME . "] [step $candidate_step] [$candidate_pos->{x} $candidate_pos->{y}] Danger $score\n", 'route';
 =pod
 		if ($score <= $expected_route_danger) {
 			$best_step = $candidate_step;
@@ -913,12 +913,12 @@ sub choose_best_route_step {
 		}
 	}
 
-	if (defined $best_score) {
+	#if (defined $best_score) {
 	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Client == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
 	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n";
-		warning "[" . PLUGIN_NAME . "] chose route_step $best_step (max $max_route_step [same? ". (($best_step == $max_route_step) ? 1 : 0) ."]) at [$best_pos->{x} $best_pos->{y}].\n", 'route';
-		warning "[" . PLUGIN_NAME . "] Danger score $best_score (expected route danger $expected_route_danger).\n", 'route';
-	}
+	#	warning "[" . PLUGIN_NAME . "] chose route_step $best_step (max $max_route_step [same? ". (($best_step == $max_route_step) ? 1 : 0) ."]) at [$best_pos->{x} $best_pos->{y}].\n", 'route';
+	#	warning "[" . PLUGIN_NAME . "] Danger score $best_score (expected route danger $expected_route_danger).\n", 'route';
+	#}
 
 	return ($best_step, $best_score);
 }
@@ -948,7 +948,7 @@ sub filter_prohibited_cells_for_route_task {
 	my $dest = $task->{dest}{pos};
 	my @matching_portals = grep {
 		my $obstacle = $obstaclesList{$_};
-		my $match_dist = 5;
+		my $match_dist = 7;
 		my $danger_distance = profile_max_distance($obstacle->{danger_dist});
 		$match_dist = $danger_distance if defined $danger_distance && $danger_distance > $match_dist;
 		$match_dist = $obstacle->{prohibited_dist} if defined $obstacle->{prohibited_dist} && $obstacle->{prohibited_dist} > $match_dist;
@@ -1249,6 +1249,9 @@ sub on_getRoute {
 	return unless ($args->{liveRoute});
 
 	my $prohibited_cells = get_cached_prohibited_cells();
+	if ($args->{self} && ref $args->{self}) {
+		$prohibited_cells = filter_prohibited_cells_for_route_task($args->{self}, $prohibited_cells, $args->{field});
+	}
 	my $base_weight_map_ref = defined $args->{weight_map} ? $args->{weight_map} : \($args->{field}->{weightMap});
 	if ($prohibited_cells && scalar keys %{$prohibited_cells} && !pos_is_prohibited($args->{start}, $prohibited_cells) && !pos_is_prohibited($args->{dest}, $prohibited_cells)) {
 		$pathfinding_weight_map_override = get_cached_weight_map_with_prohibited_cells($base_weight_map_ref, $args->{field}, $prohibited_cells);
