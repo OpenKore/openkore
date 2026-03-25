@@ -79,7 +79,7 @@ use Globals;
 use Misc;
 use Plugins;
 use Utils;
-use Log qw(message debug warning);
+use Log qw(error message debug warning);
 use Data::Dumper;
 use Scalar::Util qw(refaddr);
 
@@ -880,12 +880,6 @@ sub build_route_step_candidates {
 }
 
 ## Chooses the safest route_step by simulating the client's local move path for each candidate.
-# TODO: $current_pos might not match perfectly $solution[0], it usually lags behing 1 to 2 cells but in
-# curve heavy routes it can lag 3-5 cells behind
-# calculate the blockdist from $current_pos to $solution[0]
-# We should check if we do not need to ask for a path reset (make $current_pos == $solution[0] and revalidade $solution)
-# the critearia for asking must be decided (maybe compare danger of $best_score (which is danger ($current_pos to $best_pos) to danger of ($solution[0] to $best_pos))
-# if D($current_pos to $best_pos) > D($solution[0] to $best_pos) we should recalc 
 sub choose_best_route_step {
 	my ($current_pos, $solution, $max_route_step, $prohibited_cells, $danger_cells) = @_;
 	return unless $current_pos && $solution && @{$solution};
@@ -896,7 +890,9 @@ sub choose_best_route_step {
 	return unless $max_route_step >= 1;
 	
 	my ($best_step, $best_score, $best_solution, $best_pos);
+	my $route_start_lag = blockDistance($current_pos, $solution->[0]);
 	my $candidate_steps = build_route_step_candidates($solution, $max_route_step);
+
 	my $expected_route_danger = route_danger_score_for_slice($solution, $danger_cells, 0, $max_route_step);
 
 	#message "[" . PLUGIN_NAME . "] >>>>> Before best step candidates ". (scalar @{$candidate_steps}) ."\n", 'route';
@@ -920,15 +916,6 @@ sub choose_best_route_step {
 		}
 
 		#message "[" . PLUGIN_NAME . "] [step $candidate_step] [$candidate_pos->{x} $candidate_pos->{y}] Danger $score\n", 'route';
-=pod
-		if ($score <= $expected_route_danger) {
-			$best_step = $candidate_step;
-			$best_score = $score;
-			$best_solution = $client_solution;
-			$best_pos = $candidate_pos;
-			last;
-		}
-=cut
 		if (!defined $best_score || $score < $best_score) {
 			$best_step = $candidate_step;
 			$best_score = $score;
@@ -937,12 +924,25 @@ sub choose_best_route_step {
 		}
 	}
 
-	#if (defined $best_score) {
+	if (defined $best_score) {
 	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Client == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
 	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n";
-	#	warning "[" . PLUGIN_NAME . "] chose route_step $best_step (max $max_route_step [same? ". (($best_step == $max_route_step) ? 1 : 0) ."]) at [$best_pos->{x} $best_pos->{y}].\n", 'route';
-	#	warning "[" . PLUGIN_NAME . "] Danger score $best_score (expected route danger $expected_route_danger).\n", 'route';
-	#}
+		warning "[" . PLUGIN_NAME . "] chose route_step $best_step (max $max_route_step [same? ". (($best_step == $max_route_step) ? 1 : 0) ."]) at [$best_pos->{x} $best_pos->{y}].\n", 'route';
+		warning "[" . PLUGIN_NAME . "] Danger score $best_score (expected route danger $expected_route_danger).\n", 'route';
+
+		my $fix_lag_solution = get_client_solution($field, $current_pos, $solution->[0]);
+		my $fix_lag_danger = route_danger_score_from_cells($fix_lag_solution, $danger_cells);
+		my $ideal_danger = $expected_route_danger + $fix_lag_danger;
+
+		warning "[" . PLUGIN_NAME . "] Route_start_lag [$route_start_lag] | lag_danger [$fix_lag_danger] | ideal danger [$ideal_danger]\n", 'route';
+
+		if ($route_start_lag > 0 && $best_score > $expected_route_danger) {
+			error "[" . PLUGIN_NAME . "] lolololol route_step reset requested: current_calc_pos lags $route_start_lag cells behind planned route start and local danger $best_score exceeds expected route danger $expected_route_danger.\n", 'route';
+			return;
+		} elsif ($best_score > $ideal_danger) {
+			warning "[" . PLUGIN_NAME . "] lolololol else\n", 'route';
+		}
+	}
 
 	return ($best_step, $best_score);
 }

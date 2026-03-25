@@ -780,6 +780,8 @@ sub _bestSolutionAnchorIndex {
 	#debug "[Route trimm] Solution[0] is ($solution->[0]{x}, $solution->[0]{y}) >> dist $displacedist\n", "route";
 	#debug "[Route trimm] Solution[i] is ($solution->[$best_index]{x}, $solution->[$best_index]{y}) >> dist $best_dist\n", "route";
 
+	debug "[Route] Current drift is [$best_dist] Sol [$solution->[$best_index]{x} $solution->[$best_index]{y}] x [$pos->{x} $pos->{y}] Pos\n", "route";
+
 	return ($best_index, $best_dist || 0);
 }
 
