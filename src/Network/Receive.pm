@@ -5536,6 +5536,7 @@ sub character_moves {
 	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
 	my $time = calcTimeFromSolution($my_solution, $speed);
 	$char->{time_move} = time;
+	#$char->{time_move_server_tick} = unpack('V', $args->{move_start_time});
 	$char->{time_move_calc} = $time;
 	$char->{solution} = $my_solution;
 

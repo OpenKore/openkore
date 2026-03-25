@@ -35,7 +35,7 @@ use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding existsInList getLimits get_client_solution);
+use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding calcPosFromPathfinding_old existsInList getLimits get_client_solution);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -235,7 +235,7 @@ sub iterate {
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};
 		my $pos_to = $self->{actor}{pos_to};
-		
+
 		my $calc_pos = calcPosFromPathfinding($field, $self->{actor});
 
 		my $walk = 1;
@@ -391,6 +391,7 @@ sub iterate {
 		@{$current_pos_to}{qw(x y)} = @{$self->{actor}{pos_to}}{qw(x y)};
 		
 		$current_calc_pos = calcPosFromPathfinding($field, $self->{actor});
+		my $current_calc_pos_old = calcPosFromPathfinding_old($field, $self->{actor});
 		
 		if ($current_calc_pos->{x} == $solution->[$#{$solution}]{x} && $current_calc_pos->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
@@ -724,6 +725,18 @@ sub iterate {
 
 				debug "Route $self->{actor} at ($current_calc_pos->{x} $current_calc_pos->{y}) - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $move_step_index, $stepsleft steps left\n", "route";
 				
+				my %routeSetMoveHookArgs = (
+					task => $self,
+					actor => $self->{actor},
+					current_pos => $current_pos,
+					current_pos_to => $current_pos_to,
+					current_calc_pos => $current_calc_pos,
+					current_calc_pos_old => $current_calc_pos_old,
+					next_pos => $self->{next_pos},
+					move_step_index => $move_step_index,
+					stepsleft => $stepsleft,
+				);
+				Plugins::callHook('route_setMove', \%routeSetMoveHookArgs);
 				$self->setMove();
 			}
 		$self->{route_out_time} = time;

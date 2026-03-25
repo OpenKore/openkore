@@ -38,7 +38,7 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(getLimits get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
+	qw(getLimits get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcPosFromPathfinding_old calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
 	calcPosFromTime calcTime calcPosition
 	checkMovementDirection
 	distance blockDistance specifiedBlockDistance adjustedBlockDistance getClientDist canAttack
@@ -221,7 +221,7 @@ sub get_solution {
 }
 
 # Currently the go-to function to get the position of a given actor on critical ocasions (eg. Attack logic)
-sub calcPosFromPathfinding {
+sub calcPosFromPathfinding_old {
 	my ($field, $actor, $extra_time) = @_;
 	my $speed = ($actor->{walk_speed} || 0.12);
 	my $time = time - $actor->{time_move} + $extra_time;
@@ -249,6 +249,102 @@ sub calcPosFromPathfinding {
 	my $pos = $solution->[$steps_walked];
 
 	return $pos;
+}
+
+# Mirrors rAthena's walking coordinate update logic as closely as OpenKore can with
+# the movement data it actually has.
+#
+# What rAthena really does:
+# - `unit_data::update_pos()` keeps the unit on the current cell center only while
+#   the sub-cell offset is still inside that cell.
+# - During an active step it moves the sub-cell from 8,8 to the border and then
+#   across it.
+# - Once the sub-cell crosses the border, rAthena already reports the main x/y as
+#   the next cell, even though the full cell timer has not finished yet.
+# - That is why a redirected move can legitimately start one cell ahead of the
+#   position that a full-step-only model would still report.
+#
+# What OpenKore can and cannot reproduce:
+# - We do have the path solution, walk speed and local receive time for the move.
+# - For our own character, `ZC_NOTIFY_PLAYERMOVE` (`character_moves`) always gives
+#   start subcoordinates 8,8, so there is no extra hidden offset to decode there.
+# - We store the raw rAthena/server `move_start_time` tick for debugging and future
+#   experiments, but we still anchor elapsed time to the local packet receive time
+#   because OpenKore has no trustworthy local<->server tick conversion.
+#
+# What this function changes compared with calcPosFromPathfinding_old():
+# - For `Actor::You`, it walks the same path solution step by step.
+# - But for the in-progress step it applies the same sub-cell math used by
+#   rAthena/clif packets: `24 + dir * 16 * percent`.
+# - Then it converts that sub-cell back into the reported main x/y exactly like
+#   rAthena: values outside the 16..31 range mean the logical cell already crossed
+#   into the neighbor.
+# - This makes the returned cell change around the half-step border crossing instead
+#   of only after a whole step duration has elapsed.
+# - For every non-player actor, we intentionally keep using
+#   calcPosFromPathfinding_old() until we have actor-specific benchmarks that show
+#   the new handoff logic is an improvement there too.
+sub calcPosFromPathfinding {
+	my ($field, $actor, $extra_time) = @_;
+	$extra_time ||= 0;
+	return unless $actor;
+	return calcPosFromPathfinding_old($field, $actor, $extra_time) unless UNIVERSAL::isa($actor, "Actor::You");
+
+	my $speed = ($actor->{walk_speed} || 0.12);
+	my $time_anchor = $actor->{time_move};
+	my $time_elapsed = time - $time_anchor + $extra_time;
+	$time_elapsed = 0 if $time_elapsed < 0;
+
+	# If Pos and PosTo are the same return Pos
+	if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y}) {
+		return $actor->{pos};
+	}
+
+	my $solution;
+
+	# For the character we should have already saved the time calc and solution at
+	# Receive.pm::character_moves.
+	if ($time_elapsed >= $actor->{time_move_calc}) {
+		return $actor->{pos_to};
+	}
+	$solution = $actor->{solution};
+	$solution = get_solution($field, $actor->{pos}, $actor->{pos_to}) unless $solution && @{$solution};
+
+	return $actor->{pos_to} unless $solution && @{$solution};
+	return $solution->[0] if @{$solution} == 1;
+
+	my $time_needed_ortogonal = $speed;
+	my $time_needed_diagonal = $speed * (MOVE_DIAGONAL_COST / MOVE_COST);
+
+	for (my $i = 1; $i < @{$solution}; $i++) {
+		my $from = $solution->[$i - 1];
+		my $to = $solution->[$i];
+		next unless $from && $to;
+
+		my $step_dx = $to->{x} <=> $from->{x};
+		my $step_dy = $to->{y} <=> $from->{y};
+		my $step_type = ($from->{x} != $to->{x}) + ($from->{y} != $to->{y});
+		my $time_needed = ($step_type == 2) ? $time_needed_diagonal : $time_needed_ortogonal;
+
+		if ($time_elapsed >= $time_needed) {
+			$time_elapsed -= $time_needed;
+			next;
+		}
+
+		my $cell_percent = $time_needed > 0 ? ($time_elapsed / $time_needed) : 0;
+		my $sx = int(24.0 + $step_dx * 16.0 * $cell_percent);
+		my $sy = int(24.0 + $step_dy * 16.0 * $cell_percent);
+		my ($x, $y) = ($from->{x}, $from->{y});
+
+		$x-- if $sx < 16;
+		$y-- if $sy < 16;
+		$x++ if $sx > 31;
+		$y++ if $sy > 31;
+
+		return { x => $x, y => $y };
+	}
+
+	return $solution->[-1];
 }
 
 # Wrapper for calcTimeFromSolution so you don't need to call get_client_solution and calcTimeFromSolution when you only need the time
@@ -655,8 +751,9 @@ sub adjustedBlockDistance {
 
 	my $xDistance = abs($pos1->{x} - $pos2->{x});
 	my $yDistance = abs($pos1->{y} - $pos2->{y});
+	my $min = $xDistance > $yDistance ? $yDistance : $xDistance;
 
-	my $dist = $xDistance + $yDistance - ((2-sqrt(2)) * min($xDistance, $yDistance));
+	my $dist = $xDistance + $yDistance - ((3 * $min) / 5);
 
 	return $dist;
 }
