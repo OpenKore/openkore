@@ -1327,6 +1327,12 @@ sub on_add_prohibited_cells {
 
 	if ($field && $target_field->name eq $field->name) {
 		merge_prohibited_cells($args->{cells}, get_cached_prohibited_cells());
+
+		# Meeting-position targets must never land on a cell that is only marked as
+		# dangerous, otherwise we can deliberately run into ranged obstacle threat zones.
+		if (defined $args->{caller} && $args->{caller} eq 'meetingPosition') {
+			merge_marked_cells($args->{cells}, get_cached_danger_cells());
+		}
 	} else {
 		merge_prohibited_cells($args->{cells}, build_prohibited_cells_for_field($target_field));
 	}
