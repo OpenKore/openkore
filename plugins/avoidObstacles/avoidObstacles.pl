@@ -124,15 +124,10 @@ my $mobhooks = Plugins::addHooks(
 );
 
 my $pathfinding_weight_map_override;
-my $cached_prohibited_cells;
-my $cached_prohibited_cells_field_name;
-my $cached_danger_cells;
-my $cached_danger_cells_field_name;
-my $cached_weight_map_refaddr;
 my $cached_weight_map_field_name;
 my $cached_weight_map_with_prohibited;
-my $cached_final_grid;
-my $cached_final_grid_field_name;
+my $cached_final_grid = [];
+my %cached_final_grid_index;
 
 my $chooks = Commands::register(
 	['avoid', 'avoidObstacles controls: od [dump|reload|status]', \&command_avoid],
@@ -147,40 +142,38 @@ my %default_portal_obstacle;
 
 my %obstaclesList;
 my %removed_obstacle_still_in_list;
-my %live_prohibited_distance_counts;
-my %live_prohibited_cells;
-my %live_danger_cells;
-my %live_weight_sums;
+my %cached_prohibited_distance_counts;
+my %cached_prohibited_cells;
+my %cached_prohibited_cell_counts;
+my %cached_danger_cells;
+my %cached_weight_map;
 
 my $mustRePath = 0;
 
-## Purpose: Clears every pathfinding-related cache built from live obstacle state.
+## Purpose: Clears derived pathfinding caches that depend on field/base-map identity.
 ## Args: none.
 ## Returns: nothing.
-## Notes: This exists so any obstacle add/move/remove invalidates cached prohibited,
-## danger, weight-map, and final-grid data before the next route query reuses it.
+## Notes: The incremental cell caches stay live and current. This helper only drops
+## the canonical blocked weight-map cache that depends on the current field/base map.
 sub invalidate_pathfinding_caches {
-	undef $cached_prohibited_cells;
-	undef $cached_prohibited_cells_field_name;
-	undef $cached_danger_cells;
-	undef $cached_danger_cells_field_name;
-	undef $cached_weight_map_refaddr;
 	undef $cached_weight_map_field_name;
 	undef $cached_weight_map_with_prohibited;
-	undef $cached_final_grid;
-	undef $cached_final_grid_field_name;
+	undef $pathfinding_weight_map_override;
 }
 
-## Purpose: Resets the live aggregated obstacle state kept for the current map.
+## Purpose: Resets the incremental obstacle caches kept for the current map.
 ## Args: none.
 ## Returns: nothing.
-## Notes: This wipes the merged prohibited, danger, and weight contribution tables
-## and then drops all derived caches so the plugin can rebuild from scratch safely.
+## Notes: This wipes the summed per-cell caches and their supporting indexes so the
+## plugin can rebuild the current field state from scratch safely.
 sub reset_live_aggregate_state {
-	%live_prohibited_distance_counts = ();
-	%live_prohibited_cells = ();
-	%live_danger_cells = ();
-	%live_weight_sums = ();
+	%cached_prohibited_distance_counts = ();
+	%cached_prohibited_cells = ();
+	%cached_prohibited_cell_counts = ();
+	%cached_danger_cells = ();
+	%cached_weight_map = ();
+	$cached_final_grid = [];
+	%cached_final_grid_index = ();
 	invalidate_pathfinding_caches();
 }
 
@@ -945,7 +938,7 @@ sub is_there_an_obstacle_near_pos {
 ## Notes: The implementation currently delegates to the live aggregate table, but
 ## keeping this wrapper makes the calling code independent from storage details.
 sub build_prohibited_cells {
-	return build_live_prohibited_cells();
+	return \%cached_prohibited_cells;
 }
 
 ## Purpose: Returns the cached prohibited-cell map for the current field.
@@ -961,25 +954,32 @@ sub get_cached_prohibited_cells {
 ## Purpose: Returns a cached copy of the field weight map with prohibited cells blocked.
 ## Args: `($base_weight_map_ref, $target_field, $prohibited_cells)`.
 ## Returns: A modified weight-map string, or `undef` when inputs are invalid.
-## Notes: The cache is keyed by both field name and the base weight map refaddr so
-## repeated route calls can reuse the expensive cloned map.
+## Notes: The canonical cache is only used for the current full prohibited-cell set.
+## Route-specific filtered prohibited sets get their own uncached temporary clone so
+## task-local filtering never reuses a stale blocked-map variant.
 sub get_cached_weight_map_with_prohibited_cells {
 	my ($base_weight_map_ref, $target_field, $prohibited_cells) = @_;
 	return unless $base_weight_map_ref && $target_field && $prohibited_cells;
 
-	my $field_name = $target_field->name;
-	my $ref_key = refaddr($base_weight_map_ref);
-	return unless $ref_key;
+	my $canonical_prohibited_refaddr = refaddr(\%cached_prohibited_cells);
+	my $requested_prohibited_refaddr = refaddr($prohibited_cells);
+	if (!defined $canonical_prohibited_refaddr || !defined $requested_prohibited_refaddr || $canonical_prohibited_refaddr != $requested_prohibited_refaddr) {
+		return build_weight_map_with_prohibited_cells($base_weight_map_ref, $target_field->{width}, $prohibited_cells);
+	}
 
+	my $field_name = $target_field->name;
 	if (
 		!defined $cached_weight_map_with_prohibited
-		|| !defined $cached_weight_map_refaddr
 		|| !defined $cached_weight_map_field_name
-		|| $cached_weight_map_refaddr != $ref_key
 		|| $cached_weight_map_field_name ne $field_name
 	) {
-		$cached_weight_map_with_prohibited = build_weight_map_with_prohibited_cells($base_weight_map_ref, $target_field->{width}, $prohibited_cells);
-		$cached_weight_map_refaddr = $ref_key;
+		$cached_weight_map_with_prohibited = ${$base_weight_map_ref};
+		foreach my $x (keys %cached_prohibited_cells) {
+			foreach my $y (keys %{ $cached_prohibited_cells{$x} }) {
+				my $offset = getOffset($x, $target_field->{width}, $y);
+				substr($cached_weight_map_with_prohibited, $offset, 1) = pack('c', -1);
+			}
+		}
 		$cached_weight_map_field_name = $field_name;
 	}
 
@@ -992,7 +992,7 @@ sub get_cached_weight_map_with_prohibited_cells {
 ## Notes: Like `build_prohibited_cells`, this wrapper hides the storage detail that
 ## danger cells are maintained incrementally in a live aggregate hash.
 sub build_danger_cells {
-	return \%live_danger_cells;
+	return \%cached_danger_cells;
 }
 
 ## Purpose: Returns the cached danger-cell map for the current field.
@@ -1544,7 +1544,11 @@ sub on_getRoute {
 	}
 	my $base_weight_map_ref = defined $args->{weight_map} ? $args->{weight_map} : \($args->{field}->{weightMap});
 	if ($prohibited_cells && scalar keys %{$prohibited_cells} && !pos_is_prohibited($args->{start}, $prohibited_cells) && !pos_is_prohibited($args->{dest}, $prohibited_cells)) {
-		$pathfinding_weight_map_override = get_cached_weight_map_with_prohibited_cells($base_weight_map_ref, $args->{field}, $prohibited_cells);
+		if (defined $args->{weight_map}) {
+			$pathfinding_weight_map_override = build_weight_map_with_prohibited_cells($base_weight_map_ref, $args->{field}->{width}, $prohibited_cells);
+		} else {
+			$pathfinding_weight_map_override = get_cached_weight_map_with_prohibited_cells($base_weight_map_ref, $args->{field}, $prohibited_cells);
+		}
 		$args->{weight_map} = \$pathfinding_weight_map_override if defined $pathfinding_weight_map_override;
 	}
 
@@ -1569,13 +1573,6 @@ sub getOffset {
 ## sums only when obstacle state changed.
 sub get_final_grid {
 	return [] unless $field;
-
-	my $field_name = $field->name;
-	if (!$cached_final_grid || !$cached_final_grid_field_name || $cached_final_grid_field_name ne $field_name) {
-		$cached_final_grid = sum_all_changes();
-		$cached_final_grid_field_name = $field_name;
-	}
-
 	return $cached_final_grid;
 }
 
@@ -1752,7 +1749,7 @@ sub build_prohibited_cells_for_field {
 ## Notes: The data is maintained incrementally as obstacles change, so this accessor
 ## simply returns the live aggregate table.
 sub build_live_prohibited_cells {
-	return \%live_prohibited_cells;
+	return \%cached_prohibited_cells;
 }
 
 ## Purpose: Builds prohibited cells from configured static cell blocks for a field.
@@ -1932,7 +1929,19 @@ sub add_weight_contribution {
 
 	foreach my $change (@{$changes}) {
 		next unless $change;
-		$live_weight_sums{$change->{x}}{$change->{y}} += $change->{weight};
+		$cached_weight_map{$change->{x}}{$change->{y}} += $change->{weight};
+		my $cell_key = "$change->{x},$change->{y}";
+		my $clamped_weight = assertWeightBelowLimit($cached_weight_map{$change->{x}}{$change->{y}}, $plugin_settings{weight_limit});
+		if (exists $cached_final_grid_index{$cell_key}) {
+			$cached_final_grid->[$cached_final_grid_index{$cell_key}]{weight} = $clamped_weight;
+		} else {
+			push @{$cached_final_grid}, {
+				x => $change->{x},
+				y => $change->{y},
+				weight => $clamped_weight
+			};
+			$cached_final_grid_index{$cell_key} = $#{$cached_final_grid};
+		}
 	}
 }
 
@@ -1946,10 +1955,27 @@ sub remove_weight_contribution {
 
 	foreach my $change (@{$changes}) {
 		next unless $change;
-		next unless exists $live_weight_sums{$change->{x}} && exists $live_weight_sums{$change->{x}}{$change->{y}};
-		$live_weight_sums{$change->{x}}{$change->{y}} -= $change->{weight};
-		delete $live_weight_sums{$change->{x}}{$change->{y}} if $live_weight_sums{$change->{x}}{$change->{y}} <= 0;
-		delete $live_weight_sums{$change->{x}} unless scalar keys %{ $live_weight_sums{$change->{x}} };
+		next unless exists $cached_weight_map{$change->{x}} && exists $cached_weight_map{$change->{x}}{$change->{y}};
+		$cached_weight_map{$change->{x}}{$change->{y}} -= $change->{weight};
+
+		my $cell_key = "$change->{x},$change->{y}";
+		if ($cached_weight_map{$change->{x}}{$change->{y}} <= 0) {
+			delete $cached_weight_map{$change->{x}}{$change->{y}};
+			delete $cached_weight_map{$change->{x}} unless scalar keys %{ $cached_weight_map{$change->{x}} };
+
+			if (exists $cached_final_grid_index{$cell_key}) {
+				my $remove_index = delete $cached_final_grid_index{$cell_key};
+				my $last_index = $#{$cached_final_grid};
+				if ($remove_index != $last_index) {
+					my $moved = $cached_final_grid->[$last_index];
+					$cached_final_grid->[$remove_index] = $moved;
+					$cached_final_grid_index{"$moved->{x},$moved->{y}"} = $remove_index;
+				}
+				pop @{$cached_final_grid};
+			}
+		} elsif (exists $cached_final_grid_index{$cell_key}) {
+			$cached_final_grid->[$cached_final_grid_index{$cell_key}]{weight} = assertWeightBelowLimit($cached_weight_map{$change->{x}}{$change->{y}}, $plugin_settings{weight_limit});
+		}
 	}
 }
 
@@ -1997,12 +2023,23 @@ sub add_prohibited_contribution {
 	my ($source) = @_;
 	return unless $source;
 
+	my $can_update_blocked_weight_map = $field
+		&& defined $cached_weight_map_with_prohibited
+		&& defined $cached_weight_map_field_name
+		&& $cached_weight_map_field_name eq $field->name;
+
 	foreach my $x (keys %{$source}) {
 		foreach my $y (keys %{ $source->{$x} }) {
 			my $distance = $source->{$x}{$y};
-			$live_prohibited_distance_counts{$x}{$y}{$distance}++;
-			if (!exists $live_prohibited_cells{$x}{$y} || $distance < $live_prohibited_cells{$x}{$y}) {
-				$live_prohibited_cells{$x}{$y} = $distance;
+			my $was_prohibited = exists $cached_prohibited_cells{$x} && exists $cached_prohibited_cells{$x}{$y};
+			$cached_prohibited_distance_counts{$x}{$y}{$distance}++;
+			$cached_prohibited_cell_counts{$x}{$y}++;
+			if (!exists $cached_prohibited_cells{$x}{$y} || $distance < $cached_prohibited_cells{$x}{$y}) {
+				$cached_prohibited_cells{$x}{$y} = $distance;
+			}
+			if ($can_update_blocked_weight_map && !$was_prohibited) {
+				my $offset = getOffset($x, $field->{width}, $y);
+				substr($cached_weight_map_with_prohibited, $offset, 1) = pack('c', -1);
 			}
 		}
 	}
@@ -2017,25 +2054,37 @@ sub remove_prohibited_contribution {
 	my ($source) = @_;
 	return unless $source;
 
-	foreach my $x (keys %{$source}) {
-		next unless exists $live_prohibited_distance_counts{$x};
-		foreach my $y (keys %{ $source->{$x} }) {
-			next unless exists $live_prohibited_distance_counts{$x}{$y};
-			my $distance = $source->{$x}{$y};
-			next unless exists $live_prohibited_distance_counts{$x}{$y}{$distance};
-			$live_prohibited_distance_counts{$x}{$y}{$distance}--;
-			delete $live_prohibited_distance_counts{$x}{$y}{$distance} if $live_prohibited_distance_counts{$x}{$y}{$distance} <= 0;
+	my $can_update_blocked_weight_map = $field
+		&& defined $cached_weight_map_with_prohibited
+		&& defined $cached_weight_map_field_name
+		&& $cached_weight_map_field_name eq $field->name;
 
-			if (!scalar keys %{ $live_prohibited_distance_counts{$x}{$y} }) {
-				delete $live_prohibited_distance_counts{$x}{$y};
-				delete $live_prohibited_cells{$x}{$y} if exists $live_prohibited_cells{$x};
-			} elsif (exists $live_prohibited_cells{$x} && exists $live_prohibited_cells{$x}{$y} && $live_prohibited_cells{$x}{$y} == $distance) {
-				my ($nearest) = sort { $a <=> $b } keys %{ $live_prohibited_distance_counts{$x}{$y} };
-				$live_prohibited_cells{$x}{$y} = $nearest;
+	foreach my $x (keys %{$source}) {
+		next unless exists $cached_prohibited_distance_counts{$x};
+		foreach my $y (keys %{ $source->{$x} }) {
+			next unless exists $cached_prohibited_distance_counts{$x}{$y};
+			my $distance = $source->{$x}{$y};
+			next unless exists $cached_prohibited_distance_counts{$x}{$y}{$distance};
+			$cached_prohibited_distance_counts{$x}{$y}{$distance}--;
+			delete $cached_prohibited_distance_counts{$x}{$y}{$distance} if $cached_prohibited_distance_counts{$x}{$y}{$distance} <= 0;
+			$cached_prohibited_cell_counts{$x}{$y}-- if exists $cached_prohibited_cell_counts{$x} && exists $cached_prohibited_cell_counts{$x}{$y};
+			delete $cached_prohibited_cell_counts{$x}{$y} if exists $cached_prohibited_cell_counts{$x} && exists $cached_prohibited_cell_counts{$x}{$y} && $cached_prohibited_cell_counts{$x}{$y} <= 0;
+			delete $cached_prohibited_cell_counts{$x} if exists $cached_prohibited_cell_counts{$x} && !scalar keys %{ $cached_prohibited_cell_counts{$x} };
+
+			if (!scalar keys %{ $cached_prohibited_distance_counts{$x}{$y} }) {
+				delete $cached_prohibited_distance_counts{$x}{$y};
+				delete $cached_prohibited_cells{$x}{$y} if exists $cached_prohibited_cells{$x};
+				if ($can_update_blocked_weight_map) {
+					my $offset = getOffset($x, $field->{width}, $y);
+					substr($cached_weight_map_with_prohibited, $offset, 1) = substr($field->{weightMap}, $offset, 1);
+				}
+			} elsif (exists $cached_prohibited_cells{$x} && exists $cached_prohibited_cells{$x}{$y} && $cached_prohibited_cells{$x}{$y} == $distance) {
+				my ($nearest) = sort { $a <=> $b } keys %{ $cached_prohibited_distance_counts{$x}{$y} };
+				$cached_prohibited_cells{$x}{$y} = $nearest;
 			}
 
-			delete $live_prohibited_distance_counts{$x} unless scalar keys %{ $live_prohibited_distance_counts{$x} };
-			delete $live_prohibited_cells{$x} if exists $live_prohibited_cells{$x} && !scalar keys %{ $live_prohibited_cells{$x} };
+			delete $cached_prohibited_distance_counts{$x} unless scalar keys %{ $cached_prohibited_distance_counts{$x} };
+			delete $cached_prohibited_cells{$x} if exists $cached_prohibited_cells{$x} && !scalar keys %{ $cached_prohibited_cells{$x} };
 		}
 	}
 }
@@ -2051,9 +2100,8 @@ sub apply_obstacle_contributions {
 	return unless $obstacle;
 
 	add_prohibited_contribution($obstacle->{prohibited_cells});
-	add_grid_sum_contribution(\%live_danger_cells, $obstacle->{danger_cells});
+	add_grid_sum_contribution(\%cached_danger_cells, $obstacle->{danger_cells});
 	add_weight_contribution($obstacle->{weight});
-	invalidate_pathfinding_caches();
 }
 
 ## Purpose: Removes one live obstacle's cached contributions from aggregate tables.
@@ -2067,32 +2115,17 @@ sub remove_obstacle_contributions {
 	return unless $obstacle;
 
 	remove_prohibited_contribution($obstacle->{prohibited_cells});
-	remove_grid_sum_contribution(\%live_danger_cells, $obstacle->{danger_cells});
+	remove_grid_sum_contribution(\%cached_danger_cells, $obstacle->{danger_cells});
 	remove_weight_contribution($obstacle->{weight});
-	invalidate_pathfinding_caches();
 }
 
-## Purpose: Rebuilds the consolidated live obstacle weight grid from aggregate sums.
+## Purpose: Returns the incrementally maintained final obstacle weight grid.
 ## Args: none.
 ## Returns: An arrayref of `{ x, y, weight }` entries.
 ## Notes: Pathfinding consumes this sparse list as the second weight map layered on
-## top of the field's normal weights.
+## top of the field's normal weights. The list is updated cell-by-cell as obstacles change.
 sub sum_all_changes {
-	my @rebuilt_array;
-
-	foreach my $x_keys (keys %live_weight_sums) {
-		foreach my $y_keys (keys %{ $live_weight_sums{$x_keys} }) {
-			next if $live_weight_sums{$x_keys}{$y_keys} == 0;
-			my $weight = assertWeightBelowLimit($live_weight_sums{$x_keys}{$y_keys}, $plugin_settings{weight_limit});
-			push @rebuilt_array, {
-				x => $x_keys,
-				y => $y_keys,
-				weight => $weight
-			};
-		}
-	}
-
-	return \@rebuilt_array;
+	return $cached_final_grid;
 }
 
 ## Purpose: Returns the configured obstacle profile for a player actor.
