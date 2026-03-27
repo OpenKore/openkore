@@ -154,6 +154,11 @@ my %live_weight_sums;
 
 my $mustRePath = 0;
 
+## Purpose: Clears every pathfinding-related cache built from live obstacle state.
+## Args: none.
+## Returns: nothing.
+## Notes: This exists so any obstacle add/move/remove invalidates cached prohibited,
+## danger, weight-map, and final-grid data before the next route query reuses it.
 sub invalidate_pathfinding_caches {
 	undef $cached_prohibited_cells;
 	undef $cached_prohibited_cells_field_name;
@@ -166,6 +171,11 @@ sub invalidate_pathfinding_caches {
 	undef $cached_final_grid_field_name;
 }
 
+## Purpose: Resets the live aggregated obstacle state kept for the current map.
+## Args: none.
+## Returns: nothing.
+## Notes: This wipes the merged prohibited, danger, and weight contribution tables
+## and then drops all derived caches so the plugin can rebuild from scratch safely.
 sub reset_live_aggregate_state {
 	%live_prohibited_distance_counts = ();
 	%live_prohibited_cells = ();
@@ -174,8 +184,11 @@ sub reset_live_aggregate_state {
 	invalidate_pathfinding_caches();
 }
 
-# Rejects a route that enters a hard zone, re-enters after leaving,
-# or moves deeper while trying to escape from inside the initial hard zone.
+## Purpose: Checks whether a local path crosses prohibited cells in an unsafe way.
+## Args: `($solution, $prohibited_cells)`.
+## Returns: `1` when the path must be rejected, otherwise `0`.
+## Notes: A path is rejected if it enters a prohibited zone from outside, leaves and
+## re-enters one, or moves deeper into the initial prohibited zone instead of escaping.
 sub route_crosses_prohibited_cells {
 	my ($solution, $prohibited_cells) = @_;
 
@@ -213,7 +226,11 @@ sub route_crosses_prohibited_cells {
 	return 0;
 }
 
-## Returns the built-in plugin settings used when the control file is absent.
+## Purpose: Returns the built-in plugin settings used when config.txt has no overrides.
+## Args: none.
+## Returns: A flat key/value list suitable for assigning into `%plugin_settings`.
+## Notes: This centralizes the default runtime policy so config reloads always start
+## from a known baseline before user overrides are applied.
 sub default_settings {
 	return (
 		enable_move => 0,
@@ -224,7 +241,11 @@ sub default_settings {
 	);
 }
 
-## Restores the plugin configuration to defaults before parsing overrides.
+## Purpose: Restores every plugin configuration table to its built-in defaults.
+## Args: none.
+## Returns: nothing.
+## Notes: Reload code calls this first so stale config values from a prior parse do
+## not survive after options are removed or changed in `config.txt`.
 sub reset_plugin_configuration {
 	%plugin_settings = default_settings();
 	%mob_nameID_obstacles = ();
@@ -234,13 +255,19 @@ sub reset_plugin_configuration {
 	%default_portal_obstacle = default_portal_obstacle_entry();
 }
 
-## Converts a short plugin setting name into its config.txt key.
+## Purpose: Converts a short internal setting name into the corresponding config key.
+## Args: `($key)` where `$key` is the short setting name such as `enable_move`.
+## Returns: The full `config.txt` key string, for example `avoidObstacles_enable_move`.
+## Notes: This avoids hard-coding the plugin prefix in multiple config-parsing loops.
 sub plugin_config_key {
 	my ($key) = @_;
 	return 'avoidObstacles_' . $key;
 }
 
-## Returns whether a config key belongs to this plugin's flat settings or obstacle blocks.
+## Purpose: Checks whether a config key belongs to this plugin.
+## Args: `($key)` which may be a flat setting key or a block-scoped obstacle key.
+## Returns: `1` when the key belongs to avoidObstacles, otherwise `0`.
+## Notes: Runtime config hooks use this to avoid unnecessary full plugin reloads.
 sub is_plugin_config_key {
 	my ($key) = @_;
 
@@ -252,7 +279,11 @@ sub is_plugin_config_key {
 	return 0;
 }
 
-## Returns whether a bulk config change set includes any avoidObstacles key.
+## Purpose: Detects whether a bulk config change touched any avoidObstacles key.
+## Args: `($keys)` where `$keys` is the hashref provided by the bulk config hook.
+## Returns: `1` if any key belongs to the plugin, otherwise `0`.
+## Notes: This lets the plugin reload once at the end of a bulk update instead of
+## reloading on every individual key change.
 sub bulk_includes_plugin_config_keys {
 	my ($keys) = @_;
 
@@ -264,7 +295,11 @@ sub bulk_includes_plugin_config_keys {
 	return 0;
 }
 
-## Loads flat plugin settings from config.txt, falling back to built-in defaults when missing.
+## Purpose: Loads the plugin's flat top-level settings from `config.txt`.
+## Args: none.
+## Returns: nothing.
+## Notes: It only overwrites keys that are explicitly present and keeps built-in
+## defaults for anything the user omitted.
 sub load_settings_from_config {
 	foreach my $key (keys %plugin_settings) {
 		my $config_key = plugin_config_key($key);
@@ -278,7 +313,12 @@ sub load_settings_from_config {
 	}
 }
 
-## Loads repeated obstacle blocks from config.txt into the requested obstacle table.
+## Purpose: Loads repeated obstacle blocks from `config.txt` into one obstacle table.
+## Args: `($prefix, $type, $target_hash)` describing the block prefix, identifier
+## normalization type, and destination hashref.
+## Returns: nothing.
+## Notes: This is shared by monster, player, and spell obstacle blocks so their
+## parsing stays consistent and uses the same normalization rules.
 sub load_obstacle_blocks_from_config {
 	my ($prefix, $type, $target_hash) = @_;
 
@@ -308,7 +348,11 @@ sub load_obstacle_blocks_from_config {
 	}
 }
 
-## Parses a comma-separated `x y` cell list from one avoidObstaclesCellsInMap block.
+## Purpose: Parses one comma-separated `x y` cell list from a CellsInMap config block.
+## Args: `($cells_text, $map_name, $block_key)` from the current config entry.
+## Returns: A list of `{ x => ..., y => ... }` hashes.
+## Notes: Invalid or duplicate cells are skipped with warnings so a bad entry does
+## not abort the rest of the block.
 sub parse_cells_in_map_list {
 	my ($cells_text, $map_name, $block_key) = @_;
 
@@ -333,7 +377,11 @@ sub parse_cells_in_map_list {
 	return @cells;
 }
 
-## Loads static cell obstacles keyed by map name from config.txt.
+## Purpose: Loads all configured static cell obstacle blocks from `config.txt`.
+## Args: none.
+## Returns: nothing.
+## Notes: The result is grouped by map name so the plugin can rebuild only the
+## current map's static cell obstacles when a field is entered or reloaded.
 sub load_cells_in_map_obstacles_from_config {
 	foreach my $block_key (sort keys %config) {
 		next unless $block_key =~ /^avoidObstaclesCellsInMap_\d+$/;
@@ -364,7 +412,11 @@ sub load_cells_in_map_obstacles_from_config {
 	}
 }
 
-## Loads the default portal obstacle configuration from config.txt.
+## Purpose: Loads the default portal obstacle profile from `config.txt`.
+## Args: none.
+## Returns: nothing.
+## Notes: Portals do not have per-portal custom blocks, so this reads one shared
+## profile that is later cloned for every live portal obstacle.
 sub load_default_portal_obstacle_from_config {
 	my %entry = default_portal_obstacle_entry();
 
@@ -386,7 +438,11 @@ sub load_default_portal_obstacle_from_config {
 	%default_portal_obstacle = %entry;
 }
 
-## Loads or reloads the plugin configuration from config.txt and rebuilds runtime obstacles from the visible world.
+## Purpose: Reloads plugin configuration and rebuilds runtime obstacle state from it.
+## Args: none.
+## Returns: nothing.
+## Notes: This is the main configuration entry point. It resets defaults, parses
+## config tables, and then rebuilds live obstacles from the currently visible world.
 sub reload_plugin_configuration {
 	reset_plugin_configuration();
 	load_settings_from_config();
@@ -399,12 +455,20 @@ sub reload_plugin_configuration {
 	rebuild_obstacles_from_world();
 }
 
-## Rebuilds plugin settings after config.txt is reloaded.
+## Purpose: Reacts to the full config load hook.
+## Args: Hook arguments are ignored.
+## Returns: nothing.
+## Notes: It exists as a tiny hook adapter that funnels the event into the shared
+## reload routine used by every config-related entry point.
 sub on_config_file_loaded {
 	reload_plugin_configuration();
 }
 
-## Rebuilds plugin settings after config keys are modified at runtime.
+## Purpose: Reacts to a single runtime config modification.
+## Args: `(undef, $args)` from `post_configModify`.
+## Returns: nothing.
+## Notes: It ignores unrelated keys and bulk operations, and reloads the plugin only
+## when an avoidObstacles key changed.
 sub on_post_config_modify {
 	my (undef, $args) = @_;
 
@@ -413,7 +477,11 @@ sub on_post_config_modify {
 	reload_plugin_configuration();
 }
 
-## Rebuilds plugin settings once after a bulk runtime config update completes.
+## Purpose: Reacts once after a bulk runtime config update finishes.
+## Args: `(undef, $args)` from `post_bulkConfigModify`.
+## Returns: nothing.
+## Notes: This prevents redundant reloads during bulk edits while still rebuilding
+## once if any avoidObstacles key was part of the batch.
 sub on_post_bulk_config_modify {
 	my (undef, $args) = @_;
 
@@ -421,7 +489,11 @@ sub on_post_bulk_config_modify {
 	reload_plugin_configuration();
 }
 
-## Removes hooks and commands on unload.
+## Purpose: Unregisters plugin hooks and commands during unload.
+## Args: none.
+## Returns: nothing.
+## Notes: This exists so disabling or reloading the plugin leaves no stale hooks
+## registered in the OpenKore runtime.
 sub onUnload {
 	Plugins::delHooks($hooks) if $hooks;
 	Plugins::delHooks($obstacle_hooks) if $obstacle_hooks;
@@ -429,7 +501,11 @@ sub onUnload {
 	Commands::unregister($chooks) if $chooks;
 }
 
-## Normalizes config identifiers so lookups are case-safe and consistent.
+## Purpose: Normalizes obstacle identifiers before storing or looking them up.
+## Args: `($type, $identifier)` where `$type` controls the normalization strategy.
+## Returns: The normalized identifier string.
+## Notes: Player names are lowercased so lookups are case-insensitive, while numeric
+## or spell identifiers are preserved as-is.
 sub normalize_identifier {
 	my ($type, $identifier) = @_;
 
@@ -440,7 +516,11 @@ sub normalize_identifier {
 	return $identifier;
 }
 
-## Returns the default shape for one obstacle entry.
+## Purpose: Returns the default structure for one obstacle configuration entry.
+## Args: none.
+## Returns: A flat key/value list for one obstacle profile.
+## Notes: Shared defaults keep monster, player, spell, and cell obstacles aligned on
+## the same option names and sentinel values.
 sub default_obstacle_entry {
 	return (
 		enabled => 1,
@@ -452,7 +532,11 @@ sub default_obstacle_entry {
 	);
 }
 
-## Returns the built-in portal obstacle configuration used when portal avoidance is enabled.
+## Purpose: Returns the built-in portal obstacle configuration.
+## Args: none.
+## Returns: A flat key/value list describing the default portal profile.
+## Notes: Portals use stronger defaults than regular obstacles because stepping onto
+## them can teleport or otherwise disrupt routeing.
 sub default_portal_obstacle_entry {
 	return (
 		enabled => 1,
@@ -464,7 +548,10 @@ sub default_portal_obstacle_entry {
 	);
 }
 
-## Converts a config value to a boolean and warns when the value is invalid.
+## Purpose: Normalizes a config value into a boolean.
+## Args: `($value, $line_no, $key)` for diagnostics and parsing.
+## Returns: `1` or `0`.
+## Notes: Invalid values warn and fall back to `0` so parsing can continue safely.
 sub normalize_bool {
 	my ($value, $line_no, $key) = @_;
 	return 1 if defined $value && $value =~ /^(?:1|true|yes|on)$/i;
@@ -473,7 +560,11 @@ sub normalize_bool {
 	return 0;
 }
 
-## Converts a config value to a number and warns when the value is invalid.
+## Purpose: Normalizes a config value into a numeric scalar.
+## Args: `($value, $line_no, $key)` for diagnostics and parsing.
+## Returns: The numeric value, or `0` when invalid.
+## Notes: This helper keeps numeric validation and warning format consistent across
+## all plugin config parsing paths.
 sub normalize_number {
 	my ($value, $line_no, $key) = @_;
 	if (defined $value && $value =~ /^-?(?:\d+(?:\.\d*)?|\.\d+)$/) {
@@ -483,6 +574,12 @@ sub normalize_number {
 	return 0;
 }
 
+## Purpose: Parses either a scalar distance or a per-distance profile from config.
+## Args: `($option, $value, $line_no, $key)` describing the option being parsed.
+## Returns: A numeric scalar for single-value options, or an arrayref profile for
+## `penalty_dist` and `danger_dist`.
+## Notes: The plugin allows profile options to define one value per block distance,
+## so this helper centralizes the split-and-validate logic.
 sub normalize_obstacle_number_or_profile {
 	my ($option, $value, $line_no, $key) = @_;
 
@@ -505,24 +602,42 @@ sub normalize_obstacle_number_or_profile {
 	return normalize_number($value, $line_no, $key);
 }
 
+## Purpose: Builds a fixed-size profile where every distance has the same value.
+## Args: `($max_distance, $value)`.
+## Returns: An arrayref profile indexed by block distance.
+## Notes: This is mainly used for convenience defaults such as uniform danger zones.
 sub build_uniform_profile {
 	my ($max_distance, $value) = @_;
 	my @profile = map { $value } (0 .. $max_distance);
 	return \@profile;
 }
 
+## Purpose: Builds the default inverse-square-style penalty profile.
+## Args: `($ratio, $max_distance)` controlling the strength and maximum radius.
+## Returns: An arrayref penalty profile indexed by block distance.
+## Notes: It delegates per-cell math to `get_weight_for_block` so default profiles
+## use the same weight clamping logic as custom obstacle contributions.
 sub build_default_penalty_profile {
 	my ($ratio, $max_distance) = @_;
 	my @profile = map { get_weight_for_block($ratio, $_) } (0 .. $max_distance);
 	return \@profile;
 }
 
+## Purpose: Returns the farthest distance represented by a profile.
+## Args: `($profile)` which should be an arrayref.
+## Returns: The maximum valid distance index, or `undef` for invalid input.
+## Notes: Many obstacle builders use this to derive the square bounds they must scan.
 sub profile_max_distance {
 	my ($profile) = @_;
 	return undef unless $profile && ref($profile) eq 'ARRAY';
 	return $#{$profile};
 }
 
+## Purpose: Reads the danger value for one distance from a danger profile.
+## Args: `($profile, $distance)`.
+## Returns: The configured value at that distance, or `0` when out of range.
+## Notes: Returning zero for invalid distances makes downstream danger accumulation
+## code simpler because callers can just sum the result.
 sub danger_profile_value_at_distance {
 	my ($profile, $distance) = @_;
 	return 0 unless $profile && ref($profile) eq 'ARRAY';
@@ -531,6 +646,11 @@ sub danger_profile_value_at_distance {
 	return $profile->[$distance] || 0;
 }
 
+## Purpose: Reads the penalty value for one distance from a penalty profile.
+## Args: `($profile, $distance)`.
+## Returns: The configured value at that distance, or `undef` when out of range.
+## Notes: Unlike danger values, penalty callers need to distinguish "no configured
+## value" from zero, so this helper preserves `undef`.
 sub penalty_profile_value_at_distance {
 	my ($profile, $distance) = @_;
 	return undef unless $profile && ref($profile) eq 'ARRAY';
@@ -539,7 +659,11 @@ sub penalty_profile_value_at_distance {
 	return $profile->[$distance];
 }
 
-## Rebuilds the active obstacle list from actors that are currently visible in the world.
+## Purpose: Rebuilds the full live obstacle list from the currently visible world.
+## Args: none.
+## Returns: nothing.
+## Notes: This is used after config reloads and map resets so every visible monster,
+## player, spell, portal, and configured static cell obstacle is re-applied cleanly.
 sub rebuild_obstacles_from_world {
 	my $had_obstacles = scalar keys %obstaclesList;
 
@@ -575,7 +699,11 @@ sub rebuild_obstacles_from_world {
 	$mustRePath = 1 if $had_obstacles || scalar keys %obstaclesList;
 }
 
-## Adds all configured static cell obstacles for the current map into the live obstacle cache.
+## Purpose: Adds all configured static cell obstacles for the current map.
+## Args: none.
+## Returns: nothing.
+## Notes: Static cells are stored in config rather than discovered from actors, so
+## they are rebuilt separately whenever the active field changes.
 sub rebuild_static_cell_obstacles_for_current_map {
 	return unless $field;
 
@@ -596,7 +724,11 @@ sub rebuild_static_cell_obstacles_for_current_map {
 	}
 }
 
-## Handles the `od` console command for dumping, reloading, and summarizing plugin state.
+## Purpose: Implements the `od` console command for this plugin.
+## Args: `($cmd, $args)` from the command dispatcher.
+## Returns: nothing.
+## Notes: This command is intentionally small and operational: dump internals,
+## reload config, or print a compact status summary.
 sub command_avoid {
 	my ($cmd, $args) = @_;
 	$args ||= '';
@@ -630,13 +762,21 @@ sub command_avoid {
 	message "[" . PLUGIN_NAME . "] Usage: od [dump|reload|status]\n", 'list';
 }
 
-## Dumps the live obstacle caches for debugging.
+## Purpose: Dumps the main live obstacle caches for debugging.
+## Args: none.
+## Returns: nothing.
+## Notes: This writes the raw structures to the log so debugging can inspect cached
+## obstacle state without attaching a debugger.
 sub use_dump {
 	warning "[" . PLUGIN_NAME . "] obstaclesList Dump: " . Dumper(\%obstaclesList);
 	warning "[" . PLUGIN_NAME . "] removed_obstacle_still_in_list Dump: " . Dumper(\%removed_obstacle_still_in_list);
 }
 
-## Clears live obstacle state on map changes and restores any temporary route-step override.
+## Purpose: Clears live obstacle state when the map changes.
+## Args: Hook arguments are ignored.
+## Returns: nothing.
+## Notes: Map change invalidates every live actor-based obstacle, so this resets
+## state, clears caches, and rebuilds only static cell obstacles for the new field.
 sub on_packet_mapChange {
 	%obstaclesList = ();
 	%removed_obstacle_still_in_list = ();
@@ -645,7 +785,11 @@ sub on_packet_mapChange {
 	rebuild_static_cell_obstacles_for_current_map();
 }
 
-## Returns whether a target is close enough to an obstacle that it should be dropped.
+## Purpose: Checks whether a target should be dropped because an obstacle is nearby.
+## Args: `($hook, $target, $drop_string)` for logging and target inspection.
+## Returns: `1` if the target should be dropped, otherwise `0`.
+## Notes: It tests both the target's current pathfinding position and destination so
+## fast-moving targets cannot slip through just because one position is stale.
 sub should_drop_target_from_obstacle {
 	my ($hook, $target, $drop_string) = @_;
 	return 0 unless $target;
@@ -678,7 +822,11 @@ sub should_drop_target_from_obstacle {
 	return 0;
 }
 
-## Blocks the currently attacked target when it moves too close to a configured obstacle.
+## Purpose: Hook callback that forces the current attack target to be dropped.
+## Args: `(undef, $args)` from `shouldDropTarget`.
+## Returns: nothing directly; writes to `$args->{return}` when dropping.
+## Notes: This keeps the core attack AI from tunneling into a target that has moved
+## into an obstacle zone.
 sub on_shouldDropTarget {
 	my ($hook, $args) = @_;
 	return unless $args->{target};
@@ -688,7 +836,11 @@ sub on_shouldDropTarget {
 	}
 }
 
-## Removes obstacle-blocked entries from `possibleTargets` before the core target picker scores them.
+## Purpose: Filters obstacle-blocked targets out of the candidate target list.
+## Args: `(undef, $args)` from `getBestTarget`.
+## Returns: nothing directly; mutates `$args->{possibleTargets}`.
+## Notes: This is the earlier, cheaper target-selection gate that prevents bad
+## targets from being scored in the first place.
 sub on_getBestTarget {
 	my ($hook, $args) = @_;
 	return unless $args->{possibleTargets} && ref $args->{possibleTargets} eq 'ARRAY';
@@ -706,6 +858,12 @@ sub on_getBestTarget {
 	@{ $args->{possibleTargets} } = @filtered_targets;
 }
 
+## Purpose: Produces a readable obstacle name for logs and debug output.
+## Args: `($obstacle)` which may be an actor, spell-like object, static-cell entry,
+## or plain value.
+## Returns: A best-effort human-readable name string.
+## Notes: Many obstacle sources look different internally, so this helper keeps log
+## messages understandable without leaking raw object structure details.
 sub getObstacleName {
 	my ($obstacle) = @_;
 	return 'Unknown obstacle' unless $obstacle;
@@ -742,14 +900,22 @@ sub getObstacleName {
 	return 'Unknown obstacle';
 }
 
-## Returns whether a target was previously rejected because of nearby obstacles.
+## Purpose: Checks whether a target is currently flagged as obstacle-blocked.
+## Args: `($target)`.
+## Returns: `1` if the plugin previously marked it as blocked, otherwise `0`.
+## Notes: This is used to avoid duplicate warnings and to release the flag once the
+## target becomes safe again.
 sub isTargetDroppedObstacle {
 	my ($target) = @_;
 	return 1 if exists $target->{attackFailedObstacle} && $target->{attackFailedObstacle} == 1;
 	return 0;
 }
 
-## Returns the first obstacle that is close enough to reject a target or a destination.
+## Purpose: Finds the first obstacle close enough to reject a target or destination.
+## Args: `($pos, $type)` where `$type` selects target-drop or destination-drop rules.
+## Returns: The matching obstacle hashref, or `undef` when none applies.
+## Notes: This centralizes the distance checks used by both target filtering and
+## destination/route validation logic.
 sub is_there_an_obstacle_near_pos {
 	my ($pos, $type) = @_;
 	return unless $pos;
@@ -773,18 +939,30 @@ sub is_there_an_obstacle_near_pos {
 	return;
 }
 
-## Builds a hash of hard-zone cells keyed by their nearest obstacle distance.
+## Purpose: Returns the current prohibited-cell map for the live field.
+## Args: none.
+## Returns: A hashref of prohibited cells keyed by x/y with nearest-distance values.
+## Notes: The implementation currently delegates to the live aggregate table, but
+## keeping this wrapper makes the calling code independent from storage details.
 sub build_prohibited_cells {
 	return build_live_prohibited_cells();
 }
 
-## Returns the current-map prohibited-cell cache, rebuilding it only when obstacle state changed.
+## Purpose: Returns the cached prohibited-cell map for the current field.
+## Args: none.
+## Returns: A prohibited-cell hashref, or an empty hashref when no field exists.
+## Notes: The plugin invalidates this cache whenever obstacle contributions change,
+## so callers can safely reuse it inside one routing cycle.
 sub get_cached_prohibited_cells {
 	return {} unless $field;
 	return build_prohibited_cells();
 }
 
-## Returns a cached blocked weight map for the current field and base weight map source.
+## Purpose: Returns a cached copy of the field weight map with prohibited cells blocked.
+## Args: `($base_weight_map_ref, $target_field, $prohibited_cells)`.
+## Returns: A modified weight-map string, or `undef` when inputs are invalid.
+## Notes: The cache is keyed by both field name and the base weight map refaddr so
+## repeated route calls can reuse the expensive cloned map.
 sub get_cached_weight_map_with_prohibited_cells {
 	my ($base_weight_map_ref, $target_field, $prohibited_cells) = @_;
 	return unless $base_weight_map_ref && $target_field && $prohibited_cells;
@@ -808,15 +986,30 @@ sub get_cached_weight_map_with_prohibited_cells {
 	return $cached_weight_map_with_prohibited;
 }
 
+## Purpose: Returns the merged danger-cell table for the live field.
+## Args: none.
+## Returns: A hashref of live danger values keyed by x/y.
+## Notes: Like `build_prohibited_cells`, this wrapper hides the storage detail that
+## danger cells are maintained incrementally in a live aggregate hash.
 sub build_danger_cells {
 	return \%live_danger_cells;
 }
 
+## Purpose: Returns the cached danger-cell map for the current field.
+## Args: none.
+## Returns: A danger-cell hashref, or an empty hashref when no field exists.
+## Notes: The danger table is already maintained live, so this wrapper mainly gives
+## call sites a symmetric API with the prohibited-cell cache helpers.
 sub get_cached_danger_cells {
 	return {} unless $field;
 	return build_danger_cells();
 }
 
+## Purpose: Sums the danger score of every node in a path solution.
+## Args: `($solution, $danger_cells)`.
+## Returns: The total numeric danger score for that path.
+## Notes: Danger values are additive, so this is the shared primitive used for local
+## path scoring, lag compensation, and route-slice comparison.
 sub route_danger_score_from_cells {
 	my ($solution, $danger_cells) = @_;
 	return 0 unless $solution && @{$solution};
@@ -832,6 +1025,11 @@ sub route_danger_score_from_cells {
 	return $score;
 }
 
+## Purpose: Sums danger only for a slice of a route solution.
+## Args: `($solution, $danger_cells, $from_idx, $to_idx)`.
+## Returns: The numeric danger score for that inclusive slice.
+## Notes: This exists so route-step scoring can compare a partial local path with the
+## remaining danger still present in the original route plan.
 sub route_danger_score_for_slice {
 	my ($solution, $danger_cells, $from_idx, $to_idx) = @_;
 	return 0 unless $solution && @{$solution};
@@ -842,6 +1040,11 @@ sub route_danger_score_for_slice {
 	return route_danger_score_from_cells($slice, $danger_cells);
 }
 
+## Purpose: Builds the candidate route_step indices that should be evaluated.
+## Args: `($solution, $max_route_step)`.
+## Returns: An arrayref of candidate route-step indices.
+## Notes: It prefers step boundaries where movement direction changes, plus the full
+## maximum step, because those are the most meaningful places to rescore local paths.
 sub build_route_step_candidates {
 	my ($solution, $max_route_step) = @_;
 	my @candidates;
@@ -879,7 +1082,12 @@ sub build_route_step_candidates {
 	return \@candidates;
 }
 
-## Chooses the safest route_step by simulating the client's local move path for each candidate.
+## Purpose: Chooses the safest route_step by simulating local movement to each candidate.
+## Args: `($current_pos, $solution, $max_route_step, $prohibited_cells, $danger_cells)`.
+## Returns: `($best_step, $best_score)` when a safe candidate exists, otherwise empty.
+## Notes: This is the heart of the plugin's route-step adjustment. It compares the
+## local client path against prohibited cells and danger scores, and can force a
+## repath when lag makes the live local path more dangerous than the planned route.
 sub choose_best_route_step {
 	my ($current_pos, $solution, $max_route_step, $prohibited_cells, $danger_cells) = @_;
 	return unless $current_pos && $solution && @{$solution};
@@ -954,6 +1162,11 @@ sub choose_best_route_step {
 	return ($best_step, $best_score);
 }
 
+## Purpose: Removes one obstacle's prohibited zone from a cell set.
+## Args: `($filtered, $target_field, $center, $prohibited_dist)`.
+## Returns: nothing; mutates `$filtered` in place.
+## Notes: Route destinations sometimes intentionally land inside a portal or other
+## special zone, so this helper carves out just that obstacle's hard zone.
 sub remove_prohibited_zone_from_cells {
 	my ($filtered, $target_field, $center, $prohibited_dist) = @_;
 	return unless $filtered && $target_field && $center;
@@ -971,7 +1184,11 @@ sub remove_prohibited_zone_from_cells {
 	}
 }
 
-## Removes hard-prohibited zones that cover the route destination while leaving danger scoring intact.
+## Purpose: Loosens prohibited cells around a route destination when needed.
+## Args: `($task, $prohibited_cells, $target_field)`.
+## Returns: The original or filtered prohibited-cell hashref.
+## Notes: This exists so route tasks can still finish at destinations such as portals
+## while keeping danger scoring and all other obstacle penalties intact.
 sub filter_prohibited_cells_for_route_task {
 	my ($task, $prohibited_cells, $target_field) = @_;
 	return $prohibited_cells unless $task && $prohibited_cells && $target_field;
@@ -1024,7 +1241,11 @@ sub filter_prohibited_cells_for_route_task {
 	return \%filtered;
 }
 
-## Adjusts the current route_step before Task::Route selects the next move packet target.
+## Purpose: Hook callback that adjusts `route_step` before Task::Route sends movement.
+## Args: `(undef, $args)` from the `route_step` hook.
+## Returns: nothing directly; mutates `$args->{route_step}` or requests repath.
+## Notes: This is where the plugin injects local danger-aware route-step selection
+## into the core movement loop.
 sub on_route_step {
 	my (undef, $args) = @_;
 	return unless $plugin_settings{adjust_route_step};
@@ -1055,7 +1276,12 @@ sub on_route_step {
 	}
 }
 
-## Adds or refreshes an obstacle entry in the live obstacle cache.
+## Purpose: Adds or refreshes one live obstacle entry.
+## Args: `($actor, $obstacle, $type)` describing the source actor, obstacle profile,
+## and logical obstacle type.
+## Returns: nothing.
+## Notes: This builds the obstacle's weight, danger, and prohibited contributions,
+## handles cached re-adds safely, and marks routes for repath if the world changed.
 sub add_obstacle {
 	my ($actor, $obstacle, $type) = @_;
 	return unless $actor && $obstacle;
@@ -1091,7 +1317,11 @@ sub add_obstacle {
 	$mustRePath = 1;
 }
 
-## Adds one static cell obstacle to the live obstacle cache.
+## Purpose: Adds one configured static cell obstacle to the live cache.
+## Args: `($map_name, $block_index, $cell_index, $pos, $obstacle)`.
+## Returns: nothing.
+## Notes: Static cell obstacles do not have actor objects, so they receive a stable
+## synthetic ID derived from map, block, and coordinate.
 sub add_static_cell_obstacle {
 	my ($map_name, $block_index, $cell_index, $pos, $obstacle) = @_;
 	return unless $field && $pos && $obstacle;
@@ -1111,7 +1341,11 @@ sub add_static_cell_obstacle {
 	apply_obstacle_contributions($id);
 }
 
-## Copies obstacle metadata that later logic needs for dropping and route-step scoring.
+## Purpose: Copies frequently used obstacle metadata into the live obstacle entry.
+## Args: `($ID, $obstacle)`.
+## Returns: nothing.
+## Notes: This keeps later lookups simple by storing the parsed drop, danger,
+## prohibited, and penalty settings directly on the live entry.
 sub define_extras {
 	my ($ID, $obstacle) = @_;
 	$obstaclesList{$ID}{drop_target_when_near_dist} = defined $obstacle->{drop_target_when_near_dist} ? $obstacle->{drop_target_when_near_dist} : -1;
@@ -1121,7 +1355,11 @@ sub define_extras {
 	$obstaclesList{$ID}{penalty_dist} = defined $obstacle->{penalty_dist} ? $obstacle->{penalty_dist} : -1;
 }
 
-## Updates the position and weight grid of a moving obstacle when that mode is enabled.
+## Purpose: Updates one live obstacle after its source actor moved.
+## Args: `($actor, $obstacle, $type)`.
+## Returns: nothing.
+## Notes: Movement handling is optional by config. When enabled, this removes the old
+## contributions, rebuilds them at the new position, and requests a repath.
 sub move_obstacle {
 	my ($actor, $obstacle, $type) = @_;
 	return unless $plugin_settings{enable_move};
@@ -1143,7 +1381,11 @@ sub move_obstacle {
 	$mustRePath = 1;
 }
 
-## Removes an obstacle immediately or parks it in the out-of-sight cache until the map confirms it is gone.
+## Purpose: Removes an obstacle immediately or parks it in the hidden-obstacle cache.
+## Args: `($actor, $type, $reason)`.
+## Returns: nothing.
+## Notes: Monsters and players that simply leave sight are kept cached temporarily so
+## the bot does not instantly assume the danger vanished just because visibility did.
 sub remove_obstacle {
 	my ($actor, $type, $reason) = @_;
 	return unless $plugin_settings{enable_remove};
@@ -1164,7 +1406,11 @@ sub remove_obstacle {
 	}
 }
 
-## Returns the best-known position for an actor or spell-like obstacle object.
+## Purpose: Returns the best-known position for an actor-like obstacle source.
+## Args: `($actor)`.
+## Returns: A `{ x => ..., y => ... }` hashref, or `undef`.
+## Notes: Different object types expose either `pos_to` or `pos`, so this helper
+## gives the rest of the plugin one consistent position accessor.
 sub get_actor_position {
 	my ($actor) = @_;
 	return unless $actor;
@@ -1173,14 +1419,22 @@ sub get_actor_position {
 	return;
 }
 
-## Runs the plugin's AI maintenance steps once per manual AI tick.
+## Purpose: Runs the plugin's periodic AI maintenance tasks.
+## Args: Hook arguments are ignored.
+## Returns: nothing.
+## Notes: This keeps all per-tick maintenance in one place: route destination drops,
+## stale hidden-obstacle cleanup, and repath dispatch.
 sub on_AI_pre_manual {
 	on_AI_pre_manual_drop_route_dest_near_Obstacle();
 	on_AI_pre_manual_removed_obstacle_still_in_list();
 	on_AI_pre_manual_repath();
 }
 
-## Drops random-walk or lock-map route destinations when an obstacle appears too close to them.
+## Purpose: Drops route destinations that became unsafe because of nearby obstacles.
+## Args: none.
+## Returns: nothing.
+## Notes: This mainly protects random-walk and lock-map routes from continuing toward
+## a destination that is now effectively guarded by an obstacle.
 sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
 	return unless scalar keys %obstaclesList;
 
@@ -1202,7 +1456,11 @@ sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
 	}
 }
 
-## Purges cached out-of-sight obstacles once they should be visible again but are no longer present.
+## Purpose: Purges hidden cached obstacles once they should be visible again.
+## Args: none.
+## Returns: nothing.
+## Notes: This solves the classic "left sight but may still exist" problem by keeping
+## obstacles cached until the player gets close enough that the actor should reappear.
 sub on_AI_pre_manual_removed_obstacle_still_in_list {
 	my @obstacles = keys %removed_obstacle_still_in_list;
 	return unless @obstacles;
@@ -1229,7 +1487,11 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 	}
 }
 
-## Resets active route tasks whenever obstacle changes require a fresh path calculation.
+## Purpose: Triggers a route repath when obstacle changes marked routing as dirty.
+## Args: none.
+## Returns: nothing.
+## Notes: Obstacle add/move/remove code only sets a flag; this helper emits the hook
+## once per AI tick so repaths stay centralized and cheap.
 sub on_AI_pre_manual_repath {
 	return unless $mustRePath;
 	debug "[" . PLUGIN_NAME . "] Requesting route repath if routing.\n";
@@ -1237,7 +1499,11 @@ sub on_AI_pre_manual_repath {
 	$mustRePath = 0;
 }
 
-## Infers why an actor left view based on the flags populated by Network::Receive.
+## Purpose: Infers why an actor disappeared from view.
+## Args: `($actor)`.
+## Returns: One of `dead`, `teleported`, `disconnected`, `disappeared`, or `gone`.
+## Notes: Removal policy depends on why the actor vanished, so this helper translates
+## Network::Receive state flags into one plugin-specific reason string.
 sub get_actor_disappearance_reason {
 	my ($actor) = @_;
 	return 'gone' unless $actor;
@@ -1247,7 +1513,11 @@ sub get_actor_disappearance_reason {
 	return 'disappeared' if $actor->{disappeared};
 	return 'gone';
 }
-## Extracts the concrete Task::Route object from different AI task containers.
+## Purpose: Extracts a concrete `Task::Route` from different AI containers.
+## Args: `($args)` which may already be a route or a map-route wrapper.
+## Returns: A `Task::Route` object, or `undef`.
+## Notes: Different hooks hand route tasks to the plugin in different wrappers, so
+## this helper normalizes that shape before route-specific logic runs.
 sub get_task {
 	my ($args) = @_;
 	if (UNIVERSAL::isa($args, 'Task::Route')) {
@@ -1258,7 +1528,11 @@ sub get_task {
 	return;
 }
 
-## Injects the obstacle weight grid into getRoute pathfinding calls for the current map.
+## Purpose: Injects obstacle weights and prohibited cells into live pathfinding calls.
+## Args: `(undef, $args)` from `getRoute`.
+## Returns: nothing directly; mutates route arguments in place.
+## Notes: This is the main integration point with pathfinding. It overlays blocked
+## cells and the live weight grid only for routes on the current live field.
 sub on_getRoute {
 	my (undef, $args) = @_;
 	return unless scalar keys %obstaclesList;
@@ -1280,13 +1554,21 @@ sub on_getRoute {
 	$args->{secondWeightMap} = get_final_grid();
 }
 
-## Converts a 2D coordinate into a linear offset for weight maps.
+## Purpose: Converts an `(x, y)` coordinate into a linear weight-map offset.
+## Args: `($x, $width, $y)`.
+## Returns: The numeric byte offset into the field weight map.
+## Notes: OpenKore weight maps are packed strings, so callers need this to edit a
+## single cell in the cloned blocked weight map.
 sub getOffset {
 	my ($x, $width, $y) = @_;
 	return (($y * $width) + $x);
 }
 
-## Builds the final merged obstacle grid that pathfinding will consume.
+## Purpose: Returns the merged live obstacle weight grid used by pathfinding.
+## Args: none.
+## Returns: An arrayref of `{ x, y, weight }` entries.
+## Notes: The result is cached per field and rebuilt from live aggregated weight
+## sums only when obstacle state changed.
 sub get_final_grid {
 	return [] unless $field;
 
@@ -1299,7 +1581,11 @@ sub get_final_grid {
 	return $cached_final_grid;
 }
 
-## Returns whether a coordinate is inside the current prohibited-cell set.
+## Purpose: Checks whether a coordinate lies inside a prohibited-cell set.
+## Args: `($pos, $prohibited_cells)`.
+## Returns: `1` if the coordinate is prohibited, otherwise `0`.
+## Notes: This is used before overriding the route weight map so start/destination
+## cells are not made impossible by mistake.
 sub pos_is_prohibited {
 	my ($pos, $prohibited_cells) = @_;
 	return 0 unless $pos && $prohibited_cells;
@@ -1307,7 +1593,11 @@ sub pos_is_prohibited {
 	return exists $prohibited_cells->{$pos->{x}}{$pos->{y}} ? 1 : 0;
 }
 
-## Clones a base weight map and turns prohibited cells into true unwalkable nodes for pathfinding.
+## Purpose: Clones a weight map and turns prohibited cells into hard blocks.
+## Args: `($base_weight_map_ref, $width, $prohibited_cells)`.
+## Returns: A modified packed weight-map string.
+## Notes: Prohibited cells are represented by `-1` in the cloned map so core
+## pathfinding treats them as unwalkable instead of merely expensive.
 sub build_weight_map_with_prohibited_cells {
 	my ($base_weight_map_ref, $width, $prohibited_cells) = @_;
 	return unless $base_weight_map_ref && $width && $prohibited_cells;
@@ -1324,7 +1614,11 @@ sub build_weight_map_with_prohibited_cells {
 	return $blocked_weight_map;
 }
 
-## Adds prohibited cells for the requested field to callers that need destination/meeting-position filtering.
+## Purpose: Hook callback that contributes prohibited cells to external callers.
+## Args: `(undef, $args)` containing `cells`, optional `field`, and optional `caller`.
+## Returns: nothing directly; mutates `$args->{cells}`.
+## Notes: This is used by systems such as route destination filtering and
+## `meetingPosition`, including the special rule that dangerous meeting cells are also banned.
 sub on_add_prohibited_cells {
 	my (undef, $args) = @_;
 	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
@@ -1346,6 +1640,11 @@ sub on_add_prohibited_cells {
 	}
 }
 
+## Purpose: Merges one boolean cell-mark map into another.
+## Args: `($target, $source)`.
+## Returns: nothing; mutates `$target`.
+## Notes: Unlike prohibited-cell merging, this treats presence as a simple mark and
+## does not preserve any distance or weighted value metadata.
 sub merge_marked_cells {
 	my ($target, $source) = @_;
 	return unless $target && $source;
@@ -1357,6 +1656,11 @@ sub merge_marked_cells {
 	}
 }
 
+## Purpose: Builds a boolean cell set around one center for destination dropping.
+## Args: `($target_field, $center, $distance)`.
+## Returns: A hashref of marked cells.
+## Notes: This is used for "drop destination when near" logic, so it marks every
+## walkable cell inside the configured block-distance radius.
 sub build_drop_destination_cells_around_pos {
 	my ($target_field, $center, $distance) = @_;
 	return {} unless $target_field && $center;
@@ -1375,6 +1679,11 @@ sub build_drop_destination_cells_around_pos {
 	return \%cells;
 }
 
+## Purpose: Builds the full destination-drop cell set for a field.
+## Args: `($target_field)`.
+## Returns: A hashref of marked cells.
+## Notes: On the live field it uses live obstacles; on other fields it falls back to
+## configured static cell blocks only.
 sub build_drop_destination_cells_for_field {
 	my ($target_field) = @_;
 	return {} unless $target_field;
@@ -1404,6 +1713,11 @@ sub build_drop_destination_cells_for_field {
 	return \%cells;
 }
 
+## Purpose: Hook callback that contributes destination-drop cells to callers.
+## Args: `(undef, $args)` containing `cells` and optional `field`.
+## Returns: nothing directly; mutates `$args->{cells}`.
+## Notes: This keeps destination filtering for other systems in sync with the same
+## obstacle definitions used by routing.
 sub on_add_drop_destination_cells {
 	my (undef, $args) = @_;
 	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
@@ -1415,7 +1729,11 @@ sub on_add_drop_destination_cells {
 	merge_marked_cells($args->{cells}, build_drop_destination_cells_for_field($target_field));
 }
 
-## Builds the prohibited-cell map for a specific field, using live obstacles on the current map and static configured cells anywhere.
+## Purpose: Builds the prohibited-cell map for an arbitrary field.
+## Args: `($target_field)`.
+## Returns: A prohibited-cell hashref for that field.
+## Notes: The current live field can use live dynamic obstacles, while non-current
+## fields can only rely on configured static cell obstacles.
 sub build_prohibited_cells_for_field {
 	my ($target_field) = @_;
 	return {} unless $target_field;
@@ -1430,12 +1748,20 @@ sub build_prohibited_cells_for_field {
 	return \%prohibited;
 }
 
-## Builds prohibited cells from live dynamic obstacles on the current map only.
+## Purpose: Returns prohibited cells from live dynamic obstacles on the current map.
+## Args: none.
+## Returns: A hashref of prohibited cells keyed by x/y with nearest distances.
+## Notes: The data is maintained incrementally as obstacles change, so this accessor
+## simply returns the live aggregate table.
 sub build_live_prohibited_cells {
 	return \%live_prohibited_cells;
 }
 
-## Builds prohibited cells from configured static cell blocks for the given field.
+## Purpose: Builds prohibited cells from configured static cell blocks for a field.
+## Args: `($target_field)`.
+## Returns: A prohibited-cell hashref.
+## Notes: This is the fallback path for non-current maps where no live actor obstacle
+## state exists and only config-defined cells can be considered.
 sub build_static_prohibited_cells_for_field {
 	my ($target_field) = @_;
 	return {} unless $target_field;
@@ -1466,7 +1792,11 @@ sub build_static_prohibited_cells_for_field {
 	return \%prohibited;
 }
 
-## Merges one prohibited-cell hash into another, preserving the nearest obstacle distance.
+## Purpose: Merges one prohibited-cell map into another.
+## Args: `($target, $source)`.
+## Returns: nothing; mutates `$target`.
+## Notes: If multiple obstacles cover the same cell, the merge keeps the nearest
+## obstacle distance because that is the strongest prohibited-zone meaning.
 sub merge_prohibited_cells {
 	my ($target, $source) = @_;
 	return unless $target && $source;
@@ -1481,7 +1811,11 @@ sub merge_prohibited_cells {
 	}
 }
 
-## Calculates the extra weight contributed by a single obstacle cell at a given distance.
+## Purpose: Calculates one inverse-square-like weight value for an obstacle distance.
+## Args: `($ratio, $dist)`.
+## Returns: The clamped weight contribution for that distance.
+## Notes: Distance zero is treated as one to avoid division by zero and to ensure the
+## obstacle center receives the strongest weight.
 sub get_weight_for_block {
 	my ($ratio, $dist) = @_;
 	$dist = 1 if !$dist;
@@ -1490,14 +1824,22 @@ sub get_weight_for_block {
 	return $weight;
 }
 
-## Caps a computed weight so it never exceeds the configured limit.
+## Purpose: Caps a computed weight at the configured safety limit.
+## Args: `($weight, $weight_limit)`.
+## Returns: The original or capped weight value.
+## Notes: Pathfinding weights have practical limits, so this keeps large penalty
+## profiles from exploding the final grid.
 sub assertWeightBelowLimit {
 	my ($weight, $weight_limit) = @_;
 	return $weight_limit if $weight >= $weight_limit;
 	return $weight;
 }
 
-## Creates the weighted influence area around one obstacle position.
+## Purpose: Builds the weighted influence area for one obstacle position.
+## Args: `($obstacle_pos, $obstacle)`.
+## Returns: An arrayref of `{ x, y, weight }` contributions.
+## Notes: It scans the square covering the obstacle's penalty profile radius and
+## records only positive walkable-cell contributions.
 sub create_changes_array {
 	my ($obstacle_pos, $obstacle) = @_;
 	return [] unless $field && $obstacle_pos && $obstacle;
@@ -1530,6 +1872,11 @@ sub create_changes_array {
 	return \@changes_array;
 }
 
+## Purpose: Builds the prohibited-cell contribution produced by one obstacle.
+## Args: `($obstacle_pos, $obstacle, $target_field)`.
+## Returns: A prohibited-cell hashref for just that obstacle.
+## Notes: Distances are stored so later merges can preserve the nearest covering
+## obstacle when multiple prohibited zones overlap.
 sub build_prohibited_cells_contribution {
 	my ($obstacle_pos, $obstacle, $target_field) = @_;
 	return {} unless $obstacle_pos && $obstacle && $target_field;
@@ -1549,6 +1896,11 @@ sub build_prohibited_cells_contribution {
 	return \%prohibited;
 }
 
+## Purpose: Builds the danger-cell contribution produced by one obstacle.
+## Args: `($obstacle_pos, $obstacle, $target_field)`.
+## Returns: A danger-cell hashref for just that obstacle.
+## Notes: Danger values are additive, so overlapping obstacles can later be summed
+## cell by cell in the live aggregate table.
 sub build_danger_cells_contribution {
 	my ($obstacle_pos, $obstacle, $target_field) = @_;
 	return {} unless $obstacle_pos && $obstacle && $target_field;
@@ -1571,6 +1923,11 @@ sub build_danger_cells_contribution {
 	return \%danger;
 }
 
+## Purpose: Adds one obstacle's weight contributions into the live aggregate table.
+## Args: `($changes)` as built by `create_changes_array`.
+## Returns: nothing.
+## Notes: The live aggregate tables let the plugin update incrementally instead of
+## rebuilding every cell contribution from scratch on each change.
 sub add_weight_contribution {
 	my ($changes) = @_;
 	return unless $changes;
@@ -1581,6 +1938,10 @@ sub add_weight_contribution {
 	}
 }
 
+## Purpose: Removes one obstacle's weight contributions from the live aggregate table.
+## Args: `($changes)` as previously added to the live aggregate.
+## Returns: nothing.
+## Notes: Empty cells are pruned as sums drop to zero so caches stay compact.
 sub remove_weight_contribution {
 	my ($changes) = @_;
 	return unless $changes;
@@ -1594,6 +1955,10 @@ sub remove_weight_contribution {
 	}
 }
 
+## Purpose: Adds one numeric x/y grid into another by summing cell values.
+## Args: `($target, $source)`.
+## Returns: nothing; mutates `$target`.
+## Notes: This generic helper is currently used for additive danger grids.
 sub add_grid_sum_contribution {
 	my ($target, $source) = @_;
 	return unless $target && $source;
@@ -1605,6 +1970,11 @@ sub add_grid_sum_contribution {
 	}
 }
 
+## Purpose: Removes one numeric x/y grid from another.
+## Args: `($target, $source)`.
+## Returns: nothing; mutates `$target`.
+## Notes: Cells and rows are deleted once their summed value reaches zero so the
+## aggregate grid stays sparse.
 sub remove_grid_sum_contribution {
 	my ($target, $source) = @_;
 	return unless $target && $source;
@@ -1620,6 +1990,11 @@ sub remove_grid_sum_contribution {
 	}
 }
 
+## Purpose: Adds one obstacle's prohibited contribution into the live aggregate state.
+## Args: `($source)` prohibited-cell hashref for one obstacle.
+## Returns: nothing.
+## Notes: This tracks counts by distance so removing one obstacle later can restore
+## the next-nearest distance if multiple prohibited zones overlap.
 sub add_prohibited_contribution {
 	my ($source) = @_;
 	return unless $source;
@@ -1635,6 +2010,11 @@ sub add_prohibited_contribution {
 	}
 }
 
+## Purpose: Removes one obstacle's prohibited contribution from the live aggregate state.
+## Args: `($source)` prohibited-cell hashref for one obstacle.
+## Returns: nothing.
+## Notes: Distance counters allow the plugin to recompute the nearest remaining
+## prohibited distance at each cell without rebuilding everything.
 sub remove_prohibited_contribution {
 	my ($source) = @_;
 	return unless $source;
@@ -1662,6 +2042,11 @@ sub remove_prohibited_contribution {
 	}
 }
 
+## Purpose: Applies one live obstacle's cached contributions to every aggregate table.
+## Args: `($obstacle_id)`.
+## Returns: nothing.
+## Notes: This is the one place where a live obstacle becomes visible to routing:
+## prohibited cells, danger cells, and weights are all merged here together.
 sub apply_obstacle_contributions {
 	my ($obstacle_id) = @_;
 	my $obstacle = $obstaclesList{$obstacle_id};
@@ -1673,6 +2058,11 @@ sub apply_obstacle_contributions {
 	invalidate_pathfinding_caches();
 }
 
+## Purpose: Removes one live obstacle's cached contributions from aggregate tables.
+## Args: `($obstacle_id)`.
+## Returns: nothing.
+## Notes: This is the exact inverse of `apply_obstacle_contributions` and is called
+## before moving, deleting, or rebuilding an obstacle entry.
 sub remove_obstacle_contributions {
 	my ($obstacle_id) = @_;
 	my $obstacle = $obstaclesList{$obstacle_id};
@@ -1684,7 +2074,11 @@ sub remove_obstacle_contributions {
 	invalidate_pathfinding_caches();
 }
 
-## Sums the influence of all live obstacles into one consolidated weight map.
+## Purpose: Rebuilds the consolidated live obstacle weight grid from aggregate sums.
+## Args: none.
+## Returns: An arrayref of `{ x, y, weight }` entries.
+## Notes: Pathfinding consumes this sparse list as the second weight map layered on
+## top of the field's normal weights.
 sub sum_all_changes {
 	my @rebuilt_array;
 
@@ -1703,7 +2097,11 @@ sub sum_all_changes {
 	return \@rebuilt_array;
 }
 
-## Returns the configured obstacle entry for a player, if that player should be avoided.
+## Purpose: Returns the configured obstacle profile for a player actor.
+## Args: `($actor)`.
+## Returns: The player obstacle config hashref, or `undef`.
+## Notes: Player lookup is name-based and case-insensitive because player IDs are not
+## stable configuration identifiers.
 sub get_player_obstacle {
 	my ($actor) = @_;
 	return unless $actor && defined $actor->{name};
@@ -1713,14 +2111,21 @@ sub get_player_obstacle {
 	return $obstacle;
 }
 
-## Adds player obstacles when configured players enter view.
+## Purpose: Hook callback that adds configured player obstacles when players appear.
+## Args: `(undef, $actor)`.
+## Returns: nothing.
+## Notes: This is a thin hook adapter around `get_player_obstacle` and `add_obstacle`.
 sub on_add_player_list {
 	my (undef, $actor) = @_;
 	my $obstacle = get_player_obstacle($actor);
 	add_obstacle($actor, $obstacle, 'player') if $obstacle;
 }
 
-## Moves configured player obstacles when those players move.
+## Purpose: Hook callback that updates configured player obstacles on movement.
+## Args: `(undef, $actor)`.
+## Returns: nothing.
+## Notes: Only already-tracked player obstacles are updated, which avoids needless
+## work for unrelated players.
 sub on_player_moved {
 	my (undef, $actor) = @_;
 	return unless $actor && exists $obstaclesList{$actor->{ID}};
@@ -1729,7 +2134,11 @@ sub on_player_moved {
 	move_obstacle($actor, $obstacle, 'player') if $obstacle;
 }
 
-## Removes configured player obstacles when a player truly disappears from the map.
+## Purpose: Hook callback that removes configured player obstacles on disappearance.
+## Args: `(undef, $args)` containing the disappearing player.
+## Returns: nothing.
+## Notes: The actual removal policy is delegated to `remove_obstacle`, which may
+## cache the obstacle instead of deleting it immediately.
 sub on_player_disappeared {
 	my (undef, $args) = @_;
 	my $actor = $args->{player};
@@ -1737,7 +2146,10 @@ sub on_player_disappeared {
 	remove_obstacle($actor, 'player', get_actor_disappearance_reason($actor));
 }
 
-## Returns the configured obstacle entry for a monster, if that monster should be avoided.
+## Purpose: Returns the configured obstacle profile for a monster actor.
+## Args: `($actor)`.
+## Returns: The monster obstacle config hashref, or `undef`.
+## Notes: Monster lookup is keyed by `nameID`, which is stable across instances.
 sub get_monster_obstacle {
 	my ($actor) = @_;
 	return unless $actor && defined $actor->{nameID};
@@ -1747,14 +2159,22 @@ sub get_monster_obstacle {
 	return $obstacle;
 }
 
-## Adds monster obstacles when configured monsters enter view.
+## Purpose: Hook callback that adds configured monster obstacles when monsters appear.
+## Args: `(undef, $actor)`.
+## Returns: nothing.
+## Notes: This is a thin adapter that keeps the monster hook path parallel to player
+## and spell obstacle registration.
 sub on_add_monster_list {
 	my (undef, $actor) = @_;
 	my $obstacle = get_monster_obstacle($actor);
 	add_obstacle($actor, $obstacle, 'monster') if $obstacle;
 }
 
-## Moves configured monster obstacles when those monsters move.
+## Purpose: Hook callback that updates configured monster obstacles on movement.
+## Args: `(undef, $actor)`.
+## Returns: nothing.
+## Notes: Only tracked monster obstacles are updated, and actual movement handling is
+## still gated by the plugin's `enable_move` setting.
 sub on_monster_moved {
 	my (undef, $actor) = @_;
 	return unless $actor && exists $obstaclesList{$actor->{ID}};
@@ -1763,7 +2183,11 @@ sub on_monster_moved {
 	move_obstacle($actor, $obstacle, 'monster') if $obstacle;
 }
 
-## Removes configured monster obstacles when a monster truly disappears from the map.
+## Purpose: Hook callback that removes configured monster obstacles on disappearance.
+## Args: `(undef, $args)` containing the disappearing monster.
+## Returns: nothing.
+## Notes: Hidden monsters may be cached briefly depending on disappearance reason and
+## plugin settings.
 sub on_monster_disappeared {
 	my (undef, $args) = @_;
 	my $actor = $args->{monster};
@@ -1771,7 +2195,10 @@ sub on_monster_disappeared {
 	remove_obstacle($actor, 'monster', get_actor_disappearance_reason($actor));
 }
 
-## Returns the configured obstacle entry for an area spell, if that spell type should be avoided.
+## Purpose: Returns the configured obstacle profile for an area spell instance.
+## Args: `($spell)`.
+## Returns: The spell obstacle config hashref, or `undef`.
+## Notes: Spell avoidance is keyed by spell type rather than by unique spell ID.
 sub get_spell_obstacle {
 	my ($spell) = @_;
 	return unless $spell && defined $spell->{type};
@@ -1781,7 +2208,11 @@ sub get_spell_obstacle {
 	return $obstacle;
 }
 
-## Adds area-spell obstacles when configured spell types appear on the map.
+## Purpose: Hook callback that adds configured spell obstacles when spells appear.
+## Args: `(undef, $args)` from `packet_areaSpell`.
+## Returns: nothing.
+## Notes: The hook provides the spell ID, so this helper resolves the live spell
+## object before attempting to add the obstacle.
 sub on_add_areaSpell_list {
 	my (undef, $args) = @_;
 	my $ID = $args->{ID};
@@ -1792,7 +2223,11 @@ sub on_add_areaSpell_list {
 	add_obstacle($spell, $obstacle, 'spell') if $obstacle;
 }
 
-## Removes area-spell obstacles safely even if the live spell object is already gone.
+## Purpose: Hook callback that removes spell obstacles when spells disappear.
+## Args: `(undef, $args)` containing the spell ID.
+## Returns: nothing.
+## Notes: The live spell object may already be missing, so the helper falls back to a
+## minimal stub object carrying the ID.
 sub on_areaSpell_disappeared {
 	my (undef, $args) = @_;
 	my $ID = $args->{ID};
@@ -1802,7 +2237,11 @@ sub on_areaSpell_disappeared {
 	remove_obstacle($spell, 'spell', 'gone');
 }
 
-## Returns the configured obstacle entry for portals when portal avoidance is enabled.
+## Purpose: Returns the active portal obstacle profile when portal avoidance is enabled.
+## Args: none.
+## Returns: A cloned portal obstacle config hashref, or `undef`.
+## Notes: The config is cloned so per-portal live entries can be modified safely
+## without mutating the shared default profile.
 sub get_portal_obstacle {
 	return unless $plugin_settings{enable_avoid_portals};
 	my %obstacle = %default_portal_obstacle;
@@ -1810,19 +2249,31 @@ sub get_portal_obstacle {
 	return;
 }
 
-## Adds portal obstacles when portals enter view.
+## Purpose: Hook callback that adds portal obstacles when portals appear.
+## Args: `(undef, $actor)`.
+## Returns: nothing.
+## Notes: Portal obstacles are opt-in via config and use the shared default portal
+## profile returned by `get_portal_obstacle`.
 sub on_add_portal_list {
 	my (undef, $actor) = @_;
 	my $obstacle = get_portal_obstacle();
 	add_obstacle($actor, $obstacle, 'portal') if $obstacle;
 }
 
-## Ignores portal disappearance because portals are fully reset on map change.
+## Purpose: Ignores portal disappearance events.
+## Args: none.
+## Returns: nothing.
+## Notes: Portal obstacles are fully rebuilt on map change, so individual disappear
+## handling is intentionally unnecessary.
 sub on_portal_disappeared {
 	return;
 }
 
-## Marks player or monster obstacles as out-of-sight so they can be purged safely later.
+## Purpose: Marks player or monster obstacles as temporarily hidden.
+## Args: `(undef, $args)` containing the actor about to be avoided for removal.
+## Returns: nothing.
+## Notes: This hook exists so the plugin can preserve obstacle influence briefly when
+## an actor leaves view, then purge it later only if it truly should have reappeared.
 sub on_actor_avoid_removal {
 	my (undef, $args) = @_;
 	my $actor = $args->{actor};
