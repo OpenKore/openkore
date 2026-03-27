@@ -150,6 +150,17 @@ my %cached_weight_map;
 
 my $mustRePath = 0;
 
+## LIMITATIONS:
+# 1 - Will drop a randomwalk if there is an aobstacle near the destination, but not if the route to the destination crosses one
+# TODO: This functionality can be added by defining a max danger accepted by randomwalk route and then asserting the randomwalk solution
+# Eg: avoidObstacles_maxRandomWalkDanger 10 - if the summed up danger of all cells in solution is greater than 10, drop this route
+# 2 - Chars with ranged attacks can have issues when you are in a valid spot, target is in a valid spot and not moving to a bad spot but between you and the target there is an obstacle
+# because the target might start walking to you and cross a prohibited area, which will make Attack.pm drop the target
+# Could be averted by running a get_solution or checklos between char and target and excluding prohibited spots
+# 3 - Openkore has no knowlodge of the 'cost' we calculate here, it only knows route cell length, if we want to a diferent path because of the obstacles
+# Eg: There is an obstacle blocking the bridge, we could route through another map or try teleporting to the other side instead of walking there
+# Then we would need a way of sending this information to openkore and actually making the decision there
+
 ## Purpose: Clears derived pathfinding caches that depend on field/base-map identity.
 ## Args: none.
 ## Returns: nothing.
@@ -1736,20 +1747,11 @@ sub build_prohibited_cells_for_field {
 	my %prohibited;
 
 	if ($field && $target_field->name eq $field->name) {
-		merge_prohibited_cells(\%prohibited, build_live_prohibited_cells());
+		merge_prohibited_cells(\%prohibited, \%cached_prohibited_cells);
 	} else {
 		merge_prohibited_cells(\%prohibited, build_static_prohibited_cells_for_field($target_field));
 	}
 	return \%prohibited;
-}
-
-## Purpose: Returns prohibited cells from live dynamic obstacles on the current map.
-## Args: none.
-## Returns: A hashref of prohibited cells keyed by x/y with nearest distances.
-## Notes: The data is maintained incrementally as obstacles change, so this accessor
-## simply returns the live aggregate table.
-sub build_live_prohibited_cells {
-	return \%cached_prohibited_cells;
 }
 
 ## Purpose: Builds prohibited cells from configured static cell blocks for a field.
