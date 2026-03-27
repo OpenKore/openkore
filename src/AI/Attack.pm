@@ -411,6 +411,7 @@ sub main {
 				$char->{pos_to}{y} = $char->{movetoattack_pos}{y};
 				$char->{time_move} = time;
 				$char->{time_move_calc} = 0;
+				$char->{solution} = [];
 				delete $char->{movetoattack_pos};
 			}
 		}
@@ -436,12 +437,15 @@ sub main {
 		}
 	}
 
+	my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
+	$extra_time = 0 unless (defined $extra_time);
+
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
 	my $monsterDist = blockDistance($myPos, $monsterPos);
 
-	my $realMyPos = calcPosFromPathfinding($field, $char);
-	my $realMonsterPos = calcPosFromPathfinding($field, $target);
+	my $realMyPos = calcPosFromPathfinding($field, $char, $extra_time);
+	my $realMonsterPos = calcPosFromPathfinding($field, $target, $extra_time);
 
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
@@ -666,7 +670,7 @@ sub main {
 	}
 	
 	if (!$args->{firstLoop} && $canAttack == 0 && $youHitTarget) {
-		debug TF("[%s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+		debug TF("[%s] We were able to hit target even though it is out of range, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
 			debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $canAttack_fail_string), 'ai_attack';
 			$args->{temporary_extra_range} = 1;
@@ -707,6 +711,21 @@ sub main {
 			debug TF("[%s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		}
 		$found_action = 1;
+	}
+
+	if (
+		!$found_action &&
+		$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'} &&
+		($canAttack == 0 || $canAttack == -1) &&
+		!$hitTarget_when_not_possible
+	) {
+		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}));
+		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+		if ($futurecanAttack) {
+			warning TF("[Attack] You currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
+			$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}), 'ai_attack';
+			$found_action = 1;
+		}
 	}
 
 	# Here we decide what to do with a mob which is out of range or we have no LOS to

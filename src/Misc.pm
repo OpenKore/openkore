@@ -2703,11 +2703,18 @@ sub meetingPosition {
 		return;
 	}
 
-	my $extra_time_actor = $timeout{'meetingPosition_extra_time_actor'}{'timeout'} ? $timeout{'meetingPosition_extra_time_actor'}{'timeout'} : 0.2;
-	my $extra_time_target = $timeout{'meetingPosition_extra_time_target'}{'timeout'} ? $timeout{'meetingPosition_extra_time_target'}{'timeout'} : 0.2;
+	my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
+	$extra_time = 0 unless (defined $extra_time);
+
+	my $future_reachability_lookup_time = exists $timeout{'meetingPosition_future_reachability_lookup'}{'timeout'} ? $timeout{'meetingPosition_future_reachability_lookup'}{'timeout'} : 0.3;
+	$future_reachability_lookup_time = 0 unless (defined $future_reachability_lookup_time);
+
+	my $max_leeway_time = exists $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'} ? $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'} : 0.3;
+	$max_leeway_time -= $extra_time;
+	$max_leeway_time = 0 if (!defined $max_leeway_time || $max_leeway_time < 0);
 
 	my $mySpeed = ($actor->{walk_speed} || 0.12);
-	my $timeSinceActorMoved = time - $actor->{time_move} + $extra_time_actor;
+	my $timeSinceActorMoved = time - $actor->{time_move} + $extra_time;
 
 	my $my_solution;
 	my $timeActorFinishMove;
@@ -2771,7 +2778,7 @@ sub meetingPosition {
 		$timeActorFinishMove = calcTimeFromSolution($my_solution, $mySpeed);
 	}
 
-	my $realMyPos = calcPosFromPathfinding($field, $actor, $extra_time_actor);
+	my $realMyPos = calcPosFromPathfinding($field, $actor, $extra_time);
 
 	# Fall back to the server-reported destination if pathfinding could not infer a position.
 	$realMyPos = $actor->{pos_to} if (!$realMyPos && $actor->{pos_to});
@@ -2785,7 +2792,7 @@ sub meetingPosition {
 	return unless $realMyPos && defined $realMyPos->{x} && defined $realMyPos->{y};
 
 	my $targetSpeed = ($target->{walk_speed} || 0.12);
-	my $timeSinceTargetMoved = time - $target->{time_move} + $extra_time_target;
+	my $timeSinceTargetMoved = time - $target->{time_move} + $extra_time;
 
 	my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
 
@@ -2815,7 +2822,7 @@ sub meetingPosition {
 	my $masterSpeed;
 	if ($masterPos) {
 		$masterSpeed = ($master->{walk_speed} || 0.12);
-		$timeSinceMasterMoved = time - $master->{time_move} + $extra_time_actor;
+		$timeSinceMasterMoved = time - $master->{time_move} + $extra_time;
 
 		$master_solution = get_solution($field, $master->{pos}, $master->{pos_to});
 
@@ -2924,7 +2931,7 @@ sub meetingPosition {
 		}
 
 		@{$solution} = ();
-		unless (Task::Route->getRoute($solution, $field, $realMyPos, $spot, 0, 0, 0, 1, 1)) {
+		unless (Task::Route->getRoute($solution, $field, $realMyPos, $spot, $config{'route_avoidWalls'}, 0, 0, 1, 1)) {
 			$meeting_rejections{route_failed}++;
 			next;
 		}
@@ -2956,17 +2963,22 @@ sub meetingPosition {
 			$meeting_rejections{same_as_target}++;
 			next;
 		}
-		
+
+		my $leeway = 0;
 		# 6. We must be able to attack the target from this spot
 		if (canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) != 1) {
-			$meeting_rejections{cannot_attack}++;
-			# TODO: Add a leeway here, if we cant attack right now, allow if we would be able to attack in a small window, like the meetingPosition_future_reachability_lookup check but in reverse
-			# That would also need to add a *wait a bit, target is closing in in Attack.pm main*
-			next;
+			my $leeway_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, ($total_time + $max_leeway_time));
+			my $leeway_targetPosInStep = $target_solution->[$leeway_targetCurrentStep];
+			if (canAttack($field, $spot, $leeway_targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) != 1) {
+				$meeting_rejections{cannot_attack}++;
+				next;
+			} else {
+				$leeway = $max_leeway_time;
+			}
 		}
 
-		if ($timeout{meetingPosition_future_reachability_lookup}{timeout}) {
-			my $future_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, ($total_time + $timeout{meetingPosition_future_reachability_lookup}{timeout}));
+		if ($future_reachability_lookup_time) {
+			my $future_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, ($total_time + $leeway + $future_reachability_lookup_time));
 			my $future_targetPosInStep = $target_solution->[$future_targetCurrentStep];
 
 			# 6.1. We must be able to attack the target from this spot in the near future (exclude very thin attack window)
@@ -5966,6 +5978,9 @@ sub get_lockMap_cell {
 	my $width = $lockField->width;
 	my $height = $lockField->height;
 
+	my $max_x = $width -1;
+	my $max_y = $height -1;
+
 	my %dropDestinationCells;
 	my %plugin_args = ( cells => \%dropDestinationCells, field => $lockField, caller => 'get_lockMap_cell' );
 	Plugins::callHook('add_dropDestinationCells' => \%plugin_args);
@@ -5983,7 +5998,7 @@ sub get_lockMap_cell {
 		} else {
 			$cell->{y} = int(rand($height));
 		}
-	} while (--$i && (!$lockField->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $width || $cell->{y} >= $height || (exists $dropDestinationCells{$cell->{x}} && exists $dropDestinationCells{$cell->{x}}{$cell->{y}})));
+	} while (--$i && (!$lockField->isWalkable($cell->{x}, $cell->{y}) || $cell->{x} <= 0 || $cell->{y} <= 0 || $cell->{x} >= $max_x || $cell->{y} >= $max_y || (exists $dropDestinationCells{$cell->{x}} && exists $dropDestinationCells{$cell->{x}}{$cell->{y}})));
 
 	return undef if (!$i);
 	return $cell;

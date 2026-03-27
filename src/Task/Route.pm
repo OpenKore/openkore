@@ -35,7 +35,7 @@ use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding calcPosFromPathfinding_old existsInList getLimits get_client_solution);
+use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding existsInList getLimits get_client_solution);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -389,9 +389,11 @@ sub iterate {
 
 		# $actor->{pos_to} is the position the character moved TO in the last move packet received
 		@{$current_pos_to}{qw(x y)} = @{$self->{actor}{pos_to}}{qw(x y)};
+
+		my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
+		$extra_time = 0 unless (defined $extra_time);
 		
-		$current_calc_pos = calcPosFromPathfinding($field, $self->{actor});
-		my $current_calc_pos_old = calcPosFromPathfinding_old($field, $self->{actor});
+		$current_calc_pos = calcPosFromPathfinding($field, $self->{actor}, $extra_time);
 		
 		if ($current_calc_pos->{x} == $solution->[$#{$solution}]{x} && $current_calc_pos->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
@@ -731,7 +733,6 @@ sub iterate {
 					current_pos => $current_pos,
 					current_pos_to => $current_pos_to,
 					current_calc_pos => $current_calc_pos,
-					current_calc_pos_old => $current_calc_pos_old,
 					next_pos => $self->{next_pos},
 					move_step_index => $move_step_index,
 					stepsleft => $stepsleft,

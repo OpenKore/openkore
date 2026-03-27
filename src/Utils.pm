@@ -38,7 +38,7 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(getLimits get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcPosFromPathfinding_old calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
+	qw(getLimits get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
 	calcPosFromTime calcTime calcPosition
 	checkMovementDirection
 	distance blockDistance specifiedBlockDistance adjustedBlockDistance getClientDist canAttack
@@ -220,37 +220,6 @@ sub get_solution {
 	}
 }
 
-# Currently the go-to function to get the position of a given actor on critical ocasions (eg. Attack logic)
-sub calcPosFromPathfinding_old {
-	my ($field, $actor, $extra_time) = @_;
-	my $speed = ($actor->{walk_speed} || 0.12);
-	my $time = time - $actor->{time_move} + $extra_time;
-
-	# If Pos and PosTo are the same return Pos
-	if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y}) {
-		return $actor->{pos};
-	}
-
-	my $solution;
-
-	# If the actor is the character then we should have already saved the time calc and solution at Receive.pm::character_moves
-	if (UNIVERSAL::isa($actor, "Actor::You")) {
-		if ($time >= $actor->{time_move_calc}) {
-			return $actor->{pos_to};
-		}
-		$solution = $actor->{solution};
-
-	} else {
-		$solution = get_solution($field, $actor->{pos}, $actor->{pos_to});
-	}
-
-	my $steps_walked = calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
-
-	my $pos = $solution->[$steps_walked];
-
-	return $pos;
-}
-
 # Mirrors rAthena's walking coordinate update logic as closely as OpenKore can with
 # the movement data it actually has.
 #
@@ -272,7 +241,7 @@ sub calcPosFromPathfinding_old {
 #   experiments, but we still anchor elapsed time to the local packet receive time
 #   because OpenKore has no trustworthy local<->server tick conversion.
 #
-# What this function changes compared with calcPosFromPathfinding_old():
+# What this function changes compared with the previous full-step-only version:
 # - For `Actor::You`, it walks the same path solution step by step.
 # - But for the in-progress step it applies the same sub-cell math used by
 #   rAthena/clif packets: `24 + dir * 16 * percent`.
@@ -281,26 +250,33 @@ sub calcPosFromPathfinding_old {
 #   into the neighbor.
 # - This makes the returned cell change around the half-step border crossing instead
 #   of only after a whole step duration has elapsed.
-# - For every non-player actor, we intentionally keep using
-#   calcPosFromPathfinding_old() until we have actor-specific benchmarks that show
+# - For every non-player actor, we intentionally keep using the simpler
+#   full-step path simulation until we have actor-specific benchmarks that show
 #   the new handoff logic is an improvement there too.
 sub calcPosFromPathfinding {
 	my ($field, $actor, $extra_time) = @_;
 	$extra_time ||= 0;
 	return unless $actor;
-	return calcPosFromPathfinding_old($field, $actor, $extra_time) unless UNIVERSAL::isa($actor, "Actor::You");
-
-	my $speed = ($actor->{walk_speed} || 0.12);
-	my $time_anchor = $actor->{time_move};
-	my $time_elapsed = time - $time_anchor + $extra_time;
-	$time_elapsed = 0 if $time_elapsed < 0;
 
 	# If Pos and PosTo are the same return Pos
 	if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y}) {
 		return $actor->{pos};
 	}
 
+	my $speed = ($actor->{walk_speed} || 0.12);
+	my $time_elapsed = time - $actor->{time_move} + $extra_time;
+
+	if ($time_elapsed <= 0) {
+		return $actor->{pos};
+	}
+	
 	my $solution;
+	unless (UNIVERSAL::isa($actor, "Actor::You")) {
+		$solution = get_solution($field, $actor->{pos}, $actor->{pos_to});
+		my $steps_walked = calcStepsWalkedFromTimeAndSolution($solution, $speed, $time_elapsed);
+		my $pos = $solution->[$steps_walked];
+		return $pos;
+	}
 
 	# For the character we should have already saved the time calc and solution at
 	# Receive.pm::character_moves.
