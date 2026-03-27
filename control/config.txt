@@ -1043,11 +1043,20 @@ avoidObstacles_weight_limit 65000
 
 avoidObstaclesDefaultPortals {
 	enabled 1
-	penalty_dist 1000, 1000, 1000
-	danger_dist 10, 10, 10
+	penalty_dist 1000, 1000, 1000, 20
+	danger_dist 10, 10, 10, 1
 	prohibited_dist 2
 	drop_target_when_near_dist 3
 	drop_destination_when_near_dist 3
+}
+
+avoidObstaclesMonster 1368 {
+	enabled 1
+	penalty_dist 20000, 20000, 20000, 20000, 30, 7
+	danger_dist 10, 10, 10, 10, 1
+	prohibited_dist -1
+	drop_target_when_near_dist 4
+	drop_destination_when_near_dist 4
 }
 
 
