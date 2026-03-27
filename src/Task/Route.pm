@@ -236,7 +236,10 @@ sub iterate {
 		my $pos = $self->{actor}{pos};
 		my $pos_to = $self->{actor}{pos_to};
 
-		my $calc_pos = calcPosFromPathfinding($field, $self->{actor});
+		my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
+		$extra_time = 0 unless (defined $extra_time);
+
+		my $calc_pos = calcPosFromPathfinding($field, $self->{actor}, $extra_time);
 
 		my $walk = 1;
 		if ($config{route_teleport} == 2

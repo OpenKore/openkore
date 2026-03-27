@@ -925,22 +925,29 @@ sub choose_best_route_step {
 	}
 
 	if (defined $best_score) {
-	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Client == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
-	#	message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n";
 		warning "[" . PLUGIN_NAME . "] chose route_step $best_step (max $max_route_step [same? ". (($best_step == $max_route_step) ? 1 : 0) ."]) at [$best_pos->{x} $best_pos->{y}].\n", 'route';
 		warning "[" . PLUGIN_NAME . "] Danger score $best_score (expected route danger $expected_route_danger).\n", 'route';
+		message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route Sol  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n";
 
-		my $fix_lag_solution = get_client_solution($field, $current_pos, $solution->[0]);
-		my $fix_lag_danger = route_danger_score_from_cells($fix_lag_solution, $danger_cells);
-		my $ideal_danger = $expected_route_danger + $fix_lag_danger;
+		if ($expected_route_danger || $route_start_lag) {
+			message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Best  Sol == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n";
+		}
 
-		warning "[" . PLUGIN_NAME . "] Route_start_lag [$route_start_lag] | lag_danger [$fix_lag_danger] | ideal danger [$ideal_danger]\n", 'route';
+		if ($route_start_lag) {
+			my $fix_lag_solution = get_client_solution($field, $current_pos, $solution->[0]);
+			my $fix_lag_danger = route_danger_score_from_cells($fix_lag_solution, $danger_cells);
+			$fix_lag_danger -= ($danger_cells->{$solution->[0]{x}} && $danger_cells->{$solution->[0]{x}}{$solution->[0]{y}}) || 0;
+			my $ideal_danger = $expected_route_danger + $fix_lag_danger;
+			message "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Lag   Sol == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$fix_lag_solution}) ."\n";
+			warning "[" . PLUGIN_NAME . "] Route_start_lag [$route_start_lag] | lag_danger [$fix_lag_danger] | predicted no lag danger [$ideal_danger]\n", 'route';
+			
 
-		if ($route_start_lag > 0 && $best_score > $expected_route_danger) {
-			error "[" . PLUGIN_NAME . "] lolololol route_step reset requested: current_calc_pos lags $route_start_lag cells behind planned route start and local danger $best_score exceeds expected route danger $expected_route_danger.\n", 'route';
-			return;
-		} elsif ($best_score > $ideal_danger) {
-			warning "[" . PLUGIN_NAME . "] lolololol else\n", 'route';
+			if ($route_start_lag > 0 && $best_score > $expected_route_danger) {
+				error "[" . PLUGIN_NAME . "] lolololol route_step reset requested: current_calc_pos lags $route_start_lag cells behind planned route start and local danger $best_score exceeds expected route danger $expected_route_danger.\n", 'route';
+				return;
+			} elsif ($best_score > $ideal_danger) {
+				warning "[" . PLUGIN_NAME . "] lolololol else\n", 'route';
+			}
 		}
 	}
 
@@ -1058,6 +1065,7 @@ sub add_obstacle {
 
 	if (exists $removed_obstacle_still_in_list{$actor->{ID}}) {
 		debug "[" . PLUGIN_NAME . "] Re-adding obstacle $actor after it returned to view.\n";
+		remove_obstacle_contributions($actor->{ID}) if exists $obstaclesList{$actor->{ID}};
 		delete $obstaclesList{$actor->{ID}};
 		delete $removed_obstacle_still_in_list{$actor->{ID}};
 	}

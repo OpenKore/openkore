@@ -109,12 +109,7 @@ sub get_client_solution {
 	return $solution unless $field && $pos && $pos_to;
 	return $solution unless defined $pos->{x} && defined $pos->{y};
 	return $solution unless defined $pos_to->{x} && defined $pos_to->{y};
-
-	# Same cell: trivial solution
-	if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y}) {
-		push @{$solution}, { x => $pos->{x}, y => $pos->{y} };
-		return $solution;
-	}
+	return $solution if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y});
 
 	# Reject obviously invalid coordinates early
 	return $solution unless $field->isWalkable($pos->{x},    $pos->{y});
