@@ -218,7 +218,7 @@ patchserver 120
 # Time to wait before load map in xKore mode
 ai_clientSuspend 1
 
-ai_route_position_prediction_delay 0.1
+ai_route_position_prediction_delay 0.05
 meetingPosition_future_reachability_lookup 0.3
 
 ai_attack_allowed_waitForTarget 0.3
