@@ -2201,21 +2201,10 @@ sub processLockMap {
 						error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
 						$config{'lockMap'} = '';
 						return;
-					} else {
-						my $attackAuto = getAttackAutoModeForContext('routeToLock');
-						my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
-						if (defined $cell->{x} || defined $cell->{y}) {
-							message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $cell->{x}, $cell->{y}), "route";
-						} else {
-							message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}), "route";
-						}
 					}
 				}
-					}
-				}
-				my $attackOnRoute = 2;
-				$attackOnRoute = 1 if ($config{'attackAuto_inLockOnly'} == 1);
-				$attackOnRoute = 0 if ($config{'attackAuto_inLockOnly'} > 1);
+				my $attackAuto = getAttackAutoModeForContext('routeToLock');
+				my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
 				if (defined $cell->{x} || defined $cell->{y}) {
 					message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $cell->{x}, $cell->{y}), "route";
 				} else {

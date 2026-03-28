@@ -102,6 +102,7 @@ sub process {
 			giveUp($ataqArgs, $ID, 0);
 			return;
 		}
+
 		if ($config{attackChangeTarget}) {
 			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
 			my @aggressives = $effectiveAttackMode >= 0 ? ai_getAggressives($aggressiveType, $assistParty) : ();
