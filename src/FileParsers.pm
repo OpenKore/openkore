@@ -32,6 +32,7 @@ use Utils;
 use Utils::TextReader;
 use Plugins;
 use Settings;
+use Globals qw(%equipSlot_rlut);
 use Log qw(warning error debug);
 use Translation qw/T TF/;
 
@@ -67,6 +68,7 @@ our @EXPORT = qw(
 	parseShopControl
 	parseSkillsSPLUT
 	parseTimeouts
+	parseTeleportItems
 	parseWaypoint
 	parseItemStackLimit
 	processUltimate
@@ -87,7 +89,7 @@ our @EXPORT = qw(
 # monsters: Return hash
 #
 # Parses a monster DB file in the format:
-# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange
+# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange [Ai]
 sub parseMonstersTableFile {
 	my $file = shift;
 	my $r_hash = shift;
@@ -104,7 +106,10 @@ sub parseMonstersTableFile {
 		next if $line =~ /^#/;
 
 		# Skip optional header line
-		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange$/i;
+		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange(?:\s+Ai)?$/i;
+
+		my @fields = split /\s+/, $line;
+		next unless @fields >= 12;
 
 		my (
 			$id,
@@ -118,8 +123,9 @@ sub parseMonstersTableFile {
 			$race,
 			$element,
 			$elementLevel,
-			$chaseRange
-		) = split /\s+/, $line, 12;
+			$chaseRange,
+			$ai
+		) = @fields;
 
 		next unless defined $id && $id =~ /^\d+$/;
 
@@ -135,6 +141,7 @@ sub parseMonstersTableFile {
 		$r_hash->{$id}->{Element}       = $element;
 		$r_hash->{$id}->{ElementLevel}  = $elementLevel;
 		$r_hash->{$id}->{ChaseRange}    = $chaseRange;
+		$r_hash->{$id}->{Ai}            = defined $ai ? $ai : '06';
 	}
 
 	return 1;
@@ -738,12 +745,19 @@ sub parsePortals {
 		my ($source_map, $source_x, $source_y, $dest_map, $dest_x, $dest_y, $misc) = ($1, $2, $3, $4, $5, $6, $7);
 			my $portal = "$source_map $source_x $source_y";
 			my $dest = "$dest_map $dest_x $dest_y";
+			my $dynamicPortalGroup;
+			if ($misc =~ s/(?:^|\s)\[([A-Za-z0-9_]+)\](?=\s|$)/ /) {
+				$dynamicPortalGroup = $1;
+			}
+			$misc =~ s/\s+/ /g;
+			$misc =~ s/^\s+|\s+$//g;
 			$$r_hash{$portal}{'source'}{'map'} = $source_map;
 			$$r_hash{$portal}{'source'}{'x'} = $source_x;
 			$$r_hash{$portal}{'source'}{'y'} = $source_y;
 			$$r_hash{$portal}{'dest'}{$dest}{'map'} = $dest_map;
 			$$r_hash{$portal}{'dest'}{$dest}{'x'} = $dest_x;
 			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $dest_y;
+			$$r_hash{$portal}{'dest'}{$dest}{dynamicPortalGroup} = $dynamicPortalGroup if defined $dynamicPortalGroup;
 			$$r_hash{$portal}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
 			#$$r_hash{$portal}{dest}{$dest}{active} = 1; # TODO: is available right now (otherwise, wait until it becomes available)
 			if ($misc =~ /^(\d+)\s(\d)\s(.*)$/) { # [cost] [allow_ticket] [talk sequence]
@@ -1125,6 +1139,111 @@ sub parseSkillsSPLUT {
 		}
 	}
 	close FILE;
+	return 1;
+}
+
+sub parseTeleportItems {
+	my ($file, $r_hash) = @_;
+	undef %{$r_hash};
+	$r_hash->{list} = [];
+
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/^\s+|\s+$//g;
+		next if ($line eq '' || $line =~ /^#/);
+		$line =~ s/\s*#.*$//;
+		$line =~ s/,/ /g;
+		my @args = grep { length } split /\s+/, $line;
+
+		if (@args < 6) {
+			warning TF("Invalid teleport item entry at %s: %s\n", $file, $line);
+			next;
+		}
+
+		my ($itemID, $mode, $dest_map, $dest_x, $dest_y, $min_level, @optional_args) = @args;
+		my $max_level = 0;
+		my $timeout_sec = 0;
+		my ($required_equip_slot, $required_equip_item_id);
+		my $invalid_entry = 0;
+
+		if (@optional_args) {
+			# Strict positional optional syntax:
+			# [maxLvl] [timeoutSec] [requiredEquipSlot requiredEquipItemID]
+			if (@optional_args >= 1) {
+				$max_level = shift @optional_args;
+			}
+			if (@optional_args >= 1) {
+				$timeout_sec = shift @optional_args;
+			}
+			if (@optional_args >= 2) {
+				($required_equip_slot, $required_equip_item_id) = splice(@optional_args, 0, 2);
+			}
+
+			if (@optional_args) {
+				warning TF("Invalid teleport item entry at %s: unexpected trailing optional argument(s): %s\n", $file, join(' ', @optional_args));
+				$invalid_entry = 1;
+			}
+
+			if (defined $required_equip_slot xor defined $required_equip_item_id) {
+				warning TF("Invalid teleport item entry at %s: equipment requirement must include slot and itemID: %s\n", $file, $line);
+				$invalid_entry = 1;
+			}
+		}
+
+		next if $invalid_entry;
+
+		unless ($itemID =~ /^\d+$/ && $dest_x =~ /^-?\d+$/ && $dest_y =~ /^-?\d+$/ && $min_level =~ /^\d+$/ && $max_level =~ /^\d+$/ && $timeout_sec =~ /^\d+$/) {
+			warning TF("Invalid teleport item entry at %s: expected numeric values for item/coords/levels/timeout: %s\n", $file, $line);
+			next;
+		}
+		if (defined $required_equip_slot && (!defined $required_equip_item_id || $required_equip_item_id !~ /^\d+$/)) {
+			warning TF("Invalid teleport item entry at %s: required equip item id must be numeric: %s\n", $file, $line);
+			next;
+		}
+		if (defined $required_equip_slot) {
+			my $valid_slot = 0;
+			for my $known_slot (keys %equipSlot_rlut) {
+				next unless defined $known_slot;
+				if ($known_slot =~ /^\Q$required_equip_slot\E$/i) {
+					$valid_slot = 1;
+					last;
+				}
+			}
+
+			if (!$valid_slot) {
+				warning TF("Invalid teleport item entry at %s: required equip slot is not recognized ($required_equip_slot): %s\n", $file, $line);
+				next;
+			}
+		}
+
+		$mode = lc $mode;
+		if ($mode !~ /^(?:any|random|respawn|warp)$/) {
+			warning TF("Invalid teleport item entry at %s: unrecognized mode '%s', defaulting to 'any': %s\n", $file, $mode, $line);
+			$mode = 'any';
+		}
+
+		my $entry = {
+			itemID => int($itemID),
+			mode => $mode,
+			destMap => $dest_map,
+			destX => int($dest_x),
+			destY => int($dest_y),
+			minLevel => int($min_level),
+			maxLevel => int($max_level),
+			timeoutSec => int($timeout_sec),
+		};
+
+		if (defined $required_equip_slot && defined $required_equip_item_id) {
+			$entry->{requiredEquipSlot} = $required_equip_slot;
+			$entry->{requiredEquipItemID} = int($required_equip_item_id);
+		}
+
+		push @{$r_hash->{list}}, $entry;
+	}
+
 	return 1;
 }
 

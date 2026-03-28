@@ -76,15 +76,19 @@ sub process {
 			return;
 		}
 
-		my $party = $config{'attackAuto_party'} ? 1 : 0;
-		my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
+		my $routeIndex = AI::findAction("route");
+		$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
+		my $routeArgs = defined $routeIndex ? AI::args($routeIndex) : undef;
+		my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs);
+		my $assistParty = ($effectiveAttackMode >= 1 && $config{'attackAuto_party'}) ? 1 : 0;
+		my $target_is_aggressive = is_aggressive($target, undef, 0, $assistParty);
 		my $control = mon_control($target->{name},$target->{nameID});
 		
 		my %plugin_args;
 		$plugin_args{target} = $target;
 		$plugin_args{control} = $control;
 		$plugin_args{stage} = $stage;
-		$plugin_args{party} = $party;
+		$plugin_args{party} = $assistParty;
 		$plugin_args{target_is_aggressive} = $target_is_aggressive;
 		$plugin_args{return} = 0;
 		Plugins::callHook('shouldDropTarget' => \%plugin_args);
@@ -98,19 +102,9 @@ sub process {
 			giveUp($ataqArgs, $ID, 0);
 			return;
 		}
-
-
 		if ($config{attackChangeTarget}) {
-			my $routeIndex = AI::findAction("route");
-			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-			my $attackOnRoute;
-			if (defined $routeIndex) {
-				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
-			} else {
-				$attackOnRoute = 2;
-			}
-
-			my @aggressives = ai_getAggressives($attackOnRoute, $party);
+			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+			my @aggressives = $effectiveAttackMode >= 0 ? ai_getAggressives($aggressiveType, $assistParty) : ();
 
             if (!$target_is_aggressive && @aggressives) {
                 my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});

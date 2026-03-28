@@ -23,6 +23,7 @@ use Task::WithSubtask;
 use Task::Route;
 use Task::CalcMapRoute;
 use Task::TalkNPC;
+use Task::SitStand;
 use base qw(Task::WithSubtask);
 use Translation qw(T TF);
 use Log qw(message debug warning error);
@@ -123,6 +124,8 @@ sub new {
 	$self->{noTeleSpawn} = 0 if (!defined $self->{noTeleSpawn});
 	$self->{noTeleSpawnMaps} = {} if (!defined $self->{noTeleSpawnMaps});
 	$self->{noRouteTeleportMaps} = {} if (!defined $self->{noRouteTeleportMaps});
+	$self->{noWarpItemMaps} = {} if (!defined $self->{noWarpItemMaps});
+	$self->{noWarpItemIDs} = {} if (!defined $self->{noWarpItemIDs});
 	$self->{noAirship} = 0 if (!defined $self->{noAirship});
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
@@ -214,6 +217,64 @@ sub iterate {
 				$self->{noGoCommandMaps}{$field->baseName} = time;
 				$self->initMapCalculator();	# redo MAP router
 			}
+		}
+
+	} elsif ( $self->{mapSolution}[0]{is_teleportItemWarp} ) {
+
+		my $itemID = $self->{mapSolution}[0]{teleportItemID};
+		my $item = $self->{actor}->inventory->getByNameID($itemID);
+		my $timeoutSec = $self->{mapSolution}[0]{teleportItemTimeoutSec} || 0;
+		my $requiredEquipSlot = $self->{mapSolution}[0]{teleportItemRequiredEquipSlot};
+		my $requiredEquipItemID = $self->{mapSolution}[0]{teleportItemRequiredEquipItemID};
+		my $equipEntry = {
+			requiredEquipSlot => $requiredEquipSlot,
+			requiredEquipItemID => $requiredEquipItemID,
+		};
+
+		if ($item && $timeoutSec && ref($self->{actor}{last_teleport_item_use}{$itemID}) eq 'HASH') {
+			my $elapsed = time - $self->{actor}{last_teleport_item_use}{$itemID}{time};
+			if ($elapsed < $timeoutSec) {
+				$item = undef;
+			}
+		}
+		$item = undef unless Misc::canTeleportItemEquipRequirementBeSatisfied($equipEntry);
+
+		if (!$item) {
+			debug "MapRoute - Cannot use teleport item warp now, recalculating\n", "route";
+			delete $self->{substage};
+			delete $self->{timeout};
+			delete $timeout{'ai_portal_give_up'}{'time'};
+			delete $timeout{'ai_portal_wait'}{'time'};
+			$self->{noWarpItemIDs}{$itemID} = time;
+			$self->initMapCalculator();
+
+		} else {
+			if ($self->{actor}{sitting}) {
+				my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
+				$self->setSubtask($task);
+				return;
+			}
+
+			if (!Misc::isTeleportItemEquipRequirementSatisfied($equipEntry)) {
+				if (Misc::tryEquipTeleportItemRequirement($equipEntry)) {
+					# already equipped
+				} else {
+					debug "MapRoute - Equipping required item before teleport item use\n", "route";
+					return;
+				}
+			}
+
+				if ($self->{mapSolution}[0]{retry} < 5) {
+					$self->{mapSolution}[0]{retry}++;
+					debug "MapRoute - Using teleport item $itemID (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+					$self->{substage} = 'Waiting for Warp';
+					Misc::registerTeleportItemPendingUse($itemID);
+					$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
+				} else {
+					error TF("Failed to move using teleport item %s after %s tries on map %s, recalculating route and forbidding teleport item warp only on this map.\n", $itemID, $self->{mapSolution}[0]{retry}, $field->baseName), "map_route";
+					$self->{noWarpItemMaps}{$field->baseName} = time;
+					$self->initMapCalculator();
+				}
 		}
 
 	} elsif ( $self->{mapSolution}[0]{is_teleportToSaveMap} ) {
@@ -656,7 +717,7 @@ sub iterate {
 					my $portal;
 					for my $x (@{$self->{mapSolution}}) {
 						$portal = $x;
-						last unless $x->{map} eq $x->{dest_map};
+						last unless _isSameMapPortalStep($x);
 					}
 
 					my $dist = new PathFinding(
@@ -715,6 +776,7 @@ sub iterate {
 						randomFactor => $self->{randomFactor},
 						useManhattan => $self->{useManhattan}
 					);
+					$task->{stopWhenMapChanged} = 1 if (_isSameMapPortalStep($self->{mapSolution}[0]));
 					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 					$self->setSubtask($task);
 
@@ -731,11 +793,31 @@ sub iterate {
 	}
 }
 
+sub _isSameMapPortalStep {
+	my ($step) = @_;
+	return 0 unless ($step && ref $step eq 'HASH');
+
+	if (defined $step->{dest_map} && defined $step->{map}) {
+		return $step->{map} eq $step->{dest_map};
+	}
+
+	# Some map-solution entries may miss either map or dest_map.
+	# Fall back to parsing the portal string in that case.
+	return 0 unless defined $step->{portal};
+	my ($from, $to) = split(/=/, $step->{portal}, 2);
+	return 0 unless (defined $from && defined $to);
+	my ($from_map) = split(/\s+/, $from, 2);
+	my ($to_map) = split(/\s+/, $to, 2);
+	return 0 unless (defined $from_map && defined $to_map);
+
+	return $from_map eq $to_map;
+}
+
 sub prunePerMapBlocks {
 	my ($self) = @_;
 	my $now = time;
 
-	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps)) {
+	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps noWarpItemIDs)) {
 		my $bucket = $self->{$bucketName};
 		next unless ($bucket && ref $bucket eq 'HASH');
 
@@ -793,6 +875,8 @@ sub initMapCalculator {
 		noGoCommandMaps => $self->{noGoCommandMaps},
 		noTeleSpawn => $self->{noTeleSpawn},
 		noTeleSpawnMaps => $self->{noTeleSpawnMaps},
+		noWarpItemMaps => $self->{noWarpItemMaps},
+		noWarpItemIDs => $self->{noWarpItemIDs},
 		noAirship => $self->{noAirship},
 	);
 	$self->setSubtask($task);
@@ -838,6 +922,21 @@ sub subtaskDone {
 	} elsif ($task->isa('Task::Route')) {
 		my $error = $task->getError();
 		if ($error) {
+			if (($error->{code} == Task::Route::CANNOT_CALCULATE_ROUTE || $error->{code} == Task::Route::STUCK)
+				&& $self->{mapChanged}
+				&& $self->{mapSolution}
+				&& @{$self->{mapSolution}}
+				&& $field->baseName eq $self->{mapSolution}[0]{map}
+				&& _isSameMapPortalStep($self->{mapSolution}[0])) {
+				debug "MapRoute - Route subtask became stale after same-map warp; advancing to the next portal step.\n", "map_route";
+				shift @{$self->{mapSolution}};
+				delete $self->{mapChanged};
+				delete $self->{teleport};
+				delete $self->{sentTeleport};
+				delete $self->{teleportTime};
+				return;
+			}
+
 			my $code;
 			if ($error->{code} == Task::Route::TOO_MUCH_TIME) {
 				$code = TOO_MUCH_TIME;
@@ -879,6 +978,16 @@ sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
 	$self->{mapChanged} = 1;
+
+	my $subtask = $self->getSubtask();
+	if ($subtask
+		&& $subtask->isa('Task::Route')
+		&& $self->{mapSolution}
+		&& @{$self->{mapSolution}}
+		&& _isSameMapPortalStep($self->{mapSolution}[0])) {
+		debug "MapRoute - Same-map portal warp detected; waiting Route subtask to finish segment on its own mapChanged handling.\n", "map_route";
+	}
+
 	delete $timeout{'ai_portal_give_up'}{'time'};
 	delete $timeout{'ai_portal_wait'}{'time'};
 	delete $self->{teleportTime};

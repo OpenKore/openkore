@@ -363,6 +363,7 @@ sub processClientSuspend {
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
 	my $slave = shift;
+	my $attackAuto = getAttackAutoMode($slave->{configPrefix});
 	
 	return if $slave->inQueue("attack");
 	
@@ -371,7 +372,7 @@ sub processAutoAttack {
 	# 2. Pick the "best" monster out of that list, and attack it.
 	
 	# Don't even think about attacking if attackAuto is -1.
-	return if ($config{$slave->{configPrefix}.'attackAuto'} && $config{$slave->{configPrefix}.'attackAuto'} eq -1);
+	return if defined $attackAuto && $attackAuto == -1;
 	
 	return if (!$field);
 	next unless ($slave->isIdle || $slave->is(qw/route/));
@@ -388,7 +389,6 @@ sub processAutoAttack {
 	next unless ($slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'});
 	#next unless ((AI::action() ne "move" && AI::action() ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'});
 	next unless (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity);
-	next unless ($config{$slave->{configPrefix}.'attackAuto_inLockOnly'} <= 1 || $field->baseName eq $config{'lockMap'});
 	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"));
 	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_buyAuto'} || !AI::inQueue("buyAuto"));
 	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_sellAuto'} || !AI::inQueue("sellAuto"));
@@ -419,12 +419,8 @@ sub processAutoAttack {
 		$playerDist = 1 if ($playerDist < 1);
 	
 		my $routeIndex = $slave->findAction("route");
-		my $attackOnRoute;
-		if (defined $routeIndex) {
-			$attackOnRoute = $slave->args($routeIndex)->{attackOnRoute};
-		} else {
-			$attackOnRoute = 2;
-		}
+		my $routeArgs = defined $routeIndex ? $slave->args($routeIndex) : undef;
+		my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs, $slave->{configPrefix});
 
 		### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 		my @aggressives;
@@ -434,8 +430,9 @@ sub processAutoAttack {
 		my $myPos = calcPosition($slave);
 
 		# List aggressive monsters
-		my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
-		@aggressives = AI::ai_slave_getAggressives($slave, 1, $party) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
+		my $party = ($effectiveAttackMode >= 1 && $config{$slave->{configPrefix}.'attackAuto_party'}) ? 1 : 0;
+		my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+		@aggressives = AI::ai_slave_getAggressives($slave, $aggressiveType, $party) if $effectiveAttackMode >= 0;
 
 		# There are two types of non-aggressive monsters. We generate two lists:
 		foreach (@monstersID) {
@@ -454,7 +451,7 @@ sub processAutoAttack {
 			# List monsters that master and other slaves are attacking
 			if (
 				   $config{$slave->{configPrefix}.'attackAuto_party'}
-				&& $attackOnRoute
+				&& $effectiveAttackMode >= 1
 				&& timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
 				&& (
 					   ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
@@ -494,9 +491,9 @@ sub processAutoAttack {
 			}
 			
 			my $control = mon_control($monster->{name}, $monster->{nameID});
-			if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
+			if ($effectiveAttackMode >= 2
 			 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
-			 && $attackOnRoute >= 2 && $safe
+			 && $safe
 			 && !positionNearPlayer($target_pos, $playerDist) && !positionNearPortal($target_pos, $portalDist)
 			 && !$monster->{dmgFromYou}
 			 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})

@@ -3576,7 +3576,7 @@ sub cmdGuild {
 		my $player = Match::player($arg2);
 		if (!$player) {
 			error TF("Player %s does not exist.\n", $arg2);
-		} elsif (!$char->{name} eq $guild{master}) {
+		} elsif ($char->{name} ne $guild{master}) {
 			error T("You must be guildmaster to set an alliance\n");
 			return;
 		} else {

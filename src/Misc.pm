@@ -62,6 +62,7 @@ our @EXPORT = (
 	qw/auth
 	configModify
 	bulkConfigModify
+	bulkSetTimeout
 	setTimeout
 	saveConfigFile/,
 
@@ -167,12 +168,22 @@ our @EXPORT = (
 	updateDamageTables
 	updatePlayerNameCache
 	canUseTeleport
+	isTeleportItemEquipRequirementSatisfied
+	canTeleportItemEquipRequirementBeSatisfied
+	tryEquipTeleportItemRequirement
+	registerTeleportItemPendingUse
+	clearTeleportItemPendingUse
+	markTeleportItemUsed
+	setTeleportItemCooldownFromRemainingSeconds
 	top10Listing
 	whenGroundStatus
 	writeStorageLog
 	getBestTarget
 	isSafe
 	isSafeActorQuery
+	getActorNameSafe
+	itemNameSimpleWithSlots
+	sumByNameID_all
 	isCellOccupied/,
 
 	# Actor's Actions Text
@@ -195,6 +206,10 @@ our @EXPORT = (
 	avoidList_near
 	compilePortals
 	compilePortals_check
+	refreshDynamicPortalGroups
+	refreshDynamicPortalStates
+	applyDynamicPortalStates
+	getDynamicPortalDestinations
 	portalExists
 	portalExists2
 	portalExistsAirship
@@ -215,6 +230,9 @@ our @EXPORT = (
 	openBuyerShop
 	closeBuyerShop
 	inLockMap
+	getAttackAutoModeForContext
+	getAttackAutoMode
+	getEffectiveAttackOnRoute
 	parseReload
 	setCharDeleteDate
 	toBase62
@@ -239,7 +257,27 @@ our @EXPORT = (
 # use SelfLoader; 1;
 # __DATA__
 
+# sumByNameID_all
+# Returns how many units of an item we own across inventory, cart and/or storage.
+sub sumByNameID_all {
+	my ($itemID, $useInventory, $useCart, $useStorage) = @_;
+	
+	my $total = 0;
 
+	if ($useInventory && $char->inventory->isReady()) {
+		$total += $char->inventory->sumByNameID($itemID, 1);
+	}
+
+	if ($useCart && $char->cart->isReady()) {
+		$total += $char->cart->sumByNameID($itemID, 1);
+	}
+
+	if ($useStorage && $char->storage->wasOpenedThisSession()) {
+		$total += $char->storage->sumByNameID($itemID, 1);
+	}
+	
+	return $total;
+}
 
 sub _checkActorHash($$$$) {
 	my ($name, $hash, $type, $hashName) = @_;
@@ -249,6 +287,121 @@ sub _checkActorHash($$$$) {
 				Dumper($hash);
 		}
 	}
+}
+
+sub _normalizeDynamicPortalSelection {
+	my ($selection) = @_;
+	return unless defined $selection;
+
+	$selection =~ s/^\s+|\s+$//g;
+	$selection =~ s/\s+/ /g;
+	return if $selection eq '';
+
+	my ($map, $x, $y) = split / /, $selection, 3;
+	($map) = Field::nameToBaseName(undef, $map);
+	$map = lc $map;
+
+	if (defined $x && defined $y && $x =~ /^\d+$/ && $y =~ /^\d+$/) {
+		return "$map $x $y";
+	}
+
+	return $map;
+}
+
+sub _dynamicPortalSelectionMatches {
+	my ($selection, $destID) = @_;
+	return 0 unless defined $selection && defined $destID;
+
+	my ($map, $x, $y) = split / /, $destID, 3;
+	my $normalizedDestID = join(' ', lc($map), $x, $y);
+	return 1 if $selection eq $normalizedDestID;
+	return 1 if $selection eq lc($map);
+	return 0;
+}
+
+sub _isDynamicPortalConfigKey {
+	my ($key) = @_;
+	return 0 unless defined $key;
+
+	foreach my $group (values %dynamicPortalGroups) {
+		return 1 if defined $group->{config_key} && $group->{config_key} eq $key;
+	}
+
+	return 0;
+}
+
+sub refreshDynamicPortalStates {
+	refreshDynamicPortalGroups();
+	applyDynamicPortalStates();
+}
+
+sub refreshDynamicPortalGroups {
+	%dynamicPortalGroups = ();
+
+	foreach my $portal (keys %portals_lut) {
+		foreach my $destID (keys %{$portals_lut{$portal}{dest}}) {
+			my $dest = $portals_lut{$portal}{dest}{$destID};
+			next unless $dest;
+			next unless $dest->{dynamicPortalGroup};
+			next if $dest->{map} eq '';
+			next if defined $dest->{steps} && $dest->{steps} ne '';
+
+			my $groupName = $dest->{dynamicPortalGroup};
+			$dynamicPortalGroups{$groupName}{config_key} = $groupName;
+			$dynamicPortalGroups{$groupName}{sources}{$portal}{destinations}{$destID} = 1;
+		}
+	}
+}
+
+sub applyDynamicPortalStates {
+	foreach my $group (values %dynamicPortalGroups) {
+		next unless $group->{config_key};
+		next unless keys %{$group->{sources}};
+
+		my $selection = _normalizeDynamicPortalSelection($config{$group->{config_key}});
+		my $matched = 0;
+		my $hasDestinations = 0;
+
+		foreach my $source (keys %{$group->{sources}}) {
+			my $sourceDestinations = $group->{sources}{$source}{destinations};
+			next unless $sourceDestinations && keys %{$sourceDestinations};
+			$hasDestinations = 1;
+
+			next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
+
+			foreach my $destID (keys %{$sourceDestinations}) {
+				next unless exists $portals_lut{$source}{dest}{$destID};
+				my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
+				$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
+				$matched ||= $enabled;
+			}
+		}
+
+		next unless $hasDestinations;
+
+		if (defined $selection && !$matched) {
+			warning TF(
+				"Dynamic portal setting '%s' has no match for %s; all detected destinations are disabled.\n",
+				$config{$group->{config_key}}, $group->{config_key}
+			);
+		}
+	}
+}
+
+sub getDynamicPortalDestinations {
+	my ($groupName) = @_;
+	return {} unless exists $dynamicPortalGroups{$groupName};
+
+	my %destinations;
+
+	foreach my $source (keys %{$dynamicPortalGroups{$groupName}{sources}}) {
+		my $sourceDestinations = $dynamicPortalGroups{$groupName}{sources}{$source}{destinations};
+		next unless $sourceDestinations;
+
+		$destinations{$_} = 1 foreach keys %{$sourceDestinations};
+	}
+
+	return \%destinations;
 }
 
 # Checks whether the internal state of some variables are correct.
@@ -364,6 +517,9 @@ sub configModify {
 	}
 
 	$config{$key} = $val;
+	if (_isDynamicPortalConfigKey($key)) {
+		applyDynamicPortalStates();
+	}
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 	
@@ -441,11 +597,59 @@ sub bulkConfigModify {
 		}
 	}
 
+	if (grep { _isDynamicPortalConfigKey($_) } keys %{$r_hash}) {
+		applyDynamicPortalStates();
+	}
 	saveConfigFile();
 	
 	Plugins::callHook('post_bulkConfigModify', {
 		keys => \%changed_keys
 	});
+}
+
+##
+# bulkSetTimeout (r_hash, [silent])
+# r_hash: key => value to change
+# silent: if set to 1, do not print a message to the console.
+#
+# like setTimeout but for more than one value at the same time.
+sub bulkSetTimeout {
+	my $r_hash = shift;
+	my $silent = shift;
+	my $oldtime;
+
+	my %create_keys;
+	foreach my $name (keys %{$r_hash}) {
+		Plugins::callHook('setTimeout', {
+			timeout => $name,
+			time => $r_hash->{$name},
+			additionalOptions => {
+				silent => $silent
+			}
+		});
+
+		$oldtime = $timeout{$name}{timeout};
+
+		if (!exists $timeout{$name}{timeout}) {
+			$create_keys{$name} = 1;
+		}
+
+		$timeout{$name}{timeout} = $r_hash->{$name};
+
+		message TF("Timeout '%s' set to %s (was %s)\n", $name, $r_hash->{$name}, $oldtime), "info" unless ($silent);
+	}
+
+	if (scalar keys %create_keys > 0) {
+		my $f;
+		if (open($f, ">>", Settings::getControlFilename("timeouts.txt"))) {
+			foreach my $name (keys %create_keys) {
+				print $f "$name\n";
+			}
+			close($f);
+		}
+	}
+
+	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
 ##
@@ -2086,13 +2290,15 @@ sub getPlayerNameFromCache {
 sub getPortalDestName {
 	my $ID = shift;
 	my %hash; # We only want unique names, so we use a hash
-	foreach (keys %{$portals_lut{$ID}{'dest'}}) {
+	my @destinations = grep { $portals_lut{$ID}{dest}{$_}{enabled} } keys %{$portals_lut{$ID}{dest}};
+	@destinations = keys %{$portals_lut{$ID}{dest}} unless @destinations;
+	foreach (@destinations) {
 		my $key = $portals_lut{$ID}{'dest'}{$_}{'map'};
 		$hash{$key} = 1;
 	}
 
-	my @destinations = sort keys %hash;
-	return join('/', @destinations);
+	my @destinationNames = sort keys %hash;
+	return join('/', @destinationNames);
 }
 
 sub getResponse {
@@ -2238,12 +2444,26 @@ sub monsterName {
 	return $monsters_lut{$ID} || "Unknown #$ID";
 }
 
-# Resolve the name of a simple item
+# Resolve the name of a simple item with ID
 sub itemNameSimple {
 	my $ID = shift;
 	return T("Unknown") unless defined($ID);
 	return T("None") unless $ID;
 	return $items_lut{$ID} || T("Unknown #")."$ID";
+}
+
+# Resolve the name of a simple item with ID, also adds slots
+sub itemNameSimpleWithSlots {
+	my $ID = shift;
+	return T("Unknown") unless defined($ID);
+	return T("None") unless $ID;
+	return (T("Unknown #")."$ID") unless (exists $items_lut{$ID} && defined $items_lut{$ID});
+	
+	my $name = $items_lut{$ID};
+	my $numSlots = $itemSlotCount_lut{$ID};
+	$name .= " [$numSlots]" if $numSlots;
+
+	return $name;
 }
 
 ##
@@ -3442,57 +3662,6 @@ sub setStatus {
 			}
 		}
 	}
-=pod
-	foreach (keys %stateHandle) {
-		if ($opt1 == $_) {
-			if (!$actor->{statuses}{$stateHandle{$_}}) {
-				$actor->{statuses}{$stateHandle{$_}} = 1;
-				message TF("%s %s in %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$stateHandle{$_}}) {
-			delete $actor->{statuses}{$stateHandle{$_}};
-			message TF("%s %s out of %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-
-	foreach (keys %ailmentHandle) {
-		if (($opt2 & $_) == $_) {
-			if (!$actor->{statuses}{$ailmentHandle{$_}}) {
-				$actor->{statuses}{$ailmentHandle{$_}} = 1;
-				if ($actor->isa('Actor::You')) {
-					message TF("%s have ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-				} else {
-					message TF("%s has ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-				}
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$ailmentHandle{$_}}) {
-			delete $actor->{statuses}{$ailmentHandle{$_}};
-			message TF("%s %s out of %s ailment.\n", $actor, $actor->verb('are', 'is'), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-
-	foreach (keys %lookHandle) {
-		if (($option & $_) == $_) {
-			if (!$actor->{statuses}{$lookHandle{$_}}) {
-				$actor->{statuses}{$lookHandle{$_}} = 1;
-				if ($actor->isa('Actor::You')) {
-					message TF("%s have look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-				} else {
-					message TF("%s has look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-				}
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$lookHandle{$_}}) {
-			delete $actor->{statuses}{$lookHandle{$_}};
-			message TF("%s %s out of %s look.\n", $actor, $actor->verb('are', 'is'), $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-=cut
 	Plugins::callHook('changed_status',{
 		actor => $actor,
 		changed => $changed
@@ -3835,7 +4004,7 @@ sub canUseTeleport {
 	# not in game
 	return 0 if $net && $net->getState != Network::IN_GAME; # $net check is to not crash test
 
-	# 1 - check for items
+	# 1 - check for usable items
 	my $item;
 	if($use_lvl == 1) {
 		if ($config{teleportAuto_item1}) {
@@ -3844,14 +4013,30 @@ sub canUseTeleport {
 		}
 		$item = getFlyWing() unless $item;
 	} else {
-		 if ($config{teleportAuto_item2}) {
+		if ($config{teleportAuto_item2}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item2});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 		}
 		$item = getButterflyWing() unless $item;
 	}
 
-	return 1 if $item;
+	if ($item) {
+		my $cooldown = $char->{last_teleport_item_use}{$item->{nameID}};
+		my $cooldownActive = (
+			ref($cooldown) eq 'HASH'
+			&& $cooldown->{timeout}
+			&& !timeOut($cooldown->{time}, $cooldown->{timeout})
+		);
+
+		my $equipRequirementSatisfied = (
+			!$item->equippable
+			|| !$item->{type_equip}
+			|| $item->{equipped}
+			|| $item->{identified}
+		);
+
+		return 1 if (!$cooldownActive && $equipRequirementSatisfied);
+	}
 	
 	# Mute prevents talking, usage of skills, and commands.
 	return 0 if $char->{'muted'};
@@ -4532,6 +4717,16 @@ sub compilePortals {
 		}
 	}
 
+	# teleport_items
+	for my $entry (@{$teleport_items{list} || []}) {
+		next unless $entry && ref($entry) eq 'HASH';
+		next unless ($entry->{destMap} && defined $entry->{destX} && defined $entry->{destY});
+
+		my $portal = join(' ', $entry->{destMap}, int($entry->{destX}), int($entry->{destY}));
+		$mapSpawns{$entry->{destMap}}{$portal}{x} = $entry->{destX};
+		$mapSpawns{$entry->{destMap}}{$portal}{y} = $entry->{destY};
+	}
+
 	$pathfinding = new PathFinding if (!$checkOnly);
 
 	# Calculate LOS values from each spawn point per map to other portals on same map
@@ -4663,6 +4858,22 @@ sub monKilled {
 	} else {
 		$dmgpsec = $totaldmg / $totalelasped;
 	}
+}
+
+# Resolves an actor ID into a name, getActorName returns nameString and this is also safer
+# as it checks for ID definition
+sub getActorNameSafe {
+	my ($id) = @_;
+
+	return unless (defined $id);
+
+	my $actor = Actor::get($id);
+	return unless ($actor);
+
+	my $name = $actor->name;
+	return unless ($name);
+
+	return $name;
 }
 
 # Resolves a player or monster ID into a name
@@ -5640,6 +5851,177 @@ sub inLockMap {
 	}
 }
 
+##
+# int|undef _normalizeAttackAutoMode(value)
+# value: raw config value to normalize.
+#
+# Normalizes an attackAuto-style value into the supported range.
+# This helper is intended for internal use by the attack-mode selectors.
+#
+# Returns:
+#  undef if the value is undefined or blank.
+#  -1 if the value is below -1.
+#  0, 1 or 2 if the value is inside the supported range.
+#  2 if the value is above 2.
+sub _normalizeAttackAutoMode {
+	my ($value) = @_;
+
+	return undef if !defined $value || $value eq '';
+	$value = int($value);
+	$value = -1 if $value < -1;
+	$value = 2 if $value > 2;
+
+	return $value;
+}
+
+##
+# int|undef _normalizeAttackOnRoute(value)
+# value: raw route attack mode to normalize.
+#
+# Normalizes an attackOnRoute-style value into the supported range.
+# Unlike attackAuto, route attack values are clamped to 0..2.
+#
+# Returns:
+#  undef if the value is undefined or blank.
+#  0, 1 or 2 if the value is inside the supported range.
+#  0 if the value is below 0.
+#  2 if the value is above 2.
+sub _normalizeAttackOnRoute {
+	my ($value) = @_;
+
+	return undef if !defined $value || $value eq '';
+	$value = int($value);
+	$value = 0 if $value < 0;
+	$value = 2 if $value > 2;
+
+	return $value;
+}
+
+##
+# int|undef getAttackAutoModeForContext(context, [prefix])
+# context: logical attack context name. Supported values are
+#          'routeToLock' and 'outOfLock'.
+# prefix: optional config prefix, such as 'mercenary_' or 'homunculus_'.
+#
+# Resolves the configured attackAuto mode for a specific context.
+# The function prefers the new context-specific keys first, then falls back
+# to legacy behavior based on attackAuto_inLockOnly, and finally to the
+# base attackAuto setting.
+#
+# Returns:
+#  undef if the resolved config value is blank or undefined.
+#  -1, 0, 1 or 2 for the resolved attack mode.
+#  The base attackAuto mode immediately if no lockMap is configured.
+#  For 'routeToLock':
+#    attackAuto_routeToLock when present;
+#    otherwise 1 if attackAuto_inLockOnly == 1;
+#    otherwise 0 if attackAuto_inLockOnly > 1;
+#    otherwise the base attackAuto mode.
+#  For 'outOfLock':
+#    attackAuto_outOfLock when present;
+#    otherwise 0 if attackAuto_inLockOnly > 1;
+#    otherwise the base attackAuto mode.
+sub getAttackAutoModeForContext {
+	my ($context, $prefix) = @_;
+
+	$prefix ||= '';
+	my $defaultMode = _normalizeAttackAutoMode($config{$prefix . 'attackAuto'});
+	return $defaultMode if !$config{'lockMap'};
+
+	if ($context eq 'routeToLock') {
+		my $mode = _normalizeAttackAutoMode($config{$prefix . 'attackAuto_routeToLock'});
+		return $mode if defined $mode;
+
+		return 1 if defined $config{$prefix . 'attackAuto_inLockOnly'} && $config{$prefix . 'attackAuto_inLockOnly'} == 1;
+		return 0 if defined $config{$prefix . 'attackAuto_inLockOnly'} && $config{$prefix . 'attackAuto_inLockOnly'} > 1;
+	} elsif ($context eq 'outOfLock') {
+		my $mode = _normalizeAttackAutoMode($config{$prefix . 'attackAuto_outOfLock'});
+		return $mode if defined $mode;
+
+		return 0 if defined $config{$prefix . 'attackAuto_inLockOnly'} && $config{$prefix . 'attackAuto_inLockOnly'} > 1;
+	}
+
+	return $defaultMode;
+}
+
+##
+# int|undef getAttackAutoMode([prefix], [routeArgs])
+# prefix: optional config prefix, such as 'mercenary_' or 'homunculus_'.
+# routeArgs: optional current route task args hash.
+#
+# Resolves the effective attackAuto mode for the actor's current situation.
+# If the actor is in lockMap, or no lockMap is configured, this returns the
+# base attackAuto setting. Outside lockMap it determines whether the actor
+# is currently routing to lockMap and delegates to getAttackAutoModeForContext().
+#
+# If routeArgs is omitted, the function inspects the current player route or
+# mapRoute task to determine whether isToLockMap is active.
+#
+# Returns:
+#  undef if the resolved config value is blank or undefined.
+#  -1, 0, 1 or 2 for the effective attack mode.
+#  The base attackAuto mode when there is no lockMap or when already in lockMap.
+#  The 'routeToLock' context mode when outside lockMap and routing to it.
+#  The 'outOfLock' context mode when outside lockMap and not routing to it.
+sub getAttackAutoMode {
+	my ($prefix, $routeArgs) = @_;
+
+	$prefix ||= '';
+	return _normalizeAttackAutoMode($config{$prefix . 'attackAuto'}) if !$config{'lockMap'} || inLockMap();
+
+	if (!$routeArgs) {
+		my $routeIndex = AI::findAction("route");
+		$routeIndex = AI::findAction("mapRoute") if !defined $routeIndex;
+		$routeArgs = AI::args($routeIndex) if defined $routeIndex;
+	}
+
+	my $context = ($routeArgs && $routeArgs->{isToLockMap}) ? 'routeToLock' : 'outOfLock';
+	return getAttackAutoModeForContext($context, $prefix);
+}
+
+##
+# int getEffectiveAttackOnRoute([routeArgs], [prefix])
+# routeArgs: optional route or mapRoute args hash. The function reads the
+#            attackOnRoute key from it when available.
+# prefix: optional config prefix, such as 'mercenary_' or 'homunculus_'.
+#
+# Computes the effective auto-attack mode after combining:
+#  1. the current context-sensitive attackAuto mode, and
+#  2. the route task's attackOnRoute permission.
+#
+# attackAuto modes use the semantic scale:
+#  -1 = never attack
+#   0 = retaliate only when attacked by the monster itself
+#   1 = assist self/master/party/slaves
+#   2 = aggressive auto-attack
+#
+# attackOnRoute permissions use the routing scale:
+#   0 = never stop routing to attack
+#   1 = allow reactive/assist attacks while routing
+#   2 = allow aggressive attacks while routing
+#
+# Returns:
+#  -1 if the resolved attackAuto mode is undefined or below 0.
+#  -1 if routeArgs explicitly disables route attacks with attackOnRoute <= 0.
+#  0, 1 or 2 otherwise, using the lower of the attackAuto mode and the
+#  route permission.
+#  If routeArgs is omitted or lacks attackOnRoute, the route side defaults to 2.
+sub getEffectiveAttackOnRoute {
+	my ($routeArgs, $prefix) = @_;
+
+	$prefix ||= '';
+	my $attackOnRoute = defined $routeArgs
+		? _normalizeAttackOnRoute($routeArgs->{attackOnRoute})
+		: 2;
+	$attackOnRoute = 2 if !defined $attackOnRoute;
+
+	my $attackAuto = getAttackAutoMode($prefix, $routeArgs);
+	return -1 if !defined $attackAuto || $attackAuto < 0;
+	return -1 if $attackOnRoute <= 0;
+
+	return $attackOnRoute > $attackAuto ? $attackAuto : $attackOnRoute;
+}
+
 sub parseReload {
 	my ($args) = @_;
 	eval {
@@ -5652,6 +6034,7 @@ sub parseReload {
 		} else {
 			Settings::loadByRegexp(qr/$args/, $progressHandler);
 		}
+		refreshDynamicPortalStates();
 		Log::initLogFiles();
 		message T("All files were loaded\n"), "reload";
 	};
@@ -5910,6 +6293,192 @@ sub autoNpcTalk {
 	Plugins::callHook('npc_autotalk', {
 		task => $task
 	});
+}
+
+sub isTeleportItemEquipRequirementSatisfied {
+	my ($entry) = @_;
+	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+
+	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
+	return 0 unless ($required_item && $required_item->{equipped});
+	return $required_item->equippedInSlot($required_slot);
+}
+
+sub canTeleportItemEquipRequirementBeSatisfied {
+	my ($entry) = @_;
+	return 1 unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+
+	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
+	return 0 unless $required_item;
+	return 1 if $required_item->{equipped} && $required_item->equippedInSlot($required_slot);
+	return $required_item->equippable();
+}
+
+sub tryEquipTeleportItemRequirement {
+	my ($entry) = @_;
+	return 1 if isTeleportItemEquipRequirementSatisfied($entry);
+	return 0 unless canTeleportItemEquipRequirementBeSatisfied($entry);
+
+	my ($required_slot, $required_item) = _getTeleportItemEquipRequirementContext($entry);
+	return 0 unless $required_item;
+	$required_item->equipInSlot($required_slot);
+	return 0;
+}
+
+sub _getTeleportItemEquipRequirementContext {
+	my ($entry) = @_;
+	return unless ($entry->{requiredEquipSlot} && defined $entry->{requiredEquipItemID});
+
+	my $required_slot = _normalizeEquipSlotName($entry->{requiredEquipSlot});
+	return unless (exists $equipSlot_rlut{$required_slot} && defined $equipSlot_rlut{$required_slot});
+	my $required_item = $char->inventory->getByNameID($entry->{requiredEquipItemID});
+	return ($required_slot, $required_item);
+}
+
+sub _normalizeEquipSlotName {
+	my ($slot) = @_;
+	return $slot unless defined $slot;
+	return $slot if (exists $equipSlot_rlut{$slot} && defined $equipSlot_rlut{$slot});
+
+	for my $known_slot (keys %equipSlot_rlut) {
+		next unless defined $known_slot;
+		return $known_slot if $known_slot =~ /^\Q$slot\E$/i;
+	}
+	return $slot;
+}
+
+sub registerTeleportItemPendingUse {
+	my ($itemID) = @_;
+	return unless $char && defined $itemID;
+	$char->{pending_teleport_item_use} = {
+		itemID => int($itemID),
+		time => time,
+	};
+}
+
+sub clearTeleportItemPendingUse {
+	my ($itemID) = @_;
+	return unless $char && $char->{pending_teleport_item_use};
+	if (!defined $itemID || $char->{pending_teleport_item_use}{itemID} == $itemID) {
+		delete $char->{pending_teleport_item_use};
+	}
+}
+
+sub _getTeleportItemTimeoutSec {
+	my ($itemID) = @_;
+	return 0 unless ($teleport_items{list} && @{$teleport_items{list}});
+
+	my $timeout = 0;
+	for my $entry (@{$teleport_items{list}}) {
+		next unless defined $entry->{itemID} && $entry->{itemID} == $itemID;
+		next unless $entry->{timeoutSec};
+		$timeout = $entry->{timeoutSec} if $entry->{timeoutSec} > $timeout;
+	}
+	return $timeout;
+}
+
+sub getTeleportItemCooldownTimeoutSec {
+	my ($itemID) = @_;
+	return 0 unless ($char && defined $itemID);
+
+	my $entry = $char->{last_teleport_item_use}{$itemID};
+	if (ref($entry) eq 'HASH' && $entry->{timeout}) {
+		return $entry->{timeout};
+	}
+	return _getTeleportItemTimeoutSec($itemID);
+}
+
+sub setTeleportItemCooldownEntry {
+	my ($itemID, $usedAt, $timeout) = @_;
+	return unless ($char && defined $itemID);
+	return unless ($timeout && $timeout > 0);
+	$usedAt = time unless defined $usedAt;
+
+	$char->{last_teleport_item_use}{$itemID} = {
+		time => $usedAt,
+		timeout => $timeout,
+	};
+}
+
+sub markTeleportItemUsed {
+	my ($itemID, $usedAt) = @_;
+	return unless ($char && defined $itemID);
+	$usedAt = time unless defined $usedAt;
+
+	my $timeout = _getTeleportItemTimeoutSec($itemID);
+	setTeleportItemCooldownEntry($itemID, $usedAt, $timeout);
+	clearTeleportItemPendingUse($itemID);
+}
+
+sub setTeleportItemCooldownFromRemainingSeconds {
+	my ($remainingSec, $itemID) = @_;
+	return unless ($char && defined $remainingSec && $remainingSec > 0);
+
+	if (!defined $itemID && $char->{pending_teleport_item_use}) {
+		$itemID = $char->{pending_teleport_item_use}{itemID};
+	}
+	return unless defined $itemID;
+
+	my $timeout = _getTeleportItemTimeoutSec($itemID);
+	if ($timeout > 0) {
+		my $lastUse = time - $timeout + $remainingSec;
+		$lastUse = time if $lastUse > time;
+		setTeleportItemCooldownEntry($itemID, $lastUse, $timeout);
+	}
+	clearTeleportItemPendingUse($itemID);
+}
+
+sub getTeleportItemCooldownRemainingSec {
+	my ($entry, $now) = @_;
+	return 0 unless ($entry && $entry->{timeoutSec} && defined $entry->{itemID});
+	return 0 unless ($char && $char->{last_teleport_item_use} && $char->{last_teleport_item_use}{$entry->{itemID}});
+	return 0 unless ref($char->{last_teleport_item_use}{$entry->{itemID}}) eq 'HASH';
+
+	$now = time unless defined $now;
+	my $elapsed = $now - $char->{last_teleport_item_use}{$entry->{itemID}}{time};
+	my $remaining = int($entry->{timeoutSec} - $elapsed);
+	return 0 if $remaining <= 0;
+	return $remaining;
+}
+
+sub isTeleportItemEntryWithinLevelRange {
+	my ($entry, $level) = @_;
+	return 0 unless $entry;
+
+	$level = $char->{lv} if !defined $level && $char;
+	return 0 unless defined $level;
+	return 0 if ($entry->{minLevel} && $level < $entry->{minLevel});
+	return 0 if ($entry->{maxLevel} && $level > $entry->{maxLevel});
+	return 1;
+}
+
+sub getTeleportItemFromTable {
+	my ($mode, %args) = @_;
+	return unless $char && $char->inventory && $char->inventory->isReady();
+	return unless ($teleport_items{list} && @{$teleport_items{list}});
+
+	my $target_map = defined $args{destMap} ? lc $args{destMap} : '';
+
+	for my $entry (@{$teleport_items{list}}) {
+		next unless ($entry);
+		next if ($entry->{mode} ne 'any' && $entry->{mode} ne $mode);
+		next unless isTeleportItemEntryWithinLevelRange($entry, $char->{lv});
+
+		my $entry_map = lc($entry->{destMap} || '');
+		if ($target_map ne '' && $entry_map ne '' && $entry_map ne '*' && $entry_map ne 'any' && $entry_map ne 'save') {
+			next if $entry_map ne $target_map;
+		}
+
+		my $item = $char->inventory->getByNameID($entry->{itemID});
+		next unless $item;
+		next unless isTeleportItemEquipRequirementSatisfied($entry);
+
+		next if getTeleportItemCooldownRemainingSec($entry) > 0;
+
+		return ($item, $entry);
+	}
+
+	return;
 }
 
 sub getFlyWing {

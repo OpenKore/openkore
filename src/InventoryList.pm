@@ -81,9 +81,11 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	Plugins::delHook($self->{hooks}) if $self->{hooks};
-	$self->clear();
-	$self->SUPER::DESTROY();
+	if ($self->{hooks} && (UNIVERSAL::isa($self->{hooks}, 'Plugins::HookHandle') || UNIVERSAL::isa($self->{hooks}, 'Plugins::HookHandles'))) {
+		eval { Plugins::delHook($self->{hooks}); };
+	}
+	eval { $self->clear(); };
+	eval { $self->SUPER::DESTROY(); };
 }
 
 ##

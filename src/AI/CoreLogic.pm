@@ -142,6 +142,7 @@ sub iterate {
 
 	Benchmark::begin("AI (part 3)") if DEBUG;
 	Benchmark::begin("AI (part 3.1)") if DEBUG;
+	processStartAutoStorageBuySell();
 	processAutoStorage();
 	Misc::checkValidity("AI (autostorage)");
 	processAutoSell();
@@ -1237,134 +1238,31 @@ sub processAutoMakeArrow {
 	}
 }
 
+sub processStartAutoStorageBuySell {
+	return if ($shopstarted || $buyershopstarted);
+	return if ($ai_v{sitAuto_forcedBySitCommand} || !$char->inventory->isReady());
+	return unless (ai_canStartStorageSellBuy());
+	return if (shouldStartAutoStorage());
+	return if (shouldStartAutoSell());
+	return if (shouldStartAutoBuy());
+}
+
 ##### AUTO STORAGE #####
 sub processAutoStorage {
-	return if ($shopstarted || $buyershopstarted);
 	# storageAuto - chobit aska 20030128
-	if ((AI::isIdle() || AI::is("route", "sitAuto", "follow"))
-		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
-		  && !$ai_v{sitAuto_forcedBySitCommand}
-		  && !AI::inQueue("buyAuto")
-		  && !AI::inQueue("sellAuto")
-		  && ai_canOpenStorage()
-		  && (
-			     ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore})
-			  || ($config{storageAuto_onStart} && !$char->storage->wasOpenedThisSession())
-			  )
-		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()
-		  
-	) {
-		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_storage_auto_weight_start' => \%plugin_args);
-		return if ($plugin_args{return});
-
-		# Initiate autostorage when the weight limit has been reached
-		my $routeIndex = AI::findAction("route");
-		my $attackOnRoute = 2;
-		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
-		# Only autostorage when we're on an attack route, or not moving
-		if ($attackOnRoute > 1 && (ai_storageAutoCheck() || ($config{storageAuto_onStart} && !$char->storage->wasOpenedThisSession()))) {
-			message T("Auto-storaging due to excess weight, excess items or storageAuto_onStart\n");
-			AI::queue("storageAuto");
-			Plugins::callHook('AI_storage_auto_queued');
-		}
-
-	} elsif ((AI::isIdle() || AI::is("route", "attack"))
-		  && $config{storageAuto}
-		  && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
-		  && !$ai_v{sitAuto_forcedBySitCommand}
-		  && !AI::inQueue("storageAuto")
-		  && !AI::inQueue("buyAuto")
-		  && !AI::inQueue("sellAuto")
-		  && $char->inventory->isReady()) {
-
-		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_storage_auto_get_auto_start' => \%plugin_args);
-		return if ($plugin_args{return});
-
-		# Initiate autostorage when we're low on some item, and getAuto is set
-		my $needitem = "";
-		my $i;
-		Misc::checkValidity("AutoStorage part 1");
-		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
-			next unless ($config{"getAuto_$i"});
-			next if ($config{"getAuto_$i"."_disabled"});
-			next if ($config{"getAuto_$i"."_minBase"} =~ /^\d+$/ && $char->{lv} <= $config{"getAuto_$i"."_minBase"});
-			next if ($config{"getAuto_$i"."_maxBase"} =~ /^\d+$/ && $char->{lv} >= $config{"getAuto_$i"."_maxBase"});
-			if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
-				foreach my $nameID (keys %items_lut) {
-					if (lc($items_lut{$nameID}) eq lc($config{"getAuto_$i"}) && $items_lut{$nameID} ne $config{"getAuto_$i"}) {
-						configModify("getAuto_$i", $items_lut{$nameID});
-					}
-				}
-			}
-
-			my $item = $char->inventory->getByName($config{"getAuto_$i"}) || $char->inventory->getByNameID($config{"getAuto_$i"});
-			# total amount of the same name items
-			my $amount = $char->inventory->sumByName($config{"getAuto_$i"}) || $char->inventory->sumByNameID($config{"getAuto_$i"});
-			if ($config{"getAuto_${i}_minAmount"} ne "" &&
-			    $config{"getAuto_${i}_maxAmount"} ne "" &&
-			    !$config{"getAuto_${i}_passive"} &&
-			    (!$item ||
-				 ($amount <= $config{"getAuto_${i}_minAmount"} &&
-				  $amount < $config{"getAuto_${i}_maxAmount"})
-			    ) &&
-				checkSelfCondition("getAuto_$i")
-			) {
-				if ($char->storage->isReady() &&
-					!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
-=pod
-					#This works only for last getAuto item
-					if ($config{"getAuto_${i}_dcOnEmpty"}) {
- 						message TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"});
-						chatLog("k", TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"}));
-						quit();
-					}
-=cut
-				} else {
-					if ($char->storage->wasOpenedThisSession() &&
-						!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
-						debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"}), "storage", 2;
-						Plugins::callHook('AI_storage_item_out_of_stock', {
-								name => $config{"getAuto_$i"},
-								getAutoIndex => $i,
-							}
-						);
-					} else {
-							my $sti = $config{"getAuto_$i"};
-							if ($needitem eq "") {
-								$needitem = "$sti";
-							} else {$needitem = "$needitem, $sti";}
-						}
-				}
-			}
-		}
-		Misc::checkValidity("AutoStorage part 2");
-
-		my $routeIndex = AI::findAction("route");
-		my $attackOnRoute;
-		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
-
-		# Only autostorage when we're on an attack route, or not moving
-		if ((!defined($routeIndex) || $attackOnRoute > 1 || AI::isIdle()) && $needitem ne "" &&
-			$char->inventory->isReady() && ai_canOpenStorage()){
-	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
-			AI::queue("storageAuto");
-			Plugins::callHook('AI_storage_auto_queued');
-		}
-		$timeout{'ai_storageAuto'}{'time'} = time;
-	}
-
-
 	if (AI::action() eq "storageAuto" && AI::args()->{done}) {
+		undef $timeout{ai_storageAuto_wait_before_action}{time};
 		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
+		
+		message T("Auto-storage sequence completed.\n"), "success";
+		
 		my $forcedBySell = AI::args()->{forcedBySell};
 		my $forcedByBuy = AI::args()->{forcedByBuy};
-
-		undef $timeout{ai_storageAuto_wait_before_action}{time};
 		AI::dequeue();
+
+		my %plugin_args = ( return => 0, forcedBySell => $forcedBySell, forcedByBuy => $forcedByBuy );
+		Plugins::callHook('AI_storage_auto_completed' => \%plugin_args);
+		return if ($plugin_args{return});
 
 		if ($config{sellAuto} && ai_sellAutoCheck()) {
 			if ($forcedByBuy) {
@@ -1786,30 +1684,6 @@ sub processAutoStorage {
 #####AUTO SELL#####
 sub processAutoSell {
 	return if ($shopstarted || $buyershopstarted);
-	if ((AI::isIdle() || AI::action() eq "route" || AI::action() eq "sitAuto" || AI::action() eq "follow")
-		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-			|| ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'})
-			|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-			)
-	    && !AI::inQueue("storageAuto")
-	    && !AI::inQueue("buyAuto")
-		&& $config{'sellAuto'}
-		&& $config{'sellAuto_npc'} ne ""
-		&& !$ai_v{sitAuto_forcedBySitCommand}
-	  ) {
-		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
-		return if ($plugin_args{return});
-		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && ai_sellAutoCheck()) {
-			AI::queue("sellAuto");
-			Plugins::callHook('AI_sell_auto_queued');
-		}
-	}
-
 	if (AI::action() eq "sellAuto" && AI::args()->{'done'}) {
 
 		if (exists AI::args()->{'error'}) {
@@ -1820,6 +1694,10 @@ sub processAutoSell {
 		my $forcedByBuy = AI::args()->{'forcedByBuy'};
 		my $forcedByStorage = AI::args()->{'forcedByStorage'};
 		AI::dequeue();
+
+		my %plugin_args = ( return => 0, forcedByBuy => $forcedByBuy, forcedByStorage => $forcedByStorage );
+		Plugins::callHook('AI_sell_auto_completed' => \%plugin_args);
+		return if ($plugin_args{return});
 
 		if ($forcedByStorage) {
 			AI::queue("buyAuto", {forcedByStorage => 1});
@@ -1980,68 +1858,21 @@ sub processAutoSell {
 #####AUTO BUY#####
 sub processAutoBuy {
 	return if ($shopstarted || $buyershopstarted);
-	my $needitem;
-	if (
-		 (AI::isIdle() || AI::action() eq "route" || AI::action() eq "follow")
-	  && timeOut($timeout{'ai_buyAuto'})
-	  && $char->inventory->isReady()
-	  && !AI::inQueue("sellAuto")
-	  && !AI::inQueue("storageAuto")
-	) {
-		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
-		return if ($plugin_args{return});
-
-		undef $ai_v{'temp'}{'found'};
-
-		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-			my $amount;
-			if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
-				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
-			}
-			else {
-				$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
-			}
-			if (
-				$config{"buyAuto_$i"."_minAmount"} ne "" &&
-				$config{"buyAuto_$i"."_maxAmount"} ne "" &&
-				(checkSelfCondition("buyAuto_$i")) &&
-				$amount <= $config{"buyAuto_$i"."_minAmount"} &&
-				$amount < $config{"buyAuto_$i"."_maxAmount"}
-			) {
-				$ai_v{'temp'}{'found'} = 1;
-				my $bai = $config{"buyAuto_$i"};
-				if ($needitem eq "") {
-					$needitem = "$bai";
-				} else {
-					$needitem = "$needitem, $bai";
-				}
-			}
-		}
-		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && AI::findAction("buyAuto")) && $ai_v{'temp'}{'found'}) {
-			AI::queue("buyAuto");
-			Plugins::callHook('AI_buy_auto_queued');
-		}
-		$timeout{'ai_buyAuto'}{'time'} = time;
-	}
-
 	if (AI::action() eq "buyAuto" && AI::args()->{'done'}) {
 
 		if (exists AI::args()->{'error'}) {
 			error AI::args()->{'error'}.".\n";
 		}
+		message T("Auto-buy sequence completed.\n"), "success";
 
 		# buyAuto finished
 		my $forcedBySell = AI::args()->{'forcedBySell'};
 		my $forcedByStorage = AI::args()->{'forcedByStorage'};
-
 		AI::dequeue();
-		Plugins::callHook('AI_buy_auto_done');
+
+		my %plugin_args = ( return => 0, forcedBySell => $forcedBySell, forcedByStorage => $forcedByStorage );
+		Plugins::callHook('AI_buy_auto_completed' => \%plugin_args);
+		return if ($plugin_args{return});
 
 		if ($forcedBySell && $config{storageAuto}) {
 			AI::queue("storageAuto", {forcedBySell => 1});
@@ -2166,29 +1997,22 @@ sub processAutoBuy {
 					undef $args->{warpedToSave};
 				}
 
-				my $msgneeditem;
 				if (shouldUseWarpToSaveMapForBuyOrSell($args)) {
 					if ($char->{sitting}) {
-						message T($msgneeditem."Standing up to auto-buy\n"), "teleport";
+						message T("Standing up to auto-buy\n"), "teleport";
 						ai_setSuspend(0);
 						stand();
 					} else {
 						$args->{warpedToSave} = 1;
-						if ($needitem ne "") {
-							$msgneeditem = "Auto-buy: $needitem\n";
-						}
 						# If we still haven't warped after a certain amount of time, fallback to walking
 						$args->{warpStart} = time unless $args->{warpStart};
-						message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
+						message T("Teleporting to auto-buy\n"), "teleport";
 						ai_useTeleport(2);
 					}
 					$timeout{ai_buyAuto_wait}{time} = time;
 
 				} else {
-					if ($needitem ne "") {
-						$msgneeditem = "Auto-buy: $needitem\n";
-					}
-					message TF($msgneeditem."Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
+					message TF("Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 						attackOnRoute => 1,
 						distFromGoal => $args->{distance});
@@ -2377,6 +2201,16 @@ sub processLockMap {
 						error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
 						$config{'lockMap'} = '';
 						return;
+					} else {
+						my $attackAuto = getAttackAutoModeForContext('routeToLock');
+						my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
+						if (defined $cell->{x} || defined $cell->{y}) {
+							message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $cell->{x}, $cell->{y}), "route";
+						} else {
+							message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}), "route";
+						}
+					}
+				}
 					}
 				}
 				my $attackOnRoute = 2;
@@ -2487,13 +2321,15 @@ sub processRandomWalk {
 			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
 			$config{'route_randomWalk'} = 0;
 		} else {
+			my $attackAuto = getAttackAutoMode();
+			my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
 			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $cell->{x}, $cell->{y}), "route";
 			ai_route(
 				$field->baseName,
 				$cell->{x},
 				$cell->{y},
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
-				attackOnRoute => (defined $config{attackAuto}) ? $config{attackAuto} : 2,
+				attackOnRoute => $attackOnRoute,
 				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
 				isRandomWalk => 1
 			);
@@ -3179,8 +3015,8 @@ sub processAutoEquip {
 
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
-	# Don't even think about attacking if attackAuto is -1.
-	return if $config{attackAuto} && $config{attackAuto} eq -1;
+	my $attackAuto = getAttackAutoMode();
+	return if defined $attackAuto && $attackAuto == -1;
 
 	# The auto-attack logic is as follows:
 	# 1. Generate a list of monsters that we are allowed to attack.
@@ -3198,7 +3034,6 @@ sub processAutoAttack {
 	  && timeOut($timeout{ai_attack_auto})
 	  && $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search}
 	  && (!$config{attackAuto_notInTown} || !$field->isCity)
-	  && ($config{attackAuto_inLockOnly} <= 1 || $field->baseName eq $config{'lockMap'})
 	  && (!$config{attackAuto_notWhile_storageAuto} || !AI::inQueue("storageAuto"))
 	  && (!$config{attackAuto_notWhile_buyAuto} || !AI::inQueue("buyAuto"))
 	  && (!$config{attackAuto_notWhile_sellAuto} || !AI::inQueue("sellAuto"))
@@ -3232,12 +3067,8 @@ sub processAutoAttack {
 
 			my $routeIndex = AI::findAction("route");
 			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-			my $attackOnRoute;
-			if (defined $routeIndex) {
-				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
-			} else {
-				$attackOnRoute = 2;
-			}
+			my $routeArgs = defined $routeIndex ? AI::args($routeIndex) : undef;
+			my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs);
 
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 
@@ -3251,8 +3082,9 @@ sub processAutoAttack {
 			my @droppedMonsters;
 
 			# List aggressive monsters
-			my $party = $config{'attackAuto_party'} ? 1 : 0;
-			@aggressives = ai_getAggressives($attackOnRoute, $party) if $attackOnRoute;
+			my $party = ($effectiveAttackMode >= 1 && $config{'attackAuto_party'}) ? 1 : 0;
+			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+			@aggressives = ai_getAggressives($aggressiveType, $party) if $effectiveAttackMode >= 0;
 
 			# List party monsters
 			foreach (@monstersID) {
@@ -3283,7 +3115,7 @@ sub processAutoAttack {
 				# List monsters that our slaves are attacking
 				if (
 					   $config{attackAuto_party}
-					&& $attackOnRoute && !AI::is("take", "items_take")
+					&& $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
 					&& !$ai_v{sitAuto_forcedBySitCommand}
 					&& timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
 					&& (
@@ -3300,7 +3132,7 @@ sub processAutoAttack {
 				}
 
 				# List monsters that party members are attacking
-				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
+				if ($config{attackAuto_party} && $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
 				     $monster->{dmgToParty} || $monster->{missedToParty})
@@ -3310,7 +3142,7 @@ sub processAutoAttack {
 				}
 
 				# List monsters that the master is attacking
-				if ($following && $config{'attackAuto_followTarget'} && $attackOnRoute && !AI::is("take", "items_take")
+				if ($following && $config{'attackAuto_followTarget'} && $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
 				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
@@ -3320,19 +3152,18 @@ sub processAutoAttack {
 				my $control = mon_control($monster->{name}, $monster->{nameID});
 				# List dropped targets and already engaged targets
 				if(
-					$monster->{droppedForAggressive} || # check for dropped target
-					($monster->{dmgFromYou} && $config{'attackAuto'} >= 1 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)) # if received damage then check if we can continue the attack
+					($effectiveAttackMode >= 0 && $monster->{droppedForAggressive}) || # check for dropped target
+					($monster->{dmgFromYou} && $effectiveAttackMode >= 0 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)) # if received damage then check if we can continue the attack
 				) {
 					push @droppedMonsters, $_;
 					next;
 				}
 
 				next unless (!AI::is(qw/sitAuto take items_gather items_take/)
-				 && $config{'attackAuto'} >= 2
+				 && $effectiveAttackMode >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())
 				 && !$ai_v{sitAuto_forcedBySitCommand}
-				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
 				);
 

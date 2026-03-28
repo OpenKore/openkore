@@ -26,11 +26,11 @@ use Task;
 use base qw(Task);
 use Task::Route;
 use Field;
-use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships);
+use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships %teleport_items);
 use Translation qw(T TF);
 use Log qw(debug warning error);
-use Misc qw(canUseTeleport);
-use Utils qw(timeOut);
+use Misc qw(canUseTeleport itemNameSimple);
+use Utils qw(timeConvert timeOut);
 use Utils::Exceptions;
 use Utils::DataStructures qw(hashSafeGetValue);
 
@@ -111,7 +111,15 @@ sub new {
 	} else {
 		$self->{noTeleSpawn} = 0;
 	}
-	$self->{noGoCommandMaps} = $args{noGoCommandMaps} || {};
+	$self->{noTeleSpawnMaps} = $args{noTeleSpawnMaps} || {};
+	$self->{noWarpItemMaps} = $args{noWarpItemMaps} || {};
+	$self->{noWarpItemIDs} = $args{noWarpItemIDs} || {};
+
+	if (exists $args{noWarpItem}) {
+		$self->{noWarpItem} = $args{noWarpItem}
+	} else {
+		$self->{noWarpItem} = 0;
+	}
 
 	if (exists $args{noAirship}) {
 		$self->{noAirship} = $args{noAirship}
@@ -121,13 +129,11 @@ sub new {
 
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
 
-	my $tickets = $char->inventory->getByNameID(7060);
-
-	if ($tickets) {
-		$self->{tickets_amount} = $tickets->{amount};
-	} else {
-		$self->{tickets_amount} = 0;
+	my $tickets;
+	if ($char && eval { $char->inventory }) {
+		$tickets = $char->inventory->getByNameID(7060);
 	}
+	$self->{tickets_amount} = $tickets ? $tickets->{amount} : 0;
 
 	$self->{stage} = INITIALIZE;
 	$self->{openlist} = {};
@@ -135,8 +141,18 @@ sub new {
 	$self->{mapSolution} = [];
 	$self->{solution} = [];
 	$self->{mapChangeWeight} = $args{mapChangeWeight} || 1;
+	$self->{suppressDebug} = $args{suppressDebug} ? 1 : 0;
 
 	return $self;
+}
+
+sub canUseTeleportInRouteContext {
+	return $char && eval { $char->inventory } ? canUseTeleport(2) : 0;
+}
+
+sub shouldLogDebug {
+	my ($self) = @_;
+	return !$self->{suppressDebug};
 }
 
 # Overrided method.
@@ -175,16 +191,22 @@ sub iterate {
 			if ($ret) {
 				for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
 					my $penalty = int(($entry->{dest}{$dest}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL});
-					$openlist->{"$portal=$dest"}{walk} = $penalty + scalar @{$self->{solution}};
-					$openlist->{"$portal=$dest"}{zeny} = $entry->{dest}{$dest}{cost};
-					$openlist->{"$portal=$dest"}{allow_ticket} = $entry->{dest}{$dest}{allow_ticket};
-					if ($self->{tickets_amount} > 0 && $openlist->{"$portal=$dest"}{allow_ticket}) {
-						$openlist->{"$portal=$dest"}{zeny_covered_by_tickets} = $openlist->{"$portal=$dest"}{zeny};
-						$openlist->{"$portal=$dest"}{amount_of_tickets_used} = 1;
+					my $key = "$portal=$dest";
+					my $value = {
+						type => 'portal_or_npc',
+						walk => $penalty + scalar @{$self->{solution}},
+						allow_ticket => $entry->{dest}{$dest}{allow_ticket}
+					};
+					if ($self->{tickets_amount} > 0 && $value->{allow_ticket}) {
+						$value->{zeny_covered_by_tickets} = $entry->{dest}{$dest}{cost};
+						$value->{amount_of_tickets_used} = 1;
+						$value->{zeny} = 0;
 					} else {
-						$openlist->{"$portal=$dest"}{zeny_covered_by_tickets} = 0;
-						$openlist->{"$portal=$dest"}{amount_of_tickets_used} = 0;
+						$value->{zeny_covered_by_tickets} = 0;
+						$value->{amount_of_tickets_used} = 0;
+						$value->{zeny} = $entry->{dest}{$dest}{cost};
 					}
+					$self->add_key_to_openList($key, $value);
 				}
 			}
 		}
@@ -196,8 +218,16 @@ sub iterate {
 		) unless ($self->{noGoCommand});
 
 		delete $self->{tempPortalsSaveMap} if (exists $self->{tempPortalsSaveMap});
-		if (!$self->{noTeleSpawn} && canUseTeleport(2) && $self->isSaveMapSetAndValid()) {
+		delete $self->{tempPortalsWarpItems} if (exists $self->{tempPortalsWarpItems});
+		if (!$self->{noTeleSpawn} && canUseTeleportInRouteContext() && $self->isSaveMapSetAndValid()) {
 			$self->populateOpenListWithWarpToSaveMap(
+				"$self->{source}{map} $self->{source}{x} $self->{source}{y}",
+				{ walk => 0, zeny => 0, zeny_covered_by_tickets => 0, amount_of_tickets_used => 0 },
+				undef,
+			);
+		}
+		unless ($self->{noWarpItem}) {
+			$self->populateOpenListWithWarpByItems(
 				"$self->{source}{map} $self->{source}{x} $self->{source}{y}",
 				{ walk => 0, zeny => 0, zeny_covered_by_tickets => 0, amount_of_tickets_used => 0 },
 				undef,
@@ -213,16 +243,25 @@ sub iterate {
 				if ($ret) {
 					for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
 						my $penalty = $routeWeights{AIRSHIP};
-						$openlist->{"$portal=$dest"}{walk} = $penalty + scalar @{$self->{solution}};
-						$openlist->{"$portal=$dest"}{is_airship} = 1;
-						$openlist->{"$portal=$dest"}{airship_message} = $entry->{dest}{$dest}{message};
+						my $key = "$portal=$dest";
+						my $value = {
+							type => 'airship',
+							walk => $penalty + scalar @{$self->{solution}},
+							zeny => 0,
+							zeny_covered_by_tickets => 0,
+							amount_of_tickets_used => 0
+						};
+						$value->{airship_message} = $entry->{dest}{$dest}{message};
+						$value->{is_airship} = 1;
+						$self->add_key_to_openList($key, $value);
 					}
 				}
 			}
 		}
 
 		$self->{stage} = CALCULATE_ROUTE;
-		debug "CalcMapRoute - initialized with '".(scalar keys %{$openlist})."' options.\n", "calc_map_route";
+			debug "CalcMapRoute - initialized with '".(scalar keys %{$openlist})."' options.\n", "calc_map_route"
+				if $self->shouldLogDebug();
 
 	} elsif ( $self->{stage} == CALCULATE_ROUTE ) {
 		my $time = time;
@@ -235,15 +274,17 @@ sub iterate {
 			delete $self->{closelist};
 			delete $_->{field} foreach @{ $self->{targets} };
 			$self->setDone();
-			debug "Map Solution Ready for traversal.\n", "calc_map_route";
-			debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
+				if ($self->shouldLogDebug()) {
+					debug "Map Solution Ready for traversal.\n", "calc_map_route";
+					debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
+				}
 
 		} elsif ($self->{done}) {
 			my $destpos = $self->{targets}[0]->{x} ? " (".$self->{targets}[0]->{x}.",".$self->{targets}[0]->{y}.")" : undef;
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s%s",
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{targets}[0]->{map} || T("unknown"), $destpos));
-			debug "CalcMapRoute failed.\n", "calc_map_route";
+				debug "CalcMapRoute failed.\n", "calc_map_route" if $self->shouldLogDebug();
 			Plugins::callHook('fail_calc_map_route', { 
 				map_from	=> $self->{source}{field}->baseName,
 				map_from_x	=> $self->{source}{x},
@@ -301,11 +342,19 @@ sub searchStep {
 	}
 
 	# selects the node with the lowest walk cost
-	# NOTE: avoid sorting the full list every step; just track the minimum.
-	my $parent = reduce {
-		$openlist->{$a}{walk} <= $openlist->{$b}{walk} ? $a : $b
-	} keys %{$openlist};
-	debug "[CalcMapRoute - searchStep - Loop] $parent, $openlist->{$parent}{walk}\n", "calc_map_route";
+	my $parent = $self->shiftOpenlistHeapMinKey();
+	if (!defined $parent) {
+		# Fallback: rebuild heap from openlist if it got out of sync.
+		$self->rebuildOpenlistHeap();
+		$parent = $self->shiftOpenlistHeapMinKey();
+	}
+	unless (defined $parent) {
+		$self->{done} = 1;
+		$self->{found} = '';
+		return 0;
+	}
+	debug "[CalcMapRoute - searchStep - Loop] $parent, $openlist->{$parent}{walk}\n", "calc_map_route"
+		if $self->shouldLogDebug();
 
 	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
 	#foreach my $parent (keys %{$openlist})
@@ -326,12 +375,14 @@ sub searchStep {
 			my $map_name = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest, 'map')
 						|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest, 'map') 
 						|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest, 'map') 
+						|| hashSafeGetValue($self->{tempPortalsWarpItems}, $dest, 'dest', $dest, 'map')
 						|| hashSafeGetValue(\%portals_airships, $portal, 'dest', $dest, 'map')
 						|| undef;
 
 			my $map_destination = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest)
 							|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest)
 							|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest)
+							|| hashSafeGetValue($self->{tempPortalsWarpItems}, $dest, 'dest', $dest)
 							|| hashSafeGetValue(\%portals_airships, $portal, 'dest', $dest)
 							|| undef;
 
@@ -349,6 +400,11 @@ sub searchStep {
 				$closelist->{$walk}{is_command} = 0;
 				$closelist->{$walk}{command} = undef;
 				$closelist->{$walk}{is_teleportToSaveMap} = 0;
+				$closelist->{$walk}{is_teleportItemWarp} = 0;
+				$closelist->{$walk}{teleportItemID} = undef;
+				$closelist->{$walk}{teleportItemTimeoutSec} = 0;
+				$closelist->{$walk}{teleportItemRequiredEquipSlot} = undef;
+				$closelist->{$walk}{teleportItemRequiredEquipItemID} = undef;
 				$closelist->{$walk}{is_airship} = 0;
 				$closelist->{$walk}{airship_message} = undef;
 			}
@@ -379,6 +435,11 @@ sub searchStep {
 					$arg{is_command} =  $closelist->{$this}{is_command} || 0;
 					$arg{command} = $closelist->{$this}{command};
 					$arg{is_teleportToSaveMap} = $closelist->{$this}{is_teleportToSaveMap} || 0;
+					$arg{is_teleportItemWarp} = $closelist->{$this}{is_teleportItemWarp} || 0;
+					$arg{teleportItemID} = $closelist->{$this}{teleportItemID};
+					$arg{teleportItemTimeoutSec} = $closelist->{$this}{teleportItemTimeoutSec} || 0;
+					$arg{teleportItemRequiredEquipSlot} = $closelist->{$this}{teleportItemRequiredEquipSlot};
+					$arg{teleportItemRequiredEquipItemID} = $closelist->{$this}{teleportItemRequiredEquipItemID};
 					$arg{is_airship} = $closelist->{$this}{is_airship} || 0;
 					$arg{airship_message} = $closelist->{$this}{airship_message};
 
@@ -391,8 +452,11 @@ sub searchStep {
 
 		# get all children of each openlist.
 		$self->populateOpenListWithGoCommands($dest, $closelist->{$parent}, $parent) unless ($self->{noGoCommand});
-		if (!$self->{noTeleSpawn} && canUseTeleport(2) && $self->isSaveMapSetAndValid()) {
+		if (!$self->{noTeleSpawn} && canUseTeleportInRouteContext() && $self->isSaveMapSetAndValid()) {
 			$self->populateOpenListWithWarpToSaveMap($dest, $closelist->{$parent}, $parent);
+		}
+		if (!$self->{noWarpItem}) {
+			$self->populateOpenListWithWarpByItems($dest, $closelist->{$parent}, $parent);
 		}
 		
 		# explore connected portals and NPC warps
@@ -408,18 +472,26 @@ sub searchStep {
 				my $thisWalk = $penalty + $closelist->{$parent}{walk} + $portals_los{$dest}{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
 				if (!exists $closelist->{"$child=$subchild"}) { # check if node is already explorated
 					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) { # check the current node cost less
-						debug "[CalcMapRoute - searchStep - Add] from '$parent' to '$child=$subchild' cost '$thisWalk'\n", "calc_map_route", 2;
-						$openlist->{"$child=$subchild"}{parent} = $parent;
-						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
-						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
-						$openlist->{"$child=$subchild"}{allow_ticket} = $portals_lut{$child}{dest}{$subchild}{allow_ticket};
-						if ($openlist->{"$child=$subchild"}{allow_ticket} && $self->{tickets_amount} > $openlist->{"$child=$subchild"}{amount_of_tickets_used}) { # checks if route allow use ticket and how many we spent so far
-							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets} + $openlist->{"$child=$subchild"}{zeny};
-							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used} + 1;
+						my $key = "$child=$subchild";
+						my $value = {
+							type => 'portal_or_npc',
+							parent => $parent,
+							walk => $thisWalk,
+							allow_ticket => $portals_lut{$child}{dest}{$subchild}{allow_ticket}
+						};
+
+						if ($value->{allow_ticket} && $self->{tickets_amount} > $closelist->{$parent}{amount_of_tickets_used}) {
+							$value->{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets} + $portals_lut{$child}{dest}{$subchild}{cost};
+							$value->{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used} + 1;
+							$value->{zeny} = $closelist->{$parent}{zeny};
+
 						} else {
-							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
-							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
+							$value->{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
+							$value->{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
+							$value->{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
 						}
+
+						$self->add_key_to_openList($key, $value);
 					}
 				}
 			}
@@ -434,11 +506,18 @@ sub searchStep {
 				my $thisWalk = $penalty + $closelist->{$parent}{walk} + $portals_los{$dest}{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
 				if (!exists $closelist->{"$child=$subchild"}) { # check if node is already explorated
 					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) { # check the current node cost less
-						$openlist->{"$child=$subchild"}{parent} = $parent;
-						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
-						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny};
-						$openlist->{"$child=$subchild"}{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
-						$openlist->{"$child=$subchild"}{is_airship} = 1;
+						my $key = "$child=$subchild";
+						my $value = {
+							type => 'airship',
+							parent => $parent,
+							walk => $thisWalk,
+							zeny => $closelist->{$parent}{zeny},
+							zeny_covered_by_tickets => $closelist->{$parent}{zeny_covered_by_tickets},
+							amount_of_tickets_used => $closelist->{$parent}{amount_of_tickets_used}
+						};
+						$value->{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
+						$value->{is_airship} = 1;
+						$self->add_key_to_openList($key, $value);
 					}
 				}
 			}
@@ -467,7 +546,8 @@ sub populateOpenListWithGoCommands {
 			next if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
 
 			# add @go option as a synthetic portal
-			$self->{openlist}{$key} = {
+			$self->add_key_to_openList($key, {
+				type                     => 'command',
 				parent                   => $parent,
 				walk                     => $walk,
 				zeny                     => $zeny,
@@ -476,7 +556,7 @@ sub populateOpenListWithGoCommands {
 				amount_of_tickets_used   => $amount_of_tickets_used,
 				is_command               => 1,
 				command                  => $portals_commands{$portal}{dest}{$dest}{command},
-			};
+			});
 		}
 	}
 }
@@ -486,22 +566,27 @@ sub populateOpenListWithGoCommands {
 sub populateOpenListWithWarpToSaveMap {
 	my ($self, $from_node, $baseCost, $parent) = @_;
 	return unless $from_node;
-	
 	return unless ($config{saveMap_warp});
+
 	my ($current_map) = split / /, $from_node, 2;
 	return unless $self->isWarpToSaveMapAllowedOnMap($current_map);
+
+	my @warpItemCandidates = $self->getWarpItemCandidates();
+	return unless @warpItemCandidates;
+
 	return unless ($self->isWarpToSaveMapMinDistanceReached());
 	my $saveMapDestination = $self->resolveSaveMapDestination();
 	return unless ($saveMapDestination);
-	
+
 	my $dest_map = $saveMapDestination->{map};
 	my $dest_x = $saveMapDestination->{x};
 	my $dest_y = $saveMapDestination->{y};
-	
+
 	my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
 
-	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route";
+	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route" if $self->shouldLogDebug();
 
+	return if ($dest eq $from_node);
 	my $key = "$from_node=$dest";
 	my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPTOSAVEMAP} || 200);
 	my $zeny = $baseCost->{zeny} || 0;
@@ -511,7 +596,8 @@ sub populateOpenListWithWarpToSaveMap {
 	return if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
 	return if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
 
-	$self->{openlist}{$key} = {
+	$self->add_key_to_openList($key, {
+		type                     => 'respawn',
 		parent                   => $parent,
 		walk                     => $walk,
 		zeny                     => $zeny,
@@ -519,12 +605,446 @@ sub populateOpenListWithWarpToSaveMap {
 		zeny_covered_by_tickets  => $zeny_covered_by_tickets,
 		amount_of_tickets_used   => $amount_of_tickets_used,
 		is_teleportToSaveMap     => 1,
-	};
+	});
 
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'map'} = $dest_map;
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'x'} = $dest_x;
 	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'y'} = $dest_y;
 	$self->{tempPortalsSaveMap}{$dest}{dest}{$dest}{enabled} = 1;
+}
+
+
+sub populateOpenListWithWarpByItems {
+	my ($self, $from_node, $baseCost, $parent) = @_;
+	return unless $from_node;
+	return unless $config{route_warpByItem};
+	return unless $self->isWarpByItemMinDistanceReached();
+
+	my ($current_map) = split / /, $from_node, 2;
+	return unless $self->isWarpByItemAllowedOnMap($current_map);
+	# By default, evaluate warp-item usage from the initial source node only.
+	# This avoids chaining item-warps back and forth across maps (e.g. xmas <-> yuno)
+	# during graph expansion. Set route_warpByItem_chaining to enable old behavior.
+	my $allowWarpItemChaining = hashSafeGetValue(\%config, 'route_warpByItem_chaining');
+	return if (defined $parent && !$allowWarpItemChaining);
+	my $baselineNoWarpRouteCost;
+	if (!defined $parent) {
+		$baselineNoWarpRouteCost = $self->getSourceRouteCostToTargetNoWarp();
+	}
+
+	my $routeCostProbeEnabled = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostProbe_maxPerTick') || 6) > 0;
+
+	for my $entry ($self->getWarpItemCandidates()) {
+		my $dest = $entry->{destMap} . ' ' . $entry->{destX} . ' ' . $entry->{destY};
+		next if ($dest eq $from_node);
+		my $key = "$from_node=$dest";
+		my $walk = ($baseCost->{walk} || 0) + ($routeWeights{WARPITEM} || 80);
+		# Optional ranking heuristic: incorporate estimated route cost from item destination
+		# to current targets so the heap can prefer warp items that actually shorten the route.
+		# Controlled by route_warpItem_routeCostProbe_maxPerTick (>0 enables probing),
+		# and bounded by route_warpItem_routeCostHeuristic_max (default: 10000).
+		if ($routeCostProbeEnabled) {
+			my $heuristic = $self->getWarpItemRouteCostToTarget($entry);
+			if (defined $heuristic && $heuristic > 0) {
+				if (!defined $parent && defined $baselineNoWarpRouteCost) {
+					my $minGain = int(hashSafeGetValue(\%config, 'route_warpItem_minGain') || 0);
+					my $estimatedWarpTotal = ($routeWeights{WARPITEM} || 80) + $heuristic;
+					next if ($estimatedWarpTotal + $minGain >= $baselineNoWarpRouteCost);
+				}
+				my $heuristicMax = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostHeuristic_max') || 10000);
+				$heuristicMax = 0 if $heuristicMax < 0;
+				$heuristic = $heuristicMax if ($heuristicMax > 0 && $heuristic > $heuristicMax);
+				$walk += $heuristic;
+			}
+		}
+		my $zeny = $baseCost->{zeny} || 0;
+		my $zeny_covered_by_tickets = $baseCost->{zeny_covered_by_tickets} || 0;
+		my $amount_of_tickets_used = $baseCost->{amount_of_tickets_used} || 0;
+
+		next if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
+		next if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
+
+		$self->add_key_to_openList($key, {
+			type => 'item',
+			parent => $parent,
+			walk => $walk,
+			zeny => $zeny,
+			allow_ticket => 0,
+			zeny_covered_by_tickets => $zeny_covered_by_tickets,
+			amount_of_tickets_used => $amount_of_tickets_used,
+			is_teleportItemWarp => 1,
+			teleportItemID => $entry->{itemID},
+			teleportItemTimeoutSec => $entry->{timeoutSec} || 0,
+			teleportItemRequiredEquipSlot => $entry->{requiredEquipSlot},
+			teleportItemRequiredEquipItemID => $entry->{requiredEquipItemID},
+		});
+
+		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'map'} = $entry->{destMap};
+		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'x'} = $entry->{destX};
+		$self->{tempPortalsWarpItems}{$dest}{'dest'}{$dest}{'y'} = $entry->{destY};
+		$self->{tempPortalsWarpItems}{$dest}{dest}{$dest}{enabled} = 1;
+	}
+}
+
+sub isWarpByItemMinDistanceReached {
+	my ($self) = @_;
+
+	my $minDistance = int(hashSafeGetValue(\%config, 'route_warpByItem_minDistance') || 0);
+	return 1 if ($minDistance <= 0);
+
+	my $distance = $self->getSourceRouteCostToTargetNoWarp();
+	return ($distance >= $minDistance) if (defined $distance);
+
+	# If route distance cannot be calculated, don't block warp-item usage.
+	return 1;
+}
+
+sub getSourceRouteCostToTargetNoWarp {
+	my ($self) = @_;
+	return unless ($self->{targets} && ref($self->{targets}) eq 'ARRAY' && @{$self->{targets}});
+	return $self->{_source_route_cost_no_warp}
+		if exists $self->{_source_route_cost_no_warp};
+
+	my @targets = map {{ map => $_->{map}, x => $_->{x}, y => $_->{y} }} @{$self->{targets}};
+	my $task = Task::CalcMapRoute->new(
+		targets => \@targets,
+		sourceMap => $self->{source}{map},
+		sourceX => $self->{source}{x},
+		sourceY => $self->{source}{y},
+		noGoCommand => $self->{noGoCommand} || 0,
+		noTeleSpawn => 1,
+		noWarpItem => 1,
+		maxTime => 3,
+		suppressDebug => 1,
+	);
+	$task->activate();
+	$task->iterate() while ($task->getStatus() != Task::DONE);
+	if ($task->getError()) {
+		$self->{_source_route_cost_no_warp} = undef;
+		return undef;
+	}
+	my $route = $task->getRoute();
+	$self->{_source_route_cost_no_warp} = ($route && @{$route}) ? $route->[-1]{walk} : undef;
+	return $self->{_source_route_cost_no_warp};
+}
+
+sub add_key_to_openList {
+	my ($self, $key, $value) = @_;
+
+	if ($self->shouldLogDebug() && $config{'debug'} >= 2) {
+		debug "[CalcMapRoute - add] Added key [$value->{type}] [$key] [cost $value->{walk}] (current size ".((scalar keys %{$self->{openlist}}) + 1).")\n", "calc_map_route", 2;
+	}
+
+	$self->{openlist}{$key} = $value;
+	$self->pushOpenlistHeap($key, $value->{walk});
+
+	# If stale heap entries accumulate too much, rebuild to keep memory and pop cost bounded.
+	my $heapSize = $self->{openlist_heap} ? scalar(@{$self->{openlist_heap}}) : 0;
+	my $openSize = scalar(keys %{$self->{openlist}});
+	if ($heapSize > ($openSize * 3 + 1000)) {
+		$self->rebuildOpenlistHeap();
+	}
+}
+
+sub pushOpenlistHeap {
+	my ($self, $key, $walk) = @_;
+	return unless defined $key;
+	return unless defined $walk;
+
+	$self->{openlist_heap} ||= [];
+	my $heap = $self->{openlist_heap};
+	push @{$heap}, [$walk, $key];
+
+	my $i = $#{$heap};
+	while ($i > 0) {
+		my $parent = int(($i - 1) / 2);
+		last if $heap->[$parent][0] <= $heap->[$i][0];
+		@{$heap}[$i, $parent] = @{$heap}[$parent, $i];
+		$i = $parent;
+	}
+}
+
+sub shiftOpenlistHeapMinKey {
+	my ($self) = @_;
+	$self->{openlist_heap} ||= [];
+	my $heap = $self->{openlist_heap};
+
+	while (@{$heap}) {
+		my $top = $heap->[0];
+		my $last = pop @{$heap};
+		if (@{$heap}) {
+			$heap->[0] = $last;
+			my $i = 0;
+			while (1) {
+				my $left = 2 * $i + 1;
+				my $right = $left + 1;
+				last if $left > $#{$heap};
+				my $smallest = $left;
+				if ($right <= $#{$heap} && $heap->[$right][0] < $heap->[$left][0]) {
+					$smallest = $right;
+				}
+				last if $heap->[$i][0] <= $heap->[$smallest][0];
+				@{$heap}[$i, $smallest] = @{$heap}[$smallest, $i];
+				$i = $smallest;
+			}
+		}
+
+		my ($walk, $key) = @{$top};
+		my $entry = $self->{openlist}{$key};
+		next unless $entry;
+		next if !defined $entry->{walk};
+		next if $entry->{walk} != $walk;
+		return $key;
+	}
+
+	return;
+}
+
+sub rebuildOpenlistHeap {
+	my ($self) = @_;
+	my $openlist = $self->{openlist};
+	$self->{openlist_heap} = [];
+	return unless ($openlist && %{$openlist});
+	foreach my $key (keys %{$openlist}) {
+		$self->pushOpenlistHeap($key, $openlist->{$key}{walk});
+	}
+}
+
+sub getWarpItemCandidates {
+	my ($self) = @_;
+	return unless ($char && $char->inventory && $char->inventory->isReady());
+	return unless ($teleport_items{list} && @{$teleport_items{list}});
+
+	my $cacheKey = $self->buildWarpItemCandidateCacheKey();
+	if ($self->{_warp_item_candidates_cache}
+		&& $self->{_warp_item_candidates_cache}{key}
+		&& $self->{_warp_item_candidates_cache}{key} eq $cacheKey) {
+		return @{$self->{_warp_item_candidates_cache}{value}};
+	}
+
+	my ($matchesRef, $availableEntriesRef, $cooldownEntriesRef) = $self->collectWarpItemCandidateBuckets();
+	my @matches = @{$matchesRef};
+	my @availableEntries = @{$availableEntriesRef};
+	my @cooldownEntries = @{$cooldownEntriesRef};
+
+	if (!@cooldownEntries) {
+		$self->setWarpItemCandidatesCache($cacheKey, \@matches);
+		return @matches;
+	}
+
+	my $bestAvailableCost;
+	# Optional tuning: max amount of route-cost probes per getWarpItemCandidates() call.
+	# config key: route_warpItem_routeCostProbe_maxPerTick (default: 6)
+	my $probeBudget = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostProbe_maxPerTick') || 6);
+	$probeBudget = 0 if $probeBudget < 0;
+	my $fetchRouteCost = sub {
+		my ($entry) = @_;
+		return if !$entry;
+		return if ($probeBudget <= 0);
+		$probeBudget--;
+		return $self->getWarpItemRouteCostToTarget($entry);
+	};
+	if (@availableEntries) {
+		for my $entry (@availableEntries) {
+			last if ($probeBudget <= 0);
+			my $routeCost = $fetchRouteCost->($entry);
+			next unless defined $routeCost;
+			$bestAvailableCost = $routeCost if (!defined $bestAvailableCost || $routeCost < $bestAvailableCost);
+			last if (defined $bestAvailableCost && $bestAvailableCost <= 0);
+		}
+	}
+
+	# Nothing can beat direct target-map cost.
+	if (defined $bestAvailableCost && $bestAvailableCost <= 0) {
+		$self->setWarpItemCandidatesCache($cacheKey, \@matches);
+		return @matches;
+	}
+
+	my @cooldownCandidates;
+	my $needsCooldownCostCompare = defined $bestAvailableCost ? 1 : 0;
+	for my $candidate (@cooldownEntries) {
+		last if ($needsCooldownCostCompare && $probeBudget <= 0);
+		next if ($self->{_warp_item_cooldown_warned}{$candidate->{entry}{itemID}});
+		push @cooldownCandidates, {
+			entry => $candidate->{entry},
+			remaining => $candidate->{remaining},
+			itemName => $candidate->{itemName},
+			itemInvIndex => $candidate->{itemInvIndex},
+			routeCost => $needsCooldownCostCompare ? $fetchRouteCost->($candidate->{entry}) : undef,
+		};
+	}
+
+	for my $candidate (sort { ($a->{routeCost} // 9_999_999) <=> ($b->{routeCost} // 9_999_999) } @cooldownCandidates) {
+		next unless ($candidate->{entry});
+		if (defined $bestAvailableCost) {
+			next if (!defined $candidate->{routeCost});
+			next if ($candidate->{routeCost} >= $bestAvailableCost);
+		}
+		my $entry = $candidate->{entry};
+		my $itemLabel = $self->formatWarpItemLabel($candidate);
+		my $remaining = int(($candidate->{remaining} || 0) + 0.5);
+		my $cooldown = sprintf("%s (%s sec)", timeConvert($remaining), $remaining);
+		warning TF("Teleport item %s: cooldown active, wait %s.\n", $itemLabel, $cooldown), "route";
+		$self->{_warp_item_cooldown_warned}{$entry->{itemID}} = 1;
+		last;
+	}
+
+	$self->setWarpItemCandidatesCache($cacheKey, \@matches);
+
+	return @matches;
+}
+
+sub buildWarpItemCandidateCacheKey {
+	my ($self) = @_;
+	# Scope cache to a one-second window. Route targets/noWarpItemIDs are stable
+	# during a single CalcMapRoute task execution, so avoid expensive key building.
+	return join('|', time, ($char->{lv} // ''), scalar(@{$teleport_items{list} || []}));
+}
+
+sub collectWarpItemCandidateBuckets {
+	my ($self) = @_;
+	my (@matches, @availableEntries, @cooldownEntries);
+
+	for my $value (@{$teleport_items{list}}) {
+		next unless ($value && ref($value) eq 'HASH');
+		my $entry = $value;
+
+		next unless ($entry->{mode} eq 'warp' || $entry->{mode} eq 'any');
+		next unless Misc::isTeleportItemEntryWithinLevelRange($entry, $char->{lv});
+		next if ($self->{noWarpItemIDs}{$entry->{itemID}});
+		next unless $self->isWarpItemRoutingDestinationValid($entry);
+
+		my $item = $char->inventory->getByNameID($entry->{itemID});
+		next unless $item;
+		next unless Misc::canTeleportItemEquipRequirementBeSatisfied($entry);
+
+		my $remaining = Misc::getTeleportItemCooldownRemainingSec($entry);
+		if ($remaining > 0) {
+			push @cooldownEntries, {
+				entry => $entry,
+				remaining => $remaining,
+				itemName => $item->{name},
+				itemInvIndex => $item->{invIndex},
+			};
+			next;
+		}
+
+		push @availableEntries, $entry;
+		push @matches, $entry;
+	}
+
+	return (\@matches, \@availableEntries, \@cooldownEntries);
+}
+
+sub formatWarpItemLabel {
+	my ($self, $candidate) = @_;
+	return '' unless ($candidate && $candidate->{entry});
+	my $entry = $candidate->{entry};
+	my $itemName = $candidate->{itemName};
+	$itemName = itemNameSimple($entry->{itemID}) if (!defined $itemName || $itemName eq '');
+	return $itemName if (!defined $candidate->{itemInvIndex});
+	return sprintf("%s (%s)", $itemName, $candidate->{itemInvIndex});
+}
+
+sub setWarpItemCandidatesCache {
+	my ($self, $cacheKey, $matchesRef) = @_;
+	return unless defined $cacheKey;
+	return unless ($matchesRef && ref($matchesRef) eq 'ARRAY');
+	$self->{_warp_item_candidates_cache} = {
+		key => $cacheKey,
+		value => [@{$matchesRef}],
+	};
+}
+
+sub isWarpItemRoutingDestinationValid {
+	my ($self, $entry) = @_;
+	return 0 unless ($entry && defined $entry->{destMap} && $entry->{destMap} ne '');
+
+	my $destMap = lc($entry->{destMap});
+	return 0 if ($destMap eq '*' || $destMap eq 'any' || $destMap eq 'save');
+	return 1;
+}
+
+sub getWarpItemRouteCostToTarget {
+	my ($self, $entry) = @_;
+	return unless ($entry && defined $entry->{destMap} && $entry->{destMap} ne '');
+	return unless ($self->{targets} && ref($self->{targets}) eq 'ARRAY' && @{$self->{targets}});
+	return 0 if grep { ($_ && defined $_->{map} && $_->{map} eq $entry->{destMap}) } @{$self->{targets}};
+	return unless $self->mapHasPortalLOS($entry->{destMap});
+
+	my $targetKey = $self->getTargetMapsCacheKey();
+	my $cacheKey = join('|', $entry->{destMap}, $targetKey, ($self->{noGoCommand} || 0));
+	return $self->{_warp_item_route_cost_cache}{$cacheKey}
+		if exists $self->{_warp_item_route_cost_cache}{$cacheKey};
+
+	my @targets = map {{ map => $_->{map}, x => $_->{x}, y => $_->{y} }} @{$self->{targets}};
+	my $task = Task::CalcMapRoute->new(
+		targets => \@targets,
+		sourceMap => $entry->{destMap},
+		sourceX => $entry->{destX},
+		sourceY => $entry->{destY},
+		noGoCommand => $self->{noGoCommand} || 0,
+		noTeleSpawn => 1,
+		noWarpItem => 1,
+		maxTime => 3,
+		suppressDebug => 1,
+	);
+	$task->activate();
+	$task->iterate() while ($task->getStatus() != Task::DONE);
+
+	my $routeCost;
+	if ($task->getError()) {
+		$routeCost = undef;
+	} else {
+		my $route = $task->getRoute();
+		$routeCost = ($route && @{$route}) ? $route->[-1]{walk} : undef;
+	}
+	# Optional tuning: maximum number of cached warp route-cost entries kept in memory.
+	# config key: route_warpItem_routeCostCache_max (default: 3000)
+	my $maxRouteCostCacheEntries = int(hashSafeGetValue(\%config, 'route_warpItem_routeCostCache_max') || 3000);
+	if ($maxRouteCostCacheEntries > 0
+		&& $self->{_warp_item_route_cost_cache}
+		&& scalar(keys %{$self->{_warp_item_route_cost_cache}}) > $maxRouteCostCacheEntries) {
+		# Keep cache bounded inside long-running route calculations.
+		$self->{_warp_item_route_cost_cache} = {};
+	}
+	$self->{_warp_item_route_cost_cache}{$cacheKey} = $routeCost;
+	return $routeCost;
+}
+
+sub mapHasPortalLOS {
+	my ($self, $map) = @_;
+	return 0 unless defined $map && $map ne '';
+	$self->{_map_has_portals_los_cache} ||= {};
+
+	if (!$self->{_map_has_portals_los_cache_initialized}) {
+		foreach my $portal (keys %portals_los) {
+			my ($portalMap) = split(/\s+/, $portal, 2);
+			next unless defined $portalMap && $portalMap ne '';
+			$self->{_map_has_portals_los_cache}{$portalMap} = 1;
+		}
+		$self->{_map_has_portals_los_cache_initialized} = 1;
+	}
+
+	return $self->{_map_has_portals_los_cache}{$map} ? 1 : 0;
+}
+
+sub getTargetMapsCacheKey {
+	my ($self) = @_;
+	return '' unless ($self->{targets} && ref($self->{targets}) eq 'ARRAY');
+	return $self->{_target_maps_cache_key}
+		if defined $self->{_target_maps_cache_key};
+
+	my %targetMaps = map { (($_ && defined $_->{map}) ? $_->{map} : '') => 1 } @{$self->{targets}};
+	$self->{_target_maps_cache_key} = join('|', sort grep { $_ ne '' } keys %targetMaps);
+	return $self->{_target_maps_cache_key};
+}
+
+sub isWarpByItemAllowedOnMap {
+	my ($self, $map) = @_;
+	return 0 if !$map;
+	return 0 if hashSafeGetValue($self->{noWarpItemMaps}, $map);
+	return 1;
 }
 
 sub isGoCommandAllowedOnMap {

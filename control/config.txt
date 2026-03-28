@@ -65,15 +65,17 @@ allowedMaps
 allowedMaps_reaction 1
 
 attackAuto 2
+attackAuto_routeToLock 1
+attackAuto_outOfLock 1
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
-attackAuto_inLockOnly 1
 attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
 attackAuto_considerDamagedAggressive 0
+attackAllowStartStorageBuySell 1
 attackDistance 1
 attackDistanceAuto 1
 attackMaxDistance 1
@@ -227,6 +229,8 @@ route_teleport 0
 route_teleport_minDistance 75
 route_teleport_maxTries 8
 route_teleport_notInMaps
+route_warpByItem 0
+route_warpByItem_minDistance 150
 route_step 10
 route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
@@ -234,6 +238,10 @@ route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 route_avoidWalls 1
 route_randomFactor 0
+
+# Eden Group Headquarters exit portal.
+# Use only a map name, with or without quotes, like prontera or "payon"
+EdenPortalExit
 
 # Maximum walking path distance (client setting). Default: 17
 # This corresponds to max_walk_path in server configuration
@@ -409,9 +417,10 @@ monster_filter
 ######## Mercenary Support ########
 
 mercenary_attackAuto 2
+mercenary_attackAuto_routeToLock 1
+mercenary_attackAuto_outOfLock 1
 mercenary_attackAuto_party 1
 mercenary_attackAuto_notInTown 1
-mercenary_attackAuto_inLockOnly 1
 mercenary_attackAuto_notWhile_storageAuto 1
 mercenary_attackAuto_notWhile_buyAuto 1
 mercenary_attackAuto_notWhile_sellAuto 1
@@ -479,9 +488,10 @@ mercenary_teleportAuto_attackedWhenSitting 0
 ######## Homunculus Support ########
 
 homunculus_attackAuto 2
+homunculus_attackAuto_routeToLock 1
+homunculus_attackAuto_outOfLock 1
 homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
-homunculus_attackAuto_inLockOnly 1
 homunculus_attackAuto_notWhile_storageAuto 1
 homunculus_attackAuto_notWhile_buyAuto 1
 homunculus_attackAuto_notWhile_sellAuto 1

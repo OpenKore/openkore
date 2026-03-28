@@ -5,6 +5,7 @@ cities.txt
 consoleui-test.cpp
 FieldTest.pm
 FileParsersTest.pm
+DynamicPortalGroupsTest.pm
 http-reader-test.cpp
 HttpReaderTest.pm
 InventoryListTest.pm
@@ -16,6 +17,9 @@ maps.txt
 NetworkTest.pm
 ObjectListTest.pm
 pickupitems.txt
+dynamic_portals.txt
+teleport_items.txt
+teleport_items_invalid.txt
 PluginsHookTest.pm
 portals.txt
 resnametable.txt

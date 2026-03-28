@@ -37,7 +37,7 @@ COMMAND 20
 WARPTOSAVEMAP 200
 
 # Use airship
-AIRSHIP 2000
+AIRSHIP 200
 
 # Maps where you can exit to the same place you came from,
 # which confuses routing if added to portals thoughtlessly.

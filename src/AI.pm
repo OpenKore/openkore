@@ -42,7 +42,6 @@ our @EXPORT = (
 	ai_slave_getAggressives
 	ai_getPlayerAggressives
 	ai_getMonstersAttacking
-	ai_mapRoute_searchStep
 	ai_items_take
 	ai_route
 	ai_route_getRoute
@@ -51,9 +50,13 @@ our @EXPORT = (
 	ai_setSuspend
 	ai_skillUse
 	ai_skillUse2
-	ai_storageAutoCheck
 	ai_useTeleport
+	ai_storageAutoCheck
 	ai_canOpenStorage
+	ai_canStartStorageSellBuy
+	shouldStartAutoStorage
+	shouldStartAutoSell
+	shouldStartAutoBuy
 	cartGet
 	cartAdd
 	ai_talkNPC
@@ -450,97 +453,6 @@ sub ai_getMonstersAttacking {
 	return @agMonsters;
 }
 
-sub ai_mapRoute_searchStep {
-	my $r_args = shift;
-
-	unless ($r_args->{openlist} && %{$r_args->{openlist}}) {
-		$r_args->{done} = 1;
-		$r_args->{found} = '';
-		return 0;
-	}
-
-	my $parent = (sort {$$r_args{'openlist'}{$a}{'walk'} <=> $$r_args{'openlist'}{$b}{'walk'}} keys %{$$r_args{'openlist'}})[0];
-	debug "$parent, $$r_args{'openlist'}{$parent}{'walk'}\n", "route/path";
-	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
-	#foreach my $parent (keys %{$$r_args{'openlist'}})
-	{
-		my ($portal,$dest) = split /=/, $parent;
-		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zeny'} > $$r_args{'budget'}) {
-			#This link is too expensive
-			delete $$r_args{'openlist'}{$parent};
-			next;
-		} else {
-			#MOVE this entry into the CLOSELIST
-			$$r_args{'closelist'}{$parent}{'walk'}   = $$r_args{'openlist'}{$parent}{'walk'};
-			$$r_args{'closelist'}{$parent}{'zeny'}  = $$r_args{'openlist'}{$parent}{'zeny'};
-			$$r_args{'closelist'}{$parent}{'parent'} = $$r_args{'openlist'}{$parent}{'parent'};
-			#Then delete in from OPENLIST
-			delete $$r_args{'openlist'}{$parent};
-		}
-
-		if ($portals_lut{$portal}{'dest'}{$dest}{'map'} eq $$r_args{'dest'}{'map'}) {
-			if ($$r_args{'dest'}{'pos'}{'x'} eq '' && $$r_args{'dest'}{'pos'}{'y'} eq '') {
-				$$r_args{'found'} = $parent;
-				$$r_args{'done'} = 1;
-				undef @{$$r_args{'mapSolution'}};
-				my $this = $$r_args{'found'};
-				while ($this) {
-					my %arg;
-					$arg{'portal'} = $this;
-					my ($from,$to) = split /=/, $this;
-					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
-					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
-					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zeny'} = $$r_args{'closelist'}{$this}{'zeny'};
-					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
-					unshift @{$$r_args{'mapSolution'}},\%arg;
-					$this = $$r_args{'closelist'}{$this}{'parent'};
-				}
-				return;
-			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, $$r_args{'dest'}{'field'}, $portals_lut{$portal}{'dest'}{$dest}, $$r_args{'dest'}{'pos'}) ) {
-				my $walk = "$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}=$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}";
-				$$r_args{'closelist'}{$walk}{'walk'} = scalar @{$$r_args{'solution'}} + $$r_args{'closelist'}{$parent}{$dest}{'walk'};
-				$$r_args{'closelist'}{$walk}{'parent'} = $parent;
-				$$r_args{'closelist'}{$walk}{'zeny'} = $$r_args{'closelist'}{$parent}{'zeny'};
-				$$r_args{'found'} = $walk;
-				$$r_args{'done'} = 1;
-				undef @{$$r_args{'mapSolution'}};
-				my $this = $$r_args{'found'};
-				while ($this) {
-					my %arg;
-					$arg{'portal'} = $this;
-					my ($from,$to) = split /=/, $this;
-					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
-					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zeny'} = $$r_args{'closelist'}{$this}{'zeny'};
-					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
-					unshift @{$$r_args{'mapSolution'}},\%arg;
-					$this = $$r_args{'closelist'}{$this}{'parent'};
-				}
-				return;
-			}
-		}
-		#get all children of each openlist
-		foreach my $child (keys %{$portals_los{$dest}}) {
-			next unless $portals_los{$dest}{$child};
-			foreach my $subchild (keys %{$portals_lut{$child}{'dest'}}) {
-				my $destID = $subchild;
-				my $mapName = $portals_lut{$child}{'source'}{'map'};
-				#############################################################
-				my $penalty = int($routeWeights{lc($mapName)}) + int(($portals_lut{$child}{'dest'}{$subchild}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
-				my $thisWalk = $penalty + $$r_args{'closelist'}{$parent}{'walk'} + $portals_los{$dest}{$child};
-				if (!exists $$r_args{'closelist'}{"$child=$subchild"}) {
-					if ( !exists $$r_args{'openlist'}{"$child=$subchild"} || $$r_args{'openlist'}{"$child=$subchild"}{'walk'} > $thisWalk ) {
-						$$r_args{'openlist'}{"$child=$subchild"}{'parent'} = $parent;
-						$$r_args{'openlist'}{"$child=$subchild"}{'walk'} = $thisWalk;
-						$$r_args{'openlist'}{"$child=$subchild"}{'zeny'} = $$r_args{'closelist'}{$parent}{'zeny'} + $portals_lut{$child}{'dest'}{$subchild}{'cost'};
-					}
-				}
-			}
-		}
-	}
-}
-
 sub ai_items_take {
 	my ($x1, $y1, $x2, $y2) = @_;
 	my %args;
@@ -643,7 +555,8 @@ sub ai_skillUse2 {
 ##
 # ai_storageAutoCheck()
 #
-# Returns 1 if it is time to perform storageAuto sequence.
+# Returns 1 if we have items in the inventory that could be moved to storage
+# Check: amount in inventory is higher than the keep amount set in items control and storage is set to 1
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
 	return 0 unless ai_canOpenStorage();
@@ -659,6 +572,11 @@ sub ai_storageAutoCheck {
 	return 0;
 }
 
+##
+# ai_canOpenStorage()
+#
+# Returns 1 if can open storage (item, command, zeny, skill checks)
+# Returns 0 otherwise.
 sub ai_canOpenStorage {
 	# Check NV_BASIC and SU_BASIC_SKILL (Doram)
 	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6 && $char->getSkillLevel(new Skill(handle => 'SU_BASIC_SKILL')) < 1);
@@ -671,6 +589,226 @@ sub ai_canOpenStorage {
 	return 1;
 }
 
+##
+# ai_canStartStorageSellBuy()
+#
+# Returns 1 if the AI queue allows storage
+# Returns 0 otherwise.
+sub ai_canStartStorageSellBuy {
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('ai_canStartStorageSellBuy' => \%plugin_args);
+	return 0 if ($plugin_args{return});
+
+	return 1 if (AI::isIdle());
+	return 0 if (AI::inQueue("storageAuto", "buyAuto", "sellAuto", "teleport", "NPC", "skill_use", "eventMacro"));
+	
+	return 0 if (AI::inQueue("attack") && !$config{attackAllowStartStorageBuySell});
+	
+	my $routeIndex = AI::findAction("route");
+	$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
+	if (defined $routeIndex) {
+		my $args = AI::args($routeIndex);
+		return 0 if ($args->getSubtask && UNIVERSAL::isa($args->getSubtask, 'Task::TalkNPC'));
+		return 0 unless ($args->{isRandomWalk} || $args->{isToLockMap} || $args->{attackID} || $args->{meetingSubRoute});
+	}
+	
+	return 1 if (AI::is("attack", "sitAuto", "follow", "mapRoute", "route", "move"));
+
+	return 0;
+}
+
+sub shouldStartAutoStorage {
+	return unless (ai_canOpenStorage());
+	return unless ($config{storageAuto});
+	return unless ($config{'storageAuto_npc'} ne "" || $config{'storageAuto_useChatCommand'} || $config{'storageAuto_useItem'});
+
+	my $storageAutoOnStart = $config{'storageAuto_onStart'} && !$char->storage->wasOpenedThisSession();
+	if ($storageAutoOnStart) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook('AI_storage_auto_onStart' => \%plugin_args);
+		unless ($plugin_args{return}) {
+			message T("Auto-storaging due to storageAuto_onStart\n");
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			AI::queue("storageAuto");
+			Plugins::callHook('AI_storage_auto_queued');
+			$timeout{'ai_storageAuto'}{'time'} = time;
+			return 1;
+		}
+	}
+	
+	my @reasons;
+
+	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight'});
+	push(@reasons, 'itemsMaxWeight') if ($weightLimitReached);
+
+	my $itemNumLimitReached = ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'});
+	push(@reasons, 'itemsMaxNum') if ($itemNumLimitReached);
+
+	if (scalar @reasons && ai_storageAutoCheck()) {
+		my %plugin_args = ( return => 0, reasons => \@reasons );
+		Plugins::callHook('AI_storage_auto_limit_reached' => \%plugin_args);
+		unless ($plugin_args{return}) {
+			message TF("Auto-storaging due to %s\n", join('|', @reasons));
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			AI::queue("storageAuto");
+			Plugins::callHook('AI_storage_auto_queued');
+			$timeout{'ai_storageAuto'}{'time'} = time;
+			return 1;
+		}
+	}
+
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('AI_storage_auto_get_auto_start' => \%plugin_args);
+	return if ($plugin_args{return});
+
+	return unless (timeOut($timeout{'ai_storageAuto_getAutoCheck'}));
+	$timeout{'ai_storageAuto_getAutoCheck'}{'time'} = time;
+
+	# Initiate autostorage when we're low on some item, and getAuto is set
+	my $needitem = "";
+	my $i;
+
+	Misc::checkValidity("AutoStorage part 1");
+	for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
+		next unless ($config{"getAuto_$i"});
+		next if ($config{"getAuto_$i"."_disabled"});
+		next if ($config{"getAuto_$i"."_minBase"} =~ /^\d+$/ && $char->{lv} <= $config{"getAuto_$i"."_minBase"});
+		next if ($config{"getAuto_$i"."_maxBase"} =~ /^\d+$/ && $char->{lv} >= $config{"getAuto_$i"."_maxBase"});
+		if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
+			foreach my $nameID (keys %items_lut) {
+				if (lc($items_lut{$nameID}) eq lc($config{"getAuto_$i"}) && $items_lut{$nameID} ne $config{"getAuto_$i"}) {
+					configModify("getAuto_$i", $items_lut{$nameID});
+				}
+			}
+		}
+
+		my $item = $char->inventory->getByName($config{"getAuto_$i"}) || $char->inventory->getByNameID($config{"getAuto_$i"});
+		# total amount of the same name items
+		my $amount = $char->inventory->sumByName($config{"getAuto_$i"}) || $char->inventory->sumByNameID($config{"getAuto_$i"});
+		if ($config{"getAuto_${i}_minAmount"} ne "" &&
+		    $config{"getAuto_${i}_maxAmount"} ne "" &&
+		    !$config{"getAuto_${i}_passive"} &&
+		    (!$item ||
+			 ($amount <= $config{"getAuto_${i}_minAmount"} &&
+			  $amount < $config{"getAuto_${i}_maxAmount"})
+		    ) &&
+			Misc::checkSelfCondition("getAuto_$i")
+		) {
+			if ($char->storage->isReady() &&
+				!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
+			} else {
+				if ($char->storage->wasOpenedThisSession() &&
+					!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
+					debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"}), "storage", 2;
+					Plugins::callHook('AI_storage_item_out_of_stock', {
+							name => $config{"getAuto_$i"},
+							getAutoIndex => $i,
+						}
+					);
+				} else {
+						my $sti = $config{"getAuto_$i"};
+						if ($needitem eq "") {
+							$needitem = "$sti";
+						} else {$needitem = "$needitem, $sti";}
+					}
+			}
+		}
+	}
+	Misc::checkValidity("AutoStorage part 2");
+
+	return unless ($needitem ne "");
+
+	my %plugin_args = ( return => 0, needitem => $needitem );
+	Plugins::callHook('AI_storage_auto_getAuto_needitem' => \%plugin_args);
+	unless ($plugin_args{return}) {
+		message TF("Auto-storaging due to insufficient %s\n", $needitem);
+		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+		AI::queue("storageAuto");
+		Plugins::callHook('AI_storage_auto_queued');
+		$timeout{'ai_storageAuto'}{'time'} = time;
+		return 1;
+	}
+
+	return;
+}
+
+sub shouldStartAutoSell {
+	return unless ($config{'sellAuto'});
+	return unless ($config{'sellAuto_npc'} ne "");
+	
+	my @reasons;
+
+	my $weightLimitReached = ($config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) || (!$config{'itemsMaxWeight_sellOrStore'} && Misc::percent_weight($char) >= $config{'itemsMaxWeight'});
+	push(@reasons, 'itemsMaxWeight') if ($weightLimitReached);
+
+	my $itemNumLimitReached = ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'});
+	push(@reasons, 'itemsMaxNum') if ($itemNumLimitReached);
+
+	if (scalar @reasons && ai_sellAutoCheck()) {
+		my %plugin_args = ( return => 0, reasons => \@reasons );
+		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
+		unless ($plugin_args{return}) {
+			message TF("Auto-selling due to %s\n", join('|', @reasons));
+			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			AI::queue("sellAuto");
+			Plugins::callHook('AI_sell_auto_queued');
+			$timeout{'ai_sellAuto'}{'time'} = time;
+			return 1;
+		}
+	}
+	return;
+}
+
+sub shouldStartAutoBuy {
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
+	return if ($plugin_args{return});
+
+	return unless (timeOut($timeout{'ai_buyAuto'}));
+	$timeout{'ai_buyAuto'}{'time'} = time;
+
+	my $needitem;
+	undef $ai_v{'temp'}{'found'};
+	for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
+		next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
+		my $amount;
+		if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+			$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
+		}
+		else {
+			$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
+		}
+		if (
+			$config{"buyAuto_$i"."_minAmount"} ne "" &&
+			$config{"buyAuto_$i"."_maxAmount"} ne "" &&
+			(Misc::checkSelfCondition("buyAuto_$i")) &&
+			$amount <= $config{"buyAuto_$i"."_minAmount"} &&
+			$amount < $config{"buyAuto_$i"."_maxAmount"}
+		) {
+			$ai_v{'temp'}{'found'} = 1;
+			my $bai = $config{"buyAuto_$i"};
+			if ($needitem eq "") {
+				$needitem = "$bai";
+			} else {
+				$needitem = "$needitem, $bai";
+			}
+		}
+	}
+
+	return unless ($ai_v{'temp'}{'found'});
+
+	my %plugin_args = ( return => 0, needitem => $needitem );
+	Plugins::callHook('AI_buy_auto_needitem' => \%plugin_args);
+	unless ($plugin_args{return}) {
+		message TF("Auto-buying due to insufficient %s\n", $needitem);
+		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+		AI::queue("buyAuto");
+		Plugins::callHook('AI_buy_auto_queued');
+		return 1
+	}
+
+	return;
+}
 
 ##
 # cartGet(items)

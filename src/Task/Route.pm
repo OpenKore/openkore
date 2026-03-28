@@ -148,6 +148,10 @@ sub new {
 	if (!defined $self->{useManhattan}) {
 		$self->{useManhattan} = 0;
 	}
+
+	if (!defined $self->{attackOnRoute}) {
+		$self->{attackOnRoute} = 0;
+	}
 	
 	$self->{solution} = [];
 	$self->{stage} = NOT_INITIALIZED;
@@ -225,12 +229,18 @@ sub iterate {
 		$self->setDone();
 		
 	} elsif ($self->{mapChanged}) {
-		debug "Route $self->{actor}: Map changed within same map; recalculating route.\n", "route";
-		undef $self->{sentTeleport};
-		undef $self->{mapChanged};
-		$self->resetRoute();
-		$self->iterate();
-		return;
+		if ($self->{stopWhenMapChanged}) {
+			debug "Route $self->{actor}: Map changed within same map; finishing current segment.\n", "route";
+			undef $self->{mapChanged};
+			$self->setDone();
+		} else {
+			debug "Route $self->{actor}: Map changed within same map; recalculating route.\n", "route";
+			undef $self->{sentTeleport};
+			undef $self->{mapChanged};
+			$self->resetRoute();
+			$self->iterate();
+			return;
+		}
 
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};

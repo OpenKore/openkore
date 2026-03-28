@@ -188,6 +188,7 @@ ai_sellAuto_wait_before_sell 2
 ai_sellAuto_wait_after_packet_giveup 15
 
 ai_storageAuto 2
+ai_storageAuto_getAutoCheck 2
 ai_storageAuto_giveup 15
 ai_storageAuto_useItem 2
 ai_storageAuto_wait_before_action 2
