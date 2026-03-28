@@ -1409,7 +1409,6 @@ sub skill_used_no_damage {
 		$char->{time_move} = time;
 		$char->{time_move_calc} = 0;
 		$char->{solution} = [];
-		push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 	}
 
 	# Resolve source and target names

@@ -2192,30 +2192,31 @@ sub processLockMap {
 			Plugins::callHook('AI/lockMap', \%args);
 			unless ($args{'return'}) {
 				my ($cell, $i);
-				eval {
-					my $lockField = new Field(name => $config{'lockMap'}, loadWeightMap => 0);
-					$cell = get_lockMap_cell($lockField);
-				};
-
-				if (caught('FileNotFoundException') || !defined $cell) {
-					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
-					$config{'lockMap'} = '';
-				} else {
-					my $attackAuto = getAttackAutoModeForContext('routeToLock');
-					my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
-					if (defined $cell->{x} || defined $cell->{y}) {
-						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $cell->{x}, $cell->{y}), "route";
-					} else {
-						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}), "route";
+				if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
+					eval {
+						my $lockField = new Field(name => $config{'lockMap'}, loadWeightMap => 0);
+						$cell = get_lockMap_cell($lockField);
+					};
+					if (caught('FileNotFoundException') || !defined $cell) {
+						error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
+						$config{'lockMap'} = '';
+						return;
 					}
-					ai_route(
-						$config{'lockMap'},
-						$cell->{x},
-						$cell->{y},
-						attackOnRoute => $attackOnRoute,
-						isToLockMap => 1
-					);
 				}
+				my $attackAuto = getAttackAutoModeForContext('routeToLock');
+				my $attackOnRoute = (!defined $attackAuto || $attackAuto < 0) ? 0 : ($attackAuto >= 2 ? 2 : 1);
+				if (defined $cell->{x} || defined $cell->{y}) {
+					message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}, $cell->{x}, $cell->{y}), "route";
+				} else {
+					message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}), "route";
+				}
+				ai_route(
+					$config{'lockMap'},
+					$cell->{x},
+					$cell->{y},
+					attackOnRoute => $attackOnRoute,
+					isToLockMap => 1
+				);
 			}
 		}
 	}

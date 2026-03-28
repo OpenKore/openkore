@@ -68,9 +68,6 @@ sub process {
 		if (targetGone($ataqArgs, $ID)) {
 			finishAttacking($ataqArgs, $ID);
 			return;
-		} elsif (shouldGiveUp($ataqArgs, $ID)) {
-			giveUp($ataqArgs, $ID, 0);
-			return;
 		}
 
 		my $target = Actor::get($ID);
@@ -85,6 +82,27 @@ sub process {
 		my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs);
 		my $assistParty = ($effectiveAttackMode >= 1 && $config{'attackAuto_party'}) ? 1 : 0;
 		my $target_is_aggressive = is_aggressive($target, undef, 0, $assistParty);
+		my $control = mon_control($target->{name},$target->{nameID});
+		
+		my %plugin_args;
+		$plugin_args{target} = $target;
+		$plugin_args{control} = $control;
+		$plugin_args{stage} = $stage;
+		$plugin_args{party} = $assistParty;
+		$plugin_args{target_is_aggressive} = $target_is_aggressive;
+		$plugin_args{return} = 0;
+		Plugins::callHook('shouldDropTarget' => \%plugin_args);
+		if ($plugin_args{return}) {
+			giveUp($ataqArgs, $ID, 2);
+			return;
+		}
+
+		if (shouldGiveUp($ataqArgs, $ID)) {
+			message T("Can't reach or damage target\n"), "ai_attack";
+			giveUp($ataqArgs, $ID, 0);
+			return;
+		}
+
 		if ($config{attackChangeTarget}) {
 			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
 			my @aggressives = $effectiveAttackMode >= 0 ? ai_getAggressives($aggressiveType, $assistParty) : ();
@@ -118,7 +136,6 @@ sub process {
 			return;
 		}
 		
-		my $control = mon_control($target->{name},$target->{nameID});
 		if ($control->{attack_auto} == 3 && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou})) {
 			message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
 			$char->sendAttackStop;
@@ -126,16 +143,6 @@ sub process {
 			AI::dequeue() while (AI::inQueue("attack"));
 			return;
 		}
-		
-		my %plugin_args;
-		$plugin_args{target} = $target;
-		$plugin_args{control} = $control;
-		$plugin_args{stage} = $stage;
-		$plugin_args{party} = $assistParty;
-		$plugin_args{target_is_aggressive} = $target_is_aggressive;
-		$plugin_args{return} = 0;
-		Plugins::callHook('AI::Attack::process' => \%plugin_args);
-		return if ($plugin_args{return});
 		
 		if ($stage == MOVING_TO_ATTACK) {
 			# Check for hidden monsters
@@ -231,18 +238,18 @@ sub shouldGiveUp {
 }
 
 sub giveUp {
-	my ($args, $ID, $LOS) = @_;
+	my ($args, $ID, $reason) = @_;
 	my $target = Actor::get($ID);
 	if ($monsters{$ID}) {
-		if ($LOS) {
+		if ($reason == 1) {
 			$target->{attack_failedLOS} = time;
-		} else {
+		} elsif ($reason == 0) {
 			$target->{attack_failed} = time;
 		}
 	}
 	$target->{dmgFromYou} = 0; # Hack | TODO: Fix me
 	AI::dequeue() while (AI::inQueue("attack"));
-	message T("Can't reach or damage target, dropping target\n"), "ai_attack";
+	message T("Dropping target\n"), "ai_attack";
 	if ($config{'teleportAuto_dropTarget'}) {
 		message T("Teleport due to dropping attack target\n");
 		ai_useTeleport(1);
@@ -399,6 +406,7 @@ sub main {
 				$char->{pos_to}{y} = $char->{movetoattack_pos}{y};
 				$char->{time_move} = time;
 				$char->{time_move_calc} = 0;
+				$char->{solution} = [];
 				delete $char->{movetoattack_pos};
 			}
 		}
@@ -424,12 +432,15 @@ sub main {
 		}
 	}
 
+	my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
+	$extra_time = 0 unless (defined $extra_time);
+
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
 	my $monsterDist = blockDistance($myPos, $monsterPos);
 
-	my $realMyPos = calcPosFromPathfinding($field, $char);
-	my $realMonsterPos = calcPosFromPathfinding($field, $target);
+	my $realMyPos = calcPosFromPathfinding($field, $char, $extra_time);
+	my $realMonsterPos = calcPosFromPathfinding($field, $target, $extra_time);
 
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
@@ -654,7 +665,7 @@ sub main {
 	}
 	
 	if (!$args->{firstLoop} && $canAttack == 0 && $youHitTarget) {
-		debug TF("[%s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+		debug TF("[%s] We were able to hit target even though it is out of range, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
 			debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $canAttack_fail_string), 'ai_attack';
 			$args->{temporary_extra_range} = 1;
@@ -695,6 +706,21 @@ sub main {
 			debug TF("[%s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		}
 		$found_action = 1;
+	}
+
+	if (
+		!$found_action &&
+		$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'} &&
+		($canAttack == 0 || $canAttack == -1) &&
+		!$hitTarget_when_not_possible
+	) {
+		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}));
+		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+		if ($futurecanAttack) {
+			warning TF("[Attack] You currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
+			$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}), 'ai_attack';
+			$found_action = 1;
+		}
 	}
 
 	# Here we decide what to do with a mob which is out of range or we have no LOS to

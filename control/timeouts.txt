@@ -49,9 +49,9 @@ ai_attack_auto 0.5
 ai_homunculus_attack_auto 0.5
 ai_mercenary_attack_auto 0.5
 
-ai_attack_route_adjust 0.3
-ai_homunculus_route_adjust 0.3
-ai_mercenary_route_adjust 0.3
+ai_attack_route_adjust 0.15
+ai_homunculus_route_adjust 0.15
+ai_mercenary_route_adjust 0.15
 
 # Ignore monster for x seconds if there is no route to it
 ai_attack_failedLOS 12
@@ -219,5 +219,7 @@ patchserver 120
 # Time to wait before load map in xKore mode
 ai_clientSuspend 1
 
-meetingPosition_extra_time_actor 0.2
-meetingPosition_extra_time_target 0.5
+ai_route_position_prediction_delay 0.05
+meetingPosition_future_reachability_lookup 0.3
+
+ai_attack_allowed_waitForTarget 0.3

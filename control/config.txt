@@ -219,7 +219,6 @@ lockMap_randY
 route_escape_reachedNoPortal 1
 route_escape_randomWalk 1
 route_escape_shout
-route_avoidWalls 1
 route_randomWalk 1
 route_randomWalk_inLockOnly 0
 route_randomWalk_inTown 0
@@ -237,6 +236,7 @@ route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
+route_avoidWalls 1
 route_randomFactor 0
 
 # Eden Group Headquarters exit portal.
@@ -1044,3 +1044,29 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
+
+avoidObstacles_enable_move 0
+avoidObstacles_enable_remove 1
+avoidObstacles_enable_avoid_portals 1
+avoidObstacles_adjust_route_step 1
+avoidObstacles_weight_limit 65000
+
+avoidObstaclesDefaultPortals {
+	enabled 1
+	penalty_dist 1000, 1000, 1000, 20
+	danger_dist 10, 10, 10, 1
+	prohibited_dist 2
+	drop_target_when_near_dist 3
+	drop_destination_when_near_dist 3
+}
+
+avoidObstaclesMonster 1368 {
+	enabled 1
+	penalty_dist 20000, 20000, 20000, 20000, 30, 7
+	danger_dist 10, 10, 10, 10, 1
+	prohibited_dist -1
+	drop_target_when_near_dist 4
+	drop_destination_when_near_dist 4
+}
+
+

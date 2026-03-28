@@ -8,7 +8,7 @@ use Globals qw( %config );
 use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
-	['post_configModify','pos_load_config.txt','in_game'];
+	['post_configModify','post_bulkConfigModify','pos_load_config.txt','in_game'];
 }
 
 sub _parse_syntax {

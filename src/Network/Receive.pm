@@ -1297,7 +1297,6 @@ sub map_loaded {
 	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
-	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 
 	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
 	if ($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
@@ -5557,6 +5556,7 @@ sub character_moves {
 	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
 	my $time = calcTimeFromSolution($my_solution, $speed);
 	$char->{time_move} = time;
+	#$char->{time_move_server_tick} = unpack('V', $args->{move_start_time});
 	$char->{time_move_calc} = $time;
 	$char->{solution} = $my_solution;
 
@@ -7306,7 +7306,6 @@ sub map_change {
 	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
-	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
@@ -7361,7 +7360,6 @@ sub map_changed {
 	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
 	$char->{solution} = [];
-	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 
 	undef $conState_tries;
 	main::initMapChangeVars();
