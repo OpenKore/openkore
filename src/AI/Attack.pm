@@ -79,13 +79,13 @@ sub process {
 			return;
 		}
 
+		my $routeIndex = AI::findAction("route");
+		$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
+		my $routeArgs = defined $routeIndex ? AI::args($routeIndex) : undef;
+		my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs);
+		my $assistParty = ($effectiveAttackMode >= 1 && $config{'attackAuto_party'}) ? 1 : 0;
+		my $target_is_aggressive = is_aggressive($target, undef, 0, $assistParty);
 		if ($config{attackChangeTarget}) {
-			my $routeIndex = AI::findAction("route");
-			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-			my $routeArgs = defined $routeIndex ? AI::args($routeIndex) : undef;
-			my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs);
-			my $assistParty = ($effectiveAttackMode >= 1 && $config{'attackAuto_party'}) ? 1 : 0;
-			my $target_is_aggressive = is_aggressive($target, undef, 0, $assistParty);
 			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
 			my @aggressives = $effectiveAttackMode >= 0 ? ai_getAggressives($aggressiveType, $assistParty) : ();
 
@@ -131,7 +131,7 @@ sub process {
 		$plugin_args{target} = $target;
 		$plugin_args{control} = $control;
 		$plugin_args{stage} = $stage;
-		$plugin_args{party} = $party;
+		$plugin_args{party} = $assistParty;
 		$plugin_args{target_is_aggressive} = $target_is_aggressive;
 		$plugin_args{return} = 0;
 		Plugins::callHook('AI::Attack::process' => \%plugin_args);
