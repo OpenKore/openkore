@@ -398,6 +398,7 @@ sub loadDataFiles {
 			message TF("Loading %s...\n", $filename);
 		};
 		Settings::loadAll($progressHandler);
+		refreshDynamicPortalStates();
 	};
 	my $e;
 	if ($e = caught('UTF8MalformedException')) {

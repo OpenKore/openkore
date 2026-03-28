@@ -62,6 +62,7 @@ our @EXPORT = (
 	qw/auth
 	configModify
 	bulkConfigModify
+	bulkSetTimeout
 	setTimeout
 	saveConfigFile/,
 
@@ -180,6 +181,9 @@ our @EXPORT = (
 	getBestTarget
 	isSafe
 	isSafeActorQuery
+	getActorNameSafe
+	itemNameSimpleWithSlots
+	sumByNameID_all
 	isCellOccupied/,
 
 	# Actor's Actions Text
@@ -202,6 +206,10 @@ our @EXPORT = (
 	avoidList_near
 	compilePortals
 	compilePortals_check
+	refreshDynamicPortalGroups
+	refreshDynamicPortalStates
+	applyDynamicPortalStates
+	getDynamicPortalDestinations
 	portalExists
 	portalExists2
 	portalExistsAirship
@@ -249,7 +257,27 @@ our @EXPORT = (
 # use SelfLoader; 1;
 # __DATA__
 
+# sumByNameID_all
+# Returns how many units of an item we own across inventory, cart and/or storage.
+sub sumByNameID_all {
+	my ($itemID, $useInventory, $useCart, $useStorage) = @_;
+	
+	my $total = 0;
 
+	if ($useInventory && $char->inventory->isReady()) {
+		$total += $char->inventory->sumByNameID($itemID, 1);
+	}
+
+	if ($useCart && $char->cart->isReady()) {
+		$total += $char->cart->sumByNameID($itemID, 1);
+	}
+
+	if ($useStorage && $char->storage->wasOpenedThisSession()) {
+		$total += $char->storage->sumByNameID($itemID, 1);
+	}
+	
+	return $total;
+}
 
 sub _checkActorHash($$$$) {
 	my ($name, $hash, $type, $hashName) = @_;
@@ -259,6 +287,121 @@ sub _checkActorHash($$$$) {
 				Dumper($hash);
 		}
 	}
+}
+
+sub _normalizeDynamicPortalSelection {
+	my ($selection) = @_;
+	return unless defined $selection;
+
+	$selection =~ s/^\s+|\s+$//g;
+	$selection =~ s/\s+/ /g;
+	return if $selection eq '';
+
+	my ($map, $x, $y) = split / /, $selection, 3;
+	($map) = Field::nameToBaseName(undef, $map);
+	$map = lc $map;
+
+	if (defined $x && defined $y && $x =~ /^\d+$/ && $y =~ /^\d+$/) {
+		return "$map $x $y";
+	}
+
+	return $map;
+}
+
+sub _dynamicPortalSelectionMatches {
+	my ($selection, $destID) = @_;
+	return 0 unless defined $selection && defined $destID;
+
+	my ($map, $x, $y) = split / /, $destID, 3;
+	my $normalizedDestID = join(' ', lc($map), $x, $y);
+	return 1 if $selection eq $normalizedDestID;
+	return 1 if $selection eq lc($map);
+	return 0;
+}
+
+sub _isDynamicPortalConfigKey {
+	my ($key) = @_;
+	return 0 unless defined $key;
+
+	foreach my $group (values %dynamicPortalGroups) {
+		return 1 if defined $group->{config_key} && $group->{config_key} eq $key;
+	}
+
+	return 0;
+}
+
+sub refreshDynamicPortalStates {
+	refreshDynamicPortalGroups();
+	applyDynamicPortalStates();
+}
+
+sub refreshDynamicPortalGroups {
+	%dynamicPortalGroups = ();
+
+	foreach my $portal (keys %portals_lut) {
+		foreach my $destID (keys %{$portals_lut{$portal}{dest}}) {
+			my $dest = $portals_lut{$portal}{dest}{$destID};
+			next unless $dest;
+			next unless $dest->{dynamicPortalGroup};
+			next if $dest->{map} eq '';
+			next if defined $dest->{steps} && $dest->{steps} ne '';
+
+			my $groupName = $dest->{dynamicPortalGroup};
+			$dynamicPortalGroups{$groupName}{config_key} = $groupName;
+			$dynamicPortalGroups{$groupName}{sources}{$portal}{destinations}{$destID} = 1;
+		}
+	}
+}
+
+sub applyDynamicPortalStates {
+	foreach my $group (values %dynamicPortalGroups) {
+		next unless $group->{config_key};
+		next unless keys %{$group->{sources}};
+
+		my $selection = _normalizeDynamicPortalSelection($config{$group->{config_key}});
+		my $matched = 0;
+		my $hasDestinations = 0;
+
+		foreach my $source (keys %{$group->{sources}}) {
+			my $sourceDestinations = $group->{sources}{$source}{destinations};
+			next unless $sourceDestinations && keys %{$sourceDestinations};
+			$hasDestinations = 1;
+
+			next unless exists $portals_lut{$source} && exists $portals_lut{$source}{dest};
+
+			foreach my $destID (keys %{$sourceDestinations}) {
+				next unless exists $portals_lut{$source}{dest}{$destID};
+				my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
+				$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
+				$matched ||= $enabled;
+			}
+		}
+
+		next unless $hasDestinations;
+
+		if (defined $selection && !$matched) {
+			warning TF(
+				"Dynamic portal setting '%s' has no match for %s; all detected destinations are disabled.\n",
+				$config{$group->{config_key}}, $group->{config_key}
+			);
+		}
+	}
+}
+
+sub getDynamicPortalDestinations {
+	my ($groupName) = @_;
+	return {} unless exists $dynamicPortalGroups{$groupName};
+
+	my %destinations;
+
+	foreach my $source (keys %{$dynamicPortalGroups{$groupName}{sources}}) {
+		my $sourceDestinations = $dynamicPortalGroups{$groupName}{sources}{$source}{destinations};
+		next unless $sourceDestinations;
+
+		$destinations{$_} = 1 foreach keys %{$sourceDestinations};
+	}
+
+	return \%destinations;
 }
 
 # Checks whether the internal state of some variables are correct.
@@ -363,6 +506,9 @@ sub configModify {
 		}
 	}
 	$config{$key} = $val;
+	if (_isDynamicPortalConfigKey($key)) {
+		applyDynamicPortalStates();
+	}
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
 	
@@ -414,9 +560,57 @@ sub bulkConfigModify {
 		}
 	}
 
+	if (grep { _isDynamicPortalConfigKey($_) } keys %{$r_hash}) {
+		applyDynamicPortalStates();
+	}
 	saveConfigFile();
 	
 	Plugins::callHook('post_configModify');
+}
+
+##
+# bulkSetTimeout (r_hash, [silent])
+# r_hash: key => value to change
+# silent: if set to 1, do not print a message to the console.
+#
+# like setTimeout but for more than one value at the same time.
+sub bulkSetTimeout {
+	my $r_hash = shift;
+	my $silent = shift;
+	my $oldtime;
+
+	my %create_keys;
+	foreach my $name (keys %{$r_hash}) {
+		Plugins::callHook('setTimeout', {
+			timeout => $name,
+			time => $r_hash->{$name},
+			additionalOptions => {
+				silent => $silent
+			}
+		});
+
+		$oldtime = $timeout{$name}{timeout};
+
+		if (!exists $timeout{$name}{timeout}) {
+			$create_keys{$name} = 1;
+		}
+
+		$timeout{$name}{timeout} = $r_hash->{$name};
+
+		message TF("Timeout '%s' set to %s (was %s)\n", $name, $r_hash->{$name}, $oldtime), "info" unless ($silent);
+	}
+
+	if (scalar keys %create_keys > 0) {
+		my $f;
+		if (open($f, ">>", Settings::getControlFilename("timeouts.txt"))) {
+			foreach my $name (keys %create_keys) {
+				print $f "$name\n";
+			}
+			close($f);
+		}
+	}
+
+	writeDataFileIntact2(Settings::getControlFilename("timeouts.txt"), \%timeout);
 }
 
 ##
@@ -2057,13 +2251,15 @@ sub getPlayerNameFromCache {
 sub getPortalDestName {
 	my $ID = shift;
 	my %hash; # We only want unique names, so we use a hash
-	foreach (keys %{$portals_lut{$ID}{'dest'}}) {
+	my @destinations = grep { $portals_lut{$ID}{dest}{$_}{enabled} } keys %{$portals_lut{$ID}{dest}};
+	@destinations = keys %{$portals_lut{$ID}{dest}} unless @destinations;
+	foreach (@destinations) {
 		my $key = $portals_lut{$ID}{'dest'}{$_}{'map'};
 		$hash{$key} = 1;
 	}
 
-	my @destinations = sort keys %hash;
-	return join('/', @destinations);
+	my @destinationNames = sort keys %hash;
+	return join('/', @destinationNames);
 }
 
 sub getResponse {
@@ -2209,12 +2405,26 @@ sub monsterName {
 	return $monsters_lut{$ID} || "Unknown #$ID";
 }
 
-# Resolve the name of a simple item
+# Resolve the name of a simple item with ID
 sub itemNameSimple {
 	my $ID = shift;
 	return T("Unknown") unless defined($ID);
 	return T("None") unless $ID;
 	return $items_lut{$ID} || T("Unknown #")."$ID";
+}
+
+# Resolve the name of a simple item with ID, also adds slots
+sub itemNameSimpleWithSlots {
+	my $ID = shift;
+	return T("Unknown") unless defined($ID);
+	return T("None") unless $ID;
+	return (T("Unknown #")."$ID") unless (exists $items_lut{$ID} && defined $items_lut{$ID});
+	
+	my $name = $items_lut{$ID};
+	my $numSlots = $itemSlotCount_lut{$ID};
+	$name .= " [$numSlots]" if $numSlots;
+
+	return $name;
 }
 
 ##
@@ -3276,57 +3486,6 @@ sub setStatus {
 			}
 		}
 	}
-=pod
-	foreach (keys %stateHandle) {
-		if ($opt1 == $_) {
-			if (!$actor->{statuses}{$stateHandle{$_}}) {
-				$actor->{statuses}{$stateHandle{$_}} = 1;
-				message TF("%s %s in %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$stateHandle{$_}}) {
-			delete $actor->{statuses}{$stateHandle{$_}};
-			message TF("%s %s out of %s state.\n", $actor, $actor->verb('are', 'is'), $statusName{$stateHandle{$_}} || $stateHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-
-	foreach (keys %ailmentHandle) {
-		if (($opt2 & $_) == $_) {
-			if (!$actor->{statuses}{$ailmentHandle{$_}}) {
-				$actor->{statuses}{$ailmentHandle{$_}} = 1;
-				if ($actor->isa('Actor::You')) {
-					message TF("%s have ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-				} else {
-					message TF("%s has ailment: %s.\n", $actor->nameString(), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-				}
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$ailmentHandle{$_}}) {
-			delete $actor->{statuses}{$ailmentHandle{$_}};
-			message TF("%s %s out of %s ailment.\n", $actor, $actor->verb('are', 'is'), $statusName{$ailmentHandle{$_}} || $ailmentHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-
-	foreach (keys %lookHandle) {
-		if (($option & $_) == $_) {
-			if (!$actor->{statuses}{$lookHandle{$_}}) {
-				$actor->{statuses}{$lookHandle{$_}} = 1;
-				if ($actor->isa('Actor::You')) {
-					message TF("%s have look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-				} else {
-					message TF("%s has look: %s.\n", $actor->nameString, $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-				}
-				$changed = 1;
-			}
-		} elsif ($actor->{statuses}{$lookHandle{$_}}) {
-			delete $actor->{statuses}{$lookHandle{$_}};
-			message TF("%s %s out of %s look.\n", $actor, $actor->verb('are', 'is'), $statusName{$lookHandle{$_}} || $lookHandle{$_}), "parseMsg_statuslook", $verbosity;
-			$changed = 1;
-		}
-	}
-=cut
 	Plugins::callHook('changed_status',{
 		actor => $actor,
 		changed => $changed
@@ -4524,6 +4683,22 @@ sub monKilled {
 	}
 }
 
+# Resolves an actor ID into a name, getActorName returns nameString and this is also safer
+# as it checks for ID definition
+sub getActorNameSafe {
+	my ($id) = @_;
+
+	return unless (defined $id);
+
+	my $actor = Actor::get($id);
+	return unless ($actor);
+
+	my $name = $actor->name;
+	return unless ($name);
+
+	return $name;
+}
+
 # Resolves a player or monster ID into a name
 # Obsoleted by Actor module, don't use this!
 sub getActorName {
@@ -5682,6 +5857,7 @@ sub parseReload {
 		} else {
 			Settings::loadByRegexp(qr/$args/, $progressHandler);
 		}
+		refreshDynamicPortalStates();
 		Log::initLogFiles();
 		message T("All files were loaded\n"), "reload";
 	};
