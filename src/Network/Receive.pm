@@ -2086,8 +2086,9 @@ sub actor_display {
 		return;
 	}
 
+	my $maxWalkPath = $config{maxUnobstructedWalkPathDistance} || 17;
 	if ( ($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0) ||
-		 (blockDistance(\%coordsFrom, \%coordsTo) > $config{clientSight}) ) {
+		 (blockDistance(\%coordsFrom, \%coordsTo) > $maxWalkPath) ) {
 			warning TF("Ignoring bugged actor moved packet (%s) (%d, %d)->(%d, %d)\n", $args->{switch}, $coordsFrom{x}, $coordsFrom{y}, $coordsTo{x}, $coordsTo{y});
 			# seems this is just a position bug, lets just ignore the change in position
 			# $actor->{avoid} = 1;
@@ -8273,12 +8274,13 @@ sub actor_movement_interrupted {
 	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
 		$actor->{sitting} = 0;
 	}
+
 	if ($actor->isa('Actor::You')) {
 		debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
 		AI::clear("move");
-	}
-	if ($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) {
-		AI::clear("move");
+	
+	} elsif (($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) || ($char->{mercenary} && $char->{mercenary}{ID} eq $actor->{ID})) {
+		debug TF("[%s] Movement interrupted, coordinates: %s %s\n", $actor, $coords{x}, $coords{y}), "parseMsg_move";
 	}
 }
 

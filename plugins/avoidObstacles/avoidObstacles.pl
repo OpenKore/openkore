@@ -130,7 +130,7 @@ my $cached_final_grid = [];
 my %cached_final_grid_index;
 
 my $chooks = Commands::register(
-	['avoid', 'avoidObstacles controls: od [dump|reload|status]', \&command_avoid],
+	['avoid', 'avoidObstacles controls: avoid [dump|reload|status]', \&command_avoid],
 );
 
 my %plugin_settings;
@@ -763,7 +763,7 @@ sub command_avoid {
 		return;
 	}
 
-	message "[" . PLUGIN_NAME . "] Usage: od [dump|reload|status]\n", 'list';
+	message "[" . PLUGIN_NAME . "] Usage: avoid [dump|reload|status]\n", 'list';
 }
 
 ## Purpose: Dumps the main live obstacle caches for debugging.

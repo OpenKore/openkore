@@ -26,7 +26,6 @@ sub addSlave {
 		$actor->{ai_attack_timeout} = 'ai_homunculus_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_homunculus_attack_auto';
 		$actor->{ai_check_monster_auto} = 'ai_homunculus_check_monster_auto';
-		$actor->{ai_route_adjust_timeout} = 'ai_homunculus_route_adjust';
 		$actor->{ai_attack_main} = 'ai_homunculus_attack_main';
 		$actor->{ai_standby_timeout} = 'ai_homunculus_standby';
 		$actor->{ai_dance_attack_melee_timeout} = 'ai_homunculus_dance_attack_melee';
@@ -43,7 +42,6 @@ sub addSlave {
 		$actor->{ai_attack_timeout} = 'ai_mercenary_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_mercenary_attack_auto';
 		$actor->{ai_check_monster_auto} = 'ai_mercenary_check_monster_auto';
-		$actor->{ai_route_adjust_timeout} = 'ai_mercenary_route_adjust';
 		$actor->{ai_attack_main} = 'ai_mercenary_attack_main';
 		$actor->{ai_standby_timeout} = 'ai_mercenary_standby';
 		$actor->{ai_dance_attack_melee_timeout} = 'ai_mercenary_dance_attack_melee';
@@ -115,7 +113,7 @@ sub mustStopForAttack {
 	
 	foreach my $slave (values %{$char->{slaves}}) {
 		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
-			return $slave if ($slave->action eq "attack" && $config{$slave->{configPrefix}.'route_randomWalk_stopDuringAttack'});
+			return $slave if ($slave->action eq "attack" && $config{$slave->{configPrefix}.'route_stopDuringAttack'});
 		}
 	}
 	return undef;
@@ -139,7 +137,7 @@ sub mustWaitMinDistance {
 	foreach my $slave (values %{$char->{slaves}}) {
 		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
 			my $dist = $slave->blockDistance_master;
-			return $slave if ($config{$slave->{configPrefix}.'route_randomWalk_waitMinDistance'} && $dist > $config{$slave->{configPrefix}.'route_randomWalk_waitMinDistance'});
+			return $slave if ($config{$slave->{configPrefix}.'route_waitMinDistance'} && $dist > $config{$slave->{configPrefix}.'route_waitMinDistance'});
 		}
 	}
 	return undef;

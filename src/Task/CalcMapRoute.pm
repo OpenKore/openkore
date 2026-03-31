@@ -571,9 +571,6 @@ sub populateOpenListWithWarpToSaveMap {
 	my ($current_map) = split / /, $from_node, 2;
 	return unless $self->isWarpToSaveMapAllowedOnMap($current_map);
 
-	my @warpItemCandidates = $self->getWarpItemCandidates();
-	return unless @warpItemCandidates;
-
 	return unless ($self->isWarpToSaveMapMinDistanceReached());
 	my $saveMapDestination = $self->resolveSaveMapDestination();
 	return unless ($saveMapDestination);

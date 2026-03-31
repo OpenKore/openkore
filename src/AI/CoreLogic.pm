@@ -858,7 +858,7 @@ sub processTake {
 		AI::dequeue();
 
 	} elsif (AI::action() eq "take") {
-		my $myPos = $char->{pos};
+		my $myPos = calcPosFromPathfinding($field, $char);
 		my $dist = blockDistance($item->{pos}, $myPos);
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
@@ -868,6 +868,7 @@ sub processTake {
 		} elsif ($dist <= 2 && $config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
 			my $skill = new Skill(handle => 'BS_GREED');
 			ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
+
 		} elsif ($dist > 1 && timeOut(AI::args()->{time_route}, $timeout{ai_take_giveup}{timeout})) {
 			my $pos = $item->{pos};
 			AI::args()->{time_route} = time;
@@ -875,9 +876,9 @@ sub processTake {
 				$field->baseName,
 				$pos->{x},
 				$pos->{y},
-				maxRouteDistance => $config{'attackRouteMaxPathDistance'},
 				noSitAuto => 1,
 				distFromGoal => 1,
+				attackOnRoute => 0,
 				isItemTake => 1
 			);
 		} elsif (timeOut($timeout{ai_take})) {
@@ -1242,9 +1243,14 @@ sub processStartAutoStorageBuySell {
 	return if ($shopstarted || $buyershopstarted);
 	return if ($ai_v{sitAuto_forcedBySitCommand} || !$char->inventory->isReady());
 	return unless (ai_canStartStorageSellBuy());
+
 	return if (shouldStartAutoStorage());
 	return if (shouldStartAutoSell());
 	return if (shouldStartAutoBuy());
+
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('processStartAutoStorageBuySell_end' => \%plugin_args);
+	return if ($plugin_args{return});
 }
 
 ##### AUTO STORAGE #####
@@ -2224,12 +2230,12 @@ sub processLockMap {
 
 sub processRescueSlave {
 	if (
-		(AI::isIdle() || (AI::is('route') && AI::args()->{isRandomWalk}))
+		(AI::isIdle() || (AI::is('route')))
 		&& $char->{slaves}
 	) {
 		my $slave = AI::SlaveManager::mustRescue();
 		if (defined $slave) {
-			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
+			AI::dequeue() while (AI::is(qw/move route mapRoute/));
 			ai_route(
 				$field->baseName,
 				$slave->{pos_to}{x},
@@ -2247,7 +2253,7 @@ sub processRescueSlave {
 
 # route_randomWalk_stopDuringSlaveAttack
 sub processRandomWalk_stopDuringSlaveAttack {
-	if (AI::is('route') && AI::args()->{isRandomWalk}
+	if (AI::is('route')
 		&& $char->{slaves}
 		&& !AI::SlaveManager::isIdle()
 	){
@@ -2258,7 +2264,7 @@ sub processRandomWalk_stopDuringSlaveAttack {
 			# we shoudl probably not stop it, just not send new move commands after the current one
 			$char->sendAttackStop;
 			# TODO: This should probably just pause route instead of dequeuing it
-			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
+			AI::dequeue() while (AI::is(qw/move route mapRoute/));
 		}
 	}
 }
@@ -3016,10 +3022,10 @@ sub processAutoAttack {
 	return if (AI::inQueue("attack"));
 	
 	return if (!$field);
-	if ((AI::isIdle() || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action() eq "mapRoute" && AI::args()->{stage} eq 'Getting Map Solution'))
+	if (AI::isIdle() || AI::is(qw/route follow sitAuto take items_gather items_take/)
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
-	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
-	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
+	  && !($config{'itemsTakeAuto'} >= 2 && AI::inQueue("take", "items_take"))
+	  && !($config{'itemsGatherAuto'} >= 2 && AI::inQueue("take", "items_gather"))
 	  && timeOut($timeout{ai_attack_auto})
 	  && $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search}
 	  && (!$config{attackAuto_notInTown} || !$field->isCity)
@@ -3180,12 +3186,12 @@ sub processAutoAttack {
 			# We define whether we should attack only monsters in LOS or not
 			my $checkLOS = $config{attackCheckLOS};
 			my $canSnipe = $config{attackCanSnipe};
-			$attackTarget = getBestTarget(\@skillCancelMonsters, $checkLOS, $canSnipe) ||
-			                getBestTarget(\@looterMonsters, $checkLOS, $canSnipe) ||
-			                getBestTarget(\@aggressives, $checkLOS, $canSnipe) ||
-			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
-			                getBestTarget(\@droppedMonsters, $checkLOS, $canSnipe) ||
-			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
+			$attackTarget = getBestTarget(\@skillCancelMonsters, $checkLOS, $canSnipe, $char, '') ||
+			                getBestTarget(\@looterMonsters, $checkLOS, $canSnipe, $char, '') ||
+			                getBestTarget(\@aggressives, $checkLOS, $canSnipe, $char, '') ||
+			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe, $char, '') ||
+			                getBestTarget(\@droppedMonsters, $checkLOS, $canSnipe, $char, '') ||
+			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe, $char, '');
 		}
 
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
@@ -3193,6 +3199,7 @@ sub processAutoAttack {
 			ai_setSuspend(0);
 
 			$char->attack($attackTarget);
+			$timeout{'ai_attack_auto'}{'time'} = 0;
 		} else {
 			$timeout{'ai_attack_auto'}{'time'} = time;
 		}

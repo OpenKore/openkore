@@ -2929,6 +2929,7 @@ sub cmdSlave {
 	} else {
 		error T("Error: Unknown command in cmdSlave\n");
 	}
+	return unless $slave;
 	my $string = $cmd;
 
 	if ($slave->isa("AI::Slave::Homunculus") && $slave->{homunculus_info}{vaporized}) {

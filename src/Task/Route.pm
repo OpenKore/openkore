@@ -720,10 +720,10 @@ sub iterate {
 					return;
 				}
 				
-                if ($self->{actor}->isa('Actor::You') && $self->{isRandomWalk} && $self->{actor}{slaves}) {
+                if ($self->{actor}->isa('Actor::You') && $self->{actor}{slaves}) {
 					my $slave = AI::SlaveManager::mustWaitMinDistance();
 					if (defined $slave) {
-						debug TF("Waiting for slave %s before next randomWalk step.\n", $slave), 'route', 2;
+						debug TF("Waiting for slave %s before next step.\n", $slave), 'route', 2;
 						return;
 					}
 				}

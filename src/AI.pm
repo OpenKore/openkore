@@ -31,6 +31,7 @@ use Field;
 use Exporter;
 use base qw(Exporter);
 use Translation;
+use Misc;
 
 our @EXPORT = (
 	qw/
@@ -54,6 +55,7 @@ our @EXPORT = (
 	ai_storageAutoCheck
 	ai_canOpenStorage
 	ai_canStartStorageSellBuy
+	StorageSellBuy_aiClear
 	shouldStartAutoStorage
 	shouldStartAutoSell
 	shouldStartAutoBuy
@@ -599,6 +601,9 @@ sub ai_canStartStorageSellBuy {
 	Plugins::callHook('ai_canStartStorageSellBuy' => \%plugin_args);
 	return 0 if ($plugin_args{return});
 
+	#return 0 if (%talk);
+	#return 0 if ((defined $ai_v{'npc_talk'} && ref($ai_v{'npc_talk'}) eq 'HASH' && scalar keys %{$ai_v{'npc_talk'}} > 0));
+
 	return 1 if (AI::isIdle());
 	return 0 if (AI::inQueue("storageAuto", "buyAuto", "sellAuto", "teleport", "NPC", "skill_use", "eventMacro"));
 	
@@ -617,6 +622,10 @@ sub ai_canStartStorageSellBuy {
 	return 0;
 }
 
+sub StorageSellBuy_aiClear {
+	AI::clear("move", "route", "attack", "items_take", "take", "items_gather");
+}
+
 sub shouldStartAutoStorage {
 	return unless (ai_canOpenStorage());
 	return unless ($config{storageAuto});
@@ -628,7 +637,7 @@ sub shouldStartAutoStorage {
 		Plugins::callHook('AI_storage_auto_onStart' => \%plugin_args);
 		unless ($plugin_args{return}) {
 			message T("Auto-storaging due to storageAuto_onStart\n");
-			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			StorageSellBuy_aiClear();
 			AI::queue("storageAuto");
 			Plugins::callHook('AI_storage_auto_queued');
 			$timeout{'ai_storageAuto'}{'time'} = time;
@@ -649,7 +658,7 @@ sub shouldStartAutoStorage {
 		Plugins::callHook('AI_storage_auto_limit_reached' => \%plugin_args);
 		unless ($plugin_args{return}) {
 			message TF("Auto-storaging due to %s\n", join('|', @reasons));
-			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			StorageSellBuy_aiClear();
 			AI::queue("storageAuto");
 			Plugins::callHook('AI_storage_auto_queued');
 			$timeout{'ai_storageAuto'}{'time'} = time;
@@ -722,7 +731,7 @@ sub shouldStartAutoStorage {
 	Plugins::callHook('AI_storage_auto_getAuto_needitem' => \%plugin_args);
 	unless ($plugin_args{return}) {
 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
-		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+		StorageSellBuy_aiClear();
 		AI::queue("storageAuto");
 		Plugins::callHook('AI_storage_auto_queued');
 		$timeout{'ai_storageAuto'}{'time'} = time;
@@ -749,7 +758,7 @@ sub shouldStartAutoSell {
 		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
 		unless ($plugin_args{return}) {
 			message TF("Auto-selling due to %s\n", join('|', @reasons));
-			AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+			StorageSellBuy_aiClear();
 			AI::queue("sellAuto");
 			Plugins::callHook('AI_sell_auto_queued');
 			$timeout{'ai_sellAuto'}{'time'} = time;
@@ -762,7 +771,7 @@ sub shouldStartAutoSell {
 sub shouldStartAutoBuy {
 	my %plugin_args = ( return => 0 );
 	Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
-	return if ($plugin_args{return});
+	return $plugin_args{return_result} if ($plugin_args{return});
 
 	return unless (timeOut($timeout{'ai_buyAuto'}));
 	$timeout{'ai_buyAuto'}{'time'} = time;
@@ -801,7 +810,7 @@ sub shouldStartAutoBuy {
 	Plugins::callHook('AI_buy_auto_needitem' => \%plugin_args);
 	unless ($plugin_args{return}) {
 		message TF("Auto-buying due to insufficient %s\n", $needitem);
-		AI::clear("sitAuto", "follow", "mapRoute", "route", "move", "attack");
+		StorageSellBuy_aiClear();
 		AI::queue("buyAuto");
 		Plugins::callHook('AI_buy_auto_queued');
 		return 1
