@@ -482,7 +482,7 @@ sub canMove {
 
 	# This value is actually set at
 	# hercules conf\map\battle\client.conf max_walk_path (which is by default 17, can be higher)
-	my $maxWalkPath = $config{maxWalkPathDistance} || 17;
+	my $maxWalkPath = $config{maxUnobstructedWalkPathDistance} || 17;
 	if ($dist > $maxWalkPath) {
 		return 0;
 	}
@@ -493,8 +493,9 @@ sub canMove {
 		return 1;
 	}
 	
+	my $maxObsWalkPath = $config{maxObstructedWalkPathDistance} || 14;
 	# If there are obstacles and the path is walkable the max solution dist acceptable is 14 (double check to save time)
-	if ($dist > 14) {
+	if ($dist > $maxObsWalkPath) {
 		return 0;
 	}
 

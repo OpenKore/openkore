@@ -29,8 +29,8 @@ ai 1
 ai_move_retry 0.4
 ai_move_giveup 1.2
 
-ai_homunculus_standby 0.5
-ai_mercenary_standby 0.5
+ai_homunculus_standby 2
+ai_mercenary_standby 2
 
 # Send the attack packet every x seconds, if it hasn't been send already
 ai_attack 1
@@ -49,9 +49,6 @@ ai_attack_auto 0.5
 ai_homunculus_attack_auto 0.5
 ai_mercenary_attack_auto 0.5
 
-ai_attack_route_adjust 0.15
-ai_homunculus_route_adjust 0.15
-ai_mercenary_route_adjust 0.15
 
 # Ignore monster for x seconds if there is no route to it
 ai_attack_failedLOS 12
@@ -74,7 +71,7 @@ ai_attack_main 0.1
 ai_homunculus_attack_main 0.1
 ai_mercenary_attack_main 0.1
 
-ai_future_reachability_lookup 0.3
+ai_future_reachability_lookup 0.7
 
 ai_attack_unstuck 2.75
 ai_attack_unfail 12
@@ -222,4 +219,6 @@ ai_clientSuspend 1
 ai_route_position_prediction_delay 0.05
 meetingPosition_future_reachability_lookup 0.3
 
+# If a target is predicted to move into attack range/LOS soon, wait up to x seconds
+# before rerouting or dropping it. Shared by player and slave attack AI.
 ai_attack_allowed_waitForTarget 0.3

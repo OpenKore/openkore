@@ -242,6 +242,7 @@ our @EXPORT = (
 	solveMSG
 	get_lockMap_cell
 	absunit
+	print_callers
 	autoNpcTalk/,
 
 	# Npc buy and sell
@@ -3085,7 +3086,12 @@ sub meetingPosition {
 	my $allspots_count = scalar @candidate_spots;
 
 	my %prohibitedSpots;
-	foreach my $prohibited_actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
+	foreach my $prohibited_actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList, @$portalsList) {
+		next unless ($prohibited_actor->{pos_to});
+		next unless (defined $prohibited_actor->{ID});
+		next if ($prohibited_actor->{ID} eq $target->{ID});
+		next if ($prohibited_actor->{ID} eq $actor->{ID});
+		next if ($masterPos && $master && defined $master->{ID} && $prohibited_actor->{ID} eq $master->{ID});
 		$prohibitedSpots{$prohibited_actor->{pos_to}{x}}{$prohibited_actor->{pos_to}{y}} = 1;
 	}
 
@@ -4159,16 +4165,19 @@ sub _targetWillLeaveClientSightSoon {
 }
 
 ##
-# getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe)
+# getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe, $actor, $configPrefix)
 # possibleTargets: reference to an array of monsters' IDs
 # attackCheckLOS: if set, non-LOS monsters are checked up
 #
 # Returns ID of the best target
 sub getBestTarget {
-	my ($possibleTargets, $attackCheckLOS, $attackCanSnipe) = @_;
+	my ($possibleTargets, $attackCheckLOS, $attackCanSnipe, $actor, $configPrefix) = @_;
 	if (!$possibleTargets) {
 		return;
 	}
+
+	$actor ||= $char;
+	$configPrefix ||= '';
 
 	my $portalDist = $config{'attackMinPortalDistance'} || 4;
 	my $playerDist = $config{'attackMinPlayerDistance'} || 1;
@@ -4176,7 +4185,8 @@ sub getBestTarget {
 	my @noLOSMonsters;
 	my @noLOSMonsters_pos;
 	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-	my $myPos = calcPosFromPathfinding($field, $char);
+	my $actorPos = calcPosFromPathfinding($field, $actor);
+
 	my ($highestPri, $smallestDist, $bestTarget);
 
 	# First of all we check monsters in LOS, then the rest of monsters
@@ -4185,16 +4195,18 @@ sub getBestTarget {
 	$plugin_args{possibleTargets} = $possibleTargets;
 	$plugin_args{attackCheckLOS} = $attackCheckLOS;
 	$plugin_args{attackCanSnipe} = $attackCanSnipe;
+	$plugin_args{actor} = $actor;
+	$plugin_args{configPrefix} = $configPrefix;
 	$plugin_args{return} = 0;
 	Plugins::callHook('getBestTarget' => \%plugin_args);
 
 	foreach (@{$possibleTargets}) {
 		my $monster = $monsters{$_};
 		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-		my $pos = calcPosFromPathfinding($field, $monster);
+		my $targetPos = calcPosFromPathfinding($field, $monster);
 
-		next if (positionNearPlayer($pos, $playerDist)
-			|| positionNearPortal($pos, $portalDist)
+		next if (positionNearPlayer($targetPos, $playerDist)
+			|| positionNearPortal($targetPos, $portalDist)
 		);
 
 		my $control = mon_control($monster->{name},$monster->{nameID});
@@ -4211,14 +4223,14 @@ sub getBestTarget {
 
 		next if (_targetWillLeaveClientSightSoon($char, $monster));
 
-		if (!$field->checkLOS($myPos, $pos, $attackCanSnipe)) {
+		if (!$field->checkLOS($actorPos, $targetPos, $attackCanSnipe)) {
 			push(@noLOSMonsters, $_);
-			push(@noLOSMonsters_pos, $pos);
+			push(@noLOSMonsters_pos, $targetPos);
 			next;
 		}
 
 		my $name = lc $monster->{name};
-		my $dist = adjustedBlockDistance($myPos, $pos);
+		my $dist = adjustedBlockDistance($actorPos, $targetPos);
 		my $priority = $priority{$name} ? $priority{$name} : 0;
 
 		if (!defined($bestTarget) || ($priority > $highestPri)) {
@@ -4234,8 +4246,8 @@ sub getBestTarget {
 		}
 	}
 	if ($attackCheckLOS && !$bestTarget && scalar(@noLOSMonsters) > 0) {
-		my $pathfinding = new PathFinding;
-		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = $field->getSquareEdgesFromCoord($myPos, $config{attackRouteMaxPathDistance});
+		require Task::Route;
+		my $solution;
 		foreach my $index (0..$#noLOSMonsters) {
 			
 			# The most optimal solution is to include the path lenghts' comparison, however it will take
@@ -4243,36 +4255,31 @@ sub getBestTarget {
 
 			my $monster = $monsters{$noLOSMonsters[$index]};
 			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-			my $pos = $noLOSMonsters_pos[$index];
+			my $targetPos = $noLOSMonsters_pos[$index];
 
 			# avoid get targets away from attackRouteMaxPathDistance
-			next if(blockDistance($myPos, $pos) >= $config{attackRouteMaxPathDistance});
+			next if(blockDistance($actorPos, $targetPos) >= $config{attackRouteMaxPathDistance});
 
-			$pathfinding->reset(
-				start => $myPos,
-				dest  => $pos,
-				field => $field,
-				avoidWalls => 0,
-				randomFactor => 0,
-				useManhattan => 0,
-				min_x => $min_pathfinding_x,
-				max_x => $max_pathfinding_x,
-				min_y => $min_pathfinding_y,
-				max_y => $max_pathfinding_y
-			);
-			my $dist = $pathfinding->runcount;
-			if ($dist <= 0 || $dist > $config{attackRouteMaxPathDistance}) {
-				$monster->{attack_failedLOS} = time;
+			@{$solution} = ();
+			unless (Task::Route->getRoute($solution, $field, $actorPos, $targetPos, $config{'route_avoidWalls'}, 0, 0, 1, 1)) {
+				next;
+			}
+
+			if (scalar @{$solution} == 0) {
 				next;
 			}
 			
+			my $dist = scalar @{$solution};
+			
 			my $name = lc $monster->{name};
 			my $priority = $priority{$name} ? $priority{$name} : 0;
+
 			if (!defined($bestTarget) || ($priority > $highestPri)) {
 				$highestPri = $priority;
 				$smallestDist = $dist;
 				$bestTarget = $noLOSMonsters[$index];
 			}
+
 			if ((!defined($bestTarget) || $priority == $highestPri)
 			  && (!defined($smallestDist) || $dist < $smallestDist)) {
 				$highestPri = $priority;
