@@ -4891,6 +4891,8 @@ sub quest_update_mission_hunt {
 
 		@{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
 
+		next unless exists $questList->{$mission->{questID}};
+
 		my $quest = \%{$questList->{$mission->{questID}}};
 
 		my $mission_id;
@@ -4923,6 +4925,21 @@ sub quest_update_mission_hunt {
 				}
 			}
 		}
+
+		# Some servers can return mission updates keyed only by hunt identification.
+		# If direct lookup fails, map update by mission index from hunt_id.
+		if (!defined $mission_id && exists $mission->{hunt_id}) {
+			my $mission_index = $mission->{hunt_id} - ($mission->{questID} * 1000);
+
+			foreach my $current_key (keys %{$quest->{missions}}) {
+				next unless exists $quest->{missions}->{$current_key}{mission_index};
+				next unless $quest->{missions}->{$current_key}{mission_index} == $mission_index || $quest->{missions}->{$current_key}{mission_index} == $mission_index - 1;
+				$mission_id = $current_key;
+				last;
+			}
+		}
+
+		next unless defined $mission_id && exists $quest->{missions}->{$mission_id};
 
 		my $quest_mission = \%{$quest->{missions}->{$mission_id}};
 
@@ -12604,4 +12621,3 @@ sub notify_accessible_mapname {
 }
 
 1;
-
