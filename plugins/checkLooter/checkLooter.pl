@@ -10,10 +10,10 @@
 #
 # How it works:
 # - When OpenKore runs the check_attackLooter hook, this plugin looks up the
-#   target monster in %monstersTable.
-# - It reads the monster Ai value from monsters_table.txt.
-# - It converts that AI type into mode flags and checks whether the MD_LOOTER
-#   bit is enabled.
+#   target monster through MonstersTable helper functions.
+# - It reads the monster AI value from monsters_table.txt through
+#   monster_is_looter_by_ai.
+# - It checks whether the looter flag is enabled for that AI mode.
 # - If the monster is not a looter, the plugin sets $args->{return} = 1.
 #
 # How to configure it:
@@ -29,8 +29,8 @@
 #    behavior where extended checks and looter checks are handled separately.
 #
 # Notes:
-# - This plugin depends on monsters_table.txt having Ai data for each monster.
-# - If a monster is missing from %monstersTable, the plugin logs a warning and
+# - This plugin depends on monsters_table.txt having AI data for each monster.
+# - If a monster is missing from MonstersTable, the plugin logs a warning and
 #   leaves the hook result unchanged.
 #
 package checkLooter;
@@ -39,6 +39,7 @@ use strict;
 use Plugins;
 use Globals;
 use Log qw(debug warning);
+use MonstersTable qw(monster_exists monster_is_looter_by_ai);
 
 use constant {
 	PLUGIN_NAME => 'checkLooter',
@@ -48,15 +49,6 @@ Plugins::register(PLUGIN_NAME, 'Checks looter monsters using monsters_table.txt'
 
 my $hooks = Plugins::addHooks(
 	['check_attackLooter', \&oncheck_attackLooter, undef],
-);
-
-my %ai_constant = (
-	'01' => 0x81, '02' => 0x83, '03' => 0x1089, '04' => 0x3885,
-	'05' => 0x2085, '06' => 0, '07' => 0x108B, '08' => 0x7085,
-	'09' => 0x3095, '10' => 0x84, '11' => 0x84, '12' => 0x2085,
-	'13' => 0x308D, '17' => 0x91, '19' => 0x3095, '20' => 0x3295,
-	'21' => 0x3695, '24' => 0xA1, '25' => 0x1, '26' => 0xB695,
-	'27' => 0x8084, 'ABR_PASSIVE' => 0x21, 'ABR_OFFENSIVE' => 0xA5
 );
 
 =pod
@@ -102,31 +94,18 @@ sub oncheck_attackLooter {
 	my ($hook, $args) = @_;
 	return 0 if (!$args->{monster} || $args->{monster}->{nameID} eq '');
 
-	if (!exists $monstersTable{$args->{monster}->{nameID}}) {
+	if (!monster_exists($args->{monster}->{nameID})) {
 		warning "[checkLooter] Monster {name '$args->{monster}->{name}'} {ID '$args->{monster}->{nameID}'} not found\n", 'checkLooter';
 		return;
 	}
 
-	my $mob = $monstersTable{$args->{monster}->{nameID}};
-	my $ai = $mob->{Ai};
-	my $is_looter = is_monster_ai_looter($ai);
+	my $is_looter = monster_is_looter_by_ai($args->{monster}->{nameID});
 	if (!$is_looter) {
 		debug "[checkLooter] [False] $args->{monster} ($args->{monster}->{nameID}) is not a Looter\n", 'checkLooter';
 		$args->{return} = 1;
 	} else {
 		debug "[checkLooter] [True] $args->{monster} ($args->{monster}->{nameID}) is a Looter\n", 'checkLooter';
 	}
-}
-
-sub is_monster_ai_looter {
-	my ($ai_str) = @_;
-	$ai_str = uc($ai_str);
-
-	my $mode_value = exists $ai_constant{$ai_str}
-		? $ai_constant{$ai_str}
-		: $ai_constant{'06'};
-
-	return ($mode_value & 0x2) ? 1 : 0;
 }
 
 1;

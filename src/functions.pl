@@ -387,7 +387,7 @@ sub loadDataFiles {
 		loader => [\&parseAchievementFile, \%achievements], mustExist => 0);
 	Settings::addTableFile('monsters_table.txt',
 		internalName => 'monsters_table.txt',
-		loader => [\&parseMonstersTableFile, \%monstersTable], mustExist => 0);
+		loader => [sub { 1 }, \%monstersTable], mustExist => 0);
 
 	use utf8;
 
@@ -415,6 +415,37 @@ sub loadDataFiles {
 	return if $quit;
 
 	Settings::update_log_filenames();
+
+	require MonstersTable;
+	my $rows = 0;
+	my $source = 'legacy-fallback';
+	my $monsters_file = Settings::getTableFilename('monsters_table.txt');
+
+	if ($monsters_file) {
+		my $ok = eval {
+			$rows = MonstersTable::load_compact_backend_from_file(
+				file => $monsters_file,
+				purge_legacy => 1
+			);
+			1;
+		};
+		if (!$ok) {
+			warning TF("MonstersTable direct compact load failed (%s); falling back to legacy table conversion.\n", $@);
+			$rows = 0;
+		} elsif ($rows > 0) {
+			$source = 'direct-file';
+		}
+	}
+
+	if ($rows <= 0) {
+		if ($monsters_file) {
+			parseMonstersTableFile($monsters_file, \%monstersTable);
+		}
+		$rows = MonstersTable::initialize_compact_backend(purge_legacy => 1);
+		$source = 'legacy-fallback';
+	}
+
+	message TF("MonstersTable compact backend enabled (%d rows) [legacy table purged, source=%s]\n", $rows, $source);
 
 	Plugins::callHook('start3');
 
