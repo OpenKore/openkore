@@ -46,7 +46,8 @@ sub load {
 			['packet_pre/local_broadcast', \&localBroadcastPre, undef],
 			['packet_pre/system_chat', \&systemChatPre, undef],
 			['packet_pre/npc_talk', \&npcTalkPre, undef],
-			['pre/npc_talk_responses', \&npcTalkRespPre, undef]
+			['pre/npc_talk_responses', \&npcTalkRespPre, undef],
+			['quest_mission_added', \&questMissionAdded, undef]
 		);
 		loadJSON();
 	}
@@ -154,12 +155,39 @@ sub _translate_tokens_inplace {
     $$sref =~ s/$RE_TOKEN_BLOB/_translate_blob($1)/gex;
 }
 
+sub _translate_single_token_inplace {
+    my ($sref) = @_;
+    return unless defined $$sref;
+    return unless length $$sref;
+    return unless exists $strings_cache{$$sref};
+    $$sref = translate_token($$sref);
+}
+
 sub _translate_args_field {
     my ($args, $field) = @_;
     my $val = $args->{$field};
     return unless defined $val;
     _translate_tokens_inplace(\$val);
     $args->{$field} = $val;
+}
+
+sub questMissionAdded {
+	my (undef, $args) = @_;
+
+	return unless defined $args->{questID} && defined $args->{mission_id};
+	return unless exists $questList->{$args->{questID}};
+	return unless exists $questList->{$args->{questID}}->{missions};
+	return unless exists $questList->{$args->{questID}}->{missions}->{$args->{mission_id}};
+
+	my $mission = $questList->{$args->{questID}}->{missions}->{$args->{mission_id}};
+	return unless defined $mission->{mob_name};
+
+	my $name = $mission->{mob_name};
+	_translate_tokens_inplace(\$name);
+	_translate_single_token_inplace(\$name);
+	return if $name =~ /\[MISSING:/;
+
+	$mission->{mob_name} = $name;
 }
 
 sub setName {
