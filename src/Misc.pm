@@ -6283,15 +6283,12 @@ sub autoNpcTalk {
 	my ($ID, $nameID) = @_;
 
 	return if (defined AI::findAction("NPC"));
-
-	my $routeIndex = AI::findAction("route");
-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
-
-	my $routeIndex = AI::findAction("route", 1);
-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
+	return if _routeActionHasTalkNpcSubtask(0) || _routeActionHasTalkNpcSubtask(1);
 
 	debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-	my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
+	my $sequence = resolveAutoNpcTalkSequence($ID);
+	debug "[TalkNPC] AutoTalk resolved sequence '".($sequence // '')."'.\n", "ai_npcTalk";
+	my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID, sequence => $sequence);
 	AI::queue("NPC", $task);
 	# TODO: The following npc_talk hook is only added on activation.
 	# Make the task module or AI listen to the hook instead
@@ -6300,6 +6297,48 @@ sub autoNpcTalk {
 	Plugins::callHook('npc_autotalk', {
 		task => $task
 	});
+}
+
+sub _routeActionHasTalkNpcSubtask {
+	my ($offset) = @_;
+	$offset = 0 if !defined $offset;
+
+	my $routeIndex = AI::findAction("route", $offset);
+	return 0 if !defined $routeIndex;
+
+	my $routeSubtask = AI::args($routeIndex)->getSubtask;
+	return ($routeSubtask && UNIVERSAL::isa($routeSubtask, 'Task::TalkNPC')) ? 1 : 0;
+}
+
+sub resolveAutoNpcTalkSequence {
+	my ($ID) = @_;
+
+	my $routeIndex = AI::findAction("mapRoute");
+	$routeIndex = AI::findAction("route") if (!defined $routeIndex);
+	return '' if (!defined $routeIndex);
+
+	my $routeTask = AI::args($routeIndex);
+	return '' if (!$routeTask || !UNIVERSAL::isa($routeTask, 'Task::MapRoute'));
+	return '' if (!$routeTask->{mapSolution} || ref($routeTask->{mapSolution}) ne 'ARRAY' || !@{$routeTask->{mapSolution}});
+	return '' if (!$routeTask->{mapSolution}[0]{steps});
+
+	my $solution = $routeTask->{mapSolution}[0];
+	my $actor = $npcsList->getByID($ID) || $portalsList->getByID($ID) || $monstersList->getByID($ID);
+	return '' if (!$actor);
+
+	my $pos = $actor->{pos} || $actor->{pos_to};
+	return '' if (!$pos || !$solution->{pos});
+	return '' if ($pos->{x} != $solution->{pos}{x} || $pos->{y} != $solution->{pos}{y});
+
+	return _stripLeadingPortalApproachStep($solution->{steps});
+}
+
+sub _stripLeadingPortalApproachStep {
+	my ($sequence) = @_;
+	$sequence = '' if !defined $sequence;
+	$sequence =~ s/^\s*k(?:\s+|$)//i;
+	$sequence =~ s/^\s+|\s+$//g;
+	return $sequence;
 }
 
 sub isTeleportItemEquipRequirementSatisfied {
