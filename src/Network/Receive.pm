@@ -4898,6 +4898,8 @@ sub quest_update_mission_hunt {
 
 		next unless exists $questList->{$mission->{questID}};
 
+		next unless exists $questList->{$mission->{questID}};
+
 		my $quest = \%{$questList->{$mission->{questID}}};
 		my $quest_packet_index = $quest_update_seq{$mission->{questID}} // 0;
 		$quest_update_seq{$mission->{questID}} = $quest_packet_index + 1;
