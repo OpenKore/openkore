@@ -2435,6 +2435,8 @@ sub actor_died_or_disappeared {
 		} elsif ($args->{type} == 1) {
 			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
 			$monster->{dead} = 1;
+			$self->{_last_killed_monster_nameID} = $monster->{nameID};
+			$self->{_last_killed_monster_time} = time;
 
 			if ((AI::action() ne "attack" || AI::args(0)->{ID} eq $ID) &&
 				($config{itemsTakeAuto_party} &&
@@ -4886,8 +4888,6 @@ sub quest_update_mission_hunt {
 		$args->{mission_amount} = (length $args->{message}) / ($quest_info->{mission_len});
 	}
 
-	my %quest_update_seq;
-
 	for (my $i = 0; $i < $args->{mission_amount}; $i++) {
 		my $mission;
 
@@ -4898,11 +4898,7 @@ sub quest_update_mission_hunt {
 
 		next unless exists $questList->{$mission->{questID}};
 
-		next unless exists $questList->{$mission->{questID}};
-
 		my $quest = \%{$questList->{$mission->{questID}}};
-		my $quest_packet_index = $quest_update_seq{$mission->{questID}} // 0;
-		$quest_update_seq{$mission->{questID}} = $quest_packet_index + 1;
 
 		my $mission_id;
 		my $update_without_mob_id = exists $mission->{hunt_id} && !exists $mission->{mob_id};
@@ -4912,12 +4908,28 @@ sub quest_update_mission_hunt {
 			# Only treat it as a usable hunt identifier when it looks like questID * 1000 + mission_id.
 			$hunt_identifier = $mission->{hunt_id} if $mission->{hunt_id} > ($mission->{questID} * 1000);
 		}
+		my $recent_kill_mission_id;
 
-		# Primary path (default behavior): use direct identifiers from packet/state.
-		# Only if these fail do we apply fallback heuristics below.
+		# For hunt-only updates, if we just killed a monster, that is the strongest
+		# deterministic signal to map the mission.
+		if ($update_without_mob_id
+			&& defined $self->{_last_killed_monster_nameID}
+			&& defined $self->{_last_killed_monster_time}
+			&& time - $self->{_last_killed_monster_time} <= 3) {
+			my @recent_kill_candidates = grep {
+				exists $quest->{missions}->{$_}{mob_id}
+					&& $quest->{missions}->{$_}{mob_id} == $self->{_last_killed_monster_nameID}
+			} keys %{$quest->{missions}};
+			$recent_kill_mission_id = $recent_kill_candidates[0] if @recent_kill_candidates == 1;
+		}
+
+		if (defined $recent_kill_mission_id) {
+			$mission_id = $recent_kill_mission_id;
+		}
+
 		# Mission is saved as hunt_id and server sent hunt_id
-		if (exists $mission->{hunt_id} && exists $quest->{missions}->{$mission->{hunt_id}}) {
-			$mission_id = $mission->{hunt_id};
+		if (defined $hunt_identifier && exists $quest->{missions}->{$hunt_identifier}) {
+			$mission_id = $hunt_identifier;
 
 		# Mission is saved as mob_id and server sent mob_id
 		} elsif (exists $mission->{mob_id} && exists $quest->{missions}->{$mission->{mob_id}}) {
@@ -4934,74 +4946,52 @@ sub quest_update_mission_hunt {
 			}
 
 		# Mission is saved as mob_id and server sent hunt_id
-		} elsif (exists $mission->{hunt_id} && !exists $quest->{missions}->{$mission->{hunt_id}}) {
+		} elsif (defined $hunt_identifier && !exists $quest->{missions}->{$hunt_identifier}) {
 			# Search in the quest of a mission with this hunt_id
 			foreach my $current_key (keys %{$quest->{missions}}) {
-				if (exists $quest->{missions}->{$current_key}{hunt_id} && $quest->{missions}->{$current_key}{hunt_id} == $mission->{hunt_id}) {
+				if (exists $quest->{missions}->{$current_key}{hunt_id} && $quest->{missions}->{$current_key}{hunt_id} == $hunt_identifier) {
 					$mission_id = $quest->{missions}->{$current_key}{mob_id};
 					last;
 				}
 			}
 		}
 
-		# Fallback: when default lookup fails, use normalized hunt_id heuristics.
+		# Some servers can return mission updates keyed only by hunt identification.
+		# If direct lookup fails, map update by mission index from hunt_id.
 		if (!defined $mission_id && defined $hunt_identifier) {
 			my $mission_index = $hunt_identifier - ($mission->{questID} * 1000);
+			my @exact_candidates;
+			my @legacy_candidates;
 
 			foreach my $current_key (keys %{$quest->{missions}}) {
 				next unless exists $quest->{missions}->{$current_key}{mission_index};
-				next unless $quest->{missions}->{$current_key}{mission_index} == $mission_index
-					|| $quest->{missions}->{$current_key}{mission_index} == $mission_index - 1;
-				$mission_id = $current_key;
-				last;
+				my $current_index = $quest->{missions}->{$current_key}{mission_index};
+				push @exact_candidates, $current_key if $current_index == $mission_index;
+				push @legacy_candidates, $current_key if $current_index == $mission_index - 1;
 			}
-		}
 
-		# Some servers send hunt-only updates without a usable hunt_id for each mission.
-		# In multi-entry packets, fall back to packet order within each quest.
-		if (!defined $mission_id && $update_without_mob_id) {
-			my @index_candidates = grep {
-				exists $quest->{missions}->{$_}{mission_index}
-					&& $quest->{missions}->{$_}{mission_index} == $quest_packet_index
-			} keys %{$quest->{missions}};
-			$mission_id = $index_candidates[0] if @index_candidates == 1;
-		}
-
-		# Last-resort for single-entry hunt-only updates: map by current attack target mob_id.
-		if (!defined $mission_id && $update_without_mob_id && $args->{mission_amount} == 1
-			&& AI::action() eq 'attack' && AI::args(0) && AI::args(0)->{ID}) {
-			my $target = $monstersList->getByID(AI::args(0)->{ID});
-			if ($target && defined $target->{nameID}) {
-				my @target_candidates = grep {
-					exists $quest->{missions}->{$_}{mob_id}
-						&& $quest->{missions}->{$_}{mob_id} == $target->{nameID}
-				} keys %{$quest->{missions}};
-				$mission_id = $target_candidates[0] if @target_candidates == 1;
+			# Prefer exact mission_index match first.
+			if (@exact_candidates == 1) {
+				$mission_id = $exact_candidates[0];
+			} elsif (!@exact_candidates && @legacy_candidates == 1) {
+				# Compatibility fallback for servers that report mission_index starting at 1.
+				$mission_id = $legacy_candidates[0];
+			} elsif (@exact_candidates > 1 || @legacy_candidates > 1) {
+				debug TF("Quest mission update ignored due to ambiguous hunt mapping (quest: %d, hunt_id: %d, mission_index: %d)\n",
+					$mission->{questID}, $mission->{hunt_id}, $mission_index), "info";
 			}
-		}
-
-		# For single-entry hunt-only updates, align slot by current quest progress when possible.
-		if ($update_without_mob_id && $args->{mission_amount} == 1) {
-			my @progress_candidates = grep {
-				exists $quest->{missions}->{$_}{mob_count}
-					&& $mission->{mob_count} == $quest->{missions}->{$_}{mob_count} + 1
-			} keys %{$quest->{missions}};
-			$mission_id = $progress_candidates[0] if @progress_candidates == 1;
 		}
 
 		next unless defined $mission_id && exists $quest->{missions}->{$mission_id};
 
 		my $quest_mission = \%{$quest->{missions}->{$mission_id}};
-		my $old_count = $quest_mission->{mob_count};
-		my $old_goal  = $quest_mission->{mob_goal};
 
 		$quest_mission->{mob_count} = $mission->{mob_count};
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
-		my $mission_changed = !defined $old_count || $old_count != $quest_mission->{mob_count}
-			|| !defined $old_goal || $old_goal != $quest_mission->{mob_goal};
+
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
 
-		if ($config{questDisplayStyle} && ($args->{mission_amount} == 1 || $mission_changed)) {
+		if ($config{questDisplayStyle}) {
 			if ($config{questDisplayStyle} >= 2) {
 				warning TF("[%s] Quest - defeated [%s] progress (%s/%s)\n", $quests_lut{$mission->{questID}} ? "$quests_lut{$mission->{questID}}{title} ($mission->{questID})" : $mission->{questID}, $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
 			} else {
