@@ -4713,39 +4713,35 @@ sub quest_all_list {
 	}
 
 	for (my $i = 0 ; $i < $args->{quest_amount} ; $i++) {
-        my $quest;
+		my $quest;
 
-        @{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
+		@{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
 		if (exists $quest->{time_start} && exists $quest->{time_expire}) {
-			my $raw_time_start = $quest->{time_start};
-			my $raw_time_expire = $quest->{time_expire};
 			($quest->{time_start}, $quest->{time_expire}) = _quest_normalize_time_window($quest->{time_start}, $quest->{time_expire});
-			debug TF("Quest %d time window parsed: raw(start=%s expire=%s) resolved(start=%s expire=%s)\n",
-				$quest->{quest_id}, $raw_time_start, $raw_time_expire, $quest->{time_start}, $quest->{time_expire}), "info";
 		}
 
-        %{$questList->{$quest->{quest_id}}} = %$quest;
+		%{$questList->{$quest->{quest_id}}} = %$quest;
 
-        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+		debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
 
-        $offset += $quest_info->{quest_len};
+		$offset += $quest_info->{quest_len};
 
-        next if !exists $quest->{mission_amount};
+		next if !exists $quest->{mission_amount};
 
-        debug "- Mission amount: $quest->{mission_amount}\n", "info";
+		debug "- Mission amount: $quest->{mission_amount}\n", "info";
 
-        for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
-            my $mission;
+		for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+			my $mission;
 
-	            @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
-				$mission->{mob_name} = _quest_resolve_mob_name($mission->{mob_id}, $mission->{mob_name_original});
-            $mission->{mission_index} = $j;
+			@{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
+			$mission->{mob_name} = _quest_resolve_mob_name($mission->{mob_id}, $mission->{mob_name_original});
+			$mission->{mission_index} = $j;
 
-            %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
+			%{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
 
-            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
+			debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
 
-            $offset += $quest_info->{mission_len};
+			$offset += $quest_info->{mission_len};
 
 			Plugins::callHook('quest_mission_added', {
 				questID => $quest->{quest_id},
@@ -4778,11 +4774,7 @@ sub quest_all_mission {
 
 		@{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
 		if (exists $quest->{time_start} && exists $quest->{time_expire}) {
-			my $raw_time_start = $quest->{time_start};
-			my $raw_time_expire = $quest->{time_expire};
 			($quest->{time_start}, $quest->{time_expire}) = _quest_normalize_time_window($quest->{time_start}, $quest->{time_expire});
-			debug TF("Quest %d time window parsed: raw(start=%s expire=%s) resolved(start=%s expire=%s)\n",
-				$quest->{quest_id}, $raw_time_start, $raw_time_expire, $quest->{time_start}, $quest->{time_expire}), "info";
 		}
 
 		my $char_quest = \%{$questList->{$quest->{quest_id}}};
@@ -4857,10 +4849,7 @@ sub quest_add {
 	}
 
 	my $quest = \%{$questList->{$args->{questID}}};
-	my ($raw_time_start, $raw_time_expire) = ($args->{time_start}, $args->{time_expire});
-	my ($time_start, $time_expire) = _quest_normalize_time_window($raw_time_start, $raw_time_expire);
-	debug TF("Quest %d time window parsed: raw(start=%s expire=%s) resolved(start=%s expire=%s)\n",
-		$args->{questID}, $raw_time_start, $raw_time_expire, $time_start, $time_expire), "info";
+	my ($time_start, $time_expire) = _quest_normalize_time_window($args->{time_start}, $args->{time_expire});
 	$quest->{quest_id} = $args->{questID};
 	$quest->{active} = $args->{active};
 	$quest->{time_start} = $time_start;
@@ -4982,6 +4971,7 @@ sub quest_update_mission_hunt {
 			} keys %{$quest->{missions}};
 			$recent_kill_mission_id = $recent_kill_candidates[0] if @recent_kill_candidates == 1;
 		}
+
 		# Mission is saved as hunt_id and server sent hunt_id
 		if (defined $hunt_identifier && exists $quest->{missions}->{$hunt_identifier}) {
 			$mission_id = $hunt_identifier;
@@ -5040,11 +5030,11 @@ sub quest_update_mission_hunt {
 		# Last-resort fallback for hunt-only updates: preserve packet order within the same quest.
 		if (!defined $mission_id && $update_without_mob_id) {
 			my @index_candidates = grep {
-			exists $quest->{missions}->{$_}{mission_index}
-				&& $quest->{missions}->{$_}{mission_index} == $quest_packet_index
+				exists $quest->{missions}->{$_}{mission_index}
+					&& $quest->{missions}->{$_}{mission_index} == $quest_packet_index
 			} keys %{$quest->{missions}};
-				$mission_id = $index_candidates[0] if @index_candidates == 1;
-			}
+			$mission_id = $index_candidates[0] if @index_candidates == 1;
+		}
 
 		# Fallback only after deterministic mappings fail: use recent kill.
 		if (!defined $mission_id && defined $recent_kill_mission_id) {
