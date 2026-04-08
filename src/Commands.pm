@@ -7089,8 +7089,17 @@ sub cmdQuest {
 		my $msg .= center(" " . T("Quest List") . " ", 79, '-') . "\n";
 		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
+			my $display_time = $quest->{time_expire};
+			if ((!exists $quest->{missions} || !keys %{$quest->{missions}})
+				&& $quest->{time_start}
+				&& $quest->{time_expire}
+				&& $quest->{time_start} < $quest->{time_expire}) {
+				# For "wait/return after" quests without hunt missions, start time
+				# carries the meaningful availability timestamp on some servers.
+				$display_time = $quest->{time_start};
+			}
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x5), ('<'x30), ('<'x10), ('<'x24)),
-				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time_expire} ? scalar localtime $quest->{time_expire} : '']);
+				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $display_time ? scalar localtime $display_time : '']);
 			foreach my $mobID (sort {
 				($quest->{missions}{$a}{mission_index} // 9999) <=> ($quest->{missions}{$b}{mission_index} // 9999) || $a <=> $b
 			} keys %{$quest->{missions}}) {
@@ -8787,4 +8796,3 @@ sub cmdEden {
 }
 
 1;
-
