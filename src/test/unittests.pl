@@ -23,6 +23,7 @@ my @tests = qw(
 	FileParsersTest
 	DynamicPortalGroupsTest
 	NetworkTest
+	QuestReceiveTest
 	FieldTest
 	XConfTest
 );
