@@ -1051,7 +1051,14 @@ logToFile_Messages
 logToFile_Warnings
 history_max 50
 
-avoidObstacles_enable_move 0
+# Plugins
+
+eventMacro_orphans terminate
+eventMacro_CheckOnAI auto
+eventMacro_notWhenInQueue storageAuto, buyAuto, sellAuto
+eventMacro_file eventMacros.txt
+
+avoidObstacles_enable_move 1
 avoidObstacles_enable_remove 1
 avoidObstacles_enable_avoid_portals 1
 avoidObstacles_adjust_route_step 1
@@ -1064,15 +1071,6 @@ avoidObstaclesDefaultPortals {
 	prohibited_dist 2
 	drop_target_when_near_dist 3
 	drop_destination_when_near_dist 3
-}
-
-avoidObstaclesMonster 1368 {
-	enabled 1
-	penalty_dist 20000, 20000, 20000, 20000, 30, 7
-	danger_dist 10, 10, 10, 10, 1
-	prohibited_dist -1
-	drop_target_when_near_dist 4
-	drop_destination_when_near_dist 4
 }
 
 

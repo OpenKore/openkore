@@ -6,8 +6,10 @@
 # by both Obeaunes and Hydras, you'll attack Hydras first. Obeaunes have
 # more priority than all monsters not listed in this file, so you'll
 # attack Obeaunes first if you get mobbed by Obeaunes and something other
-# than Hydras.
+# than Hydras. all is the default monster not listed on this file.
+# Monsters listed bellow all will have less priority than a non-listed mob
 #
 # Example (remove the comment character to activate them):
 #Hydra
 #Obeaune
+#all
