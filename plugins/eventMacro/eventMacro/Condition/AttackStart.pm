@@ -2,7 +2,7 @@ package eventMacro::Condition::AttackStart;
 
 use strict;
 use Globals qw( %monsters $field $char);
-use Utils   qw( calcPocalcPosFromPathfindingsition blockDistance );
+use Utils   qw( calcPosFromPathfinding blockDistance );
 
 use base 'eventMacro::Conditiontypes::ListConditionEvent';
 
