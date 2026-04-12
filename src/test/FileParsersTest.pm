@@ -7,6 +7,7 @@ use FileParsers;
 use Globals;
 use Misc;
 use File::Copy;
+use File::Temp qw(tempfile);
 
 use constant NOT_CONFIGURED_ITEM => 'Random Item';
 
@@ -46,6 +47,29 @@ sub start {
 			}
 			done_testing();
 		} or skip 'failed to load tables', 1;
+
+		subtest 'monsters_table.txt' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				"ID\tLevel\tHp\tAttackRange\tSkillRange\tAttackDelay\tAttackMotion\tSize\tRace\tElement\tElementLevel\tChaseRange\tAi\tName",
+				"1002\t1\t55\t1\t10\t1872\t672\tMedium\tPlant\tWater\t1\t12\t02\tPoring",
+				"1038\t78\t114480\t1\t10\t1736\t936\tLarge\tUndead\tHoly\t4\t14\t03\tGolden Thief Bug",
+				"2000 10 100 1 10 1000 500 Small Formless Neutral 1 12",
+			) . "\n";
+			close $fh;
+
+			my %monsters;
+			parseMonstersTableFile($filename, \%monsters);
+
+			is($monsters{1002}{Ai}, '02', 'parses Ai from tab-separated format');
+			is($monsters{1002}{Name}, 'Poring', 'parses Name from tab-separated format');
+			is($monsters{1038}{Name}, 'Golden Thief Bug', 'parses Name with spaces');
+			is($monsters{2000}{Ai}, '06', 'defaults Ai to 06 when omitted');
+			ok(!exists $monsters{2000}{Name}, 'does not create Name when omitted');
+
+			unlink $filename;
+			done_testing();
+		};
 
 		# 502 - unknown item
 		my %item_names = map {$_ => itemName({nameID => $_, cards => pack('v*', (0)x4)})} 502, keys %items_lut;
@@ -98,6 +122,19 @@ sub start {
 			is(pickupitems(NOT_CONFIGURED_ITEM), 1, 'all');
 			is(pickupitems($_), 2, $_) for grep {!/Bowman Scroll 1/} @{$item_names_part[0]};
 			is(pickupitems($_), -1, $_) for @{$item_names_part[1]};
+			done_testing();
+		};
+
+		subtest 'priority.txt' => sub {
+			parsePriority('data/priority.txt', \%priority);
+
+			is($priority{hydra}, 4, 'stores named monsters');
+			is($priority{1096}, 3, 'stores monster IDs');
+			is($priority{all}, 2, 'stores all fallback in list order');
+			is(Misc::monsterPriority('Angeling', 1096), 3, 'prefers ID over name');
+			is(Misc::monsterPriority('Hydra', 1053), 4, 'falls back to name when ID is missing');
+			is(Misc::monsterPriority('Poring', 1002), 2, 'uses all for unlisted monsters');
+			is(Misc::monsterPriority('Eclipse', 1093), 1, 'entries after all stay below the fallback');
 			done_testing();
 		};
 

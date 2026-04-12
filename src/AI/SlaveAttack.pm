@@ -361,8 +361,8 @@ sub main {
 	my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
 	$extra_time = 0 unless defined $extra_time;
 
-	my $realMyPos = calcPosFromPathfinding($field, $slave, $extra_time);
-	my $realMonsterPos = calcPosFromPathfinding($field, $target, $extra_time);
+	my $realMyPos = calcPosFromPathfinding($field, $slave, $extra_time, 1);
+	my $realMonsterPos = calcPosFromPathfinding($field, $target, $extra_time, 1);
 	
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
@@ -628,7 +628,7 @@ sub main {
 		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}));
 		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance}, $config{clientSight});
 		if ($futurecanAttack) {
-			warning TF("[SlaveAttack] %s currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
+			debug TF("[SlaveAttack] %s currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
 				$slave, $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}, $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}), 'ai_attack';
 			$found_action = 1;
 		}

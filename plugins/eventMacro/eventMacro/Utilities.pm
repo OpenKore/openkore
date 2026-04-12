@@ -10,7 +10,8 @@ our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
         getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
         getWord call_macro getArgFromList sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
         getStorageAmountbyID getCartAmountbyID getQuestStatus get_pattern find_hash_and_get_keys find_hash_and_get_values
-        getEquipProperty getEquipCards getEquipCardAmount getEquipOptions getEquipOptionsAmount getEquipRefinement);
+        getEquipProperty getEquipCards getEquipCardAmount getEquipOptions getEquipOptionsAmount getEquipRefinement
+        updateQuestConditionStandbyState);
 
 use Utils;
 use Globals;
@@ -220,6 +221,38 @@ sub getQuestStatus {
 		}
 	}
 	$result;
+}
+
+sub updateQuestConditionStandbyState {
+	my ($self, $callback_type, $callback_name) = @_;
+
+	if ($callback_type eq 'hook') {
+		if ($callback_name eq 'in_game' || $callback_name eq 'packet_mapChange') {
+			$self->{is_on_stand_by} = 1;
+			$self->{quest_ready_after} = time + 3;
+		} elsif ($callback_name eq 'mainLoop_pre' || $callback_name eq 'AI_pre') {
+			my $quest_ready_after = $self->{quest_ready_after} // 0;
+			if (keys %{$questList} || !$quest_ready_after || time >= $quest_ready_after) {
+				$self->{is_on_stand_by} = 0;
+			}
+		} else {
+			$self->{is_on_stand_by} = 0;
+		}
+	} elsif ($callback_type eq 'recheck') {
+		my $quest_ready_after = $self->{quest_ready_after} // 0;
+		if (keys %{$questList} || !$quest_ready_after || time >= $quest_ready_after) {
+			$self->{is_on_stand_by} = 0;
+		}
+	}
+
+	my $should_enable_dynamic_hooks = $self->{is_on_stand_by} ? 1 : 0;
+	my $dynamic_hooks_enabled = $self->{quest_standby_dynamic_hooks_enabled} ? 1 : 0;
+	if ($should_enable_dynamic_hooks != $dynamic_hooks_enabled) {
+		$self->add_or_remove_dynamic_hooks($should_enable_dynamic_hooks);
+		$self->{quest_standby_dynamic_hooks_enabled} = $should_enable_dynamic_hooks;
+	}
+
+	return $self->{is_on_stand_by};
 }
 
 # get NPC array index

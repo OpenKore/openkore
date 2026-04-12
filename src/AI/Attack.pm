@@ -383,14 +383,21 @@ sub find_kite_position {
 	}
 }
 
+sub resolve_movetoattack_pos {
+	my ($actor) = @_;
+	return unless (actorFinishedMovement($actor, $field));
+	debug TF("[Attack] [%s] Fixing failed to attack target, setting actor position to: %s %s\n", $actor, $char->{movetoattack_pos}{x}, $char->{movetoattack_pos}{y} ), "ai_attack";
+	$actor->{pos}{x} = $actor->{movetoattack_pos}{x};
+	$actor->{pos}{y} = $actor->{movetoattack_pos}{y};
+	$actor->{pos_to}{x} = $actor->{movetoattack_pos}{x};
+	$actor->{pos_to}{y} = $actor->{movetoattack_pos}{y};
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = 0;
+	$actor->{solution} = [];
+	delete $actor->{movetoattack_pos};
+}
+
 sub main {
-	my $args = AI::args();
-
-	Benchmark::begin("ai_attack (part 1)") if DEBUG;
-	Benchmark::begin("ai_attack (part 1.1)") if DEBUG;
-	# The attack sequence hasn't timed out and the monster is on screen
-
-	# Update information about the monster and the current situation
 	my $args = AI::args();
 	my $ID = $args->{ID};
 
@@ -403,6 +410,10 @@ sub main {
 		Plugins::callHook('undefined_object_id');
 	}
 
+	Benchmark::begin("ai_attack (part 1)") if DEBUG;
+	Benchmark::begin("ai_attack (part 1.1)") if DEBUG;
+	# The attack sequence hasn't timed out and the monster is on screen
+
 	my $target = Actor::get($ID);
 
 	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
@@ -413,18 +424,7 @@ sub main {
 		if (!exists $char->{movetoattack_targetID} || $char->{movetoattack_targetID} ne $ID || $char->{time_move} > $char->{movetoattack_time}) {
 			delete $char->{movetoattack_pos};
 		} else {
-			my $time_since_char_moved = time - $char->{time_move};
-			if ($time_since_char_moved > $char->{time_move_calc}) {
-				debug "[Attack] [Char] Fixing failed to attack target, setting char position to: $char->{movetoattack_pos}{x} $char->{movetoattack_pos}{y}\n", "ai_attack";
-				$char->{pos}{x} = $char->{movetoattack_pos}{x};
-				$char->{pos}{y} = $char->{movetoattack_pos}{y};
-				$char->{pos_to}{x} = $char->{movetoattack_pos}{x};
-				$char->{pos_to}{y} = $char->{movetoattack_pos}{y};
-				$char->{time_move} = time;
-				$char->{time_move_calc} = 0;
-				$char->{solution} = [];
-				delete $char->{movetoattack_pos};
-			}
+			resolve_movetoattack_pos($char);
 		}
 	}
 
@@ -432,19 +432,7 @@ sub main {
 		if ($target->{time_move} > $target->{movetoattack_time}) {
 			delete $target->{movetoattack_pos};
 		} else {
-			my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
-			my $target_time_to_move = calcTimeFromSolution($target_solution, $target->{walk_speed});
-			my $time_since_target_moved = time - $target->{time_move};
-			if ($time_since_target_moved > $target_time_to_move) {
-				debug "[Attack] [Target] Fixing failed to attack target, setting target $target position to: $target->{movetoattack_pos}{x} $target->{movetoattack_pos}{y}\n", "ai_attack";
-				$target->{pos}{x} = $target->{movetoattack_pos}{x};
-				$target->{pos}{y} = $target->{movetoattack_pos}{y};
-				$target->{pos_to}{x} = $target->{movetoattack_pos}{x};
-				$target->{pos_to}{y} = $target->{movetoattack_pos}{y};
-				$target->{time_move} = time;
-				$target->{time_move_calc} = 0;
-				delete $target->{movetoattack_pos};
-			}
+			resolve_movetoattack_pos($target);
 		}
 	}
 
@@ -455,8 +443,8 @@ sub main {
 	my $monsterPos = $target->{pos_to};
 	my $monsterDist = blockDistance($myPosTo, $monsterPos);
 
-	my $realMyPos = calcPosFromPathfinding($field, $char, $extra_time);
-	my $realMonsterPos = calcPosFromPathfinding($field, $target, $extra_time);
+	my $realMyPos = calcPosFromPathfinding($field, $char, $extra_time, 1);
+	my $realMonsterPos = calcPosFromPathfinding($field, $target, $extra_time, 1);
 
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
@@ -738,7 +726,7 @@ sub main {
 		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}));
 		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
 		if ($futurecanAttack) {
-			warning TF("[Attack] You currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
+			debug TF("[Attack] You currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
 			$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}), 'ai_attack';
 			$found_action = 1;
 		}

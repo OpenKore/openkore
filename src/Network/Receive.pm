@@ -1881,14 +1881,18 @@ sub actor_display {
 		$args->{tick} = $tickArg; # lol tickcount what do we do with that? debug "tick: " . $tickArg/1000/3600/24 . "\n";
 	}
 
-	my (%coordsFrom, %coordsTo);
+	my (%coordsFrom, %coordsTo, $move_start_sx, $move_start_sy);
 	if (length $args->{coords} == 6) {
 		# Actor Moved
-		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}); # body dir will be calculated using the vector
+		makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords}, \$move_start_sx, \$move_start_sy); # body dir will be calculated using the vector
+		$move_start_sx = 8 unless defined $move_start_sx;
+		$move_start_sy = 8 unless defined $move_start_sy;
 	} else {
 		# Actor Spawned/Exists
 		makeCoordsDir(\%coordsTo, $args->{coords}, \$args->{body_dir});
 		%coordsFrom = %coordsTo;
+		$move_start_sx = 8;
+		$move_start_sy = 8;
 	}
 
 =pod
@@ -2097,9 +2101,12 @@ sub actor_display {
 
 	$actor->{pos} = {%coordsFrom};
 	$actor->{pos_to} = {%coordsTo};
+	$actor->{move_start_sx} = $move_start_sx;
+	$actor->{move_start_sy} = $move_start_sy;
 	$actor->{time_move} = time;
-	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
+	$actor->{time_move_calc} = 0;
 	$actor->{solution} = [];
+	$actor->{solution_calc_time} = 0;
 
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
@@ -2417,7 +2424,6 @@ sub actor_died_or_disappeared {
 
 	if ($ID eq $accountID) {
 		message T("You have died\n") if (!$char->{dead});
-		Plugins::callHook('self_died');
 		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || AI::state() == AI::OFF();
 		$char->{deathCount}++;
 		$char->{dead} = 1;
@@ -2425,6 +2431,7 @@ sub actor_died_or_disappeared {
 		if ($char->{equipment}{arrow} && $char->{equipment}{arrow}{type} == 19) {
 			delete $char->{equipment}{arrow};
 		}
+		Plugins::callHook('self_died');
 
 	} elsif (defined $monstersList->getByID($ID)) {
 		my $monster = $monstersList->getByID($ID);
@@ -5570,13 +5577,11 @@ sub character_moves {
 	my $dist = blockDistance($char->{pos}, $char->{pos_to});
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
 
-	my $speed = ($char->{walk_speed} || 0.12);
-	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
-	my $time = calcTimeFromSolution($my_solution, $speed);
 	$char->{time_move} = time;
+	$char->{time_move_calc} = 0;
+	$char->{solution} = [];
+
 	#$char->{time_move_server_tick} = unpack('V', $args->{move_start_time});
-	$char->{time_move_calc} = $time;
-	$char->{solution} = $my_solution;
 
 	# Correct the direction in which we're looking
 	my (%vec, $degree);
@@ -8293,10 +8298,10 @@ sub actor_movement_interrupted {
 	}
 
 	if ($actor->isa('Actor::You')) {
-		debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
+		debug "Your movement was interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
 		AI::clear("move");
 	
-	} elsif (($char->{homunculus} && $char->{homunculus}{ID} eq $actor->{ID}) || ($char->{mercenary} && $char->{mercenary}{ID} eq $actor->{ID})) {
+	} elsif ($actor) {
 		debug TF("[%s] Movement interrupted, coordinates: %s %s\n", $actor, $coords{x}, $coords{y}), "parseMsg_move";
 	}
 }
@@ -11507,6 +11512,7 @@ sub resurrection {
 		undef $char->{'dead'};
 		undef $char->{'dead_time'};
 		$char->{'resurrected'} = 1;
+		Plugins::callHook('self_resurrected');
 
 	} else {
 		if ($player) {

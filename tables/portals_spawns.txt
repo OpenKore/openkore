@@ -74,6 +74,7 @@ savepoint "pay_arche",49,144;
 savepoint "payon",104,99;
 savepoint "payon",160,58;
 savepoint "payon",164,58;
+savepoint "payon",159,57;
 savepoint "payon",256,242;
 savepoint "payon",257,242;
 savepoint "payon",70,100;

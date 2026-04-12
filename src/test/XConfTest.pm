@@ -51,7 +51,10 @@ END_MONS
 			},
 		);
 		local %Globals::monsters_lut = (
-			1002 => 'Poring',
+			1002 => "\x1CoYYB\x1C",
+		);
+		local %Globals::monstersTable = (
+			1002 => { Name => 'Poring' },
 		);
 		local %Globals::mon_control = (
 			poring => {

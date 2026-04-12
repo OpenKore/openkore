@@ -65,15 +65,17 @@ sub manage_check_triggered_automacros {
 		$args->{return} = 0;
 		return;
 	}
-	
-	foreach my $array_member (@{$eventMacro->{triggered_prioritized_automacros_index_list}}) {
 
-		my $automacro = $eventMacro->{Automacro_List}->get($array_member->{index});
+	foreach my $cycle_stage ($eventMacro->get_cycle_stages) {
+		foreach my $array_member (@{$eventMacro->{triggered_prioritized_automacros_index_list}{$cycle_stage}}) {
 
-		next unless $automacro->is_timed_out;
-		
-		$args->{return} = 1;
-		return;
+			my $automacro = $eventMacro->{Automacro_List}->get($array_member->{index});
+
+			next unless $automacro->is_timed_out;
+
+			$args->{return} = 1;
+			return;
+		}
 	}
 	
 	$args->{return} = 0;
@@ -84,6 +86,7 @@ sub checkConfig {
 	$timeout{eventMacro_delay}{timeout} = 1 unless defined $timeout{eventMacro_delay};
 	$config{eventMacro_orphans} = 'terminate' unless defined $config{eventMacro_orphans};
 	$config{eventMacro_CheckOnAI} = 'auto' unless defined $config{eventMacro_CheckOnAI};
+	$config{eventMacro_notWhenInQueue} = '' unless defined $config{eventMacro_notWhenInQueue};
 	$file = (defined $config{eventMacro_file}) ? $config{eventMacro_file} : "eventMacros.txt";
 	return 1;
 }
@@ -628,6 +631,7 @@ sub commandHandler {
 		);
 
 		if ( defined $eventMacro->{Macro_Runner} ) {
+			$eventMacro->{Macro_Runner_Cycle_Stage} = 'AI_start';
 			$eventMacro->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $eventMacro->iterate_macro }, undef );
 		} else {
 			error "[eventMacro] unable to create macro queue.\n";

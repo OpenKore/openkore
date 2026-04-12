@@ -117,7 +117,7 @@ sub iterate {
 
 	##### AUTOMATIC AI STARTS HERE #####
 
-	Plugins::callHook('AI_pre');
+	Plugins::callHook('AI_pre', {state => AI::state()});
 	Benchmark::begin("AI (part 2)") if DEBUG;
 
 	ChatQueue::processFirst;
@@ -152,6 +152,8 @@ sub iterate {
 	processAutoCart();
 	Misc::checkValidity("AI (autocart)");
 	Benchmark::end("AI (part 3.1)") if DEBUG;
+
+	Plugins::callHook('AI_middle', {state => AI::state()});
 
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
@@ -217,7 +219,7 @@ sub iterate {
 	}
 
 
-	Plugins::callHook('AI_post');
+	Plugins::callHook('AI_post', {state => AI::state()});
 }
 
 
@@ -3081,6 +3083,8 @@ sub processAutoAttack {
 			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
 			@aggressives = ai_getAggressives($aggressiveType, $party) if $effectiveAttackMode >= 0;
 
+			my $myPos = calcPosFromPathfinding($field, $char);
+
 			# List party monsters
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
@@ -3162,7 +3166,6 @@ sub processAutoAttack {
 				 && !$monster->{dmgFromYou}
 				);
 
-				my $myPos = calcPosition($char);
 				my $target_pos = calcPosition($monster);
 				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				next unless ($control->{dist} eq '' || blockDistance($target_pos, $myPos) <= $control->{dist});
@@ -3264,7 +3267,7 @@ sub processItemsAutoGather {
 
 		my $bestItem;
 		my $smallestDist;
-		my $myPos = calcPosition($char);
+		my $myPos = calcPosFromPathfinding($field, $char);
 		my $minPlayerDist = $config{itemsGatherAutoMinPlayerDistance} || 6;
 		my $minPortalDist = $config{itemsGatherAutoMinPortalDistance} || 5;
 
@@ -3419,6 +3422,7 @@ sub processAutoTeleport {
 
 	##### TELEPORT MONSTER #####
 	if ($safe && timeOut($timeout{ai_teleport_away})) {
+		my $realMyPos = calcPosFromPathfinding($field, $char);
 		foreach (@monstersID) {
 			next unless $_;
 			my $teleAuto = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto};
@@ -3431,11 +3435,10 @@ sub processAutoTeleport {
 				return;
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
 				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-				my $pos = calcPosition($monsters{$_});
-				my $myPos = calcPosition($char);
-				my $dist = blockDistance($pos, $myPos);
+				my $pos = calcPosFromPathfinding($field, $monsters{$_});
+				my $dist = blockDistance($pos, $realMyPos);
 				if ($dist <= abs($teleAuto)) {
-					if ($field->canMove($myPos, $pos)) {
+					if ($field->canMove($realMyPos, $pos)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1;
 						ai_useTeleport(1);

@@ -1647,7 +1647,7 @@ sub parse_log {
 			return;
 		}
 	}
-	$self->timeout($self->macro_delay);
+	$self->timeout(0);
 	$self->next_line;
 }
 

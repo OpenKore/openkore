@@ -318,6 +318,9 @@ sub on_bulk_mconf {
 	my ($hook, $args) = @_;
 	_bulk_write_control_entries('mon_control.txt', $args->{changes}, \%mon_control, sub {
 		my ($key) = @_;
+		if (exists $monstersTable{$key} && exists $monstersTable{$key}{Name}) {
+			return $monstersTable{$key}{Name};
+		}
 		return $monsters_lut{$key} || $key;
 	});
 }

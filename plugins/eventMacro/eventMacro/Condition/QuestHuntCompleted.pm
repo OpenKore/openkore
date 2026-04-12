@@ -3,12 +3,7 @@ package eventMacro::Condition::QuestHuntCompleted;
 use strict;
 use Globals qw( $questList );
 use eventMacro::Utilities qw( find_variable );
-
-use base 'eventMacro::Condition';
-
-sub _hooks {
-	['quest_all_list_end','quest_all_mission_end','quest_added','quest_update_mission_hunt_end','quest_delete','quest_active'];
-}
+use base 'eventMacro::Condition::Base::Quest';
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
@@ -22,7 +17,7 @@ sub _parse_syntax {
 	
 	$self->{members_array} = [];
 	
-	$self->{is_on_stand_by} = 1;
+	$self->initialize_quest_condition;
 	
 	my $var_exists_hash = {};
 	
@@ -146,26 +141,9 @@ sub check_quests {
 	}
 }
 
-sub validate_condition {
-	my ( $self, $callback_type, $callback_name, $args ) = @_;
-	
-	if ($callback_type eq 'hook') {
-		$self->{is_on_stand_by} = 0;
-		
-	} elsif ($callback_type eq 'variable') {
-		$self->update_vars($callback_name, $args);
-		
-	} elsif ($callback_type eq 'recheck') {
-		$self->{is_on_stand_by} = 0;
-	}
-	
-	$self->check_quests;
-	
-	if ($self->{is_on_stand_by} == 1) {
-		return $self->SUPER::validate_condition(0);
-	} else {
-		return $self->SUPER::validate_condition( (defined $self->{fulfilled_quest_id} ? 1 : 0) );
-	}
+sub get_quest_condition_result {
+	my ($self) = @_;
+	return defined $self->{fulfilled_quest_id} ? 1 : 0;
 }
 
 sub get_new_variable_list {

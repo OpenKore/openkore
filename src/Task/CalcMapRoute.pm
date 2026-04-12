@@ -881,7 +881,7 @@ sub getWarpItemCandidates {
 		my $itemLabel = $self->formatWarpItemLabel($candidate);
 		my $remaining = int(($candidate->{remaining} || 0) + 0.5);
 		my $cooldown = sprintf("%s (%s sec)", timeConvert($remaining), $remaining);
-		warning TF("Teleport item %s: cooldown active, wait %s.\n", $itemLabel, $cooldown), "route";
+		debug TF("[CalcMapRoute] Teleport item %s: cooldown active, wait %s.\n", $itemLabel, $cooldown), "route";
 		$self->{_warp_item_cooldown_warned}{$entry->{itemID}} = 1;
 		last;
 	}

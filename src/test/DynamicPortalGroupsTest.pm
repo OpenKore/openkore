@@ -9,6 +9,7 @@ use FileParsers;
 use Globals;
 use Misc qw(
 	refreshDynamicPortalGroups
+	refreshDynamicPortalStates
 	applyDynamicPortalStates
 	getDynamicPortalDestinations
 );
@@ -104,6 +105,12 @@ sub start {
 			applyDynamicPortalStates();
 			ok($Globals::portals_lut{'moc_para01 40 20'}{dest}{'geffen 120 39'}{enabled}, 'selection can enable a different source cluster');
 			ok(!$Globals::portals_lut{'moc_para01 30 10'}{dest}{'payon 161 58'}{enabled}, 'previously enabled destination is disabled after selection changes');
+
+			$Globals::config{EdenPortalExit} = 'alberta';
+			parsePortals(_test_file('dynamic_portals.txt'), \%Globals::portals_lut);
+			refreshDynamicPortalStates();
+			ok($Globals::portals_lut{'moc_para01 40 20'}{dest}{'alberta 117 56'}{enabled}, 'refresh after portal reload restores the selected destination');
+			ok(!$Globals::portals_lut{'moc_para01 30 10'}{dest}{'payon 161 58'}{enabled}, 'refresh after portal reload disables stale destinations again');
 		});
 
 		done_testing();
@@ -159,6 +166,25 @@ sub start {
 			edenPortalExitSync::_updateFromEdenExit('payon');
 			is($Globals::config{EdenPortalExit}, 'payon', 'leaving Eden rewrites the exit when the actual destination differs');
 			is_deeply(\@config_updates, [['EdenPortalExit', 'payon']], 'exit updates the config once');
+
+			@config_updates = ();
+			$Globals::config{EdenPortalExit} = 'geffen';
+			$Globals::char = {
+				pos => {x => 10, y => 10},
+			};
+
+			edenPortalExitSync::_updateFromEdenExit('payon');
+			is($Globals::config{EdenPortalExit}, 'geffen', 'non-portal exits from Eden do not rewrite the configured destination');
+			is_deeply(\@config_updates, [], 'non-portal exits do not write config changes');
+
+			@config_updates = ();
+			$Globals::char = {
+				pos => {x => 162, y => 58},
+			};
+
+			edenPortalExitSync::_updateFromEdenExit('payon');
+			is($Globals::config{EdenPortalExit}, 'payon', 'small landing offsets still resolve to the expected Eden exit destination');
+			is_deeply(\@config_updates, [['EdenPortalExit', 'payon']], 'nearby portal landing still updates config once');
 		});
 
 		done_testing();

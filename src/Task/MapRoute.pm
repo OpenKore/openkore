@@ -30,7 +30,7 @@ use Log qw(message debug warning error);
 use Network;
 use Plugins;
 use Misc qw(canUseTeleport portalExists);
-use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding);
+use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding actorFinishedMovement);
 use Utils::PathFinding;
 use Utils::Exceptions;
 use AI qw(ai_useTeleport);
@@ -306,7 +306,7 @@ sub iterate {
 			my $max_npc_dist = 10;
 			my $realPos = calcPosFromPathfinding($field, $self->{actor});
 			my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
-			return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
+			return unless actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1);
 
 			if ( $self->{mapSolution}[0]{steps} && $dist_to_npc > $max_npc_dist) {
 				if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
@@ -375,7 +375,7 @@ sub iterate {
 									if (!exists $self->{mapSolution}[0]{plugin_retry}) {
 										$self->{mapSolution}[0]{plugin_retry} = 0;
 									}
-									my %plugin_args = (
+									my %airship_fail_plugin_args = (
 										'x'            => $self->{mapSolution}[0]{pos}{x},
 										'y'            => $self->{mapSolution}[0]{pos}{y},
 										'steps'        => $self->{mapSolution}[0]{steps},
@@ -384,13 +384,13 @@ sub iterate {
 										'return'       => 0
 									);
 
-									Plugins::callHook('npc_airship_teleport_missing' => \%plugin_args);
+									Plugins::callHook('npc_airship_teleport_missing' => \%airship_fail_plugin_args);
 
-									if ($plugin_args{return}) {
+									if ($airship_fail_plugin_args{return}) {
 										$self->{mapSolution}[0]{retry} = 0;
 										$self->{mapSolution}[0]{plugin_retry}++;
-										$self->{mapSolution}[0]{pos}{x} = $plugin_args{x};
-										$self->{mapSolution}[0]{pos}{y} = $plugin_args{y};
+										$self->{mapSolution}[0]{pos}{x} = $airship_fail_plugin_args{x};
+										$self->{mapSolution}[0]{pos}{y} = $airship_fail_plugin_args{y};
 										$self->setNpcTalk();
 									} else {
 										error TF("Failed to teleport using airship NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
@@ -453,7 +453,7 @@ sub iterate {
 		my $max_npc_dist = 10;
 		my $realPos = calcPosFromPathfinding($field, $self->{actor});
 		my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
-		return unless (timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})));
+		return unless actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1);
 		
 		if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
 			$self->{mapSolution}[0]{retry} = 0;
@@ -470,6 +470,36 @@ sub iterate {
 				warning TF("Failed to teleport using NPC at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
 				warning TF("NPC error: %s.\n", $self->{mapSolution}[0]{error}), "map_route" if (exists $self->{mapSolution}[0]{error});
 
+				my %npc_error_plugin_args = (
+					'x'            => $self->{mapSolution}[0]{pos}{x},
+					'y'            => $self->{mapSolution}[0]{pos}{y},
+					'steps'        => $self->{mapSolution}[0]{steps},
+					'portal'       => $self->{mapSolution}[0]{portal},
+					'error'        => $self->{mapSolution}[0]{error},
+					'retry'        => $self->{mapSolution}[0]{retry},
+					'plugin_retry' => ($self->{mapSolution}[0]{plugin_retry} || 0),
+					'recalculate' => 0,
+					'return'       => 0
+				);
+				Plugins::callHook('npc_teleport_error' => \%npc_error_plugin_args);
+
+				if ($npc_error_plugin_args{return}) {
+					$self->{mapSolution}[0]{retry} = 0;
+					$self->{mapSolution}[0]{plugin_retry}++;
+					delete $self->{mapSolution}[0]{error};
+
+					if ($npc_error_plugin_args{recalculate}) {
+						warning TF("Recalculating NPC teleport route using refreshed portal data after talk sequence reset.\n"), "map_route";
+						$self->initMapCalculator();
+						return;
+					}
+					
+					warning TF("Resetting NPC teleport route using refreshed portal data at %s (%s,%s).\n",
+						$self->{mapSolution}[0]{map}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+					$self->setNpcTalk();
+					return;
+				}
+
 				if ($self->{mapSolution}[0]{retry} < ($config{route_maxNpcTries} || 5)) {
 					$self->{mapSolution}[0]{retry}++;
 					warning "Retrying for the ".$self->{mapSolution}[0]{retry}."th time...\n", "map_route";
@@ -479,7 +509,7 @@ sub iterate {
 					if (!exists $self->{mapSolution}[0]{plugin_retry}) {
 						$self->{mapSolution}[0]{plugin_retry} = 0;
 					}
-					my %plugin_args = (
+					my %teleport_missing_plugin_args = (
 						'x'            => $self->{mapSolution}[0]{pos}{x},
 						'y'            => $self->{mapSolution}[0]{pos}{y},
 						'steps'        => $self->{mapSolution}[0]{steps},
@@ -488,13 +518,13 @@ sub iterate {
 						'return'       => 0
 					);
 
-					Plugins::callHook('npc_teleport_missing' => \%plugin_args);
+					Plugins::callHook('npc_teleport_missing' => \%teleport_missing_plugin_args);
 
-					if ($plugin_args{return}) {
+					if ($teleport_missing_plugin_args{return}) {
 						$self->{mapSolution}[0]{retry} = 0;
 						$self->{mapSolution}[0]{plugin_retry}++;
-						$self->{mapSolution}[0]{pos}{x} = $plugin_args{x};
-						$self->{mapSolution}[0]{pos}{y} = $plugin_args{y};
+						$self->{mapSolution}[0]{pos}{x} = $teleport_missing_plugin_args{x};
+						$self->{mapSolution}[0]{pos}{y} = $teleport_missing_plugin_args{y};
 						$self->setNpcTalk();
 					} else {
 						error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
@@ -665,7 +695,7 @@ sub iterate {
 			$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 			$self->setSubtask($task);
 
-		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 && timeOut($self->{actor}{time_move}, ($self->{actor}{time_move_calc} + $timeout{ai_portal_wait}{timeout})) ) {
+		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 && actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1) ) {
 				if (!exists $timeout{ai_portal_give_up}{time}) {
 					$timeout{ai_portal_give_up}{time} = time;
 					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
@@ -1005,3 +1035,5 @@ sub localBroadcast {
 }
 
 1;
+
+

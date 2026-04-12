@@ -5,10 +5,10 @@ use utf8;
 use open ':std', ':encoding(UTF-8)';
 
 # Usage:
-#   perl mobdb_yml_to_openkore.pl input.yml output.txt
+#   perl mobdb_yml_to_monsters_table_txt.pl input.yml output.txt
 #
 # Example:
-#   perl mobdb_yml_to_openkore.pl mob_db.yml monsters_table.txt
+#   perl mobdb_yml_to_monsters_table_txt.pl mob_db.yml monsters_table.txt
 #
 # Requires:
 #   cpan YAML::XS
@@ -46,6 +46,7 @@ print $out join("\t",
 		ElementLevel
 		ChaseRange
 		Ai
+		Name
 	)
 ), "\n";
 
@@ -65,6 +66,9 @@ for my $mob (@{ $yaml->{Body} }) {
 	my $element_lv    = defined $mob->{ElementLevel}  ? $mob->{ElementLevel}  : 1;
 	my $chase_range   = defined $mob->{ChaseRange}    ? $mob->{ChaseRange}    : 0;
 	my $ai            = defined $mob->{Ai}            ? $mob->{Ai}            : '06';
+	my $name          = defined $mob->{Name}          ? $mob->{Name}          : '';
+	$name =~ s/[\r\n\t]+/ /g;
+	$name =~ s/^\s+|\s+$//g;
 
 	print $out join("\t",
 		$id,
@@ -80,6 +84,7 @@ for my $mob (@{ $yaml->{Body} }) {
 		$element_lv,
 		$chase_range,
 		$ai,
+		$name,
 	), "\n";
 }
 

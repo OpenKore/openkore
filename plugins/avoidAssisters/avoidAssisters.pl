@@ -16,6 +16,9 @@
 # How to configure it:
 # Add blocks in config.txt using one or more
 # `maxAssistersBellowDistAllowed <dist> <allowed>` lines.
+# When you need multiple entries in the same block and your parser flattens
+# duplicate keys, use numbered keys (for example
+# `maxAssistersBellowDistAllowed_0` and `maxAssistersBellowDistAllowed_1`).
 #
 # Per-target assister check:
 # avoidAssisters 1096 {
@@ -200,7 +203,6 @@ package avoidAssisters;
 use strict;
 use Time::HiRes qw(time);
 use Globals;
-use Settings;
 use Misc;
 use Plugins;
 use Utils;
@@ -260,72 +262,9 @@ sub reload_config {
 	undef @avoidAssisters_mobs;
 	undef %avoidAssisters_rules_by_target_nameID;
 	undef @avoidGlobalAssisters_mobs;
-	my $parsed_blocks = read_avoid_assisters_blocks_from_config_file();
-	parse_avoidAssisters($parsed_blocks->{avoidAssisters});
-	parse_avoidGlobalAssisters($parsed_blocks->{avoidGlobalAssisters});
+	parse_avoidAssisters();
+	parse_avoidGlobalAssisters();
 	rebuild_visible_monster_count_cache();
-}
-
-## Purpose: Reads avoidAssisters blocks directly from the current config file.
-## Args: none.
-## Returns: A hashref with `avoidAssisters` and `avoidGlobalAssisters` block arrays.
-## Notes: This parser exists so the plugin can support repeated keys inside one
-## config block, such as multiple `maxAssistersBellowDistAllowed` entries.
-sub read_avoid_assisters_blocks_from_config_file {
-	my %blocks = (
-		avoidAssisters => [],
-		avoidGlobalAssisters => [],
-	);
-
-	my $filename = Settings::getConfigFilename();
-	return \%blocks unless defined $filename && $filename ne '' && -f $filename;
-
-	open my $fh, '<:utf8', $filename or do {
-		warning "[avoidAssisters] Unable to open config file '$filename' for parsing: $!\n";
-		return \%blocks;
-	};
-
-	my $current_block;
-	my $block_index = 0;
-	my $line_number = 0;
-	while (my $line = <$fh>) {
-		$line_number++;
-		chomp $line;
-		$line =~ s/\r$//;
-		$line =~ s/\s+#.*$//;
-		next if $line =~ /^\s*$/;
-
-		if (!$current_block) {
-			if ($line =~ /^\s*(avoidAssisters|avoidGlobalAssisters)(?:\s+([^\{]+?))?\s*\{\s*$/) {
-				$current_block = {
-					type => $1,
-					identifier_raw => defined $2 ? $2 : '',
-					attributes => [],
-					index => $block_index++,
-					line => $line_number,
-				};
-			}
-			next;
-		}
-
-		if ($line =~ /^\s*\}\s*$/) {
-			push @{ $blocks{$current_block->{type}} }, $current_block;
-			undef $current_block;
-			next;
-		}
-
-		if ($line =~ /^\s*([A-Za-z_]\w*)(?:\s+(.*?))?\s*$/) {
-			push @{ $current_block->{attributes} }, {
-				key => $1,
-				value => defined $2 ? $2 : '',
-				line => $line_number,
-			};
-			next;
-		}
-	}
-
-	close $fh;
-	return \%blocks;
 }
 
 ## Purpose: Normalizes one numeric assister config value.
@@ -364,8 +303,8 @@ sub on_packet_mapChange {
 ## bulk updates to `onpost_bulkConfigModify`.
 sub onpost_configModify {
 	my (undef, $args) = @_;
-	return if $args && $args->{bulk};
-	return if $args && !is_plugin_config_key($args->{key});
+	return unless $args && is_plugin_config_key($args->{key});
+	return if $args->{bulk};
 	reload_config();
 }
 
@@ -410,26 +349,23 @@ sub bulk_includes_plugin_config_keys {
 }
 
 
-## Purpose: Parses all per-target avoidAssisters rules from config.txt.
-## Args: `($blocks)` where `$blocks` is the parsed avoidAssisters block arrayref.
+## Purpose: Parses all per-target avoidAssisters rules from `%config`.
+## Args: none.
 ## Returns: nothing.
 ## Notes: Each block expands into one or more normalized rules and fills both the
 ## flat rule list and a per-target lookup table so runtime checks can grab
 ## matching rules in O(1).
 sub parse_avoidAssisters {
-	my ($blocks) = @_;
-	return unless $blocks;
-
-	foreach my $block (@{$blocks}) {
-		my $target_id = get_assister_block_target_id($block);
+	foreach my $block_key (@{ get_assister_block_keys_from_config('avoidAssisters') }) {
+		my $target_id = normalize_assister_numeric_config_value($config{$block_key}, $block_key);
 		next unless defined $target_id;
 
-		foreach my $rule_data (@{ expand_assister_block_rules($block) }) {
+		foreach my $rule_data (@{ collect_assister_rules_from_config_block($block_key) }) {
 			my %mobAvoid = (
 				id => $target_id,
 				checkRange => $rule_data->{checkRange},
 				maxMobsInRange => $rule_data->{maxMobsInRange},
-				blockKey => get_assister_block_display_key($block),
+				blockKey => $block_key,
 				blockValue => $target_id,
 				ruleScope => 'avoidAssisters',
 				ruleKey => $rule_data->{ruleKey},
@@ -442,25 +378,22 @@ sub parse_avoidAssisters {
 	}
 }
 
-## Purpose: Parses all global assister rules from config.txt.
-## Args: `($blocks)` where `$blocks` is the parsed avoidGlobalAssisters block arrayref.
+## Purpose: Parses all global assister rules from `%config`.
+## Args: none.
 ## Returns: nothing.
 ## Notes: These rules apply to any target and may expand one config block into
 ## several normalized assister thresholds.
 sub parse_avoidGlobalAssisters {
-	my ($blocks) = @_;
-	return unless $blocks;
-
-	foreach my $block (@{$blocks}) {
-		my $assister_id = get_assister_block_target_id($block);
+	foreach my $block_key (@{ get_assister_block_keys_from_config('avoidGlobalAssisters') }) {
+		my $assister_id = normalize_assister_numeric_config_value($config{$block_key}, $block_key);
 		next unless defined $assister_id;
 
-		foreach my $rule_data (@{ expand_assister_block_rules($block) }) {
+		foreach my $rule_data (@{ collect_assister_rules_from_config_block($block_key) }) {
 			my %mobAvoid = (
 				id => $assister_id,
 				checkRange => $rule_data->{checkRange},
 				maxMobsInRange => $rule_data->{maxMobsInRange},
-				blockKey => get_assister_block_display_key($block),
+				blockKey => $block_key,
 				blockValue => $assister_id,
 				ruleScope => 'avoidGlobalAssisters',
 				ruleKey => $rule_data->{ruleKey},
@@ -472,82 +405,83 @@ sub parse_avoidGlobalAssisters {
 	}
 }
 
-## Purpose: Builds a readable identifier for one parsed config block.
-## Args: `($block)` where `$block` is the parsed block hashref.
-## Returns: A readable block identifier string.
-## Notes: This keeps dumps and warnings stable even when one block expands into
-## multiple normalized rules.
-sub get_assister_block_display_key {
-	my ($block) = @_;
-	return 'unknownBlock' unless $block;
-	return sprintf('%s[%d]', $block->{type}, $block->{index});
+## Purpose: Lists configured block keys for one assister block prefix.
+## Args: `($prefix)` where `$prefix` is `avoidAssisters` or `avoidGlobalAssisters`.
+## Returns: Arrayref of matching `%config` block keys.
+## Notes: Parsing from `%config` keeps behavior aligned with OpenKore runtime
+## config state and avoids direct file parsing.
+sub get_assister_block_keys_from_config {
+	my ($prefix) = @_;
+	return [] unless defined $prefix && $prefix ne '';
+
+	my @block_keys = grep { $_ =~ /^\Q$prefix\E_\d+$/ } sort keys %config;
+	return \@block_keys;
 }
 
-## Purpose: Resolves the target or assister mob ID for one config block.
-## Args: `($block)` where `$block` is the parsed block hashref.
-## Returns: The normalized numeric mob ID, or `undef` when missing.
-## Notes: The block header value is preferred, but legacy inner `id` entries are
-## still accepted for backward compatibility.
-sub get_assister_block_target_id {
-	my ($block) = @_;
-	return unless $block;
+## Purpose: Lists raw merged-rule config keys for one assister block.
+## Args: `($block_key)` where `$block_key` is a flattened `%config` block key.
+## Returns: Arrayref of raw rule config keys for that block.
+## Notes: Supports both `Bellow` and `Below` spellings and numbered variants such
+## as `_0`, `_1` for multiple rules in a single block.
+sub get_assister_rule_config_keys_from_block {
+	my ($block_key) = @_;
+	return [] unless defined $block_key && $block_key ne '';
 
-	my $raw_identifier = $block->{identifier_raw};
-	if ((!defined $raw_identifier || $raw_identifier eq '') && $block->{attributes}) {
-		foreach my $attribute (@{ $block->{attributes} }) {
-			next unless $attribute->{key} eq 'id';
-			$raw_identifier = $attribute->{value};
-			last;
-		}
+	my @rule_keys;
+	foreach my $rule_name (qw(maxAssistersBellowDistAllowed maxAssistersBelowDistAllowed)) {
+		my $base_key = "${block_key}_${rule_name}";
+		push @rule_keys, $base_key if exists $config{$base_key};
+
+		my @indexed_keys = sort {
+			my ($a_index) = $a =~ /_(\d+)$/;
+			my ($b_index) = $b =~ /_(\d+)$/;
+			($a_index <=> $b_index) || ($a cmp $b);
+		} grep { $_ =~ /^\Q$base_key\E_\d+$/ } keys %config;
+		push @rule_keys, @indexed_keys;
 	}
 
-	my $config_key = get_assister_block_display_key($block) . '.id';
-	return normalize_assister_numeric_config_value($raw_identifier, $config_key);
+	return \@rule_keys;
 }
 
-## Purpose: Expands one parsed config block into normalized range/threshold rules.
-## Args: `($block)` where `$block` is the parsed block hashref.
-## Returns: An arrayref of normalized rule hashes.
-## Notes: This supports repeated `maxAssistersBellowDistAllowed <dist> <allowed>`
-## lines and rejects blocks that do not use the merged syntax.
-sub expand_assister_block_rules {
-	my ($block) = @_;
-	return [] unless $block;
+## Purpose: Expands one `%config` assister block into normalized rule hashes.
+## Args: `($block_key)` where `$block_key` is the flattened config block name.
+## Returns: Arrayref of normalized rule hashes.
+## Notes: Blocks without merged-rule entries are ignored with a warning.
+sub collect_assister_rules_from_config_block {
+	my ($block_key) = @_;
+	return [] unless defined $block_key && $block_key ne '';
 
 	my @rules;
-	my @merged_attrs = grep {
-		$_->{key} eq 'maxAssistersBellowDistAllowed' || $_->{key} eq 'maxAssistersBelowDistAllowed'
-	} @{ $block->{attributes} || [] };
+	foreach my $rule_config_key (@{ get_assister_rule_config_keys_from_block($block_key) }) {
+		my $raw_value = $config{$rule_config_key};
+		next unless defined $raw_value && $raw_value ne '';
 
-	if (@merged_attrs) {
-		my $merged_index = 0;
-		foreach my $attribute (@merged_attrs) {
-			my ($check_range_raw, $max_allowed_raw) = ($attribute->{value} || '') =~ /^\s*(-?\d+)\s+(-?\d+)\s*$/;
-			unless (defined $check_range_raw && defined $max_allowed_raw) {
-				warning "[avoidAssisters] Ignoring invalid $attribute->{key} value '$attribute->{value}' in " . get_assister_block_display_key($block) . ". Expected '<dist> <allowed>'.\n";
-				$merged_index++;
-				next;
-			}
-
-			my $rule_config_key_prefix = get_assister_block_display_key($block) . "." . $attribute->{key} . "[$merged_index]";
-			my $check_range = normalize_assister_numeric_config_value($check_range_raw, $rule_config_key_prefix . ".checkRange");
-			my $max_mobs_in_range = normalize_assister_numeric_config_value($max_allowed_raw, $rule_config_key_prefix . ".maxMobsInRange");
-			if (defined $check_range && defined $max_mobs_in_range) {
-				push @rules, {
-					checkRange => $check_range,
-					maxMobsInRange => $max_mobs_in_range,
-					ruleKey => $attribute->{key} . "[$merged_index]",
-					ruleValue => $attribute->{value},
-				};
-			}
-			$merged_index++;
+		my ($check_range_raw, $max_allowed_raw) = $raw_value =~ /^\s*(-?\d+)\s+(-?\d+)\s*$/;
+		unless (defined $check_range_raw && defined $max_allowed_raw) {
+			warning "[avoidAssisters] Ignoring invalid $rule_config_key value '$raw_value'. Expected '<dist> <allowed>'.\n";
+			next;
 		}
 
-		return \@rules;
+		my $check_range = normalize_assister_numeric_config_value($check_range_raw, "${rule_config_key}.checkRange");
+		my $max_mobs_in_range = normalize_assister_numeric_config_value($max_allowed_raw, "${rule_config_key}.maxMobsInRange");
+		next unless defined $check_range && defined $max_mobs_in_range;
+
+		my $rule_key = $rule_config_key;
+		$rule_key =~ s/^\Q${block_key}_\E//;
+		push @rules, {
+			checkRange => $check_range,
+			maxMobsInRange => $max_mobs_in_range,
+			ruleKey => $rule_key,
+			ruleValue => $raw_value,
+		};
 	}
 
-	warning "[avoidAssisters] Ignoring " . get_assister_block_display_key($block) . " because it has no maxAssistersBellowDistAllowed entries.\n";
-	return [];
+	if (!@rules) {
+		warning "[avoidAssisters] Ignoring $block_key because it has no maxAssistersBellowDistAllowed entries.\n";
+		return [];
+	}
+
+	return \@rules;
 }
 
 ## Purpose: Clears the visible-monster caches for counts and buckets.
@@ -940,7 +874,7 @@ sub should_drop_target_from_assisters {
 
 		clear_engaged_drop_confirmation($target);
 		start_assister_drop_release_cooldown($target) unless $is_dropped;
-		warning "[avoidAssisters] [$hook] $drop_string target $target (binID: " . format_avoid_assisters_dump_value($target->{binID}) . ", nameID: " . format_avoid_assisters_dump_value($target->{nameID}) . ") " . join(' ALSO ', map { format_assister_drop_reason_message($target, $_) } @drop_infos) . "\n" if !$is_dropped;
+		debug "[avoidAssisters] [$hook] $drop_string target $target (binID: " . format_avoid_assisters_dump_value($target->{binID}) . ", nameID: " . format_avoid_assisters_dump_value($target->{nameID}) . ") " . join(' ALSO ', map { format_assister_drop_reason_message($target, $_) } @drop_infos) . "\n" if !$is_dropped;
 		$target->{attackFailedAssisters} = 1;
 		return 1;
 	}
@@ -950,7 +884,7 @@ sub should_drop_target_from_assisters {
 	if ($is_dropped) {
 		my ($can_release, $monster_dist, $max_dist_to_release, $required_check_range) = can_release_target_from_assisters($target, \@target_positions);
 		if ($can_release) {
-			warning "[avoidAssisters] [$hook] Releasing nearby ($monster_dist <= $max_dist_to_release) target $target from block, it no longer meets blocking criteria and we are close enough to fully see its assister range ($required_check_range).\n";
+			debug "[avoidAssisters] [$hook] Releasing nearby ($monster_dist <= $max_dist_to_release) target $target from block, it no longer meets blocking criteria and we are close enough to fully see its assister range ($required_check_range).\n";
 			$target->{attackFailedAssisters} = 0;
 			clear_engaged_drop_confirmation($target);
 			clear_assister_drop_release_cooldown($target);

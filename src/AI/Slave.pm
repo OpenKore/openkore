@@ -566,7 +566,7 @@ sub processAutoAttack {
 		my @partyMonsters;
 		my @cleanMonsters;
 		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-		my $myPos = calcPosition($slave);
+		my $myPos = calcPosFromPathfinding($field, $slave);
 
 		# List aggressive monsters
 		my $party = ($effectiveAttackMode >= 1 && $config{$slave->{configPrefix}.'attackAuto_party'}) ? 1 : 0;

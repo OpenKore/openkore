@@ -291,7 +291,8 @@ sub loadDataFiles {
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
 		internalName => 'portals.txt',
-		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
+		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed],
+		onLoaded => \&refreshDynamicPortalStates);
 	Settings::addTableFile('portals_commands.txt',
 		internalName => 'portals_commands.txt',
 		loader => [\&parsePortalsCommands, \%portals_commands], mustExist => 0);
@@ -398,7 +399,6 @@ sub loadDataFiles {
 			message TF("Loading %s...\n", $filename);
 		};
 		Settings::loadAll($progressHandler);
-		refreshDynamicPortalStates();
 	};
 	my $e;
 	if ($e = caught('UTF8MalformedException')) {
@@ -869,11 +869,26 @@ sub mainLoop_initialized {
 
 	# GameGuard support
 	if ($masterServer->{gameGuard} && ($net->version != 1 || ($net->version == 1 && $masterServer->{gameGuard} eq '2'))) {
-		my $result = Poseidon::Client::getInstance()->getResult();
-		if (defined($result)) {
-			debug "Received Poseidon result.\n", "poseidon";
-			#$messageSender->encryptMessageID(\$result, unpack("v", $result));
-			$messageSender->sendToServer($result);
+		my $instance = Poseidon::Client::getInstance();
+
+		if ($instance && $instance->isWaitingQuery()) {
+			if ($net->getState() == Network::IN_GAME) {
+				my $result = $instance->getResult();
+				if (defined($result)) {
+					debug "Received Poseidon result.\n", "poseidon";
+					#$messageSender->encryptMessageID(\$result, unpack("v", $result));
+
+					my %hookArgs;
+					$hookArgs{result} = $result;
+					$hookArgs{return} = 1;
+					Plugins::callHook('PoseidonReply', \%hookArgs);
+					return 0 if (!$hookArgs{return});
+
+					$messageSender->sendToServer($result);
+				}
+			} else {
+				$instance->reset()
+			}
 		}
 	}
 

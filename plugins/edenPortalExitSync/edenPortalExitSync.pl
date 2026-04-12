@@ -37,6 +37,8 @@ use Field;
 use Log qw(warning);
 use Translation qw(TF);
 
+use constant EDEN_EXIT_POS_TOLERANCE => 3;
+
 Plugins::register(
 	'edenPortalExitSync',
 	'Keeps EdenPortalExit aligned with Eden Group travel',
@@ -208,15 +210,21 @@ sub _resolveExitDestinationForPosition {
 	my $destinations = _getEdenExitDestinations();
 	return $exact if exists $destinations->{$exact};
 
-	my @matches = _getDestinationsForMap($map);
+	my @matches = grep {
+		my (undef, $x, $y) = split / /, $_, 3;
+		defined $x && defined $y && $x =~ /^\d+$/ && $y =~ /^\d+$/
+	} _getDestinationsForMap($map);
 	return unless @matches;
-	return $matches[0] if @matches == 1;
 
 	@matches = sort {
 		my (undef, $ax, $ay) = split / /, $a, 3;
 		my (undef, $bx, $by) = split / /, $b, 3;
 		(abs($ax - $pos->{x}) + abs($ay - $pos->{y})) <=> (abs($bx - $pos->{x}) + abs($by - $pos->{y}))
 	} @matches;
+
+	my (undef, $bestX, $bestY) = split / /, $matches[0], 3;
+	my $distance = abs($bestX - $pos->{x}) + abs($bestY - $pos->{y});
+	return unless $distance <= EDEN_EXIT_POS_TOLERANCE;
 
 	return $matches[0];
 }

@@ -374,6 +374,11 @@ sub applyDynamicPortalStates {
 				next unless exists $portals_lut{$source}{dest}{$destID};
 				my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
 				$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
+				if ($enabled) {
+					debug "Dynamic portal enabled for group $group->{config_key}: $source -> $destID\n", "route", 1;
+				} elsif (!$enabled) {
+					debug "Dynamic portal disabled for group $group->{config_key}: $source -> $destID\n", "route", 2;
+				}
 				$matched ||= $enabled;
 			}
 		}
@@ -546,12 +551,6 @@ sub bulkConfigModify {
 	my %changed_keys;
 	foreach my $key (keys %{$r_hash}) {
 		my $val = $r_hash->{$key};
-		Plugins::callHook('configModify', {
-			key => $key,
-			val => $val,
-			silent => $silent,
-			bulk => 1
-		});
 
 		my $local_silent = ($silent || $key =~ /password/i) ? 1 : 0;
 		
@@ -583,10 +582,19 @@ sub bulkConfigModify {
 				message TF("Config '%s' set to %s (was %s)\n", $key, $val, $config{$key}), "info" unless ($local_silent);
 			}
 		}
+		
+		Plugins::callHook('configModify', {
+			key => $key,
+			val => $val,
+			silent => $silent,
+			bulk => 1
+		});
 
 		$changed_keys{$key} = 1;
 		$config{$key} = $val;
 	}
+
+	return unless (scalar keys %changed_keys > 0);
 	
 	if (scalar keys %create_keys > 0) {
 		my $f;
@@ -900,7 +908,7 @@ sub objectIsMovingTowards {
 	my $obj2 = shift;
 	my $max_variance = (shift || 15);
 
-	if (!timeOut($obj->{time_move}, $obj->{time_move_calc})) {
+	if (!actorFinishedMovement($obj, $field)) {
 		# $obj is still moving
 		my %vec;
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
@@ -918,7 +926,7 @@ sub objectIsMovingTowardsPlayer {
 	my $ignore_party_members = shift;
 	$ignore_party_members = 1 if (!defined $ignore_party_members);
 
-	if (!timeOut($obj->{time_move}, $obj->{time_move_calc}) && @playersID) {
+	if (!actorFinishedMovement($obj, $field) && @playersID) {
 		# Monster is still moving, and there are players on screen
 		my %vec;
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
@@ -2935,10 +2943,6 @@ sub meetingPosition {
 	$max_leeway_time = 0 if (!defined $max_leeway_time || $max_leeway_time < 0);
 
 	my $mySpeed = ($actor->{walk_speed} || 0.12);
-	my $timeSinceActorMoved = time - $actor->{time_move} + $extra_time;
-
-	my $my_solution;
-	my $timeActorFinishMove;
 
 	my $attackRouteMaxPathDistance;
 	my $attackCanSnipe;
@@ -2975,10 +2979,6 @@ sub meetingPosition {
 			}
 		}
 
-		# If the actor is the character then we should have already saved the time calc and solution at Receive.pm::character_moves
-		$my_solution = $char->{solution};
-		$timeActorFinishMove = $char->{time_move_calc};
-
 	# actor is a slave
 	} elsif ($actorType == 2) {
 		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'} || 20;
@@ -2994,12 +2994,9 @@ sub meetingPosition {
 		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
 		$master = $char;
 		$masterPos = 1;
-
-		$my_solution = get_solution($field, $actor->{pos}, $actor->{pos_to});
-		$timeActorFinishMove = calcTimeFromSolution($my_solution, $mySpeed);
 	}
 
-	my $realMyPos = calcPosFromPathfinding($field, $actor, $extra_time);
+	my $realMyPos = calcPosFromPathfinding($field, $actor, $extra_time, 1);
 
 	# Fall back to the server-reported destination if pathfinding could not infer a position.
 	$realMyPos = $actor->{pos_to} if (!$realMyPos && $actor->{pos_to});
@@ -3190,6 +3187,11 @@ sub meetingPosition {
 			next;
 		}
 
+		if (exists $prohibitedCells{$targetPosInStep->{x}} && exists $prohibitedCells{$targetPosInStep->{x}}{$targetPosInStep->{y}}) {
+			$meeting_rejections{prohibited_cell}++;
+			next;
+		}
+
 		my $leeway = 0;
 		# 6. We must be able to attack the target from this spot
 		if (canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) != 1) {
@@ -3350,6 +3352,27 @@ sub mon_control {
 	my ($name, $nameID) = @_;
 
 	return $mon_control{lc($name)} || $mon_control{$nameID} || $mon_control{all} || { attack_auto => 1 };
+}
+
+##
+# monsterPriority($name, $nameID)
+#
+# Returns the priority.txt priority for a monster.
+# Checks monster ID first, then monster name, then the 'all' fallback.
+# If nothing matches, return 0.
+sub monsterPriority {
+	my ($name, $nameID) = @_;
+
+	if (defined $nameID && exists $priority{$nameID}) {
+		return $priority{$nameID};
+	}
+
+	if (defined $name && exists $priority{lc $name}) {
+		return $priority{lc $name};
+	}
+
+	return $priority{all} if exists $priority{all};
+	return 0;
 }
 
 ##
@@ -3610,16 +3633,24 @@ sub setPartySkillTimer {
 }
 
 ##
-# boolean isCellOccupied(pos)
+# boolean isCellOccupied(pos, ignore_actor)
 # pos: position hash.
+# ignore_actor: actor to ignore (usually self).
 #
 # Returns 1 if there is a player, npc or mob in the cell, otherwise return 0.
 # TODO: Check if a character can move to a cell with a pet, elemental, homunculus or mercenary
 sub isCellOccupied {
-	my ($pos) = @_;
+	my ($pos, $ignore_actor) = @_;
+
+	if ($ignore_actor && $char && $ignore_actor->{ID} ne $char->{ID}) {
+		return 1 if ($char->{pos_to}{x} == $pos->{x} && $char->{pos_to}{y} == $pos->{y});
+	}
+
 	foreach my $actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
+		next if ($ignore_actor && $ignore_actor->{ID} eq $actor->{ID});
 		return 1 if ($actor->{pos_to}{x} == $pos->{x} && $actor->{pos_to}{y} == $pos->{y});
 	}
+
 	return 0;
 }
 
@@ -4229,9 +4260,8 @@ sub getBestTarget {
 			next;
 		}
 
-		my $name = lc $monster->{name};
 		my $dist = adjustedBlockDistance($actorPos, $targetPos);
-		my $priority = $priority{$name} ? $priority{$name} : 0;
+		my $priority = monsterPriority($monster->{name}, $monster->{nameID});
 
 		if (!defined($bestTarget) || ($priority > $highestPri)) {
 			$highestPri = $priority;
@@ -4271,8 +4301,7 @@ sub getBestTarget {
 			
 			my $dist = scalar @{$solution};
 			
-			my $name = lc $monster->{name};
-			my $priority = $priority{$name} ? $priority{$name} : 0;
+			my $priority = monsterPriority($monster->{name}, $monster->{nameID});
 
 			if (!defined($bestTarget) || ($priority > $highestPri)) {
 				$highestPri = $priority;
@@ -6041,7 +6070,6 @@ sub parseReload {
 		} else {
 			Settings::loadByRegexp(qr/$args/, $progressHandler);
 		}
-		refreshDynamicPortalStates();
 		Log::initLogFiles();
 		message T("All files were loaded\n"), "reload";
 	};

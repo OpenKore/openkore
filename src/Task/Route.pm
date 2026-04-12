@@ -153,6 +153,8 @@ sub new {
 		$self->{attackOnRoute} = 0;
 	}
 	
+	$self->{loop} = 0;
+
 	$self->{solution} = [];
 	$self->{stage} = NOT_INITIALIZED;
 
@@ -218,6 +220,8 @@ sub iterate {
 	my ($self) = @_;
 	return unless ($self->SUPER::iterate() && $net->getState() == Network::IN_GAME);
 	return unless $field && defined $self->{actor}{pos_to} && defined $self->{actor}{pos_to}{x} && defined $self->{actor}{pos_to}{y};
+
+	$self->{loop}++;
 
 	if ( $self->{maxTime} && timeOut($self->{time_start}, $self->{maxTime})) {
 		# We spent too much time
@@ -420,6 +424,17 @@ sub iterate {
 			$self->setDone();
 			return;
 
+		} elsif ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
+			if ($self->{distFromGoal} && blockDistance($self->{dest}{pos}, $current_calc_pos) <= $self->{distFromGoal}) {
+				debug "[Route] [distFromGoal] Target cell is already close enough, ending movement.\n", "route";
+					$self->setDone();
+					return;
+					
+			} elsif ($self->{pyDistFromGoal} && distance($self->{dest}{pos}, $current_calc_pos) <= $self->{pyDistFromGoal}) {
+				debug "[Route] [pyDistFromGoal] Target cell is already close enough, ending movement.\n", "route";
+				$self->setDone();
+				return;
+			}
 		}
 
 		if (@{$solution}) {
@@ -449,10 +464,20 @@ sub iterate {
 		}
 
 		my $pos_changed = ($self->{last_current_calc_pos}{x} == $current_calc_pos->{x} && $self->{last_current_calc_pos}{y} == $current_calc_pos->{y}) ? 0 : 1;
+		my $actual_pos_moved = !$self->{start} && (
+			$self->{last_pos}{x} != $current_pos->{x}
+			|| $self->{last_pos}{y} != $current_pos->{y}
+			|| $self->{last_pos_to}{x} != $current_pos_to->{x}
+			|| $self->{last_pos_to}{y} != $current_pos_to->{y}
+		);
+		if ($actual_pos_moved && $self->{trimm_dev_block}) {
+			debug "Route $self->{actor} - clearing trimm_dev_block after actual movement to ($current_calc_pos->{x} $current_calc_pos->{y})\n", "route";
+			delete $self->{trimm_dev_block};
+		}
 		
 		$self->{lastStep} = 0;
 
-		if ($stepsleft == 2 && isCellOccupied($solution->[-1]) && !$self->{meetingSubRoute}) {
+		if ($stepsleft == 2 && isCellOccupied($solution->[-1], $self->{actor}) && !$self->{meetingSubRoute}) {
 			# 2 more steps to cover (current position and the destination)
 			debug "Stoping 1 cell away from destination because there is an obstacle in it.\n", "route";
 			if ($self->{notifyUponArrival}) {
@@ -463,7 +488,7 @@ sub iterate {
 
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
-		} elsif ($stepsleft <= 2 && isCellOccupied($solution->[-1]) && $self->{attackID}) {
+		} elsif ($stepsleft <= 2 && isCellOccupied($solution->[-1], $self->{actor}) && $self->{attackID}) {
 			# If the destination cell is occupied, then we can't walk there but we need to attack
 
 			# Get the cells around the destination cell
@@ -483,15 +508,15 @@ sub iterate {
 			# If the cells around the destination cell are all occupied, then we can't walk there
 			if (!(defined $walk_pos)) {
 				# Log error message
-				error TF("Destination cell (%d,%d) is occupied and there are no walkable cells around it.\n",
-					$solution->[-1]{x}, $solution->[-1]{y}), "route";
+				error TF("[Route] [%s] Destination cell (%d,%d) is occupied and there are no walkable cells around it.\n",
+					$self->{actor}, $solution->[-1]{x}, $solution->[-1]{y}), "route";
 				# Emit error message
 				$self->setError(STUCK, T("Stuck during route."));
 				Plugins::callHook('route', {status => 'stuck'});
 			} else {
 				# If we have a walkable cell, then walk there
-				warning TF("Destination cell (%d,%d) is occupied, replacing it with (%d,%d).\n",
-					$solution->[-1]{x}, $solution->[-1]{y}, $walk_pos->{x}, $walk_pos->{y}), "route";
+				warning TF("[Route] [%s] Destination cell (%d,%d) is occupied, replacing it with (%d,%d).\n",
+					$self->{actor}, $solution->[-1]{x}, $solution->[-1]{y}, $walk_pos->{x}, $walk_pos->{y}), "route";
 				#
 				$self->{dest}{pos}{x} = $walk_pos->{x};
 				$self->{dest}{pos}{y} = $walk_pos->{y};
@@ -560,10 +585,30 @@ sub iterate {
 			# Keep step_index as the persistent safeguard/unstuck step size.
 			# Hook-driven route_step changes should only affect the move we send now.
 			my $move_step_index = $self->{step_index};
+
 			if ($move_step_index >= $stepsleft) {
 				$move_step_index = $stepsleft - 1;
 				$self->{lastStep} = 1;
 			}
+
+			if ($self->{anyDistFromGoal}) {
+				my $step = $solution->[$move_step_index];
+				# We are close enough to the destination
+				if (exists $step->{closeToEnd} && $step->{closeToEnd}) {
+					my $current_i = $move_step_index;
+					while (1) {
+						last if ($current_i == 0);
+						last if ($solution->[($current_i-1)]{closeToEnd} == 0);
+						$current_i--;
+					}
+					$move_step_index = $current_i;
+				}
+			}
+
+			$move_step_index = 0 if $move_step_index < 0;
+
+			debug "[Route] [$self->{loop}] step_index $self->{step_index} | move_step_index $move_step_index | lastStep $self->{lastStep} | self->{start} $self->{start}\n", 'route', 1;
+
 
 			my $requested_move_step_index = $move_step_index;
 
@@ -589,7 +634,9 @@ sub iterate {
 				my $max_deviation = _maxPathDeviation($client_solution, \@trusted_slice);
 				#debug "[move_step_index $move_step_index] Route estimated deviation: $max_deviation\n", "route";
 
-				if ($max_deviation > ROUTE_CLIENT_PATH_MAX_DEVIATION) {
+				if ($self->{trimm_dev_block}) {
+					debug "Route $self->{actor} - skipping deviation trim check because trimm_dev_block is active.\n", "route", 2;
+				} elsif ($max_deviation > ROUTE_CLIENT_PATH_MAX_DEVIATION) {
 					return if _trimMoveStepOrReset($self, $requested_move_step_index, \$move_step_index,
 						"because simulated client path would drift too far from trusted route (max deviation $max_deviation)");
 					next;
@@ -620,24 +667,12 @@ sub iterate {
 			}
 
 			if (defined $routeStepHookArgs{route_step} && $routeStepHookArgs{route_step} != $move_step_index) {
+				debug "[Route] $self->{actor} - routeStepHookArgs changed step index ('$move_step_index' > '$routeStepHookArgs{route_step}') \n", "route", 2;
+				if ($routeStepHookArgs{route_step} > $move_step_index) {
+					Log::error "[Route] routeStepHookArgs{route_step} > move_step_index. This should never happen\n";
+				}
 				$move_step_index = $routeStepHookArgs{route_step};
 			}
-
-			if ($self->{anyDistFromGoal}) {
-				my $step = $solution->[$move_step_index];
-				# We are close enough to the destination
-				if (exists $step->{closeToEnd} && $step->{closeToEnd}) {
-					my $current_i = $move_step_index;
-					while (1) {
-						last if ($current_i == 0);
-						last if ($solution->[($current_i-1)]{closeToEnd} == 0);
-						$current_i--;
-					}
-					$move_step_index = $current_i;
-				}
-			}
-
-			$move_step_index = 0 if $move_step_index < 0;
 			
 			if ($move_step_index >= $stepsleft) {
 				$move_step_index = $stepsleft - 1;
@@ -652,11 +687,9 @@ sub iterate {
 			# If it is, then we've moved to an unexpected place. This could be caused by auto-attack, for example.
 			my %nextPos = (x => $self->{next_pos}{x}, y => $self->{next_pos}{y});
 
-			if (!$field->canMove(\%nextPos, $current_calc_pos)) {
-				debug "Route $self->{actor} - movement interrupted: reset route (the distance of the next point is abnormally large ($current_calc_pos->{x} $current_calc_pos->{y} -> $nextPos{x} $nextPos{y}))\n", "route";
-				$self->resetRoute();
-				$self->iterate();
-				return;
+			if (!$field->canMove($current_calc_pos, \%nextPos)) {
+				return _resetRouteForMoveSelection($self,
+					"the distance of the next point is abnormally large ($current_calc_pos->{x} $current_calc_pos->{y} -> $nextPos{x} $nextPos{y})");
 			}
 
 				if ($self->{targetNpcPos}) {
@@ -672,36 +705,11 @@ sub iterate {
 						}
 					}
 					if ($found) {
-						debug "[Route] [targetNpcPos] Found target npc.\n", "route";
-						if ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
-							if ($self->{distFromGoal} && blockDistance($self->{dest}{pos}, $current_calc_pos) <= $self->{distFromGoal}) {
-								debug "[Route] [targetNpcPos] [distFromGoal] Target npc is already close enough, ending movement.\n", "route";
-								$self->setDone();
-								return;
-								
-							} elsif ($self->{pyDistFromGoal} && distance($self->{dest}{pos}, $current_calc_pos) <= $self->{pyDistFromGoal}) {
-								debug "[Route] [targetNpcPos] [pyDistFromGoal] Target npc is already close enough, ending movement.\n", "route";
-								$self->setDone();
-								return;
-							}
-						} else {
-							debug "[Route] [targetNpcPos] Target npc is already on screen, ending movement.\n", "route";
-							$self->setDone();
-							return;
-						}
+						debug "[Route] [targetNpcPos] Target npc is already on screen, ending movement.\n", "route";
+						$self->setDone();
+						return;
 					}
 					
-				} elsif ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
-					if ($self->{distFromGoal} && blockDistance($self->{dest}{pos}, $current_calc_pos) <= $self->{distFromGoal}) {
-						debug "[Route] [distFromGoal] Target cell is already close enough, ending movement.\n", "route";
-						$self->setDone();
-						return;
-						
-					} elsif ($self->{pyDistFromGoal} && distance($self->{dest}{pos}, $current_calc_pos) <= $self->{pyDistFromGoal}) {
-						debug "[Route] [pyDistFromGoal] Target cell is already close enough, ending movement.\n", "route";
-						$self->setDone();
-						return;
-					}
 				}
 				
 				my %hookArgs;
@@ -849,6 +857,7 @@ sub _trimMoveStepOrReset {
 	$$move_step_index_ref--;
 
 	if (($requested_move_step_index - $$move_step_index_ref) >= ROUTE_CLIENT_PATH_RESET_TRIM_STEPS) {
+		$self->{trimm_dev_block} = 1;
 		return _resetRouteForMoveSelection($self, "had to trim down $requested_move_step_index to $$move_step_index_ref while selecting next move");
 	}
 

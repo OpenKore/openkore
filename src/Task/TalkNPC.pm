@@ -105,6 +105,29 @@ sub new {
 	return $self;
 }
 
+sub TalkNPC_reset {
+	my ($hook_name, $args, $holder) = @_;
+	my $self = $holder->[0];
+
+	return if !defined $self;
+	return if $self->{stage} != TALKING_TO_NPC;
+
+	if (defined $args->{x} && defined $self->{x} && $args->{x} != $self->{x}) {
+		return;
+	}
+	if (defined $args->{y} && defined $self->{y} && $args->{y} != $self->{y}) {
+		return;
+	}
+
+	$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
+	$self->{error_message} = defined $args->{message} ? $args->{message} : TF("TalkNPC_reset.");
+	$self->{trying_to_cancel} = 1;
+	$self->{sent_talk_response_cancel} = 0;
+	delete $self->{wait_for_answer};
+	delete $self->{sent_talk_resp_cancel_time};
+	warning TF("[TalkNPC] Resetting conversation with %s due to plugin request.\n", $self->{target} || 'NPC'), "ai_npcTalk";
+}
+
 sub handleNPCTalk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
@@ -203,7 +226,8 @@ sub activate {
 		['packet/npc_sell_list',                     \&handleNPCTalk, \@holder],
 		['packet/cash_dealer',                       \&handleNPCTalk, \@holder],
 		['packet/npc_market_info',                   \&handleNPCTalk, \@holder],
-		['packet/npc_market_purchase_result',        \&handleNPCTalk, \@holder]
+		['packet/npc_market_purchase_result',        \&handleNPCTalk, \@holder],
+		['TalkNPC_reset',                            \&TalkNPC_reset, \@holder]
 	);
 
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
@@ -329,7 +353,7 @@ sub iterate {
 			$self->{time} = time;
 			return;
 
-		} elsif (!timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
+		} elsif (!actorFinishedMovement($char, undef, 0.2, 1)) {
 			# Wait for us to stop moving before talking.
 			return;
 
@@ -975,3 +999,4 @@ sub validateStep {
 }
 
 1;
+

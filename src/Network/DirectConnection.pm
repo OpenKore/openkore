@@ -236,7 +236,7 @@ sub serverDisconnect {
 
 		$messageSender->sendQuit() if ($self->getState() == Network::IN_GAME);
 
-		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(),
+		message TF("Disconnecting (%s:%s)...\n", $self->{remote_socket}->peerhost(),
 			$self->{remote_socket}->peerport()), "connection";
 		close($self->{remote_socket});
 

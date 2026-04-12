@@ -89,7 +89,7 @@ our @EXPORT = qw(
 # monsters: Return hash
 #
 # Parses a monster DB file in the format:
-# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange [Ai]
+# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange [Ai] [Name]
 sub parseMonstersTableFile {
 	my $file = shift;
 	my $r_hash = shift;
@@ -106,28 +106,35 @@ sub parseMonstersTableFile {
 		next if $line =~ /^#/;
 
 		# Skip optional header line
-		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange(?:\s+Ai)?$/i;
+		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange(?:\s+Ai)?(?:\s+Name)?$/i;
 
-		my @fields = split /\s+/, $line;
-		next unless @fields >= 12;
+		my ($id, $level, $hp, $attackRange, $skillRange, $attackDelay, $attackMotion,
+			$size, $race, $element, $elementLevel, $chaseRange, $ai, $name);
 
-		my (
-			$id,
-			$level,
-			$hp,
-			$attackRange,
-			$skillRange,
-			$attackDelay,
-			$attackMotion,
-			$size,
-			$race,
-			$element,
-			$elementLevel,
-			$chaseRange,
-			$ai
-		) = @fields;
+		if (index($line, "\t") != -1) {
+			my @fields = split /\t+/, $line;
+			next unless @fields >= 12;
+
+			(
+				$id, $level, $hp, $attackRange, $skillRange, $attackDelay,
+				$attackMotion, $size, $race, $element, $elementLevel, $chaseRange
+			) = @fields[0 .. 11];
+			$ai = (defined $fields[12] && $fields[12] ne '') ? $fields[12] : '06';
+			$name = @fields > 13 ? join("\t", @fields[13 .. $#fields]) : undef;
+		} else {
+			my @fields = split /\s+/, $line;
+			next unless @fields >= 12;
+
+			(
+				$id, $level, $hp, $attackRange, $skillRange, $attackDelay,
+				$attackMotion, $size, $race, $element, $elementLevel, $chaseRange, $ai
+			) = @fields;
+			$ai = (defined $ai && $ai ne '') ? $ai : '06';
+			$name = @fields > 13 ? join(' ', @fields[13 .. $#fields]) : undef;
+		}
 
 		next unless defined $id && $id =~ /^\d+$/;
+		$name =~ s/^\s+|\s+$//g if defined $name;
 
 		$r_hash->{$id}->{ID}            = $id;
 		$r_hash->{$id}->{Level}         = $level;
@@ -142,6 +149,7 @@ sub parseMonstersTableFile {
 		$r_hash->{$id}->{ElementLevel}  = $elementLevel;
 		$r_hash->{$id}->{ChaseRange}    = $chaseRange;
 		$r_hash->{$id}->{Ai}            = defined $ai ? $ai : '06';
+		$r_hash->{$id}->{Name}          = $name if defined $name && $name ne '';
 	}
 
 	return 1;

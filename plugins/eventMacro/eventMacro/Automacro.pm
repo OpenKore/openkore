@@ -111,11 +111,17 @@ sub set_parameters {
 	if (!defined $self->{parameters}{'CheckOnAI'}) {
 		$self->{parameters}{'CheckOnAI'} = $config{eventMacro_CheckOnAI};
 	}
+	if (!defined $self->{parameters}{'CheckOnCycleStage'}) {
+		$self->{parameters}{'CheckOnCycleStage'} = 'AI_start';
+	}
 	if (!defined $self->{parameters}{'disabled'}) {
 		$self->{parameters}{'disabled'} = 0;
 	}
 	if (!defined $self->{parameters}{'overrideAI'}) {
 		$self->{parameters}{'overrideAI'} = 0;
+	}
+	if (!defined $self->{parameters}{'overrideNotWhenInQueue'}) {
+		$self->{parameters}{'overrideNotWhenInQueue'} = 0;
 	}
 	if (!defined $self->{parameters}{'orphan'}) {
 		$self->{parameters}{'orphan'} = $config{eventMacro_orphans};
