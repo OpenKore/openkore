@@ -603,57 +603,11 @@ attackSkillSlot {
 	maxDist 1
 	maxCastTime 0
 	minCastTime 0
-	hp
-	sp > 10
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-    inQueue
-    notInQueue
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
 	previousDamage
-	stopWhenHit 0
-	inLockOnly 0
-	notInTown 0
-	timeout 0
-	disabled 0
 	monsters
 	notMonsters
-	monstersCount
-	monstersCountDist
 	maxAttempts 0
 	maxUses 0
-	target_hp
-	target_whenStatusActive
-	target_whenStatusInactive
-	target_deltaHp
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
 	isSelfSkill 0
 	isStartSkill 0
 	equip_topHead
@@ -667,7 +621,8 @@ attackSkillSlot {
 	equip_armor
 	equip_shoes
 	equip_arrow
-	manualAI 0
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 attackComboSlot {
@@ -675,118 +630,29 @@ attackComboSlot {
 	waitBeforeUse
 	dist 1
 	maxDist 1
+	lvl
+	maxCastTime 0
+	minCastTime 0
+	maxUses 0
+	autoCombo 0
 	isSelfSkill 1
-	target_hp
-	target_deltaHp
 	monsters
 	notMonsters
-	monstersCount
-	monstersCountDist
-	whenPartyMembersNear
-	whenPartyMembersNearDist
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 doCommand {
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-    inQueue
-    notInQueue
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	inCart
-	inMap
-	manualAI 0
+	# [checkSelfCondition]
 }
 
 useSelf_skill {
 	lvl
 	maxCastTime 0
 	minCastTime 0
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-    inQueue
-    notInQueue
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	manualAI 0
+	smartEncore 0
+	noSmartHeal 0
+	# [checkSelfCondition]
 }
 
 useSelf_skill_smartHeal 1
@@ -799,74 +665,23 @@ partySkill {
 	maxDist 8
 	maxCastTime 0
 	minCastTime 0
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-    inQueue
-    notInQueue
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	manualAI 0
 	target
-	target_hp
-	target_isJob
-	target_isNotJob
-	target_whenStatusActive
-	target_whenStatusInactive
-	target_aggressives
-	target_monsters
-	target_timeout 0
-	target_deltaHp
-	target_dead 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
+	notPartyOnly 0
 	isSelfSkill 0
+	noSmartHeal 0
+	# [checkSelfCondition]
+	# [checkPlayerCondition]
 }
 
 monsterSkill {
 	target
 	maxUses
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	# Skill Use Conditions, including isSelfSkill
-	# Self Conditions
-	# Target Monster Conditions
+	lvl
+	maxCastTime 0
+	minCastTime 0
+	isSelfSkill 0
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 autoSwitch_default_rightHand
@@ -897,103 +712,16 @@ equipAuto {
 	armor
 	shoes
 	arrow
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
+	target
 	weight 0
 	whileSitting 0
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-    inQueue
-    notInQueue
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	manualAI 0
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 useSelf_item {
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-    inQueue
-    notInQueue
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	manualAI 0
+	dcOnEmpty 0
+	# [checkSelfCondition]
 }
 
 ######## Autostorage/autosell ########
@@ -1009,9 +737,11 @@ buyAuto {
 	maxAmount 3
 	batchSize
 	onlyIdentified
-	disabled 0
-	maxBase
-	minBase
+	zeny
+	minDistance
+	maxDistance
+	dcOnEmpty 0
+	# [checkSelfCondition]
 }
 
 sellAuto 0
@@ -1048,7 +778,8 @@ getAuto {
 	maxAmount
 	batchSize
 	passive
-	disabled 0
+	dcOnEmpty 0
+	# [checkSelfCondition]
 }
 
 ######## Debugging options; only useful for developers ########
@@ -1092,4 +823,158 @@ avoidObstaclesDefaultPortals {
 	drop_destination_when_near_dist 3
 }
 
+#checkSelfCondition {
+#	disabled 0
+#	whenIdle 0
+#	whenNotIdle 0
+#	manualAI 0
+#	timeout 0
+#	inQueue
+#	notInQueue
+#	onAction
+#	notOnAction
+#
+#	hp
+#	sp
+#	ap
+#	weight
+#	zeny
+#	spirit
+#	amuletType
+#	minBase
+#	maxBase
+#
+#	whenStatusActive
+#	whenStatusInactive
+#	whenGround
+#	whenNotGround
+#	whenPermitSkill
+#	whenNotPermitSkill
+#	whenFlag
+#	whenNotFlag
+#	onlyWhenSafe 0
+#	nearPortal 0
+#	inMap
+#	notInMap
+#	inLockOnly 0
+#	notWhileSitting 0
+#	notWhileCasting 0
+#	whileCasting 0
+#	notInTown 0
+#	inTown 0
+#	whenFollowing 0
+#	inParty 0
+#	notInParty 0
+#
+#	aggressives
+#	partyAggressives
+#	stopWhenHit 0
+#	monstersCount
+#	monstersCountDist
+#	monsters
+#	notMonsters
+#	defendMonsters
+#
+#	inInventory
+#	inInventoryID
+#	inCart
+#	whenEquipped
+#	whenNotEquipped
+#	whenEquip_Right_Hand_Empty 0
+#	whenEquip_Left_Hand_Empty 0
+#	whenEquip_Right_Hand_Type
+#	whenEquip_Left_Hand_Type
+#
+#	homunculus 0
+#	homunculus_hp
+#	homunculus_sp
+#	homunculus_onAction
+#	homunculus_notOnAction
+#	homunculus_whenIdle 0
+#	homunculus_whenNotIdle 0
+#	homunculus_dead 0
+#	homunculus_resting 0
+#	homunculus_noinfo_dead 0
+#	homunculus_noinfo_resting 0
+#
+#	mercenary 0
+#	mercenary_hp
+#	mercenary_sp
+#	mercenary_whenStatusActive
+#	mercenary_whenStatusInactive
+#	mercenary_onAction
+#	mercenary_notOnAction
+#	mercenary_whenIdle 0
+#	mercenary_whenNotIdle 0
+#
+#	skill
+#	whenWater 0
+#	devotees
+#	whenPartyMembersNear
+#	whenPartyMembersNearDist
+#}
+
+#checkPlayerCondition {
+#	target_timeout 0
+#	target_whenStatusActive
+#	target_whenStatusInactive
+#	target_notWhileSitting 0
+#	target_hp
+#	target_deltaHp
+#	target_isJob
+#	target_isNotJob
+#	target_aggressives
+#	target_defendMonsters
+#	target_monsters
+#	target_whenGround
+#	target_whenNotGround
+#	target_dead 0
+#	target_whenWeaponEquipped 0
+#	target_whenShieldEquipped 0
+#	target_isGuild
+#	target_isNotGuild
+#	target_dist
+#	target_isNotMyDevotee 0
+#	target_spirit
+#}
+
+#checkMonsterCondition {
+#	target_hp
+#	target_timeout 0
+#	target_misses
+#	target_totalMisses
+#	target_whenStatusActive
+#	target_whenStatusInactive
+#	target_whenGround
+#	target_whenNotGround
+#	target_dist
+#	target_deltaHp
+#	target_whenWeaponEquipped 0
+#	target_whenShieldEquipped 0
+#	target_is_aggressive 0
+#	target_is_aggressive_party 0
+#	# Added by eCast Plugin
+#	target_Element
+#	target_notElement
+#	target_Race
+#	target_notRace
+#	target_Size
+#	target_notSize
+#	target_hpLeft
+#	target_Level
+#	target_cellBehindFree 0
+#	target_isAIMode_Aggressive 0
+#	target_isAIMode_Looter 0
+#	target_isAIMode_Assist 0
+#	target_isAIMode_CanMove 0
+#	target_isAIMode_CastSensorIdle 0
+#	target_isAIMode_CastSensorChase 0
+#	target_isAIMode_MVP 0
+#	target_isAIMode_KnockbackImmune 0
+#	target_isAIMode_Detector 0
+#	target_isAIMode_TakesFixed_1_Damage_Melee 0
+#	target_isAIMode_TakesFixed_1_Damage_Ranged 0
+#	target_isAIMode_TakesFixed_1_Damage_Magic 0
+#	target_isAIMode_TakesFixed_1_Damage_None 0
+#}
 
