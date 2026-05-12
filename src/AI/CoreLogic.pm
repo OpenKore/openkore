@@ -471,14 +471,14 @@ sub processDrop {
 }
 
 ##### PORTALREADD #####
-# Automatically adds the last missing portals to portals_lut
+# Automatically restores the last temporarily removed route source.
 sub processReAddMissingPortals {
 	return unless ($config{route_reAddMissingPortals});
 	return unless (@portals_lut_missed);
 	return unless (timeOut($portals_lut_missed[0]{time}, $timeout{ai_portal_re_add_missed}{timeout}));
 	my $portal = shift(@portals_lut_missed);
-	$portals_lut{$portal->{name}} = $portal->{portal};
-	debug "Re adding portal '".$portal->{name}."' to portals list.\n", "portalReAdd";
+	Misc::restoreSuspendedRouteSource($portal);
+	debug "Re adding route source '".$portal->{name}."' to portals list.\n", "portalReAdd";
 }
 
 ##### PORTALRECORD #####
@@ -1019,6 +1019,7 @@ sub processAutoBreakTime {
 ##### DEAD #####
 sub processDead {
 	if (AI::action() eq "dead" && !$char->{dead}) {
+		message T("[processDead] Clearing Dead status and dead AI queue sequence.\n");
 		AI::dequeue();
 		$char->setStatus('Dead', 0);
 
@@ -1045,7 +1046,16 @@ sub processDead {
 			}
 		}
 
+	} elsif (AI::action() ne "dead" && !$char->{dead} && $char->statusActive('Dead')) {
+		my $current_action = AI::action();
+		$current_action = defined $current_action && $current_action ne '' ? $current_action : 'none';
+		debug "[processDead] Cleared stale Dead status after respawn while current AI action was '$current_action'; the dead queue was displaced before normal cleanup ran.\n";
+		AI::clear('dead');
+		$char->setStatus('Dead', 0);
+		$char->{resurrected} = 0 if $char->{resurrected};
+
 	} elsif (AI::action() ne "dead" && AI::action() ne "deal" && $char->{'dead'}) {
+		message T("[processDead] You died, clearing AI queue, queueing dead and setting status Dead.\n");
 		AI::clear();
 		AI::queue("dead");
 		$char->setStatus('Dead', 1);
@@ -1058,6 +1068,7 @@ sub processDead {
 	}
 
 	if (AI::action() eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
+		message T("[processDead] Sending respawn.\n");
 		$messageSender->sendRestart(0);
 		$char->{'dead_time'} = time;
 	}
@@ -2335,20 +2346,136 @@ sub processRandomWalk {
 }
 
 ##### FOLLOW #####
+sub follow_route_needs_reset {
+	my ($args, $master_pos_to, $master_time_move, $master_map) = @_;
+	return 0 unless $args;
+
+	my $has_coords = ($master_pos_to && defined $master_pos_to->{x} && defined $master_pos_to->{y}) ? 1 : 0;
+	my $had_coords = ($args->{masterLastMovePosTo} && defined $args->{masterLastMovePosTo}{x} && defined $args->{masterLastMovePosTo}{y}) ? 1 : 0;
+
+	if (defined $master_map && $master_map ne '' && defined $args->{masterLastMap} && $args->{masterLastMap} ne '' && $args->{masterLastMap} ne $master_map) {
+		return 1;
+	}
+
+	if ($has_coords != $had_coords) {
+		return 1;
+	}
+
+	if ($has_coords && (
+		$args->{masterLastMovePosTo}{x} != $master_pos_to->{x}
+		|| $args->{masterLastMovePosTo}{y} != $master_pos_to->{y}
+	)) {
+		return 1;
+	}
+
+	$args->{masterLastMap} = $master_map if defined $master_map && $master_map ne '';
+	if ($has_coords) {
+		$args->{masterLastMovePosTo} = { %{$master_pos_to} };
+	} else {
+		delete $args->{masterLastMovePosTo};
+	}
+	if (defined $master_time_move && $master_time_move ne '') {
+		$args->{masterLastMoveTime} = $master_time_move;
+	} else {
+		delete $args->{masterLastMoveTime};
+	}
+
+	return 0;
+}
+
+sub start_follow {
+	my ($args, %opts) = @_;
+	return unless $args && $char && $char->{pos_to};
+
+	my $master_pos_to = $opts{pos_to};
+	my $master_time_move = $opts{time_move};
+	my $route_map = $opts{route_map} || $field->baseName;
+	my $master_map = $opts{master_map} || $route_map;
+	my $allow_direct_move = $opts{allow_direct_move} ? 1 : 0;
+	my %route_args = $opts{route_args} ? %{$opts{route_args}} : ();
+
+	my $has_coords = ($master_pos_to && defined $master_pos_to->{x} && defined $master_pos_to->{y}) ? 1 : 0;
+	return unless ($has_coords || $route_map ne $field->baseName);
+
+	$args->{move_timeout} = time;
+	$args->{masterLastMap} = $master_map if defined $master_map && $master_map ne '';
+	if ($has_coords) {
+		$args->{masterLastMovePosTo} = { %{$master_pos_to} };
+	} else {
+		delete $args->{masterLastMovePosTo};
+	}
+	if (defined $master_time_move && $master_time_move ne '') {
+		$args->{masterLastMoveTime} = $master_time_move;
+	} else {
+		delete $args->{masterLastMoveTime};
+	}
+
+	my $must_route = !$allow_direct_move
+		|| !$has_coords
+		|| $route_map ne $field->baseName
+		|| !$field->canMove($char->{pos_to}, $master_pos_to);
+
+	if ($must_route) {
+		ai_route(
+			$route_map,
+			($has_coords ? $master_pos_to->{x} : ''),
+			($has_coords ? $master_pos_to->{y} : ''),
+			%route_args
+		);
+		return 1;
+	}
+
+	$char->move(@{$master_pos_to}{qw(x y)});
+	if (AI::action() eq 'move' && AI::args()) {
+		AI::args()->{isFollow} = 1;
+		AI::args()->{masterLastMap} = $master_map if defined $master_map && $master_map ne '';
+		if ($has_coords) {
+			AI::args()->{masterLastMovePosTo} = { %{$master_pos_to} };
+		}
+		if (defined $master_time_move && $master_time_move ne '') {
+			AI::args()->{masterLastMoveTime} = $master_time_move;
+		}
+	}
+	return 1;
+}
+
+sub reset_follow {
+	my ($args, %opts) = @_;
+	return unless $args;
+
+	debug($opts{debug_message} || "Master has moved since we started the follow movement - Adjusting follow\n", 'follow');
+	while ((AI::action() eq 'move' || AI::action() eq 'route') && AI::args() && AI::args()->{isFollow}) {
+		AI::dequeue();
+	}
+
+	delete $args->{move_timeout};
+	return start_follow($args, %opts);
+}
+
 sub processFollow {
 	# FIXME: Should use actors list to determine who and where is the master
 	# TODO: follow should be a 'mode' rather then a sequence, hence all
 	# var/flag about follow should be moved to %ai_v
 
+	my %plugin_args;
+	$plugin_args{return} = 0;
+	Plugins::callHook('processFollow' => \%plugin_args);
+	return if ($plugin_args{return});
+
 	if (!$config{follow}) {
 		AI::clear("follow") if (AI::findAction("follow") ne undef); # if follow is disabled and there's still "follow" in AI queue, remove it
 		return;
+	}
+
+	my $follow_action;
+	if ((AI::action() eq 'move' || AI::action() eq 'route') && AI::args() && AI::args()->{isFollow}) {
+		$follow_action = AI::action();
 	}
 	
 	return unless (
 		(AI::isIdle() || (AI::is('route') && AI::args()->{isRandomWalk})) ||
 		(AI::action() eq "follow") ||
-		((AI::action() eq "route" && AI::action(1) eq "follow") || (AI::action() eq "move" && AI::action(2) eq "follow"))
+		$follow_action
 	);
 	
 	# stop follow when talking with NPC
@@ -2407,17 +2534,19 @@ sub processFollow {
 
 			if ($args->{following} && $player->{pos_to}) {
 				my $dist = blockDistance($char->{pos_to}, $player->{pos_to});
-				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
-					$args->{move_timeout} = time;
-					$args->{masterLastMoveTime} = $player->{time_move};
-
-					ai_route(
-						$field->baseName,
-						$player->{pos_to}{x},
-						$player->{pos_to}{y},
-						attackOnRoute => 1,
-						isFollow => 1,
-						distFromGoal => $config{followDistanceMin}
+				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.5)) {
+					start_follow(
+						$args,
+						pos_to => $player->{pos_to},
+						time_move => $player->{time_move},
+						master_map => $field->baseName,
+						route_map => $field->baseName,
+						allow_direct_move => 1,
+						route_args => {
+							attackOnRoute => 1,
+							isFollow => 1,
+							distFromGoal => $config{followDistanceMin}
+						}
 					);
 				}
 			}
@@ -2436,32 +2565,31 @@ sub processFollow {
 				}
 			}
 		}
-	} elsif (((AI::action() eq "route" && AI::action(1) eq "follow") || (AI::action() eq "move" && AI::action(2) eq "follow")) && !$args->{ai_follow_lost}) {
+	} elsif ($follow_action && !$args->{ai_follow_lost}) {
 		my $ID = $args->{ID};
 		my $player = $players{$ID};
 		if (
 			$args->{following} &&
 			$player &&
 			%{$player} &&
-			$player->{pos_to} &&
-			$args->{masterLastMoveTime} &&
-			$args->{masterLastMoveTime} != $player->{time_move}
+			$player->{pos_to}
 		) {
-			debug "Master $player has moved since we started routing to it - Adjusting route\n", "ai_attack";
-			AI::dequeue();
-			AI::dequeue() if (AI::action() eq "route");
-
-			$args->{move_timeout} = time;
-			$args->{masterLastMoveTime} = $player->{time_move};
-
-			ai_route(
-				$field->baseName,
-				$player->{pos_to}{x},
-				$player->{pos_to}{y},
-				attackOnRoute => 1,
-				isFollow => 1,
-				distFromGoal => $config{followDistanceMin}
-			);
+			if (follow_route_needs_reset($args, $player->{pos_to}, $player->{time_move}, $field->baseName)) {
+				reset_follow(
+					$args,
+					pos_to => $player->{pos_to},
+					time_move => $player->{time_move},
+					master_map => $field->baseName,
+					route_map => $field->baseName,
+					allow_direct_move => 1,
+					route_args => {
+						attackOnRoute => 1,
+						isFollow => 1,
+						distFromGoal => $config{followDistanceMin}
+					},
+					debug_message => "Master $player moved since we started the follow movement - Adjusting follow\n"
+				);
+			}
 		}
 	}
 
@@ -2926,11 +3054,9 @@ sub processMonsterSkillUse {
 		while ($config{$prefix}) {
 			# monsterSkill can be used on any monster that we could
 			# attackAuto
-			my @monsterIDs = ai_getAggressives(1, 1);
-			for my $monsterID (@monsterIDs) {
-				my $monster = $monsters{$monsterID};
-				if (checkSelfCondition($prefix)
-				    && checkMonsterCondition("${prefix}_target", $monster)) {
+			for my $monster (@$monstersList) {
+				my $monsterID = $monster->{ID};
+				if (checkSelfCondition($prefix) && checkMonsterCondition("${prefix}_target", $monster)) {
 					my $skill = new Skill(auto => $config{$prefix});
 
 					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
@@ -2939,7 +3065,7 @@ sub processMonsterSkillUse {
 					my $lvl = $config{"${prefix}_lvl"} || $char->getSkillLevel($skill);
 					my $maxCastTime = $config{"${prefix}_maxCastTime"};
 					my $minCastTime = $config{"${prefix}_minCastTime"};
-					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
+					message "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
 					# FIXME: $skill->getOwner (homun, merc) instead of $char?
 					my $target = $config{"${prefix}_isSelfSkill"} ? $char : $monster;
 					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix);
@@ -3133,8 +3259,8 @@ sub processAutoAttack {
 				# List monsters that party members are attacking
 				if ($config{attackAuto_party} && $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
 				 && !$ai_v{sitAuto_forcedBySitCommand}
-				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
-				     $monster->{dmgToParty} || $monster->{missedToParty})
+				 && ((($monster->{dmgFromParty} || $monster->{castOnByParty}) && $config{attackAuto_party} != 2) ||
+				     $monster->{dmgToParty} || $monster->{castOnToParty} || $monster->{missedToParty})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
@@ -3142,7 +3268,7 @@ sub processAutoAttack {
 
 				# List monsters that the master is attacking
 				if ($following && $config{'attackAuto_followTarget'} && $effectiveAttackMode >= 1 && !AI::is("take", "items_take")
-				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
+				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID} || $monster->{castOnToPlayer}{$followID} || $monster->{castOnByPlayer}{$followID})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
@@ -3922,7 +4048,11 @@ sub processPartyShareAuto {
 	if (timeOut($timeout{ai_partyShareCheck})) {
 		if (!exists($char->{party}{shareTimes})) { $char->{party}{shareTimes} = 1; }
 
-		if (($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv}) && $char->{party}{joined} && ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})) {
+		if (
+			   ($config{partyAutoShare} || $config{partyAutoShareItem} || $config{partyAutoShareItemDiv})
+			&& $char->{party}{joined}
+			&& ($char->{party}{share} ne $config{partyAutoShare} || $char->{party}{itemPickup} ne $config{partyAutoShareItem} || $char->{party}{itemDivision} ne $config{partyAutoShareItemDiv})
+		) {
 			$messageSender->sendPartyOption($config{partyAutoShare}, $config{partyAutoShareItem}, $config{partyAutoShareItemDiv});
 			$char->{party}{shareTimes}++;
 			if ($char->{party}{shareTimes} > 5) {

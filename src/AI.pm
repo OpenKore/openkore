@@ -268,6 +268,16 @@ sub ai_follow {
 	return 1;
 }
 
+sub _followCoordsAreValid {
+	my ($map, $x, $y) = @_;
+	return 0 unless defined $map && $map ne '';
+	return 0 unless defined $x && defined $y && $x ne '' && $y ne '';
+	return 0 if ($x <= 0 || $y <= 0);
+	return 0 if ($x >= 65535 || $y >= 65535);
+	return 0 if (defined $field && $map eq $field->name && $field->isOffMap($x, $y));
+	return 1;
+}
+
 sub ai_partyfollow {
 	# we have to enable re-calc of route based on master's possition regulary, even when it is
 	# on route and move, otherwise we have finaly moved to the possition and found that the master
@@ -284,20 +294,38 @@ sub ai_partyfollow {
 		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};
 		($master{map}) = $char->{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
 
-		if ($master{map} ne $field->name || $master{x} == 0 || $master{y} == 0) { # Compare including InstanceID
+		my $hasValidCoords = _followCoordsAreValid($master{map}, $master{x}, $master{y});
+		if ($master{map} ne $field->name || !$hasValidCoords) { # Compare including InstanceID
 			delete $master{x};
 			delete $master{y};
 		}
 
 		return unless ($master{map} ne $field->name || exists $master{x}); # Compare including InstanceID
 
-		# Compare map names including InstanceID
-		if ((exists $ai_v{master} && blockDistance(\%master, $ai_v{master}) > 15)
-			|| $master{map} != $ai_v{master}{map}
-			|| (timeOut($ai_v{master}{time}, 15) && blockDistance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
+		my $masterMovedFar = (
+			exists $master{x}
+			&& exists $ai_v{master}
+			&& exists $ai_v{master}{x}
+			&& exists $ai_v{master}{y}
+			&& blockDistance(\%master, $ai_v{master}) > 15
+		);
+		my $masterMapChanged = (!exists $ai_v{master}{map} || $master{map} ne $ai_v{master}{map});
+		my $masterTimedOutFar = (
+			exists $master{x}
+			&& timeOut($ai_v{master}{time}, 15)
+			&& blockDistance(\%master, $char->{pos_to}) > $config{followDistanceMax}
+		);
 
-			$ai_v{master}{x} = $master{x};
-			$ai_v{master}{y} = $master{y};
+		# Compare map names including InstanceID
+		if ($masterMovedFar || $masterMapChanged || $masterTimedOutFar) {
+
+			if (exists $master{x}) {
+				$ai_v{master}{x} = $master{x};
+				$ai_v{master}{y} = $master{y};
+			} else {
+				delete $ai_v{master}{x};
+				delete $ai_v{master}{y};
+			}
 			$ai_v{master}{map} = $master{map};
 			($ai_v{master}{map_name}, undef) = Field::nameToBaseName(undef, $master{map}); # Hack to clean up InstanceID
 			$ai_v{master}{time} = time;
@@ -313,10 +341,11 @@ sub ai_partyfollow {
 			AI::clear("move", "route", "mapRoute");
 			ai_route(
 				$ai_v{master}{map_name},
-				$ai_v{master}{x},
-				$ai_v{master}{y},
+				(exists $ai_v{master}{x} ? $ai_v{master}{x} : ''),
+				(exists $ai_v{master}{y} ? $ai_v{master}{y} : ''),
 				distFromGoal => $config{followDistanceMin},
-				isFollow => 1
+				isFollow => 1,
+				noTeleSpawn => 1
 			);
 
 			my $followIndex = AI::findAction("follow");

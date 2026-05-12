@@ -4099,6 +4099,8 @@ sub monster_typechange {
 		$monster->{nameID} = $type;
 		$monster->{dmgToParty} = 0;
 		$monster->{dmgFromParty} = 0;
+		$monster->{castOnToParty} = 0;
+		$monster->{castOnByParty} = 0;
 		$monster->{missedToParty} = 0;
 		message TF("Monster %s (%d) changed to %s\n", $oldName, $monster->{binID}, $monster->name);
 	}
@@ -7833,6 +7835,8 @@ sub npc_store_info {
 	my $msg = $args->{RAW_MSG};
 	my $pack;
 	my $keys;
+	my $npc_id = $ai_v{'npc_talk'}{'ID'} || $talk{ID};
+	my @shop_items;
 
 	if ($args->{switch} eq '0B77') {
 		$pack = "V3 C v V";
@@ -7862,9 +7866,15 @@ sub npc_store_info {
 
 		$item->{name} = itemName($item);
 		$storeList->add($item);
+		push @shop_items, {
+			itemID => int($item->{nameID}),
+			price  => int($item->{price}),
+		};
 
 		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
 	}
+
+	update_npc_shop_cache($npc_id, \@shop_items);
 
 	$ai_v{'npc_talk'}{talk} = 'store';
 	# continue talk sequence now
@@ -10894,13 +10904,47 @@ sub card_merge_status {
 sub combo_delay {
 	my ($self, $args) = @_;
 
-	$char->{combo_packet} = ($args->{delay}); #* 15) / 100000;
-	# How was the above formula derived? I think it's better that the manipulation be
-	# done in functions.pl (or whatever sub that handles this) instead of here.
+	if ($args->{ID} eq $accountID) {
+		my $received_at = time;
+		my $provisional_source_skill = defined $char->{last_skill_used}
+			? Skill->new(idn => $char->{last_skill_used})->getName()
+			: 'pending self skill packet';
+		my $provisional_target = defined $char->{last_skill_target}
+			? Actor::get($char->{last_skill_target})
+			: undef;
+		my $provisional_target_name = $provisional_target ? $provisional_target->nameString() : 'pending self skill packet';
 
-	$args->{actor} = Actor::get($args->{ID});
-	my $verb = $args->{actor}->verb('have', 'has');
-	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
+		$char->{combo_state} = {
+			delay => $args->{delay},
+			received_at => $received_at,
+			expires_at => $received_at + ($args->{delay} / 1000),
+			source_skill => $char->{last_skill_used},
+			target_id => $char->{last_skill_target},
+		};
+
+		# TODO: If the generic attack loop still misses monk combos, enqueue the
+		# follow-up from this packet handler instead of waiting for the next AI
+		# pass. The observed combo windows are only ~250-290ms, which is easy to
+		# miss when we only poll for them later.
+
+		my $window_seconds = $char->{combo_state}{delay} / 1000;
+		my $remaining_seconds = $char->{combo_state}{expires_at} - time;
+		$remaining_seconds = 0 if $remaining_seconds < 0;
+		
+		$args->{actor} = Actor::get($args->{ID});
+
+		debug sprintf(
+			"%s combo window packet received: provisional_opener=%s, provisional_target=%s, delay=%dms (%.3fs), received_at=%.6f, expires_at=%.6f, remaining=%.3fs, awaiting self skill packet sync\n",
+			$args->{actor},
+			$provisional_source_skill,
+			$provisional_target_name,
+			$char->{combo_state}{delay},
+			$window_seconds,
+			$char->{combo_state}{received_at},
+			$char->{combo_state}{expires_at},
+			$remaining_seconds,
+		), "parseMsg_comboDelay";
+	}
 }
 
 # 0294

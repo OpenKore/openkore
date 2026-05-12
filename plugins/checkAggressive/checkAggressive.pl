@@ -55,29 +55,125 @@ use constant {
 	PLUGIN_NAME => 'checkAggressive',
 };
 
-my %ai_constant = (
-	'01' => 0x81, '02' => 0x83, '03' => 0x1089, '04' => 0x3885,
-	'05' => 0x2085, '06' => 0, '07' => 0x108B, '08' => 0x7085,
-	'09' => 0x3095, '10' => 0x84, '11' => 0x84, '12' => 0x2085,
-	'13' => 0x308D, '17' => 0x91, '19' => 0x3095, '20' => 0x3295,
-	'21' => 0x3695, '24' => 0xA1, '25' => 0x1, '26' => 0xB695,
-	'27' => 0x8084, 'ABR_PASSIVE' => 0x21, 'ABR_OFFENSIVE' => 0xA5
-);
-
 sub Unload {
 	Plugins::delHooks($hooks);
 	message "[".PLUGIN_NAME."] Plugin unloading or reloading.\n", 'success';
 }
 
-sub is_monster_ai_aggressive {
-	my ($ai_str) = @_;
-	$ai_str = uc($ai_str);
+sub is_monster_engaged_with_us {
+	my ($monster) = @_;
 
-	my $mode_value = exists $ai_constant{$ai_str}
-		? $ai_constant{$ai_str}
-		: $ai_constant{'06'};
+	return ($monster->{sentAttack} || $monster->{engaged}) ? 1 : 0;
+}
 
-	return ($mode_value & 0x4) ? 1 : 0;
+sub is_looking_at_actor {
+	my ($monster, $actor) = @_;
+
+	return unless ($monster && $actor);
+	return unless defined $monster->{look}{body};
+
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	return unless ($monster_pos && $actor_pos);
+
+	return 1 if ($monster_pos->{x} == $actor_pos->{x} && $monster_pos->{y} == $actor_pos->{y});
+
+	my %vec;
+	getVector(\%vec, $actor_pos, $monster_pos);
+	my $degree = vectorToDegree(\%vec);
+	return unless defined $degree;
+
+	my $target_body = int(sprintf("%.0f", (360 - $degree) / 45)) % 8;
+	return $monster->{look}{body} == $target_body ? 1 : 0;
+}
+
+sub get_attackable_actors {
+	my @actors;
+
+	push @actors, @{ $playersList ? $playersList->getItems : [] };
+	push @actors, @{ $slavesList ? $slavesList->getItems : [] };
+	push @actors, @{ $elementalsList ? $elementalsList->getItems : [] };
+
+	return @actors;
+}
+
+sub get_line_points_between {
+	my ($from_pos, $to_pos) = @_;
+	return [] unless ($from_pos && $to_pos);
+
+	my ($x1, $y1) = ($from_pos->{x}, $from_pos->{y});
+	my ($x2, $y2) = ($to_pos->{x}, $to_pos->{y});
+
+	my @points;
+	my $dx = abs($x2 - $x1);
+	my $dy = abs($y2 - $y1);
+	my $sx = $x1 < $x2 ? 1 : -1;
+	my $sy = $y1 < $y2 ? 1 : -1;
+	my $err = $dx - $dy;
+
+	while (!($x1 == $x2 && $y1 == $y2)) {
+		my $e2 = 2 * $err;
+		if ($e2 > -$dy) {
+			$err -= $dy;
+			$x1 += $sx;
+		}
+		if ($e2 < $dx) {
+			$err += $dx;
+			$y1 += $sy;
+		}
+
+		last if ($x1 == $x2 && $y1 == $y2);
+		push @points, {x => $x1, y => $y1};
+	}
+
+	return \@points;
+}
+
+sub has_attackable_actor_between {
+	my ($actor, $monster) = @_;
+	return unless ($actor && $monster);
+
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	return unless ($actor_pos && $monster_pos);
+
+	my $line_points = get_line_points_between($actor_pos, $monster_pos);
+	return 0 unless (@{$line_points});
+
+	my %line_lookup = map { $_->{x} . ',' . $_->{y} => 1 } @{$line_points};
+
+	foreach my $other_actor (get_attackable_actors()) {
+		next unless $other_actor;
+		next if ($actor->{ID} && $other_actor->{ID} && $actor->{ID} eq $other_actor->{ID});
+		next if $other_actor->{dead};
+
+		my $other_pos = calcPosFromPathfinding($field, $other_actor);
+		next unless $other_pos;
+
+		return 1 if $line_lookup{$other_pos->{x} . ',' . $other_pos->{y}};
+	}
+
+	return 0;
+}
+
+sub is_aggressive_towards_actor {
+	my ($monster, $actor, $is_clean) = @_;
+	return unless ($monster && $actor);
+
+	return 1 if is_monster_engaged_with_us($monster);
+
+	return unless $is_clean;
+	return unless exists $monstersTable{$monster->{nameID}};
+	return unless $monstersTable{$monster->{nameID}}{isAIMode_Aggressive};
+
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	return unless ($monster_pos && $actor_pos);
+	return unless (blockDistance($actor_pos, $monster_pos) < 10);
+	return unless (Misc::objectIsMovingTowards($monster, $actor) || is_looking_at_actor($monster, $actor));
+	return if has_attackable_actor_between($actor, $monster);
+
+	return 1;
 }
 
 sub is_monster_engaged_with_us {

@@ -593,7 +593,9 @@ sub processAutoAttack {
 				&& $effectiveAttackMode >= 1
 				&& timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
 				&& (
-					   ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					   ($monster->{castOnByParty} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| $monster->{castOnToParty}
+					|| ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
 					|| ($monster->{dmgFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
 					|| ($monster->{castOnByYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
 					|| $monster->{dmgToYou}

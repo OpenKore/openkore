@@ -49,8 +49,11 @@ our @EXPORT = qw(
 	parseDataFile2
 	parseEmotionsFile
 	parseItemsControl
+	parseItemHandTypeTable
 	parseList
 	parseNPCs
+	parseNPCShops
+	parseNoTeleportMaps
 	parseMonControl
 	parsePortals
 	parsePortalsLOS
@@ -81,6 +84,7 @@ our @EXPORT = qw(
 	updatePortalLUT
 	updatePortalLUT2
 	updateNPCLUT
+	updateNPCShopFile
 );
 
 ##
@@ -89,7 +93,8 @@ our @EXPORT = qw(
 # monsters: Return hash
 #
 # Parses a monster DB file in the format:
-# ID Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race Element ElementLevel ChaseRange [Ai] [Name]
+# ID Name Level HP AttackRange SkillRange AttackDelay AttackMotion Size Race
+# Element ElementLevel ChaseRange Ai isAIMode_*...
 sub parseMonstersTableFile {
 	my $file = shift;
 	my $r_hash = shift;
@@ -97,59 +102,195 @@ sub parseMonstersTableFile {
 	undef %{$r_hash};
 
 	my $reader = new Utils::TextReader($file);
+	my @expected_columns = qw(
+		ID
+		Name
+		Level
+		Hp
+		AttackRange
+		SkillRange
+		AttackDelay
+		AttackMotion
+		Size
+		Race
+		Element
+		ElementLevel
+		ChaseRange
+		Ai
+		isAIMode_Aggressive
+		isAIMode_Looter
+		isAIMode_Assist
+		isAIMode_CanMove
+		isAIMode_CastSensorIdle
+		isAIMode_CastSensorChase
+		isAIMode_MVP
+		isAIMode_KnockbackImmune
+		isAIMode_Detector
+		isAIMode_TakesFixed_1_Damage_Melee
+		isAIMode_TakesFixed_1_Damage_Ranged
+		isAIMode_TakesFixed_1_Damage_Magic
+		isAIMode_TakesFixed_1_Damage_None
+	);
+	my %boolean_columns = map { $_ => 1 } @expected_columns[14 .. $#expected_columns];
+	my %numeric_columns = map { $_ => 1 } qw(
+		ID
+		Level
+		Hp
+		AttackRange
+		SkillRange
+		AttackDelay
+		AttackMotion
+		ElementLevel
+		ChaseRange
+	);
+	my %valid_size = map { $_ => 1 } qw(Small Medium Large);
+	my %valid_race = map { $_ => 1 } qw(Formless Undead Brute Plant Insect Fish Demon Demi-Human Angel Dragon);
+	my %valid_element = map { $_ => 1 } qw(Neutral Water Earth Fire Wind Poison Holy Shadow Ghost Undead);
+	my %valid_ai = map { $_ => 1 } qw(
+		01 02 03 04 05 06 07 08 09 10 11 12 13 17 19 20 21 24 25 26 27
+		ABR_PASSIVE ABR_OFFENSIVE
+	);
+	my $line_number = 0;
 
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
+		$line_number++;
 		$line =~ s/^\s+|\s+$//g;
 
 		next if $line eq '';
 		next if $line =~ /^#/;
 
-		# Skip optional header line
-		next if $line =~ /^ID\s+Level\s+HP\s+AttackRange\s+SkillRange\s+AttackDelay\s+AttackMotion\s+Size\s+Race\s+Element\s+ElementLevel\s+ChaseRange(?:\s+Ai)?(?:\s+Name)?$/i;
+		my @fields = split /\t/, $line, -1;
 
-		my ($id, $level, $hp, $attackRange, $skillRange, $attackDelay, $attackMotion,
-			$size, $race, $element, $elementLevel, $chaseRange, $ai, $name);
-
-		if (index($line, "\t") != -1) {
-			my @fields = split /\t+/, $line;
-			next unless @fields >= 12;
-
-			(
-				$id, $level, $hp, $attackRange, $skillRange, $attackDelay,
-				$attackMotion, $size, $race, $element, $elementLevel, $chaseRange
-			) = @fields[0 .. 11];
-			$ai = (defined $fields[12] && $fields[12] ne '') ? $fields[12] : '06';
-			$name = @fields > 13 ? join("\t", @fields[13 .. $#fields]) : undef;
-		} else {
-			my @fields = split /\s+/, $line;
-			next unless @fields >= 12;
-
-			(
-				$id, $level, $hp, $attackRange, $skillRange, $attackDelay,
-				$attackMotion, $size, $race, $element, $elementLevel, $chaseRange, $ai
-			) = @fields;
-			$ai = (defined $ai && $ai ne '') ? $ai : '06';
-			$name = @fields > 13 ? join(' ', @fields[13 .. $#fields]) : undef;
+		if (@fields == scalar(@expected_columns)
+			&& join("\t", @fields) eq join("\t", @expected_columns)) {
+			next;
 		}
 
-		next unless defined $id && $id =~ /^\d+$/;
-		$name =~ s/^\s+|\s+$//g if defined $name;
+		if (@fields != scalar(@expected_columns)) {
+			error TF(
+				"%s: Invalid monsters_table entry at line %d: expected %d tab-separated columns, got %d. Dropping line.\n",
+				$file, $line_number, scalar(@expected_columns), scalar(@fields)
+			);
+			next;
+		}
 
-		$r_hash->{$id}->{ID}            = $id;
-		$r_hash->{$id}->{Level}         = $level;
-		$r_hash->{$id}->{HP}            = $hp;
-		$r_hash->{$id}->{AttackRange}   = $attackRange;
-		$r_hash->{$id}->{SkillRange}    = $skillRange;
-		$r_hash->{$id}->{AttackDelay}   = $attackDelay;
-		$r_hash->{$id}->{AttackMotion}  = $attackMotion;
-		$r_hash->{$id}->{Size}          = $size;
-		$r_hash->{$id}->{Race}          = $race;
-		$r_hash->{$id}->{Element}       = $element;
-		$r_hash->{$id}->{ElementLevel}  = $elementLevel;
-		$r_hash->{$id}->{ChaseRange}    = $chaseRange;
-		$r_hash->{$id}->{Ai}            = defined $ai ? $ai : '06';
-		$r_hash->{$id}->{Name}          = $name if defined $name && $name ne '';
+		my %row;
+		@row{@expected_columns} = @fields;
+
+		my $id = $row{ID};
+		if (!defined $id || $id !~ /^\d+$/) {
+			error TF("%s: Invalid monsters_table entry at line %d: invalid ID '%s'. Dropping line.\n",
+				$file, $line_number, defined $id ? $id : '');
+			next;
+		}
+
+		my @errors;
+		for my $column (@expected_columns) {
+			if (!defined $row{$column} || $row{$column} eq '') {
+				push @errors, "$column is empty";
+				next;
+			}
+
+			if ($numeric_columns{$column} && $row{$column} !~ /^\d+$/) {
+				push @errors, "$column='$row{$column}' is not numeric";
+			} elsif ($boolean_columns{$column} && $row{$column} !~ /^(?:0|1)$/) {
+				push @errors, "$column='$row{$column}' is not 0 or 1";
+			}
+		}
+
+		push @errors, "Size='$row{Size}' is invalid" if !$valid_size{$row{Size}};
+		push @errors, "Race='$row{Race}' is invalid" if !$valid_race{$row{Race}};
+		push @errors, "Element='$row{Element}' is invalid" if !$valid_element{$row{Element}};
+		push @errors, "Ai='$row{Ai}' is invalid" if !$valid_ai{uc $row{Ai}};
+
+		if (@errors) {
+			error TF(
+				"%s: Invalid monsters_table entry at line %d for monster ID %s: %s. Dropping monster.\n",
+				$file, $line_number, $id, join(', ', @errors)
+			);
+			delete $r_hash->{$id};
+			next;
+		}
+
+		$r_hash->{$id}->{ID}                               = int($row{ID});
+		$r_hash->{$id}->{Name}                             = $row{Name};
+		$r_hash->{$id}->{Level}                            = int($row{Level});
+		$r_hash->{$id}->{HP}                               = int($row{Hp});
+		$r_hash->{$id}->{AttackRange}                      = int($row{AttackRange});
+		$r_hash->{$id}->{SkillRange}                       = int($row{SkillRange});
+		$r_hash->{$id}->{AttackDelay}                      = int($row{AttackDelay});
+		$r_hash->{$id}->{AttackMotion}                     = int($row{AttackMotion});
+		$r_hash->{$id}->{Size}                             = $row{Size};
+		$r_hash->{$id}->{Race}                             = $row{Race};
+		$r_hash->{$id}->{Element}                          = $row{Element};
+		$r_hash->{$id}->{ElementLevel}                     = int($row{ElementLevel});
+		$r_hash->{$id}->{ChaseRange}                       = int($row{ChaseRange});
+		$r_hash->{$id}->{Ai}                               = uc $row{Ai};
+		$r_hash->{$id}->{isAIMode_Aggressive}              = int($row{isAIMode_Aggressive});
+		$r_hash->{$id}->{isAIMode_Looter}                  = int($row{isAIMode_Looter});
+		$r_hash->{$id}->{isAIMode_Assist}                  = int($row{isAIMode_Assist});
+		$r_hash->{$id}->{isAIMode_CanMove}                 = int($row{isAIMode_CanMove});
+		$r_hash->{$id}->{isAIMode_CastSensorIdle}          = int($row{isAIMode_CastSensorIdle});
+		$r_hash->{$id}->{isAIMode_CastSensorChase}         = int($row{isAIMode_CastSensorChase});
+		$r_hash->{$id}->{isAIMode_MVP}                     = int($row{isAIMode_MVP});
+		$r_hash->{$id}->{isAIMode_KnockbackImmune}         = int($row{isAIMode_KnockbackImmune});
+		$r_hash->{$id}->{isAIMode_Detector}                = int($row{isAIMode_Detector});
+		$r_hash->{$id}->{isAIMode_TakesFixed_1_Damage_Melee}  = int($row{isAIMode_TakesFixed_1_Damage_Melee});
+		$r_hash->{$id}->{isAIMode_TakesFixed_1_Damage_Ranged} = int($row{isAIMode_TakesFixed_1_Damage_Ranged});
+		$r_hash->{$id}->{isAIMode_TakesFixed_1_Damage_Magic}  = int($row{isAIMode_TakesFixed_1_Damage_Magic});
+		$r_hash->{$id}->{isAIMode_TakesFixed_1_Damage_None}   = int($row{isAIMode_TakesFixed_1_Damage_None});
+	}
+
+	return 1;
+}
+
+##
+# parseItemHandTypeTable(file, hand_types)
+# file: Filename to parse
+# hand_types: Return hash
+#
+# Parses an item hand type file in the format:
+# itemID AegisName type
+sub parseItemHandTypeTable {
+	my ($file, $r_hash) = @_;
+
+	undef %{$r_hash};
+
+	my $reader = new Utils::TextReader($file);
+	my $line_number = 0;
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line_number++;
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/^\s+|\s+$//g;
+		next if $line eq '';
+		next if $line =~ /^#/;
+
+		$line =~ s/\s+#.*$//;
+		my ($item_id, $aegis_name, $type) = split /\s+/, $line, 3;
+		if (!defined $item_id || !defined $aegis_name || !defined $type) {
+			error TF(
+				"%s: Invalid item_hand_type entry at line %d: expected 3 whitespace-separated columns. Dropping line.\n",
+				$file, $line_number
+			);
+			next;
+		}
+
+		if ($item_id !~ /^\d+$/) {
+			error TF(
+				"%s: Invalid item_hand_type entry at line %d: invalid item ID '%s'. Dropping line.\n",
+				$file, $line_number, $item_id
+			);
+			next;
+		}
+
+		$r_hash->{$item_id} = {
+			itemID    => int($item_id),
+			aegisName => $aegis_name,
+			type      => $type,
+		};
 	}
 
 	return 1;
@@ -549,6 +690,33 @@ sub parseList {
 	return 1;
 }
 
+sub parseNoTeleportMaps {
+	my ($file, $r_hash) = @_;
+
+	%{$r_hash} = ();
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/^\s+|\s+$//g;
+		next if ($line eq '' || $line =~ /^#/);
+
+		my ($map, $noteleport, $noreturn) = split /\s+/, $line, 3;
+		next unless defined $map && $map ne '';
+
+		# Allow a header row like: map noteleport noreturn
+		next if (lc($map) eq 'map' && defined $noteleport && lc($noteleport) eq 'noteleport');
+
+		$r_hash->{lc $map} = {
+			noteleport => ($noteleport // 0) ? 1 : 0,
+			noreturn   => ($noreturn   // 0) ? 1 : 0,
+		};
+	}
+
+	return 1;
+}
+
 ##
 # parseShopControl(file, shop)
 # file: Filename to parse
@@ -696,6 +864,71 @@ sub parseNPCs {
 	return 1;
 }
 
+sub parseNPCShops {
+	my ($file, $r_hash) = @_;
+
+	%{$r_hash} = ();
+	$r_hash->{list} = [];
+	my $field_loaded = eval { require Field; 1 };
+
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/\x{FEFF}//g;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/^\s+|\s+$//g;
+		next if ($line eq '' || $line =~ /^#/);
+		next if $line =~ /^npcmap,npcx,npcy,/i;
+
+		my ($map, $x, $y, @item_specs) = split /,/, $line;
+		if (!(defined $map && defined $x && defined $y && @item_specs)) {
+			warning TF("[parseNPCShops] Skipping malformed shop line in %s: %s\n", $file, $line);
+			next;
+		}
+		if (!($x =~ /^-?\d+$/ && $y =~ /^-?\d+$/)) {
+			warning TF("[parseNPCShops] Skipping shop line with invalid coordinates in %s: %s\n", $file, $line);
+			next;
+		}
+
+		my $original_map = $map;
+		$map = (Field::nameToBaseName(undef, $map))[0] if $field_loaded && defined $map;
+		debug TF("[parseNPCShops] Normalized map '%s' -> '%s' for line: %s\n", $original_map, $map, $line), "parseMsg", 2
+			if defined $original_map && defined $map && $original_map ne $map;
+
+		my @items;
+		my %items_by_id;
+		for my $item_spec (@item_specs) {
+			if (!(defined $item_spec && $item_spec =~ /^(\d+):(-?\d+)$/)) {
+				warning TF("[parseNPCShops] Ignoring malformed item spec '%s' in %s line: %s\n",
+					(defined $item_spec ? $item_spec : 'undef'), $file, $line);
+				next;
+			}
+
+			my $item = {
+				itemID => int($1),
+				price  => int($2),
+			};
+			push @items, $item;
+			$items_by_id{$item->{itemID}} = $item->{price};
+		}
+
+		if (!@items) {
+			warning TF("[parseNPCShops] Skipping shop line with no valid items in %s: %s\n", $file, $line);
+			next;
+		}
+
+		push @{$r_hash->{list}}, {
+			map       => $map,
+			x         => int($x),
+			y         => int($y),
+			items     => \@items,
+			itemsByID => \%items_by_id,
+		};
+	}
+
+	return 1;
+}
+
 sub parseMonControl {
 	my $file = shift;
 	my $r_hash = shift;
@@ -740,6 +973,7 @@ sub parsePortals {
 	my $r_array = shift;
 	undef %{$r_hash};
 	undef @{$r_array};
+	Log::debug("[parsePortals] Loading portals file: $file\n", "calc_map_route");
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -754,8 +988,13 @@ sub parsePortals {
 			my $portal = "$source_map $source_x $source_y";
 			my $dest = "$dest_map $dest_x $dest_y";
 			my $dynamicPortalGroup;
-			if ($misc =~ s/(?:^|\s)\[([A-Za-z0-9_]+)\](?=\s|$)/ /) {
-				$dynamicPortalGroup = $1;
+			my $dynamicPortalGroupBlock;
+			while ($misc =~ s/(?:^|\s)\[(\^?)([A-Za-z0-9_]+)\](?=\s|$)/ /) {
+				if ($1 && $1 eq '^') {
+					$dynamicPortalGroupBlock = $2;
+				} else {
+					$dynamicPortalGroup = $2;
+				}
 			}
 			$misc =~ s/\s+/ /g;
 			$misc =~ s/^\s+|\s+$//g;
@@ -766,6 +1005,10 @@ sub parsePortals {
 			$$r_hash{$portal}{'dest'}{$dest}{'x'} = $dest_x;
 			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $dest_y;
 			$$r_hash{$portal}{'dest'}{$dest}{dynamicPortalGroup} = $dynamicPortalGroup if defined $dynamicPortalGroup;
+			$$r_hash{$portal}{'dest'}{$dest}{dynamicPortalGroupBlock} = $dynamicPortalGroupBlock if defined $dynamicPortalGroupBlock;
+
+			Log::debug("[parsePortals] Portal [$source_map $source_x $source_y] > [$dest_map $dest_x $dest_y] has dynamic portal group: $dynamicPortalGroup\n", "calc_map_route", 2) if defined $dynamicPortalGroup;
+			Log::debug("[parsePortals] Portal [$source_map $source_x $source_y] > [$dest_map $dest_x $dest_y] has dynamic portal group block: $dynamicPortalGroupBlock\n", "calc_map_route", 2) if defined $dynamicPortalGroupBlock;
 			$$r_hash{$portal}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
 			#$$r_hash{$portal}{dest}{$dest}{active} = 1; # TODO: is available right now (otherwise, wait until it becomes available)
 			if ($misc =~ /^(\d+)\s(\d)\s(.*)$/) { # [cost] [allow_ticket] [talk sequence]
@@ -1154,6 +1397,7 @@ sub parseTeleportItems {
 	my ($file, $r_hash) = @_;
 	undef %{$r_hash};
 	$r_hash->{list} = [];
+	Log::debug("[parseTeleportItems] Loading teleport items file: $file\n", "calc_map_route");
 
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
@@ -1164,6 +1408,17 @@ sub parseTeleportItems {
 		next if ($line eq '' || $line =~ /^#/);
 		$line =~ s/\s*#.*$//;
 		$line =~ s/,/ /g;
+		my $dynamicPortalGroup;
+		my $dynamicPortalGroupBlock;
+		while ($line =~ s/(?:^|\s)\[(\^?)([A-Za-z0-9_]+)\](?=\s|$)/ /) {
+			if ($1 && $1 eq '^') {
+				$dynamicPortalGroupBlock = $2;
+			} else {
+				$dynamicPortalGroup = $2;
+			}
+		}
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
 		my @args = grep { length } split /\s+/, $line;
 
 		if (@args < 6) {
@@ -1243,11 +1498,24 @@ sub parseTeleportItems {
 			maxLevel => int($max_level),
 			timeoutSec => int($timeout_sec),
 		};
+		$entry->{dynamicPortalGroup} = $dynamicPortalGroup if defined $dynamicPortalGroup;
+		$entry->{dynamicPortalGroupBlock} = $dynamicPortalGroupBlock if defined $dynamicPortalGroupBlock;
 
 		if (defined $required_equip_slot && defined $required_equip_item_id) {
 			$entry->{requiredEquipSlot} = $required_equip_slot;
 			$entry->{requiredEquipItemID} = int($required_equip_item_id);
 		}
+
+		Log::debug(
+			"[parseTeleportItems] Item [$entry->{itemID}] -> [$entry->{destMap} $entry->{destX} $entry->{destY}] has dynamic portal group: $dynamicPortalGroup\n",
+			"calc_map_route",
+			2,
+		) if defined $dynamicPortalGroup;
+		Log::debug(
+			"[parseTeleportItems] Item [$entry->{itemID}] -> [$entry->{destMap} $entry->{destX} $entry->{destY}] has dynamic portal group block: $dynamicPortalGroupBlock\n",
+			"calc_map_route",
+			2,
+		) if defined $dynamicPortalGroupBlock;
 
 		push @{$r_hash->{list}}, $entry;
 	}
@@ -1789,6 +2057,73 @@ sub updateNPCLUT {
 	open FILE, ">>:utf8", $file;
 	print FILE "$location $name\n";
 	close FILE;
+}
+
+sub updateNPCShopFile {
+	my ($file, $map, $x, $y, $items) = @_;
+	return unless defined $file && defined $map && defined $x && defined $y;
+	return unless $x =~ /^-?\d+$/ && $y =~ /^-?\d+$/;
+	my $field_loaded = eval { require Field; 1 };
+	$map = (Field::nameToBaseName(undef, $map))[0] if $field_loaded && defined $map;
+
+	my @serialized_items;
+	for my $item (@{$items || []}) {
+		next unless $item && defined $item->{itemID} && defined $item->{price};
+		next unless $item->{itemID} =~ /^\d+$/ && $item->{price} =~ /^-?\d+$/;
+		push @serialized_items, int($item->{itemID}) . ':' . int($item->{price});
+	}
+
+	return if !-f $file && !@serialized_items;
+
+	my $header = 'npcmap,npcx,npcy,item1id:item1price,item2id:item2price,etc';
+	my $updated_line = join(',', $map, int($x), int($y), @serialized_items);
+	my @lines;
+
+	if (-f $file && open(my $fh, '<:utf8', $file)) {
+		@lines = <$fh>;
+		close $fh;
+	}
+
+	my @output;
+	my $has_header = 0;
+	my $updated = 0;
+
+	for my $line (@lines) {
+		$line =~ s/[\r\n]+$//;
+
+		my $compare = $line;
+		$compare =~ s/\x{FEFF}//g;
+
+		if ($compare =~ /^npcmap,npcx,npcy,/i) {
+			next if $has_header;
+			$has_header = 1;
+			push @output, $line;
+			next;
+		}
+
+		my ($existing_map, $existing_x, $existing_y) = split /,/, $compare, 4;
+		if (
+			defined $existing_map && defined $existing_x && defined $existing_y
+			&& $existing_map eq $map
+			&& $existing_x =~ /^-?\d+$/ && $existing_y =~ /^-?\d+$/
+			&& int($existing_x) == int($x) && int($existing_y) == int($y)
+		) {
+			if (!$updated && @serialized_items) {
+				push @output, $updated_line;
+			}
+			$updated = 1;
+			next;
+		}
+
+		push @output, $line;
+	}
+
+	unshift @output, $header unless $has_header;
+	push @output, $updated_line if @serialized_items && !$updated;
+
+	open(my $fh, '>:utf8', $file) or return;
+	print {$fh} join("\n", @output) . "\n";
+	close $fh;
 }
 
 1;

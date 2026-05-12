@@ -386,7 +386,7 @@ sub find_kite_position {
 sub resolve_movetoattack_pos {
 	my ($actor) = @_;
 	return unless (actorFinishedMovement($actor, $field));
-	debug TF("[Attack] [%s] Fixing failed to attack target, setting actor position to: %s %s\n", $actor, $char->{movetoattack_pos}{x}, $char->{movetoattack_pos}{y} ), "ai_attack";
+	debug TF("[Attack] [%s] Fixing failed to attack target, setting actor position to: %s %s\n", $actor, $actor->{movetoattack_pos}{x}, $actor->{movetoattack_pos}{y} ), "ai_attack";
 	$actor->{pos}{x} = $actor->{movetoattack_pos}{x};
 	$actor->{pos}{y} = $actor->{movetoattack_pos}{y};
 	$actor->{pos_to}{x} = $actor->{movetoattack_pos}{x};
@@ -486,31 +486,52 @@ sub main {
 	# Determine what combo skill to use
 	delete $args->{attackMethod};
 
+	my $combo_state = $char->{combo_state};
+	if ($combo_state && (!defined $combo_state->{expires_at} || time >= $combo_state->{expires_at})) {
+		debug TF("[Attack] [Combo] %s, target %s, combo %d expired at pass 1 (%s).\n", $char, , $target, $char->{combo_state}{source_skill}, $combo_state->{expires_at}), 'ai_attack';
+		delete $char->{combo_state};
+		$combo_state = undef;
+	}
+
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
 		next unless (defined $config{"attackComboSlot_$i"});
+		next unless ($config{"attackComboSlot_${i}_afterSkill"});
+
+		my $after_skill_id = Skill->new(auto => $config{"attackComboSlot_${i}_afterSkill"})->getIDN;
+		my $combo_source_skill = $combo_state ? $combo_state->{source_skill} : undef;
+		my $combo_target_id = $combo_state ? $combo_state->{target_id} : undef;
+		my $combo_delay = $combo_state ? $combo_state->{delay} : undef;
+		my $expected_target_id = defined $combo_target_id ? $combo_target_id : $char->{last_skill_target};
+		my $combo_wait_before_use = $config{"attackComboSlot_${i}_waitBeforeUse"};
 
 		next unless (checkSelfCondition("attackComboSlot_$i"));
-		next unless ($config{"attackComboSlot_${i}_afterSkill"});
-		next unless (Skill->new(auto => $config{"attackComboSlot_${i}_afterSkill"})->getIDN == $char->{last_skill_used});
+		next unless ($after_skill_id == $char->{last_skill_used} || defined $combo_source_skill && $after_skill_id == $combo_source_skill);
 		next unless (( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} ));
-		next unless (( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) ));
-		next unless (( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"}));
+		next unless (( !$config{"attackComboSlot_${i}_autoCombo"} || ($combo_state && defined $combo_delay && $config{"attackComboSlot_${i}_autoCombo"}) ));
+		next unless (( !defined($args->{ID}) || $args->{ID} eq $expected_target_id || !$config{"attackComboSlot_${i}_isSelfSkill"}));
 		next unless ((!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID})));
 		next unless ((!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) || existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID}))));
 		next unless (checkMonsterCondition("attackComboSlot_${i}_target", $target));
 
 		$args->{attackComboSlot_uses}{$i}++;
+		debug TF("[Attack] [Combo] %s, target %s, last_skill_used %s expired at combo check (%s).\n", $char, , $target, $char->{last_skill_used}, $config{"attackComboSlot_$i"}), 'ai_attack';
 		delete $char->{last_skill_used};
 		if ($config{"attackComboSlot_${i}_autoCombo"}) {
-			$char->{combo_packet} = 1500 if ($char->{combo_packet} > 1500);
-			# eAthena seems to have a bug where the combo_packet overflows and gives an
-			# abnormally high number. This causes kore to get stuck in a waitBeforeUse timeout.
-			$config{"attackComboSlot_${i}_waitBeforeUse"} = ($char->{combo_packet} / 1000);
+			my $remaining_combo_delay = defined $combo_state->{expires_at}
+				? $combo_state->{expires_at} - time
+				: 0;
+			$combo_delay = 1500 if ($combo_delay > 1500);
+			# rAthena calculates 01D2 from the opener's current can-act / attack
+			# motion delay, so OpenKore must treat it as a timer that started when
+			# the packet arrived instead of re-waiting the full delay later.
+			$combo_wait_before_use = $remaining_combo_delay > 0 ? $remaining_combo_delay : 0;
 		}
-		delete $char->{combo_packet};
+		debug TF("[Attack] [Combo] %s, target %s, combo %d expired at pass 2 (%s) in combo check.\n", $char, , $target, $char->{combo_state}{source_skill}, $config{"attackComboSlot_$i"}), 'ai_attack';
+		delete $char->{combo_state};
 		$args->{attackMethod}{type} = "combo";
 		$args->{attackMethod}{comboSlot} = $i;
+		$args->{attackMethod}{waitBeforeUse} = $combo_wait_before_use;
 		$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
 		$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_maxDist"} || $config{"attackComboSlot_${i}_dist"};
 		last;
@@ -573,8 +594,9 @@ sub main {
 		delete $args->{ai_attack_failed_give_up}{time};
 
 	}
-
-	$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
+	# Keep the extra chase tolerance scoped to the loop where we actually
+	# proved we could hit out of nominal range. Persisting it here lets melee
+	# attacks get stuck spamming from clientDist 2 without re-approaching.
 
 	# -2: undefined attackMethod
 	# -1: No LOS
@@ -854,6 +876,7 @@ sub main {
 		# Attack with combo logic
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
+			my $wait_before_use = $args->{attackMethod}{waitBeforeUse};
 			delete $args->{attackMethod};
 
 			$ai_v{"attackComboSlot_${slot}_time"} = time;
@@ -868,7 +891,7 @@ sub main {
 				$config{"attackComboSlot_${slot}_minCastTime"},
 				$config{"attackComboSlot_${slot}_isSelfSkill"} ? $char : $target,
 				undef,
-				$config{"attackComboSlot_${slot}_waitBeforeUse"},
+				$wait_before_use,
 			);
 
 			$args->{monsterID} = $ID;

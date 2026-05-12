@@ -213,7 +213,10 @@ sub parseMacroFile {
 					$inBlock--;
 					next;
 				}
-				$macro_subs = join( '', @perl_lines );
+				# Preserve line boundaries inside Perl subs so multi-line constructs like
+				# `qw(...)`, array literals, and argument lists do not collapse into a
+				# single token when eventMacro recompiles the sub.
+				$macro_subs = join( "\n", @perl_lines );
 				sub_execute( $block{name}, $macro_subs );
 				push( @perl_name, $block{name} ) unless existsInList( join( ',', @perl_name ), $block{name} );
 				undef %block;

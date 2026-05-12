@@ -26,7 +26,7 @@ use Modules 'register';
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %equipSlot_rlut %equipSlot_lut %haircolors @headgears_lut @msgTable %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %itemOptionHandle %itemOption_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut @portals_lut_missed %responses %sex_lut %shop %banking %buyer_shop %skillsDesc_lut %lookHandle %skillsArea %skillsEncore %spells_lut %emotions_lut %timeout $char %mon_control %priority %routeWeights %pickupitems %rpackets %itemSlots_lut %statusHandle %statusName %effectName %hatEffectHandle %hatEffectName %portals_los %portals_commands %portals_spawns %portals_airships %stateHandle %ailmentHandle %mapTypeHandle %mapPropertyTypeHandle %mapPropertyInfoHandle %elements_lut %mapAlias_lut %quests_lut $Blacksmith_Blessing %itemStackLimit %title_lut %attendance_rewards %teleport_items %dynamicPortalGroups)],
+	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %equipSlot_rlut %equipSlot_lut %haircolors @headgears_lut @msgTable %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %itemHandType_lut %handEquipTypeAliases %itemOptionHandle %itemOption_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut @portals_lut_missed %responses %sex_lut %shop %banking %buyer_shop %skillsDesc_lut %lookHandle %skillsArea %skillsEncore %spells_lut %emotions_lut %timeout $char %mon_control %priority %routeWeights %pickupitems %rpackets %itemSlots_lut %statusHandle %statusName %effectName %hatEffectHandle %hatEffectName %portals_los %portals_commands %portals_spawns %portals_airships %stateHandle %ailmentHandle %mapTypeHandle %mapPropertyTypeHandle %mapPropertyInfoHandle %elements_lut %mapAlias_lut %quests_lut $Blacksmith_Blessing %itemStackLimit %title_lut %attendance_rewards %teleport_items %dynamicPortalGroups %no_teleport_maps %npc_shops %itemIDtoShops)],
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v %targetTimeout)],
 	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old @friendsID %friends %incomingFriend $field %homunculus $itemsList @itemsID %items $monstersList @monstersID %monsters @npcsID %npcs $npcsList @playersID %players @portalsID @portalsID_old %portals %portals_old $portalsList $storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID $storageTitle @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownPlayers @unknownNPCs $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets $venderItemList $venderID $venderCID @venderListsID $buyerItemList $buyerPriceLimit @selfBuyerItemList $buyerID $buyingStoreID @buyerListsID @articles $articles %venderLists %buyerLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $secureLoginKey $initSync $lastConfChangeTime $petsList $playersList $portalsList %elementals $elementalsList @elementalsID @playerNameCacheIDs %playerNameCache %pet $pvp $cashList $slavesList @slavesID %slaves %cashShop $skillExchangeItem $refineUI %clan %universalCatalog $mergeItemList)],
 	network => [qw($remote_socket $net $messageSender $charServer $conState $conState_tries $encryptVal $ipc $bus $masterServer $lastSwitch $packetParser $clientPacketHandler $bytesSent $incomingMessages $outgoingClientMessages $enc_val1 $enc_val2 $captcha_state $captcha_image $captcha_image_content $captcha_key $captcha_size)],
@@ -90,6 +90,9 @@ our %equipSlot_rlut = (
 );
 
 our %dynamicPortalGroups;
+our %no_teleport_maps;
+our %npc_shops;
+our %itemIDtoShops;
 
 our %elements_lut;
 our %directions_lut;
@@ -101,6 +104,34 @@ our %items_lut;
 our %itemSlotCount_lut;
 our %itemsDesc_lut;
 our %itemTypes_lut;
+our %itemHandType_lut;
+our %handEquipTypeAliases = map { $_ => 1 } qw(
+	Shield
+	Fist
+	Dagger
+	1hSword
+	2hSword
+	1hSpear
+	2hSpear
+	1hAxe
+	2hAxe
+	Mace
+	2hMace
+	Staff
+	Bow
+	Knuckle
+	Musical
+	Whip
+	Book
+	Katar
+	Revolver
+	Rifle
+	Gatling
+	Shotgun
+	Grenade
+	Huuma
+	2hStaff
+);
 our %itemSlots_lut;
 our %itemOption_lut;
 our %itemOptionHandle;

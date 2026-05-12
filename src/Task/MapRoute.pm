@@ -29,9 +29,10 @@ use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
 use Plugins;
-use Misc qw(canUseTeleport portalExists);
+use Misc qw(canUseTeleport portalExists suspendRouteSource);
 use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding actorFinishedMovement);
 use Utils::PathFinding;
+use Utils::DataStructures qw(hashSafeGetValue);
 use Utils::Exceptions;
 use AI qw(ai_useTeleport);
 
@@ -394,17 +395,8 @@ sub iterate {
 										$self->setNpcTalk();
 									} else {
 										error TF("Failed to teleport using airship NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
-										# NPC sequence is a failure
-										if ($config{route_removeMissingPortals_NPC}) {
-											# We delete that portal and try again
-											my $missed = {};
-											$missed->{time} = time;
-											$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
-											$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-											push(@portals_lut_missed, $missed);
-											delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-											error TF("[route_removeMissingPortals_NPC] Deleting airship NPC.\n"), "map_route";
-										}
+										$self->_suspendCurrentRouteSourceForRecalc('portals_airships', '[route_removeMissingPortals_NPC] Deleting airship NPC.')
+											if $config{route_removeMissingPortals_NPC};
 										$self->initMapCalculator();	# redo MAP router
 									}
 								}
@@ -529,17 +521,8 @@ sub iterate {
 					} else {
 						error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
 						
-						# NPC sequence is a failure
-						if ($config{route_removeMissingPortals_NPC}) {
-							# We delete that portal and try again
-							my $missed = {};
-							$missed->{time} = time;
-							$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
-							$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-							push(@portals_lut_missed, $missed);
-							delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-							error TF("[route_removeMissingPortals_NPC] Deleting portal NPC.\n"), "map_route";
-						}
+						$self->_suspendCurrentRouteSourceForRecalc('portals_lut', '[route_removeMissingPortals_NPC] Deleting portal NPC.')
+							if $config{route_removeMissingPortals_NPC};
 
 						$self->initMapCalculator();	# redo MAP router
 					}
@@ -548,14 +531,16 @@ sub iterate {
 
 		} elsif ($dist_to_npc <= $max_npc_dist) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
-			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
+			my $portalCost = hashSafeGetValue(\%portals_lut, $from, 'dest', $to, 'cost') || 0;
+			my $allowTicket = hashSafeGetValue(\%portals_lut, $from, 'dest', $to, 'allow_ticket') || 0;
+			if (($self->{actor}{zeny} >= $portalCost) || ($char->inventory->getByNameID(7060) && $allowTicket)) {
 				debug TF("[mapRoute] Calling setNpcTalk to teleport using NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route";
 				# We have enough money for this service.
 				$self->setNpcTalk();
 
 			} else {
 				error TF("You need %sz to pay for warp service at %s (%s,%s), you have %sz.\n",
-					$portals_lut{$from}{dest}{$to}{cost},
+					$portalCost,
 					$field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y},
 					$self->{actor}{zeny}), "map_route";
 					AI::clear(qw/move route mapRoute/);
@@ -637,22 +622,14 @@ sub iterate {
 			shift @{$self->{mapSolution}};
 		}
 
-	} elsif ( $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"}{source} ) {
+	} elsif ( $self->_currentPortalSourceEntry('portals_lut') ) {
 		# This is a portal solution
 
 		if ($self->{missing_portal}) {
 
 			my $current_portal = portalExists($field->baseName, $self->{mapSolution}[0]{pos});
 			error TF("Bugged current portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
-
-			my $missed = {
-				time => time,
-				name => "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}",
-				portal => $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"}
-			};
-			push(@portals_lut_missed, $missed);
-			
-			delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+			$self->_suspendCurrentRouteSourceForRecalc('portals_lut');
 			delete $self->{missing_portal};
 			delete $self->{guess_portal};
 			
@@ -841,6 +818,31 @@ sub _isSameMapPortalStep {
 	return 0 unless (defined $from_map && defined $to_map);
 
 	return $from_map eq $to_map;
+}
+
+sub _currentRouteSourceID {
+	my ($self) = @_;
+	return join(' ',
+		$self->{mapSolution}[0]{map},
+		$self->{mapSolution}[0]{pos}{x},
+		$self->{mapSolution}[0]{pos}{y},
+	);
+}
+
+sub _currentPortalSourceEntry {
+	my ($self, $dataset) = @_;
+	my $nodeID = $self->_currentRouteSourceID();
+	my $routeSources = $dataset eq 'portals_airships' ? \%portals_airships : \%portals_lut;
+	return unless exists $routeSources->{$nodeID};
+	return if Misc::isRouteSourceRemoved($routeSources->{$nodeID});
+	return $routeSources->{$nodeID}{source};
+}
+
+sub _suspendCurrentRouteSourceForRecalc {
+	my ($self, $dataset, $logMessage) = @_;
+	my $removed = suspendRouteSource($self->_currentRouteSourceID(), dataset => $dataset);
+	error TF("%s\n", $logMessage), "map_route" if $removed && defined $logMessage;
+	return $removed;
 }
 
 sub prunePerMapBlocks {

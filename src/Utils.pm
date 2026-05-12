@@ -426,6 +426,28 @@ sub actorFinishedMovement {
 	return (($elapsed + $extra_time) >= $time_needed);
 }
 
+sub _normalize_calc_pos_to_walkable {
+	my ($field, $actor, $calc_pos) = @_;
+	return $calc_pos if !$field || !$actor || !$calc_pos;
+	return $calc_pos if $field->isWalkable($calc_pos->{x}, $calc_pos->{y});
+
+	my $fallback = $field->closestWalkableSpot($calc_pos, 1);
+	$fallback ||= $field->closestWalkableSpot($calc_pos, 10);
+	return $calc_pos if !$fallback;
+
+	my $bad_pos_key = join(':', $field->baseName, $calc_pos->{x}, $calc_pos->{y}, $fallback->{x}, $fallback->{y});
+	if (!defined $actor->{lastBadCalcPosFallback} || $actor->{lastBadCalcPosFallback} ne $bad_pos_key) {
+		Log::error(
+			sprintf("[calcPosFromPathfinding] [%s] Predicted position (%d,%d) is not walkable on local field '%s'. Falling back to closest walkable cell (%d,%d). Local field data may be out of sync with the server.\n",
+				$actor, $calc_pos->{x}, $calc_pos->{y}, $field->baseName, $fallback->{x}, $fallback->{y}),
+			"route"
+		);
+		$actor->{lastBadCalcPosFallback} = $bad_pos_key;
+	}
+
+	return { x => $fallback->{x}, y => $fallback->{y} };
+}
+
 ##
 # calcPosFromPathfinding(field, actor, [extra_time, precise_mode])
 # field: current map field.
@@ -460,31 +482,33 @@ sub calcPosFromPathfinding {
 	return unless $actor && $actor->{pos} && $actor->{pos_to};
 	$precise_mode = UNIVERSAL::isa($actor, 'Actor::You') ? 1 : 0 unless defined $precise_mode;
 
-	return $actor->{pos_to} if (!$actor->{pos} && $actor->{pos_to});
-	return $actor->{pos} if ($actor->{pos} && !$actor->{pos_to});
-	return $actor->{pos} if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y});
+	return _normalize_calc_pos_to_walkable($field, $actor, $actor->{pos})
+		if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y});
 
 	my $speed = ($actor->{walk_speed} || 0.12);
 	my $time_elapsed = time - $actor->{time_move} + $extra_time;
 
-	return $actor->{pos} if ($time_elapsed <= 0);
+	return _normalize_calc_pos_to_walkable($field, $actor, $actor->{pos}) if ($time_elapsed <= 0);
 
 	set_actor_solution($actor, $field);
 	my $solution = $actor->{solution};
-	return $actor->{pos_to} unless (defined $solution && ref($solution) eq 'ARRAY' && @{$solution});
+	return _normalize_calc_pos_to_walkable($field, $actor, $actor->{pos_to})
+		unless (defined $solution && ref($solution) eq 'ARRAY' && @{$solution});
 
 	if (!$precise_mode) {
 		my $steps_walked = calcStepsWalkedFromTimeAndSolution($solution, $speed, $time_elapsed);
-		return $solution->[$steps_walked] if (defined $solution->[$steps_walked]);
-		return $solution->[-1];
+		if (defined $solution->[$steps_walked]) {
+			return _normalize_calc_pos_to_walkable($field, $actor, $solution->[$steps_walked]);
+		}
+		return _normalize_calc_pos_to_walkable($field, $actor, $solution->[-1]);
 	}
 
 	my $start_sx = defined $actor->{move_start_sx} ? $actor->{move_start_sx} : 8;
 	my $start_sy = defined $actor->{move_start_sy} ? $actor->{move_start_sy} : 8;
 
 	my $pos = _calcPosFromSolutionWithSubcell($solution, $speed, $time_elapsed, $start_sx, $start_sy);
-	return $pos if $pos;
-	return $solution->[-1];
+	return _normalize_calc_pos_to_walkable($field, $actor, $pos) if $pos;
+	return _normalize_calc_pos_to_walkable($field, $actor, $solution->[-1]);
 }
 
 # Wrapper for calcTimeFromSolution so you don't need to call get_client_solution and calcTimeFromSolution when you only need the time

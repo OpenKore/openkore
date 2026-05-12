@@ -306,12 +306,16 @@ sub iterate {
 		
 		my $begin = time;
 
-		if (!$self->{meetingSubRoute} && !$self->{LOSSubRoute} && $pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
+		if ($pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
 		
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $calc_pos, $self->{dest}{pos}, $self->{avoidWalls}, $self->{randomFactor}, $self->{useManhattan}, 1, 0)) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
+
+			my $max = 10;
+			$max = $#{$self->{solution}} if ($#{$self->{solution}} < $max);
+			debug "[calc getroute] Solution  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$self->{solution}}[0..$max]) ."\n", 'route', 2;
 
 			@{$self->{last_pos}}{qw(x y)} = @{$calc_pos}{qw(x y)};
 			@{$self->{last_pos_to}}{qw(x y)} = @{$pos_to}{qw(x y)};
@@ -438,7 +442,7 @@ sub iterate {
 		}
 
 		if (@{$solution}) {
-			my ($anchor_index, $anchor_dist) = _bestSolutionAnchorIndex($solution, $#{$solution}, $current_calc_pos);
+			my ($anchor_index, $anchor_dist) = $self->bestSolutionAnchorIndex($solution, $#{$solution}, $current_calc_pos);
 			if ($self->{start}) {
 				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because we have not moved yet.\n", "route", 2;
 			} elsif ($anchor_index == 0) {
@@ -795,8 +799,8 @@ sub resetRoute {
 	$self->{stage} = CALCULATE_ROUTE;
 }
 
-sub _bestSolutionAnchorIndex {
-	my ($solution, $max_index, $pos) = @_;
+sub bestSolutionAnchorIndex {
+	my ($self, $solution, $max_index, $pos) = @_;
 
 	$max_index = $#{$solution} if $max_index > $#{$solution};
 	my ($best_index, $best_dist) = (0, undef);
@@ -815,7 +819,7 @@ sub _bestSolutionAnchorIndex {
 	#debug "[Route trimm] Solution[0] is ($solution->[0]{x}, $solution->[0]{y}) >> dist $displacedist\n", "route";
 	#debug "[Route trimm] Solution[i] is ($solution->[$best_index]{x}, $solution->[$best_index]{y}) >> dist $best_dist\n", "route";
 
-	debug "[Route] Current drift is [$best_dist] Sol [$solution->[$best_index]{x} $solution->[$best_index]{y}] x [$pos->{x} $pos->{y}] Pos\n", "route";
+	debug "[Route] [loop $self->{loop}] [start $self->{start}] Current drift is [$best_dist] Sol [$solution->[$best_index]{x} $solution->[$best_index]{y}] x [$pos->{x} $pos->{y}] Pos\n", "route";
 
 	return ($best_index, $best_dist || 0);
 }
@@ -888,9 +892,16 @@ sub _trimMoveStepOrReset {
 sub getRoute {
 	my ($class, $solution, $field, $start, $dest, $avoidWalls, $randomFactor, $useManhattan, $liveRoute, $addLimits) = @_;
 	assertClass($field, 'Field') if DEBUG;
-	if (!defined $dest->{x} || $dest->{y} eq '') {
+
+	my $dest_has_x = defined $dest->{x} && $dest->{x} ne '';
+	my $dest_has_y = defined $dest->{y} && $dest->{y} ne '';
+	my $start_has_x = defined $start->{x} && $start->{x} ne '';
+	my $start_has_y = defined $start->{y} && $start->{y} ne '';
+	if (!$dest_has_x || !$dest_has_y || !$start_has_x || !$start_has_y) {
+		Log::error "[getRoute] Called with invalid coordinates\n";
+		Misc::print_callers();
 		@{$solution} = () if ($solution);
-		return 1;
+		return 0;
 	}
 
 	# The exact destination may not be a spot that we can walk on.
@@ -903,9 +914,10 @@ sub getRoute {
 	$closest_dest = $field->closestWalkableSpot(\%dest, 10) if(!$closest_dest); # can't find a closest walkable spot
 
 	if (!defined $closest_start || !defined $closest_dest) {
+		Log::error "[getRoute] Called with no valid closest coordinates ($start->{x}, $start->{y}) to ($dest->{x}, $dest->{y})\n";
+		Misc::print_callers();
 		return 0;
 	}
-
 
 	my %path_args;
 	$path_args{self} = $class;

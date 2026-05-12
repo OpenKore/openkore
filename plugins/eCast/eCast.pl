@@ -26,6 +26,19 @@
 # - target_hpLeft
 # - target_Level
 # - target_cellBehindFree
+# - target_isAIMode_Aggressive
+# - target_isAIMode_Looter
+# - target_isAIMode_Assit / target_isAIMode_Assist
+# - target_isAIMode_CanMove
+# - target_isAIMode_CastSensorIdle
+# - target_isAIMode_CastSensorChase
+# - target_isAIMode_MVP
+# - target_isAIMode_KnockbackImmune
+# - target_isAIMode_Detector
+# - target_isAIMode_TakesFixed_1_Damage_Melee
+# - target_isAIMode_TakesFixed_1_Damage_Ranged
+# - target_isAIMode_TakesFixed_1_Damage_Magic
+# - target_isAIMode_TakesFixed_1_Damage_None
 #
 # How to configure it:
 # Use the normal skill or equipment condition prefixes in config.txt and add
@@ -42,6 +55,9 @@
 # - target_cellBehindFree:
 #   1 = require a free cell behind the target
 #   0 = require that the cell behind the target is not free
+# - target_isAIMode_*:
+#   1 = require that the AI mode flag is present
+#   0 = require that the AI mode flag is not present
 #
 # Examples:
 # 1. Only cast a skill on Fire monsters:
@@ -103,6 +119,21 @@ my %skillChangeElement = qw(
 	NPC_CHANGEHOLY Holy
 	NPC_CHANGEDARKNESS Shadow
 	NPC_CHANGETELEKINESIS Ghost
+);
+my %monster_ai_mode_flags = (
+	isAIMode_Aggressive                 => 'isAIMode_Aggressive',
+	isAIMode_Looter                     => 'isAIMode_Looter',
+	isAIMode_Assist                     => 'isAIMode_Assist',
+	isAIMode_CanMove                    => 'isAIMode_CanMove',
+	isAIMode_CastSensorIdle             => 'isAIMode_CastSensorIdle',
+	isAIMode_CastSensorChase            => 'isAIMode_CastSensorChase',
+	isAIMode_MVP                        => 'isAIMode_MVP',
+	isAIMode_KnockbackImmune            => 'isAIMode_KnockbackImmune',
+	isAIMode_Detector                   => 'isAIMode_Detector',
+	isAIMode_TakesFixed_1_Damage_Melee  => 'isAIMode_TakesFixed_1_Damage_Melee',
+	isAIMode_TakesFixed_1_Damage_Ranged => 'isAIMode_TakesFixed_1_Damage_Ranged',
+	isAIMode_TakesFixed_1_Damage_Magic  => 'isAIMode_TakesFixed_1_Damage_Magic',
+	isAIMode_TakesFixed_1_Damage_None   => 'isAIMode_TakesFixed_1_Damage_None',
 );
 
 sub onUnload {
@@ -199,6 +230,33 @@ sub extendedCheck {
 	if ($config{$args->{prefix} . '_Level'}
 	&& !inRange(($mob->{Level}),$config{$args->{prefix} . '_Level'})) {
 	return $args->{return} = 0;
+	}
+
+	if (!checkMonsterAIModeConditions($args->{prefix}, $args->{monster}, $mob, $skillBlock)) {
+		return $args->{return} = 0;
+	}
+
+	return 1;
+}
+
+sub checkMonsterAIModeConditions {
+	my ($prefix, $monster, $mob, $skill) = @_;
+
+	for my $condition (sort keys %monster_ai_mode_flags) {
+		my $config_key = $prefix . '_' . $condition;
+		next unless exists $config{$config_key} && defined $config{$config_key};
+
+		my $expected = $config{$config_key} ? 1 : 0;
+		my $has_flag = $mob->{$monster_ai_mode_flags{$condition}} ? 1 : 0;
+		next if $expected == $has_flag;
+
+		my $state = $expected ? 'missing' : 'present';
+		debug(
+			"Will not cast $config{$skill} on $monster because AI mode $condition is $state\n",
+			'eCast',
+			1
+		);
+		return 0;
 	}
 
 	return 1;
