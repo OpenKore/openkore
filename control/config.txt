@@ -34,6 +34,8 @@ XKore_exeName ragexe.exe
 # XKore 2 / Proxy configuration
 XKore_listenIp 127.0.0.1
 XKore_listenPort 6901
+XKore_listenPort_map
+XKore_listenPort_char
 XKore_publicIp 127.0.0.1
 XKore_ID
 
@@ -75,6 +77,7 @@ attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
 attackAuto_considerDamagedAggressive 0
+attackAuto_considerAggressiveIfCastOnCastSensor 0
 attackAllowStartStorageBuySell 1
 attackDistance 1
 attackDistanceAuto 1
@@ -230,7 +233,12 @@ route_teleport_minDistance 75
 route_teleport_maxTries 8
 route_teleport_notInMaps
 route_warpByItem 0
+route_warpByItem_chaining 0
 route_warpByItem_minDistance 150
+route_warpItem_minGain 0
+route_warpItem_routeCostHeuristic_max 10000
+route_warpItem_routeCostProbe_maxPerTick 6
+route_warpItem_routeCostCache_max 3000
 route_step 10
 route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
@@ -336,6 +344,7 @@ teleportAuto_item2
 
 dealAuto 1
 dealAuto_names
+dealMaxItems 10
 partyAuto 1
 partyAutoShare 0
 partyAutoShareItem 0
@@ -361,9 +370,15 @@ wx_map_npcSticking 1
 wx_map_playersSticking 1
 wx_map_portalSticking 5
 wx_map_route
+wx_map_namesDetail 8
+wx_map_playerNameZoom 8
+wx_map_partyNameZoom 1
+wx_map_portalDestinations 0
 wx_npcTalk
 wx_captcha
 showAllDamage 0
+githubURL
+githubIssueURL
 manualURL https://openkore.com/wiki/Manual
 forumURL https://forums.openkore.com
 
@@ -371,6 +386,7 @@ logChat 1
 logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
+logClanChat 0
 logSystemChat 1
 logLocalBroadcast 1
 logShop 1
@@ -1015,6 +1031,7 @@ storageAuto_npc_type 1
 storageAuto_type 0
 storageAuto_npc_steps
 storageAuto_password
+rodexMaxItems 5
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
 storageAuto_useItem 0
@@ -1037,8 +1054,10 @@ getAuto {
 ######## Debugging options; only useful for developers ########
 
 debug 0
+debugAssertOnNetwork 0
 debugPacket_unparsed 0
 debugPacket_received 0
+debugPacket_ro_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
 debugPacket_exclude
