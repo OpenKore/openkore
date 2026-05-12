@@ -52,6 +52,7 @@ use Actor::Portal;
 use Actor::Pet;
 use Actor::Slave;
 use Actor::Unknown;
+use Task;
 use Time::HiRes qw(time usleep);
 use Translation;
 use Utils::Exceptions;
@@ -5758,50 +5759,57 @@ sub checkSelfCondition {
 	}
 
 	if (exists $config{$prefix.'_whenEquip_Right_Hand_Empty'} && defined $config{$prefix.'_whenEquip_Right_Hand_Empty'}) {
-		my $wanted = $config{$prefix.'_whenEquip_Right_Hand_Empty'} ? 1 : 0;
+		my $wanted = $config{$prefix.'_whenEquip_Right_Hand_Empty'} ? 0 : 1;
 		my $is_empty = getEquippedItemSlot('rightHand') ? 0 : 1;
 		return 0 if $wanted != $is_empty;
 	}
 
 	if (exists $config{$prefix.'_whenEquip_Left_Hand_Empty'} && defined $config{$prefix.'_whenEquip_Left_Hand_Empty'}) {
-		my $wanted = $config{$prefix.'_whenEquip_Left_Hand_Empty'} ? 1 : 0;
+		my $wanted = $config{$prefix.'_whenEquip_Left_Hand_Empty'} ? 0 : 1;
 		my $is_empty = getEquippedItemSlot('leftHand') ? 0 : 1;
 		return 0 if $wanted != $is_empty;
 	}
 
 	if (exists $config{$prefix.'_whenEquip_Right_Hand_Type'} && defined $config{$prefix.'_whenEquip_Right_Hand_Type'}) {
 		my $item = getEquippedItemSlot('rightHand');
-		return 0 unless (defined $item);
-		return 0 unless (exists $itemHandType_lut{$item->{nameID}} && defined $itemHandType_lut{$item->{nameID}});
-		my $entry = $itemHandType_lut{$item->{nameID}};
-		return 0 unless ($entry && exists $entry->{type} && defined $entry->{type});
 		my @array = split / *, */, $config{$prefix.'_whenEquip_Right_Hand_Type'};
-		my $found = 0;
-		foreach (@array) {
-			if ($entry->{type} eq $_) {
-				$found = 1;
-				last;
+		if (!defined $item) {
+			my $matches_empty_fist = scalar grep { $_ eq 'Fist' } @array;
+			return 0 unless $matches_empty_fist;
+		} else {
+			return 0 unless (exists $itemHandType_lut{$item->{nameID}} && defined $itemHandType_lut{$item->{nameID}});
+			my $entry = $itemHandType_lut{$item->{nameID}};
+			return 0 unless ($entry && exists $entry->{type} && defined $entry->{type});
+			my $found = 0;
+			foreach (@array) {
+				if ($entry->{type} eq $_) {
+					$found = 1;
+					last;
+				}
 			}
+			return 0 unless $found;
 		}
-		return 0 unless $found;
 	}
 
 	if (exists $config{$prefix.'_whenEquip_Left_Hand_Type'} && defined $config{$prefix.'_whenEquip_Left_Hand_Type'}) {
-		my $wanted_type = $config{$prefix.'_whenEquip_Left_Hand_Type'};
 		my $item = getEquippedItemSlot('leftHand');
-		return 0 unless (defined $item);
-		return 0 unless (exists $itemHandType_lut{$item->{nameID}} && defined $itemHandType_lut{$item->{nameID}});
-		my $entry = $itemHandType_lut{$item->{nameID}};
-		return 0 unless ($entry && exists $entry->{type} && defined $entry->{type});
 		my @array = split / *, */, $config{$prefix.'_whenEquip_Left_Hand_Type'};
-		my $found = 0;
-		foreach (@array) {
-			if ($entry->{type} eq $_) {
-				$found = 1;
-				last;
+		if (!defined $item) {
+			my $matches_empty_fist = scalar grep { $_ eq 'Fist' } @array;
+			return 0 unless $matches_empty_fist;
+		} else {
+			return 0 unless (exists $itemHandType_lut{$item->{nameID}} && defined $itemHandType_lut{$item->{nameID}});
+			my $entry = $itemHandType_lut{$item->{nameID}};
+			return 0 unless ($entry && exists $entry->{type} && defined $entry->{type});
+			my $found = 0;
+			foreach (@array) {
+				if ($entry->{type} eq $_) {
+					$found = 1;
+					last;
+				}
 			}
+			return 0 unless $found;
 		}
-		return 0 unless $found;
 	}
 
 	if ($config{$prefix."_zeny"}) {
