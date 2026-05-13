@@ -274,6 +274,9 @@ sub loadDataFiles {
 	Settings::addTableFile('itemtypes.txt',
 		internalName => 'itemtypes.txt',
 		loader => [\&parseDataFile2, \%itemTypes_lut]);
+	Settings::addTableFile('item_hand_type.txt',
+		internalName => 'item_hand_type.txt',
+		loader => [\&parseItemHandTypeTable, \%itemHandType_lut], mustExist => 0);
 	Settings::addTableFile('resnametable.txt',
 		internalName => 'resnametable.txt',
 		loader => [\&parseROLUT, \%mapAlias_lut, 1, ".gat"]);
@@ -286,6 +289,13 @@ sub loadDataFiles {
 	Settings::addTableFile('npcs.txt',
 		internalName => 'npcs.txt',
 		loader => [\&parseNPCs, \%npcs_lut], createIfMissing => 1);
+	Settings::addTableFile('npc_shops.txt',
+		internalName => 'npc_shops.txt',
+		loader => [\&parseNPCShops, \%npc_shops], mustExist => 0,
+		onLoaded => \&compileItemIDtoShops);
+	Settings::addTableFile('no_teleport_maps.txt',
+		internalName => 'no_teleport_maps.txt',
+		loader => [\&parseNoTeleportMaps, \%no_teleport_maps], mustExist => 0);
 	Settings::addTableFile('packetdescriptions.txt',
 		internalName => 'packetdescriptions.txt',
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
@@ -584,6 +594,20 @@ sub processServerSettings {
 
 	# Process setting custom recvpackets option
 	Settings::setRecvPacketsName($masterServer->{recvpackets} && $masterServer->{recvpackets} ne '' ? $masterServer->{recvpackets} : Settings::getRecvPacketsFilename() );
+}
+
+sub compileItemIDtoShops {
+	my $filename = shift;
+
+	%itemIDtoShops = ();
+	for my $shop (@{$npc_shops{list} || []}) {
+		next unless $shop && $shop->{items};
+
+		for my $item (@{$shop->{items}}) {
+			next unless $item && defined $item->{itemID};
+			push @{$itemIDtoShops{$item->{itemID}}}, $shop;
+		}
+	}
 }
 
 sub finalInitialization {

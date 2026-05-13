@@ -511,6 +511,8 @@ sub initHandlers {
 			T("Exit this program."),
 			["", T("exit this program")],
 			["2", T("send a special package 'quit_request' to the server, then exit this program")],
+			["3", T("display status, display exp report, disconnect from the server, then exit this program")],
+			["4", T("same as 3, but ignore dcPause for this shutdown")],
 			], \&cmdQuit],
 		['rc', [
 			T("Reload source code files."),
@@ -826,6 +828,10 @@ sub initHandlers {
 			["select <page #> <store #>", T("Selects a store")],
 			["buy [view|end|<item #> [<amount>]]", T("Buys from a store using Universal Catalog Gold")],
 			], \&cmdSearchStore],
+		['searchshop', [
+			T("Find the closest known NPC shop for an item"),
+			[T("<item name | item ID>"), T("shows the nearest known NPC shop that sells the item and its route")]
+			], \&cmdSearchShop],
 		['pause', [
 			T("Delay the next console commands."),
 			["", T("delay the next console commands for 1 second")],
@@ -5060,6 +5066,13 @@ sub cmdQuit {
 	my (undef, $args) = @_;
 	if ($args eq "2") {
 		$messageSender->sendQuit();
+	} elsif ($args eq "3" || $args eq "4") {
+		$config{dcPause} = 0 if $args eq "4";
+		run('s');
+		run('st');
+		run('skills');
+		run('exp report');
+		$messageSender->sendQuit();
 	}
 	quit();
 }
@@ -5950,8 +5963,8 @@ sub cmdTalk {
 				return;
 
 			} else {
-				error T("Error in function 'talk resp' (Respond to NPC)\n" .
-					"Wrong talk resp sintax.\n");
+				error TF("Error in function 'talk resp' (Respond to NPC)\n" .
+					"Wrong talk resp sintax ('%s').\n", $arg);
 				return;
 			}
 
@@ -8549,13 +8562,72 @@ sub cmdSearchStore {
 		return;
 	}
 
-	error T("Syntax error in 'searchstore' command (Universal catalog command)\n" .
+error T("Syntax error in 'searchstore' command (Universal catalog command)\n" .
 			"searchstore close : Closes search store catalog\n" .
 			"searchstore next : Requests catalog next page\n" .
 			"searchstore view <page #> : Shows catalog page # (0-indexed)\n" .
 			"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] [price <min_price>..<max_price>] [sell|buy] : Searches for an item\n" .
 			"searchstore select <page #> <store #> : Selects a store\n" .
 			"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using Universal Catalog Gold\n");
+}
+
+sub cmdSearchShop {
+	my ($cmd, $args) = @_;
+	my ($item_arg) = parseArgs($args, 1);
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
+		return;
+	}
+
+	if (!defined $item_arg || $item_arg eq '') {
+		error T("Syntax Error in function 'searchshop' (Closest NPC Shop)\n" .
+			"Usage: searchshop <item name | item ID>\n");
+		return;
+	}
+
+	my $item_id;
+	if ($item_arg =~ /^\d+$/) {
+		$item_id = $item_arg;
+	} else {
+		$item_id = itemNameToID($item_arg);
+		if (!defined $item_id) {
+			my @matches = containsItemNameToIDList($item_arg);
+			if (@matches == 1) {
+				$item_id = $matches[0];
+			} elsif (@matches > 1) {
+				my @names = map { itemNameSimple($_) } @matches[0 .. ($#matches < 4 ? $#matches : 4)];
+				error TF("Error in function 'searchshop' (Closest NPC Shop)\n" .
+					"Item name '%s' is ambiguous. Matches: %s\n", $item_arg, join(', ', @names));
+				return;
+			}
+		}
+	}
+
+	if (!defined $item_id) {
+		error TF("Error in function 'searchshop' (Closest NPC Shop)\n" .
+			"Item '%s' not found\n", $item_arg);
+		return;
+	}
+
+	my $shop = get_closest_npc_shop_for_item($item_id, 0);
+	if (!$shop) {
+		error TF("No known NPC shop sells %s (%s).\n", itemNameSimple($item_id), $item_id);
+		return;
+	}
+
+	my $price = defined $shop->{price} ? formatNumber($shop->{price}) . 'z' : T('unknown');
+	my $move_cost = defined $shop->{move_cost} ? formatNumber($shop->{move_cost}) . 'z' : T('unknown');
+	my $route = defined $shop->{route} && $shop->{route} ne '' ? $shop->{route} : T('unknown');
+	my $msg = center(T(" Closest NPC Shop "), 64, '-') . "\n" .
+		TF("Item: %s (%s)\n", itemNameSimple($item_id), $item_id) .
+		TF("Map : %s\n", $shop->{map}) .
+		TF("Pos : %s, %s\n", $shop->{x}, $shop->{y}) .
+		TF("Price: %s\n", $price) .
+		TF("Move Cost: %s\n", $move_cost) .
+		TF("Route: %s\n", $route) .
+		('-' x 64) . "\n";
+	message $msg, "info";
 }
 
 sub cmdRevive {

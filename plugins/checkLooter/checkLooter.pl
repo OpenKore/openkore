@@ -50,15 +50,6 @@ my $hooks = Plugins::addHooks(
 	['check_attackLooter', \&oncheck_attackLooter, undef],
 );
 
-my %ai_constant = (
-	'01' => 0x81, '02' => 0x83, '03' => 0x1089, '04' => 0x3885,
-	'05' => 0x2085, '06' => 0, '07' => 0x108B, '08' => 0x7085,
-	'09' => 0x3095, '10' => 0x84, '11' => 0x84, '12' => 0x2085,
-	'13' => 0x308D, '17' => 0x91, '19' => 0x3095, '20' => 0x3295,
-	'21' => 0x3695, '24' => 0xA1, '25' => 0x1, '26' => 0xB695,
-	'27' => 0x8084, 'ABR_PASSIVE' => 0x21, 'ABR_OFFENSIVE' => 0xA5
-);
-
 =pod
 /// Monster mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
@@ -108,25 +99,13 @@ sub oncheck_attackLooter {
 	}
 
 	my $mob = $monstersTable{$args->{monster}->{nameID}};
-	my $ai = $mob->{Ai};
-	my $is_looter = is_monster_ai_looter($ai);
+	my $is_looter = $mob->{isAIMode_Looter} ? 1 : 0;
 	if (!$is_looter) {
 		debug "[checkLooter] [False] $args->{monster} ($args->{monster}->{nameID}) is not a Looter\n", 'checkLooter';
 		$args->{return} = 1;
 	} else {
 		debug "[checkLooter] [True] $args->{monster} ($args->{monster}->{nameID}) is a Looter\n", 'checkLooter';
 	}
-}
-
-sub is_monster_ai_looter {
-	my ($ai_str) = @_;
-	$ai_str = uc($ai_str);
-
-	my $mode_value = exists $ai_constant{$ai_str}
-		? $ai_constant{$ai_str}
-		: $ai_constant{'06'};
-
-	return ($mode_value & 0x2) ? 1 : 0;
 }
 
 1;

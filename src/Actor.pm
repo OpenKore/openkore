@@ -303,6 +303,11 @@ sub getByName {
 # Total damage done by this actor to the party.
 
 ##
+# int $Actor->{castOnToParty}
+#
+# Total number of targeted casts done by this actor to the party.
+
+##
 # int $Actor->{missedToParty}
 #
 # Number of misses done by this actor to the party.
@@ -311,6 +316,11 @@ sub getByName {
 # int $Actor->{dmgFromParty}
 #
 # Total damage done by the party to this actor.
+
+##
+# int $Actor->{castOnByParty}
+#
+# Total number of targeted casts done by the party to this actor.
 
 ##
 # int $Actor->{missedFromParty}
@@ -625,9 +635,12 @@ sub setStatus {
 		delete $self->{statuses}{$handle};
 		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party}{joined} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
 	}
-	debug
-		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag ? $tick/1000 : 0),
-		"parseMsg_statuslook", ($self->{ID} eq $accountID or $char->{slaves} && $char->{slaves}{$self->{ID}}) ? 1 : 2;
+	my $msg = Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag ? $tick/1000 : 0);
+	if ($self->{ID} eq $accountID or $char->{slaves} && $char->{slaves}{$self->{ID}}) {
+		message $msg, "parseMsg_statuslook";
+	} else {
+		debug $msg, "parseMsg_statuslook", 1;
+	}
 
 	Plugins::callHook('Actor::setStatus::change', {
 		handle => $handle,

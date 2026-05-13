@@ -51,10 +51,10 @@ sub start {
 		subtest 'monsters_table.txt' => sub {
 			my ($fh, $filename) = tempfile();
 			print {$fh} join("\n",
-				"ID\tLevel\tHp\tAttackRange\tSkillRange\tAttackDelay\tAttackMotion\tSize\tRace\tElement\tElementLevel\tChaseRange\tAi\tName",
-				"1002\t1\t55\t1\t10\t1872\t672\tMedium\tPlant\tWater\t1\t12\t02\tPoring",
-				"1038\t78\t114480\t1\t10\t1736\t936\tLarge\tUndead\tHoly\t4\t14\t03\tGolden Thief Bug",
-				"2000 10 100 1 10 1000 500 Small Formless Neutral 1 12",
+				"ID\tName\tLevel\tHp\tAttackRange\tSkillRange\tAttackDelay\tAttackMotion\tSize\tRace\tElement\tElementLevel\tChaseRange\tAi\tisAIMode_Aggressive\tisAIMode_Looter\tisAIMode_Assist\tisAIMode_CanMove\tisAIMode_CastSensorIdle\tisAIMode_CastSensorChase\tisAIMode_MVP\tisAIMode_KnockbackImmune\tisAIMode_Detector\tisAIMode_TakesFixed_1_Damage_Melee\tisAIMode_TakesFixed_1_Damage_Ranged\tisAIMode_TakesFixed_1_Damage_Magic\tisAIMode_TakesFixed_1_Damage_None",
+				"1002\tPoring\t1\t55\t1\t10\t1872\t672\tMedium\tPlant\tWater\t1\t12\t02\t0\t1\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0",
+				"1038\tGolden Thief Bug\t78\t114480\t1\t10\t1736\t936\tLarge\tUndead\tHoly\t4\t14\t03\t0\t0\t1\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0",
+				"2000\tBroken Monster\t10\t100\t1\t10\t1000\t500\tSmall\tFormless\tNeutral\t1\t12\t99\t0\t2\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0",
 			) . "\n";
 			close $fh;
 
@@ -62,10 +62,36 @@ sub start {
 			parseMonstersTableFile($filename, \%monsters);
 
 			is($monsters{1002}{Ai}, '02', 'parses Ai from tab-separated format');
-			is($monsters{1002}{Name}, 'Poring', 'parses Name from tab-separated format');
+			is($monsters{1002}{Name}, 'Poring', 'parses Name from column 2');
+			is($monsters{1002}{isAIMode_Looter}, 1, 'parses precomputed looter flag');
+			is($monsters{1002}{isAIMode_CanMove}, 1, 'parses precomputed can-move flag');
 			is($monsters{1038}{Name}, 'Golden Thief Bug', 'parses Name with spaces');
-			is($monsters{2000}{Ai}, '06', 'defaults Ai to 06 when omitted');
-			ok(!exists $monsters{2000}{Name}, 'does not create Name when omitted');
+			is($monsters{1038}{isAIMode_Assist}, 1, 'parses assist flag');
+			ok(!exists $monsters{2000}, 'drops invalid monster rows instead of partially parsing them');
+
+			unlink $filename;
+			done_testing();
+		};
+
+		subtest 'item_hand_type.txt' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				'# itemID AegisName type',
+				'1813 Kaiser_Knuckle Knuckle',
+				'2112 Novice_Guard Shield',
+				'broken line',
+				'badid Another_Item Dagger',
+			) . "\n";
+			close $fh;
+
+			my %hand_types;
+			parseItemHandTypeTable($filename, \%hand_types);
+
+			is($hand_types{1813}{itemID}, 1813, 'parses item ID');
+			is($hand_types{1813}{aegisName}, 'Kaiser_Knuckle', 'parses AegisName');
+			is($hand_types{1813}{type}, 'Knuckle', 'parses weapon type');
+			is($hand_types{2112}{type}, 'Shield', 'parses shield type');
+			ok(!exists $hand_types{badid}, 'drops invalid rows');
 
 			unlink $filename;
 			done_testing();
@@ -96,6 +122,7 @@ sub start {
 			is($teleport_items{list}[0]{destY}, 115, 'destY');
 			is($teleport_items{list}[0]{maxLevel}, 0, 'parses explicit maxLvl');
 			is($teleport_items{list}[0]{timeoutSec}, 1200, 'timeoutSec');
+			is($teleport_items{list}[0]{dynamicPortalGroupBlock}, 'EdenPortalExit', 'parses teleport item dynamic portal block');
 			is($teleport_items{list}[1]{mode}, 'random', 'supports comma syntax');
 			is($teleport_items{list}[1]{maxLevel}, 99, 'parses maxLvl syntax');
 			is($teleport_items{list}[2]{requiredEquipSlot}, 'midHead', 'preserves required equip slot case from table');
@@ -113,6 +140,79 @@ sub start {
 			is($teleport_items{list}[0]{itemID}, 602, 'valid control line itemID');
 			is($teleport_items{list}[0]{mode}, 'respawn', 'valid control line mode');
 			is($teleport_items{list}[0]{timeoutSec}, 120, 'valid control line timeoutSec');
+			done_testing();
+		};
+
+		subtest 'npc_shops.txt' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				'npcmap,npcx,npcy,item1id:item1price,item2id:item2price,etc',
+				'prontera,100,200,501:10,502:50,503:180',
+				'alberta_in,182,97,611:40',
+				'ignoreme,bad,x,501:10',
+			) . "\n";
+			close $fh;
+
+			my %npc_shops;
+			parseNPCShops($filename, \%npc_shops);
+
+			is_deeply([sort keys %npc_shops], ['list'], 'stores only list structure for npc shops');
+			is(scalar @{$npc_shops{list}}, 2, 'parses valid shop rows only');
+			is($npc_shops{list}[0]{map}, 'prontera', 'parses map');
+			is($npc_shops{list}[0]{x}, 100, 'parses x');
+			is($npc_shops{list}[0]{y}, 200, 'parses y');
+			is(scalar @{$npc_shops{list}[0]{items}}, 3, 'parses item list');
+			is($npc_shops{list}[0]{items}[1]{itemID}, 502, 'parses item ID');
+			is($npc_shops{list}[0]{items}[1]{price}, 50, 'parses item price');
+			is($npc_shops{list}[0]{itemsByID}{503}, 180, 'builds itemsByID lookup');
+			is($npc_shops{list}[1]{map}, 'alberta_in', 'keeps basename-normalized map names');
+
+			unlink $filename;
+			done_testing();
+		};
+
+		subtest 'npc_shops_instance_map_normalization' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} "0021\@cata,20,30,602:1000\n";
+			close $fh;
+
+			my %npc_shops;
+			parseNPCShops($filename, \%npc_shops);
+
+			is($npc_shops{list}[0]{map}, '1@cata', 'normalizes instance map names through Field::nameToBaseName');
+
+			unlink $filename;
+			done_testing();
+		};
+
+		subtest 'updateNPCShopFile' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				'npcmap,npcx,npcy,item1id:item1price,item2id:item2price,etc',
+				'prontera,100,200,501:10,502:50',
+				'alberta_in,182,97,611:40',
+			) . "\n";
+			close $fh;
+
+			updateNPCShopFile($filename, 'prontera', 100, 200, [
+				{itemID => 501, price => 12},
+				{itemID => 503, price => 180},
+			]);
+			updateNPCShopFile($filename, 'geffen', 50, 60, [
+				{itemID => 601, price => 99},
+			]);
+			updateNPCShopFile($filename, 'alberta_in', 182, 97, []);
+
+			my %npc_shops;
+			parseNPCShops($filename, \%npc_shops);
+
+			is(scalar @{$npc_shops{list}}, 2, 'updates existing shops, appends new shops, and removes emptied shops');
+			is($npc_shops{list}[0]{itemsByID}{501}, 12, 'replaces stale prices for existing shops');
+			is($npc_shops{list}[0]{itemsByID}{503}, 180, 'writes updated item lists for existing shops');
+			is($npc_shops{list}[1]{map}, 'geffen', 'adds new shop rows when missing');
+			is($npc_shops{list}[1]{items}[0]{price}, 99, 'stores new shop price');
+
+			unlink $filename;
 			done_testing();
 		};
 

@@ -52,6 +52,7 @@ use Actor::Portal;
 use Actor::Pet;
 use Actor::Slave;
 use Actor::Unknown;
+use Task;
 use Time::HiRes qw(time usleep);
 use Translation;
 use Utils::Exceptions;
@@ -166,6 +167,7 @@ our @EXPORT = (
 	stripLanguageCode
 	switchConfigFile
 	updateDamageTables
+	update_npc_shop_cache
 	updatePlayerNameCache
 	canUseTeleport
 	isTeleportItemEquipRequirementSatisfied
@@ -183,6 +185,7 @@ our @EXPORT = (
 	isSafeActorQuery
 	getActorNameSafe
 	itemNameSimpleWithSlots
+	get_closest_npc_shop_for_item
 	sumByNameID_all
 	isCellOccupied/,
 
@@ -210,6 +213,12 @@ our @EXPORT = (
 	refreshDynamicPortalStates
 	applyDynamicPortalStates
 	getDynamicPortalDestinations
+	hasMapCoords
+	isRoutePointDefined
+	isRoutePointReachableOnField
+	isRouteSourceRemoved
+	suspendRouteSource
+	restoreSuspendedRouteSource
 	portalExists
 	portalExists2
 	portalExistsAirship
@@ -408,6 +417,38 @@ sub getDynamicPortalDestinations {
 	}
 
 	return \%destinations;
+}
+
+sub hasMapCoords {
+	my ($point) = @_;
+	return 0 unless ref($point) eq 'HASH';
+	return 0 unless defined $point->{x} && $point->{x} ne '';
+	return 0 unless defined $point->{y} && $point->{y} ne '';
+	return 1;
+}
+
+sub isRoutePointDefined {
+	my ($entry) = @_;
+	return 0 unless defined $entry && ref($entry) eq 'HASH';
+	return 0 unless defined $entry->{map} && $entry->{map} ne '';
+	return 0 unless defined $entry->{x} && $entry->{x} ne '';
+	return 0 unless defined $entry->{y} && $entry->{y} ne '';
+	return 1;
+}
+
+sub isRoutePointReachableOnField {
+	my ($fieldObj, $entry) = @_;
+	return 0 unless isRoutePointDefined($entry);
+	return 0 unless $fieldObj;
+	return 1 if $fieldObj->closestWalkableSpot($entry, 1);
+	return 1 if $fieldObj->closestWalkableSpot($entry, 10);
+	return 0;
+}
+
+sub isRouteSourceRemoved {
+	my ($entry) = @_;
+	return 0 unless defined $entry && ref($entry) eq 'HASH';
+	return $entry->{removed} ? 1 : 0;
 }
 
 # Checks whether the internal state of some variables are correct.
@@ -1736,6 +1777,33 @@ sub isNotMySlaveID {
 	return 1;
 }
 
+sub isPartyUserID {
+	my ($ID) = @_;
+	return 0 unless ($char && $char->{party}{joined});
+	return 0 unless ($char->{party}{users}{$ID} && %{$char->{party}{users}{$ID}});
+	return 1;
+}
+
+sub isPartyAggroActorID {
+	my ($ID, $actor) = @_;
+	return 0 unless ($char && defined $ID && $actor);
+	return 1 if existsInList($config{tankersList}, $actor->{name});
+	return 1 if isMySlaveID($ID);
+	return 1 if isPartyUserID($ID);
+	return 0;
+}
+
+sub isCastSensorMonster {
+	my ($monster) = @_;
+	return 0 unless $monster;
+	return 0 unless defined $monster->{nameID} && exists $monstersTable{$monster->{nameID}};
+
+	my $mob = $monstersTable{$monster->{nameID}};
+	return 1 if $mob->{isAIMode_CastSensorIdle};
+	return 1 if $mob->{isAIMode_CastSensorChase};
+	return 0;
+}
+
 sub is_aggressive {
 	my ($monster, $control, $type, $party) = @_;
 
@@ -1752,11 +1820,15 @@ sub is_aggressive {
 		($type == 2 && $control->{attack_auto} == 2) ||
 		(($monster->{dmgToYou} || $monster->{missedYou} || $monster->{castOnToYou})) ||
 		($config{"attackAuto_considerDamagedAggressive"} && $monster->{dmgFromYou} > 0) ||
+		($config{"attackAuto_considerAggressiveIfCastOnCastSensor"} && $monster->{castOnByYou} && isCastSensorMonster($monster)) ||
+		($party && $config{"attackAuto_considerAggressiveIfCastOnCastSensor"} && $monster->{castOnByParty} && isCastSensorMonster($monster)) ||
 		($party &&
 		 (
 			   $monster->{dmgToParty}
+			|| $monster->{castOnToParty}
 			|| $monster->{missedToParty}
 			|| $monster->{dmgFromParty}
+			|| $monster->{castOnByParty}
 			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
 			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
 			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
@@ -1787,9 +1859,17 @@ sub is_aggressive_slave {
 		($type && ($control->{attack_auto} == 2)) ||
 		($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{castOnToPlayer}{$slave->{ID}}) ||
 		($config{$slave->{configPrefix}."attackAuto_considerDamagedAggressive"} && $monster->{dmgFromPlayer}{$slave->{ID}} > 0) ||
+		($config{$slave->{configPrefix}."attackAuto_considerAggressiveIfCastOnCastSensor"} && $monster->{castOnByPlayer}{$slave->{ID}} && isCastSensorMonster($monster)) ||
+		($party && $config{$slave->{configPrefix}."attackAuto_considerAggressiveIfCastOnCastSensor"} && $monster->{castOnByParty} && isCastSensorMonster($monster)) ||
 		($party &&
 		 (
-			   $monster->{missedFromYou}
+			   $monster->{dmgToParty}
+			|| $monster->{castOnToParty}
+			|| $monster->{missedToParty}
+			|| $monster->{dmgFromParty}
+			|| $monster->{castOnByParty}
+			|| $monster->{missedFromParty}
+			|| $monster->{missedFromYou}
 			|| $monster->{dmgFromYou}
 			|| $monster->{castOnByYou}
 			|| $monster->{dmgToYou}
@@ -1821,8 +1901,8 @@ sub checkMonsterCleanness {
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
 
-	# If party attacked monster, or if monster attacked/missed party
-	if ($config{attackAuto_party} && ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0)) {
+	# If party attacked monster, or if monster attacked/missed/cast on party
+	if ($config{attackAuto_party} && ($monster->{dmgFromParty} > 0 || $monster->{castOnByParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{castOnToParty} > 0 || $monster->{missedToParty} > 0)) {
 		return 1;
 	}
 
@@ -1948,7 +2028,13 @@ sub slave_checkMonsterCleanness {
 	if (
 		$config{$slave->{configPrefix}.'attackAuto_party'} &&
 		(
-			   $monster->{dmgFromYou}
+			   $monster->{dmgFromParty}
+			|| $monster->{castOnByParty}
+			|| $monster->{missedFromParty}
+			|| $monster->{dmgToParty}
+			|| $monster->{castOnToParty}
+			|| $monster->{missedToParty}
+			|| $monster->{dmgFromYou}
 			|| $monster->{missedFromYou}
 			|| $monster->{castOnByYou}
 			|| $monster->{dmgToYou}
@@ -2267,6 +2353,163 @@ sub getNPCName {
 	} else {
 		return T("Unknown #") . unpack("V1", $ID);
 	}
+}
+
+sub update_npc_shop_cache {
+	my ($npc_id, $items) = @_;
+	return unless defined $npc_id;
+
+	my $npc = $npcs{$npc_id};
+	return unless $npc && $field && $field->baseName;
+	return unless defined $npc->{pos}{x} && defined $npc->{pos}{y};
+
+	my $map = $field->baseName;
+	my $x = int($npc->{pos}{x});
+	my $y = int($npc->{pos}{y});
+	my @shop_items = map {
+		{
+			itemID => int($_->{itemID}),
+			price  => int($_->{price}),
+		}
+	} grep {
+		$_ && defined $_->{itemID} && defined $_->{price}
+		&& $_->{itemID} =~ /^\d+$/
+		&& $_->{price} =~ /^-?\d+$/
+	} @{$items || []};
+	@shop_items = sort {
+		$a->{itemID} <=> $b->{itemID}
+		||
+		$a->{price} <=> $b->{price}
+	} @shop_items;
+
+	my $shop_file = Settings::getTableFilename('npc_shops.txt');
+	if (!defined $shop_file) {
+		my @table_dirs = grep { -d $_ } Settings::getTablesFolders();
+		$shop_file = "$table_dirs[-1]/npc_shops.txt" if @table_dirs;
+	}
+
+	if (defined $shop_file) {
+		updateNPCShopFile($shop_file, $map, $x, $y, \@shop_items);
+		Settings::loadByRegexp(qr/npc_shops/);
+		debug TF("Updated npc shop cache for %s (%s, %s).\n", getNPCName($npc_id) || T('Unknown'), $x, $y), "parseMsg", 2;
+		return;
+	}
+}
+
+sub get_closest_npc_shop_for_item {
+	my ($itemID, $silent) = @_;
+	$silent = $silent ? 1 : 0;
+	if (!(defined $itemID && $itemID =~ /^\d+$/)) {
+		warning TF("[get_closest_npc_shop_for_item] Invalid itemID '%s'.\n", (defined $itemID ? $itemID : 'undef')) unless $silent;
+		return;
+	}
+	if (!($field && $char && $char->{pos_to})) {
+		warning TF("[get_closest_npc_shop_for_item] Missing route context for item %s (field=%s char=%s pos_to=%s).\n",
+			$itemID, ($field ? 1 : 0), ($char ? 1 : 0), ($char && $char->{pos_to} ? 1 : 0)) unless $silent;
+		return;
+	}
+	if (!(exists $itemIDtoShops{$itemID} && ref($itemIDtoShops{$itemID}) eq 'ARRAY' && @{$itemIDtoShops{$itemID}})) {
+		warning TF("[get_closest_npc_shop_for_item] No indexed npc shop entries found for %s.\n", $itemID) unless $silent;
+		return;
+	}
+	if (!(eval { require Task::CalcMapRoute; 1 })) {
+		warning TF("[get_closest_npc_shop_for_item] Unable to load Task::CalcMapRoute for item %s: %s\n", $itemID, $@) unless $silent;
+		return;
+	}
+
+	my @targets;
+	my %target_shop_by_key;
+	foreach my $shop (@{$itemIDtoShops{$itemID}}) {
+		if (!($shop && defined $shop->{map} && defined $shop->{x} && defined $shop->{y})) {
+			warning TF("[get_closest_npc_shop_for_item] Skipping incomplete shop entry for item %s.\n", $itemID) unless $silent;
+			next;
+		}
+		if (!($shop->{x} =~ /^-?\d+$/ && $shop->{y} =~ /^-?\d+$/)) {
+			warning TF("[get_closest_npc_shop_for_item] Skipping shop with invalid coordinates for item %s: %s,%s,%s\n",
+				$itemID, $shop->{map}, $shop->{x}, $shop->{y}) unless $silent;
+			next;
+		}
+
+		my $map = eval { (Field::nameToBaseName(undef, $shop->{map}))[0] };
+		if (!defined $map) {
+			warning TF("[get_closest_npc_shop_for_item] Failed to normalize map '%s' for item %s: %s\n",
+				$shop->{map}, $itemID, ($@ || 'unknown error')) unless $silent;
+			next;
+		}
+
+		my $key = join("\t", $map, int($shop->{x}), int($shop->{y}));
+		next if exists $target_shop_by_key{$key};
+
+		push @targets, {
+			map => $map,
+			x   => int($shop->{x}),
+			y   => int($shop->{y}),
+		};
+		$target_shop_by_key{$key} = $shop;
+	}
+	if (!@targets) {
+		warning TF("[get_closest_npc_shop_for_item] Item %s has indexed entries but none produced valid route targets.\n", $itemID) unless $silent;
+		return;
+	}
+
+	debug TF("[get_closest_npc_shop_for_item] Item %s has %s indexed entries and %s unique route targets.\n",
+		$itemID, scalar(@{$itemIDtoShops{$itemID}}), scalar(@targets)), "parseMsg", 2 unless $silent;
+
+	my $task = Task::CalcMapRoute->new(
+		targets      => \@targets,
+		sourceMap    => $field->baseName,
+		sourceX      => $char->{pos_to}{x},
+		sourceY      => $char->{pos_to}{y},
+		noGoCommand  => 1,
+	);
+	if (!defined $task) {
+		warning TF("[get_closest_npc_shop_for_item] Task::CalcMapRoute->new returned undef for item %s with %s targets.\n",
+			$itemID, scalar @targets) unless $silent;
+		return;
+	}
+
+	$task->activate;
+	$task->iterate until ($task->getStatus == Task::DONE);
+	if (my $error = $task->getError) {
+		warning TF("[get_closest_npc_shop_for_item] CalcMapRoute failed for item %s from %s (%s,%s).\n",
+			$itemID, $field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y}) unless $silent;
+		warning sprintf("[get_closest_npc_shop_for_item] CalcMapRoute error: %s\n", Data::Dumper::Dumper($error)) unless $silent;
+		return;
+	}
+
+	my $chosen = $task->{target};
+	if (!($chosen && defined $chosen->{map} && defined $chosen->{x} && defined $chosen->{y})) {
+		warning TF("[get_closest_npc_shop_for_item] CalcMapRoute completed without a chosen target for item %s.\n", $itemID) unless $silent;
+		return;
+	}
+	my $chosen_key = join("\t", $chosen->{map}, int($chosen->{x}), int($chosen->{y}));
+	my $shop = $target_shop_by_key{$chosen_key};
+	if (!$shop) {
+		warning TF("[get_closest_npc_shop_for_item] Chosen target %s,%s,%s for item %s was not found in target_shop_by_key.\n",
+			$chosen->{map}, $chosen->{x}, $chosen->{y}, $itemID) unless $silent;
+		return;
+	}
+
+	my $move_cost = 5000;
+	if (defined $task->{mapSolution} && ref($task->{mapSolution}) eq 'ARRAY' && @{$task->{mapSolution}}) {
+		my $last = $task->{mapSolution}[-1];
+		if ($last && defined $last->{zeny} && $last->{zeny} >= 0) {
+			$move_cost = $last->{zeny};
+		}
+	} elsif ($field->baseName eq $chosen->{map}) {
+		$move_cost = 0;
+	}
+
+	return {
+		shop        => $shop,
+		map         => $chosen->{map},
+		x           => int($chosen->{x}),
+		y           => int($chosen->{y}),
+		destination => join(' ', $chosen->{map}, int($chosen->{x}), int($chosen->{y})),
+		price       => (defined $shop->{itemsByID}{$itemID}) ? $shop->{itemsByID}{$itemID} : undef,
+		move_cost   => $move_cost,
+		route       => $task->getRouteString(),
+	};
 }
 
 ##
@@ -3603,13 +3846,39 @@ sub setSkillUseTimer {
 	my ($skillID, $targetID, $wait) = @_;
 	my $skill = new Skill(idn => $skillID);
 	my $handle = $skill->getHandle();
+	my $now = time;
 
-	$char->{skills}{$handle}{time_used} = time;
+	$char->{skills}{$handle}{time_used} = $now;
 	delete $char->{time_cast};
 	delete $char->{cast_cancelled};
-	$char->{last_skill_time} = time;
+	$char->{last_skill_time} = $now;
 	$char->{last_skill_used} = $skillID;
 	$char->{last_skill_target} = $targetID;
+
+	if ($char->{combo_state}
+		&& defined $char->{combo_state}{expires_at}
+		&& $now <= $char->{combo_state}{expires_at}) {
+		$char->{combo_state}{source_skill} = $skillID;
+		$char->{combo_state}{target_id} = $targetID;
+		$char->{combo_state}{skill_packet_at} = $now;
+
+		my $target = defined $targetID ? Actor::get($targetID) : undef;
+		my $target_name = $target ? $target->nameString() : 'no target';
+		my $remaining_seconds = $char->{combo_state}{expires_at} - $now;
+		$remaining_seconds = 0 if $remaining_seconds < 0;
+
+		debug sprintf(
+			"%s combo window synchronized with self skill packet: opener=%s, target=%s, delay=%dms, received_at=%.6f, skill_packet_at=%.6f, expires_at=%.6f, remaining=%.3fs\n",
+			$char,
+			$skill->getName(),
+			$target_name,
+			$char->{combo_state}{delay},
+			$char->{combo_state}{received_at},
+			$char->{combo_state}{skill_packet_at},
+			$char->{combo_state}{expires_at},
+			$remaining_seconds,
+		), "parseMsg_comboDelay";
+	}
 
 	# increment monsterSkill maxUses counter
 	if (defined $targetID) {
@@ -3761,6 +4030,9 @@ sub countCastOn {
 	} elsif ($target->isa('Actor::Monster')) {
 		$source->{castOnToMonster}{$targetID}++;
 	}
+	if (isPartyAggroActorID($targetID, $target)) {
+		$source->{castOnToParty}++;
+	}
 
 	if ($sourceID eq $accountID) {
 		$target->{castOnByYou}++;
@@ -3768,6 +4040,12 @@ sub countCastOn {
 		$target->{castOnByPlayer}{$sourceID}++;
 	} elsif ($source->isa('Actor::Monster')) {
 		$target->{castOnByMonster}{$sourceID}++;
+	}
+	if ($sourceID ne $accountID
+	 && ($source->isa('Actor::Player') || $source->isa('Actor::Slave'))
+	 && isPartyAggroActorID($sourceID, $source)
+	) {
+		$target->{castOnByParty}++;
 	}
 }
 
@@ -4041,8 +4319,51 @@ sub canUseTeleport {
 	# not in game
 	return 0 if $net && $net->getState != Network::IN_GAME; # $net check is to not crash test
 
-	# 1 - check for usable items
+	my $current_map = $field ? $field->baseName : undef;
+	my $randomTeleportBlocked = isRandomTeleportBlockedOnMap($current_map);
+	my $teleportSkillBlocked = isTeleportSkillBlockedOnMap($current_map);
+	my $returnTeleportBlocked = isReturnTeleportBlockedOnMap($current_map);
 	my $item;
+
+	if ($use_lvl == 1) {
+		return 0 if $randomTeleportBlocked;
+	} elsif ($use_lvl == 2) {
+		my $itemAvailable = 0;
+		if (!$returnTeleportBlocked) {
+			if ($config{teleportAuto_item2}) {
+				$item = $char->inventory->getByName($config{teleportAuto_item2});
+				$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
+			}
+			$item = getButterflyWing() unless $item;
+			if ($item) {
+				my $cooldown = $char->{last_teleport_item_use}{$item->{nameID}};
+				my $cooldownActive = (
+					ref($cooldown) eq 'HASH'
+					&& $cooldown->{timeout}
+					&& !timeOut($cooldown->{time}, $cooldown->{timeout})
+				);
+
+				my $equipRequirementSatisfied = (
+					!$item->equippable
+					|| !$item->{type_equip}
+					|| $item->{equipped}
+					|| $item->{identified}
+				);
+
+				$itemAvailable = 1 if (!$cooldownActive && $equipRequirementSatisfied);
+			}
+		}
+
+		my $chatAvailable = (!$returnTeleportBlocked && $config{saveMap_warpChatCommand}) ? 1 : 0;
+		my $equipAvailable = (!$teleportSkillBlocked && Actor::Item::scanConfigAndCheck('teleportAuto_equip')) ? 1 : 0;
+		my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
+		my $skillAvailable = (!$teleportSkillBlocked && $skill_level >= $use_lvl) ? 1 : 0;
+
+		return 1 if ($itemAvailable || $chatAvailable || $equipAvailable || $skillAvailable);
+		return 0;
+	}
+
+	# 1 - check for usable items
 	if($use_lvl == 1) {
 		if ($config{teleportAuto_item1}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
@@ -4090,6 +4411,32 @@ sub canUseTeleport {
 	return 1 if($skill_level >= $use_lvl);
 
 	return 0;
+}
+
+sub getNoTeleportMapFlags {
+	my ($map) = @_;
+	return { noteleport => 0, noreturn => 0 } unless (defined $map && $map ne '');
+	my ($base_map, undef) = Field::nameToBaseName(undef, $map);
+	my $key = lc($base_map // $map);
+	return $no_teleport_maps{$key} || { noteleport => 0, noreturn => 0 };
+}
+
+sub isRandomTeleportBlockedOnMap {
+	my ($map) = @_;
+	my $flags = getNoTeleportMapFlags($map);
+	return $flags->{noteleport} ? 1 : 0;
+}
+
+sub isTeleportSkillBlockedOnMap {
+	my ($map) = @_;
+	my $flags = getNoTeleportMapFlags($map);
+	return $flags->{noteleport} ? 1 : 0;
+}
+
+sub isReturnTeleportBlockedOnMap {
+	my ($map) = @_;
+	my $flags = getNoTeleportMapFlags($map);
+	return $flags->{noreturn} ? 1 : 0;
 }
 
 ##
@@ -4824,9 +5171,43 @@ sub compilePortals_check {
 	return compilePortals(1);
 }
 
+sub suspendRouteSource {
+	my ($nodeID, %args) = @_;
+	return unless defined $nodeID && $nodeID ne '';
+
+	my $dataset = $args{dataset} || 'portals_lut';
+	my $routeSources = $dataset eq 'portals_airships' ? \%portals_airships : \%portals_lut;
+	return unless exists $routeSources->{$nodeID};
+	return if isRouteSourceRemoved($routeSources->{$nodeID});
+
+	$routeSources->{$nodeID}{removed} = 1;
+
+	my $entry = {
+		time => time,
+		name => $nodeID,
+		dataset => $dataset,
+	};
+
+	push @portals_lut_missed, $entry;
+	return $entry;
+}
+
+sub restoreSuspendedRouteSource {
+	my ($entry) = @_;
+	return unless $entry && ref($entry) eq 'HASH';
+	return unless defined $entry->{name} && $entry->{name} ne '';
+
+	my $dataset = $entry->{dataset} || 'portals_lut';
+	my $routeSources = $dataset eq 'portals_airships' ? \%portals_airships : \%portals_lut;
+	return unless exists $routeSources->{$entry->{name}};
+
+	delete $routeSources->{$entry->{name}}{removed};
+}
+
 sub portalExists {
 	my ($map, $r_pos) = @_;
 	foreach (keys %portals_lut) {
+		next if isRouteSourceRemoved($portals_lut{$_});
 		if ($portals_lut{$_}{source}{map} eq $map
 		    && $portals_lut{$_}{source}{x} == $r_pos->{x}
 		    && $portals_lut{$_}{source}{y} == $r_pos->{y}) {
@@ -4846,9 +5227,10 @@ sub portalExists2 {
 
 	foreach (keys %portals_lut) {
 		my $entry = $portals_lut{$_};
+		next if isRouteSourceRemoved($entry);
 		if ($entry->{source}{map} eq $src
-		 && $entry->{source}{pos}{x} == $srcx
-		 && $entry->{source}{pos}{y} == $srcy
+		 && $entry->{source}{x} == $srcx
+		 && $entry->{source}{y} == $srcy
 		 && $entry->{dest}{$destID}) {
 			return $_;
 		}
@@ -4859,6 +5241,7 @@ sub portalExists2 {
 sub portalExistsAirship {
 	my ($map, $r_pos) = @_;
 	foreach (keys %portals_airships) {
+		next if isRouteSourceRemoved($portals_airships{$_});
 		if ($portals_airships{$_}{source}{map} eq $map
 		    && $portals_airships{$_}{source}{x} == $r_pos->{x}
 		    && $portals_airships{$_}{source}{y} == $r_pos->{y}) {
@@ -4980,6 +5363,13 @@ sub getNPCInfo {
 	} else {
 		error TF("Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n", $id);
 	}
+}
+
+sub getEquippedItemSlot {
+	my ($slot) = @_;
+	return unless defined $slot;
+	return unless $char && $char->{equipment};
+	return $char->{equipment}{$slot};
 }
 
 sub checkSelfCondition {
@@ -5363,6 +5753,65 @@ sub checkSelfCondition {
 		return 0 if $item && $item->{equipped};
 	}
 
+	if ($config{$prefix."_whenNotEquipped"}) {
+		my $item = Actor::Item::get($config{$prefix."_whenNotEquipped"});
+		return 0 if $item && $item->{equipped};
+	}
+
+	if (exists $config{$prefix.'_whenEquip_Right_Hand_Empty'} && defined $config{$prefix.'_whenEquip_Right_Hand_Empty'}) {
+		my $wanted = $config{$prefix.'_whenEquip_Right_Hand_Empty'} ? 0 : 1;
+		my $is_empty = getEquippedItemSlot('rightHand') ? 0 : 1;
+		return 0 if $wanted != $is_empty;
+	}
+
+	if (exists $config{$prefix.'_whenEquip_Left_Hand_Empty'} && defined $config{$prefix.'_whenEquip_Left_Hand_Empty'}) {
+		my $wanted = $config{$prefix.'_whenEquip_Left_Hand_Empty'} ? 0 : 1;
+		my $is_empty = getEquippedItemSlot('leftHand') ? 0 : 1;
+		return 0 if $wanted != $is_empty;
+	}
+
+	if (exists $config{$prefix.'_whenEquip_Right_Hand_Type'} && defined $config{$prefix.'_whenEquip_Right_Hand_Type'}) {
+		my $item = getEquippedItemSlot('rightHand');
+		my @array = split / *, */, $config{$prefix.'_whenEquip_Right_Hand_Type'};
+		if (!defined $item) {
+			my $matches_empty_fist = scalar grep { $_ eq 'Fist' } @array;
+			return 0 unless $matches_empty_fist;
+		} else {
+			return 0 unless (exists $itemHandType_lut{$item->{nameID}} && defined $itemHandType_lut{$item->{nameID}});
+			my $entry = $itemHandType_lut{$item->{nameID}};
+			return 0 unless ($entry && exists $entry->{type} && defined $entry->{type});
+			my $found = 0;
+			foreach (@array) {
+				if ($entry->{type} eq $_) {
+					$found = 1;
+					last;
+				}
+			}
+			return 0 unless $found;
+		}
+	}
+
+	if (exists $config{$prefix.'_whenEquip_Left_Hand_Type'} && defined $config{$prefix.'_whenEquip_Left_Hand_Type'}) {
+		my $item = getEquippedItemSlot('leftHand');
+		my @array = split / *, */, $config{$prefix.'_whenEquip_Left_Hand_Type'};
+		if (!defined $item) {
+			my $matches_empty_fist = scalar grep { $_ eq 'Fist' } @array;
+			return 0 unless $matches_empty_fist;
+		} else {
+			return 0 unless (exists $itemHandType_lut{$item->{nameID}} && defined $itemHandType_lut{$item->{nameID}});
+			my $entry = $itemHandType_lut{$item->{nameID}};
+			return 0 unless ($entry && exists $entry->{type} && defined $entry->{type});
+			my $found = 0;
+			foreach (@array) {
+				if ($entry->{type} eq $_) {
+					$found = 1;
+					last;
+				}
+			}
+			return 0 unless $found;
+		}
+	}
+
 	if ($config{$prefix."_zeny"}) {
 		return 0 if (!inRange($char->{zeny}, $config{$prefix."_zeny"}));
 	}
@@ -5639,6 +6088,18 @@ sub checkMonsterCondition {
 	}
 	if ($config{$prefix."_whenShieldEquipped"}) {
 		return 0 unless $monster->{shield};
+	}
+
+	if (exists $config{$prefix."_is_aggressive"} && defined $config{$prefix."_is_aggressive"}) {
+		my $expected = $config{$prefix."_is_aggressive"} ? 1 : 0;
+		my $is_aggressive = is_aggressive($monster, undef, 0, 0) ? 1 : 0;
+		return 0 unless $expected == $is_aggressive;
+	}
+
+	if (exists $config{$prefix."_is_aggressive_party"} && defined $config{$prefix."_is_aggressive_party"}) {
+		my $expected = $config{$prefix."_is_aggressive_party"} ? 1 : 0;
+		my $is_aggressive = is_aggressive($monster, undef, 0, 1) ? 1 : 0;
+		return 0 unless $expected == $is_aggressive;
 	}
 
 	my %args = (
@@ -6491,6 +6952,8 @@ sub getTeleportItemFromTable {
 	my ($mode, %args) = @_;
 	return unless $char && $char->inventory && $char->inventory->isReady();
 	return unless ($teleport_items{list} && @{$teleport_items{list}});
+	return if ($field && $mode eq 'random'  && isRandomTeleportBlockedOnMap($field->baseName));
+	return if ($field && $mode eq 'respawn' && isReturnTeleportBlockedOnMap($field->baseName));
 
 	my $target_map = defined $args{destMap} ? lc $args{destMap} : '';
 
@@ -6517,6 +6980,7 @@ sub getTeleportItemFromTable {
 }
 
 sub getFlyWing {
+	return undef if ($field && isRandomTeleportBlockedOnMap($field->baseName));
 	# 12887 - Unlimited Fly Wing
 	# 23280 - Mosquito Wings (only if lv < 99)
 	# 23338 - [Event] Fly Wing
@@ -6531,6 +6995,7 @@ sub getFlyWing {
 }
 
 sub getButterflyWing {
+	return undef if ($field && isReturnTeleportBlockedOnMap($field->baseName));
 	# 12324 - Novice Butterfly Wing
 	# 602   - Butterfly Wing
 	for my $id (12324, 602) {

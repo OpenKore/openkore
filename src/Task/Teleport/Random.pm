@@ -17,6 +17,7 @@ sub hookArgs {
 sub chatCommand {
 	my ($self) =  @_;
 	return undef if ($self->{actor}->{muted});
+	return undef if Misc::isRandomTeleportBlockedOnMap($field->baseName);
 	return ($config{teleportAuto_useChatCommand}) ? $config{teleportAuto_useChatCommand} . " " . $field->baseName : undef;
 }
 
@@ -25,6 +26,7 @@ sub getInventoryItem {
 	my ($self) =  @_;
 	delete $self->{teleportItemRule};
 	return undef unless ($self->{actor}->inventory->isReady());
+	return undef if Misc::isRandomTeleportBlockedOnMap($field->baseName);
 
 	my $item;
 	if ($config{teleportAuto_item1}) {
@@ -43,6 +45,7 @@ sub getInventoryItem {
 sub canUseSkill {
 	my ($self) =  @_;
 	return 0 if ($self->{actor}->{muted});
+	return 0 if Misc::isTeleportSkillBlockedOnMap($field->baseName);
 	return 0 if defined $config{'teleportAuto_useSkill'} && $config{'teleportAuto_useSkill'} == 0;
 	return $self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT')) ? 1 : 0;
 }
@@ -51,6 +54,7 @@ sub canUseSkill {
 sub isEquipNeededToTeleport {
 	my ($self) =  @_;
 	return 0 unless ($self->{actor}->inventory->isReady());
+	return 0 if Misc::isTeleportSkillBlockedOnMap($field->baseName);
 	return Actor::Item::scanConfigAndCheck('teleportAuto_equip');
 }
 
