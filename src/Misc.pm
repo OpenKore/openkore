@@ -41,6 +41,7 @@ use Skill;
 use Field;
 use Network;
 use Network::Send ();
+use NPC::Conversation;
 use AI;
 use Actor;
 use Actor::You;
@@ -6112,8 +6113,7 @@ sub setCharDeleteDate {
 }
 
 sub cancelNpcBuySell {
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
+	NPC::Conversation::reset(reason => 'cancel_buy_sell');
 
 	if ($in_market) {
 		$messageSender->sendMarketClose;
@@ -6131,8 +6131,7 @@ sub completeNpcSell {
 		$messageSender->sendSellBulk($items);
 	}
 
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
+	NPC::Conversation::reset(reason => 'complete_sell');
 
 	if ($messageSender->{send_sell_buy_complete}) {
 		$messageSender->sendSellBuyComplete;
@@ -6151,8 +6150,7 @@ sub completeNpcBuy {
 		}
 	}
 
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
+	NPC::Conversation::reset(reason => 'complete_buy');
 
 	if ($in_market) {
 		$messageSender->sendMarketClose;

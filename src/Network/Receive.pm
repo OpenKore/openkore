@@ -42,6 +42,7 @@ use Interface;
 use Network;
 use Network::MessageTokenizer;
 use Misc;
+use NPC::Conversation;
 use Plugins;
 use Skill;
 use Utils;
@@ -3170,9 +3171,9 @@ sub npc_image {
 	}
 
 	unless ($args->{type} == 255) {
-		$talk{image} = $args->{npc_image};
+		NPC::Conversation::on_image_packet(image => $args->{npc_image});
 	} else {
-		delete $talk{image};
+		NPC::Conversation::clear_image();
 	}
 }
 
@@ -7669,28 +7670,22 @@ sub npc_talk {
 	my $nameID = unpack 'V', $ID;
 	autoNpcTalk($ID, $nameID);
 
-	$talk{ID} = $args->{ID};
-	$talk{nameID} = unpack 'V', $args->{ID};
 	my $msg = bytesToString ($args->{msg});
 
 	# Remove RO color codes
-	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
 	$msg =~ s/\^[a-fA-F0-9]{6}//g;
-
-	# Prepend existing conversation.
-	$talk{msg} .= "\n" if $talk{msg};
-	$talk{msg} .= $msg;
-
-	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
-	$ai_v{'npc_talk'}{talk} = 'initiated';
-	$ai_v{'npc_talk'}{time} = time;
-
-	my $name = getNPCName($talk{ID});
+	my $name = getNPCName($ID);
+	NPC::Conversation::on_text_packet(
+		npc_id   => $ID,
+		name_id  => $nameID,
+		npc_name => $name,
+		text     => $msg,
+	);
 	Plugins::callHook('npc_talk', {
-						ID => $talk{ID},
-						nameID => $talk{nameID},
+						ID => $ID,
+						nameID => $nameID,
 						name => $name,
-						msg => $talk{msg},
+						msg => NPC::Conversation::text(),
 						});
 	message "$name: $msg\n", "npc";
 }
@@ -7701,20 +7696,19 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 
-	if (!exists $ai_v{'npc_talk'} || !defined $ai_v{'npc_talk'} || !exists $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'}) {
+	if (!NPC::Conversation::is_open() || !NPC::Conversation::current_npc_id()) {
 		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
 		return;
 	}
 
-	return if (exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
+	return if (NPC::Conversation::legacy_talk_state() && NPC::Conversation::legacy_talk_state() eq 'buy_or_sell');
 
 	my $ID = $args->{ID};
-	my $name = getNPCName($ID);
-
-	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
-	$ai_v{'npc_talk'}{'talk'} = 'close';
-	$ai_v{'npc_talk'}{'time'} = time;
-	undef %talk;
+	NPC::Conversation::on_close_packet(
+		npc_id   => $ID,
+		name_id  => unpack('V', $ID),
+		npc_name => getNPCName($ID),
+	);
 
 	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
@@ -7724,11 +7718,11 @@ sub npc_talk_close {
 sub npc_talk_continue {
 	my ($self, $args) = @_;
 	my $ID = substr($args->{RAW_MSG}, 2, 4);
-	my $name = getNPCName($ID);
-
-	$ai_v{'npc_talk'}{'ID'} = $ID;
-	$ai_v{'npc_talk'}{'talk'} = 'next';
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_continue_packet(
+		npc_id   => $ID,
+		name_id  => unpack('V', $ID),
+		npc_name => getNPCName($ID),
+	);
 }
 
 # Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLG).
@@ -7737,11 +7731,11 @@ sub npc_talk_number {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	$ai_v{'npc_talk'}{'ID'} = $ID;
-	$ai_v{'npc_talk'}{'talk'} = 'number';
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_number_input_packet(
+		npc_id   => $ID,
+		name_id  => unpack('V', $ID),
+		npc_name => getNPCName($ID),
+	);
 }
 
 # Displays an NPC dialog menu (ZC_MENU_LIST).
@@ -7758,8 +7752,6 @@ sub npc_talk_responses {
 	my $nameID = unpack 'V', $ID;
 	autoNpcTalk($ID, $nameID);
 
-	$talk{ID} = $ID;
-	$talk{nameID} = $nameID;
 	my $talk = unpack("Z*", substr($msg, 8));
 	$talk = substr($msg, 8) if (!defined $talk);
 	$talk = bytesToString($talk);
@@ -7770,7 +7762,7 @@ sub npc_talk_responses {
 						responses => \@preTalkResponses,
 						});
 
-	$talk{responses} = [];
+	my @responses;
 	foreach my $response (@preTalkResponses) {
 		# Remove RO color codes
 		$response =~ s/\^[a-fA-F0-9]{6}//g;
@@ -7778,23 +7770,18 @@ sub npc_talk_responses {
 			$response = itemNameSimple($1);
 		}
 
-		push @{$talk{responses}}, $response if ($response ne "");
+		push @responses, $response if ($response ne "");
 	}
 
-	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
-
-	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
-	$ai_v{'npc_talk'}{'talk'} = 'select';
-	$ai_v{'npc_talk'}{'time'} = time;
+	my $name = getNPCName($ID);
+	NPC::Conversation::on_responses_packet(
+		npc_id    => $ID,
+		name_id   => $nameID,
+		npc_name  => $name,
+		responses => \@responses,
+	);
 
 	Commands::run('talk resp');
-
-	my $name = getNPCName($ID);
-	Plugins::callHook('npc_talk_responses', {
-						ID => $ID,
-						name => $name,
-						responses => $talk{responses},
-						});
 }
 
 # Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLGSTR).
@@ -7803,22 +7790,22 @@ sub npc_talk_text {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID};
-
-	my $name = getNPCName($ID);
-	$ai_v{'npc_talk'}{'ID'} = $ID;
-	$ai_v{'npc_talk'}{'talk'} = 'text';
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_text_input_packet(
+		npc_id   => $ID,
+		name_id  => unpack('V', $ID),
+		npc_name => getNPCName($ID),
+	);
 }
 
 # Displays the buy/sell dialog of an NPC shop (ZC_SELECT_DEALTYPE).
 # 00C4 <shop id>.L
 sub npc_store_begin {
 	my ($self, $args) = @_;
-	undef %talk;
-	$talk{ID} = $args->{ID};
-	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
-	$ai_v{'npc_talk'}{'talk'} = 'buy_or_sell';
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_shop_begin(
+		npc_id   => $args->{ID},
+		name_id  => unpack('V', $args->{ID}),
+		npc_name => getNPCName($args->{ID}),
+	);
 
 	$storeList->{npcName} = getNPCName($args->{ID}) || T('Unknown');
 }
@@ -7844,7 +7831,6 @@ sub npc_store_info {
 
 	my $len = length pack $pack;
 	$storeList->clear;
-	undef %talk;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $len) {
 		my $item = Actor::Item->new;
 		@$item{@{$keys}} = unpack $pack, substr $msg, $i, $len;
@@ -7866,9 +7852,11 @@ sub npc_store_info {
 		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
 	}
 
-	$ai_v{'npc_talk'}{talk} = 'store';
-	# continue talk sequence now
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_store_list(
+		npc_id   => NPC::Conversation::current_npc_id(),
+		name_id  => NPC::Conversation::current_name_id(),
+		npc_name => $storeList->{npcName},
+	);
 
 	if (AI::action() ne 'buyAuto') {
 		Commands::run('store');
@@ -7897,18 +7885,19 @@ sub npc_sell_list {
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
 
-	undef %talk;
 	message T("Ready to start selling items\n");
-
-	$ai_v{'npc_talk'}{talk} = 'sell';
-	# continue talk sequence now
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_sell_list(
+		npc_id   => NPC::Conversation::current_npc_id(),
+		name_id  => NPC::Conversation::current_name_id(),
+		npc_name => $storeList->{npcName},
+	);
 }
 
 sub npc_clear_dialog {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
 	debug "The dialogue with the NPC " .getHex($ID) ." was closed.\n", "parseMsg";
+	NPC::Conversation::on_clear_packet(npc_id => $ID);
 }
 
 # Notification about the result of a purchase attempt from an NPC shop (ZC_PC_PURCHASE_RESULT).
@@ -7956,7 +7945,6 @@ sub npc_market_info {
 	my $len = length pack $pack;
 
 	$storeList->clear;
-	undef %talk;
 
 	for (my $i = 0; $i < length($args->{itemList}); $i += $len) {
 		my $item = Actor::Item->new;
@@ -7988,9 +7976,11 @@ sub npc_market_info {
 
 	$in_market = 1;
 
-	# continue talk sequence now
-	$ai_v{'npc_talk'}{'talk'} = 'store';
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_store_list(
+		npc_id   => NPC::Conversation::current_npc_id(),
+		name_id  => NPC::Conversation::current_name_id(),
+		npc_name => $storeList->{npcName},
+	);
 }
 
 # Show the purchase result update the list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).
@@ -8031,7 +8021,6 @@ sub npc_market_purchase_result {
 	my $len = length pack $pack;
 
 	$storeList->clear;
-	undef %talk;
 
 	for (my $i = 0; $i < length($args->{itemList}); $i += $len) {
 		my $item = Actor::Item->new;
@@ -8063,9 +8052,11 @@ sub npc_market_purchase_result {
 
 	$in_market = 1;
 
-	# continue talk sequence now
-	$ai_v{'npc_talk'}{'talk'} = 'store';
-	$ai_v{'npc_talk'}{'time'} = time;
+	NPC::Conversation::on_store_list(
+		npc_id   => NPC::Conversation::current_npc_id(),
+		name_id  => NPC::Conversation::current_name_id(),
+		npc_name => $storeList->{npcName},
+	);
 }
 
 sub deal_add_you {
@@ -10315,10 +10306,11 @@ sub vender_buy_fail {
 sub cash_dealer {
 	my ($self, $args) = @_;
 
-	undef %talk;
-	$ai_v{'npc_talk'}{talk} = 'cash';
-	# continue talk sequence now
-	$ai_v{'npc_talk'}{time} = time;
+	NPC::Conversation::on_cash_dealer(
+		npc_id   => NPC::Conversation::current_npc_id(),
+		name_id  => NPC::Conversation::current_name_id(),
+		npc_name => $storeList->{npcName},
+	);
 
 	# Parse item_list => ['V2 C v', [qw(price price_discount type nameid)]]
 	$cashList->clear;

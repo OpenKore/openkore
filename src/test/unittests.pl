@@ -19,6 +19,7 @@ my @tests = qw(
 	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	TaskTalkNPCTest
+	NPCConversationTest NPCConversationStaticTest
 	PluginsHookTest
 	FileParsersTest
 	DynamicPortalGroupsTest

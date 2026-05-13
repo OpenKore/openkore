@@ -1,0 +1,96 @@
+// rAthena NPC conversation coverage script for OpenKore NPC::Conversation testing.
+// Add to a test NPC map and talk to the NPCs below from OpenKore.
+
+prontera,150,180,4	script	OK_NPC_MES_CLOSE	4_F_KAFRA1,{
+	mes "[MES_CLOSE]";
+	mes "Simple message then close.";
+	close;
+}
+
+prontera,152,180,4	script	OK_NPC_NEXT	4_F_KAFRA1,{
+	mes "[NEXT]";
+	mes "First page.";
+	next;
+	mes "Second page.";
+	close;
+}
+
+prontera,154,180,4	script	OK_NPC_SELECT	4_F_KAFRA1,{
+	mes "[SELECT]";
+	switch(select("Prontera","Payon","Alberta")) {
+	case 1:
+		mes "Prontera selected.";
+		break;
+	case 2:
+		mes "Payon selected.";
+		break;
+	case 3:
+		mes "Alberta selected.";
+		break;
+	}
+	close;
+}
+
+prontera,156,180,4	script	OK_NPC_MENU_REPEAT	4_F_KAFRA1,{
+	mes "[MENU_REPEAT]";
+	switch(select("Same Label","Same Label","Different Label")) {
+	case 1:
+		mes "First repeated label.";
+		break;
+	case 2:
+		mes "Second repeated label.";
+		break;
+	case 3:
+		mes "Different label.";
+		break;
+	}
+	close;
+}
+
+prontera,158,180,4	script	OK_NPC_NUMBER	4_F_KAFRA1,{
+	mes "[NUMBER]";
+	input .@value;
+	mes "You entered "+.@value+".";
+	close;
+}
+
+prontera,160,180,4	script	OK_NPC_TEXT	4_F_KAFRA1,{
+	mes "[TEXT]";
+	input .@name$;
+	mes "Hello "+.@name$+".";
+	close;
+}
+
+prontera,162,180,4	script	OK_NPC_COLOR	4_F_KAFRA1,{
+	mes "[COLOR]";
+	mes "^FF0000Red text^000000 and punctuation: ! ? , .";
+	next;
+	mes "Second line after colored text.";
+	close;
+}
+
+prontera,164,180,4	script	OK_NPC_UNEXPECTED_CLOSE	4_F_KAFRA1,{
+	mes "[UNEXPECTED_CLOSE]";
+	mes "This closes abruptly.";
+	close2;
+	dispbottom "Server-side close2 reached.";
+	end;
+}
+
+prontera,166,180,4	script	OK_NPC_SHOP	4_F_KAFRA1,{
+	callshop "OK_NPC_TESTSHOP",1;
+	end;
+}
+
+-	shop	OK_NPC_TESTSHOP	-1,501:2,502:5,503:10
+
+// Suggested manual checks:
+// 1. mes + close
+// 2. next flow
+// 3. menu/select with unique labels
+// 4. menu/select with repeated labels
+// 5. numeric input
+// 6. text input
+// 7. color codes and punctuation
+// 8. close2 / unexpected close
+// 9. shop open path

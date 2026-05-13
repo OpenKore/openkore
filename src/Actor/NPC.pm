@@ -25,7 +25,7 @@ use strict;
 
 use base qw(Actor);
 
-use Globals qw($messageSender);
+use NPC::Conversation;
 use Translation qw(T);
 
 sub new {
@@ -36,7 +36,7 @@ sub new {
 sub sendTalk {
 	my ($self) = @_;
 
-	$messageSender->sendTalk($self->{ID});
+	NPC::Conversation::start($self->{ID}, name_id => $self->{nameID}, npc_name => $self->{name});
 }
 
 1;

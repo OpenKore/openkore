@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop);
+use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -577,16 +577,12 @@ sub sendGetCharacterName {
 
 sub sendTalk {
 	my ($self, $ID) = @_;
-	delete $talk{msg};
-	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk', ID => $ID, type => 1}));
 	debug "Sent talk: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkCancel {
 	my ($self, $ID) = @_;
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk_cancel', ID => $ID}));
 	debug "Sent talk cancel: ".getHex($ID)."\n", "sendPacket", 2;
 }
@@ -599,24 +595,18 @@ sub sendTalkContinue {
 
 sub sendTalkResponse {
 	my ($self, $ID, $response) = @_;
-	delete $talk{msg};
-	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk_response', ID => $ID, response => $response}));
 	debug "Sent talk respond: ".getHex($ID).", $response\n", "sendPacket", 2;
 }
 
 sub sendTalkNumber {
 	my ($self, $ID, $number) = @_;
-	delete $talk{msg};
-	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk_number', ID => $ID, value => $number}));
 	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;
 }
 
 sub sendTalkText {
 	my ($self, $ID, $input) = @_;
-	delete $talk{msg};
-	delete $talk{image};
 	$input = stringToBytes($input);
 	$self->sendToServer($self->reconstruct({
 		switch => 'npc_talk_text',

@@ -27,6 +27,7 @@ use Network::Send ();
 use Network::ClientReceive;
 use Network::PaddedPackets;
 use Network::MessageTokenizer;
+use NPC::Conversation;
 use Commands;
 use Plugins;
 use Utils;
@@ -745,8 +746,7 @@ sub initMapChangeVars {
 	undef %items;
 	undef %spells;
 	undef %incomingParty;
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
+	NPC::Conversation::reset(reason => 'global_reset');
 	$ai_v{temp} = {};
 	undef $venderID;
 	undef $venderCID;

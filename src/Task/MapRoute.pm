@@ -28,6 +28,7 @@ use base qw(Task::WithSubtask);
 use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
+use NPC::Conversation;
 use Plugins;
 use Misc qw(canUseTeleport portalExists);
 use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding actorFinishedMovement);
@@ -877,8 +878,8 @@ sub isRouteTeleportAllowedOnMap {
 sub setNpcTalk {
 	my ($self) = @_;
 
-	if (%talk) {
-		warning "[mapRoute] [setNpcTalk] % talk is defined for some reason.\n", "ai_npcTalk";
+	if (NPC::Conversation::is_open()) {
+		warning "[mapRoute] [setNpcTalk] NPC conversation is already active for some reason.\n", "ai_npcTalk";
 	}
 	
 	$self->{substage} = 'Waiting for Warp';

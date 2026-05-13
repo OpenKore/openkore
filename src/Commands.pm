@@ -32,6 +32,7 @@ use Field;
 use Misc;
 use Network;
 use Network::Send ();
+use NPC::Conversation;
 use Settings;
 use Plugins;
 use Skill;
@@ -682,6 +683,24 @@ sub initHandlers {
 			T("Send a sequence of responses to an NPC."),
 			[T("<x> <y> <NPC talk codes>"), T("talk to the NPC standing at <x> <y> and use <NPC talk codes>")]
 			], \&cmdTalkNPC],
+		['npcTalkContinue', T("Continue the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npctalkcontinue', T("Continue the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npcTalkSelect', T("Select an option in the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npctalkselect', T("Select an option in the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npcTalkSelectRegex', T("Select an option by regex in the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npctalkselectregex', T("Select an option by regex in the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npcTalkNumber', T("Send a number to the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npctalknumber', T("Send a number to the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npcTalkText', T("Send text to the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npctalktext', T("Send text to the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npcTalkClose', T("Close the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npctalkclose', T("Close the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npcTalkCancel', T("Cancel the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npctalkcancel', T("Cancel the current NPC conversation."), \&cmdNpcTalkConversation],
+		['npcTalkReset', T("Reset local NPC conversation state."), \&cmdNpcTalkConversation],
+		['npctalkreset', T("Reset local NPC conversation state."), \&cmdNpcTalkConversation],
+		['npcTalkDebug', T("Show the current NPC conversation snapshot."), \&cmdNpcTalkConversation],
+		['npctalkdebug', T("Show the current NPC conversation snapshot."), \&cmdNpcTalkConversation],
 		['tank', [
 			T("Tank for a player."),
 			[T("<player name|player #>"), T("starts tank mode with player as tankModeTarget")],
@@ -5200,8 +5219,8 @@ sub cmdSell {
 	}
 	my @args = parseArgs($_[1]);
 
-	if ($args[0] eq "" && defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
-		$messageSender->sendNPCBuySellList($talk{ID}, 1);
+	if ($args[0] eq "" && NPC::Conversation::prompt_state() eq 'BUY_OR_SELL') {
+		NPC::Conversation::choose_buy_or_sell('sell');
 
 	} elsif ($args[0] eq "list") {
 		if (@sellList == 0) {
@@ -5784,7 +5803,7 @@ sub cmdStore {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
-	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
+	if ($arg1 eq "" && NPC::Conversation::prompt_state() ne 'BUY_OR_SELL') {
 		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 68, '-') ."\n".
 			  T("#  Name                    Type                       Price   Amount\n");
 		foreach my $item (@$storeList) {
@@ -5796,9 +5815,9 @@ sub cmdStore {
 		$msg .= ('-'x68) . "\n";
 		message $msg, "list";
 
-	} elsif ($arg1 eq "" && defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
+	} elsif ($arg1 eq "" && NPC::Conversation::prompt_state() eq 'BUY_OR_SELL'
 	 && ($net && $net->getState() == Network::IN_GAME)) {
-		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
+		NPC::Conversation::choose_buy_or_sell('buy');
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList->get($arg2)) {
 		error TF("Error in function 'store desc' (Store Item Description)\n" .
@@ -5862,18 +5881,19 @@ sub cmdTalk {
 	my (undef, $args) = @_;
 
 	if ($args =~ /^resp$/) {
-		if (!$talk{'responses'}) {
+		my $responses = NPC::Conversation::legacy_responses();
+		if (!@{$responses}) {
 			error T("Error in function 'talk resp' (Respond to NPC)\n" .
 				"No NPC response list available.\n");
 			return;
 
 		} else {
-			my $msg = center(T(" Responses (").getNPCName($talk{ID}).") ", 40, '-') ."\n" .
+			my $msg = center(T(" Responses (").getNPCName(NPC::Conversation::current_npc_id()).") ", 40, '-') ."\n" .
 				TF("#  Response\n");
-			for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+			for (my $i = 0; $i < @{$responses}; $i++) {
 				$msg .= swrite(
 				"@< @*",
-				[$i, $talk{responses}[$i]]);
+				[$i, $responses->[$i]]);
 			}
 			$msg .= ('-'x40) . "\n";
 			message $msg, "list";
@@ -8025,10 +8045,88 @@ sub cmdCancelTransaction {
 		return;
 	}
 
-	if (defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' || $ai_v{'npc_talk'}{'talk'} eq 'store')) {
+	if (NPC::Conversation::prompt_state() eq 'BUY_OR_SELL' || NPC::Conversation::prompt_state() eq 'STORE') {
 		cancelNpcBuySell();
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");
+	}
+}
+
+sub cmdNpcTalkConversation {
+	my ($switch, $args) = @_;
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $switch);
+		return;
+	}
+
+	if ($switch =~ /^npcTalkContinue$/i) {
+		NPC::Conversation::continue();
+		return;
+	}
+
+	if ($switch =~ /^npcTalkSelect$/i) {
+		if (!defined $args || $args eq '') {
+			error T("Syntax Error in function 'npcTalkSelect'\nUsage: npcTalkSelect <index|exact text>\n");
+			return;
+		}
+		if ($args =~ /^\d+$/) {
+			NPC::Conversation::select_response($args);
+		} else {
+			NPC::Conversation::select_response_text($args);
+		}
+		return;
+	}
+
+	if ($switch =~ /^npcTalkSelectRegex$/i) {
+		if (!defined $args || $args eq '') {
+			error T("Syntax Error in function 'npcTalkSelectRegex'\nUsage: npcTalkSelectRegex </regex/[flags]|pattern>\n");
+			return;
+		}
+		if ($args =~ m{^/(.*)/([imsx]*)$}) {
+			NPC::Conversation::select_response_regex($1, $2);
+		} else {
+			NPC::Conversation::select_response_regex($args);
+		}
+		return;
+	}
+
+	if ($switch =~ /^npcTalkNumber$/i) {
+		if (!defined $args || $args eq '') {
+			error T("Syntax Error in function 'npcTalkNumber'\nUsage: npcTalkNumber <number>\n");
+			return;
+		}
+		NPC::Conversation::send_number($args);
+		return;
+	}
+
+	if ($switch =~ /^npcTalkText$/i) {
+		if (!defined $args) {
+			error T("Syntax Error in function 'npcTalkText'\nUsage: npcTalkText <text>\n");
+			return;
+		}
+		NPC::Conversation::send_text($args);
+		return;
+	}
+
+	if ($switch =~ /^npcTalkClose$/i) {
+		NPC::Conversation::close();
+		return;
+	}
+
+	if ($switch =~ /^npcTalkCancel$/i) {
+		NPC::Conversation::cancel();
+		return;
+	}
+
+	if ($switch =~ /^npcTalkReset$/i) {
+		NPC::Conversation::reset(reason => 'manual_reset');
+		return;
+	}
+
+	if ($switch =~ /^npcTalkDebug$/i) {
+		message NPC::Conversation::debug_string(), 'list';
+		return;
 	}
 }
 
