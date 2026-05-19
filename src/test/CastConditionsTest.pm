@@ -43,7 +43,7 @@ sub testSelfConditionBlocksWhileBeingCasted {
 	my $char = _fresh_char();
 	my $caster = _player(2);
 	$caster->{casting} = {
-		skill => Skill->new(auto => 'Blessing'),
+		skill => Skill->new(auto => 'AL_BLESSING'),
 		targetID => $char->{ID},
 		target => $char,
 	};
@@ -51,14 +51,18 @@ sub testSelfConditionBlocksWhileBeingCasted {
 
 	local %Globals::config = (
 		selftest_manualAI => 2,
-		selftest_notWhileBeingCasted => 'Blessing',
+		selftest_notWhileBeingCasted => 'AL_BLESSING',
 	);
 	local %Misc::config = %Globals::config;
 
 	ok(!Misc::checkSelfCondition('selftest'), 'self condition fails while blessing is being cast on self');
 
-	$Globals::config{selftest_notWhileBeingCasted} = 'Assumption';
-	$Misc::config{selftest_notWhileBeingCasted} = 'Assumption';
+	$Globals::config{selftest_notWhileBeingCasted} = 'Blessing';
+	$Misc::config{selftest_notWhileBeingCasted} = 'Blessing';
+	ok(Misc::checkSelfCondition('selftest'), 'self condition ignores skill names and only matches handles');
+
+	$Globals::config{selftest_notWhileBeingCasted} = 'HP_ASSUMPTIO';
+	$Misc::config{selftest_notWhileBeingCasted} = 'HP_ASSUMPTIO';
 	ok(Misc::checkSelfCondition('selftest'), 'self condition ignores other skills being cast on self');
 }
 
@@ -66,7 +70,7 @@ sub testSelfConditionRequiresWhileBeingCasted {
 	my $char = _fresh_char();
 	my $caster = _player(9);
 	$caster->{casting} = {
-		skill => Skill->new(auto => 'Blessing'),
+		skill => Skill->new(auto => 'AL_BLESSING'),
 		targetID => $char->{ID},
 		target => $char,
 	};
@@ -74,14 +78,18 @@ sub testSelfConditionRequiresWhileBeingCasted {
 
 	local %Globals::config = (
 		selftest_manualAI => 2,
-		selftest_whileBeingCasted => 'Blessing',
+		selftest_whileBeingCasted => 'AL_BLESSING',
 	);
 	local %Misc::config = %Globals::config;
 
 	ok(Misc::checkSelfCondition('selftest'), 'self condition passes while the requested skill is being cast on self');
 
-	$Globals::config{selftest_whileBeingCasted} = 'Assumption';
-	$Misc::config{selftest_whileBeingCasted} = 'Assumption';
+	$Globals::config{selftest_whileBeingCasted} = 'Blessing';
+	$Misc::config{selftest_whileBeingCasted} = 'Blessing';
+	ok(!Misc::checkSelfCondition('selftest'), 'self condition rejects skill names and only matches handles');
+
+	$Globals::config{selftest_whileBeingCasted} = 'HP_ASSUMPTIO';
+	$Misc::config{selftest_whileBeingCasted} = 'HP_ASSUMPTIO';
 	ok(!Misc::checkSelfCondition('selftest'), 'self condition fails when self is not being casted with the requested skill');
 }
 
@@ -166,8 +174,8 @@ sub testPlayerConditionBlocksPartyTargetCast {
 
 	ok(!Misc::checkPlayerCondition('playertest_target', $target->{ID}), 'player condition fails while target is already receiving assumption');
 
-	$Globals::config{playertest_target_notWhileBeingCasted} = 'Blessing';
-	$Misc::config{playertest_target_notWhileBeingCasted} = 'Blessing';
+	$Globals::config{playertest_target_notWhileBeingCasted} = 'AL_BLESSING';
+	$Misc::config{playertest_target_notWhileBeingCasted} = 'AL_BLESSING';
 	ok(Misc::checkPlayerCondition('playertest_target', $target->{ID}), 'player condition allows target when a different skill is being cast');
 }
 
@@ -190,8 +198,8 @@ sub testPlayerConditionRequiresWhileBeingCasted {
 
 	ok(Misc::checkPlayerCondition('playertest_target', $target->{ID}), 'player condition passes while target is receiving the requested cast');
 
-	$Globals::config{playertest_target_whileBeingCasted} = 'Blessing';
-	$Misc::config{playertest_target_whileBeingCasted} = 'Blessing';
+	$Globals::config{playertest_target_whileBeingCasted} = 'AL_BLESSING';
+	$Misc::config{playertest_target_whileBeingCasted} = 'AL_BLESSING';
 	ok(!Misc::checkPlayerCondition('playertest_target', $target->{ID}), 'player condition fails when target is not receiving the requested cast');
 }
 
@@ -214,8 +222,8 @@ sub testMonsterConditionBlocksMonsterTargetCast {
 
 	ok(!Misc::checkMonsterCondition('monstertest_target', $monster), 'monster condition fails while the same debuff is already being cast');
 
-	$Globals::config{monstertest_target_notWhileBeingCasted} = 'Blessing';
-	$Misc::config{monstertest_target_notWhileBeingCasted} = 'Blessing';
+	$Globals::config{monstertest_target_notWhileBeingCasted} = 'AL_BLESSING';
+	$Misc::config{monstertest_target_notWhileBeingCasted} = 'AL_BLESSING';
 	ok(Misc::checkMonsterCondition('monstertest_target', $monster), 'monster condition allows the target when another skill is being cast');
 }
 
@@ -238,8 +246,8 @@ sub testMonsterConditionRequiresWhileBeingCasted {
 
 	ok(Misc::checkMonsterCondition('monstertest_target', $monster), 'monster condition passes while the requested debuff is being cast');
 
-	$Globals::config{monstertest_target_whileBeingCasted} = 'Blessing';
-	$Misc::config{monstertest_target_whileBeingCasted} = 'Blessing';
+	$Globals::config{monstertest_target_whileBeingCasted} = 'AL_BLESSING';
+	$Misc::config{monstertest_target_whileBeingCasted} = 'AL_BLESSING';
 	ok(!Misc::checkMonsterCondition('monstertest_target', $monster), 'monster condition fails when the requested debuff is not being cast');
 }
 
