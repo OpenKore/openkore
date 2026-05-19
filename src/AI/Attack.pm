@@ -36,12 +36,16 @@ use Utils::PathFinding;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
 
+# Internal stages used to tell whether the AI is still closing distance
+# or is already inside the active combat loop for a target.
 use constant {
 	MOVING_TO_ATTACK => 1,
 	ATTACKING => 2,
 };
 
 sub process {
+	# `process` is the lightweight dispatcher that watches the current AI queue,
+	# validates the target, and decides whether we should continue into `main`.
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args();
 	my $action = AI::action();
@@ -50,6 +54,8 @@ sub process {
 		my $ID;
 		my $ataqArgs;
 		my $stage; # 1 - moving to attack | 2 - attacking
+		# Figure out whether we are already attacking or are still moving/routeing
+		# toward a queued attack target.
 		if (AI::action() eq "attack") {
 			$ID = $args->{ID};
 			$ataqArgs = AI::args(0);
@@ -65,6 +71,7 @@ sub process {
 			$stage = MOVING_TO_ATTACK;
 		}
 
+		# Stop immediately if the target disappeared or can no longer be resolved.
 		if (targetGone($ataqArgs, $ID)) {
 			finishAttacking($ataqArgs, $ID);
 			return;
@@ -84,6 +91,7 @@ sub process {
 		my $target_is_aggressive = is_aggressive($target, undef, 0, $assistParty);
 		my $control = mon_control($target->{name},$target->{nameID});
 		
+		# Expose the current attack context so plugins can veto or alter handling.
 		my %plugin_args;
 		$plugin_args{target} = $target;
 		$plugin_args{control} = $control;
@@ -99,32 +107,49 @@ sub process {
 			return;
 		}
 
+		# Abort when we have spent too long trying to reach or damage the target.
 		if (shouldGiveUp($ataqArgs, $ID)) {
 			message T("Can't reach or damage target\n"), "ai_attack";
 			giveUp($ataqArgs, $ID, 0);
 			return;
 		}
 
+		# Optionally swap to a more urgent aggressive target when our current one
+		# is passive, or when another aggressive target has a higher priority.txt
+		# priority than the monster we are currently hitting.
 		if ($config{attackChangeTarget}) {
 			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
 			my @aggressives = $effectiveAttackMode >= 0 ? ai_getAggressives($aggressiveType, $assistParty) : ();
 
-            if (!$target_is_aggressive && @aggressives) {
-                my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe}, $char, '');
-                if ($attackTarget && $attackTarget ne $target->{ID}) {
-                    $char->sendAttackStop;
-                    AI::dequeue() while ( AI::inQueue("attack") );
-                    ai_setSuspend(0);
-                    my $new_target = Actor::get($attackTarget);
-                    warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
-                    $target->{droppedForAggressive} = 1;
-                    $char->attack($attackTarget);
-                    AI::Attack::process();
-                    return;
-                }
-            }
-        }
+			if (@aggressives) {
+				my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe}, $char, '');
+				if ($attackTarget && $attackTarget ne $target->{ID}) {
+					my $new_target = Actor::get($attackTarget);
+					my $current_priority = Misc::monsterPriority($target->{name}, $target->{nameID});
+					my $new_priority = Misc::monsterPriority($new_target->{name}, $new_target->{nameID});
+					my $switch_to_aggressive = !$target_is_aggressive;
+					my $switch_to_higher_priority = $target_is_aggressive && $new_priority > $current_priority;
 
+					if ($switch_to_aggressive || $switch_to_higher_priority) {
+						$char->sendAttackStop;
+						AI::dequeue() while ( AI::inQueue("attack") );
+						ai_setSuspend(0);
+						if ($switch_to_higher_priority) {
+							warning TF("Changing target to higher priority monster: %s -> %s.\n", $target, $new_target), 'ai_attack';
+						} else {
+							warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
+						}
+						$target->{droppedForAggressive} = 1;
+						$char->attack($attackTarget);
+						AI::Attack::process();
+						return;
+					}
+				}
+			}
+		}
+
+		# Refuse targets that would count as kill-stealing according to the
+		# configured monster ownership rules.
 		my $cleanMonster = checkMonsterCleanness($ID);
 		if (!$cleanMonster) {
 			message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
@@ -138,6 +163,8 @@ sub process {
 			return;
 		}
 		
+		# `attack_auto == 3` means "only untouched monsters", so drop anything
+		# that has already interacted with us or been attacked.
 		if ($control->{attack_auto} == 3 && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou})) {
 			message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
 			$char->sendAttackStop;
@@ -161,7 +188,8 @@ sub process {
 				return;
 			}
 
-			# We're on route to the monster; check whether the monster has moved
+			# While routeing in, recalculate if the monster changed course since we
+			# started approaching it.
 			if ($args->{attackID} && approach_target_route_needs_reset($ataqArgs, $target)) {
 				reset_approach_for_moved_target($ataqArgs, $target);
 				return;
@@ -169,6 +197,8 @@ sub process {
 		}
 
 		if ($stage == ATTACKING) {
+			# Keep the give-up timer fair by discounting time spent suspended,
+			# approaching, or performing anti-stuck / avoidance movement.
 			if (AI::args()->{suspended}) {
 				$args->{ai_attack_giveup}{time} += time - $args->{suspended};
 				delete $args->{suspended};
@@ -186,6 +216,8 @@ sub process {
 				debug "Finished avoiding movement from target $target, updating ai_attack_giveup\n", "ai_attack";
 			}
 
+			# Throttle the heavy combat loop; `main` performs the expensive
+			# positioning, skill, and attack decisions.
 			if (timeOut($timeout{ai_attack_main})) {
 				if ($char->{sitting}) {
 					ai_setSuspend(0);
@@ -203,6 +235,8 @@ sub process {
 }
 
 sub shouldAttack {
+    # Return true only when the AI queue represents an attack directly, or a
+    # route/move action that is merely the lead-in for an attack.
     my ($action, $args) = @_;
     return (
         ($action eq "attack" && $args->{ID}) ||
@@ -212,11 +246,15 @@ sub shouldAttack {
 }
 
 sub shouldGiveUp {
+	# Give up after the configured timeout unless attackNoGiveup is active, or
+	# after too many anti-stuck retries.
 	my ($args, $ID) = @_;
 	return !$config{attackNoGiveup} && (timeOut($args->{ai_attack_giveup}) || $args->{unstuck}{count} > 5);
 }
 
 sub approach_target_route_needs_reset {
+	# Detect whether the target moved to a new destination after we already
+	# committed to an approach route, which makes the old meeting point stale.
 	my ($args, $target) = @_;
 	return 0 unless $args && $target;
 	return 0 if $target->{type} eq 'Unknown';
@@ -235,6 +273,8 @@ sub approach_target_route_needs_reset {
 }
 
 sub reset_approach_for_moved_target {
+	# Clear route-specific state so the next pass can compute a fresh approach
+	# path for the monster's new movement direction.
 	my ($args, $target) = @_;
 	return unless $args && $target;
 
@@ -251,6 +291,8 @@ sub reset_approach_for_moved_target {
 }
 
 sub giveUp {
+	# Centralized cleanup for abandoned targets. This records why we failed,
+	# clears attack queue state, and optionally teleports away.
 	my ($args, $ID, $reason) = @_;
 	my $target = Actor::get($ID);
 	if ($monsters{$ID}) {
@@ -273,6 +315,8 @@ sub giveUp {
 }
 
 sub targetGone {
+	# Treat missing or dead actors as gone so the attack loop can terminate
+	# without waiting for additional state updates.
 	my ($args, $ID) = @_;
 	my $target = Actor::get($ID, 1);
 	unless ($target) {
@@ -285,6 +329,8 @@ sub targetGone {
 }
 
 sub finishAttacking {
+    # Finalize the encounter: clear the attack queue, run death/loss handling,
+    # loot when appropriate, and notify hooks that combat has ended.
     my ($args, $ID) = @_;
     $timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
     AI::dequeue() while (AI::inQueue("attack"));
@@ -304,6 +350,8 @@ sub finishAttacking {
 			ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 		}
 
+		# Maintain the historical per-monster kill counters used elsewhere by the
+		# bot and logs.
 		## kokal start
 		## mosters counting
 		my $i = 0;
@@ -337,6 +385,8 @@ sub finishAttacking {
 }
 
 sub find_kite_position {
+	# Try to find a safe retreat tile that preserves enough distance to keep
+	# attacking, then launch a short route to that tile.
 	my ($args, $inAdvance, $target, $realMyPos, $realMonsterPos, $noAttackMethodFallback_runFromTarget) = @_;
 
 	my $maxDistance;
@@ -384,6 +434,8 @@ sub find_kite_position {
 }
 
 sub resolve_movetoattack_pos {
+	# When local movement prediction says an actor should already have arrived,
+	# snap its tracked position to the predicted endpoint to prevent desync.
 	my ($actor) = @_;
 	return unless (actorFinishedMovement($actor, $field));
 	debug TF("[Attack] [%s] Fixing failed to attack target, setting actor position to: %s %s\n", $actor, $actor->{movetoattack_pos}{x}, $actor->{movetoattack_pos}{y} ), "ai_attack";
@@ -398,6 +450,8 @@ sub resolve_movetoattack_pos {
 }
 
 sub main {
+	# `main` is the core combat brain. It predicts movement, chooses the attack
+	# method, handles kiting/chasing, and finally sends weapon or skill attacks.
 	my $args = AI::args();
 	my $ID = $args->{ID};
 
@@ -416,6 +470,8 @@ sub main {
 
 	my $target = Actor::get($ID);
 
+	# Reset per-loop range adjustments and reconcile any temporary predicted
+	# positions left over from move-to-attack logic.
 	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
 		$args->{temporary_extra_range} = 0;
 	}
@@ -436,6 +492,8 @@ sub main {
 		}
 	}
 
+	# Build a predicted "real" position for both player and monster so range and
+	# line-of-sight checks are based on movement in flight, not only stale cells.
 	my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
 	$extra_time = 0 unless (defined $extra_time);
 
@@ -459,6 +517,7 @@ sub main {
 	my $casOnYou = (defined $args->{castOnToYou_last} &&  $args->{castOnToYou_last} != $target->{castOnToYou}) ? 1 : 0;
 	my $youHitTarget = ((defined $args->{dmgFromYou_last} && $args->{dmgFromYou_last} != $target->{dmgFromYou}) || (defined $args->{missedFromYou_last} && $args->{missedFromYou_last} != $target->{missedFromYou})) ? 1 : 0;
 	
+	# Any exchange of damage, misses, or casts marks the fight as engaged.
 	if ($hitYou || $casOnYou || $args->{dmgFromYou_last} != $target->{dmgFromYou} || ($args->{firstLoop} && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou} || $target->{castOnToYou}))) {
 		$target->{engaged} = 1 if (!exists $target->{engaged} || !$target->{engaged});
 	}
@@ -483,7 +542,8 @@ sub main {
 	Benchmark::end("ai_attack (part 1.1)") if DEBUG;
 	Benchmark::begin("ai_attack (part 1.2)") if DEBUG;
 
-	# Determine what combo skill to use
+	# Highest priority: see whether we are in a combo window that should replace
+	# the normal attack flow for this pass.
 	delete $args->{attackMethod};
 
 	my $combo_state = $char->{combo_state};
@@ -539,7 +599,8 @@ sub main {
 		$i++;
 	}
 
-	# Determine what skill to use to attack
+	# Otherwise fall back to the standard priority: weapon by default, then
+	# override with the first attackSkillSlot whose conditions currently match.
 	if (!$args->{attackMethod}{type}) {
 		if ($config{'attackUseWeapon'}) {
 			$args->{attackMethod}{type} = "weapon";
@@ -598,6 +659,8 @@ sub main {
 	# proved we could hit out of nominal range. Persisting it here lets melee
 	# attacks get stuck spamming from clientDist 2 without re-approaching.
 
+	# Evaluate whether the chosen attack method can be executed from the current
+	# predicted positions.
 	# -2: undefined attackMethod
 	# -1: No LOS
 	#  0: out of range
@@ -624,8 +687,8 @@ sub main {
 		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
 	}
 
-	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config
-	# If so sets sentApproach to 0
+	# If we are already walking to a meeting position, keep waiting, reset the
+	# route if the target drifted, or clear the flag once we can attack again.
 	if ($args->{sentApproach}) {
 		if (approach_target_route_needs_reset($args, $target)) {
 			reset_approach_for_moved_target($args, $target);
@@ -650,8 +713,8 @@ sub main {
 	my $failed_runFromTarget = 0;
 	my $hitTarget_when_not_possible = 0;
 
-	# Here, if runFromTarget is active, we check if the target mob is closer to us than the minimun distance specified in runFromTarget_dist
-	# If so try to kite it
+	# First defensive option: kite away when the target gets closer than the
+	# configured minimum distance for run-from-target behavior.
 	if (
 		!$found_action &&
 		$config{"runFromTarget"} &&
@@ -665,8 +728,8 @@ sub main {
 		}
 	}
 
-	# Here, if runFromTarget is active, and we can't attack right now (eg. all skills in cooldown) we check if the target mob is closer to us than the minimun distance specified in runFromTarget_noAttackMethodFallback_minStep
-	# If so try to kite it using maxdistance of runFromTarget_noAttackMethodFallback_attackMaxDist
+	# Second defensive option: if we currently have no valid attack method at
+	# all, still try to kite using the fallback run-from-target settings.
 	if (
 		!$found_action &&
 		$canAttack  == -2 &&
@@ -716,9 +779,8 @@ sub main {
 		}
 	}
 
-	# Here we decide what to do when a mob we have already hit is no longer in range or we have no LOS to it
-	# We also check if we have waited too long for the monster which we are waiting to get closer to us to approach
-	# TODO: Maybe we should separate this into 2 sections, one for out of range and another for no LOS - low priority
+	# If we already tagged the monster, optionally wait a little for it to walk
+	# back into range/LOS before giving up entirely.
 	if (
 		!$found_action &&
 		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
@@ -754,7 +816,7 @@ sub main {
 		}
 	}
 
-	# Here we decide what to do with a mob which is out of range or we have no LOS to
+	# If we still cannot attack, compute a better meeting position and walk to it.
 	if (
 		!$found_action &&
 		($canAttack == 0 || $canAttack == -1) &&
@@ -806,7 +868,8 @@ sub main {
 		(!$config{"runFromTarget"} || $realMonsterDist >= $config{"runFromTarget_dist"} || $failed_runFromTarget) &&
 		(!$config{"tankMode"} || !$target->{dmgFromYou})
 	 ) {
-		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
+		# We are in range and not committed to a movement action, so execute the
+		# chosen attack method. In tank mode, only strike until initial aggro is secured.
 		if (!$args->{firstAttack}) {
 			$args->{firstAttack} = 1;
 			$target->{sentAttack} = 1;
@@ -900,6 +963,8 @@ sub main {
 
 	}
 
+	# Tank mode fallback: stop re-sending attacks once we already transferred
+	# aggro and just keep the encounter alive by monitoring damage updates.
 	if (!$found_action && $config{tankMode}) {
 		if ($args->{dmgTo_last} != $target->{dmgTo}) {
 			$args->{ai_attack_giveup}{time} = time;

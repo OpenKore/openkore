@@ -484,9 +484,10 @@ sub processReAddMissingPortals {
 ##### PORTALRECORD #####
 # Automatically record new unknown portals
 sub processPortalRecording {
-	return unless $config{portalRecord};
+	return unless ($config{portalRecord} || $config{portalUpdatePosition});
 	return unless $ai_v{portalTrace_mapChanged} && timeOut($ai_v{portalTrace_mapChanged}, 0.5);
 	delete $ai_v{portalTrace_mapChanged};
+	my $portal_update_candidate = delete $ai_v{portalUpdatePosition_candidate};
 
 	debug "Checking for new portals...\n", "portalRecord";
 	my $first = 1;
@@ -549,6 +550,14 @@ sub processPortalRecording {
 		debug "No destination portal found.\n", "portalRecord";
 		return;
 	}
+
+	my $destMap = $field->baseName;
+	my %arrivalPos = %{$char->{pos_to}};
+	if ($config{portalUpdatePosition}
+		&& _tryUpdateKnownPortalPositions($portal_update_candidate, $sourceMap, \%sourcePos, $destMap, \%arrivalPos)) {
+		return;
+	}
+
 	#if (defined portalExists($field->baseName, $portals{$foundID}{pos})) {
 	#	debug "Destination portal is already in portals.txt\n", "portalRecord";
 	#	last PORTALRECORD;
@@ -565,8 +574,7 @@ sub processPortalRecording {
 
 
 	# And finally, record the portal information
-	my ($destMap, $destID, %destPos);
-	$destMap = $field->baseName;
+	my ($destID, %destPos);
 	$destID = $portals{$foundID}{nameID};
 	%destPos = %{$portals{$foundID}{pos}};
 	debug "Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
@@ -574,67 +582,179 @@ sub processPortalRecording {
 	$portals{$foundID}{name} = "$destMap -> $sourceMap";
 	$portals_old{$sourceIndex}{name} = "$sourceMap -> $destMap";
 
-
 	my ($ID, $destName);
 	my $recorded = 0;
 
 	# Record information about destination portal
 	if ($config{portalRecord} > 1 &&
 	    !defined portalExists($destMap, $portals{$foundID}{pos})) {
-		$ID = "$destMap $destPos{x} $destPos{y}";
-		$portals_lut{$ID}{source}{map} = $destMap;
-		$portals_lut{$ID}{source}{x} = $destPos{x};
-		$portals_lut{$ID}{source}{y} = $destPos{y};
-		$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
-		$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
-		$portals_lut{$ID}{dest}{$destName}{x} = $sourcePos{x};
-		$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
+		if ($config{portalUpdatePosition}
+			&& _tryUpdateNearbyPortalRecordSibling($destMap, \%destPos, $sourceMap, \%sourcePos)) {
+			$recorded = 1;
+		} else {
+			$ID = "$destMap $destPos{x} $destPos{y}";
+			$portals_lut{$ID}{source}{map} = $destMap;
+			$portals_lut{$ID}{source}{x} = $destPos{x};
+			$portals_lut{$ID}{source}{y} = $destPos{y};
+			$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
+			$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
+			$portals_lut{$ID}{dest}{$destName}{x} = $sourcePos{x};
+			$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
 
-		message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $destMap, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
-		updatePortalLUT(Settings::getTableFilename("portals.txt"),
+			my $updated = updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$destMap, $destPos{x}, $destPos{y},
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
-		Plugins::callHook('portal_exist2', {
-			srcMap => $destMap,
-			srcx => $destPos{x},
-			srcy => $destPos{y},
-			dstMap => $sourceMap,
-			dstx => $sourcePos{x},
-			dsty => $sourcePos{y}
-		});
-		$recorded = 1;
+
+			if ($updated == 1) {
+				message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $destMap, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
+				Plugins::callHook('portal_exist2', {
+					srcMap => $destMap,
+					srcx => $destPos{x},
+					srcy => $destPos{y},
+					dstMap => $sourceMap,
+					dstx => $sourcePos{x},
+					dsty => $sourcePos{y}
+				});
+				$recorded = 1;
+			} elsif ($updated == 2) {
+				debug "Destination portal already canonical in portals.txt\n", "portalRecord";
+			}
+		}
 	}
 
 	# Record information about the source portal
 	if (!defined portalExists($sourceMap, \%sourcePos)) {
-		$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
-		$portals_lut{$ID}{source}{map} = $sourceMap;
-		$portals_lut{$ID}{source}{x} = $sourcePos{x};
-		$portals_lut{$ID}{source}{y} = $sourcePos{y};
-		$destName = "$destMap $destPos{x} $destPos{y}";
-		$portals_lut{$ID}{dest}{$destName}{map} = $destMap;
-		$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
-		$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
+		if ($config{portalUpdatePosition}
+			&& _tryUpdateNearbyPortalRecordSibling($sourceMap, \%sourcePos, $destMap, $char->{pos})) {
+			$recorded = 1;
+		} else {
+			$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
+			$portals_lut{$ID}{source}{map} = $sourceMap;
+			$portals_lut{$ID}{source}{x} = $sourcePos{x};
+			$portals_lut{$ID}{source}{y} = $sourcePos{y};
+			$destName = "$destMap $destPos{x} $destPos{y}";
+			$portals_lut{$ID}{dest}{$destName}{map} = $destMap;
+			$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
+			$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
 
-		message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $destMap, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
-		updatePortalLUT(Settings::getTableFilename("portals.txt"),
+			my $updated = updatePortalLUT(Settings::getTableFilename("portals.txt"),
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
 				$destMap, $char->{pos}{x}, $char->{pos}{y});
-		Plugins::callHook('portal_exist2', {
-			srcMap => $sourceMap,
-			srcx => $sourcePos{x},
-			srcy => $sourcePos{y},
-			dstMap => $destMap,
-			dstx => $char->{pos}{x},
-			dsty => $char->{pos}{y}
-		});
-		$recorded = 1;
+
+			if ($updated == 1) {
+				message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $destMap, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
+				Plugins::callHook('portal_exist2', {
+					srcMap => $sourceMap,
+					srcx => $sourcePos{x},
+					srcy => $sourcePos{y},
+					dstMap => $destMap,
+					dstx => $char->{pos}{x},
+					dsty => $char->{pos}{y}
+				});
+				$recorded = 1;
+			} elsif ($updated == 2) {
+				debug "Source portal already canonical in portals.txt\n", "portalRecord";
+			}
+		}
 	}
 
 	if ($recorded && $config{portalRecord_recompileAfter}) {
-		Settings::loadByRegexp(qr/portals/);
-		Misc::compilePortals() if Misc::compilePortals_check();
+		recompilePortals();
 	}
+}
+
+sub _tryUpdateKnownPortalPositions {
+	my ($candidate, $sourceMap, $sourcePos, $destMap, $destPos) = @_;
+	return 0 unless $candidate;
+	return 0 unless ($candidate->{oldSourceMap} eq $sourceMap && $candidate->{oldDestMap} eq $destMap);
+	return 1 if ($candidate->{oldSourceX} == $sourcePos->{x}
+		&& $candidate->{oldSourceY} == $sourcePos->{y}
+		&& $candidate->{oldDestX} == $destPos->{x}
+		&& $candidate->{oldDestY} == $destPos->{y});
+
+	my $updated = FileParsers::replacePortalLUT(
+		Settings::getTableFilename("portals.txt"),
+		$candidate->{oldSourceMap}, $candidate->{oldSourceX}, $candidate->{oldSourceY},
+		$candidate->{oldDestMap}, $candidate->{oldDestX}, $candidate->{oldDestY},
+		"$sourceMap $sourcePos->{x} $sourcePos->{y} $destMap $destPos->{x} $destPos->{y}",
+	);
+	return 0 unless $updated;
+	return 1 if $updated == 2;
+
+	warning TF("Updated portal coordinates in portals.txt: %s (%s,%s) -> %s (%s,%s) became %s (%s,%s) -> %s (%s,%s)\n",
+		$candidate->{oldSourceMap}, $candidate->{oldSourceX}, $candidate->{oldSourceY},
+		$candidate->{oldDestMap}, $candidate->{oldDestX}, $candidate->{oldDestY},
+		$sourceMap, $sourcePos->{x}, $sourcePos->{y},
+		$destMap, $destPos->{x}, $destPos->{y}), "portalRecord";
+
+	recompilePortals();
+	return 1;
+}
+
+sub _tryUpdateNearbyPortalRecordSibling {
+	my ($sourceMap, $sourcePos, $destMap, $destPos) = @_;
+
+	my ($siblingSource, $siblingDest) = _findNearbyPortalRecordSibling($sourceMap, $sourcePos, $destMap, $destPos);
+	return 0 unless ($siblingSource && $siblingDest);
+
+	my $updated = FileParsers::replacePortalLUT(
+		Settings::getTableFilename("portals.txt"),
+		$siblingSource->{map}, $siblingSource->{x}, $siblingSource->{y},
+		$siblingDest->{map}, $siblingDest->{x}, $siblingDest->{y},
+		"$sourceMap $sourcePos->{x} $sourcePos->{y} $destMap $destPos->{x} $destPos->{y}",
+	);
+	return 0 unless $updated;
+	return 1 if $updated == 2;
+
+	warning TF("Updated nearby portal sibling in portals.txt: %s (%s,%s) -> %s (%s,%s) became %s (%s,%s) -> %s (%s,%s)\n",
+		$siblingSource->{map}, $siblingSource->{x}, $siblingSource->{y},
+		$siblingDest->{map}, $siblingDest->{x}, $siblingDest->{y},
+		$sourceMap, $sourcePos->{x}, $sourcePos->{y},
+		$destMap, $destPos->{x}, $destPos->{y}), "portalRecord";
+
+	recompilePortals();
+	return 1;
+}
+
+sub _findNearbyPortalRecordSibling {
+	my ($sourceMap, $sourcePos, $destMap, $destPos) = @_;
+
+	my $bestSource;
+	my $bestDest;
+	my $bestScore;
+	my $maxSourceDrift = 2;
+	my $maxDestDrift = 6;
+
+	foreach my $portalID (keys %portals_lut) {
+		my $entry = $portals_lut{$portalID};
+		next if Misc::isRouteSourceRemoved($entry);
+		next unless ($entry->{source}{map} eq $sourceMap && $entry->{dest});
+
+		my $sourceDist = blockDistance($entry->{source}, $sourcePos);
+		next if $sourceDist > $maxSourceDrift;
+
+		foreach my $destID (keys %{$entry->{dest}}) {
+			my $destEntry = $entry->{dest}{$destID};
+			next unless ($destEntry->{map} eq $destMap);
+
+			my $destDist = blockDistance($destEntry, $destPos);
+			next if $destDist > $maxDestDrift;
+
+			my $score = $sourceDist + $destDist;
+			next if defined $bestScore && $score >= $bestScore;
+
+			$bestSource = $entry->{source};
+			$bestDest = $destEntry;
+			$bestScore = $score;
+		}
+	}
+
+	return ($bestSource, $bestDest);
+}
+
+sub recompilePortals {
+	Settings::loadByRegexp(qr/portals/);
+	Misc::compilePortals() if Misc::compilePortals_check();
 }
 
 ##### ESCAPE UNKNOWN MAPS #####
@@ -1843,7 +1963,7 @@ sub processAutoSell {
 			Plugins::callHook('AI_sell_auto');
 
 			# Form list of items to sell
-			my @sellItems;
+			@sellList = ();
 			for my $item (@{$char->inventory}) {
 				next if ($item->{equipped} || !$item->{sellable});
 
@@ -1853,15 +1973,15 @@ sub processAutoSell {
 					my %obj;
 					$obj{ID} = $item->{ID};
 					$obj{amount} = $item->{amount} - $control->{keep};
-					push @sellItems, \%obj;
+					push @sellList, \%obj;
 				}
 			}
 
-			if (@sellItems == 0) {
+			if (@sellList == 0) {
 				$args->{'sentEmptyList'} = 1;
 			}
 
-			completeNpcSell(\@sellItems);
+			completeNpcSell(\@sellList);
 
 			delete $args->{'sentNpcTalk'};
 			delete $args->{'sentNpcTalk_time'};
@@ -3295,13 +3415,6 @@ sub processAutoAttack {
 				my $target_pos = calcPosition($monster);
 				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				next unless ($control->{dist} eq '' || blockDistance($target_pos, $myPos) <= $control->{dist});
-
-				# TODO: Sometimes we had no LOS to attack mob and dropped it, but now it is following us and attacking us
-				# which means we now have LOS to is, it we should have a way to delete ai_attack_unfail and ai_attack_failedLOS
-				# timeouts in these cases.
-				next unless (timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}));
-				next unless (timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
-
 				my %hookArgs;
 				$hookArgs{monster} = $monster;
 				$hookArgs{return} = 1;

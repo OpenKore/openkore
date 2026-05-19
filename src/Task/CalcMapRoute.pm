@@ -281,6 +281,9 @@ sub canAddOpenListEntry {
 	my ($self, $key, $walk) = @_;
 	return 0 if (exists $self->{closelist}{$key} && $self->{closelist}{$key}{walk} <= $walk);
 	return 0 if (exists $self->{openlist}{$key} && $self->{openlist}{$key}{walk} <= $walk);
+	# TODO: After fixing the current route-cost mismatch bug, add a stricter
+	# duplicate-state guard here so the same portal/path key is not re-added to
+	# the open list/heap over and over with alternate costs during expansion.
 	return 1;
 }
 
@@ -414,14 +417,14 @@ sub iterate {
 			if ($ret) {
 				for my $dest ($self->getPortalDestinationsForRoute($portal, undef)) {
 					next unless isRoutePointDefined($entry->{dest}{$dest});
+					my $portalString = "$portal=$dest";
 					my $penalty = $self->getMapRouteWeight($self->{source}{map})
 						+ (($entry->{dest}{$dest}{steps} ne '') ? $self->getRouteWeight('NPC') : $self->getRouteWeight('PORTAL'));
 					my $blockedPortalGroups = $self->getBlockedPortalGroupsAfterStep(
 						$entry->{dest}{$dest},
 						undef,
-						"Portal branch [<initial>]",
+						"Portal branch [<initial>] child [$portalString]",
 					);
-					my $portalString = "$portal=$dest";
 					my $key = $self->buildRouteStateKey($portalString, $blockedPortalGroups);
 					my ($extraZeny, $extraTickets) = $self->getPortalStepCost(undef, $entry->{dest}{$dest});
 					my $value = $self->buildRouteValue(
@@ -531,10 +534,26 @@ sub getRoute {
 # Requires: $self->getStatus() == Task::DONE && !defined($self->getError())
 #
 # Return a string which describes the calculated route. This string has
-# the following form: "payon -> pay_arche -> pay_dun00 -> pay_dun01"
+# the following form: "payon (228,329) [walk 30] -> pay_arche (36,131) [walk 55] -> pay_dun01 (286,25)"
 sub getRouteString {
 	my ( $self ) = @_;
-	join ' -> ', map { $_->{map} } @{ $self->getRoute }, $self->{target};
+
+	my $formatTarget = sub {
+		my ($point) = @_;
+		return $point->{map} unless (defined $point->{x} && defined $point->{y});
+		return sprintf("%s (%s,%s)", $point->{map}, $point->{x}, $point->{y});
+	};
+
+	join ' -> ',
+		(map {
+			sprintf("%s (%s,%s) [walk %s]",
+				$_->{map},
+				$_->{pos}->{x},
+				$_->{pos}->{y},
+				$_->{walk}
+			)
+		} @{ $self->getRoute }),
+		$formatTarget->($self->{target});
 }
 
 ##
@@ -563,153 +582,159 @@ sub searchStep {
 
 	# selects the node with the lowest walk cost
 	my $parent = $self->shiftOpenlistHeapMinKey();
+
 	if (!defined $parent) {
 		# Fallback: rebuild heap from openlist if it got out of sync.
 		$self->rebuildOpenlistHeap();
 		$parent = $self->shiftOpenlistHeapMinKey();
 	}
+
 	unless (defined $parent) {
 		$self->{done} = 1;
 		$self->{found} = '';
 		return 0;
 	}
-	debug "[CalcMapRoute] [searchStep] $parent (cost $openlist->{$parent}{walk})\n", "calc_map_route" if $self->shouldLogDebug();
 
-	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
-	#foreach my $parent (keys %{$openlist})
-		my ($portalString) = $self->parseRouteStateKey($parent);
-		my ($portal, $dest) = split /=/, $portalString, 2;
-		# skip if budget exceeded
-		if ($self->{budget} ne '' && $self->{budget} < $openlist->{$parent}{zeny}) {
-			# This link is too expensive
-			delete $openlist->{$parent};
-			next;
+	if (!exists $self->{searchStepCount}) {
+		$self->{searchStepCount} = 0;
+	}
+	$self->{searchStepCount}++;
 
-		} else {
-			# MOVE this entry into the CLOSELIST
-			$closelist->{$parent} = delete $openlist->{$parent};
+	debug "[CalcMapRoute] [searchStep $self->{searchStepCount}] [size ".(scalar keys %{$self->{openlist}})."] $parent (cost $openlist->{$parent}{walk})\n", "calc_map_route" if $self->shouldLogDebug();
+	
+	my ($portalString) = $self->parseRouteStateKey($parent);
+	my ($portal, $dest) = split /=/, $portalString, 2;
+	# skip if budget exceeded
+	if ($self->{budget} ne '' && $self->{budget} < $openlist->{$parent}{zeny}) {
+		# This link is too expensive
+		delete $openlist->{$parent};
+		next;
+
+	} else {
+		# MOVE this entry into the CLOSELIST
+		$closelist->{$parent} = delete $openlist->{$parent};
+	}
+
+	my $map_destination = $self->resolveRouteDestinationEntry($portal, $dest);
+	# support to multiple targets
+	foreach my $target ( @{ $self->{targets} } ) {
+		next unless $map_destination;
+		my $map_name = $map_destination->{map};
+		next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
+		my $target_has_coords = hasMapCoords($target);
+		my $map_destination_has_coords = hasMapCoords($map_destination);
+		# if no x or y consider that is already at destination
+		if (!$target_has_coords) {
+			$self->{found} = $parent;
+		}
+		# uses getRoute to check whether you have reached exactly the desired point on the map.
+		elsif ($map_destination_has_coords
+		    && Task::Route->getRoute($self->{solution}, $target->{field}, $map_destination, $target)) {
+			my $targetPortalString = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
+			my ($walk, $value) = $self->buildReachedTargetState(
+				$parent,
+				$closelist->{$parent},
+				$targetPortalString,
+			);
+			$self->{found} = $walk;
+			$closelist->{$walk} = $value;
 		}
 
-		my $map_destination = $self->resolveRouteDestinationEntry($portal, $dest);
-		# support to multiple targets
-		foreach my $target ( @{ $self->{targets} } ) {
-			next unless $map_destination;
-			my $map_name = $map_destination->{map};
-			next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
-			my $target_has_coords = hasMapCoords($target);
-			my $map_destination_has_coords = hasMapCoords($map_destination);
-			# if no x or y consider that is already at destination
-			if (!$target_has_coords) {
-				$self->{found} = $parent;
+		# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
+		if ( $self->{found} ) {
+			$self->{done} = 1;
+			$self->{mapSolution} = [];
+			$self->{target} = $target;
+			$self->{target}->{pos}->{x} = $self->{target}->{x};
+			$self->{target}->{pos}->{y} = $self->{target}->{y};
+			my $this = $self->{found};
+			while ($this) {
+				unshift @{$self->{mapSolution}}, $self->buildMapSolutionStep($this, $closelist->{$this});
+				$this = $closelist->{$this}{parent};
 			}
-			# uses getRoute to check whether you have reached exactly the desired point on the map.
-			elsif ($map_destination_has_coords
-			    && Task::Route->getRoute($self->{solution}, $target->{field}, $map_destination, $target)) {
-				my $targetPortalString = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
-				my ($walk, $value) = $self->buildReachedTargetState(
-					$parent,
+			return;
+		}
+	}
+
+	# get all children of each openlist.
+	$self->populateOpenListWithGoCommands($dest, $closelist->{$parent}, $parent) unless ($self->{noGoCommand});
+	if (!$self->{noTeleSpawn} && canUseTeleportInRouteContext() && $self->isSaveMapSetAndValid()) {
+		$self->populateOpenListWithWarpToSaveMap($dest, $closelist->{$parent}, $parent);
+	}
+	if (!$self->{noWarpItem}) {
+		$self->populateOpenListWithWarpByItems($dest, $closelist->{$parent}, $parent);
+	}
+	
+	# explore connected portals and NPC warps
+	my $children = $portals_los{$dest};
+	return unless ($children && ref($children) eq 'HASH');
+
+	foreach my $child (keys %{$children}) {
+		next unless $children->{$child}; # next if no child
+
+		if (exists $portals_lut{$child}
+		 && !isRouteSourceRemoved($portals_lut{$child})
+		 && isRoutePointDefined($portals_lut{$child}{source}
+		)) {
+			# iterates through the child's/portals that have connection to destination
+			foreach my $subchild ($self->getPortalDestinationsForRoute($child, $closelist->{$parent})) {
+				my $destID = $subchild;
+				next unless isRoutePointDefined($portals_lut{$child}{dest}{$subchild});
+				my $mapName = $portals_lut{$child}{source}{map};
+				my $portalString = "$child=$subchild";
+				#############################################################
+				my $penalty = $self->getMapRouteWeight($mapName) +
+					(($portals_lut{$child}{dest}{$subchild}{steps} ne '') ? $self->getRouteWeight('NPC') : $self->getRouteWeight('PORTAL')); # get node/child penalty based on routeWeights
+				my $blockedPortalGroups = $self->getBlockedPortalGroupsAfterStep(
+					$portals_lut{$child}{dest}{$subchild},
 					$closelist->{$parent},
-					$targetPortalString,
+					"Portal branch [$closelist->{$parent}{portal_string}] child [$portalString]",
 				);
-				$self->{found} = $walk;
-				$closelist->{$walk} = $value;
+				my $key = $self->buildRouteStateKey($portalString, $blockedPortalGroups);
+				my ($extraZeny, $extraTickets) = $self->getPortalStepCost($closelist->{$parent}, $portals_lut{$child}{dest}{$subchild});
+				my $value = $self->buildRouteValue(
+					type => 'portal_or_npc',
+					parent => $parent,
+					baseCost => $closelist->{$parent},
+					extraWalk => $penalty + $children->{$child},
+					extraZeny => $extraZeny,
+					extraTickets => $extraTickets,
+					allow_ticket => $portals_lut{$child}{dest}{$subchild}{allow_ticket},
+					blockedPortalGroups => $blockedPortalGroups,
+				);
+				next unless $self->canAddOpenListEntry($key, $value->{walk});
+				$self->add_key_to_openList($key, $value);
 			}
-
-			# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
-			if ( $self->{found} ) {
-				$self->{done} = 1;
-				$self->{mapSolution} = [];
-				$self->{target} = $target;
-				$self->{target}->{pos}->{x} = $self->{target}->{x};
-				$self->{target}->{pos}->{y} = $self->{target}->{y};
-				my $this = $self->{found};
-				while ($this) {
-					unshift @{$self->{mapSolution}}, $self->buildMapSolutionStep($this, $closelist->{$this});
-					$this = $closelist->{$this}{parent};
-				}
-				return;
-			}
+			next;
 		}
 
-		# get all children of each openlist.
-		$self->populateOpenListWithGoCommands($dest, $closelist->{$parent}, $parent) unless ($self->{noGoCommand});
-		if (!$self->{noTeleSpawn} && canUseTeleportInRouteContext() && $self->isSaveMapSetAndValid()) {
-			$self->populateOpenListWithWarpToSaveMap($dest, $closelist->{$parent}, $parent);
+		next if $self->{noAirship};
+		next unless exists $portals_airships{$child};
+		next if isRouteSourceRemoved($portals_airships{$child});
+		next unless isRoutePointDefined($portals_airships{$child}{source});
+		next unless $portals_airships{$child}{dest} && ref($portals_airships{$child}{dest}) eq 'HASH';
+		# iterates airships
+		foreach my $subchild (grep { $portals_airships{$child}{dest}{$_}{enabled} } keys %{$portals_airships{$child}{dest}}) {
+			my $destID = $subchild;
+			next unless isRoutePointDefined($portals_airships{$child}{dest}{$subchild});
+			my $mapName = $portals_airships{$child}{source}{map};
+			#############################################################
+			my $penalty = $self->getMapRouteWeight($mapName) + $self->getRouteWeight('AIRSHIP'); # get node/child penalty based on routeWeights
+			my $thisWalk = $penalty + $closelist->{$parent}{walk} + $children->{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
+			my $key = $self->buildRouteStateKey("$child=$subchild", $closelist->{$parent}{blockedPortalGroups});
+			next unless $self->canAddOpenListEntry($key, $thisWalk);
+			my $value = $self->buildRouteValue(
+				type => 'airship',
+				parent => $parent,
+				baseCost => $closelist->{$parent},
+				extraWalk => $penalty + $children->{$child},
+				blockedPortalGroups => $self->cloneBlockedPortalGroups($closelist->{$parent}),
+			);
+			$value->{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
+			$value->{is_airship} = 1;
+			$self->add_key_to_openList($key, $value);
 		}
-		if (!$self->{noWarpItem}) {
-			$self->populateOpenListWithWarpByItems($dest, $closelist->{$parent}, $parent);
-		}
-		
-		# explore connected portals and NPC warps
-		my $children = $portals_los{$dest};
-		if ($children && ref($children) eq 'HASH') {
-			foreach my $child (keys %{$children}) {
-				next unless $children->{$child}; # next if no child
-
-				if (exists $portals_lut{$child}
-				 && !isRouteSourceRemoved($portals_lut{$child})
-				 && isRoutePointDefined($portals_lut{$child}{source})) {
-					# iterates through the child's/portals that have connection to destination
-					foreach my $subchild ($self->getPortalDestinationsForRoute($child, $closelist->{$parent})) {
-						my $destID = $subchild;
-						next unless isRoutePointDefined($portals_lut{$child}{dest}{$subchild});
-						my $mapName = $portals_lut{$child}{source}{map};
-						#############################################################
-						my $penalty = $self->getMapRouteWeight($mapName) +
-							(($portals_lut{$child}{dest}{$subchild}{steps} ne '') ? $self->getRouteWeight('NPC') : $self->getRouteWeight('PORTAL')); # get node/child penalty based on routeWeights
-						my $thisWalk = $penalty + $closelist->{$parent}{walk} + $children->{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
-						my $blockedPortalGroups = $self->getBlockedPortalGroupsAfterStep(
-							$portals_lut{$child}{dest}{$subchild},
-							$closelist->{$parent},
-							"Portal branch [$closelist->{$parent}{portal_string}]",
-						);
-						my $portalString = "$child=$subchild";
-						my $key = $self->buildRouteStateKey($portalString, $blockedPortalGroups);
-						my ($extraZeny, $extraTickets) = $self->getPortalStepCost($closelist->{$parent}, $portals_lut{$child}{dest}{$subchild});
-						next unless $self->canAddOpenListEntry($key, $thisWalk);
-						my $value = $self->buildRouteValue(
-							type => 'portal_or_npc',
-							parent => $parent,
-							baseCost => $closelist->{$parent},
-							extraWalk => $penalty + $children->{$child},
-							extraZeny => $extraZeny,
-							extraTickets => $extraTickets,
-							allow_ticket => $portals_lut{$child}{dest}{$subchild}{allow_ticket},
-							blockedPortalGroups => $blockedPortalGroups,
-						);
-						$self->add_key_to_openList($key, $value);
-					}
-					next;
-				}
-
-				next if $self->{noAirship};
-				next unless exists $portals_airships{$child};
-				next if isRouteSourceRemoved($portals_airships{$child});
-				next unless isRoutePointDefined($portals_airships{$child}{source});
-				next unless $portals_airships{$child}{dest} && ref($portals_airships{$child}{dest}) eq 'HASH';
-				# iterates airships
-				foreach my $subchild (grep { $portals_airships{$child}{dest}{$_}{enabled} } keys %{$portals_airships{$child}{dest}}) {
-					my $destID = $subchild;
-					next unless isRoutePointDefined($portals_airships{$child}{dest}{$subchild});
-					my $mapName = $portals_airships{$child}{source}{map};
-					#############################################################
-					my $penalty = $self->getMapRouteWeight($mapName) + $self->getRouteWeight('AIRSHIP'); # get node/child penalty based on routeWeights
-					my $thisWalk = $penalty + $closelist->{$parent}{walk} + $children->{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
-					my $key = $self->buildRouteStateKey("$child=$subchild", $closelist->{$parent}{blockedPortalGroups});
-					next unless $self->canAddOpenListEntry($key, $thisWalk);
-					my $value = $self->buildRouteValue(
-						type => 'airship',
-						parent => $parent,
-						baseCost => $closelist->{$parent},
-						extraWalk => $penalty + $children->{$child},
-						blockedPortalGroups => $self->cloneBlockedPortalGroups($closelist->{$parent}),
-					);
-					$value->{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
-					$value->{is_airship} = 1;
-					$self->add_key_to_openList($key, $value);
-				}
-			}
-		}
+	}
 }
 
 sub getPortalDestinationsForRoute {
@@ -731,14 +756,6 @@ sub isPortalDestinationEnabledForRoute {
 
 	my $groupName = $entry->{dynamicPortalGroup};
 	if (defined $groupName && $groupName ne '' && $self->isPortalGroupBlockedForValue($groupName, $currentValue)) {
-		if ($self->shouldLogDebug()) {
-			my $branchPortal = ($currentValue && ref($currentValue) eq 'HASH') ? ($currentValue->{portal_string} || '<initial>') : '<initial>';
-			my $blocked = $self->formatBlockedPortalGroups($self->cloneBlockedPortalGroups($currentValue));
-			debug sprintf(
-				"CalcMapRoute - Blocking portal %s=%s because group '%s' is blocked for branch [%s] (blocked groups: %s).\n",
-				$portal, $destID, $groupName, $branchPortal, $blocked
-			), "calc_map_route";
-		}
 		return 0;
 	}
 

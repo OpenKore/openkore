@@ -420,7 +420,8 @@ sub iterate {
 								maxTime => $self->{maxTime},
 								avoidWalls => $self->{avoidWalls},
 								randomFactor => $self->{randomFactor},
-								useManhattan => $self->{useManhattan}
+								useManhattan => $self->{useManhattan},
+								isPortalRoute => 1
 							);
 							$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 							$self->setSubtask($task);
@@ -664,7 +665,8 @@ sub iterate {
 			warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "map_route";
 			my %params = (
 				field => $field,
-				solution => \@solution
+				solution => \@solution,
+				isPortalRoute => 1,
 			);
 			$params{$_} = $self->{guess_portal}{pos}{$_} for qw(x y);
 			$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls randomFactor useManhattan);
@@ -672,7 +674,7 @@ sub iterate {
 			$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 			$self->setSubtask($task);
 
-		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 && actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1) ) {
+		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= 1 && actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1) ) {
 				if (!exists $timeout{ai_portal_give_up}{time}) {
 					$timeout{ai_portal_give_up}{time} = time;
 					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
@@ -781,7 +783,8 @@ sub iterate {
 						maxTime => $self->{maxTime},
 						avoidWalls => $self->{avoidWalls},
 						randomFactor => $self->{randomFactor},
-						useManhattan => $self->{useManhattan}
+						useManhattan => $self->{useManhattan},
+						isPortalRoute => 1
 					);
 					$task->{stopWhenMapChanged} = 1 if (_isSameMapPortalStep($self->{mapSolution}[0]));
 					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
@@ -1009,6 +1012,30 @@ sub subtaskDone {
 sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
+
+	if ($config{portalUpdatePosition}
+		&& $self->{mapSolution}
+		&& @{$self->{mapSolution}}
+		&& $self->{mapSolution}[0]{portal}
+		&& !$self->{mapSolution}[0]{steps}
+		&& $self->_currentPortalSourceEntry('portals_lut')) {
+		my ($from, $to) = split(/=/, $self->{mapSolution}[0]{portal}, 2);
+		if (defined $from && defined $to) {
+			my ($dest_map, $dest_x, $dest_y) = split(/\s+/, $to, 3);
+			if (defined $dest_map && defined $dest_x && defined $dest_y) {
+				$ai_v{portalUpdatePosition_candidate} = {
+					oldSourceMap => $self->{mapSolution}[0]{map},
+					oldSourceX   => $self->{mapSolution}[0]{pos}{x},
+					oldSourceY   => $self->{mapSolution}[0]{pos}{y},
+					oldDestMap   => $dest_map,
+					oldDestX     => $dest_x,
+					oldDestY     => $dest_y,
+					time         => time,
+				};
+			}
+		}
+	}
+
 	$self->{mapChanged} = 1;
 
 	my $subtask = $self->getSubtask();

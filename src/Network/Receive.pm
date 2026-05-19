@@ -3435,10 +3435,9 @@ sub show_script {
 sub skill_post_delay {
 	my ($self, $args) = @_;
 
-	my $skillName = (new Skill(idn => $args->{ID}))->getName;
-	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
+	my $skillHandleName = (new Skill(idn => $args->{ID}))->getHandle();
 
-	$char->setStatus($skillName." ".$status, 1, $args->{time});
+	$char->setStatus($skillHandleName."_DELAY", 1, $args->{time});
 }
 
 # Skill cooldown display icon List.
@@ -3466,10 +3465,8 @@ sub skill_post_delaylist {
 	for (my $i = 0; $i < length($args->{skill_list}); $i += $skill_post_delay_info->{len}) {
 		my $skill;
 		@{$skill}{@{$skill_post_delay_info->{keys}}} = unpack($skill_post_delay_info->{types}, substr($args->{skill_list}, $i, $skill_post_delay_info->{len}));
-		$skill->{name} = (new Skill(idn => $skill->{ID}))->getName;
-		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
-
-		$char->setStatus($skill->{name}." ".$status, 1, $skill->{remain_time});
+		$skill->{handle} = (new Skill(idn => $skill->{ID}))->getHandle();
+		$char->setStatus($skill->{handle}."_DELAY", 1, $skill->{remain_time});
 	}
 }
 
@@ -4569,12 +4566,20 @@ sub sprite_change {
 	my ($self, $args) = @_;
 
 	my ($ID, $type, $value1, $value2) = @{$args}{qw(ID type value1 value2)};
-	my $player = ($ID ne $accountID)? $playersList->getByID($ID) : $char;
+	my $player = ($ID ne $accountID) ? $playersList->getByID($ID) : $char;
 	return unless $player;
 
 	if ($type == 0) {
-		$player->{jobID} = $value1;
-		message TF("%s changed Job to: %s\n", $player, $jobs_lut{$value1}), "parseMsg_statuslook";
+		if ($ID eq $accountID) {
+			my $old_job = $player->{jobID};
+			$player->{jobID} = $value1;
+			message TF("Your job changed from %s to: %s\n", $jobs_lut{$old_job}, $jobs_lut{$value1}), "parseMsg_statuslook";
+			Plugins::callHook('job_changed', {old_job => $old_job, new_job => $value1});
+
+		} else {
+			$player->{jobID} = $value1;
+			message TF("%s changed Job to: %s\n", $player, $jobs_lut{$value1}), "parseMsg_statuslook";
+		}
 
 	} elsif ($type == 2) {
 		if ($value1 ne $player->{weapon}) {
@@ -9838,12 +9843,15 @@ sub sell_result {
 	if ($args->{fail}) {
 		error T("Sell failed.\n");
 	} else {
-		message TF("Sold %s items.\n", @sellList.""), "success";
+		my $itemCount = scalar @sellList;
+		message TF("Sold %d items.\n", $itemCount), "success" if ($itemCount > 0);
 		message T("Sell completed.\n"), "success";
 	}
 	@sellList = ();
-	if (AI::is("sellAuto")) {
-		AI::args()->{recv_sell_packet} = 1;
+
+	my $sellAutoIndex = AI::findAction("sellAuto");
+	if (defined $sellAutoIndex) {
+		AI::args($sellAutoIndex)->{recv_sell_packet} = 1;
 	}
 }
 
@@ -11825,6 +11833,7 @@ sub skill_cast {
 	my $skill = new Skill(idn => $skillID);
 	$source->{casting} = {
 		skill => $skill,
+		targetID => $targetID,
 		target => $target,
 		x => $x,
 		y => $y,

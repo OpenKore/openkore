@@ -940,6 +940,56 @@ sub objectInsideCasting {
 	return 0;
 }
 
+sub actorIsBeingCastedOn {
+	my ($target, $skills) = @_;
+	return 0 unless $target && defined $target->{ID} && defined $skills;
+
+	my @skills = grep { $_ ne '' } split / *, */, $skills;
+	return 0 unless @skills;
+
+	foreach my $caster ($char, @$playersList, @$monstersList, @$npcsList, @$slavesList, @$elementalsList) {
+		next unless $caster && exists $caster->{casting} && defined $caster->{casting} && $caster->{casting};
+
+		my $cast = $caster->{casting};
+		my $targetID = $cast->{targetID} || ($cast->{target} && $cast->{target}{ID});
+		next unless defined $targetID && $targetID eq $target->{ID};
+
+		my $handle = $cast->{skill}->getHandle();
+		next unless defined $handle;
+
+		foreach my $skillName (@skills) {
+			return 1 if ($handle eq $skillName);
+		}
+	}
+
+	return 0;
+}
+
+sub nearPartyMemberIsCasting {
+	my ($skills) = @_;
+	return 0 unless defined $skills;
+	return 0 unless $char->{party}{joined};
+
+	my @skills = grep { $_ ne '' } split / *, */, $skills;
+	return 0 unless @skills;
+
+	foreach my $member (@$playersList) {
+		next unless $member && defined $member->{ID};
+		next unless $char->{party}{users}{$member->{ID}};
+		next unless exists $member->{casting} && defined $member->{casting} && $member->{casting};
+
+		my $cast = $member->{casting};
+		my $handle = $cast->{skill}->getHandle();
+		next unless defined $handle;
+
+		foreach my $skillName (@skills) {
+			return 1 if ($handle eq $skillName);
+		}
+	}
+
+	return 0;
+}
+
 ##
 # objectIsMovingTowards(object1, object2, [max_variance])
 #
@@ -4542,6 +4592,28 @@ sub _targetWillLeaveClientSightSoon {
 	return 0;
 }
 
+# TODO: Sometimes we had no LOS to attack mob and dropped it, but now it is following us and attacking us
+# which means we now have LOS to is, it we should have a way to delete ai_attack_unfail and ai_attack_failedLOS
+# timeouts in these cases.
+sub _targetRecentlyFailedAttack {
+	my ($actor, $target) = @_;
+
+	return 0 unless ($actor && $target);
+
+	my $failed_timeout_key = (
+		exists $actor->{ai_attack_failed_timeout}
+		&& defined $actor->{ai_attack_failed_timeout}
+		&& $actor->{ai_attack_failed_timeout} ne ''
+	)
+		? $actor->{ai_attack_failed_timeout}
+		: 'attack_failed';
+
+	return 1 if (!timeOut($target->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+	return 1 if (!timeOut($target->{$failed_timeout_key}, $timeout{ai_attack_unfail}{timeout}));
+
+	return 0;
+}
+
 ##
 # getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe, $actor, $configPrefix)
 # possibleTargets: reference to an array of monsters' IDs
@@ -4580,6 +4652,8 @@ sub getBestTarget {
 
 	foreach (@{$possibleTargets}) {
 		my $monster = $monsters{$_};
+		next if _targetRecentlyFailedAttack($actor, $monster);
+
 		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $targetPos = calcPosFromPathfinding($field, $monster);
 
@@ -4606,6 +4680,9 @@ sub getBestTarget {
 			push(@noLOSMonsters_pos, $targetPos);
 			next;
 		}
+		
+		my $blockDist = blockDistance($actorPos, $targetPos);
+		next if ($blockDist > $config{attackRouteMaxPathDistance});
 
 		my $dist = adjustedBlockDistance($actorPos, $targetPos);
 		my $priority = monsterPriority($monster->{name}, $monster->{nameID});
@@ -4647,6 +4724,8 @@ sub getBestTarget {
 			}
 			
 			my $dist = scalar @{$solution};
+
+			next if ($dist > $config{attackRouteMaxPathDistance});
 			
 			my $priority = monsterPriority($monster->{name}, $monster->{nameID});
 
@@ -5611,6 +5690,10 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
 	if ($config{$prefix . "_notWhileCasting"} > 0) { return 0 if (exists $char->{casting}); }
 	if ($config{$prefix . "_whileCasting"} > 0) { return 0 unless (exists $char->{casting}); }
+	if ($config{$prefix . "_notWhileBeingCasted"}) { return 0 if actorIsBeingCastedOn($char, $config{$prefix . "_notWhileBeingCasted"}); }
+	if ($config{$prefix . "_whileBeingCasted"}) { return 0 unless actorIsBeingCastedOn($char, $config{$prefix . "_whileBeingCasted"}); }
+	if ($config{$prefix . "_whenNoNearPartyMemberCasting"}) { return 0 if nearPartyMemberIsCasting($config{$prefix . "_whenNoNearPartyMemberCasting"}); }
+	if ($config{$prefix . "_whenNearPartyMemberCasting"}) { return 0 unless nearPartyMemberIsCasting($config{$prefix . "_whenNearPartyMemberCasting"}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field->isCity); }
 	if ($config{$prefix . "_inTown"} > 0) { return 0 unless ($field->isCity); }
     if (defined $config{$prefix . "_monstersCount"}) {
@@ -5893,6 +5976,8 @@ sub checkPlayerCondition {
 		return 0 if $player->statusActive($config{$prefix . "_whenStatusInactive"});
 	}
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
+	if ($config{$prefix . "_notWhileBeingCasted"}) { return 0 if actorIsBeingCastedOn($player, $config{$prefix . "_notWhileBeingCasted"}); }
+	if ($config{$prefix . "_whileBeingCasted"}) { return 0 unless actorIsBeingCastedOn($player, $config{$prefix . "_whileBeingCasted"}); }
 
 	# TODO: Optimize this
 	if ($config{$prefix . "_hp"}) {
@@ -6064,6 +6149,12 @@ sub checkMonsterCondition {
 	}
 	if ($config{$prefix . "_whenStatusInactive"}) {
 		return 0 if $monster->statusActive($config{$prefix . "_whenStatusInactive"});
+	}
+	if ($config{$prefix . "_notWhileBeingCasted"}) {
+		return 0 if actorIsBeingCastedOn($monster, $config{$prefix . "_notWhileBeingCasted"});
+	}
+	if ($config{$prefix . "_whileBeingCasted"}) {
+		return 0 unless actorIsBeingCastedOn($monster, $config{$prefix . "_whileBeingCasted"});
 	}
 
 	if ($config{$prefix."_whenGround"}) {

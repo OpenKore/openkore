@@ -17,6 +17,7 @@ my @tests = qw(
 	SetTest SkillTest InventoryListTest
 	ItemsTest
 	HandConditionsTest
+	CastConditionsTest
 	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	TaskTalkNPCTest
