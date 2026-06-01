@@ -16,6 +16,7 @@ use Plugins;
 use Globals;
 use Settings;
 use Misc;
+use Translation qw(T TF);
 
 use Win32::GUI;
 use Win32::GUI::Constants qw(WS_CHILD WS_VISIBLE WS_VSCROLL ES_LEFT ES_MULTILINE ES_READONLY ES_AUTOVSCROLL MB_OK MB_ICONERROR);
