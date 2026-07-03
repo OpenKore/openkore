@@ -23,6 +23,7 @@ use strict;
 use warnings;
 
 use Carp qw/carp croak confess/;
+use Scalar::Util qw(weaken);
 use Time::HiRes qw/time usleep/;
 use Tk;
 use Tk::ROText;
@@ -140,6 +141,11 @@ sub new {
 	$self->addHooks;
 
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	Plugins::delHooks(delete $self->{hooks}) if $self->{hooks};
 }
 
 
@@ -1596,6 +1602,17 @@ sub followObj {
 	$self->{objc}{$id}[1] = "#CC00CC";
 }
 
+sub _weakHook {
+	my ($self, $callback) = @_;
+	my $weak_self = $self;
+	weaken($weak_self);
+
+	return sub {
+		my $self = $weak_self or return;
+		$callback->(@_, $self);
+	};
+}
+
 
 ###
 # OpenKore Hooks - update info section
@@ -1603,35 +1620,38 @@ sub followObj {
 
 sub addHooks {
 	my $self = shift;
-	Plugins::addHook('mainLoop_pre',						\&updateHook, $self);
-	Plugins::addHook('postloadfiles',						\&parsePortals, $self);
-	Plugins::addHook('packet/actor_exists',					\&mapAddActor, $self);
-	Plugins::addHook('packet/actor_connected',				\&mapAddActor, $self);
-	Plugins::addHook('packet/actor_spawned',				\&mapAddActor, $self);
-	Plugins::addHook('packet/actor_display',				\&mapMoveActor, $self);
-	Plugins::addHook('packet/actor_moved',					\&mapMoveActor, $self);
-	Plugins::addHook('packet/actor_died_or_disappeared',	\&mapRemoveActor, $self);
-	Plugins::addHook('packet/map_change', 					\&mapChangeUpdateInferface, $self);
-	Plugins::addHook('packet/map_changed', 					\&mapChangeUpdateInferface, $self);
-	Plugins::addHook('packet/map_loaded', 					\&mapChangeUpdateInferface, $self);
-	Plugins::addHook('packet/item_exists', 					\&mapAddActor, $self);
-	Plugins::addHook('packet/item_appeared', 				\&mapAddActor, $self);
-	Plugins::addHook('packet/item_disappeared', 			\&mapRemoveActor, $self);
-	Plugins::addHook('packet/arrow_equipped',               \&inventoryChanged, $self);
-	Plugins::addHook('packet/card_merge_status',            \&inventoryChanged, $self);
-	Plugins::addHook('packet/deal_add_you',                 \&inventoryChanged, $self);
-	Plugins::addHook('packet/equip_item',                   \&inventoryChanged, $self);
-	Plugins::addHook('packet/identify',                     \&inventoryChanged, $self);
-	Plugins::addHook('packet/inventory_item_added',         \&inventoryChanged, $self);
-	Plugins::addHook('packet/inventory_item_removed',       \&inventoryChanged, $self);
-	Plugins::addHook('packet_useitem',                      \&inventoryChanged, $self);
-	Plugins::addHook('packet/inventory_items_nonstackable', \&inventoryChanged, $self);
-	Plugins::addHook('packet/inventory_items_stackable',    \&inventoryChanged, $self);
-	Plugins::addHook('packet/item_upgrade',                 \&inventoryChanged, $self);
-	Plugins::addHook('packet/unequip_item',                 \&inventoryChanged, $self);
-	Plugins::addHook('packet/use_item',                     \&inventoryChanged, $self);
-	Plugins::addHook('packet/mail_send',                    \&inventoryChanged, $self);
-	Plugins::addHook('packet/item_list_end',                \&inventoryChanged, $self);
+	Plugins::delHooks(delete $self->{hooks}) if $self->{hooks};
+	$self->{hooks} = Plugins::addHooks(
+		['mainLoop_pre',                        $self->_weakHook(\&updateHook)],
+		['postloadfiles',                       $self->_weakHook(\&parsePortals)],
+		['packet/actor_exists',                 $self->_weakHook(\&mapAddActor)],
+		['packet/actor_connected',              $self->_weakHook(\&mapAddActor)],
+		['packet/actor_spawned',                $self->_weakHook(\&mapAddActor)],
+		['packet/actor_display',                $self->_weakHook(\&mapMoveActor)],
+		['packet/actor_moved',                  $self->_weakHook(\&mapMoveActor)],
+		['packet/actor_died_or_disappeared',    $self->_weakHook(\&mapRemoveActor)],
+		['packet/map_change',                   $self->_weakHook(\&mapChangeUpdateInferface)],
+		['packet/map_changed',                  $self->_weakHook(\&mapChangeUpdateInferface)],
+		['packet/map_loaded',                   $self->_weakHook(\&mapChangeUpdateInferface)],
+		['packet/item_exists',                  $self->_weakHook(\&mapAddActor)],
+		['packet/item_appeared',                $self->_weakHook(\&mapAddActor)],
+		['packet/item_disappeared',             $self->_weakHook(\&mapRemoveActor)],
+		['packet/arrow_equipped',               $self->_weakHook(\&inventoryChanged)],
+		['packet/card_merge_status',            $self->_weakHook(\&inventoryChanged)],
+		['packet/deal_add_you',                 $self->_weakHook(\&inventoryChanged)],
+		['packet/equip_item',                   $self->_weakHook(\&inventoryChanged)],
+		['packet/identify',                     $self->_weakHook(\&inventoryChanged)],
+		['packet/inventory_item_added',         $self->_weakHook(\&inventoryChanged)],
+		['packet/inventory_item_removed',       $self->_weakHook(\&inventoryChanged)],
+		['packet_useitem',                      $self->_weakHook(\&inventoryChanged)],
+		['packet/inventory_items_nonstackable', $self->_weakHook(\&inventoryChanged)],
+		['packet/inventory_items_stackable',    $self->_weakHook(\&inventoryChanged)],
+		['packet/item_upgrade',                 $self->_weakHook(\&inventoryChanged)],
+		['packet/unequip_item',                 $self->_weakHook(\&inventoryChanged)],
+		['packet/use_item',                     $self->_weakHook(\&inventoryChanged)],
+		['packet/mail_send',                    $self->_weakHook(\&inventoryChanged)],
+		['packet/item_list_end',                $self->_weakHook(\&inventoryChanged)],
+	);
 }
 
 sub mapAddActor {

@@ -104,7 +104,8 @@ our %EXPORT_TAGS = (
 						VAR_SP_PATK VAR_SP_SMATK VAR_SP_RES VAR_SP_MRES VAR_SP_HPLUS VAR_SP_CRATE VAR_SP_TRAITPOINT VAR_SP_AP VAR_SP_MAXAP
 						VAR_SP_UPOW VAR_SP_USTA VAR_SP_UWIS VAR_SP_USPL VAR_SP_UCON VAR_SP_UCRT)],
 	party_invite => [qw(ANSWER_ALREADY_OTHERGROUPM ANSWER_JOIN_REFUSE ANSWER_JOIN_ACCEPT ANSWER_MEMBER_OVERSIZE ANSWER_DUPLICATE
-						ANSWER_JOINMSG_REFUSE ANSWER_UNKNOWN_ERROR ANSWER_UNKNOWN_CHARACTER ANSWER_INVALID_MAPPROPERTY)],
+						ANSWER_JOINMSG_REFUSE ANSWER_UNKNOWN_ERROR ANSWER_UNKNOWN_CHARACTER ANSWER_INVALID_MAPPROPERTY
+						ANSWER_INVALID_MAPPROPERTY_ME ANSWER_MEMORIALDUNGEON ANSWER_LEVEL_MISMATCH)],
 	party_leave => [qw(GROUPMEMBER_DELETE_LEAVE GROUPMEMBER_DELETE_EXPEL)],
 	exp_origin => [qw(EXP_FROM_BATTLE EXP_FROM_QUEST)],
 );
@@ -464,6 +465,9 @@ use constant {
 	ANSWER_UNKNOWN_ERROR => 0x6,
 	ANSWER_UNKNOWN_CHARACTER => 0x7,
 	ANSWER_INVALID_MAPPROPERTY => 0x8,
+	ANSWER_INVALID_MAPPROPERTY_ME => 0x9,
+	ANSWER_MEMORIALDUNGEON => 0xA,
+	ANSWER_LEVEL_MISMATCH => 0xB,
 };
 
 # party leave result
@@ -910,7 +914,7 @@ sub received_characters {
 
 	} elsif ($config{pauseCharLogin}) {
 		return if ($config{XKore} eq 1 || $config{XKore} eq 3);
-		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
+		if (!defined $timeout{'char_login_pause'}{'timeout'} || !$timeout{'char_login_pause'}{'timeout'}) {
 			$timeout{'char_login_pause'}{'timeout'} = $config{pauseCharLogin};
 		}
 		$timeout{'char_login_pause'}{'time'} = time;
@@ -3767,6 +3771,7 @@ sub inventory_item_added {
 
 		if (AI::state() == AI::AUTO()) {
 			# Auto-drop item
+			# TODO: We should move this to corelogic
 			if (pickupitems($item->{name}, $item->{nameID}) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{ID}, $amount);
 				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
@@ -3940,7 +3945,14 @@ sub shop_sold_long {
 sub vending_start {
 	my ($self, $args) = @_;
 
-	my $item_pack = $self->{vender_items_list_item_pack_self} || $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $modern_self_shop = $args->{switch} eq '0B40' && !$self->{vender_items_list_item_pack_self};
+	my $item_pack = $self->{vender_items_list_item_pack_self}
+		|| ($modern_self_shop ? 'V v2 C V C C a8 a25 C C' : undef)
+		|| $self->{vender_items_list_item_pack}
+		|| 'V v2 C v C3 a8';
+	my @item_keys = $modern_self_shop
+		? qw(price number quantity type nameID identified broken cards options upgrade grade)
+		: qw(price number quantity type nameID identified broken upgrade cards options location sprite_id);
 	my $item_len = length pack $item_pack;
 	my $item_list_len = length $args->{itemList};
 	#started a shop.
@@ -3955,7 +3967,7 @@ sub vending_start {
 		T("#  Name                                       Type                     Price Amount\n");
 	for (my $i = 0; $i < $item_list_len; $i += $item_len) {
 		my $item = {};
-		@$item{qw( price number quantity type nameID identified broken upgrade cards options location sprite_id)} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
+		@$item{@item_keys} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
 		$item->{name} = itemName($item);
 		$articles[delete $item->{number}] = $item;
 		$articles++;
@@ -8531,11 +8543,16 @@ sub party_join {
 	$char->{party}{itemDivision} = $info->{'item_share'};
 }
 
-# TODO: store this state
 sub party_allow_invite {
 	my ($self, $args) = @_;
+	my $deny_invites = $args->{type} ? 1 : 0;
+	my $previous = $char->{denyPartyInvites};
 
-	if ($args->{type}) {
+	$char->{denyPartyInvites} = $deny_invites;
+
+	return if !defined $previous || $previous == $deny_invites;
+
+	if ($deny_invites) {
 		message T("Not allowed other player invite to Party\n"), "party", 1;
 	} else {
 		message T("Allowed other player invite to Party\n"), "party", 1;
@@ -8569,11 +8586,14 @@ sub party_chat {
 
 sub party_exp {
 	my ($self, $args) = @_;
-	$char->{party}{share} = $args->{type}; # Always will be there, in 0101 also in 07D8
 	if ($args->{type} == 0) {
+		$char->{party}{share} = $args->{type};
 		message T("Party EXP set to Individual Take\n"), "party", 1;
 	} elsif ($args->{type} == 1) {
+		$char->{party}{share} = $args->{type};
 		message T("Party EXP set to Even Share\n"), "party", 1;
+	} elsif ($args->{type} == 2) {
+		message T("Party EXP sharing cannot be changed right now\n"), "party", 1;
 	} else {
 		error T("Error setting party option\n");
 	}
@@ -8647,13 +8667,21 @@ sub party_invite_result {
 	} elsif ($args->{type} == ANSWER_DUPLICATE) {
 		message TF("Join request failed: same account of %s allready joined the party.\n", $name), "info";
 	} elsif ($args->{type} == ANSWER_JOINMSG_REFUSE) {
-		message TF("Join request failed: ANSWER_JOINMSG_REFUSE.\n", $name), "info";
+		message TF("Join request failed: %s blocked party invites.\n", $name), "info";
 	} elsif ($args->{type} == ANSWER_UNKNOWN_ERROR) {
 		message TF("Join request failed: unknown error.\n", $name), "info";
 	} elsif ($args->{type} == ANSWER_UNKNOWN_CHARACTER) {
 		message TF("Join request failed: the character is not currently online or does not exist.\n", $name), "info";
 	} elsif ($args->{type} == ANSWER_INVALID_MAPPROPERTY) {
-		message TF("Join request failed: ANSWER_INVALID_MAPPROPERTY.\n", $name), "info";
+		message TF("Join request failed: %s is on a map where party invites are restricted.\n", $name), "info";
+	} elsif ($args->{type} == ANSWER_INVALID_MAPPROPERTY_ME) {
+		message T("Join request failed: you cannot join a party on this map.\n"), "info";
+	} elsif ($args->{type} == ANSWER_MEMORIALDUNGEON) {
+		message T("Join request failed: party invites and removals are blocked in this memorial dungeon.\n"), "info";
+	} elsif ($args->{type} == ANSWER_LEVEL_MISMATCH) {
+		message TF("Join request failed: %s does not meet the party level requirements.\n", $name), "info";
+	} else {
+		message TF("Join request failed: unknown result %d.\n", $args->{type}), "info";
 	}
 }
 
@@ -8686,10 +8714,18 @@ sub party_location {
 	my $ID = $args->{ID};
 
 	if ($char->{party}{users}{$ID}) {
+		$char->{party}{users}{$ID}{online} = 1;
+
+		if ($args->{x} >= 65535 || $args->{y} >= 65535) {
+			delete $char->{party}{users}{$ID}{pos}{x};
+			delete $char->{party}{users}{$ID}{pos}{y};
+			debug "Party member location unavailable: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg", 2;
+			return;
+		}
+
 		$char->{party}{users}{$ID}{pos}{x} = $args->{x};
 		$char->{party}{users}{$ID}{pos}{y} = $args->{y};
-		$char->{party}{users}{$ID}{online} = 1;
-		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg", 2;
 	}
 }
 sub party_organize_result {
@@ -8753,10 +8789,20 @@ sub party_users_info {
 	}
 
 	$char->{party}{name} = bytesToString($args->{party_name});
+	my $player_info_len = $player_info->{len};
+	my $payload_len = length($args->{playerInfo});
+	my $tail_len = $payload_len % $player_info_len;
+	my $members_len = $payload_len - $tail_len;
 
-	for (my $i = 0; $i < length($args->{playerInfo}); $i += $player_info->{len}) {
-		# in 0a43 lasts bytes: { <item pickup rule>.B <item share rule>.B <unknown>.L }
-		next if (length($args->{playerInfo}) - $i == 6);
+	if ($tail_len == 6) {
+		my ($item_pickup, $item_share) = unpack('C2', substr($args->{playerInfo}, $members_len, 2));
+		$char->{party}{itemPickup} = $item_pickup;
+		$char->{party}{itemDivision} = $item_share;
+	} elsif ($tail_len != 0) {
+		debug "Unexpected trailing data in party_users_info: $tail_len bytes\n", "parseMsg";
+	}
+
+	for (my $i = 0; $i < $members_len; $i += $player_info_len) {
 
 		my $ID = substr($args->{playerInfo}, $i, 4);
 
@@ -8765,7 +8811,7 @@ sub party_users_info {
 		}
 
 		$char->{party}{users}{$ID} = new Actor::Party();
-		@{$char->{party}{users}{$ID}}{@{$player_info->{keys}}} = unpack($player_info->{types}, substr($args->{playerInfo}, $i, $player_info->{len}));
+		@{$char->{party}{users}{$ID}}{@{$player_info->{keys}}} = unpack($player_info->{types}, substr($args->{playerInfo}, $i, $player_info_len));
 		$char->{party}{users}{$ID}{name} = bytesToString($char->{party}{users}{$ID}{name});
 		$char->{party}{users}{$ID}{admin} = !$char->{party}{users}{$ID}{admin};
 		$char->{party}{users}{$ID}{online} = !$char->{party}{users}{$ID}{online};
@@ -9741,7 +9787,7 @@ sub partylv_info {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
 	if ($char->{party}{users}{$ID}) {
-		$char->{party}{users}{$ID}{job} = $args->{job};
+		$char->{party}{users}{$ID}{jobID} = $args->{job};
 		$char->{party}{users}{$ID}{lv} = $args->{lv};
 	}
 }
@@ -11885,6 +11931,7 @@ sub skill_cast {
 
 	Misc::checkValidity("skill_cast part 3");
 
+	# TODO: we should probably move this somewhere else (Corelogic probably), since it is not really related to skill_cast, but it is more related to the reaction to the skill cast
 	# Skill Cancel
 	my $monster = $monstersList->getByID($sourceID);
 	my $control;
@@ -12802,27 +12849,40 @@ sub parse_notify_accessible_mapname {
     my $mapList = {
         len => 20,
         types => 'V Z16',
-        keys => [qw(unknown map_name)],
+        keys => [qw(status map_name)],
     };
 
     @{$args->{map_list}} = map {
         my %map;
         @map{@{$mapList->{keys}}} = unpack($mapList->{types}, $_);
+        $map{map_name} =~ s/\.gat\z//i;
         \%map;
     } unpack "(a$mapList->{len})*", $args->{mapList};
 }
 
 sub notify_accessible_mapname {
     my ($self, $args) = @_;
-	my $map_index = 0;
+	my $map_index;
+	my $fallback_index;
+	my $save_map = defined $config{saveMap} ? lc $config{saveMap} : undef;
+	$save_map =~ s/\.gat\z//i if defined $save_map;
 
     foreach my $i (0 .. $#{$args->{map_list}}) {
         my $map = $args->{map_list}[$i];
-        error("[notify_accessible_mapname] unknown = $map->{unknown}, name = $map->{map_name}\n");
-        if (defined $config{saveMap} && $map->{map_name} =~ /$config{saveMap}/) {
-            $map_index = $i;
-        }
+		next if $map->{status} != 0;
+
+		$fallback_index = $i if !defined $fallback_index;
+		if (defined $save_map && lc($map->{map_name}) eq $save_map) {
+			$map_index = $i;
+			last;
+		}
     }
+
+	$map_index = $fallback_index if !defined $map_index;
+	if (!defined $map_index) {
+		error T("Map server is not ready for any accessible map. Staying on character selection.\n"), 'connection';
+		return;
+	}
 
 	$messageSender->sendSelectAccessibleMapname($map_index);
 }

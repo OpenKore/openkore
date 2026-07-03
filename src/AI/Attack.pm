@@ -208,10 +208,13 @@ sub process {
 			} elsif ($args->{move_start}) {
 				$args->{ai_attack_giveup}{time} += time - $args->{move_start};
 				undef $args->{unstuck}{time};
+				undef $args->{unstuck}{last_hit_time};
 				undef $args->{move_start};
 
 			} elsif ($args->{avoiding}) {
 				$args->{ai_attack_giveup}{time} = time;
+				undef $args->{unstuck}{time};
+				undef $args->{unstuck}{last_hit_time};
 				undef $args->{avoiding};
 				debug "Finished avoiding movement from target $target, updating ai_attack_giveup\n", "ai_attack";
 			}
@@ -252,6 +255,115 @@ sub shouldGiveUp {
 	return !$config{attackNoGiveup} && (timeOut($args->{ai_attack_giveup}) || $args->{unstuck}{count} > 5);
 }
 
+sub clear_approach_failure {
+	my ($args) = @_;
+	return unless $args;
+	delete $args->{approachFailure};
+}
+
+sub note_approach_route_failure {
+	# When a route-to-attack meeting point fails, remember the attempted origin
+	# and destination so we can stop recreating the same desynced step forever.
+	my ($task, $error) = @_;
+	return unless $task && $error;
+	return unless $task->{meetingSubRoute} && $task->{attackID};
+
+	my $attack_index = AI::findAction('attack');
+	return unless defined $attack_index;
+
+	my $args = AI::args($attack_index);
+	return unless $args && $args->{ID} && $args->{ID} eq $task->{attackID};
+	return unless $task->{dest} && $task->{dest}{pos};
+
+	my $origin = $task->{actor}{pos_to} || $task->{actor}{pos};
+	my $dest = $task->{dest}{pos};
+	my $failure = $args->{approachFailure} || {};
+	my $same_dest = $failure->{dest}
+		&& $failure->{dest}{x} == $dest->{x}
+		&& $failure->{dest}{y} == $dest->{y};
+	my $same_origin = $origin && $failure->{origin}
+		&& $failure->{origin}{x} == $origin->{x}
+		&& $failure->{origin}{y} == $origin->{y};
+
+	$args->{approachFailure} = {
+		pending => 1,
+		time => time,
+		errorCode => $error->{code},
+		errorMessage => $error->{message},
+		sameSpotCount => ($same_dest && $same_origin) ? (($failure->{sameSpotCount} || 0) + 1) : 1,
+		resyncMoveTried => ($same_dest && $same_origin) ? ($failure->{resyncMoveTried} || 0) : 0,
+		dest => { x => $dest->{x}, y => $dest->{y} },
+	};
+	$args->{approachFailure}{origin} = { x => $origin->{x}, y => $origin->{y} } if $origin;
+
+	debug TF(
+		"[Attack] Recorded failed approach to (%d %d) from (%d %d), repeated %d time(s).\n",
+		$dest->{x},
+		$dest->{y},
+		($origin ? $origin->{x} : -1),
+		($origin ? $origin->{y} : -1),
+		$args->{approachFailure}{sameSpotCount},
+	), "ai_attack";
+
+	$args->{sentApproach} = 0;
+	undef $args->{move_start};
+	undef $args->{avoiding};
+}
+
+sub abort_repeated_failed_approach {
+	# If the same meeting position keeps timing out while our position never
+	# changes, assume a server/client desync and drop the target instead of
+	# looping forever on the same one-cell move.
+	my ($args, $ID, $target, $realMyPos) = @_;
+	return 0 unless $args && $target && $realMyPos;
+
+	my $failure = $args->{approachFailure};
+	return 0 unless $failure && $failure->{pending};
+
+	if ($failure->{origin}
+		&& ($failure->{origin}{x} != $realMyPos->{x} || $failure->{origin}{y} != $realMyPos->{y})) {
+		clear_approach_failure($args);
+		return 0;
+	}
+
+	if (($failure->{sameSpotCount} || 0) < 2) {
+		$failure->{pending} = 0;
+		return 0;
+	}
+
+	if (!$failure->{resyncMoveTried}) {
+		warning TF(
+			"[Attack] Repeated approach to (%d,%d) failed %d times from (%d,%d); trying to resync our position before dropping target.\n",
+			$failure->{dest}{x},
+			$failure->{dest}{y},
+			$failure->{sameSpotCount},
+			($failure->{origin} ? $failure->{origin}{x} : $realMyPos->{x}),
+			($failure->{origin} ? $failure->{origin}{y} : $realMyPos->{y}),
+		), "ai_attack";
+
+		$failure->{resyncMoveTried} = 1;
+		$failure->{pending} = 0;
+		$args->{unstuck}{time} = time;
+		$args->{unstuck}{last_hit_time} = time;
+		$args->{unstuck}{count}++;
+		$char->move(@{$char->{pos_to}}{qw(x y)});
+		return 1;
+	}
+
+	warning TF(
+		"[Attack] Repeated approach to (%d,%d) failed %d times from (%d,%d); dropping target to break a desync loop.\n",
+		$failure->{dest}{x},
+		$failure->{dest}{y},
+		$failure->{sameSpotCount},
+		($failure->{origin} ? $failure->{origin}{x} : $realMyPos->{x}),
+		($failure->{origin} ? $failure->{origin}{y} : $realMyPos->{y}),
+	), "ai_attack";
+
+	clear_approach_failure($args);
+	giveUp($args, $ID, 0);
+	return 1;
+}
+
 sub approach_target_route_needs_reset {
 	# Detect whether the target moved to a new destination after we already
 	# committed to an approach route, which makes the old meeting point stale.
@@ -286,8 +398,10 @@ sub reset_approach_for_moved_target {
 	$args->{monsterLastMoveTime} = $target->{time_move};
 	$args->{monsterLastMovePosTo} = { %{$target->{pos_to}} } if $target->{pos_to};
 	undef $args->{unstuck}{time};
+	undef $args->{unstuck}{last_hit_time};
 	undef $args->{avoiding};
 	undef $args->{move_start};
+	clear_approach_failure($args);
 }
 
 sub giveUp {
@@ -507,6 +621,10 @@ sub main {
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
 
+	if (abort_repeated_failed_approach($args, $ID, $target, $realMyPos)) {
+		return;
+	}
+
 	if (!exists $args->{firstLoop}) {
 		$args->{firstLoop} = 1;
 	} else {
@@ -516,6 +634,10 @@ sub main {
 	my $hitYou = ((defined $args->{dmgToYou_last} && $args->{dmgToYou_last} != $target->{dmgToYou}) || (defined $args->{missedYou_last} && $args->{missedYou_last} != $target->{missedYou})) ? 1 : 0;
 	my $casOnYou = (defined $args->{castOnToYou_last} &&  $args->{castOnToYou_last} != $target->{castOnToYou}) ? 1 : 0;
 	my $youHitTarget = ((defined $args->{dmgFromYou_last} && $args->{dmgFromYou_last} != $target->{dmgFromYou}) || (defined $args->{missedFromYou_last} && $args->{missedFromYou_last} != $target->{missedFromYou})) ? 1 : 0;
+
+	if ($youHitTarget) {
+		$args->{unstuck}{last_hit_time} = time;
+	}
 	
 	# Any exchange of damage, misses, or casts marks the fight as engaged.
 	if ($hitYou || $casOnYou || $args->{dmgFromYou_last} != $target->{dmgFromYou} || ($args->{firstLoop} && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou} || $target->{castOnToYou}))) {
@@ -554,7 +676,7 @@ sub main {
 	}
 
 	my $i = 0;
-	while (exists $config{"attackComboSlot_$i"}) {
+	while (exists $config{"attackComboSlot_$i"} && !$char->{muted}) {
 		next unless (defined $config{"attackComboSlot_$i"});
 		next unless ($config{"attackComboSlot_${i}_afterSkill"});
 
@@ -613,7 +735,7 @@ sub main {
 		}
 
 		$i = 0;
-		while (exists $config{"attackSkillSlot_$i"}) {
+		while (exists $config{"attackSkillSlot_$i"} && !$char->{muted}) {
 			next unless (defined $config{"attackSkillSlot_$i"});
 
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$i"});
@@ -673,6 +795,15 @@ sub main {
 	}
 
 	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
+	my $future_wait_timeout = $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'};
+	my $future_wait_max_time = $future_wait_timeout ? ($future_wait_timeout * 3) : 0;
+
+	if ($youHitTarget) {
+		delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
+		delete $args->{ai_attack_allowed_waitForTarget_disabled_until_hit};
+	} elsif ($canAttack != 0 && $canAttack != -1) {
+		delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
+	}
 
 	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
 	# If it is close enough delete the ai_attack_failed_waitForAgressive_give_up keys and loop attack logic
@@ -698,6 +829,7 @@ sub main {
 		if ($realMyPos->{x} == $myPosTo->{x} && $realMyPos->{y} == $myPosTo->{y}) {
 			debug TF("[Ended Approaching] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 			$args->{sentApproach} = 0;
+			clear_approach_failure($args);
 
 		} elsif ($config{"attackWaitApproachFinish"}) {
 			debug TF("[attackWaitApproachFinish - Waiting] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
@@ -706,6 +838,7 @@ sub main {
 		} elsif ($canAttack == 2) {
 			debug TF("[Approaching - Can now attack] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 			$args->{sentApproach} = 0;
+			clear_approach_failure($args);
 		}
 	}
 
@@ -803,16 +936,30 @@ sub main {
 
 	if (
 		!$found_action &&
-		$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'} &&
+		$future_wait_timeout &&
 		($canAttack == 0 || $canAttack == -1) &&
 		!$hitTarget_when_not_possible
 	) {
-		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}));
+		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $future_wait_timeout));
 		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
-		if ($futurecanAttack) {
-			debug TF("[Attack] You currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
-			$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}), 'ai_attack';
-			$found_action = 1;
+		if ($futurecanAttack == 1 && !$args->{ai_attack_allowed_waitForTarget_disabled_until_hit}) {
+			$args->{ai_attack_allowed_waitForTarget_give_up}{timeout} = $future_wait_max_time if !$args->{ai_attack_allowed_waitForTarget_give_up}{timeout};
+			$args->{ai_attack_allowed_waitForTarget_give_up}{time} = time if !$args->{ai_attack_allowed_waitForTarget_give_up}{time};
+
+			my $waited = time - $args->{ai_attack_allowed_waitForTarget_give_up}{time};
+			if (timeOut($args->{ai_attack_allowed_waitForTarget_give_up})) {
+				delete $args->{ai_attack_allowed_waitForTarget_give_up}{time};
+				$args->{ai_attack_allowed_waitForTarget_disabled_until_hit} = 1;
+				warning TF("[Attack] Predictive wait timed out after [%s/%s secs]; disabling predictive wait until we hit this target again. currentState %s, attackMethod %s, you %s (%d %d), target %s real(%d %d) [(%d %d) -> (%d %d)], future(%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n",
+					$waited, $future_wait_max_time, $canAttack_fail_string, $args->{attackMethod}{type}, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $futureMonsterPos->{x}, $futureMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			} else {
+				my $remaining = $future_wait_max_time - $waited;
+				debug TF("[Attack] Predictive wait active: currentState %s, futureState OK in [%s secs], waited [%s/%s], remaining [%s], attackMethod %s, you %s (%d %d), target %s real(%d %d) [(%d %d) -> (%d %d)], future(%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n",
+					$canAttack_fail_string, $future_wait_timeout, $waited, $future_wait_max_time, $remaining, $args->{attackMethod}{type}, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $futureMonsterPos->{x}, $futureMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+				$found_action = 1;
+			}
+		} else {
+			delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
 		}
 	}
 
@@ -877,12 +1024,14 @@ sub main {
 		}
 
 		$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
-		if (!$target->{dmgFromYou} && timeOut($args->{unstuck})) {
-			# We are close enough to the target, and we're trying to attack it,
-			# but some time has passed and we still haven't dealed any damage.
-			# Our recorded position might be out of sync, so try to unstuck
+		$args->{unstuck}{last_hit_time} = time if (!$args->{unstuck}{last_hit_time});
+		if (timeOut($args->{unstuck}{last_hit_time}, $args->{unstuck}{timeout})) {
+			# We are close enough to the target, but have not received any new hit
+			# feedback for a while. This covers both the "never hit once" case and
+			# the "hit before, then silently desynced" case common with skills.
 			$args->{unstuck}{time} = time;
-			debug("Attack - trying to unstuck\n", "ai_attack");
+			$args->{unstuck}{last_hit_time} = time;
+			debug("Attack - trying to unstuck after in-range hit timeout\n", "ai_attack");
 			$char->move(@{$myPosTo}{qw(x y)});
 			$args->{unstuck}{count}++;
 		}
@@ -928,7 +1077,7 @@ sub main {
 				"attackSkill",
 				$config{"attackSkillSlot_${slot}_isStartSkill"} ? 1 : 0,
 			);
-			debug "[attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
+			debug "[attackSkillSlot] Auto-skill on target $target ($realMonsterPos->{x} $realMonsterPos->{y}) ($realMonsterDist blocks away); we're at ($realMyPos->{x} $realMyPos->{y}): ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
 
 			$timeout{ai_attack_after_skill}{time} = time;

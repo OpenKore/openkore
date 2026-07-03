@@ -9,6 +9,7 @@ use Carp::Assert;
 use Time::HiRes qw(time);
 
 use Modules 'register';
+use Skill;
 use Task::SitStand;
 use base 'Task::WithSubtask';
 use Globals qw($messageSender $net %timeout);
@@ -177,6 +178,24 @@ sub equipTeleportItem {
 	return unless ($item && $self->canEquipTeleportItem($item));
 	$item->equip;
 	$self->{retry}{time} = time;
+}
+
+sub hasEnoughSPForTeleportSkill {
+	my ($self, $skill_level) = @_;
+	return 0 unless $skill_level;
+
+	my $skill = Skill->new(handle => 'AL_TELEPORT');
+	my $sp_cost = $skill->getSP($skill_level);
+	return 1 unless defined $sp_cost;
+
+	return (($self->{actor}{sp} // 0) >= $sp_cost) ? 1 : 0;
+}
+
+sub isTeleportSkillSuppressedByStatus {
+	my ($self) = @_;
+	return 1 if $self->{actor}->{muted};
+	return 0 unless $self->{actor}->can('statusActive');
+	return $self->{actor}->statusActive('HEALTHSTATE_SILENCE, EFST_HEALTHSTATE_SILENCE') ? 1 : 0;
 }
 
 sub isTeleportItemEquipRequirementSatisfied {

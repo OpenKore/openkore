@@ -480,7 +480,7 @@ sub attack {
 }
 
 sub sendSit {
-	if ($config{'sitTensionRelax'} > 0 && $char->{skills}{LK_TENSIONRELAX}{lv} > 0) {
+	if ($config{'sitTensionRelax'} > 0 && $char->{skills}{LK_TENSIONRELAX}{lv} > 0 && !$char->{muted}) {
 		my $skill = new Skill(handle => 'LK_TENSIONRELAX');
 		AI::ai_skillUse2($skill, $char->{skills}{LK_TENSIONRELAX}{lv}, 1, 0, $char, "LK_TENSIONRELAX");
 	} else {

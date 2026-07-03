@@ -1260,10 +1260,14 @@ sub dataWaiting {
 	return 0 if (!defined $r_fh || !defined $$r_fh);
 	$timeout = 0.01 unless (defined $timeout);
 
-	my $bits = '';
-	vec($bits, fileno($$r_fh), 1) = 1;
+	my $fd = eval { fileno($$r_fh) };
+	return 0 if (!defined $fd || $fd < 0);
 
-	my $nfound = select($bits, undef, undef, $timeout);
+	my $bits = '';
+	vec($bits, $fd, 1) = 1;
+
+	my $nfound = eval { select($bits, undef, undef, $timeout) };
+	return 0 if (!defined $nfound);
 	return ($nfound > 0);
 }
 

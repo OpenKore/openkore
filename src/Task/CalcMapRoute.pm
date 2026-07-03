@@ -392,6 +392,8 @@ sub iterate {
 		}
 
 		$self->{targets} = \@validTargets;
+		debug "CalcMapRoute - initialized with '".(scalar @validTargets)."' targets (" . join(', ', map { $_->{map} } @validTargets) . ").\n", "calc_map_route"
+				if $self->shouldLogDebug();
 
 		foreach my $target ( @{ $self->{targets} } ) {
 			# Check whether destination is walkable from the starting point.

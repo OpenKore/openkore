@@ -882,6 +882,7 @@ sub useTeleport {
 		my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
 		my $task = $tasks{$level}->new(actor => $self);
 
+		message T("Queueing teleport task level $level\n");
 		$self->queue('teleport', $task);
 	} else {
 		error T("NPC or Teleport in queue, finish and try again\n");

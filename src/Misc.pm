@@ -4373,6 +4373,7 @@ sub canUseTeleport {
 	my $randomTeleportBlocked = isRandomTeleportBlockedOnMap($current_map);
 	my $teleportSkillBlocked = isTeleportSkillBlockedOnMap($current_map);
 	my $returnTeleportBlocked = isReturnTeleportBlockedOnMap($current_map);
+	my $teleportSkillSuppressed = _isTeleportSkillSuppressedByStatus();
 	my $item;
 
 	if ($use_lvl == 1) {
@@ -4403,11 +4404,11 @@ sub canUseTeleport {
 				$itemAvailable = 1 if (!$cooldownActive && $equipRequirementSatisfied);
 			}
 		}
+		return $itemAvailable if $char->{'muted'};
 
 		my $chatAvailable = (!$returnTeleportBlocked && $config{saveMap_warpChatCommand}) ? 1 : 0;
-		my $equipAvailable = (!$teleportSkillBlocked && Actor::Item::scanConfigAndCheck('teleportAuto_equip')) ? 1 : 0;
-		my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
-		my $skillAvailable = (!$teleportSkillBlocked && $skill_level >= $use_lvl) ? 1 : 0;
+		my $equipAvailable = (!$teleportSkillBlocked && !$teleportSkillSuppressed && Actor::Item::scanConfigAndCheck('teleportAuto_equip')) ? 1 : 0;
+		my $skillAvailable = (!$teleportSkillBlocked && _canUseTeleportSkillAtLevel($use_lvl)) ? 1 : 0;
 
 		return 1 if ($itemAvailable || $chatAvailable || $equipAvailable || $skillAvailable);
 		return 0;
@@ -4457,9 +4458,30 @@ sub canUseTeleport {
 	return 1 if(Actor::Item::scanConfigAndCheck('teleportAuto_equip'));
 
 	# 4 - check for skill
-	my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
-	return 1 if($skill_level >= $use_lvl);
+	return 1 if _canUseTeleportSkillAtLevel($use_lvl);
 
+	return 0;
+}
+
+sub _canUseTeleportSkillAtLevel {
+	my ($use_lvl) = @_;
+	return 0 unless $char;
+	return 0 if _isTeleportSkillSuppressedByStatus();
+
+	my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
+	return 0 if $skill_level < $use_lvl;
+
+	my $skill = Skill->new(handle => 'AL_TELEPORT');
+	my $sp_cost = $skill->getSP($use_lvl);
+	return 1 unless defined $sp_cost;
+
+	return ($char->{sp} // 0) >= $sp_cost;
+}
+
+sub _isTeleportSkillSuppressedByStatus {
+	return 0 unless $char;
+	return 1 if $char->{'muted'};
+	return 1 if $char->statusActive('HEALTHSTATE_SILENCE, EFST_HEALTHSTATE_SILENCE');
 	return 0;
 }
 
@@ -5459,6 +5481,8 @@ sub checkSelfCondition {
 	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle());
 
 	return 0 if ($config{$prefix."_whenNotIdle"} && AI::isIdle());
+
+	my $realMyPos = calcPosFromPathfinding($field, $char);
 	
 	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here in these checks?
 
@@ -5696,19 +5720,11 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_whenNearPartyMemberCasting"}) { return 0 unless nearPartyMemberIsCasting($config{$prefix . "_whenNearPartyMemberCasting"}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field->isCity); }
 	if ($config{$prefix . "_inTown"} > 0) { return 0 unless ($field->isCity); }
-    if (defined $config{$prefix . "_monstersCount"}) {
-		my $nowMonsters = $monstersList->size();
-			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
-				for my $monster (@$monstersList) {
-					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) ||
-										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}) ||
-										($config{$prefix."_monstersCountDist"} && !inRange(blockDistance(calcPosition($char), calcPosition($monster)), $config{$prefix."_monstersCountDist"}))
-									);
-                }
-            }
-		return 0 unless (inRange($nowMonsters, $config{$prefix . "_monstersCount"}));
-	}
-	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
+
+	my $check_not_monsters = defined $config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i);
+	my $check_monsters = defined $config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i);
+	
+	if ($check_monsters) {
 		my $exists;
 		foreach (ai_getAggressives()) {
 			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name) ||
@@ -5718,6 +5734,38 @@ sub checkSelfCondition {
 			}
 		}
 		return 0 unless $exists;
+	}
+
+	if ($check_not_monsters) {
+		my $exists;
+		foreach (ai_getAggressives()) {
+			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->{nameID})) {
+				return 0;
+			}
+		}
+	}
+	
+    if (defined $config{$prefix . "_monstersCount"}) {
+		my $max_dist = defined $config{$prefix . "_monstersCountDist"} ? $config{$prefix . "_monstersCountDist"} : 0;
+
+		my $found = 0;
+		for my $monster (@$monstersList) {
+			if ( $check_not_monsters && (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) || existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}))) {
+				next;
+			}
+			if ( $check_monsters && !(existsInList($config{$prefix . "_monsters"}, $monster->{name}) || existsInList($config{$prefix . "_monsters"}, $monster->{nameID}))) {
+				next;
+			}
+			if ($max_dist) {
+				my $realMonsterPos = calcPosFromPathfinding($field, $monster);
+				my $dist = blockDistance($realMyPos, $realMonsterPos);
+				next if ($dist > $max_dist);
+			}
+
+			$found++;
+		}
+		return 0 unless (inRange($found, $config{$prefix . "_monstersCount"}));
 	}
 
 	if ($config{$prefix . "_defendMonsters"}) {
@@ -5730,16 +5778,6 @@ sub checkSelfCondition {
 			}
 		}
 		return 0 unless $exists;
-	}
-
-	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
-		my $exists;
-		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name) ||
-				existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->{nameID})) {
-				return 0;
-			}
-		}
 	}
 
 	if ($config{$prefix."_inInventory"}) {
@@ -5770,6 +5808,22 @@ sub checkSelfCondition {
 			my $item = $char->cart->getByName($item);
 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
+	}
+
+	if ($config{$prefix."_inCartID"}) {
+		return 0 if (!$char->cart->isReady());
+		foreach my $input (split / *, */, $config{$prefix."_inCartID"}) {
+			my ($itemID,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
+			$count = '>0' if $count eq '';
+			my $item = $char->cart->getByNameID($itemID);
+			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+		}
+	}
+
+	if ($config{$prefix."_cartActive"}) {
+		my $wanted = ($config{$prefix."_cartActive"} ? 1 : 0);
+		my $is_active = ($char->cart->isReady()) ? 1 : 0;
+		return 0 if ($wanted != $is_active);
 	}
 
 	if ($config{$prefix."_whenGround"}) {
@@ -6111,9 +6165,9 @@ sub checkPlayerCondition {
 
 sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
-	
-	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime in these checks?
 
+	my $realMyPos = calcPosFromPathfinding($field, $char);
+	
 	if ($config{$prefix . "_hp"}) {
 		if($config{$prefix . "_hp"} =~ /(\d+)%$/) {
 			if($monster->{hp} && $monster->{hp_max}) {
@@ -6157,15 +6211,17 @@ sub checkMonsterCondition {
 		return 0 unless actorIsBeingCastedOn($monster, $config{$prefix . "_whileBeingCasted"});
 	}
 
+	my $realMonsterPos = calcPosFromPathfinding($field, $monster);
+
 	if ($config{$prefix."_whenGround"}) {
-		return 0 unless whenGroundStatus(calcPosition($monster), $config{$prefix."_whenGround"});
+		return 0 unless whenGroundStatus($realMonsterPos, $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus(calcPosition($monster), $config{$prefix."_whenNotGround"});
+		return 0 if whenGroundStatus($realMonsterPos, $config{$prefix."_whenNotGround"});
 	}
 
 	if ($config{$prefix."_dist"}) {
-		return 0 unless inRange(blockDistance(calcPosition($char), calcPosition($monster)), $config{$prefix."_dist"});
+		return 0 unless inRange(blockDistance($realMyPos, $realMonsterPos), $config{$prefix."_dist"});
 	}
 
 	if ($config{$prefix."_deltaHp"}){
@@ -7113,7 +7169,7 @@ sub print_callers {
             line     => $info[2],
             sub_name => $sub_name,
         };
-        last if @callers >= 7;
+        last if @callers >= 15;
         $level++;
     }
     

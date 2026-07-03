@@ -13,11 +13,13 @@ print "Run tests on $^O\n";
 
 my @tests = qw(
     Utils::TextReaderTest
+	Utils::DataWaitingTest
 	CallbackListTest ObjectListTest ActorListTest WhirlpoolTest RijndaelTest
 	SetTest SkillTest InventoryListTest
 	ItemsTest
 	HandConditionsTest
 	CastConditionsTest
+	TeleportFallbackTest
 	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	TaskTalkNPCTest

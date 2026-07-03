@@ -88,6 +88,7 @@ sub iterate {
 	processAutoAttack() if AI::state() == AI::AUTO();
 	$char->processTask("route", onError => sub {
 		my ($task, $error) = @_;
+		AI::Attack::note_approach_route_failure($task, $error);
 		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
 		 && !($task->isa('Task::Route') && $error->{code} == Task::Route::TOO_MUCH_TIME())) {
 			error("$error->{message}\n");
@@ -275,7 +276,8 @@ sub processActorAvoid {
 	my $max_dist = $config{clientSight} + 1;
 	my $max_to_delete = $max_dist*2;
 
-	if (timeOut($timeout{'avoidDistantActors'}{'time'}, 1)) {
+	my $avoid_distant_actors_timeout = $timeout{'avoidDistantActors'}{'timeout'} || 1;
+	if (timeOut($timeout{'avoidDistantActors'}{'time'}, $avoid_distant_actors_timeout)) {
 		$timeout{'avoidDistantActors'}{'time'} = time;
 		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
 			for my $actor (@$list) {
@@ -489,12 +491,12 @@ sub processPortalRecording {
 	delete $ai_v{portalTrace_mapChanged};
 	my $portal_update_candidate = delete $ai_v{portalUpdatePosition_candidate};
 
-	debug "Checking for new portals...\n", "portalRecord";
+	debug "[processPortalRecording] Checking for new portals...\n", "portalRecord";
 	my $first = 1;
 	my ($foundID, $smallDist, $dist);
 
 	if (!$field->baseName) {
-		debug "Field name not known - abort\n", "portalRecord";
+		debug "[processPortalRecording] Field name not known - abort\n", "portalRecord";
 		return;
 	}
 
@@ -517,14 +519,14 @@ sub processPortalRecording {
 		$sourceID = $portals_old{$foundID}{nameID};
 		%sourcePos = %{$portals_old{$foundID}{pos}};
 		$sourceIndex = $foundID;
-		debug "Source portal: $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
+		debug "[processPortalRecording] Source portal: $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
 	} else {
-		debug "No source portal found.\n", "portalRecord";
+		debug "[processPortalRecording] No source portal found.\n", "portalRecord";
 		return;
 	}
 
 	#if (defined portalExists($sourceMap, \%sourcePos)) {
-	#	debug "Source portal is already in portals.txt - abort\n", "portalRecord";
+	#	debug "[processPortalRecording] Source portal is already in portals.txt - abort\n", "portalRecord";
 	#	return;
 	#}
 
@@ -547,7 +549,7 @@ sub processPortalRecording {
 
 	# Sanity checks
 	if (!defined $foundID) {
-		debug "No destination portal found.\n", "portalRecord";
+		debug "[processPortalRecording] No destination portal found.\n", "portalRecord";
 		return;
 	}
 
@@ -563,12 +565,12 @@ sub processPortalRecording {
 	#	last PORTALRECORD;
 	#}
 	if (defined portalExists2($sourceMap, \%sourcePos, $field->baseName, $portals{$foundID}{pos})) {
-		debug "This portal is already in portals.txt\n", "portalRecord";
+		debug "[processPortalRecording] This portal is already in portals.txt\n", "portalRecord";
 		return;
 	}
 
 	if (defined portalExistsAirship($sourceMap, \%sourcePos)) {
-		debug "This portal is already in portals_airships.txt\n", "portalRecord";
+		debug "[processPortalRecording] This portal is already in portals_airships.txt\n", "portalRecord";
 		return;
 	}
 
@@ -577,7 +579,7 @@ sub processPortalRecording {
 	my ($destID, %destPos);
 	$destID = $portals{$foundID}{nameID};
 	%destPos = %{$portals{$foundID}{pos}};
-	debug "Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
+	debug "[processPortalRecording] Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
 
 	$portals{$foundID}{name} = "$destMap -> $sourceMap";
 	$portals_old{$sourceIndex}{name} = "$sourceMap -> $destMap";
@@ -606,7 +608,7 @@ sub processPortalRecording {
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
 
 			if ($updated == 1) {
-				message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $destMap, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
+				message TF("[processPortalRecording] Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $destMap, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
 				Plugins::callHook('portal_exist2', {
 					srcMap => $destMap,
 					srcx => $destPos{x},
@@ -617,7 +619,7 @@ sub processPortalRecording {
 				});
 				$recorded = 1;
 			} elsif ($updated == 2) {
-				debug "Destination portal already canonical in portals.txt\n", "portalRecord";
+				debug "[processPortalRecording] Destination portal already canonical in portals.txt\n", "portalRecord";
 			}
 		}
 	}
@@ -642,7 +644,7 @@ sub processPortalRecording {
 				$destMap, $char->{pos}{x}, $char->{pos}{y});
 
 			if ($updated == 1) {
-				message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $destMap, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
+				message TF("[processPortalRecording] Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $destMap, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
 				Plugins::callHook('portal_exist2', {
 					srcMap => $sourceMap,
 					srcx => $sourcePos{x},
@@ -653,7 +655,7 @@ sub processPortalRecording {
 				});
 				$recorded = 1;
 			} elsif ($updated == 2) {
-				debug "Source portal already canonical in portals.txt\n", "portalRecord";
+				debug "[processPortalRecording] Source portal already canonical in portals.txt\n", "portalRecord";
 			}
 		}
 	}
@@ -681,7 +683,7 @@ sub _tryUpdateKnownPortalPositions {
 	return 0 unless $updated;
 	return 1 if $updated == 2;
 
-	warning TF("Updated portal coordinates in portals.txt: %s (%s,%s) -> %s (%s,%s) became %s (%s,%s) -> %s (%s,%s)\n",
+	warning TF("[processPortalRecording] Updated portal coordinates in portals.txt: %s (%s,%s) -> %s (%s,%s) became %s (%s,%s) -> %s (%s,%s)\n",
 		$candidate->{oldSourceMap}, $candidate->{oldSourceX}, $candidate->{oldSourceY},
 		$candidate->{oldDestMap}, $candidate->{oldDestX}, $candidate->{oldDestY},
 		$sourceMap, $sourcePos->{x}, $sourcePos->{y},
@@ -706,7 +708,7 @@ sub _tryUpdateNearbyPortalRecordSibling {
 	return 0 unless $updated;
 	return 1 if $updated == 2;
 
-	warning TF("Updated nearby portal sibling in portals.txt: %s (%s,%s) -> %s (%s,%s) became %s (%s,%s) -> %s (%s,%s)\n",
+	warning TF("[processPortalRecording] Updated nearby portal sibling in portals.txt: %s (%s,%s) -> %s (%s,%s) became %s (%s,%s) -> %s (%s,%s)\n",
 		$siblingSource->{map}, $siblingSource->{x}, $siblingSource->{y},
 		$siblingDest->{map}, $siblingDest->{x}, $siblingDest->{y},
 		$sourceMap, $sourcePos->{x}, $sourcePos->{y},
@@ -974,43 +976,51 @@ sub processTake {
 	if (AI::action() eq "take" && !(my $item = $items{AI::args()->{ID}})) {
 		AI::dequeue();
 
-	} elsif (AI::action() eq "take" && timeOut(AI::args()->{ai_take_giveup})) {
-		message TF("Failed to take %s (%s) from (%s, %s) to (%s, %s)\n", $item->{name}, $item->{binID}, $char->{pos}{x}, $char->{pos}{y}, $item->{pos}{x}, $item->{pos}{y});
-		$item->{take_failed}++;
-		AI::dequeue();
-
 	} elsif (AI::action() eq "take") {
 		my $myPos = calcPosFromPathfinding($field, $char);
 		my $dist = blockDistance($item->{pos}, $myPos);
-		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
-		if ($char->{sitting}) {
-			stand();
+		if (timeOut(AI::args()->{ai_take_giveup})) {
+			message TF("Failed to take %s (%s) from (%s, %s) to (%s, %s) - dist %s\n", $item->{name}, $item->{binID}, $myPos->{x}, $myPos->{y}, $item->{pos}{x}, $item->{pos}{y}, $dist);
+			$item->{take_failed}++;
+			AI::dequeue();
 
-		} elsif ($dist <= 2 && $config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
-			my $skill = new Skill(handle => 'BS_GREED');
-			ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
+		} else {
+			debug "Planning to take $item->{name} ($item->{binID}) at ($item->{pos}{x}, $item->{pos}{y}), distance $dist from us at ($myPos->{x}, $myPos->{y})\n", "drop";
 
-		} elsif ($dist > 1 && timeOut(AI::args()->{time_route}, $timeout{ai_take_giveup}{timeout})) {
-			my $pos = $item->{pos};
-			AI::args()->{time_route} = time;
-			ai_route(
-				$field->baseName,
-				$pos->{x},
-				$pos->{y},
-				noSitAuto => 1,
-				distFromGoal => 1,
-				attackOnRoute => 0,
-				isItemTake => 1
-			);
-		} elsif (timeOut($timeout{ai_take})) {
-			my %vec;
-			my $direction;
-			getVector(\%vec, $item->{pos}, $myPos);
-			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
-			$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
-			$messageSender->sendTake($item->{ID});
-			$timeout{ai_take}{time} = time;
+			if ($char->{sitting}) {
+				stand();
+
+			} elsif ($dist <= 2 && $config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1 && !$char->{muted}) {
+				my $skill = new Skill(handle => 'BS_GREED');
+				ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
+
+			} elsif ($dist > 1 && timeOut(AI::args()->{time_route}, $timeout{ai_take_giveup}{timeout})) {
+				my $pos = $item->{pos};
+				AI::args()->{time_route} = time;
+				ai_route(
+					$field->baseName,
+					$pos->{x},
+					$pos->{y},
+					noSitAuto => 1,
+					distFromGoal => 1,
+					attackOnRoute => 0,
+					isItemTake => 1
+				);
+				# Walking to the drop is not a failed loot attempt; pause the
+				# give-up timer until the route finishes and take() becomes active again.
+				AI::suspend(1);
+			} else {
+				return unless (timeOut($timeout{ai_take}));
+				return unless (actorFinishedMovement($char, $field, 0.1, 1));
+				my %vec;
+				my $direction;
+				getVector(\%vec, $item->{pos}, $myPos);
+				$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+				$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
+				$messageSender->sendTake($item->{ID});
+				$timeout{ai_take}{time} = time;
+			}
 		}
 	}
 }
@@ -1337,6 +1347,7 @@ sub processCartGet {
 }
 
 sub processAutoMakeArrow {
+	return if ($char->{muted});
 	####### AUTO MAKE ARROW #######
 	if ((AI::isIdle() || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/))
 	 && timeOut($AI::Timeouts::autoArrow, 0.2) && $config{autoMakeArrows} && defined binFind(\@skillsID, 'AC_MAKINGARROW') ) {
@@ -2270,7 +2281,7 @@ sub processAutoCart {
 			my @getItems;
 			my $max;
 
-			if ($config{cartMaxWeight} && $char->cart->{weight} < $config{cartMaxWeight}) {
+			if ($char->cart->{weight_max} && $char->cart->{weight} < $char->cart->{weight_max}) {
 				for my $invItem (@{$char->inventory}) {
 					next if ($invItem->{broken} && $invItem->{type} == 7); # dont auto-cart add pet eggs in use
 					next if ($invItem->{equipped});
@@ -2995,8 +3006,8 @@ sub processAutoItemUse {
 
 ##### AUTO-SKILL USE #####
 sub processAutoSkillUse {
-	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport) )
-	|| (AI::action() eq "skill_use" && AI::args()->{tag} eq "attackSkill")) {
+	return if ($char->{muted});
+	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport) ) || (AI::action() eq "skill_use" && AI::args()->{tag} eq "attackSkill")) {
 		my %self_skill;
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
 			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
@@ -3058,6 +3069,7 @@ sub processAutoSkillUse {
 
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
+	return if ($char->{muted});
 	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
 		my $realMyPos = calcPosFromPathfinding($field, $char);
 		my %party_skill;
@@ -3168,6 +3180,7 @@ sub processPartySkillUse {
 
 ##### MONSTER SKILL USE #####
 sub processMonsterSkillUse {
+	return if ($char->{muted});
 	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
 		my $i = 0;
 		my $prefix = "monsterSkill_$i";
@@ -3567,7 +3580,7 @@ sub processItemsGather {
 			AI::suspend();
 			stand();
 
-		} elsif (blockDistance($items{$ID}{pos}, $char->{pos}) > 2 && timeOut(AI::args()->{time_route} = time, $timeout{ai_take_giveup}{timeout})) {
+		} elsif (blockDistance($items{$ID}{pos}, $char->{pos}) > 2) {
 			my $item = $items{$ID};
 			my $pos = $item->{pos};
 			AI::args()->{time_route} = time;
@@ -3766,17 +3779,17 @@ sub processAvoid {
 		avoidGM_near() if ($config{avoidGM_near} >= 1 && (!$field->isCity || $config{avoidGM_near_inTown}));
 		avoidList_near() if $config{avoidList} >= 1;
 		$timeout{ai_avoidcheck}{time} = time;
-	}
-	foreach (@monstersID) {
-		next unless $_;
-		my $action = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto};
+		foreach (@monstersID) {
+			next unless $_;
+			my $action = mon_control($monsters{$_}{name},$monsters{$_}{nameID})->{teleport_auto};
 
-		if ($action == 3) {
-		   warning TF("Disconnecting for 30 secs to avoid %s\n", $monsters{$_}{name});
-		   relog(30);
-		} elsif ($action > 3) {
-		   warning TF("Disconnecting for %s secs to avoid %s\n", $action, $monsters{$_}{name});
-		   relog($action);
+			if ($action == 3) {
+			warning TF("Disconnecting for 30 secs to avoid %s\n", $monsters{$_}{name});
+			relog(30);
+			} elsif ($action > 3) {
+			warning TF("Disconnecting for %s secs to avoid %s\n", $action, $monsters{$_}{name});
+			relog($action);
+			}
 		}
 	}
 }
@@ -3941,7 +3954,7 @@ sub processRepairAuto {
             return;
         }
 
-        if ($args->{useSkill}) {
+        if ($args->{useSkill} && !$char->{muted}) {
             my $handle = repairAutoSkillHandle();
             unless ($handle) {
                 error T("Unable to auto repair: no repair skill available.\n");
