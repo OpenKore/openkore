@@ -4,6 +4,7 @@
 # The value of each variable is reffered as "x".
 
 # Server connection timeouts
+# Wait x seconds for each login-stage reply before treating the connection as stalled.
 master 12
 gamelogin 12
 charlogin 12
