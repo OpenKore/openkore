@@ -129,6 +129,8 @@ namespace _Intern {
 
 
 	UnixSocket::UnixSocket(const char *address, unsigned short port) {
+		in = NULL;
+		out = NULL;
 		int fd = socket (PF_INET, SOCK_STREAM, 0);
 		if (fd == -1) {
 			char message[200];
@@ -166,28 +168,49 @@ namespace _Intern {
 	}
 
 	UnixSocket::UnixSocket(int fd) {
+		in = NULL;
+		out = NULL;
 		construct(fd);
 	}
 
 	void
 	UnixSocket::construct(int fd) {
+		this->fd = fd;
 		#ifdef SO_NOSIGPIPE
 		int enabled = 1;
 		setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, &enabled, sizeof(enabled));
 		#endif
-	
-		in = new InStream(fd);
-		out = new OutStream(fd);
-	
-		this->fd = fd;
+
+		try {
+			in = new InStream(fd);
+			out = new OutStream(fd);
+		} catch (...) {
+			if (in != NULL) {
+				in->unref();
+				in = NULL;
+			}
+			if (out != NULL) {
+				out->unref();
+				out = NULL;
+			}
+			close(fd);
+			this->fd = -1;
+			throw;
+		}
 	}
 
 	UnixSocket::~UnixSocket() {
-		in->close();
-		in->unref();
-		out->close();
-		out->unref();
-		close(fd);
+		if (in != NULL) {
+			in->close();
+			in->unref();
+		}
+		if (out != NULL) {
+			out->close();
+			out->unref();
+		}
+		if (fd != -1) {
+			close(fd);
+		}
 	}
 
 	InputStream *

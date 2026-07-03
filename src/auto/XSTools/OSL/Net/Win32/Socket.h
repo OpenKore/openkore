@@ -43,6 +43,7 @@ namespace _Intern {
 		SOCKET fd;
 		InStream *in;
 		OutStream *out;
+		void construct(SOCKET fd);
 	
 	public:
 		/**

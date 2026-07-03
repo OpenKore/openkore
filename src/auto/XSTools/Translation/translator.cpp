@@ -15,28 +15,36 @@
 #include <stdio.h>
 Translator::Translator (const char *filename)
 {
+	FileReader *loadedReader;
+
 	#ifdef WIN32
-	reader = new WinFileReader (filename);
+	loadedReader = new WinFileReader (filename);
 	#else
-	reader = new UnixFileReader (filename);
+	loadedReader = new UnixFileReader (filename);
 	#endif
 
 	// Sanity check file size.
-	if (reader->getSize () < TRANSLATION_TABLE_POINTER_OFFSET)
+	if (loadedReader->getSize () < TRANSLATION_TABLE_POINTER_OFFSET) {
+		delete loadedReader;
 		throw 0;
+	}
 
 	// Load pointer info.
-	count = reader->
+	count = loadedReader->
 		readInt (COUNT_OFFSET);
-	origTableOffset = reader->
+	origTableOffset = loadedReader->
 		readInt (ORIG_TABLE_POINTER_OFFSET);
-	translationTableOffset = reader->
+	translationTableOffset = loadedReader->
 		readInt (TRANSLATION_TABLE_POINTER_OFFSET);
 
 	// Further sanity check file size.
-	if (reader->getSize () < origTableOffset
-	    || reader->getSize () < translationTableOffset)
+	if (loadedReader->getSize () < origTableOffset
+	    || loadedReader->getSize () < translationTableOffset) {
+		delete loadedReader;
 		throw 1;
+	}
+
+	reader = loadedReader;
 }
 
 Translator::~Translator ()
