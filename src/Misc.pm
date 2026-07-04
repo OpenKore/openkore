@@ -951,15 +951,10 @@ sub actorIsBeingCastedOn {
 		next unless $caster && exists $caster->{casting} && defined $caster->{casting} && $caster->{casting};
 
 		my $cast = $caster->{casting};
-		my $targetID = $cast->{targetID} || ($cast->{target} && $cast->{target}{ID});
+		my $targetID = defined $cast->{targetID} ? $cast->{targetID} : ($cast->{target} && $cast->{target}{ID});
 		next unless defined $targetID && $targetID eq $target->{ID};
 
-		my $handle = $cast->{skill}->getHandle();
-		next unless defined $handle;
-
-		foreach my $skillName (@skills) {
-			return 1 if ($handle eq $skillName);
-		}
+		return 1 if castMatchesAnySkill($cast, \@skills);
 	}
 
 	return 0;
@@ -978,13 +973,29 @@ sub nearPartyMemberIsCasting {
 		next unless $char->{party}{users}{$member->{ID}};
 		next unless exists $member->{casting} && defined $member->{casting} && $member->{casting};
 
-		my $cast = $member->{casting};
-		my $handle = $cast->{skill}->getHandle();
-		next unless defined $handle;
+		return 1 if castMatchesAnySkill($member->{casting}, \@skills);
+	}
 
-		foreach my $skillName (@skills) {
-			return 1 if ($handle eq $skillName);
-		}
+	return 0;
+}
+
+sub castMatchesAnySkill {
+	my ($cast, $skills) = @_;
+	return 0 unless $cast && $cast->{skill} && $skills && @$skills;
+
+	my $castSkill = $cast->{skill};
+	my $castIDN = $castSkill->getIDN();
+	my $castHandle = $castSkill->getHandle();
+	my $castName = $castSkill->getName();
+
+	foreach my $skillName (@$skills) {
+		return 1 if defined $castHandle && $castHandle eq $skillName;
+		return 1 if defined $castName && lc($castName) eq lc($skillName);
+		return 1 if defined $castIDN && $skillName =~ /^\d+$/ && $castIDN == $skillName;
+
+		my $requestedSkill = Skill->new(auto => $skillName);
+		my $requestedIDN = $requestedSkill->getIDN();
+		return 1 if defined $castIDN && defined $requestedIDN && $castIDN == $requestedIDN;
 	}
 
 	return 0;
