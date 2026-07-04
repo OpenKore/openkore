@@ -364,6 +364,7 @@ friendlyAID
 showTime
 showTimeDomains
 showTimeDomainsFormat
+# Wx map text and portal overlay thresholds
 wx_map_maxAutoSize 300
 wx_map_monsterSticking 1
 wx_map_npcSticking 1
@@ -413,6 +414,7 @@ noAutoSkill 0
 portalCompile 1
 portalRecord 2
 portalRecord_recompileAfter 1
+portalUpdatePosition 1
 missDamage 0
 
 tankersList
@@ -861,6 +863,10 @@ avoidObstaclesDefaultPortals {
 #	inLockOnly 0
 #	notWhileSitting 0
 #	notWhileCasting 0
+#	notWhileBeingCasted
+#	whileBeingCasted
+#	whenNoNearPartyMemberCasting
+#	whenNearPartyMemberCasting
 #	whileCasting 0
 #	notInTown 0
 #	inTown 0
@@ -921,6 +927,8 @@ avoidObstaclesDefaultPortals {
 #	target_whenStatusActive
 #	target_whenStatusInactive
 #	target_notWhileSitting 0
+#	target_notWhileBeingCasted
+#	target_whileBeingCasted
 #	target_hp
 #	target_deltaHp
 #	target_isJob
@@ -947,6 +955,8 @@ avoidObstaclesDefaultPortals {
 #	target_totalMisses
 #	target_whenStatusActive
 #	target_whenStatusInactive
+#	target_notWhileBeingCasted
+#	target_whileBeingCasted
 #	target_whenGround
 #	target_whenNotGround
 #	target_dist

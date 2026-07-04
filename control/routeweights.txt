@@ -39,6 +39,12 @@ WARPTOSAVEMAP 200
 # Use airship
 AIRSHIP 200
 
+# Additional route cost added for each 1 zeny actually spent while routing.
+ZENY 0.1
+
+# Additional route cost added for each travel ticket consumed while routing.
+TICKET 100
+
 # Maps where you can exit to the same place you came from,
 # which confuses routing if added to portals thoughtlessly.
 bat_room 10000

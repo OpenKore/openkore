@@ -116,7 +116,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set(qw(targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
+	my $allowed = new Set(qw(targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget isPortalRoute));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -254,53 +254,6 @@ sub iterate {
 		$extra_time = 0 unless (defined $extra_time);
 
 		my $calc_pos = calcPosFromPathfinding($field, $self->{actor}, $extra_time);
-
-		my $walk = 1;
-		if ($config{route_teleport} == 2
-			&& !$self->{isRandomWalk}
-			&& !$self->{disableOnMapTeleport}
-			&& !$field->isCity
-			&& !existsInList($config{route_teleport_notInMaps}, $field->baseName)
-			&& (!$config{route_teleport_maxTries} || $self->{teleportTries} <= $config{route_teleport_maxTries})) {
-			my $minDist = $config{route_teleport_minDistance};
-
-			if ($self->{mapChanged}) {
-				undef $self->{sentTeleport};
-				undef $self->{mapChanged};
-			}
-
-			if (!$self->{sentTeleport}) {
-				my $dist = new PathFinding(
-					start => $self->{actor}{pos_to},
-					dest => $self->{dest}{pos},
-					field => $field
-				)->runcount;
-				debug "Distance to destination ($self->{dest}{pos}{x},$self->{dest}{pos}{y}) is $dist\n", "route";
-
-				if ($dist < 0 || $dist > $minDist) {
-					if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
-						debug "Teleported $config{route_teleport_maxTries} times on same-map route. Falling back to walking.\n", "route";
-					} else {
-						message TF("Attempting to teleport near destination, try #%s\n", ($self->{teleportTries} + 1)), "route";
-						if (!canUseTeleport(1)) {
-							$self->{disableOnMapTeleport} = 1;
-						} else {
-							ai_useTeleport(1);
-							$walk = 0;
-							$self->{sentTeleport} = 1;
-							$self->{teleportTime} = time;
-							$self->{teleportTries}++;
-						}
-					}
-				}
-			} elsif (timeOut($self->{teleportTime}, 4)) {
-				debug "Unable to teleport; falling back to walking.\n", "route";
-				$self->{disableOnMapTeleport} = 1;
-			} else {
-				$walk = 0;
-			}
-		}
-		return unless $walk;
 		
 		debug "Route $self->{actor}: Calculating. Your pos ($pos->{x} $pos->{y}). Your pos_to ($pos_to->{x} $pos_to->{y}). calcPosFromPathfinding ($calc_pos->{x} $calc_pos->{y})\n", "route";
 		
@@ -481,7 +434,7 @@ sub iterate {
 		
 		$self->{lastStep} = 0;
 
-		if ($stepsleft == 2 && isCellOccupied($solution->[-1], $self->{actor}) && !$self->{meetingSubRoute}) {
+		if (isCellOccupied($solution->[-1], $self->{actor}) && blockDistance($current_pos_to, $self->{dest}{pos}) <= 1) {
 			# 2 more steps to cover (current position and the destination)
 			debug "Stoping 1 cell away from destination because there is an obstacle in it.\n", "route";
 			if ($self->{notifyUponArrival}) {
@@ -572,6 +525,51 @@ sub iterate {
 			}
 
 		} else {
+
+			my $walk = 1;
+			if ($config{route_teleport} == 2
+				&& !$self->{isRandomWalk}
+				&& !$self->{disableOnMapTeleport}
+				&& !$field->isCity
+				&& !existsInList($config{route_teleport_notInMaps}, $field->baseName)
+				&& (!$config{route_teleport_maxTries} || $self->{teleportTries} <= $config{route_teleport_maxTries})) {
+				my $minDist = $config{route_teleport_minDistance};
+
+				if ($self->{mapChanged}) {
+					undef $self->{sentTeleport};
+					undef $self->{mapChanged};
+				}
+
+				if (!$self->{sentTeleport}) {
+					my $dist = $stepsleft;
+					debug "[Route] [Teleport] Distance to destination ($self->{dest}{pos}{x},$self->{dest}{pos}{y}) is $dist\n", "route";
+
+					if ($dist > $minDist) {
+						if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
+							debug "[Route] [Teleport] Teleported $config{route_teleport_maxTries} times on same-map route. Falling back to walking.\n", "route";
+						} else {
+							message TF("[Route] [Teleport] Attempting to teleport near destination (dist %s > max %s), try #%s\n", $dist, $minDist, ($self->{teleportTries} + 1)), "route";
+							if (!canUseTeleport(1)) {
+								$self->{disableOnMapTeleport} = 1;
+							} else {
+								ai_useTeleport(1);
+								$walk = 0;
+								$self->{sentTeleport} = 1;
+								$self->{teleportTime} = time;
+								$self->{teleportTries}++;
+							}
+						}
+					}
+				} elsif (timeOut($self->{teleportTime}, 4)) {
+					debug "[Route] [Teleport] Unable to teleport; falling back to walking.\n", "route";
+					$self->{disableOnMapTeleport} = 1;
+				} else {
+					$walk = 0;
+				}
+			}
+			return unless $walk;
+
+
 			# We're either starting to move or already moving, so send out more
 			# move commands periodically to keep moving and updating our position
 			my $begin = time;
@@ -611,7 +609,7 @@ sub iterate {
 
 			$move_step_index = 0 if $move_step_index < 0;
 
-			debug "[Route] [$self->{loop}] step_index $self->{step_index} | move_step_index $move_step_index | lastStep $self->{lastStep} | self->{start} $self->{start}\n", 'route', 1;
+			debug "[Route] [$self->{loop}] step_index $self->{step_index} | move_step_index $move_step_index | lastStep $self->{lastStep} | self->{start} $self->{start}\n", 'route', 2;
 
 
 			my $requested_move_step_index = $move_step_index;
@@ -857,7 +855,7 @@ sub _resetRouteForMoveSelection {
 sub _trimMoveStepOrReset {
 	my ($self, $requested_move_step_index, $move_step_index_ref, $reason) = @_;
 
-	debug "Route $self->{actor} - trimming down move_step_index from $$move_step_index_ref to (".($$move_step_index_ref - 1).") $reason\n", "route";
+	debug "Route $self->{actor} - trimming down move_step_index from $$move_step_index_ref to (".($$move_step_index_ref - 1).") $reason\n", "route", 2;
 	$$move_step_index_ref--;
 
 	if (($requested_move_step_index - $$move_step_index_ref) >= ROUTE_CLIENT_PATH_RESET_TRIM_STEPS) {
@@ -893,12 +891,19 @@ sub getRoute {
 	my ($class, $solution, $field, $start, $dest, $avoidWalls, $randomFactor, $useManhattan, $liveRoute, $addLimits) = @_;
 	assertClass($field, 'Field') if DEBUG;
 
-	my $dest_has_x = defined $dest->{x} && $dest->{x} ne '';
-	my $dest_has_y = defined $dest->{y} && $dest->{y} ne '';
-	my $start_has_x = defined $start->{x} && $start->{x} ne '';
-	my $start_has_y = defined $start->{y} && $start->{y} ne '';
+	my $dest_has_x = exists $dest->{x} && defined $dest->{x} && $dest->{x} ne '';
+	my $dest_has_y = exists $dest->{y} && defined $dest->{y} && $dest->{y} ne '';
+	my $start_has_x = exists $start->{x} && defined $start->{x} && $start->{x} ne '';
+	my $start_has_y = exists $start->{y} && defined $start->{y} && $start->{y} ne '';
 	if (!$dest_has_x || !$dest_has_y || !$start_has_x || !$start_has_y) {
-		Log::error "[getRoute] Called with invalid coordinates\n";
+		my $missing = join(', ',
+			(!$start_has_x ? 'start.x' : ()),
+			(!$start_has_y ? 'start.y' : ()),
+			(!$dest_has_x ? 'dest.x' : ()),
+			(!$dest_has_y ? 'dest.y' : ())
+		);
+		my $fieldName = $field->baseName;
+		Log::error "[getRoute] Called with invalid coordinates on field $fieldName. Missing '$missing'.\n";
 		Misc::print_callers();
 		@{$solution} = () if ($solution);
 		return 0;
@@ -914,7 +919,12 @@ sub getRoute {
 	$closest_dest = $field->closestWalkableSpot(\%dest, 10) if(!$closest_dest); # can't find a closest walkable spot
 
 	if (!defined $closest_start || !defined $closest_dest) {
-		Log::error "[getRoute] Called with no valid closest coordinates ($start->{x}, $start->{y}) to ($dest->{x}, $dest->{y})\n";
+		my $fieldName = $field->baseName;
+		my $invalid_coords = join(', ',
+			(!defined $closest_start ? "closest walkable spot to start ($start->{x}, $start->{y})" : ()),
+			(!defined $closest_dest ? "closest walkable spot to dest ($dest->{x}, $dest->{y})" : ())
+		);
+		Log::error "[getRoute] Called with no valid closest coordinates on field $fieldName ($start->{x}, $start->{y}) to ($dest->{x}, $dest->{y}). Invalid coordinates: $invalid_coords\n";
 		Misc::print_callers();
 		return 0;
 	}

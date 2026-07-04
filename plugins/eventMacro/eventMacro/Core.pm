@@ -1,6 +1,7 @@
 package eventMacro::Core;
 
 use strict;
+use Scalar::Util qw(weaken);
 use Globals;
 use Log qw(message error warning debug);
 use Utils;
@@ -23,6 +24,17 @@ sub get_cycle_stages {
 sub is_valid_cycle_stage {
 	my ($self, $cycle_stage) = @_;
 	return scalar grep { $_ eq $cycle_stage } $self->get_cycle_stages;
+}
+
+sub _weak_self_sub {
+	my ($self, $callback) = @_;
+	my $weak_self = $self;
+	weaken($weak_self);
+
+	return sub {
+		my $self = $weak_self or return;
+		$callback->($self, @_);
+	};
 }
 
 sub new {
@@ -73,7 +85,15 @@ sub new {
 
 	$self->define_automacro_check_state;
 
-	$self->{AI_state_change_Hook_Handle} = Plugins::addHook( 'AI_state_change',  sub { my $state = $_[1]->{new}; $self->adapt_to_AI_state($state); }, undef );
+	$self->{AI_state_change_Hook_Handle} = Plugins::addHook(
+		'AI_state_change',
+		_weak_self_sub($self, sub {
+			my ($self, undef, $args) = @_;
+			my $state = $args->{new};
+			$self->adapt_to_AI_state($state);
+		}),
+		undef
+	);
 
 	$self->{Currently_AI_state_Adapted_Automacros} = undef;
 
@@ -101,8 +121,8 @@ sub get_log_hook_sub {
 
         return $self->{Log_Event_Sub} if (exists $self->{Log_Event_Sub});
 
-        $self->{Log_Event_Sub} = sub {
-                my ($type, $domain, $level, $currentVerbosity, $message, $user_data, $near, $far) = @_;
+        $self->{Log_Event_Sub} = _weak_self_sub($self, sub {
+                my ($self, $type, $domain, $level, $currentVerbosity, $message, $user_data, $near, $far) = @_;
                 return if (defined $domain && $domain eq 'eventMacro');
                 return if (defined $level && defined $currentVerbosity && $level > $currentVerbosity);
                 $message =~ s/[\r\n]+$//;
@@ -120,7 +140,7 @@ sub get_log_hook_sub {
 
                 my $check_list_hash = $self->{Event_Related_Hooks}{log};
                 $self->manage_event_callbacks('hook', 'log', $args, $check_list_hash);
-        };
+        });
 
         return $self->{Log_Event_Sub};
 }
@@ -154,12 +174,16 @@ sub unload {
 	$self->clean_hooks();
 	$self->sync_automacro_check_hooks(1);
 	Plugins::delHook($self->{AI_state_change_Hook_Handle}) if ($self->{AI_state_change_Hook_Handle});
+	delete $self->{AI_state_change_Hook_Handle};
+	delete $self->{Log_Event_Sub};
 }
 
 sub clean_hooks {
         my ($self) = @_;
         foreach (values %{$self->{Hook_Handles}}) {Plugins::delHook($_)}
         foreach (values %{$self->{Log_Hook_Handles}}) {Log::delHook($_)}
+        $self->{Hook_Handles} = {};
+        $self->{Log_Hook_Handles} = {};
 }
 
 sub set_automacro_checking_status {
@@ -191,10 +215,11 @@ sub sync_automacro_check_hooks {
 				debug "[eventMacro] Adding $cycle_stage hook for automacro checking.\n", "eventMacro", 2;
 				$self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage} = Plugins::addHook(
 					$cycle_stage,
-					sub {
-						my $state = $_[1]->{state};
+					_weak_self_sub($self, sub {
+						my ($self, undef, $args) = @_;
+						my $state = $args->{state};
 						$self->AI_cycle_stage_checker($cycle_stage, $state);
-					},
+					}),
 					undef
 				);
 			}
@@ -570,12 +595,11 @@ sub create_callbacks {
 		}
 
 	}
-        my $event_sub = sub {
-                my $name = shift;
-                my $args = shift;
+        my $event_sub = _weak_self_sub($self, sub {
+                my ($self, $name, $args) = @_;
                 my $check_list_hash = $self->{Event_Related_Hooks}{$name};
                 $self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
-        };
+        });
         foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
                 if ($hook_name eq 'log') {
                         $self->{Log_Hook_Handles}{$hook_name} = Log::addHook( $self->get_log_hook_sub );
@@ -1401,14 +1425,14 @@ sub manage_event_callbacks {
 		$debug_message .= ", variable value: '".$callback_args."'";
 	}
 
-	debug $debug_message."\n", "eventMacro", 2;
+	debug $debug_message."\n", "eventMacro", 3;
 
 	my ($event_type_automacro_call_index, $event_type_automacro_call_priority);
 
 	foreach my $automacro_index (keys %{$check_list_hash}) {
 		my ($automacro, $conditions_indexes_hash, $check_event_type) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
 
-		debug "[eventMacro] Conditions of state type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Conditions of state type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 
 		my @conditions_indexes_array = keys %{ $conditions_indexes_hash };
 
@@ -1513,12 +1537,11 @@ sub manage_dynamic_hook_add_and_delete {
                         if ($hook_name eq 'log') {
                                 $self->{Log_Hook_Handles}{$hook_name} = Log::addHook( $self->get_log_hook_sub );
                         } else {
-                                my $event_sub = sub {
-                                        my $name = shift;
-                                        my $args = shift;
+                                my $event_sub = _weak_self_sub($self, sub {
+                                        my ($self, $name, $args) = @_;
                                         my $check_list_hash = $self->{Event_Related_Hooks}{$name};
                                         $self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
-                                };
+                                });
                                 $self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
                         }
                 }
@@ -1568,7 +1591,7 @@ sub should_skip_automacro_for_not_when_in_queue {
 	return 0 unless @blocked_states;
 
 	if (AI::inQueue(@blocked_states)) {
-		debug "[eventMacro] Automacro '".$automacro->get_name()."' will not run because eventMacro_notWhenInQueue matched one of these AI queue states: '".join("', '", @blocked_states)."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Automacro '".$automacro->get_name()."' will not run because eventMacro_notWhenInQueue matched one of these AI queue states: '".join("', '", @blocked_states)."'.\n", "eventMacro", 3;
 		return 1;
 	}
 
@@ -1718,7 +1741,10 @@ sub call_macro {
 
 	if (defined $self->{Macro_Runner}) {
 		$self->{Macro_Runner_Cycle_Stage} = $self->get_cycle_stage_for_automacro($automacro);
-		my $iterate_macro_sub = sub { $self->iterate_macro(); };
+		my $iterate_macro_sub = _weak_self_sub($self, sub {
+			my ($self) = @_;
+			$self->iterate_macro();
+		});
 		$self->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
 	} else {
 		error "[eventMacro] unable to create macro queue.\n"

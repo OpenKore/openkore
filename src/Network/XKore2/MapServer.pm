@@ -15,6 +15,7 @@
 package Network::XKore2::MapServer;
 
 use strict;
+use Scalar::Util qw(weaken);
 use Globals qw(
 	$char $field %statusHandle @skillsID @itemsID %items
 	$portalsList $npcsList $monstersList $playersList $petsList
@@ -33,13 +34,30 @@ use Log qw(debug warning error);
 
 my $RunOnce = 1;
 
+sub _weak_hook {
+	my ($self, $callback) = @_;
+	my $weak_self = $self;
+	weaken($weak_self);
+
+	return sub {
+		my $self = $weak_self or return;
+		$callback->(@_, $self);
+	};
+}
+
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
 	debug "XKore 2 Map Server started \n";
-	$self->{kore_map_loaded_hook} = Plugins::addHook('packet/map_loaded', \&kore_map_loaded, $self);
-	$self->{kore_disconnected} = Plugins::addHook('disconnected', \&kore_disconnected, $self);
+	$self->{kore_map_loaded_hook} = Plugins::addHook('packet/map_loaded', _weak_hook($self, \&kore_map_loaded));
+	$self->{kore_disconnected} = Plugins::addHook('disconnected', _weak_hook($self, \&kore_disconnected));
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	Plugins::delHook(delete $self->{kore_map_loaded_hook}) if $self->{kore_map_loaded_hook};
+	Plugins::delHook(delete $self->{kore_disconnected}) if $self->{kore_disconnected};
 }
 
 # Overrided method.

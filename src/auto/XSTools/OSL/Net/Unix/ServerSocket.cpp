@@ -52,15 +52,13 @@ public:
 		setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
 
 		struct sockaddr_in addr;
-		char *c_address = NULL;
 
 		addr.sin_family = AF_INET;
 		addr.sin_port = htons (port);
 		if (address == NULL) {
 			addr.sin_addr.s_addr = htonl(INADDR_ANY);
 		} else {
-			c_address = strdup(address);
-			addr.sin_addr.s_addr = inet_addr(c_address);
+			addr.sin_addr.s_addr = inet_addr(address);
 		}
 		if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == -1) {
 			char message[200];
@@ -70,10 +68,6 @@ public:
 				port, strerror(errno));
 			::close(fd);
 			throw SocketException(message, errno);
-		}
-
-		if (c_address != NULL) {
-			free(c_address);
 		}
 
 		if (port == 0) {

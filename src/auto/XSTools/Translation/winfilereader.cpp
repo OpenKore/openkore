@@ -6,6 +6,9 @@ WinFileReader::WinFileReader (const char *filename)
 {
 	OFSTRUCT buf;
 
+	hFile = INVALID_HANDLE_VALUE;
+	hMapFile = NULL;
+	addr = NULL;
 	buf.cBytes = sizeof (OFSTRUCT);
 	hFile = CreateFile (filename, GENERIC_READ, FILE_SHARE_READ,
 		NULL, OPEN_EXISTING, 0, NULL);
@@ -30,8 +33,12 @@ WinFileReader::WinFileReader (const char *filename)
 
 WinFileReader::~WinFileReader ()
 {
-	CloseHandle (hMapFile);
-	CloseHandle (hFile);
+	if (addr != NULL)
+		UnmapViewOfFile (addr);
+	if (hMapFile != NULL)
+		CloseHandle (hMapFile);
+	if (hFile != INVALID_HANDLE_VALUE)
+		CloseHandle (hFile);
 }
 
 unsigned int

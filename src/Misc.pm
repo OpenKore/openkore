@@ -940,6 +940,67 @@ sub objectInsideCasting {
 	return 0;
 }
 
+sub actorIsBeingCastedOn {
+	my ($target, $skills) = @_;
+	return 0 unless $target && defined $target->{ID} && defined $skills;
+
+	my @skills = grep { $_ ne '' } split / *, */, $skills;
+	return 0 unless @skills;
+
+	foreach my $caster ($char, @$playersList, @$monstersList, @$npcsList, @$slavesList, @$elementalsList) {
+		next unless $caster && exists $caster->{casting} && defined $caster->{casting} && $caster->{casting};
+
+		my $cast = $caster->{casting};
+		my $targetID = defined $cast->{targetID} ? $cast->{targetID} : ($cast->{target} && $cast->{target}{ID});
+		next unless defined $targetID && $targetID eq $target->{ID};
+
+		return 1 if castMatchesAnySkill($cast, \@skills);
+	}
+
+	return 0;
+}
+
+sub nearPartyMemberIsCasting {
+	my ($skills) = @_;
+	return 0 unless defined $skills;
+	return 0 unless $char->{party}{joined};
+
+	my @skills = grep { $_ ne '' } split / *, */, $skills;
+	return 0 unless @skills;
+
+	foreach my $member (@$playersList) {
+		next unless $member && defined $member->{ID};
+		next unless $char->{party}{users}{$member->{ID}};
+		next unless exists $member->{casting} && defined $member->{casting} && $member->{casting};
+
+		return 1 if castMatchesAnySkill($member->{casting}, \@skills);
+	}
+
+	return 0;
+}
+
+sub castMatchesAnySkill {
+	my ($cast, $skills) = @_;
+	return 0 unless $cast && $cast->{skill} && $skills && @$skills;
+
+	my $castSkill = $cast->{skill};
+	my $castIDN = $castSkill->getIDN();
+	my $castHandle = $castSkill->getHandle();
+	my $castName = $castSkill->getName();
+
+	foreach my $skillName (@$skills) {
+		return 1 if defined $castHandle && $castHandle eq $skillName;
+		return 1 if defined $castName && lc($castName) eq lc($skillName);
+		return 1 if defined $castIDN && $skillName =~ /^\d+$/ && $castIDN == $skillName;
+
+		my $requestedSkill = Skill->new(auto => $skillName);
+		my $requestedIDN = $requestedSkill->getIDN();
+		return 1 if defined $castIDN && defined $requestedIDN && $castIDN == $requestedIDN;
+	}
+
+	return 0;
+}
+
 ##
 # objectIsMovingTowards(object1, object2, [max_variance])
 #
@@ -4323,6 +4384,7 @@ sub canUseTeleport {
 	my $randomTeleportBlocked = isRandomTeleportBlockedOnMap($current_map);
 	my $teleportSkillBlocked = isTeleportSkillBlockedOnMap($current_map);
 	my $returnTeleportBlocked = isReturnTeleportBlockedOnMap($current_map);
+	my $teleportSkillSuppressed = _isTeleportSkillSuppressedByStatus();
 	my $item;
 
 	if ($use_lvl == 1) {
@@ -4353,11 +4415,11 @@ sub canUseTeleport {
 				$itemAvailable = 1 if (!$cooldownActive && $equipRequirementSatisfied);
 			}
 		}
+		return $itemAvailable if $char->{'muted'};
 
 		my $chatAvailable = (!$returnTeleportBlocked && $config{saveMap_warpChatCommand}) ? 1 : 0;
-		my $equipAvailable = (!$teleportSkillBlocked && Actor::Item::scanConfigAndCheck('teleportAuto_equip')) ? 1 : 0;
-		my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
-		my $skillAvailable = (!$teleportSkillBlocked && $skill_level >= $use_lvl) ? 1 : 0;
+		my $equipAvailable = (!$teleportSkillBlocked && !$teleportSkillSuppressed && Actor::Item::scanConfigAndCheck('teleportAuto_equip')) ? 1 : 0;
+		my $skillAvailable = (!$teleportSkillBlocked && _canUseTeleportSkillAtLevel($use_lvl)) ? 1 : 0;
 
 		return 1 if ($itemAvailable || $chatAvailable || $equipAvailable || $skillAvailable);
 		return 0;
@@ -4407,9 +4469,30 @@ sub canUseTeleport {
 	return 1 if(Actor::Item::scanConfigAndCheck('teleportAuto_equip'));
 
 	# 4 - check for skill
-	my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
-	return 1 if($skill_level >= $use_lvl);
+	return 1 if _canUseTeleportSkillAtLevel($use_lvl);
 
+	return 0;
+}
+
+sub _canUseTeleportSkillAtLevel {
+	my ($use_lvl) = @_;
+	return 0 unless $char;
+	return 0 if _isTeleportSkillSuppressedByStatus();
+
+	my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
+	return 0 if $skill_level < $use_lvl;
+
+	my $skill = Skill->new(handle => 'AL_TELEPORT');
+	my $sp_cost = $skill->getSP($use_lvl);
+	return 1 unless defined $sp_cost;
+
+	return ($char->{sp} // 0) >= $sp_cost;
+}
+
+sub _isTeleportSkillSuppressedByStatus {
+	return 0 unless $char;
+	return 1 if $char->{'muted'};
+	return 1 if $char->statusActive('HEALTHSTATE_SILENCE, EFST_HEALTHSTATE_SILENCE');
 	return 0;
 }
 
@@ -4542,6 +4625,28 @@ sub _targetWillLeaveClientSightSoon {
 	return 0;
 }
 
+# TODO: Sometimes we had no LOS to attack mob and dropped it, but now it is following us and attacking us
+# which means we now have LOS to is, it we should have a way to delete ai_attack_unfail and ai_attack_failedLOS
+# timeouts in these cases.
+sub _targetRecentlyFailedAttack {
+	my ($actor, $target) = @_;
+
+	return 0 unless ($actor && $target);
+
+	my $failed_timeout_key = (
+		exists $actor->{ai_attack_failed_timeout}
+		&& defined $actor->{ai_attack_failed_timeout}
+		&& $actor->{ai_attack_failed_timeout} ne ''
+	)
+		? $actor->{ai_attack_failed_timeout}
+		: 'attack_failed';
+
+	return 1 if (!timeOut($target->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+	return 1 if (!timeOut($target->{$failed_timeout_key}, $timeout{ai_attack_unfail}{timeout}));
+
+	return 0;
+}
+
 ##
 # getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe, $actor, $configPrefix)
 # possibleTargets: reference to an array of monsters' IDs
@@ -4580,6 +4685,8 @@ sub getBestTarget {
 
 	foreach (@{$possibleTargets}) {
 		my $monster = $monsters{$_};
+		next if _targetRecentlyFailedAttack($actor, $monster);
+
 		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $targetPos = calcPosFromPathfinding($field, $monster);
 
@@ -4606,6 +4713,9 @@ sub getBestTarget {
 			push(@noLOSMonsters_pos, $targetPos);
 			next;
 		}
+		
+		my $blockDist = blockDistance($actorPos, $targetPos);
+		next if ($blockDist > $config{attackRouteMaxPathDistance});
 
 		my $dist = adjustedBlockDistance($actorPos, $targetPos);
 		my $priority = monsterPriority($monster->{name}, $monster->{nameID});
@@ -4647,6 +4757,8 @@ sub getBestTarget {
 			}
 			
 			my $dist = scalar @{$solution};
+
+			next if ($dist > $config{attackRouteMaxPathDistance});
 			
 			my $priority = monsterPriority($monster->{name}, $monster->{nameID});
 
@@ -5380,6 +5492,8 @@ sub checkSelfCondition {
 	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle());
 
 	return 0 if ($config{$prefix."_whenNotIdle"} && AI::isIdle());
+
+	my $realMyPos = calcPosFromPathfinding($field, $char);
 	
 	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here in these checks?
 
@@ -5611,21 +5725,17 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
 	if ($config{$prefix . "_notWhileCasting"} > 0) { return 0 if (exists $char->{casting}); }
 	if ($config{$prefix . "_whileCasting"} > 0) { return 0 unless (exists $char->{casting}); }
+	if ($config{$prefix . "_notWhileBeingCasted"}) { return 0 if actorIsBeingCastedOn($char, $config{$prefix . "_notWhileBeingCasted"}); }
+	if ($config{$prefix . "_whileBeingCasted"}) { return 0 unless actorIsBeingCastedOn($char, $config{$prefix . "_whileBeingCasted"}); }
+	if ($config{$prefix . "_whenNoNearPartyMemberCasting"}) { return 0 if nearPartyMemberIsCasting($config{$prefix . "_whenNoNearPartyMemberCasting"}); }
+	if ($config{$prefix . "_whenNearPartyMemberCasting"}) { return 0 unless nearPartyMemberIsCasting($config{$prefix . "_whenNearPartyMemberCasting"}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field->isCity); }
 	if ($config{$prefix . "_inTown"} > 0) { return 0 unless ($field->isCity); }
-    if (defined $config{$prefix . "_monstersCount"}) {
-		my $nowMonsters = $monstersList->size();
-			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
-				for my $monster (@$monstersList) {
-					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) ||
-										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}) ||
-										($config{$prefix."_monstersCountDist"} && !inRange(blockDistance(calcPosition($char), calcPosition($monster)), $config{$prefix."_monstersCountDist"}))
-									);
-                }
-            }
-		return 0 unless (inRange($nowMonsters, $config{$prefix . "_monstersCount"}));
-	}
-	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
+
+	my $check_not_monsters = defined $config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i);
+	my $check_monsters = defined $config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i);
+	
+	if ($check_monsters) {
 		my $exists;
 		foreach (ai_getAggressives()) {
 			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}->name) ||
@@ -5635,6 +5745,38 @@ sub checkSelfCondition {
 			}
 		}
 		return 0 unless $exists;
+	}
+
+	if ($check_not_monsters) {
+		my $exists;
+		foreach (ai_getAggressives()) {
+			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name) ||
+				existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->{nameID})) {
+				return 0;
+			}
+		}
+	}
+	
+    if (defined $config{$prefix . "_monstersCount"}) {
+		my $max_dist = defined $config{$prefix . "_monstersCountDist"} ? $config{$prefix . "_monstersCountDist"} : 0;
+
+		my $found = 0;
+		for my $monster (@$monstersList) {
+			if ( $check_not_monsters && (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) || existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}))) {
+				next;
+			}
+			if ( $check_monsters && !(existsInList($config{$prefix . "_monsters"}, $monster->{name}) || existsInList($config{$prefix . "_monsters"}, $monster->{nameID}))) {
+				next;
+			}
+			if ($max_dist) {
+				my $realMonsterPos = calcPosFromPathfinding($field, $monster);
+				my $dist = blockDistance($realMyPos, $realMonsterPos);
+				next if ($dist > $max_dist);
+			}
+
+			$found++;
+		}
+		return 0 unless (inRange($found, $config{$prefix . "_monstersCount"}));
 	}
 
 	if ($config{$prefix . "_defendMonsters"}) {
@@ -5647,16 +5789,6 @@ sub checkSelfCondition {
 			}
 		}
 		return 0 unless $exists;
-	}
-
-	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
-		my $exists;
-		foreach (ai_getAggressives()) {
-			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->name) ||
-				existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}->{nameID})) {
-				return 0;
-			}
-		}
 	}
 
 	if ($config{$prefix."_inInventory"}) {
@@ -5687,6 +5819,22 @@ sub checkSelfCondition {
 			my $item = $char->cart->getByName($item);
 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
+	}
+
+	if ($config{$prefix."_inCartID"}) {
+		return 0 if (!$char->cart->isReady());
+		foreach my $input (split / *, */, $config{$prefix."_inCartID"}) {
+			my ($itemID,$count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
+			$count = '>0' if $count eq '';
+			my $item = $char->cart->getByNameID($itemID);
+			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+		}
+	}
+
+	if ($config{$prefix."_cartActive"}) {
+		my $wanted = ($config{$prefix."_cartActive"} ? 1 : 0);
+		my $is_active = ($char->cart->isReady()) ? 1 : 0;
+		return 0 if ($wanted != $is_active);
 	}
 
 	if ($config{$prefix."_whenGround"}) {
@@ -5893,6 +6041,8 @@ sub checkPlayerCondition {
 		return 0 if $player->statusActive($config{$prefix . "_whenStatusInactive"});
 	}
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($player->{sitting}); }
+	if ($config{$prefix . "_notWhileBeingCasted"}) { return 0 if actorIsBeingCastedOn($player, $config{$prefix . "_notWhileBeingCasted"}); }
+	if ($config{$prefix . "_whileBeingCasted"}) { return 0 unless actorIsBeingCastedOn($player, $config{$prefix . "_whileBeingCasted"}); }
 
 	# TODO: Optimize this
 	if ($config{$prefix . "_hp"}) {
@@ -6026,9 +6176,9 @@ sub checkPlayerCondition {
 
 sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
-	
-	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime in these checks?
 
+	my $realMyPos = calcPosFromPathfinding($field, $char);
+	
 	if ($config{$prefix . "_hp"}) {
 		if($config{$prefix . "_hp"} =~ /(\d+)%$/) {
 			if($monster->{hp} && $monster->{hp_max}) {
@@ -6065,16 +6215,24 @@ sub checkMonsterCondition {
 	if ($config{$prefix . "_whenStatusInactive"}) {
 		return 0 if $monster->statusActive($config{$prefix . "_whenStatusInactive"});
 	}
+	if ($config{$prefix . "_notWhileBeingCasted"}) {
+		return 0 if actorIsBeingCastedOn($monster, $config{$prefix . "_notWhileBeingCasted"});
+	}
+	if ($config{$prefix . "_whileBeingCasted"}) {
+		return 0 unless actorIsBeingCastedOn($monster, $config{$prefix . "_whileBeingCasted"});
+	}
+
+	my $realMonsterPos = calcPosFromPathfinding($field, $monster);
 
 	if ($config{$prefix."_whenGround"}) {
-		return 0 unless whenGroundStatus(calcPosition($monster), $config{$prefix."_whenGround"});
+		return 0 unless whenGroundStatus($realMonsterPos, $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus(calcPosition($monster), $config{$prefix."_whenNotGround"});
+		return 0 if whenGroundStatus($realMonsterPos, $config{$prefix."_whenNotGround"});
 	}
 
 	if ($config{$prefix."_dist"}) {
-		return 0 unless inRange(blockDistance(calcPosition($char), calcPosition($monster)), $config{$prefix."_dist"});
+		return 0 unless inRange(blockDistance($realMyPos, $realMonsterPos), $config{$prefix."_dist"});
 	}
 
 	if ($config{$prefix."_deltaHp"}){
@@ -7022,7 +7180,7 @@ sub print_callers {
             line     => $info[2],
             sub_name => $sub_name,
         };
-        last if @callers >= 7;
+        last if @callers >= 15;
         $level++;
     }
     

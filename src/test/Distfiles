@@ -32,6 +32,7 @@ SKILL_id_handle.txt
 skillnametable.txt
 skillssp.txt
 SkillTest.pm
+TeleportFallbackTest.pm
 TaskChainedTest.pm
 TaskManagerTest.pm
 TaskTalkNPCTest.pm

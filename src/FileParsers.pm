@@ -2031,10 +2031,11 @@ sub updatePortalLUT {
 	Plugins::callHook('updatePortalLUT', $plugin_args);
 
 	unless ($plugin_args->{return}) {
-		open FILE, ">>:utf8", $file;
-		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY\n";
-		close FILE;
+		return replacePortalLUT($file, undef, undef, undef, undef, undef, undef,
+			"$sourceMap $sourceX $sourceY $destMap $destX $destY");
 	}
+
+	return $plugin_args->{return};
 }
 
 #Add: NPC talk Sequence
@@ -2045,10 +2046,75 @@ sub updatePortalLUT2 {
 	Plugins::callHook('updatePortalLUT2', $plugin_args);
 
 	unless ($plugin_args->{return}) {
-		open FILE, ">>:utf8", $file;
-		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY $steps\n";
-		close FILE;
+		return replacePortalLUT($file, undef, undef, undef, undef, undef, undef,
+			"$sourceMap $sourceX $sourceY $destMap $destX $destY $steps");
 	}
+
+	return $plugin_args->{return};
+}
+
+sub replacePortalLUT {
+	my ($file,
+		$oldSourceMap, $oldSourceX, $oldSourceY,
+		$oldDestMap, $oldDestX, $oldDestY,
+		$new_line) = @_;
+	return 0 unless defined $new_line;
+
+	open my $fh, '<:utf8', $file or return 0;
+	my @lines = <$fh>;
+	close $fh;
+	chomp @lines;
+
+	my $desired_normalized = $new_line;
+	$desired_normalized =~ s/^\s+|\s+$//g;
+
+	my $old_regex;
+	if (defined $oldSourceMap && defined $oldSourceX && defined $oldSourceY
+		&& defined $oldDestMap && defined $oldDestX && defined $oldDestY) {
+		$old_regex = qr/^(\s*)\Q$oldSourceMap\E\s+\Q$oldSourceX\E\s+\Q$oldSourceY\E\s+\Q$oldDestMap\E\s+\Q$oldDestX\E\s+\Q$oldDestY\E(\s.*)?$/;
+	}
+
+	my @new_lines;
+	my $insert_at;
+	my $line_to_insert = $new_line;
+	for my $line (@lines) {
+		if ($line =~ /^\s*#/ || $line =~ /^\s*$/) {
+			push @new_lines, $line;
+			next;
+		}
+
+		if ($old_regex && $line =~ $old_regex) {
+			$insert_at = scalar @new_lines if !defined $insert_at;
+			my $leading = $1 // '';
+			my $trailing = $2 // '';
+			$line_to_insert = $leading . $desired_normalized . $trailing if $line_to_insert eq $new_line;
+			next;
+		}
+
+		my $normalized_line = $line;
+		$normalized_line =~ s/^\s+|\s+$//g;
+		if ($normalized_line eq $desired_normalized) {
+			$insert_at = scalar @new_lines if !defined $insert_at;
+			$line_to_insert = $line if $line_to_insert eq $new_line;
+			next;
+		}
+
+		push @new_lines, $line;
+	}
+
+	$insert_at = scalar @new_lines if !defined $insert_at;
+	splice(@new_lines, $insert_at, 0, $line_to_insert);
+
+	my $original_serialized = join("\n", @lines);
+	my $new_serialized = join("\n", @new_lines);
+	if ($original_serialized eq $new_serialized) {
+		return 2;
+	}
+
+	open my $wh, '>:utf8', $file or return 0;
+	print {$wh} $new_serialized . "\n";
+	close $wh;
+	return 1;
 }
 
 sub updateNPCLUT {

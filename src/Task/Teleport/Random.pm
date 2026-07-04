@@ -44,10 +44,11 @@ sub getInventoryItem {
 # return 1 if actor has teleport skill lvl
 sub canUseSkill {
 	my ($self) =  @_;
-	return 0 if ($self->{actor}->{muted});
+	return 0 if $self->isTeleportSkillSuppressedByStatus;
 	return 0 if Misc::isTeleportSkillBlockedOnMap($field->baseName);
 	return 0 if defined $config{'teleportAuto_useSkill'} && $config{'teleportAuto_useSkill'} == 0;
-	return $self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT')) ? 1 : 0;
+	return 0 unless $self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT'));
+	return $self->hasEnoughSPForTeleportSkill(1);
 }
 
 # return the number of items necessary to teleport

@@ -31,7 +31,6 @@ use Network;
 use Plugins;
 use Misc qw(canUseTeleport portalExists suspendRouteSource);
 use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding actorFinishedMovement);
-use Utils::PathFinding;
 use Utils::DataStructures qw(hashSafeGetValue);
 use Utils::Exceptions;
 use AI qw(ai_useTeleport);
@@ -185,7 +184,7 @@ sub iterate {
 		debug "Map Router has finished traversing the map solution\n", "map_route";
 
 	} elsif ( $field->baseName ne $self->{mapSolution}[0]{map}
-	     || ( $self->{mapChanged} && !$self->{teleport} ) ) {
+	     || ( $self->{mapChanged} && (!$self->{teleport} || $self->_hasReachedSameMapPortalDestination($self->{mapSolution}[0])) ) ) {
 		# Solution Map does not match current map
 		debug "Current map " . $field->baseName . " does not match solution [ $self->{mapSolution}[0]{portal} ].\n", "map_route";
 		delete $self->{substage};
@@ -420,7 +419,8 @@ sub iterate {
 								maxTime => $self->{maxTime},
 								avoidWalls => $self->{avoidWalls},
 								randomFactor => $self->{randomFactor},
-								useManhattan => $self->{useManhattan}
+								useManhattan => $self->{useManhattan},
+								isPortalRoute => 1
 							);
 							$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 							$self->setSubtask($task);
@@ -664,7 +664,8 @@ sub iterate {
 			warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "map_route";
 			my %params = (
 				field => $field,
-				solution => \@solution
+				solution => \@solution,
+				isPortalRoute => 1,
 			);
 			$params{$_} = $self->{guess_portal}{pos}{$_} for qw(x y);
 			$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls randomFactor useManhattan);
@@ -672,7 +673,7 @@ sub iterate {
 			$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 			$self->setSubtask($task);
 
-		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 && actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1) ) {
+		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= 1 && actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1) ) {
 				if (!exists $timeout{ai_portal_give_up}{time}) {
 					$timeout{ai_portal_give_up}{time} = time;
 					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
@@ -704,67 +705,66 @@ sub iterate {
 		} else {
 			my $walk = 1;
 
-			# Teleport until we're close enough to the portal
-			if (!defined $self->{teleport} || $self->{mapChanged}) {
-				$self->{teleport} = $self->isRouteTeleportAllowedOnMap($field->baseName) ? $config{route_teleport} : 0;
-			}
-
-			if ($self->{teleport} && !$field->isCity
-			&& !existsInList($config{route_teleport_notInMaps}, $field->baseName)
-			&& ( !$config{route_teleport_maxTries} || $self->{teleportTries} <= $config{route_teleport_maxTries} )) {
-				my $minDist = $config{route_teleport_minDistance};
-
-				if ($self->{mapChanged}) {
-					undef $self->{sentTeleport};
-					undef $self->{mapChanged};
-				}
-
-				if (!$self->{sentTeleport}) {
-					# Find first inter-map portal
-					my $portal;
-					for my $x (@{$self->{mapSolution}}) {
-						$portal = $x;
-						last unless _isSameMapPortalStep($x);
-					}
-
-					my $dist = new PathFinding(
-						start => $self->{actor}{pos_to},
-						dest => $portal->{pos},
-						field => $field
-					)->runcount;
-					debug "Distance to portal ($portal->{portal}) is $dist\n", "map_route";
-
-					if ($dist < 0 || $dist > $minDist) {
-						if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
-							debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "map_route";
-						} else {
-							message TF("Attempting to teleport near portal, try #%s\n", ($self->{teleportTries} + 1)), "map_route";
-							if (!canUseTeleport(1)) {
-								$self->{teleport} = 0;
-							} else {
-								ai_useTeleport(1);
-								$walk = 0;
-								$self->{sentTeleport} = 1;
-								$self->{teleportTime} = time;
-								$self->{teleportTries}++;
-							}
-						}
-					}
-
-				} elsif (timeOut($self->{teleportTime}, 4)) {
-					debug TF("Unable to teleport on map %s; falling back to walking on this map.\n", $field->baseName), "map_route";
-					$self->{noRouteTeleportMaps}{$field->baseName} = time;
-					$self->{teleport} = 0;
-					delete $self->{sentTeleport};
-					delete $self->{teleportTime};
-				} else {
-					$walk = 0;
-				}
-			}
-
 			if ($walk) {
 				if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos} ) ) {
 					# Portal is reachable from current position
+
+					# Teleport until we're close enough to the portal
+					if (!defined $self->{teleport} || $self->{mapChanged}) {
+						$self->{teleport} = $self->isRouteTeleportAllowedOnMap($field->baseName) ? $config{route_teleport} : 0;
+					}
+
+					if ($self->{teleport} && !$field->isCity
+					&& !existsInList($config{route_teleport_notInMaps}, $field->baseName)
+					&& ( !$config{route_teleport_maxTries} || $self->{teleportTries} <= $config{route_teleport_maxTries} )) {
+						my $minDist = $config{route_teleport_minDistance};
+
+						if ($self->{mapChanged}) {
+							undef $self->{sentTeleport};
+							undef $self->{mapChanged};
+						}
+
+						if (!$self->{sentTeleport}) {
+							# Find first inter-map portal
+							my $portal;
+							for my $x (@{$self->{mapSolution}}) {
+								$portal = $x;
+								last unless _isSameMapPortalStep($x);
+							}
+							
+							my $dist = scalar @solution;
+
+							if ($dist > $minDist) {
+								debug "[MapRoute] [Teleport] Distance to portal ($portal->{portal}) is $dist\n", "map_route";
+								if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
+									message "[MapRoute] [Teleport] Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "map_route";
+								} else {
+									message TF("[MapRoute] [Teleport] Attempting to teleport near portal (dist %s > max %s), try #%s\n", $dist, $minDist, ($self->{teleportTries} + 1)), "map_route";
+									if (!canUseTeleport(1)) {
+										$self->{teleport} = 0;
+									} else {
+										ai_useTeleport(1);
+										$walk = 0;
+										$self->{sentTeleport} = 1;
+										$self->{teleportTime} = time;
+										$self->{teleportTries}++;
+									}
+								}
+							}
+
+						} elsif (timeOut($self->{teleportTime}, 4)) {
+							debug TF("[MapRoute] [Teleport] Unable to teleport on map %s; falling back to walking on this map.\n", $field->baseName), "map_route";
+							$self->{noRouteTeleportMaps}{$field->baseName} = time;
+							$self->{teleport} = 0;
+							delete $self->{sentTeleport};
+							delete $self->{teleportTime};
+						} else {
+							$walk = 0;
+						}
+					}
+
+					return if ($walk == 0);
+
 					# >> Then "route" to it
 					debug "Portal route within same map.\n", "map_route";
 					my %plugin_args;
@@ -781,7 +781,8 @@ sub iterate {
 						maxTime => $self->{maxTime},
 						avoidWalls => $self->{avoidWalls},
 						randomFactor => $self->{randomFactor},
-						useManhattan => $self->{useManhattan}
+						useManhattan => $self->{useManhattan},
+						isPortalRoute => 1
 					);
 					$task->{stopWhenMapChanged} = 1 if (_isSameMapPortalStep($self->{mapSolution}[0]));
 					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
@@ -820,6 +821,38 @@ sub _isSameMapPortalStep {
 	return $from_map eq $to_map;
 }
 
+sub _sameMapPortalDestination {
+	my ($step) = @_;
+	return unless _isSameMapPortalStep($step);
+	return unless defined $step->{portal};
+
+	my (undef, $to) = split(/=/, $step->{portal}, 2);
+	return unless defined $to;
+
+	my ($dest_map, $dest_x, $dest_y) = split(/\s+/, $to, 3);
+	return unless (defined $dest_map && defined $dest_x && defined $dest_y);
+
+	return {
+		map => $dest_map,
+		x   => $dest_x,
+		y   => $dest_y,
+	};
+}
+
+sub _hasReachedSameMapPortalDestination {
+	my ($self, $step) = @_;
+	my $dest = _sameMapPortalDestination($step);
+	return 0 unless $dest;
+	return 0 unless ($field && $field->baseName eq $dest->{map});
+
+	for my $pos ($self->{actor}{pos}, $self->{actor}{pos_to}) {
+		next unless $pos;
+		return 1 if blockDistance($pos, $dest) <= 3;
+	}
+
+	return 0;
+}
+
 sub _currentRouteSourceID {
 	my ($self) = @_;
 	return join(' ',
@@ -836,6 +869,33 @@ sub _currentPortalSourceEntry {
 	return unless exists $routeSources->{$nodeID};
 	return if Misc::isRouteSourceRemoved($routeSources->{$nodeID});
 	return $routeSources->{$nodeID}{source};
+}
+
+sub _currentPortalUpdateCandidate {
+	my ($self) = @_;
+	return unless ($self->{mapSolution}
+		&& @{$self->{mapSolution}}
+		&& $self->{mapSolution}[0]{portal}
+		&& !$self->{mapSolution}[0]{steps});
+
+	my $nodeID = $self->_currentRouteSourceID();
+	return unless exists $portals_lut{$nodeID};
+
+	my (undef, $to) = split(/=/, $self->{mapSolution}[0]{portal}, 2);
+	return unless defined $to;
+
+	my ($dest_map, $dest_x, $dest_y) = split(/\s+/, $to, 3);
+	return unless (defined $dest_map && defined $dest_x && defined $dest_y);
+
+	return {
+		oldSourceMap => $self->{mapSolution}[0]{map},
+		oldSourceX   => $self->{mapSolution}[0]{pos}{x},
+		oldSourceY   => $self->{mapSolution}[0]{pos}{y},
+		oldDestMap   => $dest_map,
+		oldDestX     => $dest_x,
+		oldDestY     => $dest_y,
+		time         => time,
+	};
 }
 
 sub _suspendCurrentRouteSourceForRecalc {
@@ -1009,6 +1069,12 @@ sub subtaskDone {
 sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
+
+	if ($config{portalUpdatePosition}) {
+		my $candidate = $self->_currentPortalUpdateCandidate();
+		$ai_v{portalUpdatePosition_candidate} = $candidate if $candidate;
+	}
+
 	$self->{mapChanged} = 1;
 
 	my $subtask = $self->getSubtask();

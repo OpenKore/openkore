@@ -51,11 +51,13 @@ public:
 				throw ThreadException("Cannot initialize pthread attribute.");
 			}
 			if (pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED) != 0) {
+				pthread_attr_destroy(&attr);
 				throw ThreadException("Cannot set pthread detach state.");
 			}
 			ref();
 			if (pthread_create(&thread, &attr, entry, this) != 0) {
 				unref();
+				pthread_attr_destroy(&attr);
 				throw ThreadException("Cannot create a thread.");
 			}
 			pthread_attr_destroy(&attr);

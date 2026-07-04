@@ -132,6 +132,9 @@ private:
 
 public:
 	Private(const char *url, const char *postData, int postDataSize, const char *userAgent) {
+		pthread_attr_t attr;
+		bool attrInitialized = false;
+
 		refCount = 1;
 		this->url = NULL;
 		this->postData = NULL;
@@ -148,11 +151,11 @@ public:
 			mutexInitialized = true;
 		}
 
-		pthread_attr_t attr;
 		if (pthread_attr_init(&attr) != 0) {
 			error = "Cannot create thread attribute object.";
 			return;
 		}
+		attrInitialized = true;
 		if (pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED) != 0) {
 			pthread_attr_destroy(&attr);
 			error = "Cannot set thread attribute to detached.";
@@ -169,6 +172,7 @@ public:
 				memcpy(this->postData, postData, postDataSize);
 				this->postDataSize = postDataSize;
 			} else {
+				pthread_attr_destroy(&attr);
 				error = "Cannot allocate memory for POST data.";
 				return;
 			}
@@ -181,10 +185,12 @@ public:
 		ref();
 		if (pthread_create(&thread, &attr, threadEntry, this) != 0) {
 			unref();
-			pthread_attr_destroy(&attr);
 			status = HTTP_READER_ERROR;
 			error = "Cannot create a thread.";
 			size = -2;
+		}
+		if (attrInitialized) {
+			pthread_attr_destroy(&attr);
 		}
 	}
 

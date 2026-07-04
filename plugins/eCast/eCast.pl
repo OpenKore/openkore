@@ -17,6 +17,7 @@
 # - monsterSkill
 #
 # Extra checks provided by this plugin:
+# - Blocks skill casts while self is under statuses that prevent casting
 # - target_Element
 # - target_notElement
 # - target_Race
@@ -101,6 +102,7 @@ use constant {
 Plugins::register(PLUGIN_NAME, 'Extends Skill Selection and Placement', \&onUnload);
 
 my $hooks = Plugins::addHooks(
+	['checkSelfCondition', \&extendedSelfCheck, undef],
 	['checkMonsterCondition', \&extendedCheck, undef],
 	['packet_skilluse', \&onPacketSkillUse, undef],
 	['packet/skill_use_no_damage', \&onPacketSkillUseNoDamage, undef],
@@ -135,9 +137,41 @@ my %monster_ai_mode_flags = (
 	isAIMode_TakesFixed_1_Damage_Magic  => 'isAIMode_TakesFixed_1_Damage_Magic',
 	isAIMode_TakesFixed_1_Damage_None   => 'isAIMode_TakesFixed_1_Damage_None',
 );
+my @self_cast_blocking_statuses = qw(
+	EFST_HANDICAPSTATE_DEEPSILENCE
+	HEALTHSTATE_SILENCE
+	EFST_HEALTHSTATE_SILENCE
+	EFST_BODYSTATE_STUN
+	EFST_BODYSTATE_FREEZING
+	EFST_BODYSTATE_STONECURSE
+	EFST_HANDICAPSTATE_LIGHTNINGSTRIKE
+	EFST_HANDICAPSTATE_CRYSTALLIZATION
+	EFST_BODYSTATE_SLEEP
+);
 
 sub onUnload {
 	Plugins::delHooks($hooks);
+}
+
+sub extendedSelfCheck {
+	my (undef, $args) = @_;
+	my $prefix = $args->{prefix};
+	
+	return unless defined $prefix;
+	return unless $prefix =~ /^(?:attackSkillSlot|attackComboSlot|useSelf_skill|partySkill|monsterSkill)_/;
+	return unless $char;
+	
+	my @active_blockers = grep { $char->statusActive($_) } @self_cast_blocking_statuses;
+	return unless @active_blockers;
+	
+	debug(
+		"Will not cast $config{$prefix} because self has cast-blocking status(es): "
+		. join(', ', @active_blockers)
+		. "\n",
+		'eCast',
+		1
+	);
+	$args->{return} = 0;
 }
 
 # TODO: Revisar

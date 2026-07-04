@@ -488,6 +488,68 @@ sub initNetworking {
 	Network::PaddedPackets::init();
 }
 
+sub _trashCorruptedPortalsLOS {
+	my $portals_los_file = Settings::getTableFilename("portalsLOS.txt");
+	return 0 unless defined $portals_los_file && -f $portals_los_file;
+
+	open my $fh, '<:raw', $portals_los_file or do {
+		warning TF("Unable to inspect '%s' for portal LOS corruption: %s\n", $portals_los_file, $!);
+		return 0;
+	};
+
+	my $line_number = 0;
+	my $corrupted_reason;
+	while (my $line = <$fh>) {
+		$line_number++;
+		$line =~ s/\x{FEFF}//g;
+		next if $line =~ /^#/;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		next if $line eq '';
+
+		my @args = split /\s/, $line;
+		if (@args < 7) {
+			$corrupted_reason = "too few tokens";
+			last;
+		}
+		if ((@args - 3) % 4 != 0) {
+			$corrupted_reason = "destination tuple count is not divisible by 4";
+			last;
+		}
+		if ($args[1] !~ /^\d+$/ || $args[2] !~ /^\d+$/) {
+			$corrupted_reason = "source coordinates are not numeric";
+			last;
+		}
+
+		for (my $i = 3; $i < @args; $i += 4) {
+			if ($args[$i + 1] !~ /^\d+$/ || $args[$i + 2] !~ /^\d+$/) {
+				$corrupted_reason = "destination coordinates are not numeric";
+				last;
+			}
+			if ($args[$i + 3] !~ /^-?\d+$/) {
+				$corrupted_reason = "LOS distance is not numeric";
+				last;
+			}
+		}
+		last if $corrupted_reason;
+	}
+	close $fh;
+
+	return 0 unless $corrupted_reason;
+
+	warning TF("Detected corrupted entry in '%s' at line %s (%s). Removing the file so portals can be recompiled from scratch.\n",
+		$portals_los_file, $line_number, $corrupted_reason);
+
+	undef %portals_los;
+	if (!unlink $portals_los_file) {
+		warning TF("Unable to remove corrupted portal LOS file '%s': %s. A rebuild will still overwrite it.\n",
+			$portals_los_file, $!);
+	}
+
+	return 1;
+}
+
 sub initPortalsDatabase {
 	# $config{portalCompile}
 	# -1: skip compile
@@ -498,8 +560,10 @@ sub initPortalsDatabase {
 
 	return if $config{portalCompile} < 0;
 
+	my $discarded_corrupted_portals_los = _trashCorruptedPortalsLOS();
+
 	Log::message(T("Checking for new portals... "));
-	if (compilePortals_check()) {
+	if ($discarded_corrupted_portals_los || compilePortals_check()) {
 		Log::message(T("found new portals!\n"));
 		my $choice = $config{portalCompile} ? 0 : $interface->showMenu(
 			T("New portals have been added to the portals database. " .
@@ -1029,35 +1093,45 @@ sub mainLoop_initialized {
 
 	Misc::checkValidity("mainLoop_part2.4");
 
-	# Set interface title
-	my $charName;
-	my $title;
-	$charName = "$char->{name}: " if ($char);
-	if ($net->getState() == Network::IN_GAME) {
-		my ($basePercent, $jobPercent, $weight, $pos);
+	if (timeOut($timeout{setTitle})) {
+		$timeout{setTitle}{time} = time;
 
-		assert(defined $char);
-		$basePercent = sprintf("%.2f", $char->exp_base_percent);
-		$jobPercent = sprintf("%.2f",$char->exp_job_percent);
-		$weight = int($char->weight_percent) . "%";
-		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
-		my $aiSeq = join(",", @ai_seq);
-		# Translation Comment: Interface Title with character status
-		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
-			$charName, $char->{lv}, $basePercent . '%',
-			$char->{lv_job}, $jobPercent . '%',
-			$weight, $pos, $aiSeq, $Settings::NAME);
+		# Set interface title
+		my $charName;
+		my $title;
+		$charName = "$char->{name}: " if ($char);
+		if ($net->getState() == Network::IN_GAME) {
+			my ($basePercent, $jobPercent, $weight, $pos);
 
-	} elsif ($net->getState() == Network::NOT_CONNECTED) {
-		# Translation Comment: Interface Title
-		$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
-	} else {
-		# Translation Comment: Interface Title
-		$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
+			assert(defined $char);
+			$basePercent = sprintf("%.2f", $char->exp_base_percent);
+			$jobPercent = sprintf("%.2f",$char->exp_job_percent);
+			$weight = int($char->weight_percent) . "%";
+			$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
+			my $aiSeq = join(",", @ai_seq);
+			# Translation Comment: Interface Title with character status
+			$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
+				$charName, $char->{lv}, $basePercent . '%',
+				$char->{lv_job}, $jobPercent . '%',
+				$weight, $pos, $aiSeq, $Settings::NAME);
+
+		} elsif ($net->getState() == Network::NOT_CONNECTED) {
+			# Translation Comment: Interface Title
+			$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
+		} else {
+			# Translation Comment: Interface Title
+			$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
+		}
+
+		my %args = (return => $title);
+		Plugins::callHook('mainLoop::setTitle',\%args);
+
+		if (%ai_v && exists $ai_v{temp} && exists $ai_v{temp}{lastTitle} && defined $ai_v{temp}{lastTitle} && $ai_v{temp}{lastTitle} eq $args{return}) {
+			# Title is the same as last time, skip setting it again to avoid unnecessary overhead.
+			return;
+		}
+		$interface->title($args{return});
 	}
-	my %args = (return => $title);
-	Plugins::callHook('mainLoop::setTitle',\%args);
-	$interface->title($args{return});
 
 	Misc::checkValidity("mainLoop_part3");
 	Benchmark::end("mainLoop_part3") if DEBUG;

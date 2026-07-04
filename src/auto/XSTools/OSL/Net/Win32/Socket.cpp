@@ -103,7 +103,7 @@ namespace _Intern {
 		virtual void
 		close() {
 			if (!closed) {
-				shutdown(fd, SD_RECEIVE);
+				shutdown(fd, SD_SEND);
 				closed = true;
 			}
 		}
@@ -127,6 +127,8 @@ namespace _Intern {
 
 
 	WinSocket::WinSocket(const char *address, unsigned short port) {
+		in = NULL;
+		out = NULL;
 		fd = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if (fd == INVALID_SOCKET) {
 			char message[100];
@@ -165,23 +167,49 @@ namespace _Intern {
 			throw SocketException(message, error);
 		}
 
-		in = new InStream(fd);
-		out = new OutStream(fd);
+		construct(fd);
 	}
 
 	WinSocket::WinSocket(SOCKET sock) {
 		assert(sock != INVALID_SOCKET);
-		fd = sock;
-		in = new InStream(fd);
-		out = new OutStream(fd);
+		in = NULL;
+		out = NULL;
+		construct(sock);
+	}
+
+	void
+	WinSocket::construct(SOCKET fd) {
+		this->fd = fd;
+		try {
+			in = new InStream(fd);
+			out = new OutStream(fd);
+		} catch (...) {
+			if (in != NULL) {
+				in->unref();
+				in = NULL;
+			}
+			if (out != NULL) {
+				out->unref();
+				out = NULL;
+			}
+			closesocket(fd);
+			this->fd = INVALID_SOCKET;
+			throw;
+		}
 	}
 
 	WinSocket::~WinSocket() {
-		in->close();
-		in->unref();
-		out->close();
-		out->unref();
-		closesocket(fd);
+		if (in != NULL) {
+			in->close();
+			in->unref();
+		}
+		if (out != NULL) {
+			out->close();
+			out->unref();
+		}
+		if (fd != INVALID_SOCKET) {
+			closesocket(fd);
+		}
 	}
 
 	InputStream *

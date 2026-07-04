@@ -490,6 +490,15 @@ sub main {
 	}
 
 	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
+	my $future_wait_timeout = $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'};
+	my $future_wait_max_time = $future_wait_timeout ? ($future_wait_timeout * 3) : 0;
+
+	if ($youHitTarget) {
+		delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
+		delete $args->{ai_attack_allowed_waitForTarget_disabled_until_hit};
+	} elsif ($canAttack != 0 && $canAttack != -1) {
+		delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
+	}
 	
 	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
 	# If it is close enough delete the ai_attack_failed_waitForAgressive_give_up keys and loop attack logic
@@ -621,16 +630,30 @@ sub main {
 
 	if (
 		!$found_action &&
-		$timeout{'ai_attack_allowed_waitForTarget'}{'timeout'} &&
+		$future_wait_timeout &&
 		($canAttack == 0 || $canAttack == -1) &&
 		!$hitTarget_when_not_possible
 	) {
-		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}));
+		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $future_wait_timeout));
 		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance}, $config{clientSight});
-		if ($futurecanAttack) {
-			debug TF("[SlaveAttack] %s currently cannot attack, but will be able to in up to [%s secs], waiting. %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)])\n",
-				$slave, $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'}, $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}), 'ai_attack';
-			$found_action = 1;
+		if ($futurecanAttack == 1 && !$args->{ai_attack_allowed_waitForTarget_disabled_until_hit}) {
+			$args->{ai_attack_allowed_waitForTarget_give_up}{timeout} = $future_wait_max_time if !$args->{ai_attack_allowed_waitForTarget_give_up}{timeout};
+			$args->{ai_attack_allowed_waitForTarget_give_up}{time} = time if !$args->{ai_attack_allowed_waitForTarget_give_up}{time};
+
+			my $waited = time - $args->{ai_attack_allowed_waitForTarget_give_up}{time};
+			if (timeOut($args->{ai_attack_allowed_waitForTarget_give_up})) {
+				delete $args->{ai_attack_allowed_waitForTarget_give_up}{time};
+				$args->{ai_attack_allowed_waitForTarget_disabled_until_hit} = 1;
+				warning TF("[SlaveAttack] Predictive wait timed out after [%s/%s secs]; disabling predictive wait until %s hits this target again. currentState %s, attackMethod %s, %s (%d %d), target %s real(%d %d) [(%d %d) -> (%d %d)], future(%d %d), blockDist %d, clientDist %d, maxDistance %d.\n",
+					$waited, $future_wait_max_time, $slave, $canAttack_fail_string, $args->{attackMethod}{type}, $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $futureMonsterPos->{x}, $futureMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			} else {
+				my $remaining = $future_wait_max_time - $waited;
+				debug TF("[SlaveAttack] Predictive wait active: currentState %s, futureState OK in [%s secs], waited [%s/%s], remaining [%s], attackMethod %s, %s (%d %d), target %s real(%d %d) [(%d %d) -> (%d %d)], future(%d %d), blockDist %d, clientDist %d, maxDistance %d.\n",
+					$canAttack_fail_string, $future_wait_timeout, $waited, $future_wait_max_time, $remaining, $args->{attackMethod}{type}, $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $futureMonsterPos->{x}, $futureMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+				$found_action = 1;
+			}
+		} else {
+			delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
 		}
 	}
 

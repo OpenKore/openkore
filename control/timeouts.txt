@@ -4,6 +4,7 @@
 # The value of each variable is reffered as "x".
 
 # Server connection timeouts
+# Wait x seconds for each login-stage reply before treating the connection as stalled.
 master 12
 gamelogin 12
 charlogin 12
@@ -19,6 +20,8 @@ reconnect_backoff 30,60,120,180,300,600,600,900,900,1800
 # Add a random amount of seconds to reconnect time, up to a maximum of reconnect_random seconds.
 reconnect_random 20
 
+setTitle 0.2
+
 # Wait x seconds for a poseidon reply before disconnecting
 # Ignore this if you don't use Poseidon Server
 poseidon_wait_reply 15
@@ -26,21 +29,30 @@ poseidon_wait_reply 15
 # Activate AI after x seconds after the map's loaded
 ai 1
 
+# Retry move commands every x seconds, and give up if movement does not progress within x seconds.
 ai_move_retry 0.4
 ai_move_giveup 1.2
 
+# How often to prune actors whose reported positions drift implausibly far from our predicted location.
+avoidDistantActors 1
+
+# Wait x seconds before trying to resume standby behavior for homunculus and mercenary AI.
 ai_homunculus_standby 2
 ai_mercenary_standby 2
 
 # Send the attack packet every x seconds, if it hasn't been send already
 ai_attack 1
+# Homunculus and mercenary attack packet cadence.
 ai_homunculus_attack 1
 ai_mercenary_attack 1
 
 ai_attack_after_skill 0.5
+# Wait x seconds after finishing a skill before regular attack logic resumes.
 
+# Delay between short melee re-engage attempts while dancing around a target.
 ai_homunculus_dance_attack_melee 0.2
 
+# Delay between dance-style re-engage attempts for mercenary melee and ranged attacks.
 ai_mercenary_dance_attack_melee 0.2
 ai_mercenary_dance_attack_ranged 0.2
 
@@ -56,6 +68,7 @@ ai_attack_failedLOS 12
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 6
 
+# Every x seconds, let homunculus and mercenary AI look for a valid monster target.
 ai_homunculus_check_monster_auto 0.2
 ai_mercenary_check_monster_auto 0.2
 
@@ -71,11 +84,14 @@ ai_attack_main 0.1
 ai_homunculus_attack_main 0.1
 ai_mercenary_attack_main 0.1
 
+# How far ahead to predict target reachability when deciding whether to keep chasing/attacking.
 ai_future_reachability_lookup 0.7
 
+# Time budget before trying anti-stuck recovery, and cooldown before retrying a previously failed target.
 ai_attack_unstuck 2.75
 ai_attack_unfail 12
 
+# Time to wait before route logic considers itself stuck and tries to recover.
 ai_route_unstuck 2
 
 # Pause for the specified number of seconds after taking something,
@@ -95,6 +111,7 @@ ai_take .4
 
 # Give up if unable to pickup item after x seconds
 ai_take_giveup 3
+# Give up gathering a specific item after x seconds.
 ai_items_gather_giveup 3
 
 # Every x seconds, check items for gathering
@@ -109,6 +126,15 @@ ai_transfer_items 0.15
 # Delay between map_loaded and send ignoreAll command
 ai_ignoreAll 3
 
+# Delay before executing queued look packets.
+ai_look 0.2
+
+
+# Delay auto-accepting or auto-refusing party invites.
+ai_partyAuto 3
+
+# Follow recovery, actor info refresh, courtesy replies, auto-deal handling,
+# automatic invite denials, respawn delay, and stale actor cleanup timers.
 ai_follow_lost_end 10
 ai_getInfo 2
 ai_thanks_set 8
@@ -139,6 +165,7 @@ ai_sit_wait 0
 # hp/sp sufficiency, do so when the specified number of seconds elapsed
 ai_safe_stand_up 2
 
+# Skill/item/equipment action cadence and their give-up windows.
 ai_skill_use 0.75
 ai_skill_use_giveup 1
 ai_item_use_auto 0.5
@@ -146,6 +173,7 @@ ai_item_equip_auto 0.75
 ai_equipAuto_skilluse_giveup 5
 ai_equip_giveup 2
 
+# Delays used by the different auto-teleport triggers.
 ai_teleport 1
 ai_teleport_away 3
 ai_teleport_idle 4
@@ -153,9 +181,11 @@ ai_teleport_portal 2
 ai_teleport_hp 3
 ai_teleport_safe_force 120
 
+# Retry cadence and post-request delay for teleport attempts.
 ai_teleport_retry 0.5
 ai_teleport_delay 0.5
 
+# Wait x seconds for a portal transition to complete before continuing route logic.
 ai_portal_wait 0.5
 
 # These timeouts are used in missing portals logic
@@ -167,11 +197,14 @@ ai_route_calcRoute 1
 ai_route_npcTalk 10
 
 # These timeouts are used in npc conversation (Task::TalkNPC)
+ai_npc_talk_wait_to_answer 1.5
 ai_npc_talk_wait_after_close_to_cancel 0.5
 ai_npc_talk_wait_after_cancel_to_destroy 0.5
 
+# Wait x seconds before sending the next "continue" step in an NPC dialog.
 ai_npc_talk_wait_before_continue 0.7
 
+# Auto-buy sequence pacing and NPC/packet give-up windows.
 ai_buyAuto 5
 ai_buyAuto_wait 2
 ai_buyAuto_wait_giveup_npc 15
@@ -179,11 +212,13 @@ ai_buyAuto_wait_before_buy 2
 ai_buyAuto_wait_after_packet_giveup 15
 ai_buyAuto_wait_after_restart 2
 
+# Auto-sell sequence pacing and NPC/packet give-up windows.
 ai_sellAuto 2
 ai_sellAuto_wait_giveup_npc 15
 ai_sellAuto_wait_before_sell 2
 ai_sellAuto_wait_after_packet_giveup 15
 
+# Auto-storage sequence pacing, periodic checks, item-use delay, and overall give-up windows.
 ai_storageAuto 2
 ai_storageAuto_getAutoCheck 2
 ai_storageAuto_giveup 15
@@ -194,6 +229,7 @@ ai_cartAuto 0.15
 
 # delay between checking if we need to do any cartAuto functions
 ai_cartAutoCheck 3
+# Avoidance checks, vending/shop actions, and buyer shop polling intervals.
 ai_avoidcheck 0.5
 ai_shop 4
 ai_shop_useskill_delay 5
@@ -208,6 +244,7 @@ ai_route_escape 8
 # Don't change the following timeouts!
 ai_sync 12
 
+# xKore sync, keepalive, welcome text, and patch-server wait timers.
 injectSync 5
 injectKeepAlive 12
 welcomeText 4
@@ -216,9 +253,14 @@ patchserver 120
 # Time to wait before load map in xKore mode
 ai_clientSuspend 1
 
+# Fine-grained delays used by route position prediction and meeting-position reachability checks.
 ai_route_position_prediction_delay 0.05
 meetingPosition_future_reachability_lookup 0.3
 
 # If a target is predicted to move into attack range/LOS soon, wait up to x seconds
 # before rerouting or dropping it. Shared by player and slave attack AI.
 ai_attack_allowed_waitForTarget 0.3
+
+# Default command spacing for the macro and eventMacro plugins.
+macro_delay 1
+eventMacro_delay 1

@@ -182,8 +182,6 @@ sub processMsg {
 	my $currentVerbosity = shift;
 	my $consoleVar = shift;
 	my $files = shift;
-	my (undef, undef, undef, $near) = caller(2);
-	my (undef, undef, undef, $far) = caller(3);
 
 	$currentVerbosity = 1 if ($currentVerbosity eq "");
 
@@ -249,9 +247,13 @@ sub processMsg {
 	}
 
 	# Call hooks
-	foreach (@hooks) {
-		next if (!defined($_));
-		$_->{'func'}->($type, $domain, $level, $currentVerbosity, $message, $_->{'user_data'}, $near, $far);
+	if (@hooks) {
+		my (undef, undef, undef, $near) = caller(2);
+		my (undef, undef, undef, $far) = caller(3);
+		foreach (@hooks) {
+			next if (!defined($_));
+			$_->{'func'}->($type, $domain, $level, $currentVerbosity, $message, $_->{'user_data'}, $near, $far);
+		}
 	}
 }
 
@@ -272,8 +274,7 @@ sub processMsg {
 sub message {
 	my ($message, $domain, $level) = @_;
 	$domain ||= "console";
-	$level = 5 if existsInList($config{squelchDomains}, $domain);
-	$level = 0 if existsInList($config{verboseDomains}, $domain);
+	$level = setLevel($domain, $level);
 	return processMsg("message",	# type
 		$message,
 		$domain,
@@ -292,8 +293,7 @@ sub message {
 sub warning {
 	my ($message, $domain, $level) = @_;
 	$domain ||= "console";
-	$level = 5 if existsInList($config{squelchDomains}, $domain);
-	$level = 0 if existsInList($config{verboseDomains}, $domain);
+	$level = setLevel($domain, $level);
 	return processMsg("warning",
 		$message,
 		$domain,
@@ -324,6 +324,7 @@ sub warning {
 sub error {
 	my ($message, $domain, $level) = @_;
 	$domain ||= "console";
+	$level = setLevel($domain, $level);
 	return processMsg("error",
 		$message,
 		$domain,
@@ -342,9 +343,7 @@ sub error {
 sub debug {
 	my ($message, $domain, $level) = @_;
 	$domain ||= "console";
-	$level = 1 if (!defined $level);
-	$level = 0 if (existsInList($config{debugDomains}, $_[1]));
-	$level = 5 if (existsInList($config{squelchDomains}, $_[1]));
+	$level = setLevel($domain, $level);
 	return processMsg("debug",
 		$message,
 		$domain,
@@ -352,6 +351,18 @@ sub debug {
 		(defined $config{'debug'}) ? $config{'debug'} : 0,
 		\%debugConsole,
 		\%debugFiles);
+}
+
+sub setLevel {
+	my ($domain, $level) = @_;
+	if (existsInList($config{squelchDomains}, $domain)) {
+		$level = 5;
+	} elsif (existsInList($config{debugDomains}, $domain)) {
+		$level = 0;
+	} elsif (!defined $level) {
+		$level = 1;
+	}
+	return $level;
 }
 
 
