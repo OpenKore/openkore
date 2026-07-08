@@ -11674,16 +11674,38 @@ sub repair_list {
 	my ($self, $args) = @_;
 	undef $repairList;
 	my $myself = 1;
+	my $modern_repair = $args->{switch} eq '0B65';
+	my $item_len = $modern_repair ? (($args->{RAW_MSG_SIZE} - 4) % 16 == 0 ? 16 : 15) : 13;
 	my $msg1 = center(T(" Repair List "), 80, '-') ."\n".
 			T("   # Short name                     Full name\n");
 	my $msg2;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
 		my $repairItem = {};
-		($repairItem->{index},
-		$repairItem->{nameID},
-		$repairItem->{upgrade},
-		$repairItem->{cards},
-		) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
+		if ($modern_repair) {
+			if ($item_len == 16) {
+				(
+					$repairItem->{index},
+					$repairItem->{nameID},
+					$repairItem->{cards},
+					$repairItem->{upgrade},
+					$repairItem->{grade},
+				) = unpack('v V a8 C C', substr($args->{RAW_MSG}, $i, $item_len));
+			} else {
+				(
+					$repairItem->{index},
+					$repairItem->{nameID},
+					$repairItem->{upgrade},
+					$repairItem->{cards},
+				) = unpack('v V C a8', substr($args->{RAW_MSG}, $i, $item_len));
+			}
+		} else {
+			(
+				$repairItem->{index},
+				$repairItem->{nameID},
+				$repairItem->{upgrade},
+				$repairItem->{cards},
+			) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, $item_len));
+		}
 		my $ID = $repairItem->{index} + 2;
 		$ID = pack("v", $ID);
 		my $item = $char->inventory->getByID($ID);
@@ -11706,13 +11728,33 @@ sub repair_list {
 		# we need to rebuild the entire array
 		undef $repairList;
 		undef $msg2;
-		for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+		for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
 			my $repairItem = {};
-			($repairItem->{index},
-			$repairItem->{nameID},
-			$repairItem->{upgrade},
-			$repairItem->{cards},
-			) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
+			if ($modern_repair) {
+				if ($item_len == 16) {
+					(
+						$repairItem->{index},
+						$repairItem->{nameID},
+						$repairItem->{cards},
+						$repairItem->{upgrade},
+						$repairItem->{grade},
+					) = unpack('v V a8 C C', substr($args->{RAW_MSG}, $i, $item_len));
+				} else {
+					(
+						$repairItem->{index},
+						$repairItem->{nameID},
+						$repairItem->{upgrade},
+						$repairItem->{cards},
+					) = unpack('v V C a8', substr($args->{RAW_MSG}, $i, $item_len));
+				}
+			} else {
+				(
+					$repairItem->{index},
+					$repairItem->{nameID},
+					$repairItem->{upgrade},
+					$repairItem->{cards},
+				) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, $item_len));
+			}
 			my $shortName = itemNameSimple($repairItem->{nameID});
 			my $fullName = itemName($repairItem);
 			$repairItem->{name} = $fullName;
@@ -12596,11 +12638,125 @@ sub item_preview {
 	if ($item) {
 		$item->{broken} = $args->{broken} if (defined $args->{broken});
 		$item->{upgrade} = $args->{upgrade};
+		$item->{grade} = $args->{grade} if (defined $args->{grade});
 		$item->{cards} = $args->{cards};
 		$item->{options} = $args->{options};
 		$item->setName(itemName($item));
 
 	}
+}
+
+sub update_cardslot {
+	my ($self, $args) = @_;
+	debug TF("Item %s card slot update: wearState=%s slots=%s equipFlag=%s\n",
+		itemNameSimple($args->{itemID}), $args->{wearState}, $args->{cardSlot}, $args->{equipFlag}),
+		"inventory", 2;
+}
+
+sub debug_message {
+	my ($self, $args) = @_;
+	return if $args->{RAW_MSG_SIZE} < 8;
+
+	my ($len, $color) = unpack('x2 v V', substr($args->{RAW_MSG}, 0, 8));
+	my $message = substr($args->{RAW_MSG}, 8, $len - 8);
+	$message =~ s/\0+\z//;
+
+	debug TF("Server debug message [%08X]: %s\n", $color, $message), "parseMsg", 1;
+}
+
+sub barter_market_info {
+	my ($self, $args) = @_;
+	my $pack = $self->{barter_market_info_pack} || 'V C V V V V';
+	my $len = length pack $pack;
+
+	$storeList->clear;
+	undef %talk;
+
+	my $msg = center(T(" Barter Market "), 88, '-') . "\n" .
+		T("#  Name                                      Type                           Cost Amount\n");
+	for (my $i = 0; $i < length($args->{itemList}); $i += $len) {
+		my $item = Actor::Item->new;
+		@$item{qw(nameID type amount currencyNameID currencyAmount weight shopIndex)} =
+			unpack $pack, substr($args->{itemList}, $i, $len);
+		next if !$item->{amount};
+
+		$item->{name} = itemNameSimple($item->{nameID});
+		$item->{currency} = itemNameSimple($item->{currencyNameID});
+		$storeList->add($item);
+
+		$msg .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>> @<<<<<",
+			[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{currencyAmount}) . ' ' . $item->{currency}, formatNumber($item->{amount})]);
+	}
+
+	$msg .= ('-'x88) . "\n";
+	message $msg, $config{showDomain_Shop} || 'list';
+}
+
+sub random_combine_item_ui_open {
+	my ($self, $args) = @_;
+	message TF("Random combine UI opened for item %s.\n", itemNameSimple($args->{itemID})), "info";
+}
+
+sub random_combine_item_ack {
+	my ($self, $args) = @_;
+	message TF("Random combine result: %s\n", $args->{result}), "info";
+}
+
+sub random_upgrade_item_ui_open {
+	my ($self, $args) = @_;
+	message TF("Random upgrade UI opened for item %s.\n", itemNameSimple($args->{itemID})), "info";
+}
+
+sub random_upgrade_item_ack {
+	my ($self, $args) = @_;
+	message TF("Random upgrade result: %s\n", $args->{result}), "info";
+}
+
+sub grade_enchant_material_list {
+	my ($self, $args) = @_;
+	return if $args->{RAW_MSG_SIZE} < 10;
+
+	my ($len, $index, $success_chance) = unpack('x2 v v V', substr($args->{RAW_MSG}, 0, 10));
+	debug TF("Grade enchant material list received for inventory index %s (success chance: %s, length: %s).\n",
+		$index, $success_chance, $len), "parseMsg", 2;
+}
+
+sub grade_enchant_ack {
+	my ($self, $args) = @_;
+	message TF("Grade enchant result for item %s to grade %s: %s\n", $args->{index}, $args->{grade}, $args->{result}), "info";
+}
+
+sub grade_enchant_broadcast_result {
+	my ($self, $args) = @_;
+	message TF("%s grade enchant: item %s to grade %s (status %s)\n",
+		$args->{name}, itemNameSimple($args->{itemID}), $args->{grade}, $args->{status}), "info";
+}
+
+sub notify_effect3 {
+	my ($self, $args) = @_;
+	debug TF("Notify effect3 on %s: effect=%s value=%s:%s\n",
+		getHex($args->{ID}), $args->{effectId}, $args->{numHigh}, $args->{numLow}), "effect", 2;
+}
+
+sub open_reform_ui {
+	my ($self, $args) = @_;
+	message TF("Item reform UI opened for item %s.\n", itemNameSimple($args->{itemID})), "info";
+}
+
+sub item_reform_ack {
+	my ($self, $args) = @_;
+	message TF("Item reform result for inventory index %s: %s\n", $args->{index}, $args->{result}), "info";
+}
+
+sub response_enchant {
+	my ($self, $args) = @_;
+	message TF("Enchant response %s for item %s.\n", $args->{msgID}, itemNameSimple($args->{itemID})), "info";
+}
+
+sub special_popup {
+	my ($self, $args) = @_;
+	debug TF("Special popup requested: %s\n", $args->{popupID}), "parseMsg", 2;
 }
 
 # 0B1D (PACKET_ZC_PING)

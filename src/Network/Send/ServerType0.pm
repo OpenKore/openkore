@@ -317,8 +317,12 @@ sub new {
 		'0A69' => ['captcha_preview_request', 'V', [qw(captcha_key)]],
 		'0A6C' => ['macro_reporter_select', 'v2 C', [qw(x y range)]],
 		'0A68' => ['open_ui_request', 'C', [qw(UIType)]],
+		'0A70' => ['random_combine_item_close'],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
+		# GM shortcut packet: triggers the /resetcooltime atcommand on the server.
+		'0A88' => ['gm_reset_cooltime'],
 		'0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]],
+		'0A4F' => ['random_combine_item', 'v V a*', [qw(len itemID itemInfo)]],
 		'0A97' => ['equip_switch_add', 'a2 V', [qw(ID position)]], # Add item to equipswitch
 		'0A99' => ['equip_switch_remove', 'a2', [qw(ID)]], # remove item in equipswitch
 		'0A9C' => ['equip_switch_run'], # switch Item !
@@ -330,17 +334,37 @@ sub new {
 		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
 		'0ACE' => ['equip_switch_single', 'a2', [qw(ID)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
+		'0AB5' => ['random_upgrade_item_close'],
+		'0AB6' => ['random_upgrade_item', 'V v', [qw(itemID index)]],
 		'0AE8' => ['change_dress'],
 		'0AEF' => ['attendance_reward_request'],
 		'0AF4' => ['skill_use_location', 'v4 C', [qw(lv skillID x y unknown)]], #11
+		'0B0F' => ['barter_market_purchase', 'v a*', [qw(len itemInfo)]],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
+		'0B12' => ['barter_market_close'],
 		'0B14' => ['inventory_expansion_request'], #2
 		'0B19' => ['inventory_expansion_rejected'], #2
 		'0B1C' => ['ping'], #2
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
+		# Modern replacement for RemoveOption: clears cart/riding/falcon/dragon/mado state.
+		'0B35' => ['remove_option', 'C', [qw(installationKind)]],
+		'0B57' => ['expanded_barter_market_purchase', 'v a*', [qw(len itemInfo)]],
+		'0B58' => ['expanded_barter_market_close'],
+		'0B59' => ['grade_enchant_select_equipment', 'v', [qw(index)]],
+		'0B5B' => ['grade_enchant_request', 'v V C V C', [qw(index material_index blessing_flag blessing_amount protect_flag)]],
+		'0B5C' => ['grade_enchant_close_ui'],
+		'0B66' => ['repair_item', 'v V a8 C C', [qw(index nameID cards upgrade grade)]],
+		'0B90' => ['close_reform_ui'],
+		'0B91' => ['item_reform', 'V v', [qw(itemID index)]],
+		'0B9B' => ['request_random_enchant', 'Q< v', [qw(enchant_group index)]],
+		'0B9C' => ['request_perfect_enchant', 'Q< v V', [qw(enchant_group index itemID)]],
+		'0B9D' => ['request_upgrade_enchant', 'Q< v v', [qw(enchant_group index slot)]],
+		'0B9E' => ['request_reset_enchant', 'Q< v', [qw(enchant_group index)]],
+		'0BA0' => ['close_ui_enchant'],
 		'0C23' => ['send_otp_login', 'a6 C', [qw(otp padding)]],
 		'0841' => ['select_accessible_mapname', 'C C', [qw(char_slot map_slot)]],
+		'0BA8' => ['npc_talk_response', 'a4 C', [qw(ID response)]],
 		'0BAF' => ['use_packageitem', 'v a4 V V', [qw(index accountID itemID boxIndex)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

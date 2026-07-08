@@ -16,7 +16,8 @@
 # OpenKore Bus Server
 #
 # This server keeps track of all clients. A client can query
-# a list of all other clients, or broadcast a message.
+# a list of all other clients, broadcast a message, or send
+# targeted traffic using TO / multiTO.
 #########################################################################
 
 use strict;

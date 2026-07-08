@@ -1896,6 +1896,7 @@ sub sendRepairItem {
 		nameID => $args->{nameID},
 		upgrade => $args->{upgrade},
 		cards => $args->{cards},
+		grade => $args->{grade} || 0,
 	}));
 	debug ("Sent repair item index: ".$args->{index}."\n", "sendPacket", 2);
 }
@@ -3480,6 +3481,24 @@ sub reconstruct_buy_bulk_market {
 	$args->{buyInfo} = pack "(a*)*", map { pack $pack, $_->{itemID}, $_->{amount} } @{$args->{items}};
 }
 
+sub reconstruct_random_combine_item {
+	my ($self, $args) = @_;
+	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(index count)} } @{$args->{items}};
+	$args->{len} ||= 8 + length($args->{itemInfo});
+}
+
+sub reconstruct_barter_market_purchase {
+	my ($self, $args) = @_;
+	$args->{itemInfo} = pack '(a14)*', map { pack 'V V v V', @{$_}{qw(itemID amount invIndex shopIndex)} } @{$args->{items}};
+	$args->{len} ||= 4 + length($args->{itemInfo});
+}
+
+sub reconstruct_expanded_barter_market_purchase {
+	my ($self, $args) = @_;
+	$args->{itemInfo} = pack '(a12)*', map { pack 'V V V', @{$_}{qw(itemID shopIndex amount)} } @{$args->{items}};
+	$args->{len} ||= 4 + length($args->{itemInfo});
+}
+
 # Request to close current Market
 # 09D8
 sub sendMarketClose {
@@ -3588,6 +3607,253 @@ sub sendUsePackageItem {
         itemID   	=> $itemID,
         boxIndex 	=> $boxIndex,
     }));
+}
+
+# 0A70 CZ_RANDOM_COMBINE_ITEM_UI_CLOSE
+sub sendRandomCombineItemClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'random_combine_item_close',
+	}));
+
+	debug "Sent Random Combine Item UI Close\n", "sendPacket", 2;
+}
+
+# 0A4F CZ_REQ_RANDOM_COMBINE_ITEM
+sub sendRandomCombineItem {
+	my ($self, $itemID, $items) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'random_combine_item',
+		itemID => $itemID,
+		items => $items,
+	}));
+
+	debug "Sent Random Combine Item request\n", "sendPacket", 2;
+}
+
+# 0A88 CZ_CMD_RESETCOOLTIME
+# GM-only shortcut packet that asks the server to run /resetcooltime.
+sub sendGMResetCoolTime {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'gm_reset_cooltime',
+	}));
+
+	debug "Sent GM Reset Cool Time\n", "sendPacket", 2;
+}
+
+# 0AB5 CZ_RANDOM_UPGRADE_ITEM_UI_CLOSE
+sub sendRandomUpgradeItemClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'random_upgrade_item_close',
+	}));
+
+	debug "Sent Random Upgrade Item UI Close\n", "sendPacket", 2;
+}
+
+# 0AB6 CZ_REQ_RANDOM_UPGRADE_ITEM
+sub sendRandomUpgradeItem {
+	my ($self, $itemID, $index) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'random_upgrade_item',
+		itemID => $itemID,
+		index => $index,
+	}));
+
+	debug "Sent Random Upgrade Item request\n", "sendPacket", 2;
+}
+
+# 0B12 CZ_NPC_BARTER_MARKET_CLOSE
+sub sendBarterMarketClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'barter_market_close',
+	}));
+
+	debug "Sent Barter Market Close\n", "sendPacket", 2;
+}
+
+# 0B0F CZ_NPC_BARTER_MARKET_PURCHASE
+sub sendBarterMarketPurchase {
+	my ($self, $items) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'barter_market_purchase',
+		items => $items,
+	}));
+
+	debug "Sent Barter Market purchase request\n", "sendPacket", 2;
+}
+
+# 0B35 CZ_UNINSTALLATION
+# Modern RemoveOption packet: removes cart/mount/falcon/dragon/mado status.
+sub sendRemoveOption {
+	my ($self, $installationKind) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'remove_option',
+		installationKind => $installationKind,
+	}));
+
+	debug "Sent Remove Option request\n", "sendPacket", 2;
+}
+
+# 0B58 CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE
+sub sendExpandedBarterMarketClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'expanded_barter_market_close',
+	}));
+
+	debug "Sent Expanded Barter Market Close\n", "sendPacket", 2;
+}
+
+# 0B57 CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE
+sub sendExpandedBarterMarketPurchase {
+	my ($self, $items) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'expanded_barter_market_purchase',
+		items => $items,
+	}));
+
+	debug "Sent Expanded Barter Market purchase request\n", "sendPacket", 2;
+}
+
+# 0B59 CZ_GRADE_ENCHANT_SELECT_EQUIPMENT
+sub sendGradeEnchantSelectEquipment {
+	my ($self, $index) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'grade_enchant_select_equipment',
+		index => $index,
+	}));
+
+	debug "Sent Grade Enchant Select Equipment\n", "sendPacket", 2;
+}
+
+# 0B5B CZ_GRADE_ENCHANT_REQUEST
+sub sendGradeEnchantRequest {
+	my ($self, $args) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'grade_enchant_request',
+		index => $args->{index},
+		material_index => $args->{material_index},
+		blessing_flag => $args->{blessing_flag} || 0,
+		blessing_amount => $args->{blessing_amount} || 0,
+		protect_flag => $args->{protect_flag} || 0,
+	}));
+
+	debug "Sent Grade Enchant Request\n", "sendPacket", 2;
+}
+
+# 0B5C CZ_GRADE_ENCHANT_CLOSE_UI
+sub sendGradeEnchantCloseUI {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'grade_enchant_close_ui',
+	}));
+
+	debug "Sent Grade Enchant Close UI\n", "sendPacket", 2;
+}
+
+# 0B90 CZ_CLOSE_REFORM_UI
+sub sendCloseReformUI {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'close_reform_ui',
+	}));
+
+	debug "Sent Close Reform UI\n", "sendPacket", 2;
+}
+
+# 0B91 CZ_ITEM_REFORM
+sub sendItemReform {
+	my ($self, $itemID, $index) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'item_reform',
+		itemID => $itemID,
+		index => $index,
+	}));
+
+	debug "Sent Item Reform request\n", "sendPacket", 2;
+}
+
+# 0B9B CZ_REQUEST_RANDOM_ENCHANT
+sub sendRequestRandomEnchant {
+	my ($self, $enchant_group, $index) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'request_random_enchant',
+		enchant_group => $enchant_group,
+		index => $index,
+	}));
+
+	debug "Sent Random Enchant request\n", "sendPacket", 2;
+}
+
+# 0B9C CZ_REQUEST_PERFECT_ENCHANT
+sub sendRequestPerfectEnchant {
+	my ($self, $enchant_group, $index, $itemID) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'request_perfect_enchant',
+		enchant_group => $enchant_group,
+		index => $index,
+		itemID => $itemID,
+	}));
+
+	debug "Sent Perfect Enchant request\n", "sendPacket", 2;
+}
+
+# 0B9D CZ_REQUEST_UPGRADE_ENCHANT
+sub sendRequestUpgradeEnchant {
+	my ($self, $enchant_group, $index, $slot) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'request_upgrade_enchant',
+		enchant_group => $enchant_group,
+		index => $index,
+		slot => $slot,
+	}));
+
+	debug "Sent Upgrade Enchant request\n", "sendPacket", 2;
+}
+
+# 0B9E CZ_REQUEST_RESET_ENCHANT
+sub sendRequestResetEnchant {
+	my ($self, $enchant_group, $index) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'request_reset_enchant',
+		enchant_group => $enchant_group,
+		index => $index,
+	}));
+
+	debug "Sent Reset Enchant request\n", "sendPacket", 2;
+}
+
+# 0BA0 CZ_CLOSE_UI_ENCHANT
+sub sendCloseUIEnchant {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'close_ui_enchant',
+	}));
+
+	debug "Sent Close UI Enchant\n", "sendPacket", 2;
 }
 
 1;

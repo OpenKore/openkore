@@ -662,12 +662,21 @@ sub new {
 		,
 		'0A38' => ['open_ui', 'C', [qw(type)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
+		'0A3F' => ($rpackets{'0A3F'}{length} == 9)
+			? ['update_cardslot', 'v3 C', [qw(wearState cardSlot itemID equipFlag)]]
+			: ['update_cardslot', 'v2 V C', [qw(wearState cardSlot itemID equipFlag)]]
+		,
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0A47' => ['stylist_res', 'C', [qw(res)]],
 		'0A4A' => ['private_airship_type', 'V', [qw(type)]],
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
+		'0A4E' => ($rpackets{'0A4E'}{length} == 4)
+			? ['random_combine_item_ui_open', 'v', [qw(itemID)]]
+			: ['random_combine_item_ui_open', 'V', [qw(itemID)]]
+		,
+		'0A50' => ['random_combine_item_ack', 'v', [qw(result)]],
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A53' => ['captcha_upload_request', 'Z4 V', [qw(captcha_key flag)]],
 		'0A55' => ['captcha_upload_request_status'],
@@ -703,6 +712,11 @@ sub new {
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
 		'0AA8' => ['misc_config', 'C3', [qw(show_eq_flag call_flag pet_autofeed_flag)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
+		'0AB4' => ($rpackets{'0AB4'}{length} == 4)
+			? ['random_upgrade_item_ui_open', 'v', [qw(itemID)]]
+			: ['random_upgrade_item_ui_open', 'V', [qw(itemID)]]
+		,
+		'0AB7' => ['random_upgrade_item_ack', 'v', [qw(result)]],
 		'0AB8' => ['move_interrupt'],
 		'0AB9' => ['item_preview', 'a2 v a8 a25', [qw(index upgrade cards options)]],
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
@@ -717,6 +731,7 @@ sub new {
 		'0ACC' => ['exp', 'a4 V2 v2', [qw(ID val val2 type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADA' => ['refine_status', 'Z24 V C C', [qw(name itemID refine_level status)]],
+		'0ADB' => ['debug_message'],
 		'0ADC' => ['misc_config', 'C4', [qw(show_eq_flag call_flag pet_autofeed_flag homunculus_autofeed_flag)]],
 		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
  		'0ADE' => ['overweight_percent', 'V', [qw(percent)]],# 6 TODO
@@ -739,6 +754,7 @@ sub new {
 		'0B0A' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
 		'0B0C' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
+		'0B0E' => ['barter_market_info', 'v a*', [qw(len itemList)]], # -1
 		'0B13' => ['item_preview', 'a2 C v a16 a25', [qw(index broken upgrade cards options)]],
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
 		'0B1A' => ['skill_cast', 'a4 a4 v5 V C V', [qw(sourceID targetID x y skillID unknown type wait dispose unknow)]], # 29
@@ -751,25 +767,48 @@ sub new {
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
 		'0B39' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B3D' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
+		'0B40' => ['vending_start', 'v a4 a*', [qw(len accountID itemList)]], # -1
+		'0B43' => ($rpackets{'0B43'}{length} == 47)
+			? ['item_preview', 'a2 C v a16 a25', [qw(index broken upgrade cards options)]]
+			: ['item_preview', 'a2 C a16 a25 C2', [qw(index broken cards options upgrade grade)]]
+		,
 		'0B41' => ['inventory_item_added', 'a2 v V C2 a16 V C2 a4 v a25 C v C2', [qw(ID amount nameID identified broken cards type_equip type fail expire unknown options favorite viewID upgrade grade)]],
 		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
 		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
+		'0B4E' => ['npc_market_purchase_result', 'v v a*', [qw(len result itemList)]], # -1
+		'0B5A' => ['grade_enchant_material_list'],
+		'0B5D' => ['grade_enchant_ack', 'v2 V', [qw(index grade result)]],
+		'0B5E' => ['grade_enchant_broadcast_result', 'Z24 V v C', [qw(name itemID grade status)]],
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
         '0B62' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], #-1
+		'0B65' => ['repair_list'], # -1
+		'0B67' => ($rpackets{'0B67'}{length} == 32)
+			? ['party_show_picker', 'a4 V C C a16 v C C', [qw(sourceID nameID identified broken cards location type upgrade)]]
+			: ['party_show_picker', 'a4 V C C a16 v C C C', [qw(sourceID nameID identified broken cards location type upgrade grade)]]
+		,
+		'0B69' => ['notify_effect3', 'a4 V V2', [qw(ID effectId numLow numHigh)]],
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'0B76' => ['homunculus_property', 'Z24 C v11 V6 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B77' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
+		'0B78' => ['barter_market_info', 'v a*', [qw(len itemList)]], # -1
 		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
 		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
 		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
 		'0B8D' => ['repute_info', 'v C a*', [qw(len sucess reputeInfo)]], # -1
+		'0B8F' => ($rpackets{'0B8F'}{length} == 4)
+			? ['open_reform_ui', 'v', [qw(itemID)]]
+			: ['open_reform_ui', 'V', [qw(itemID)]]
+		,
+		'0B92' => ['item_reform_ack', 'v C', [qw(index result)]],
+		'0B9F' => ['response_enchant', 'V V', [qw(msgID itemID)]],
 		# 'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 		'0BA4' => ['homunculus_property', 'Z24 C v11 V4 V4 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp2 exp_max exp_max2 points_skill attack_range)]],
+		'0BBE' => ['special_popup', 'V', [qw(popupID)]],
 		'0840' => ['notify_accessible_mapname', 'v a*', [qw(len mapList)]], # map_list
 	};
 

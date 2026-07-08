@@ -47,6 +47,7 @@ use Bus::DialogSlave;
 use Utils::Exceptions;
 use Utils::CallbackList;
 use Log qw(debug message error);
+use Globals qw(%config);
 
 
 # State constants.
@@ -71,7 +72,17 @@ sub new {
 
 	$self->{host} = $args{host};
 	$self->{port} = $args{port};
-	$self->{userAgent}   = $args{userAgent} || "OpenKore";
+	# The user agent string identifies the client to the bus server. It is recommended to use a unique user agent string, so that users can easily
+	# identify which client sent a message by looking at the user agent string in the message arguments.
+	if (defined $args{userAgent}) {
+		$self->{userAgent} = $args{userAgent};
+	} else {
+		# By default, we use "OpenKore" as the user agent string, but if the config file contains a username and character name, then we append those to the user agent string to make it more unique.
+		$self->{userAgent} = "OpenKore";
+		if (defined $config{username} && defined $config{char}) {
+			$self->{userAgent} .= " ($config{username}/$config{char})";
+		}
+	}
 	$self->{privateOnly} = defined($args{privateOnly}) ? $args{privateOnly} : 0;
 	
 	# Control Timeout for Waiting Reply from Poseidon (GG/HS Query)
