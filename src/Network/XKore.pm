@@ -19,19 +19,28 @@ use base qw(Exporter);
 use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
-use Win32;
 use Exception::Class ('Network::XKore::CannotStart');
 
 use Modules 'register';
 use Globals;
 use Log qw(message error debug);
-use Utils::Win32;
 use Network;
 use Network::Send ();
 use Utils qw(dataWaiting timeOut);
 use Translation;
 use Misc qw(chatLog);
 use Network::MessageTokenizer;
+
+use constant IS_WINDOWS => ($^O eq 'MSWin32');
+
+BEGIN {
+    if (IS_WINDOWS) {
+        require Win32;
+        Win32->import();
+        require Utils::Win32;
+        Utils::Win32->import();
+    }
+}
 
 my $currentClientKey = 0;
 
@@ -42,12 +51,13 @@ my $currentClientKey = 0;
 sub new {
 	my $class = shift;
 	my $port = $config{XKore_port} || 2350;
+	my $addr = $config{XKore_listenIp} || 'localhost';
 	my $self = bless {}, $class;
 
 	undef $@;
 	$self->{server} = new IO::Socket::INET->new(
 		Listen		=> 5,
-		LocalAddr	=> 'localhost',
+		LocalAddr	=> $addr,
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self->{server}) {
@@ -55,6 +65,7 @@ sub new {
 			"Make sure no other servers are running on port %s.\n", $port));
 	}
 
+	message TF("Listening on %s:%s\n", $addr, $port), "startup";
 	$self->{incomingPackets} = "";
 	$self->{serverPackets} = "";
 	$self->{clientPackets} = "";
@@ -257,12 +268,12 @@ sub checkConnection {
 	my $pid;
 	# Wait until the RO client has started
 
-	my $loop = 1;
+	my $loop = $config{XKore_lookForProcess} ? 1 : 0;
 	my @list;
 
 	message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup";
 	Plugins::callHook('XKore_start');
-	while ($loop) {
+	while ($loop && IS_WINDOWS) {
 		undef @list;
 		my @z = Utils::Win32::listProcesses();
 
