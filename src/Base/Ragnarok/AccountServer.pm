@@ -104,50 +104,54 @@ sub master_login {
 				ip => $ip,
 				port => $charServer->getPort,
 				name => $charServer->getName,
+				state => 0,
 				users => $charServer->getPlayersCount,
-				display => 5, # don't show number of players
+				display => 0, # don't show number of players
+				property => 0,
 				ip_port => $ip . ':' . $charServer->getPort,
+				unknown => 0,
 			};
 		}
-		
+
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'account_server_info',
 			# maybe sessionstore should store sessionID as bytes?
 			sessionID => pack('V', $session{sessionID}),
 			accountID => $session{accountID},
 			sessionID2 => pack('V', $session{sessionID2}),
+			lastLoginIP => 0,
+			lastLoginTime => time,
 			accountSex => $session{sex},
+			iAccountSID => 0,
 			servers => \@servers,
 		}));
-		$client->close();
 
 	} elsif ($result == ACCOUNT_NOT_FOUND) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_INVALID_ID,
 		}));
-		$client->close();
 	} elsif ($result == PASSWORD_INCORRECT) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_INVALID_PASSWD,
 		}));
-		$client->close();
 	} elsif ($result == ACCOUNT_BANNED) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_NOT_CONFIRMED,
 		}));
-		$client->close();
 	} elsif ($result == SERVER_REFUSED) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::ACCEPT_ID_PASSWD,
 		}));
-		$client->close();
 	} else {
 		die "Unexpected result $result.";
 	}
+
+	sleep 1;
+	$client->close();
 }
 
 sub token_login {
@@ -167,6 +171,7 @@ sub token_login {
 				switch => 'login_error',
 				type => Network::Receive::ServerType0::ACCEPT_ID_PASSWD,
 			}));
+			sleep 1;
 			$client->close();
 		}
 	};
@@ -187,11 +192,12 @@ sub token_login {
 				ip => $ip,
 				port => $charServer->getPort,
 				name => $charServer->getName,
-				users => $charServer->getPlayersCount,
 				state => 0,
+				users => $charServer->getPlayersCount,
 				property => 0,
+				display => 0, # don't show number of players
+				ip_port => $ip . ':' . $charServer->getPort,
 				unknown => 0,
-				display => 5, # don't show number of players
 			};
 		}
 
@@ -204,36 +210,35 @@ sub token_login {
 			lastLoginIP => 0,
 			lastLoginTime => time,
 			accountSex => $session{sex},
+			iAccountSID => 0,
 			servers => \@servers,
 		}));
-		$client->close();
 	} elsif ($result == ACCOUNT_NOT_FOUND) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_INVALID_ID,
 		}));
-		$client->close();
 	} elsif ($result == PASSWORD_INCORRECT) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_INVALID_PASSWD,
 		}));
-		$client->close();
 	} elsif ($result == ACCOUNT_BANNED) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::REFUSE_NOT_CONFIRMED,
 		}));
-		$client->close();
 	} elsif ($result == SERVER_REFUSED) {
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'login_error',
 			type => Network::Receive::ServerType0::ACCEPT_ID_PASSWD,
 		}));
-		$client->close();
 	} else {
 		die "Unexpected result $result.";
 	}
+
+	sleep 1;
+	$client->close();
 
 	$session{state} = 'About to select character';
 }
