@@ -1576,7 +1576,7 @@ sub charSelectScreen {
 			if (int(time) > $chars[$num]{deleteDateTimestamp}) {
 				$messageDeleteDate = TF("\n     -> Deleting is possible since %s.", $chars[$num]{deleteDate});
 			} else {
-				$messageDeleteDate = TF("\n     -> It will be deleted lefting %s!", $chars[$num]{deleteDate});
+				$messageDeleteDate = TF("\n     -> This character cannot be deleted until %s!", $chars[$num]{deleteDate});
 			}
 		}
 
