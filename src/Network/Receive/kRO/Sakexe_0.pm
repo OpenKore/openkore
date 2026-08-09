@@ -1075,6 +1075,7 @@ sub guild_chat {
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
+	$char->{xkore2_inventory_nonstackable_packet} = $args->{RAW_MSG};
 
 	$self->_items_list({
 		class => 'Actor::Item',

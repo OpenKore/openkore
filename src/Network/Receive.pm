@@ -850,6 +850,11 @@ sub received_characters_slots_info {
 # CHARACTER_INFO_NEO_UNION3 is based in charblocksize, check sub received_characters_unpackString
 sub received_characters {
 	my ($self, $args) = @_;
+	$charSvrSet{received_characters_switch} = $args->{switch} if $args->{switch};
+	if ($args->{switch} && $args->{switch} eq $self->{packet_lut}{received_characters} && $args->{RAW_MSG}) {
+		push @{$charSvrSet{xkore2_character_pages_raw}},
+			substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE});
+	}
 	my $blockSize = $self->received_characters_blockSize();
 	my $char_info = $self->received_characters_unpackString;
 
@@ -929,6 +934,11 @@ sub received_characters {
 # total count: Server send from total pages until 1 page
 sub sync_received_characters {
 	my ($self, $args) = @_;
+	$charSvrSet{sync_received_characters_switch} = $args->{switch} if $args->{switch};
+	if ($args->{RAW_MSG}) {
+		push @{$charSvrSet{xkore2_character_bootstrap_raw}},
+			substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE});
+	}
 
 	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
 
@@ -1036,6 +1046,13 @@ sub character_creation_failed {
 # CHARACTER_INFO_NEO_UNION3 and CHARACTER_INFO_NEO_UNION2 are based in charblocksize, check sub received_characters_unpackString
 sub received_characters_info {
 	my ($self, $args) = @_;
+	$charSvrSet{received_characters_info_switch} = $args->{switch} if $args->{switch};
+	$charSvrSet{xkore2_character_bootstrap_raw} = [];
+	$charSvrSet{xkore2_character_pages_raw} = [];
+	if ($args->{RAW_MSG}) {
+		push @{$charSvrSet{xkore2_character_bootstrap_raw}},
+			substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE});
+	}
  	Scalar::Util::weaken(my $weak = $self);
 	my $timeout = {timeout => 6, time => time};
 
@@ -4167,6 +4184,10 @@ sub marriage_partner_name {
 sub login_pin_code_request {
 	# This is ten second-level password login for 2013/3/29 upgrading of twRO
 	my ($self, $args) = @_;
+	if ($args->{RAW_MSG} && ref($charSvrSet{xkore2_character_bootstrap_raw}) eq 'ARRAY') {
+		push @{$charSvrSet{xkore2_character_bootstrap_raw}},
+			substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE});
+	}
 
 	if ($args->{flag} ne 0 && ($config{XKore} eq "1" || $config{XKore} eq "3")) {
 		$timeout{master}{time} = time;
@@ -5450,6 +5471,7 @@ sub cart_add_failed {
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
+	$char->{xkore2_inventory_stackable_packet} = $args->{RAW_MSG};
 
 	$self->_items_list({
 		class => 'Actor::Item',
@@ -5472,6 +5494,10 @@ sub inventory_items_stackable {
 sub item_list_start {
 	my ($self, $args) = @_;
 	$current_item_list = $args->{type};
+	if ($args->{type} == INVTYPE_INVENTORY) {
+		$char->{xkore2_inventory_packets} = [$args->{RAW_MSG}];
+		$char->{xkore2_inventory_complete} = 0;
+	}
 
 	debug "Starting Item List. ID: $args->{type}". ($args->{name} ? " ($args->{name})\n" : "\n"), "info";
 
@@ -5489,6 +5515,9 @@ sub item_list_start {
 sub item_list_stackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
+	if ($args->{type} == INVTYPE_INVENTORY && ref $char->{xkore2_inventory_packets} eq 'ARRAY') {
+		push @{$char->{xkore2_inventory_packets}}, $args->{RAW_MSG};
+	}
 
 	my $arguments = {
 		class => 'Actor::Item',
@@ -5531,6 +5560,9 @@ sub item_list_stackable {
 sub item_list_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
+	if ($args->{type} == INVTYPE_INVENTORY && ref $char->{xkore2_inventory_packets} eq 'ARRAY') {
+		push @{$char->{xkore2_inventory_packets}}, $args->{RAW_MSG};
+	}
 
 	my $arguments = {
 		class => 'Actor::Item',
@@ -5580,6 +5612,10 @@ sub item_list_nonstackable {
 
 sub item_list_end {
 	my ($self, $args) = @_;
+	if ($args->{type} == INVTYPE_INVENTORY && ref $char->{xkore2_inventory_packets} eq 'ARRAY') {
+		push @{$char->{xkore2_inventory_packets}}, $args->{RAW_MSG};
+		$char->{xkore2_inventory_complete} = 1;
+	}
 	debug TF("Ending Item List. ID: %s\n", $args->{type}), "info";
 	if ( $args->{type} == INVTYPE_INVENTORY ) {
 		$char->inventory->onitemListEnd();

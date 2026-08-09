@@ -19,6 +19,19 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	# PacketParser keeps several generations for these handler names. Pin the
+	# opcodes expected by this client so XKore2 reconstructs modern snapshots.
+	my %handlers = qw(
+		account_id 0283
+		inventory_expansion_result 0B18
+		skills_list 0B32
+		map_loaded 02EB
+		actor_moved 09FD
+		actor_connected 09FE
+		actor_exists 09FF
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
 	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25 V v';
 	$self->{npc_store_info_pack} = "V V C V";
 	$self->{buying_store_items_list_pack} = "V v C V";

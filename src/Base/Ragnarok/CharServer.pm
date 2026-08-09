@@ -98,42 +98,51 @@ sub game_login {
 		$client->send($args->{accountID});
 
 		my $output;
-		# 099D
-		my @char_list = $self->getCharacters($session);
-		if ($self->{recvPacketParser}{packet_lut}{received_characters} eq '099D') {
-			$output = $self->{recvPacketParser}->reconstruct({
-				switch => 'received_characters_info',
-				normal_slot => $charSvrSet{normal_slot},
-				premium_slot => $charSvrSet{premium_slot},
-				billing_slot => $charSvrSet{billing_slot},
-				producible_slot => $charSvrSet{producible_slot},
-				valid_slot => $charSvrSet{valid_slot},
-				chars => \@char_list,
-			});
+		my $replay_character_flow = @{$charSvrSet{xkore2_character_bootstrap_raw} || []};
+		if ($replay_character_flow) {
+			$output = join('', @{$charSvrSet{xkore2_character_bootstrap_raw}});
+			$client->{xkore2_character_pages_raw} = [@{$charSvrSet{xkore2_character_pages_raw} || []}];
+		} else {
+			# Fall back to reconstruction for older servers that do not use the
+			# modern multi-packet character-selection flow.
+			my @char_list = $self->getCharacters($session);
+			if ($self->{recvPacketParser}{packet_lut}{received_characters} eq '099D') {
+				$output = $self->{recvPacketParser}->reconstruct({
+					switch => 'received_characters_info',
+					normal_slot => $charSvrSet{normal_slot},
+					premium_slot => $charSvrSet{premium_slot},
+					billing_slot => $charSvrSet{billing_slot},
+					producible_slot => $charSvrSet{producible_slot},
+					valid_slot => $charSvrSet{valid_slot},
+					chars => \@char_list,
+				});
 
-			if ($charSvrSet{sync_Count} > 0) {
-				$output .= $self->{recvPacketParser}->reconstruct({
-					switch => 'sync_received_characters',
-					sync_Count => $charSvrSet{sync_Count},
+				if ($charSvrSet{sync_Count} > 0) {
+					$output .= $self->{recvPacketParser}->reconstruct({
+						switch => 'sync_received_characters',
+						sync_Count => $charSvrSet{sync_Count},
+					});
+				}
+			} else { # 006B
+				$output = $self->{recvPacketParser}->reconstruct({
+					switch => 'received_characters_info',
+					total_slot => $charSvrSet{total_slot},
+					premium_start_slot => $charSvrSet{premium_start_slot},
+					premium_end_slot => $charSvrSet{premium_end_slot},
+					chars => \@char_list,
 				});
 			}
-		} else { # 006B
-			$output = $self->{recvPacketParser}->reconstruct({
-				switch => 'received_characters_info',
-				total_slot => $charSvrSet{total_slot},
-				premium_start_slot => $charSvrSet{premium_start_slot},
-				premium_end_slot => $charSvrSet{premium_end_slot},
-				chars => \@char_list,
-			});
 		}
 		$client->send($output);
 		
 		# Show list of characters.
-		&sendCharInfo;
+		&sendCharInfo unless $replay_character_flow;
 		
 		# TODO: Check if we need send accountID
-		my $data .= pack('C2 x4 a4 v', 0xB9, 0x08, $args->{accountID}, 0);
-		$client->send($data);
+		unless ($replay_character_flow) {
+			my $data .= pack('C2 x4 a4 v', 0xB9, 0x08, $args->{accountID}, 0);
+			$client->send($data);
+		}
 	}
 }
 
@@ -165,8 +174,13 @@ sub char_login {
 				# We can't get the character information for some reason.
 				$client->send(pack('C*', 0x6C, 0x00, 0));
 			} else {
-				my $host = inet_aton($self->{mapServer}->getHost);
-				$host = inet_aton($client->{BSC_sock}->sockhost) if $host eq "\000\000\000\000";
+				my $mapHost = $self->{mapServer}->getHost;
+				my $host = inet_aton($mapHost);
+				if ($host eq "\000\000\000\000") {
+					$mapHost = $client->{BSC_sock}->sockhost;
+					$host = inet_aton($mapHost);
+				}
+				my $mapPort = $self->{mapServer}->getPort;
 
 				$session->{charID} = $char->{charID};
 				$session->{state} = 'About to load map';
@@ -175,16 +189,23 @@ sub char_login {
 					charID => $char->{charID},
 					mapName => $charInfo->{map},
 					mapIP => $host,
-					mapPort => $self->{mapServer}->getPort,
+					mapPort => $mapPort,
+					mapUrl => $mapHost . ':' . $mapPort,
 				}));
 			}
 		}
 	}
+	sleep 1;
 	$client->close();
 }
 
 sub sync_received_characters {
 	my ($self, $args, $client) = @_;
+	if (exists $client->{xkore2_character_pages_raw}) {
+		my $page = shift @{$client->{xkore2_character_pages_raw}};
+		$client->send($page) if defined $page;
+		return;
+	}
 	if ($nChar == 0) {
 		&sendCharInfo;
 		$nChar = 1;
