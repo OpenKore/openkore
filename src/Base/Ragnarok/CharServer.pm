@@ -176,10 +176,12 @@ sub char_login {
 					mapName => $charInfo->{map},
 					mapIP => $host,
 					mapPort => $self->{mapServer}->getPort,
+					mapUrl => $host . ':' . $self->{mapServer}->getPort
 				}));
 			}
 		}
 	}
+	sleep 1;
 	$client->close();
 }
 
