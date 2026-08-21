@@ -1,0 +1,23 @@
+automacro emergency_hp {
+	CurrentHP < 50%
+	timeout 30
+	priority 100
+	exclusive 1
+	overrideAI 1
+	macro_delay 0
+	call emergency_sos
+}
+
+automacro emergency_aggro {
+	Eval scalar(AI::ai_getAggressives()) >= 5
+	timeout 30
+	priority 100
+	exclusive 1
+	overrideAI 1
+	macro_delay 0
+	call emergency_sos
+}
+
+macro emergency_sos {
+	do p 妈妈救我
+}

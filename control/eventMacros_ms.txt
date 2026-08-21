@@ -1,0 +1,15 @@
+automacro hunter_rescue {
+	PartyMsg /妈妈救我/
+	timeout 1
+	priority 100
+	exclusive 1
+	overrideAI 1
+	macro_delay 0
+	call hunter_rescue_follow
+}
+
+macro hunter_rescue_follow {
+	do autofollow on
+	pause 30
+	do autofollow off
+}

@@ -304,6 +304,25 @@ serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
 addTableFolders translated/kRO_english;kRO
 
+# Lastro browser client. The server advertises the character and map servers
+# as 127.0.0.1; private 1 makes OpenKore use the public account-server host.
+[Lastro - Web]
+ip 43.248.3.48
+port 26569
+private 1
+master_version 3
+version 45
+clientType 3
+clientHash 83ba069fd7c9e7683c435cecd507b18d
+charBlockSize 175
+sendCryptKeys 0x47DA30BB, 0x234A5224, 0x1B013ABC
+serverType kRO_RagexeRE_2021_11_03
+serverEncoding GBK
+addTableFolders Lastro-zh_CN;kRO/Ragexe_2021_11_03;kRO
+lastroAirship 1
+lastroAutoFollow 1
+privateAirshipItemID 14527
+
 ####################
 # Dead
 

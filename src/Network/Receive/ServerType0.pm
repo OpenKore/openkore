@@ -1611,5 +1611,3 @@ sub senbei_amount {
 *changeToInGameState = *Network::Receive::changeToInGameState;
 
 1;
-
-

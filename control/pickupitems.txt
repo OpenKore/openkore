@@ -8,6 +8,17 @@
 #		 2 to take the item as fast as it can
 #
 #Use the item name "all" to tell kore to pickup or not pickup all items by default
-all 1
+
 # jellopy 0
 # fluff 0
+
+
+
+杰勒比结晶 -1
+毛 -1
+三叶幸运草 -1
+柔毛 -1
+
+
+
+all 1

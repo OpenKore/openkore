@@ -39,13 +39,18 @@
 
 # All items not mentioned in this file will be automatically stored in storage.
 all 0 1 0
+2000001 1 0 0
+2000180 1 0 0
+[非卖品]经验值倍增书&掉宝率倍增糖 1 0 0
+洞穴瞬间移动卷轴 1 0 0
+
 
 
 ##### HEAL/SUPPORT ITEMS #####
 # Adjust these to your needs
 
 602 10 1 0 # Butterfly Wing
-601 100 1 0 # Fly Wing
+601 20 1 0 # Fly Wing
 
 505 0 1 0 # Blue Potion
 545 50 1 0 # Condensed Red Potion
@@ -72,6 +77,9 @@ Arrow 3000 1 0
 ##### WORTHLESS GEARS #####
 # Worthless gears which are sold by default
 
+杰勒比结晶 0 0 1
+毛 0 0 1
+三叶幸运草 0 0 1
 Adventurer's Suit 0 0 1 # 2305
 Bandana 0 0 1 # 2211
 Biretta 0 0 1 # 2217

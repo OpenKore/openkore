@@ -408,7 +408,13 @@ sub sendMasterSecureLogin {
 
 sub reconstruct_game_login {
 	my ($self, $args) = @_;
-	$args->{userLevel} = 0 unless exists $args->{userLevel};
+	# The legacy field is named userLevel in OpenKore's packet tables, but
+	# 0065 uses it as the client type.  Some servers require a non-zero value.
+	if (!exists $args->{userLevel}) {
+		$args->{userLevel} = $masterServer && defined $masterServer->{clientType}
+			? $masterServer->{clientType}
+			: 0;
+	}
 	($args->{iAccountSID}) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/ unless exists $args->{iAccountSID};
 
 	if (exists $args->{mac}) {

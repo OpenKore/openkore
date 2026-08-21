@@ -264,3 +264,4 @@ ai_attack_allowed_waitForTarget 0.3
 # Default command spacing for the macro and eventMacro plugins.
 macro_delay 1
 eventMacro_delay 1
+vendingLog_request 5

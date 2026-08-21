@@ -32,6 +32,7 @@ use Field;
 use Misc;
 use Network;
 use Network::Send ();
+use Lastro::Airship qw(normalizeMapName);
 use Settings;
 use Plugins;
 use Skill;
@@ -4992,6 +4993,38 @@ sub cmdPrivateAirship {
 			"Usage: privateairship <map name> [<item ID>]\n");
 		return;
 	}
+
+	if ($masterServer && $masterServer->{lastroAirship}) {
+		my $lastro_item_id = $masterServer->{privateAirshipItemID} || 14527;
+		$item_id = $lastro_item_id if !defined $item_id || $item_id eq '';
+		if ($item_id !~ /^\d+$/) {
+			error T("Item ID must be numeric for 'privateairship'.\n");
+			return;
+		}
+		if ($item_id != $lastro_item_id) {
+			error TF("Lastro Private Airship requires item ID %d.\n", $lastro_item_id);
+			return;
+		}
+
+		my $map_name = normalizeMapName($map);
+		unless (defined $maps_lut{"$map_name.rsw"}) {
+			error TF("Map '%s' does not exist for Private Airship.\n", $map_name);
+			return;
+		}
+		if (length($map_name) > 16) {
+			error TF("Map name '%s' is too long for Private Airship (maximum 16 characters).\n", $map_name);
+			return;
+		}
+
+		# The server decides whether this destination is free or consumes 14527.
+		# Do not require an inventory item here: open-air destinations are free.
+		$char->{last_private_airship_item} = $item_id + 0;
+		$char->{last_private_airship_map} = $map_name;
+		$messageSender->sendPrivateAirshipRequest($map_name, $item_id + 0);
+		message TF("Requested Lastro map transfer to %s.\n", $map_name), "info";
+		return;
+	}
+
 	$item_id = '25464' if (!defined $item_id || $item_id eq '');
 	if ($item_id !~ /^\d+$/) {
 		error T("Item ID must be numeric for 'privateairship'.\n");

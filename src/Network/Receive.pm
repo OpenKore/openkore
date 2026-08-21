@@ -7846,6 +7846,7 @@ sub npc_store_begin {
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.W }*
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.L }*
 # 0B77 <packet len>.W { <name id>.L <price>.L <discount price>.L <item type>.B <viewSprite>.W <location>.L}*
+# 0B7A <packet len>.W { <name id>.L <item type>.B <price>.W <12 bytes>}* (Lastro)
 # 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType file if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
@@ -7855,7 +7856,10 @@ sub npc_store_info {
 	my $npc_id = $ai_v{'npc_talk'}{'ID'} || $talk{ID};
 	my @shop_items;
 
-	if ($args->{switch} eq '0B77') {
+	if ($args->{switch} eq '0B7A') {
+		$pack = "V C v x12";
+		$keys = [qw( nameID type price )];
+	} elsif ($args->{switch} eq '0B77') {
 		$pack = "V3 C v V";
 		$keys = [qw( nameID price _ type sprite_id location )];
 	} else {
@@ -9864,7 +9868,10 @@ sub private_airship_type {
 		return;
 	}
 	my $item_id = $char->{last_private_airship_item};
+	$item_id = $masterServer->{privateAirshipItemID}
+		if !defined $item_id && $masterServer && defined $masterServer->{privateAirshipItemID};
 	my $item_name = defined $item_id ? itemNameSimple($item_id) : itemNameSimple(25464);
+	Plugins::callHook('lastro_airship_result', {type => $result});
 	if ($result == 0) {
 		message T("Use Private Airship success.\n"), "info";
 	} elsif ($result == 1) {
@@ -9876,7 +9883,10 @@ sub private_airship_type {
 	} elsif ($result == 4) {
 		error T("Source map is invalid.\n");
 	} elsif ($result == 5) {
-		my $required_item = itemNameSimple(25464);
+		my $required_item_id = $masterServer && $masterServer->{privateAirshipItemID}
+			? $masterServer->{privateAirshipItemID}
+			: 25464;
+		my $required_item = itemNameSimple($required_item_id);
 		error TF("%s cannot be used for Private Airship. Please use %s.\n", $item_name, $required_item);
 	} else {
 		warning TF("Unknown Private Airship response %d.\n", $result);
