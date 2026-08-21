@@ -41,12 +41,12 @@ ai_homunculus_standby 2
 ai_mercenary_standby 2
 
 # Send the attack packet every x seconds, if it hasn't been send already
-ai_attack 1
+ai_attack 0.4
 # Homunculus and mercenary attack packet cadence.
 ai_homunculus_attack 1
 ai_mercenary_attack 1
 
-ai_attack_after_skill 0.5
+ai_attack_after_skill 0.51
 # Wait x seconds after finishing a skill before regular attack logic resumes.
 
 # Delay between short melee re-engage attempts while dancing around a target.
@@ -57,7 +57,7 @@ ai_mercenary_dance_attack_melee 0.2
 ai_mercenary_dance_attack_ranged 0.2
 
 # Check for monsters to attack every x seconds
-ai_attack_auto 0.5
+ai_attack_auto 0.53
 ai_homunculus_attack_auto 0.5
 ai_mercenary_attack_auto 0.5
 
@@ -97,17 +97,17 @@ ai_route_unstuck 2
 # Pause for the specified number of seconds after taking something,
 # it increases the interval between taking several items and between
 # taking the last item and continuing the actions.
-ai_items_take_delay 1
+ai_items_take_delay 0.1
 
 # When your monster died, start checking for loot after x seconds
-ai_items_take_start 0.3
+ai_items_take_start 0.1
 
 # Stop checking for loot x seconds after it has begun checking
 ai_items_take_end 0.6
 
 # When standing near an item, send the 'take' packet every x seconds until
 # the item has been taken.
-ai_take .4
+ai_take 0.4
 
 # Give up if unable to pickup item after x seconds
 ai_take_giveup 3
@@ -166,7 +166,7 @@ ai_sit_wait 0
 ai_safe_stand_up 2
 
 # Skill/item/equipment action cadence and their give-up windows.
-ai_skill_use 0.75
+ai_skill_use 0.3
 ai_skill_use_giveup 1
 ai_item_use_auto 0.5
 ai_item_equip_auto 0.75
@@ -176,7 +176,7 @@ ai_equip_giveup 2
 # Delays used by the different auto-teleport triggers.
 ai_teleport 1
 ai_teleport_away 3
-ai_teleport_idle 4
+ai_teleport_idle 1
 ai_teleport_portal 2
 ai_teleport_hp 3
 ai_teleport_safe_force 120
@@ -230,7 +230,7 @@ ai_cartAuto 0.15
 # delay between checking if we need to do any cartAuto functions
 ai_cartAutoCheck 3
 # Avoidance checks, vending/shop actions, and buyer shop polling intervals.
-ai_avoidcheck 0.5
+ai_avoidcheck 1
 ai_shop 4
 ai_shop_useskill_delay 5
 ai_buyer_shopCheck 60

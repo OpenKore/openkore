@@ -5,8 +5,8 @@
 
 master Lastro - Web
 server 0
-username testbot
-password 5158951589
+username 
+password 
 loginPinCode
 char 0
 otpSeed
