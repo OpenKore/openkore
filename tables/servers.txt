@@ -307,7 +307,8 @@ addTableFolders translated/kRO_english;kRO
 # Lastro browser client. The server advertises the character and map servers
 # as 127.0.0.1; private 1 makes OpenKore use the public account-server host.
 [Lastro - Web]
-ip 43.248.3.48
+#ip 43.248.3.48
+ip 45.248.9.225
 port 26569
 private 1
 master_version 3
