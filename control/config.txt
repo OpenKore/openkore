@@ -399,7 +399,7 @@ logSystemChat 1
 logLocalBroadcast 1
 logShop 1
 logEmoticons
-logConsole 1
+logConsole 0
 logAppendUsername 1
 logAppendServer 0
 monsterLog 0

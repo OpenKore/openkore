@@ -52,7 +52,7 @@
 # ***********************************************************************
 #
 # A. How to get number and lenght of number
-# - set ../control/config.txt : debug 2, logConsole 1
+# - set ../control/config.txt : debug 2, logConsole 0
 # - use plugins reactOnNPC.pl ,responseOnASCIInumber.pl
 # - look at you ../logs/console.txt
 # or
