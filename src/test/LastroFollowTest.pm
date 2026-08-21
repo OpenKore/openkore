@@ -16,7 +16,7 @@ use Plugins;
 sub start {
 	subtest 'LastroFollow plugin command' => sub {
 		my $plugin_file = File::Spec->catfile(
-			$RealBin, 'plugins', 'LastroFollow', 'LastroFollow.pl'
+			$RealBin, '..', '..', 'plugins', 'LastroFollow', 'LastroFollow.pl'
 		);
 		local $Globals::masterServer = {lastroAutoFollow => 1};
 		local $Globals::net = LastroFollowTest::FakeNet->new;
@@ -32,25 +32,40 @@ sub start {
 		my $receiver = Network::Receive->create(
 			undef, 'kRO_RagexeRE_2021_11_03'
 		);
-		$receiver->lastro_loadinfo({startAutofollow => 0});
 
 		Commands::run('autofollow on');
 		is_deeply($Globals::messageSender->{actions}, [1],
-			'autofollow on sends the browser toggle action when the server reports off');
+			'autofollow on always sends the browser toggle action first');
 
 		$receiver->lastro_reload_info({id => 37, value => 1});
-		Commands::run('autofollow on');
 		is_deeply($Globals::messageSender->{actions}, [1],
-			'autofollow on is a no-op after the server reports it enabled');
+			'autofollow on stops after the first toggle reaches the requested state');
 
-		Commands::run('autofollow off');
+		Commands::run('autofollow on');
 		is_deeply($Globals::messageSender->{actions}, [1, 1],
-			'autofollow off uses the same browser toggle action when the server reports on');
+			'autofollow on sends the first toggle even when already enabled');
 
 		$receiver->lastro_reload_info({id => 37, value => 0});
+		is_deeply($Globals::messageSender->{actions}, [1, 1, 1],
+			'autofollow on sends one follow-up toggle when the first response is off');
+		$receiver->lastro_reload_info({id => 37, value => 1});
+
 		Commands::run('autofollow off');
-		is_deeply($Globals::messageSender->{actions}, [1, 1],
-			'autofollow off is a no-op after the server reports it disabled');
+		is_deeply($Globals::messageSender->{actions}, [1, 1, 1, 1],
+			'autofollow off always sends the browser toggle action first');
+
+		$receiver->lastro_reload_info({id => 37, value => 0});
+		is_deeply($Globals::messageSender->{actions}, [1, 1, 1, 1],
+			'autofollow off stops after the first toggle reaches the requested state');
+
+		Commands::run('autofollow off');
+		is_deeply($Globals::messageSender->{actions}, [1, 1, 1, 1, 1],
+			'autofollow off sends the first toggle even when already disabled');
+
+		$receiver->lastro_reload_info({id => 37, value => 1});
+		is_deeply($Globals::messageSender->{actions}, [1, 1, 1, 1, 1, 1],
+			'autofollow off sends one follow-up toggle when the first response is on');
+		$receiver->lastro_reload_info({id => 37, value => 0});
 
 		ok(Plugins::unload('LastroFollow'), 'unloads LastroFollow plugin');
 		done_testing();

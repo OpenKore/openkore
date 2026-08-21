@@ -19,6 +19,8 @@ my $commands = Commands::register(
 	['autofollow', 'autofollow <on|off> - toggle Lastro follow battle', \&commandAutoFollow],
 );
 my $enabled;
+my $pending_target;
+my $pending_followup;
 my $hooks = Plugins::addHooks(
 	['lastro_autofollow_state', \&onAutoFollowState, undef],
 );
@@ -26,6 +28,8 @@ my $hooks = Plugins::addHooks(
 sub onUnload {
 	Commands::unregister($commands);
 	Plugins::delHooks($hooks);
+	$pending_target = undef;
+	$pending_followup = undef;
 }
 
 sub onAutoFollowState {
@@ -33,6 +37,18 @@ sub onAutoFollowState {
 	return unless $args && exists $args->{enabled};
 
 	$enabled = $args->{enabled} ? 1 : 0;
+	return unless defined $pending_target;
+
+	if ($enabled == $pending_target) {
+		$pending_target = undef;
+		$pending_followup = undef;
+		return;
+	}
+
+	return unless $pending_followup;
+	$pending_followup = 0;
+	$pending_target = undef;
+	$messageSender->sendLastroAutoFollow();
 }
 
 sub commandAutoFollow {
@@ -62,16 +78,8 @@ sub commandAutoFollow {
 		return;
 	}
 
-	unless (defined $enabled) {
-		error "Lastro follow state has not been received yet; wait for map initialization.\n";
-		return;
-	}
-
-	if ($enabled == $enabled{$args}) {
-		message "Lastro follow battle is already " . ($enabled ? 'enabled' : 'disabled') . ".\n", 'info';
-		return;
-	}
-
+	$pending_target = $enabled{$args};
+	$pending_followup = 1;
 	$messageSender->sendLastroAutoFollow();
 	message "Requested Lastro follow battle " . ($enabled{$args} ? 'enable' : 'disable') . ".\n", 'success';
 }
