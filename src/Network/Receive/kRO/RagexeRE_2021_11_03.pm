@@ -14,7 +14,7 @@
 package Network::Receive::kRO::RagexeRE_2021_11_03;
 use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2020_07_23);
-use Globals qw($masterServer);
+use Globals qw($masterServer $messageSender);
 use Plugins;
 
 sub new {
@@ -24,10 +24,8 @@ sub new {
 		# Lastro emits this zero-filled 2560-byte map initialization frame
 		# before its load-info and offline-message packets.
 		'0000' => ['lastro_ignored'],
-		# Keep the 10-byte SECOND_CHECK framing so it cannot desynchronize the
-		# receive stream, but do not send CHECK_BIN automatically. LastRO
-		# disconnects the OpenKore client after that unsolicited response.
-		'0AD5' => ['lastro_ignored', 'V V', [qw(pincode AID)]], #10
+		# LastRO's browser immediately answers SECOND_CHECK with CZ.CHECK_BIN.
+		'0AD5' => ['second_check', 'V V', [qw(pincode AID)]], #10
 		'0AD6' => ['lastro_ignored'],
 		# ZC_NOTIFY_SETTARGET is a target ID followed by a target-state byte.
 		# It is a 7-byte packet in the Lastro web client, unlike the stock 2021
@@ -47,6 +45,11 @@ sub new {
 }
 
 sub lastro_ignored {
+}
+
+sub second_check {
+	my ($self, $args) = @_;
+	$messageSender->sendCheckBin($args->{AID}, $args->{pincode});
 }
 
 sub lastro_loadinfo {

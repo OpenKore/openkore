@@ -747,7 +747,7 @@ sub start {
 		done_testing();
 	};
 
-	subtest 'Lastro ignores SECOND_CHECK without sending CHECK_BIN' => sub {
+	subtest 'Lastro answers SECOND_CHECK with browser CHECK_BIN data' => sub {
 		with_recvpackets_file(lastro_recvpackets_file(), sub {
 		with_master_server({
 			serverType => 'kRO_RagexeRE_2021_11_03',
@@ -769,9 +769,78 @@ sub start {
 					'SECOND_CHECK reads the account ID field');
 			});
 
-			is(scalar @{$net->{sent}}, 0,
-				'SECOND_CHECK does not send an unsolicited CHECK_BIN reply');
+			is(scalar @{$net->{sent}}, 1,
+				'SECOND_CHECK produces one CHECK_BIN reply');
+			is(length($net->{sent}[0]), 10,
+				'CHECK_BIN uses the browser wire length');
+			is(unpack('H*', substr($net->{sent}[0], 2)), '4ea21e0034383631',
+				'CHECK_BIN preserves AID and browser-derived pincode 4861');
 		});
+		});
+		done_testing();
+	};
+
+	subtest 'Lastro CHECK_BIN does not use the inbound 0AFA length' => sub {
+		with_recvpackets_file(lastro_recvpackets_file(), sub {
+			with_master_server({
+				serverType => 'kRO_RagexeRE_2021_11_03',
+			}, sub {
+				my $net = NetworkTest::FakeNet->new;
+				my $sender = Network::Send->create($net, 'kRO_RagexeRE_2021_11_03');
+
+				is($rpackets{'0AFA'}{length}, 58,
+					'0AFA remains a 58-byte server-to-client packet');
+				$sender->sendCheckBin(0x001EA24E, 0x0000E87A);
+
+				is(scalar @{$net->{sent}}, 1,
+					'CHECK_BIN sends one client-to-server packet');
+				is(length($net->{sent}[0]), 10,
+					'CHECK_BIN stays a 10-byte client-to-server packet');
+				is(unpack('H*', $net->{sent}[0]), 'fa0a4ea21e0034383631',
+					'CHECK_BIN uses the browser packet bytes without receive-table padding');
+			});
+		});
+		done_testing();
+	};
+
+	subtest 'Lastro private messages do not use the inbound 0096 length' => sub {
+		with_recvpackets_file(lastro_recvpackets_file(), sub {
+			with_master_server({
+				serverType => 'kRO_RagexeRE_2021_11_03',
+			}, sub {
+				my $net = NetworkTest::FakeNet->new;
+				my $sender = Network::Send->create($net, 'kRO_RagexeRE_2021_11_03');
+
+				is($rpackets{'0096'}{length}, 4,
+					'0096 remains the 4-byte server-to-client UNK1 packet');
+				$sender->sendPrivateMsg('Target', 'hello');
+
+				is(scalar @{$net->{sent}}, 1,
+					'private message sends one client-to-server packet');
+				is(length($net->{sent}[0]), 34,
+					'private message remains variable-length instead of being truncated to four bytes');
+				is(unpack('H*', $net->{sent}[0]),
+					'9600220054617267657400000000000000000000000000000000000068656c6c6f00',
+					'private message uses the browser CZ.WHISPER packet bytes');
+			});
+		});
+		done_testing();
+	};
+
+	subtest 'Lastro private messages preserve a 24-byte recipient' => sub {
+		with_recvpackets_file(lastro_recvpackets_file(), sub {
+			with_master_server({
+				serverType => 'kRO_RagexeRE_2021_11_03',
+			}, sub {
+				my $net = NetworkTest::FakeNet->new;
+				my $sender = Network::Send->create($net, 'kRO_RagexeRE_2021_11_03');
+
+				$sender->sendPrivateMsg('ABCDEFGHIJKLMNOPQRSTUVWX', 'x');
+
+				is(unpack('H*', $net->{sent}[0]),
+					'96001e004142434445464748494a4b4c4d4e4f5051525354555657587800',
+					'private message keeps all 24 receiver bytes used by the browser');
+			});
 		});
 		done_testing();
 	};

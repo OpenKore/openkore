@@ -159,11 +159,28 @@ sub sendCheckBin {
 		}
 	}
 
-	$self->sendToServer($self->reconstruct({
-		switch => 'check_bin',
-		AID => $AID,
-		pinCode => $pinCode,
-	}));
+	# 0AFA is also a 58-byte server-to-client packet in LastRO's receive
+	# table.  Do not use reconstruct(): it pads outbound CHECK_BIN to that
+	# unrelated receive length.  The browser always writes exactly these 10
+	# bytes: switch, AID, then the four-character response.
+	$self->sendToServer(pack('v V a4', 0x0AFA, $AID, $pinCode));
+}
+
+# 0096 is a 4-byte ZC.UNK1 packet in LastRO's receive table, but CZ.WHISPER
+# uses the same switch in the opposite direction and is variable-length.
+# Construct the browser frame directly so reconstruct() cannot truncate it.
+sub sendPrivateMsg {
+	my ($self, $user, $message) = @_;
+	$message = '|00' . $message if $masterServer->{chatLangCode};
+	$message = stringToBytes($message);
+	$user = stringToBytes($user);
+
+	$self->sendToServer(pack('v v a24 Z*',
+		0x0096,
+		29 + length($message),
+		$user,
+		$message,
+	));
 }
 
 1;

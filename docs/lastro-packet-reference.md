@@ -10,13 +10,16 @@
 LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01CE`：
 `u16 switch (0x01CE) + u32 SKID`，总长 **6 字节**。现有 `sendAutoSpell` 的编码与网页客户端一致，
 因此不能把该发送封包本身当作断线根因。地图初始化还包括一个独立的挑战流程：收到 `0AD5`
-后必须按网页算法回复 `0AFA`，否则地图服务器会等待确认并超时断线。
+后必须按网页算法回复 `0AFA`。该回复固定为 **10 字节**（switch、AID、4 个 ASCII 数字），不能
+忽略；否则地图服务器会等待确认并超时断线。
 
 此前已经修复 `ZC.NOTIFY_SETTARGET`（`0x0AF1`）：网页客户端定义为
 `u16 switch + u32 mobid + u8 value`，总长 **7 字节**；原表错写为 `102`。日志中的连续帧
 `F1 0A 3B 04 00 00 01` 也直接验证了该长度。
 
-本轮根据同一网页客户端中逐字段的固定结构，核对并修正了 **45 个新增条目**（连同已修复的 `0AF1`，共 **46 个已确认条目**）。其中 `0AD2` 和 `0AF9` 是按剩余数据计算记录数的变长列表，已改为 `-1`；`0AF8` 与 `0AF1` 都是 7 字节目标通知；`0AFA` 的网页结构是两个 24 字节名称、一个 AID 和一个拒绝码，总长 58 字节。
+本轮根据同一网页客户端中逐字段的固定结构，核对并修正了 **45 个新增条目**（连同已修复的 `0AF1`，共 **46 个已确认条目**）。其中 `0AD2` 和 `0AF9` 是按剩余数据计算记录数的变长列表，已改为 `-1`；`0AF8` 与 `0AF1` 都是 7 字节目标通知；服务端→客户端的 `0AFA` 网页结构是两个 24 字节名称、一个 AID 和一个拒绝码，总长 58 字节。
+
+`recvpackets.txt` 只描述服务端→客户端方向，不能作为同号客户端→服务器封包的长度表。已确认的方向碰撞包括：`0AFA` 的客户端 `CZ.CHECK_BIN` 固定 10 字节，以及 `0096` 的客户端 `CZ.WHISPER` 为变长包；二者都必须绕过通用 `reconstruct()`，否则会错误地套用入站长度。
 
 这些长度由浏览器端的读取字段直接相加得到，并不把“同名但属于其他协议世代”的定义混用。这样可以避免固定长度过大吞掉后续封包，或固定长度过小留下半包，导致 TCP 接收流失步。
 
@@ -38,7 +41,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 - `00AA REQ_WEAR_EQUIP_ACK`：网页脚本把 `.size` 写成 0，但解析体按日期条件读取 9 字节；表中保留 9。
 - `0999 ACK_WEAR_EQUIP_V5`：同样是占位长度，字段结构实际读取 11 字节；表中保留 11。
 - `0AD6 CARDCONNECTION_RECHARGE_LIST`：网页脚本声明变长，但 LastRO 先发送 2 字节标记，再发送由 `0000` 接收的 2560 字节零帧；表中保留 2，并由 LastRO 专用 receiver 处理。
-- `0AD5 SECOND_CHECK`：网页脚本确认其接收长度为 10 字节。LastRO 地图服务器会发送这个请求，但实测 OpenKore 自动回复 10 字节 `0AFA CHECK_BIN` 后会被断开；因此仅按 10 字节解析以维持接收流同步，不自动发送确认包。网页端的回复逻辑不能单独证明该回复可用于 OpenKore 的地图进入状态。
+- `0AD5 SECOND_CHECK`：网页脚本确认其接收长度为 10 字节，并立即回复客户端→服务器的 10 字节 `0AFA CHECK_BIN`。该回复必须绕过通用 `reconstruct()`：它会错误地套用同号入站 `0AFA` 的 58 字节长度，向服务器多发送 48 个零字节并被踢下线。
 - 网页脚本会重复定义同名 ZC。审计按 switch 选择定义：`011A USE_SKILL` 使用 15，`01D6 NOTIFY_MAPPROPERTY2` 使用 4，`099B NOTIFY_MAPPROPERTY2` 使用 8；不能用名称的最后一次赋值覆盖全部世代。
 
 ## 使用规则
@@ -80,7 +83,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 | `0092` | `NPCACK_SERVERMOVE` | 28 | 28 | 一致 |  |
 | `0093` | `NPCACK_ENABLE` | 2 | 2 | 一致 |  |
 | `0095` | `ACK_REQNAME` | 30 | 30 | 一致 |  |
-| `0096` | `UNK1` | 4 | 4 | 一致 | 网页客户端固定结构（本轮核对） |
+| `0096` | `UNK1` | 4 | 4 | 一致 | 仅服务端→客户端；同号客户端→服务器 `CZ.WHISPER` 为变长包，直接编码 |
 | `0098` | `ACK_WHISPER` | 3 | 3 | 一致 |  |
 | `009A` | `BROADCAST` | -1 | -1 | 一致 |  |
 | `009C` | `CHANGE_DIRECTION` | 9 | 9 | 一致 |  |
@@ -616,7 +619,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 | `0AD2` | `ADDIS_SKILLINFO_LIST` | -1 | -1 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0AD3` | `TOUCH_SKILLINFO_LIST` | -1 | -1 | 一致 |  |
 | `0AD4` | `QOATTACK_SKILLINFO_LIST` | -1 | -1 | 一致 |  |
-| `0AD5` | `SECOND_CHECK` | 10 | 10 | 仅解析 | 保持 10 字节接收边界；不自动发送 `0AFA CHECK_BIN`，否则实测会断线 |
+| `0AD5` | `SECOND_CHECK` | 10 | 10 | 必须回复 | 网页客户端立即发送 10 字节 `0AFA CHECK_BIN`；发送路径不可套用入站长度 |
 | `0AD6` | `CARDCONNECTION_RECHARGE_LIST` | -1 | 2 | LastRO 特殊处理（保留） | LastRO 专用：2 字节标记后由 0000 接收 2560 字节零帧 |
 | `0AD8` | `CARDCONNECTION_RECHARGE_UPDATE` | 9 | 9 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0ADA` | `BROADCAST_ITEMREFINING_RESULT` | 32 | 32 | 一致 |  |
@@ -637,7 +640,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 | `0AF7` | `ACK_REQNAME_BYGID2` | 32 | 32 | 一致 |  |
 | `0AF8` | `NOTIFY_SETTARGET2` | 7 | 7 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0AF9` | `SKILL_AUTOSHADOWSPELL` | -1 | -1 | 一致 | 网页客户端固定结构（本轮核对） |
-| `0AFA` | `PARTY_JOIN_REQ_ACK_FROM_MASTER` | 58 | 58 | 一致 | 网页客户端固定结构（本轮核对） |
+| `0AFA` | `PARTY_JOIN_REQ_ACK_FROM_MASTER` | 58 | 58 | 一致 | 仅服务端→客户端；同号客户端→服务器 `CHECK_BIN` 固定 10 字节，直接编码 |
 | `0AFB` | `AUTOSPELLLIST2` | -1 | -1 | 一致 |  |
 | `0AFC` | `NOTIFY_OFFLINEMSG` | 30 | 30 | 一致 |  |
 | `0B08` | `INVENTORY_START` | -1 | -1 | 一致 |  |
