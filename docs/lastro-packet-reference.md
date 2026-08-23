@@ -620,7 +620,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 | `0AD6` | `CARDCONNECTION_RECHARGE_LIST` | -1 | 2 | LastRO 特殊处理（保留） | LastRO 专用：2 字节标记后由 0000 接收 2560 字节零帧 |
 | `0AD8` | `CARDCONNECTION_RECHARGE_UPDATE` | 9 | 9 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0ADA` | `BROADCAST_ITEMREFINING_RESULT` | 32 | 32 | 一致 |  |
-| `0ADC` | `CARDCONNECTION_ENABLE_UPDATE` | 5 | 5 | 一致 | 网页客户端固定结构（本轮核对） |
+| `0ADC` | `CARDCONNECTION_ENABLE_UPDATE` | 6 | 6 | 已修正 | 4 个配置标志加 2 字节包头；旧值 5 会使后续包头错位 |
 | `0ADD` | `ITEM_FALL_ENTRY3` | — | 24 | 动态/未静态声明 |  |
 | `0ADE` | `WEIGHT_LIMIT` | 6 | 6 | 一致 |  |
 | `0ADF` | `ACK_REQNAME3` | 58 | 58 | 一致 |  |

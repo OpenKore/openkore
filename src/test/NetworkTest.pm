@@ -452,7 +452,7 @@ sub start {
 				'084B' => 19, '097F' => 11, '0990' => 31, '09F7' => 75,
 				'0A05' => 53, '0A09' => 45, '0A0A' => 47, '0A0B' => 47,
 				'0A0C' => 56, '0A37' => 59, '0AD2' => -1, '0AD8' => 9,
-				'0ADC' => 5, '0AE9' => 9, '0AF1' => 7, '0AF8' => 7,
+				'0ADC' => 6, '0AE9' => 9, '0AF1' => 7, '0AF8' => 7,
 				'0AF9' => -1, '0AFA' => 58,
 			);
 
@@ -460,6 +460,30 @@ sub start {
 				is($rpackets{$switch}{length}, $expected{$switch},
 					"$switch uses Lastro's browser-confirmed packet length");
 			}
+		});
+		done_testing();
+	};
+
+	subtest 'Lastro misc config preserves the following autospell packet boundary' => sub {
+		with_recvpackets_file(lastro_recvpackets_file(), sub {
+			my $tokenizer = Network::MessageTokenizer->new(\%rpackets);
+			$tokenizer->add(
+				pack('v C4', 0x0ADC, 0, 0, 0, 0)
+				. pack('v v v2', 0x0AFB, 8, 13, 14)
+			);
+
+			my @switches;
+			my $type;
+			while (my $message = $tokenizer->readNext(\$type)) {
+				push @switches, Network::MessageTokenizer::getMessageID($message);
+			}
+
+			is($rpackets{'0ADC'}{length}, 6,
+				'0ADC includes its two-byte header and four configuration flags');
+			is_deeply(\@switches, [qw(0ADC 0AFB)],
+				'0ADC does not consume the first byte of the following autospell packet');
+			is(length($tokenizer->getBuffer), 0,
+				'misc configuration and autospell packets leave no partial data');
 		});
 		done_testing();
 	};
