@@ -1,8 +1,8 @@
 # LastRO 封包长度参考（网页客户端 69.35）
 
-> 快照日期：2026-08-23  
-> 客户端来源：[Online.js?69.35](https://post.lastro.cn/ro/Online.js?69.35)  
-> 对照表：`tables/kRO/Ragexe_2021_11_03/recvpackets.txt`  
+> 快照日期：2026-08-23<br>
+> 客户端来源：[Online.js?69.35](https://post.lastro.cn/ro/Online.js?69.35)<br>
+> 对照表：`tables/kRO/Ragexe_2021_11_03/recvpackets.txt`<br>
 > 范围：网页客户端已注册的 **629 个 ZC（服务器 → 客户端）封包**。
 
 ## 结论与本次修复
