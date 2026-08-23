@@ -24,6 +24,7 @@ sub new {
 		# Lastro emits this zero-filled 2560-byte map initialization frame
 		# before its load-info and offline-message packets.
 		'0000' => ['lastro_ignored'],
+		# LastRO's browser immediately answers SECOND_CHECK with CZ.CHECK_BIN.
 		'0AD5' => ['second_check', 'V V', [qw(pincode AID)]], #10
 		'0AD6' => ['lastro_ignored'],
 		# ZC_NOTIFY_SETTARGET is a target ID followed by a target-state byte.
@@ -43,12 +44,12 @@ sub new {
 	return $self;
 }
 
+sub lastro_ignored {
+}
+
 sub second_check {
 	my ($self, $args) = @_;
 	$messageSender->sendCheckBin($args->{AID}, $args->{pincode});
-}
-
-sub lastro_ignored {
 }
 
 sub lastro_loadinfo {

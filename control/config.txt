@@ -3,12 +3,12 @@
 
 ######## Login options and server-specific options ########
 
-master Lastro - Web
-server 0
-username 
-password 
+master
+server
+username
+password
 loginPinCode
-char 0
+char
 otpSeed
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
@@ -42,7 +42,7 @@ XKore_ID
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword sekespev
+adminPassword
 callSign
 commandPrefix ;
 callSignGM 0
@@ -201,9 +201,9 @@ followLostStep 12
 followSitAuto 0
 followBot 0
 
-itemsTakeAuto 1
+itemsTakeAuto 2
 itemsTakeAuto_party 0
-itemsGatherAuto 1
+itemsGatherAuto 2
 itemsGatherAuto_notInTown 0
 itemsGatherAutoMinPlayerDistance 6
 itemsGatherAutoMinPortalDistance 5
@@ -214,7 +214,7 @@ cartMaxWeight 7900
 itemsTakeGreed 0
 itemsCheckWeight 1
 
-lockMap prt_fild07
+lockMap
 lockMap_x
 lockMap_y
 lockMap_randX
@@ -224,7 +224,7 @@ route_escape_reachedNoPortal 1
 route_escape_randomWalk 1
 route_escape_shout
 route_randomWalk 1
-route_randomWalk_inLockOnly 1
+route_randomWalk_inLockOnly 0
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
@@ -247,12 +247,6 @@ route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 route_avoidWalls 1
 route_randomFactor 0
-
-# Lastro browser world-map transfer.  Only maps in
-# lastro_airship_free_maps.txt are selected automatically; all other routes
-# continue through normal portals and walking.
-lastro_airshipRoute 1
-lastro_airshipRoute_timeout 5
 
 # Eden Group Headquarters exit portal.
 # Use only a map name, with or without quotes, like prontera or "payon"
@@ -293,8 +287,8 @@ shop_useSkill 1
 buyerShopAuto_open 0
 buyerShop_random 0
 
-sitAuto_hp_lower 30
-sitAuto_hp_upper 70
+sitAuto_hp_lower 40
+sitAuto_hp_upper 100
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
 sitAuto_follow 0
@@ -305,9 +299,9 @@ sitAuto_look_from_wall
 sitAuto_look_delay
 sitTensionRelax 0
 
-statsAddAuto 1
-statsAddAuto_list 20 dex, 30 agi, 30 str, 99 agi
-statsAddAuto_dontUseBonus 1
+statsAddAuto 0
+statsAddAuto_list
+statsAddAuto_dontUseBonus 0
 statsAdd_over_99 1
 
 skillsAddAuto 0
@@ -399,7 +393,7 @@ logSystemChat 1
 logLocalBroadcast 1
 logShop 1
 logEmoticons
-logConsole 0
+logConsole 1
 logAppendUsername 1
 logAppendServer 0
 monsterLog 0
@@ -735,16 +729,6 @@ useSelf_item {
 	# [checkSelfCondition]
 }
 
-
-useSelf_item 红萝卜,苹果 {
-	dcOnEmpty 0
-	disabled 0
-
-	hp < 60%
-}
-
-
-
 ######## Autostorage/autosell ########
 
 buyAuto {
@@ -813,8 +797,8 @@ debugPacket_ro_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
 debugPacket_exclude
-debugPacket_include 0AFE,0AF5,0AF6
-debugPacket_include_dumpMethod 2
+debugPacket_include
+debugPacket_include_dumpMethod
 debugDomains
 logToFile_Debug
 logToFile_Errors
@@ -1006,4 +990,3 @@ avoidObstaclesDefaultPortals {
 #	target_isAIMode_TakesFixed_1_Damage_Magic 0
 #	target_isAIMode_TakesFixed_1_Damage_None 0
 #}
-macro_orphans terminate
