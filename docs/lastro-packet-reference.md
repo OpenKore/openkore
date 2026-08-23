@@ -37,6 +37,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 - `00AA REQ_WEAR_EQUIP_ACK`：网页脚本把 `.size` 写成 0，但解析体按日期条件读取 9 字节；表中保留 9。
 - `0999 ACK_WEAR_EQUIP_V5`：同样是占位长度，字段结构实际读取 11 字节；表中保留 11。
 - `0AD6 CARDCONNECTION_RECHARGE_LIST`：网页脚本声明变长，但 LastRO 先发送 2 字节标记，再发送由 `0000` 接收的 2560 字节零帧；表中保留 2，并由 LastRO 专用 receiver 处理。
+- `0AD5 SECOND_CHECK`：网页脚本确认其接收长度为 10 字节。LastRO 的地图服务器会发送这个请求，但当前实测 Kore 自动回复 `0AFA CHECK_BIN` 后会被断开；因此 receiver 只解析并忽略 `0AD5`，不自动发送确认包。
 - 网页脚本会重复定义同名 ZC。审计按 switch 选择定义：`011A USE_SKILL` 使用 15，`01D6 NOTIFY_MAPPROPERTY2` 使用 4，`099B NOTIFY_MAPPROPERTY2` 使用 8；不能用名称的最后一次赋值覆盖全部世代。
 
 ## 使用规则
