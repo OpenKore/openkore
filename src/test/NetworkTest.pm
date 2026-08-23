@@ -747,7 +747,7 @@ sub start {
 		done_testing();
 	};
 
-	subtest 'Lastro answers SECOND_CHECK with browser CHECK_BIN data' => sub {
+	subtest 'Lastro ignores SECOND_CHECK without sending CHECK_BIN' => sub {
 		with_recvpackets_file(lastro_recvpackets_file(), sub {
 		with_master_server({
 			serverType => 'kRO_RagexeRE_2021_11_03',
@@ -769,12 +769,8 @@ sub start {
 					'SECOND_CHECK reads the account ID field');
 			});
 
-			is(scalar @{$net->{sent}}, 1,
-				'SECOND_CHECK produces one CHECK_BIN reply');
-			is(length($net->{sent}[0]), 10,
-				'CHECK_BIN uses the browser wire length');
-			is(unpack('H*', substr($net->{sent}[0], 2)), '4ea21e0034383631',
-				'CHECK_BIN preserves AID and browser-derived pincode 4861');
+			is(scalar @{$net->{sent}}, 0,
+				'SECOND_CHECK does not send an unsolicited CHECK_BIN reply');
 		});
 		});
 		done_testing();

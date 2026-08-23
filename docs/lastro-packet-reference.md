@@ -38,7 +38,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 - `00AA REQ_WEAR_EQUIP_ACK`：网页脚本把 `.size` 写成 0，但解析体按日期条件读取 9 字节；表中保留 9。
 - `0999 ACK_WEAR_EQUIP_V5`：同样是占位长度，字段结构实际读取 11 字节；表中保留 11。
 - `0AD6 CARDCONNECTION_RECHARGE_LIST`：网页脚本声明变长，但 LastRO 先发送 2 字节标记，再发送由 `0000` 接收的 2560 字节零帧；表中保留 2，并由 LastRO 专用 receiver 处理。
-- `0AD5 SECOND_CHECK`：网页脚本确认其接收长度为 10 字节。LastRO 地图服务器会发送这个请求，网页端随后按 AID 末四位和随机数置换算法发送 10 字节的 `0AFA CHECK_BIN`。Kore 的 `second_check` 处理器现在复用同一算法；忽略该请求会使服务器一直等待确认并最终断开连接。
+- `0AD5 SECOND_CHECK`：网页脚本确认其接收长度为 10 字节。LastRO 地图服务器会发送这个请求，但实测 OpenKore 自动回复 10 字节 `0AFA CHECK_BIN` 后会被断开；因此仅按 10 字节解析以维持接收流同步，不自动发送确认包。网页端的回复逻辑不能单独证明该回复可用于 OpenKore 的地图进入状态。
 - 网页脚本会重复定义同名 ZC。审计按 switch 选择定义：`011A USE_SKILL` 使用 15，`01D6 NOTIFY_MAPPROPERTY2` 使用 4，`099B NOTIFY_MAPPROPERTY2` 使用 8；不能用名称的最后一次赋值覆盖全部世代。
 
 ## 使用规则
@@ -616,7 +616,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 | `0AD2` | `ADDIS_SKILLINFO_LIST` | -1 | -1 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0AD3` | `TOUCH_SKILLINFO_LIST` | -1 | -1 | 一致 |  |
 | `0AD4` | `QOATTACK_SKILLINFO_LIST` | -1 | -1 | 一致 |  |
-| `0AD5` | `SECOND_CHECK` | 10 | 10 | 一致 | 收到后按网页算法回复 10 字节 `0AFA CHECK_BIN` |
+| `0AD5` | `SECOND_CHECK` | 10 | 10 | 仅解析 | 保持 10 字节接收边界；不自动发送 `0AFA CHECK_BIN`，否则实测会断线 |
 | `0AD6` | `CARDCONNECTION_RECHARGE_LIST` | -1 | 2 | LastRO 特殊处理（保留） | LastRO 专用：2 字节标记后由 0000 接收 2560 字节零帧 |
 | `0AD8` | `CARDCONNECTION_RECHARGE_UPDATE` | 9 | 9 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0ADA` | `BROADCAST_ITEMREFINING_RESULT` | 32 | 32 | 一致 |  |
