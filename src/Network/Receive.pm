@@ -5171,6 +5171,9 @@ sub quest_active {
 sub parse_npc_chat {
 	my ($self, $args) = @_;
 
+	# 02C1 carries the server's text bytes. Decode them before the chat
+	# handler and its hooks consume the message, just like other chat packets.
+	$args->{message} = bytesToString($args->{message});
 	$args->{actor} = Actor::get($args->{ID});
 }
 
@@ -5180,7 +5183,7 @@ sub npc_chat {
 	# like public_chat, but also has color
 
 	my $actor = $args->{actor};
-	my $message = $args->{message}; # needs bytesToString or not?
+	my $message = $args->{message};
 	my $position = sprintf("[%s %d, %d]",
 		$field ? $field->baseName : T("Unknown field,"),
 		@{$char->{pos_to}}{qw(x y)});

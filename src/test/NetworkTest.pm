@@ -2,6 +2,7 @@
 package NetworkTest;
 
 use strict;
+use Encode qw(decode);
 use FindBin qw($RealBin);
 use File::Spec;
 use Test::More;
@@ -244,6 +245,25 @@ sub start {
 
 			is(unpack('v', substr($packet, 14, 2)), 3,
 				'0065 client type comes from the server configuration');
+		});
+		done_testing();
+	};
+
+	subtest 'NPC chat decodes text using the server encoding' => sub {
+		with_master_server({serverEncoding => 'GBK'}, sub {
+			my $receiver = Network::Receive->create(
+				undef, 'kRO_RagexeRE_2021_11_03'
+			);
+			my $raw_message = "\xC4\xFA\xB5\xC4";
+			my $args = {
+				ID => pack('V', 0x7FFFFFFF),
+				message => $raw_message,
+			};
+
+			$receiver->parse_npc_chat($args);
+
+			is($args->{message}, decode('GBK', $raw_message),
+				'02C1 NPC chat text is decoded before it reaches the chat handler');
 		});
 		done_testing();
 	};
