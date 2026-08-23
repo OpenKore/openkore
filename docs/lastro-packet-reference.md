@@ -9,7 +9,8 @@
 
 LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01CE`：
 `u16 switch (0x01CE) + u32 SKID`，总长 **6 字节**。现有 `sendAutoSpell` 的编码与网页客户端一致，
-因此断线问题出在接收流的封包边界，而不是该发送封包。
+因此不能把该发送封包本身当作断线根因。地图初始化还包括一个独立的挑战流程：收到 `0AD5`
+后必须按网页算法回复 `0AFA`，否则地图服务器会等待确认并超时断线。
 
 此前已经修复 `ZC.NOTIFY_SETTARGET`（`0x0AF1`）：网页客户端定义为
 `u16 switch + u32 mobid + u8 value`，总长 **7 字节**；原表错写为 `102`。日志中的连续帧
@@ -37,7 +38,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 - `00AA REQ_WEAR_EQUIP_ACK`：网页脚本把 `.size` 写成 0，但解析体按日期条件读取 9 字节；表中保留 9。
 - `0999 ACK_WEAR_EQUIP_V5`：同样是占位长度，字段结构实际读取 11 字节；表中保留 11。
 - `0AD6 CARDCONNECTION_RECHARGE_LIST`：网页脚本声明变长，但 LastRO 先发送 2 字节标记，再发送由 `0000` 接收的 2560 字节零帧；表中保留 2，并由 LastRO 专用 receiver 处理。
-- `0AD5 SECOND_CHECK`：网页脚本确认其接收长度为 10 字节。LastRO 的地图服务器会发送这个请求，但当前实测 Kore 自动回复 `0AFA CHECK_BIN` 后会被断开；因此 receiver 只解析并忽略 `0AD5`，不自动发送确认包。
+- `0AD5 SECOND_CHECK`：网页脚本确认其接收长度为 10 字节。LastRO 地图服务器会发送这个请求，网页端随后按 AID 末四位和随机数置换算法发送 10 字节的 `0AFA CHECK_BIN`。Kore 的 `second_check` 处理器现在复用同一算法；忽略该请求会使服务器一直等待确认并最终断开连接。
 - 网页脚本会重复定义同名 ZC。审计按 switch 选择定义：`011A USE_SKILL` 使用 15，`01D6 NOTIFY_MAPPROPERTY2` 使用 4，`099B NOTIFY_MAPPROPERTY2` 使用 8；不能用名称的最后一次赋值覆盖全部世代。
 
 ## 使用规则
@@ -615,7 +616,7 @@ LastRO 的自动念咒流程使用的发送封包 `CZ.SELECTAUTOSPELL` 是 `0x01
 | `0AD2` | `ADDIS_SKILLINFO_LIST` | -1 | -1 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0AD3` | `TOUCH_SKILLINFO_LIST` | -1 | -1 | 一致 |  |
 | `0AD4` | `QOATTACK_SKILLINFO_LIST` | -1 | -1 | 一致 |  |
-| `0AD5` | `SECOND_CHECK` | 10 | 10 | 一致 |  |
+| `0AD5` | `SECOND_CHECK` | 10 | 10 | 一致 | 收到后按网页算法回复 10 字节 `0AFA CHECK_BIN` |
 | `0AD6` | `CARDCONNECTION_RECHARGE_LIST` | -1 | 2 | LastRO 特殊处理（保留） | LastRO 专用：2 字节标记后由 0000 接收 2560 字节零帧 |
 | `0AD8` | `CARDCONNECTION_RECHARGE_UPDATE` | 9 | 9 | 一致 | 网页客户端固定结构（本轮核对） |
 | `0ADA` | `BROADCAST_ITEMREFINING_RESULT` | 32 | 32 | 一致 |  |
