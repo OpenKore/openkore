@@ -26,6 +26,10 @@ sub new {
 		'0000' => ['lastro_ignored'],
 		'0AD5' => ['second_check', 'V V', [qw(pincode AID)]], #10
 		'0AD6' => ['lastro_ignored'],
+		# ZC_NOTIFY_SETTARGET is a target ID followed by a target-state byte.
+		# It is a 7-byte packet in the Lastro web client, unlike the stock 2021
+		# client packet recorded in the original recvpackets table.
+		'0AF1' => ['lastro_ignored'],
 		'0AF5' => ['lastro_loadinfo', 'a43 C a12', [qw(unknown startAutofollow trailing)]], #58
 		'0AF6' => ['lastro_reload_info', 'C V', [qw(id value)]], #7
 		'0AFC' => ['lastro_ignored'],
