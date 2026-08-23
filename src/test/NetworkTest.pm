@@ -419,6 +419,31 @@ sub start {
 		done_testing();
 	};
 
+	subtest 'Lastro recvpackets use browser-confirmed lengths' => sub {
+		with_recvpackets_file(lastro_recvpackets_file(), sub {
+			my %expected = (
+				'0075' => 11, '0078' => 58, '007C' => 42, '0096' => 4,
+				'009E' => 17, '00A0' => 23, '00E9' => 19, '00F4' => 21,
+				'0124' => 21, '0191' => 86, '01C4' => 22, '01C5' => 22,
+				'01D8' => 54, '01D9' => 53, '01DA' => 60, '0223' => 8,
+				'022A' => 58, '022B' => 57, '022C' => 65, '022E' => 71,
+				'029A' => 27, '02B8' => 22, '02D4' => 29, '02EC' => 67,
+				'02ED' => 59, '02EE' => 60, '080F' => 20, '081B' => 10,
+				'084B' => 19, '097F' => 11, '0990' => 31, '09F7' => 75,
+				'0A05' => 53, '0A09' => 45, '0A0A' => 47, '0A0B' => 47,
+				'0A0C' => 56, '0A37' => 59, '0AD2' => -1, '0AD8' => 9,
+				'0ADC' => 5, '0AE9' => 9, '0AF1' => 7, '0AF8' => 7,
+				'0AF9' => -1, '0AFA' => 58,
+			);
+
+			for my $switch (sort keys %expected) {
+				is($rpackets{$switch}{length}, $expected{$switch},
+					"$switch uses Lastro's browser-confirmed packet length");
+			}
+		});
+		done_testing();
+	};
+
 	subtest 'Lastro target notifications preserve following packet boundaries' => sub {
 		with_recvpackets_file(lastro_recvpackets_file(), sub {
 			with_master_server({lastroAutoFollow => 1}, sub {
