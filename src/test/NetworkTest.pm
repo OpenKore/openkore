@@ -419,6 +419,49 @@ sub start {
 		done_testing();
 	};
 
+	subtest 'Lastro target notifications preserve following packet boundaries' => sub {
+		with_recvpackets_file(lastro_recvpackets_file(), sub {
+			with_master_server({lastroAutoFollow => 1}, sub {
+				my @states;
+				my $hook = Plugins::addHook('lastro_autofollow_state', sub {
+					my (undef, $args) = @_;
+					push @states, $args->{enabled};
+				});
+				my $receiver = Network::Receive->create(
+					undef, 'kRO_RagexeRE_2021_11_03'
+				);
+				my $tokenizer = Network::MessageTokenizer->new(\%rpackets);
+				$tokenizer->add(
+					pack('v V C', 0x0AF1, 0x0000043B, 1)
+					. pack('v V C', 0x0AF1, 0x0000045E, 1)
+					. pack('v V C', 0x0AF1, 0x00000697, 1)
+					. pack('v', 0x0AF5) . ("\0" x 43) . pack('C', 1) . ("\0" x 12)
+				);
+
+				my @switches;
+				my $type;
+				while (my $message = $tokenizer->readNext(\$type)) {
+					my $switch = Network::MessageTokenizer::getMessageID($message);
+					push @switches, $switch;
+					$receiver->parse($message, $receiver);
+				}
+
+				is($rpackets{'0AF1'}{length}, 7,
+					'0AF1 matches the browser 4-byte target ID and 1-byte target state');
+				is($receiver->{packet_list}{'0AF1'}[0], 'lastro_ignored',
+					'0AF1 has a Lastro receiver handler instead of an unknown switch');
+				is_deeply(\@switches, [qw(0AF1 0AF1 0AF1 0AF5)],
+					'consecutive target notifications do not consume the following load-info packet');
+				is_deeply(\@states, [1],
+					'0AF5 still updates the auto-follow state after target notifications');
+				is(length($tokenizer->getBuffer), 0,
+					'notification sequence leaves no partial packet in the tokenizer');
+				Plugins::delHook($hook);
+			});
+		});
+		done_testing();
+	};
+
 	subtest 'Lastro keeps load-info after the map initialization zero frame' => sub {
 		with_recvpackets_file(lastro_recvpackets_file(), sub {
 			is($rpackets{'0000'}{length}, 2560,
