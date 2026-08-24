@@ -192,7 +192,7 @@ sub route_crosses_prohibited_cells {
 ## from a known baseline before user overrides are applied.
 sub default_settings {
 	return (
-		enable_move => 1,
+		enable_move => 0,
 		enable_remove => 1,
 		enable_avoid_portals => 1,
 		adjust_route_step => 1,
