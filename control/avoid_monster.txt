@@ -15,7 +15,7 @@ avoidObstaclesMonster 1020 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Hydra (HYDRA) - Mob-ID 1068
@@ -23,7 +23,7 @@ avoidObstaclesMonster 1068 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Flora (FLORA) - Mob-ID 1118
@@ -31,7 +31,7 @@ avoidObstaclesMonster 1118 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Megalith (MEGALITH) - Mob-ID 1274
@@ -39,7 +39,7 @@ avoidObstaclesMonster 1274 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Greatest General (GREATEST_GENERAL) - Mob-ID 1277
@@ -47,7 +47,7 @@ avoidObstaclesMonster 1277 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Geographer (GEOGRAPHER) - Mob-ID 1368
@@ -55,7 +55,7 @@ avoidObstaclesMonster 1368 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Parasite (PARASITE) - Mob-ID 1500
@@ -63,7 +63,7 @@ avoidObstaclesMonster 1500 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Amon Ra (AMON_RA) - Mob-ID 1511
@@ -71,7 +71,7 @@ avoidObstaclesMonster 1511 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Lady Tanee (LADY_TANEE) - Mob-ID 1688
@@ -79,7 +79,7 @@ avoidObstaclesMonster 1688 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Muscipular (MUSCIPULAR) - Mob-ID 1780
@@ -87,7 +87,7 @@ avoidObstaclesMonster 1780 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Drosera (DROSERA) - Mob-ID 1781
@@ -95,7 +95,7 @@ avoidObstaclesMonster 1781 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Iceicle (ICEICLE) - Mob-ID 1789
@@ -103,7 +103,7 @@ avoidObstaclesMonster 1789 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Entweihen Crothen (ENTWEIHEN) - Mob-ID 1957
@@ -111,7 +111,7 @@ avoidObstaclesMonster 1957 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Thorny Skeleton (G_ENTWEIHEN_R) - Mob-ID 1958
@@ -119,7 +119,7 @@ avoidObstaclesMonster 1958 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Thorn of Recovery (G_ENTWEIHEN_H) - Mob-ID 1959
@@ -127,7 +127,7 @@ avoidObstaclesMonster 1959 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Thorn of Magic (G_ENTWEIHEN_M) - Mob-ID 1960
@@ -135,7 +135,7 @@ avoidObstaclesMonster 1960 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Thorn of Purification (G_ENTWEIHEN_S) - Mob-ID 1961
@@ -143,7 +143,7 @@ avoidObstaclesMonster 1961 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Nepenthes (NEPENTHES) - Mob-ID 1988
@@ -151,7 +151,7 @@ avoidObstaclesMonster 1988 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Seaweed (MD_SEAWEED) - Mob-ID 2191
@@ -159,7 +159,7 @@ avoidObstaclesMonster 2191 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Octopus Leg (MD_OCTOPUS_LEG) - Mob-ID 2193
@@ -167,7 +167,7 @@ avoidObstaclesMonster 2193 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Bakonawa (BAKONAWA_1) - Mob-ID 2320
@@ -175,7 +175,7 @@ avoidObstaclesMonster 2320 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Bakonawa (BAKONAWA_2) - Mob-ID 2321
@@ -183,7 +183,7 @@ avoidObstaclesMonster 2321 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Bakonawa (BAKONAWA_3) - Mob-ID 2322
@@ -191,7 +191,7 @@ avoidObstaclesMonster 2322 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Seaweed (MA_SEAW) - Mob-ID 2331
@@ -199,7 +199,7 @@ avoidObstaclesMonster 2331 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Hidden Mob / Monster (HIDDEN_MOB) - Mob-ID 2337
@@ -207,7 +207,7 @@ avoidObstaclesMonster 2337 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Amon Ra (Nightmare) (N_AMON_RA) - Mob-ID 2362
@@ -215,7 +215,7 @@ avoidObstaclesMonster 2362 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Corrupted Soul / Root of Corruption (MG_CORRUPTION_ROOT) - Mob-ID 2475
@@ -223,7 +223,7 @@ avoidObstaclesMonster 2475 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Venom Bug (VENOM_BUG) - Mob-ID 2531
@@ -231,7 +231,7 @@ avoidObstaclesMonster 2531 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Hidden Mob 3 / Monster 3 (HIDDEN_MOB3) - Mob-ID 2536
@@ -239,7 +239,7 @@ avoidObstaclesMonster 2536 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Hidden Mob 4 / Monster 4 (HIDDEN_MOB4) - Mob-ID 2537
@@ -247,7 +247,7 @@ avoidObstaclesMonster 2537 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Solid Parasite (C2_PARASITE) - Mob-ID 2720
@@ -255,7 +255,7 @@ avoidObstaclesMonster 2720 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Solid Nephentes (C2_NEPHENTES) - Mob-ID 2735
@@ -263,7 +263,7 @@ avoidObstaclesMonster 2735 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Elusive Muscipular (C5_MUSCIPULAR) - Mob-ID 2738
@@ -271,7 +271,7 @@ avoidObstaclesMonster 2738 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Solid Mandragora (C2_MANDRAGORA) - Mob-ID 2765
@@ -279,7 +279,7 @@ avoidObstaclesMonster 2765 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Swift Greatest General (C1_GREATEST_GENERAL) - Mob-ID 2809
@@ -287,7 +287,7 @@ avoidObstaclesMonster 2809 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Swift Geographer (C1_GEOGRAPHER) - Mob-ID 2824
@@ -295,7 +295,7 @@ avoidObstaclesMonster 2824 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Solid Geographer (C2_GEOGRAPHER) - Mob-ID 2825
@@ -303,7 +303,7 @@ avoidObstaclesMonster 2825 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Solid Drosera (C2_DROSERA) - Mob-ID 2844
@@ -311,7 +311,7 @@ avoidObstaclesMonster 2844 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Morocc Necromancer (EP14_MORS_BOSSB) - Mob-ID 3000
@@ -319,7 +319,7 @@ avoidObstaclesMonster 3000 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Fire Pit (FIREPIT) - Mob-ID 3026
@@ -327,7 +327,7 @@ avoidObstaclesMonster 3026 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Sarah Irene (MM_SARAH) - Mob-ID 3190
@@ -335,7 +335,7 @@ avoidObstaclesMonster 3190 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Megalith (MIN_MEGALITH) - Mob-ID 3419
@@ -343,7 +343,7 @@ avoidObstaclesMonster 3419 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Frozen Heart (POPE_MD_E_ICICLE) - Mob-ID 3515
@@ -351,7 +351,7 @@ avoidObstaclesMonster 3515 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Frozen Heart (POPE_MD_H_ICICLE) - Mob-ID 3523
@@ -359,7 +359,7 @@ avoidObstaclesMonster 3523 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Solid Icicle (ILL_ICEICLE) - Mob-ID 3795
@@ -367,7 +367,7 @@ avoidObstaclesMonster 3795 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Ancient Megalith (ILL_MEGALITH) - Mob-ID 20272
@@ -375,7 +375,7 @@ avoidObstaclesMonster 20272 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Chemical Poison (MD_VENOM_BUG) - Mob-ID 20344
@@ -383,7 +383,7 @@ avoidObstaclesMonster 20344 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Bio Battery (MD_CONSTANT) - Mob-ID 20345
@@ -391,7 +391,7 @@ avoidObstaclesMonster 20345 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Manhole (MD_MANHOLE2) - Mob-ID 20351
@@ -399,7 +399,7 @@ avoidObstaclesMonster 20351 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Plague of Corruption (MD_HIDDEN_GROUND01) - Mob-ID 20846
@@ -407,7 +407,7 @@ avoidObstaclesMonster 20846 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
 
 # Rakehand (EP18_RAKEHAND) - Mob-ID 21296
@@ -415,5 +415,5 @@ avoidObstaclesMonster 21296 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
+	drop_destination_when_near_dist 8
 }
