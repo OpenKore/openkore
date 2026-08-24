@@ -3,70 +3,21 @@
 #
 #  Author: Henrybk
 #
-#  Config-driven dynamic obstacle avoidance for routing and target
-#  selection using per-distance penalty and danger profiles.
-#  Configure behavior in control/config.txt.
+#  Automatic dynamic obstacle avoidance for routing and target selection
+#  using per-distance penalty and danger profiles.
+#
+#  Monster obstacle profiles are loaded from control/avoid_monster.txt.
 #########################################################################
 =pod
 ######## avoidObstacles ########
 
-avoidObstacles_enable_move 0
-avoidObstacles_enable_remove 1
-avoidObstacles_enable_avoid_portals 1
-avoidObstacles_adjust_route_step 1
-avoidObstacles_weight_limit 65000
+Monster profiles belong in control/avoid_monster.txt and use the same
+avoidObstaclesMonster block syntax shown below:
 
 avoidObstaclesMonster 1368 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 13
-}
-
-avoidObstaclesMonster 1780 {
-	enabled 1
-	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
-	drop_destination_when_near_dist 13
-}
-
-avoidObstaclesMonster 1781 {
-	enabled 1
-	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
-	drop_destination_when_near_dist 13
-}
-
-avoidObstaclesSpell 135 {
-	enabled 1
-	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
-	drop_destination_when_near_dist 13
-}
-
-avoidObstaclesSpell 136 {
-	enabled 1
-	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
-	drop_destination_when_near_dist 13
-}
-
-avoidObstaclesDefaultPortals {
-	enabled 1
-	penalty_dist 10000, 10000, 2500, 1111, 625, 400, 277, 204, 156, 123, 100, 82, 69
-	danger_dist 1, 1, 1, 1, 1
-	prohibited_dist 2
-	drop_target_when_near_dist 13
-	drop_destination_when_near_dist 13
-}
-
-avoidObstaclesCellsInMap job_hunte {
-	enabled 1
-	cells 52 140, 53 140
-	penalty_dist 500, 500, 125
-	danger_dist 1, 1, 1
-	prohibited_dist 1
-	drop_target_when_near_dist 13
 	drop_destination_when_near_dist 13
 }
 =cut
@@ -75,10 +26,12 @@ package avoidObstacles;
 
 use strict;
 use AI;
+use FileParsers qw(parseConfigFile);
 use Globals;
 use Misc;
 use Plugins;
 use Skill;
+use Settings;
 use Utils;
 use Log qw(error message debug warning);
 use Data::Dumper;
@@ -90,7 +43,7 @@ use constant {
 	PLUGIN_NAME => 'avoidObstacles',
 };
 
-Plugins::register(PLUGIN_NAME, 'Enables smart pathing using config-driven dynamic obstacles', \&onUnload);
+Plugins::register(PLUGIN_NAME, 'Enables automatic smart pathing around configured obstacles', \&onUnload);
 
 my $hooks = Plugins::addHooks(
 	['pos_load_config.txt', \&on_config_file_loaded, undef],
@@ -135,6 +88,7 @@ my $chooks = Commands::register(
 );
 
 my %plugin_settings;
+my %avoid_monster_config;
 my %mob_nameID_obstacles;
 my %player_name_obstacles;
 my %area_spell_type_obstacles;
@@ -238,10 +192,10 @@ sub route_crosses_prohibited_cells {
 ## from a known baseline before user overrides are applied.
 sub default_settings {
 	return (
-		enable_move => 0,
-		enable_remove => 0,
-		enable_avoid_portals => 0,
-		adjust_route_step => 0,
+		enable_move => 1,
+		enable_remove => 1,
+		enable_avoid_portals => 1,
+		adjust_route_step => 1,
 		weight_limit => 65000,
 	);
 }
@@ -253,6 +207,7 @@ sub default_settings {
 ## not survive after options are removed or changed in `config.txt`.
 sub reset_plugin_configuration {
 	%plugin_settings = default_settings();
+	%avoid_monster_config = ();
 	%mob_nameID_obstacles = ();
 	%player_name_obstacles = ();
 	%area_spell_type_obstacles = ();
@@ -318,19 +273,45 @@ sub load_settings_from_config {
 	}
 }
 
-## Purpose: Loads repeated obstacle blocks from `config.txt` into one obstacle table.
-## Args: `($prefix, $type, $target_hash)` describing the block prefix, identifier
-## normalization type, and destination hashref.
-## Returns: nothing.
-## Notes: This is shared by monster, player, and spell obstacle blocks so their
-## parsing stays consistent and uses the same normalization rules.
-sub load_obstacle_blocks_from_config {
-	my ($prefix, $type, $target_hash) = @_;
+## Purpose: Loads monster obstacle profiles from the shared control file.
+## Args: none.
+## Returns: A flat config hash containing the parsed monster blocks.
+## Notes: The profile-specific control folder is searched first, followed by the
+## standard control folder, matching OpenKore's normal profile fallback behavior.
+sub load_avoid_monster_config {
+	my %loaded_config;
+	my $filename = Settings::getControlFilename('avoid_monster.txt');
+	return \%loaded_config unless defined $filename && -f $filename;
 
-	foreach my $block_key (sort keys %config) {
+	my $loaded = eval {
+		parseConfigFile($filename, \%loaded_config);
+		1;
+	};
+	if (!$loaded) {
+		my $reason = $@ || 'unknown parser error';
+		$reason =~ s/[\r\n]+/ /g;
+		warning "[" . PLUGIN_NAME . "] Unable to load $filename: $reason\n";
+		return {};
+	}
+
+	return \%loaded_config;
+}
+
+## Purpose: Loads repeated obstacle blocks from a config hash into one obstacle table.
+## Args: `($prefix, $type, $target_hash, $source_config)` describing the block
+## prefix, identifier normalization type, destination hashref, and optional source.
+## Returns: nothing.
+## Notes: When no source is supplied, the active config.txt data is used. A merged
+## source allows avoid_monster.txt to provide shared defaults while a profile can
+## still override an individual monster entry for backwards compatibility.
+sub load_obstacle_blocks_from_config {
+	my ($prefix, $type, $target_hash, $source_config) = @_;
+	$source_config ||= \%config;
+
+	foreach my $block_key (sort keys %{$source_config}) {
 		next unless $block_key =~ /^\Q$prefix\E_\d+$/;
 
-		my $identifier_raw = $config{$block_key};
+		my $identifier_raw = $source_config->{$block_key};
 		next unless defined $identifier_raw && $identifier_raw ne '';
 
 		my $identifier = normalize_identifier($type, $identifier_raw);
@@ -340,12 +321,12 @@ sub load_obstacle_blocks_from_config {
 
 		foreach my $option (qw(enabled penalty_dist danger_dist prohibited_dist drop_target_when_near_dist drop_destination_when_near_dist)) {
 			my $option_key = "${block_key}_${option}";
-			next unless defined $config{$option_key} && $config{$option_key} ne '';
+			next unless defined $source_config->{$option_key} && $source_config->{$option_key} ne '';
 
 			if ($option eq 'enabled') {
-				$entry{$option} = normalize_bool($config{$option_key}, 'config.txt', $option_key);
+				$entry{$option} = normalize_bool($source_config->{$option_key}, 'avoid_monster.txt', $option_key);
 			} else {
-				$entry{$option} = normalize_obstacle_number_or_profile($option, $config{$option_key}, 'config.txt', $option_key);
+				$entry{$option} = normalize_obstacle_number_or_profile($option, $source_config->{$option_key}, 'avoid_monster.txt', $option_key);
 			}
 		}
 
@@ -451,7 +432,9 @@ sub load_default_portal_obstacle_from_config {
 sub reload_plugin_configuration {
 	reset_plugin_configuration();
 	load_settings_from_config();
-	load_obstacle_blocks_from_config('avoidObstaclesMonster', 'monster', \%mob_nameID_obstacles);
+	%avoid_monster_config = %{ load_avoid_monster_config() };
+	my %effective_monster_config = (%avoid_monster_config, %config);
+	load_obstacle_blocks_from_config('avoidObstaclesMonster', 'monster', \%mob_nameID_obstacles, \%effective_monster_config);
 	load_obstacle_blocks_from_config('avoidObstaclesPlayer', 'player', \%player_name_obstacles);
 	load_obstacle_blocks_from_config('avoidObstaclesSpell', 'spell', \%area_spell_type_obstacles);
 	load_cells_in_map_obstacles_from_config();
@@ -746,13 +729,13 @@ sub command_avoid {
 
 	if ($args eq 'reload') {
 		Misc::parseReload('config\.txt');
-		message "[" . PLUGIN_NAME . "] Reloaded settings from config.txt.\n", 'success';
+		message "[" . PLUGIN_NAME . "] Reloaded settings and control/avoid_monster.txt.\n", 'success';
 		return;
 	}
 
 	if ($args eq 'status') {
 		message sprintf(
-			"[%s] obstacles=%d removed-cache=%d monsters=%d players=%d spells=%d portals=%d config=config.txt\n",
+			"[%s] obstacles=%d removed-cache=%d monsters=%d players=%d spells=%d portals=%d source=avoid_monster.txt\n",
 			PLUGIN_NAME,
 			scalar keys %obstaclesList,
 			scalar keys %removed_obstacle_still_in_list,
