@@ -12,7 +12,7 @@ wxFont
 
 ###### Bus system settings ######
 # Whether to enable the bus system.
-bus 0
+bus 1
 
 # If you want to connect to an already running bus server on a different
 # computer, specify the host and port here.
@@ -50,7 +50,7 @@ loadPlugins 2
 # loadPlugins_list <list>
 #   if loadPlugins is set to 2, this comma-separated list of plugin names (filename without the extension)
 #   specifies which plugin files to load at startup or when the "plugin load all" command is used.
-loadPlugins_list macro,profiles,breakTime,raiseStat,raiseSkill,map,reconnect,eventMacro,item_weight_recorder,xconf,OTP,LatamChecksum,AdventureAgency,LATAMTranslate,LastroAirship,LastroFollow
+loadPlugins_list macro,profiles,breakTime,raiseStat,raiseSkill,map,reconnect,eventMacro,item_weight_recorder,xconf,OTP,LatamChecksum,AdventureAgency,LATAMTranslate,LastroAirship,LastroFollow,busFollow,avoidObstacles,busParty
 
 # skipPlugins_list <list>
 #   if loadPlugins is set to 3, this comma-separated list of plugin names (filename without the extension)

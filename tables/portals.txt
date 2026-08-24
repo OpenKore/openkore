@@ -244,7 +244,7 @@ prt_are_in 54 13 arena_room 100 77
 #moc_fild20 337 315 anthell02 168 170
 anthell01 35 267 cmd_fild08 335 355
 anthell02 171 170 cmd_fild08 344 82
-cmd_fild08 335 355 anthell01 35 263
+cmd_fild08 335 355 anthell01 35 262
 cmd_fild08 348 82 anthell02 171 170
 
 # Morroc area (Episode 12)
@@ -798,7 +798,7 @@ amatsu 177 138 ama_in01 31 176
 amatsu 217 116 ama_in01 157 25
 amatsu 248 160 ama_in01 76 178
 amatsu 248 292 ama_fild01 75 30
-anthell01 253 32 anthell02 32 267
+anthell01 253 32 anthell02 34 263
 anthell02 32 267 anthell01 253 32
 ayothaya 62 104 ayo_in01 191 183
 ayothaya 111 109 ayo_in01 180 129
@@ -1822,14 +1822,14 @@ payon_in03 190 17 payon_in03 186 32
 payon_in03 146 39 payon 186 233
 prontera 22 203 prt_fild05 373 205
 prontera 42 67 prt_in 47 29
-prontera 45 346 prt_in 80 113
+prontera 45 346 prt_in 80 110
 prontera 73 100 prt_in 208 179
 prontera 74 90 prt_in 248 173
-prontera 84 89 prt_in 282 179
+prontera 84 89 prt_in 282 176
 prontera 107 215 prt_in 240 141
 prontera 120 267 prt_in 183 97
 prontera 132 222 prt_in 135 71
-prontera 133 183 prt_in 53 105
+prontera 133 183 prt_in 50 105
 prontera 156 22 prt_fild08 170 375
 prontera 156 360 prt_castle 102 16
 prontera 177 221 prt_in 168 128
@@ -1952,7 +1952,7 @@ prt_in 68 130 prontera 204 192
 prt_in 69 65 prt_in 82 65
 prt_in 70 143 prt_in 70 162
 prt_in 70 162 prt_in 70 143
-prt_in 80 113 prontera 45 346
+prt_in 80 113 prontera 196 263
 prt_in 82 65 prt_in 69 65
 prt_in 135 71 prontera 132 222
 prt_in 168 124 prontera 177 221

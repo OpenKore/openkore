@@ -3,10 +3,10 @@
 
 ######## Login options and server-specific options ########
 
-master
-server
-username
-password
+master Lastro - Web
+server 0
+username 
+password 
 loginPinCode
 char
 otpSeed
@@ -42,7 +42,7 @@ XKore_ID
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword
+adminPassword waunitwu
 callSign
 commandPrefix ;
 callSignGM 0
@@ -990,3 +990,4 @@ avoidObstaclesDefaultPortals {
 #	target_isAIMode_TakesFixed_1_Damage_Magic 0
 #	target_isAIMode_TakesFixed_1_Damage_None 0
 #}
+macro_orphans terminate

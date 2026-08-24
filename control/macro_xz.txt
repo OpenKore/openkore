@@ -1,0 +1,100 @@
+# ============================================================
+# Battle Sage
+# 普通攻击 + 自由念咒 Lv10 冰箭术
+# 使用旧 macro 插件，不是 eventMacro
+# ============================================================
+
+
+# ------------------------------------------------------------
+# 1. 普通攻击发生后，插入一次 Lv10 冰箭术
+# ------------------------------------------------------------
+
+automacro sage_start_coldbolt {
+    console /You attack Monster .+ \((\d+)\) \(Dmg:/
+    var castingColdBolt != 1
+    sp > 20%
+
+    # 非常关键：
+    # 不等待 attack AI 空闲，直接执行 Macro
+    overrideAI 1
+
+    # 不用默认的 1 秒 macro delay
+    macro_delay 0.05
+
+    # 触发瞬间就锁定，防止下一刀再次触发
+    set castingColdBolt 1
+
+    call sage_cast_coldbolt
+}
+
+macro sage_cast_coldbolt {
+#    log [SAGE] 普攻触发，开始 Lv10 冰箭术，目标 Monster #$.lastMatch1
+    do sm 火箭术 $.lastMatch1 10
+}
+
+
+# ------------------------------------------------------------
+# 2. Lv10 冰箭已经真正开始读条
+#    利用 Free Cast，再次发送普通攻击
+# ------------------------------------------------------------
+
+automacro sage_freecast_attack {
+    console /You are casting (?:火箭术|Cold Bolt) on Monster .+ \((\d+)\)/
+
+    var castingColdBolt = 1
+
+    overrideAI 1
+    macro_delay 0.05
+
+    call sage_resume_attack
+}
+
+macro sage_resume_attack {
+#    log [SAGE] 冰箭已开始读条，恢复普通攻击 Monster #$.lastMatch1
+    do a $.lastMatch1
+}
+
+
+# ------------------------------------------------------------
+# 3. 我们主动施放的 Lv10 冰箭完成
+#
+# 注意：
+# 自动念咒的 Lv3/Lv4/Lv5 不会匹配这里
+# ------------------------------------------------------------
+
+automacro sage_coldbolt_finished {
+    console /You use (?:火箭术|Cold Bolt) \(Lv: 10\) on Monster/
+
+    var castingColdBolt = 1
+
+    overrideAI 1
+    macro_delay 0.05
+
+    set castingColdBolt 0
+
+    call sage_coldbolt_done
+}
+
+macro sage_coldbolt_done {
+#    log [SAGE] 冰箭术完成，允许下一轮施法
+}
+
+
+# ------------------------------------------------------------
+# 4. 战斗结束后保险复位
+# ------------------------------------------------------------
+
+automacro sage_attack_finished {
+    console /Finished attacking/
+
+    overrideAI 1
+    macro_delay 0.05
+
+    set castingColdBolt 0
+
+    call sage_reset
+}
+
+macro sage_reset {
+#    log [SAGE] 战斗结束，Free Cast 状态复位
+}
