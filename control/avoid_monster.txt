@@ -1,0 +1,29 @@
+# avoid_monster.txt
+#
+# Monster obstacle profiles for the avoidObstacles plugin.
+# The identifier is the monster nameID from monsters.txt.
+# This file uses the same block syntax that was previously placed in config.txt.
+#
+# Profiles are shared by all profile folders. A profile-specific
+# profiles/<name>/avoid_monster.txt may override this file if needed.
+
+avoidObstaclesMonster 1368 {
+	enabled 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
+	drop_destination_when_near_dist 13
+}
+
+avoidObstaclesMonster 1780 {
+	enabled 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
+	drop_destination_when_near_dist 13
+}
+
+avoidObstaclesMonster 1781 {
+	enabled 1
+	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
+	danger_dist 1, 1
+	drop_destination_when_near_dist 13
+}
