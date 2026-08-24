@@ -104,6 +104,7 @@ my %cached_danger_cells;
 my %cached_weight_map;
 
 my $mustRePath = 0;
+my $hidden_obstacle_sequence = 0;
 
 ## LIMITATIONS:
 # 1 - Will drop a randomwalk if there is an aobstacle near the destination, but not if the route to the destination crosses one
@@ -127,6 +128,15 @@ sub invalidate_pathfinding_caches {
 	undef $pathfinding_weight_map_override;
 }
 
+## Purpose: Returns the current Unix timestamp used by hidden-obstacle expiry.
+## Args: none.
+## Returns: Integer seconds since the Unix epoch.
+## Notes: Keeping the clock behind one helper makes one maintenance pass consistent
+## and lets the expiry behavior be tested deterministically.
+sub current_time {
+	return time;
+}
+
 ## Purpose: Resets the incremental obstacle caches kept for the current map.
 ## Args: none.
 ## Returns: nothing.
@@ -140,6 +150,7 @@ sub reset_live_aggregate_state {
 	%cached_weight_map = ();
 	$cached_final_grid = [];
 	%cached_final_grid_index = ();
+	$hidden_obstacle_sequence = 0;
 	invalidate_pathfinding_caches();
 }
 
@@ -197,6 +208,8 @@ sub default_settings {
 		enable_avoid_portals => 1,
 		adjust_route_step => 1,
 		weight_limit => 65000,
+		hidden_obstacle_ttl => 5,
+		hidden_obstacle_limit => 32,
 	);
 }
 
@@ -735,10 +748,13 @@ sub command_avoid {
 
 	if ($args eq 'status') {
 		message sprintf(
-			"[%s] obstacles=%d removed-cache=%d monsters=%d players=%d spells=%d portals=%d source=avoid_monster.txt\n",
+			"[%s] obstacles=%d removed-cache=%d weight-cells=%d danger-cells=%d prohibited-cells=%d monsters=%d players=%d spells=%d portals=%d source=avoid_monster.txt\n",
 			PLUGIN_NAME,
 			scalar keys %obstaclesList,
 			scalar keys %removed_obstacle_still_in_list,
+			scalar @{$cached_final_grid},
+			count_cached_grid_cells(\%cached_danger_cells),
+			count_cached_grid_cells(\%cached_prohibited_cells),
 			scalar keys %mob_nameID_obstacles,
 			scalar keys %player_name_obstacles,
 			scalar keys %area_spell_type_obstacles,
@@ -748,6 +764,23 @@ sub command_avoid {
 	}
 
 	message "[" . PLUGIN_NAME . "] Usage: avoid [dump|reload|status]\n", 'list';
+}
+
+## Purpose: Counts populated cells in one sparse two-dimensional cache.
+## Args: ($grid), a hashref keyed by x then y coordinate.
+## Returns: Number of stored cells.
+## Notes: This is used only for the operational status command so cache growth can
+## be diagnosed without dumping every obstacle entry.
+sub count_cached_grid_cells {
+	my ($grid) = @_;
+	return 0 unless $grid;
+
+	my $count = 0;
+	foreach my $x (keys %{$grid}) {
+		$count += scalar keys %{ $grid->{$x} } if $grid->{$x};
+	}
+
+	return $count;
 }
 
 ## Purpose: Dumps the main live obstacle caches for debugging.
@@ -1446,6 +1479,66 @@ sub move_obstacle {
 	$mustRePath = 1;
 }
 
+## Purpose: Fully removes one obstacle and every cached contribution it owns.
+## Args: ($obstacle_id).
+## Returns: nothing.
+## Notes: This is shared by normal removal, expiry, and cache-cap pruning so every
+## path releases weight, danger, and prohibited-cell state consistently.
+sub purge_obstacle {
+	my ($obstacle_id) = @_;
+	return unless exists $obstaclesList{$obstacle_id};
+
+	remove_obstacle_contributions($obstacle_id);
+	delete $obstaclesList{$obstacle_id};
+	delete $removed_obstacle_still_in_list{$obstacle_id};
+	$mustRePath = 1;
+}
+
+## Purpose: Releases expired or excess hidden obstacles.
+## Args: Optional ($now) Unix timestamp, primarily to keep expiry checks stable
+## within one maintenance pass.
+## Returns: nothing.
+## Notes: A hidden obstacle is useful only briefly after leaving sight. Both a TTL
+## and a hard item limit keep that safety window bounded in time and memory.
+sub prune_hidden_obstacles {
+	my ($now) = @_;
+	$now = current_time() unless defined $now;
+
+	my $ttl = $plugin_settings{hidden_obstacle_ttl};
+	$ttl = 0 unless defined $ttl && $ttl >= 0;
+
+	foreach my $obstacle_id (keys %removed_obstacle_still_in_list) {
+		my $obstacle = $obstaclesList{$obstacle_id};
+		if (!$obstacle) {
+			delete $removed_obstacle_still_in_list{$obstacle_id};
+			next;
+		}
+
+		my $hidden_since = $obstacle->{hidden_since};
+		next if defined $hidden_since && $now - $hidden_since < $ttl;
+
+		debug "[" . PLUGIN_NAME . "] Expiring hidden obstacle $obstacle->{name} ($obstacle->{type}).\n", 'route', 2;
+		purge_obstacle($obstacle_id);
+	}
+
+	my $limit = $plugin_settings{hidden_obstacle_limit};
+	$limit = 0 unless defined $limit && $limit >= 0;
+	$limit = int($limit);
+
+	my @hidden_obstacles = sort {
+		($obstaclesList{$a}{hidden_since} || 0) <=> ($obstaclesList{$b}{hidden_since} || 0)
+			|| ($obstaclesList{$a}{hidden_sequence} || 0) <=> ($obstaclesList{$b}{hidden_sequence} || 0)
+			|| ($a cmp $b)
+	} grep { exists $obstaclesList{$_} } keys %removed_obstacle_still_in_list;
+
+	while (@hidden_obstacles > $limit) {
+		my $obstacle_id = shift @hidden_obstacles;
+		my $obstacle = $obstaclesList{$obstacle_id};
+		debug "[" . PLUGIN_NAME . "] Dropping oldest hidden obstacle $obstacle->{name} ($obstacle->{type}) to enforce cache limit $limit.\n", 'route', 2;
+		purge_obstacle($obstacle_id);
+	}
+}
+
 ## Purpose: Removes an obstacle immediately or parks it in the hidden-obstacle cache.
 ## Args: `($actor, $type, $reason)`.
 ## Returns: nothing.
@@ -1456,18 +1549,21 @@ sub remove_obstacle {
 	return unless $plugin_settings{enable_remove};
 	return unless $actor;
 	return if $type eq 'portal';
+	return unless exists $obstaclesList{$actor->{ID}};
 
 	my $pos = get_actor_position($actor) || $obstaclesList{$actor->{ID}}{pos_to};
 
 	if (($type eq 'monster' || $type eq 'player') && defined $reason && $reason eq 'disappeared') {
+		if (!exists $removed_obstacle_still_in_list{$actor->{ID}}) {
+			$obstaclesList{$actor->{ID}}{hidden_since} = current_time();
+			$obstaclesList{$actor->{ID}}{hidden_sequence} = ++$hidden_obstacle_sequence;
+		}
 		$removed_obstacle_still_in_list{$actor->{ID}} = 1;
 		debug "[" . PLUGIN_NAME . "] Keeping obstacle $actor cached after it moved out of sight.\n", 'route', 2;
+		prune_hidden_obstacles();
 	} else {
 		debug "[" . PLUGIN_NAME . "] Removing obstacle $actor from " . ($pos ? "$pos->{x} $pos->{y}" : 'unknown position') . ".\n", 'route', 2;
-		remove_obstacle_contributions($actor->{ID});
-		delete $obstaclesList{$actor->{ID}};
-		delete $removed_obstacle_still_in_list{$actor->{ID}};
-		$mustRePath = 1;
+		purge_obstacle($actor->{ID});
 	}
 }
 
@@ -1490,8 +1586,8 @@ sub get_actor_position {
 ## Notes: This keeps all per-tick maintenance in one place: route destination drops,
 ## stale hidden-obstacle cleanup, and repath dispatch.
 sub on_AI_pre_manual {
-	on_AI_pre_manual_drop_route_dest_near_Obstacle();
 	on_AI_pre_manual_removed_obstacle_still_in_list();
+	on_AI_pre_manual_drop_route_dest_near_Obstacle();
 	on_AI_pre_manual_repath();
 }
 
@@ -1535,6 +1631,8 @@ sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
 ## Notes: This solves the classic "left sight but may still exist" problem by keeping
 ## obstacles cached until the player gets close enough that the actor should reappear.
 sub on_AI_pre_manual_removed_obstacle_still_in_list {
+	prune_hidden_obstacles();
+
 	my @obstacles = keys %removed_obstacle_still_in_list;
 	return unless @obstacles;
 
@@ -1553,10 +1651,7 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 		next OBSTACLE if $target;
 
 		debug "[" . PLUGIN_NAME . "] Removing cached obstacle $obstacle->{name} ($obstacle->{type}) from $obstacle->{pos_to}{x} $obstacle->{pos_to}{y}.\n", 'route', 2;
-		remove_obstacle_contributions($obstacle_ID);
-		delete $obstaclesList{$obstacle_ID};
-		delete $removed_obstacle_still_in_list{$obstacle_ID};
-		$mustRePath = 1;
+		purge_obstacle($obstacle_ID);
 	}
 }
 
