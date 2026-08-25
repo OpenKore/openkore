@@ -1958,6 +1958,7 @@ sub is_aggressive_slave {
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
 	my ($ID) = @_;
+	return 1 if (!$config{antiKS});
 	return 1 if (!$config{attackAuto});
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
@@ -2081,6 +2082,7 @@ sub checkMonsterCleanness {
 
 sub slave_checkMonsterCleanness {
 	my ($slave, $ID) = @_;
+	return 1 if (!$config{antiKS});
 	return 1 if (!$config{$slave->{configPrefix}.'attackAuto'});
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
@@ -7232,4 +7234,3 @@ sub get_lockMap_cell {
 }
 
 return 1;
-
