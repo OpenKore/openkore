@@ -30,6 +30,7 @@ my @tests = qw(
 	QuestReceiveTest
 	FieldTest
 	XConfTest
+	AntiKSTest
 );
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);
