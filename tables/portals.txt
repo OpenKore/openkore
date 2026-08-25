@@ -1821,12 +1821,12 @@ payon_in03 186 32 payon_in03 160 17
 payon_in03 190 17 payon_in03 186 32
 payon_in03 146 39 payon 186 233
 prontera 22 203 prt_fild05 373 205
-prontera 42 67 prt_in 47 29
+prontera 42 67 prt_in 44 29
 prontera 45 346 prt_in 80 110
-prontera 73 100 prt_in 208 179
+prontera 73 100 prt_in 208 176
 prontera 74 90 prt_in 248 173
 prontera 84 89 prt_in 282 176
-prontera 107 215 prt_in 240 141
+prontera 107 215 prt_in 240 139
 prontera 120 267 prt_in 183 97
 prontera 134 221 prt_in 131 71
 prontera 133 183 prt_in 50 105
@@ -1835,7 +1835,7 @@ prontera 156 360 prt_castle 102 16
 prontera 177 221 prt_in 168 128
 prontera 179 184 prt_in 60 77
 prontera 192 267 prt_in 178 55
-prontera 204 192 prt_in 68 130
+prontera 204 192 prt_in 68 134
 prontera 208 154 prt_in 172 33
 prontera 237 317 prt_church 100 56
 prontera 289 203 prt_fild06 23 193
@@ -1948,7 +1948,7 @@ prt_in 47 29 prontera 42 67
 prt_in 48 65 prt_in 37 65
 prt_in 53 105 prontera 133 183
 prt_in 60 77 prontera 179 184
-prt_in 68 130 prontera 204 192
+prt_in 68 130 prontera 190 263
 prt_in 69 65 prt_in 82 65
 prt_in 70 143 prt_in 70 162
 prt_in 70 162 prt_in 70 143
@@ -1968,7 +1968,7 @@ prt_in 254 113 prt_in 256 131
 prt_in 256 131 prt_in 254 113
 prt_in 263 163 prt_in 274 163
 prt_in 274 163 prt_in 263 163
-prt_in 282 179 prontera 84 89
+prt_in 282 179 prontera 267 117
 prt_maze01 100 35 prt_maze01 139 47
 prt_maze01 102 165 prt_maze01 98 151
 prt_maze01 105 115 prt_maze01 175 168

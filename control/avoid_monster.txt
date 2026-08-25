@@ -52,10 +52,10 @@ avoidObstaclesMonster 1277 {
 
 # Geographer (GEOGRAPHER) - Mob-ID 1368
 avoidObstaclesMonster 1368 {
-	enabled 1
+	enabled 0
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
 	danger_dist 1, 1
-	drop_destination_when_near_dist 8
+	drop_destination_when_near_dist 4
 }
 
 # Parasite (PARASITE) - Mob-ID 1500
@@ -86,15 +86,15 @@ avoidObstaclesMonster 1688 {
 avoidObstaclesMonster 1780 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
-	drop_destination_when_near_dist 8
+#	danger_dist 1, 1
+	drop_destination_when_near_dist 3
 }
 
 # Drosera (DROSERA) - Mob-ID 1781
 avoidObstaclesMonster 1781 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
+#	danger_dist 1, 1
 	drop_destination_when_near_dist 8
 }
 
