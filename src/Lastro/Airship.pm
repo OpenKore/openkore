@@ -52,6 +52,11 @@ sub chooseRouteMap {
 # normal cross-map calculation.  Work backwards from the final destination
 # through the portal graph, so the first free map found is the one requiring
 # the fewest inter-map portal hops after the transfer.
+#
+# If the current map is already the destination, or is discovered at the same
+# or a smaller reverse-BFS depth than the best free gateway, return the current
+# map as a sentinel.  The plugin then keeps the native route from the current
+# position instead of airshipping backwards and walking the same route again.
 sub choosePreRouteMap {
 	my ($destinationMap, $currentMap, $freeMaps, $portals) = @_;
 	return unless ref($freeMaps) eq 'HASH' && ref($portals) eq 'HASH';
@@ -60,6 +65,7 @@ sub choosePreRouteMap {
 	$currentMap = normalizeMapName($currentMap);
 	return unless $destinationMap ne '';
 
+	return $currentMap if $currentMap ne '' && $destinationMap eq $currentMap;
 	return $destinationMap if $freeMaps->{$destinationMap};
 
 	my %reverse;
@@ -96,11 +102,14 @@ sub choosePreRouteMap {
 			}
 		}
 
+		# Being on a map at this BFS depth is already at least as good as
+		# airshipping to any free gateway found at the same depth.  Keep moving
+		# forward from the current map rather than teleporting backwards.
+		return $currentMap if $currentMap ne '' && $next{$currentMap};
+
 		my @free = sort grep { $freeMaps->{$_} } keys %next;
-		if (@free) {
-			return $currentMap if $currentMap ne '' && grep { $_ eq $currentMap } @free;
-			return $free[0];
-		}
+		return $free[0] if @free;
+
 		@frontier = sort keys %next;
 	}
 
