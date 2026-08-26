@@ -8,10 +8,7 @@ use Scalar::Util qw(weaken refaddr);
 use AI;
 use Commands ();
 use Globals qw(%config $char $field $masterServer $messageSender %portals_lut %maps_lut);
-use Lastro::Airship qw(
-	isEnabled normalizeMapName chooseRouteMap choosePreRouteMap
-	normalizeAirshipRequestName resolveMapAliasCandidates
-);
+use Lastro::Airship qw(isEnabled normalizeMapName chooseRouteMap choosePreRouteMap);
 use Log qw(debug warning message);
 use Plugins;
 use Settings;
@@ -21,14 +18,13 @@ use constant DEFAULT_TIMEOUT => 5;
 
 Plugins::register(
 	'LastroAirship',
-	'Uses Lastro free world-map transfers before and during cross-map routing and resolves client map aliases',
+	'Uses Lastro free world-map transfers and allows Lastro raw Private Airship map names',
 	\&onUnload
 );
 
 my $freeMaps = {};
 my $freeMapsFile;
 my $pendingTask;
-my $manualAlias;
 my $originalInitMapCalculator;
 my $originalPrivateAirshipCallback;
 my $hooks = Plugins::addHooks(
@@ -41,7 +37,6 @@ my $hooks = Plugins::addHooks(
 sub onUnload {
 	_restorePrivateAirshipInterceptor();
 	_restoreMapRouteInterceptor();
-	$manualAlias = undef;
 	Plugins::delHooks($hooks);
 }
 
@@ -152,10 +147,11 @@ sub _restoreMapRouteInterceptor {
 	$originalInitMapCalculator = undef;
 }
 
-# Manual privateairship commands may use the client-side resource name shown by
-# LastRO (for example force_map3) instead of a logical map known by the server.
-# Keep the stock Commands implementation for real map names and only intercept
-# aliases that can be resolved backwards through resnametable.txt.
+# Commands.pm normally rejects destinations that are not present in maps.txt
+# before the packet reaches the server. Lastro's browser can use resource map
+# names such as force_map3 that intentionally do not exist in maps.txt. For
+# those names only, bypass the local LUT check and send the exact normalized
+# map name in the server-specific 0A49 Z16 field.
 sub _installPrivateAirshipInterceptor {
 	my $entry = $Commands::commands{privateairship};
 	return unless ref($entry) eq 'HASH' && ref($entry->{callback}) eq 'CODE';
@@ -186,45 +182,6 @@ sub _delegatePrivateAirship {
 	return $originalPrivateAirshipCallback->(@_);
 }
 
-sub _sendManualAliasCandidate {
-	return 0 unless $manualAlias && $messageSender;
-
-	my $index = $manualAlias->{index};
-	my $map = $manualAlias->{candidates}[$index];
-	return 0 unless defined $map && $map ne '';
-
-	my $itemID = $manualAlias->{item_id};
-	$char->{last_private_airship_item} = $itemID if $char;
-	$char->{last_private_airship_map} = $map if $char;
-	$messageSender->sendPrivateAirshipRequest($map, $itemID);
-	$manualAlias->{map} = $map;
-	$manualAlias->{sent_at} = time;
-	$manualAlias->{accepted} = 0;
-
-	my $number = $index + 1;
-	my $total = scalar @{$manualAlias->{candidates}};
-	message "[LastroAirship] Alias '$manualAlias->{requested}' -> trying logical map $map ($number/$total).\n", 'info';
-	return 1;
-}
-
-sub _advanceManualAlias {
-	my ($reason) = @_;
-	return 0 unless $manualAlias;
-
-	my $failed = $manualAlias->{map};
-	$manualAlias->{index}++;
-	if ($manualAlias->{index} >= @{$manualAlias->{candidates}}) {
-		my $requested = $manualAlias->{requested};
-		$manualAlias = undef;
-		warning "[LastroAirship] No logical map candidate for alias '$requested' was accepted; last attempt $failed $reason.\n";
-		return 0;
-	}
-
-	my $next = $manualAlias->{candidates}[$manualAlias->{index}];
-	warning "[LastroAirship] Alias candidate $failed $reason; trying $next.\n";
-	return _sendManualAliasCandidate();
-}
-
 sub _cmdPrivateAirship {
 	my ($switch, $args) = @_;
 	return _delegatePrivateAirship(@_) unless isEnabled($masterServer);
@@ -234,40 +191,30 @@ sub _cmdPrivateAirship {
 		: ();
 	return _delegatePrivateAirship(@_) unless defined $map && $map ne '';
 
-	my $requested = normalizeAirshipRequestName($map);
+	my $requested = normalizeMapName($map);
 	return _delegatePrivateAirship(@_)
 		if $requested eq '' || defined $maps_lut{"$requested.rsw"};
-
-	my $resnametable = Settings::getTableFilename('resnametable.txt');
-	my $candidates = resolveMapAliasCandidates($map, \%maps_lut, $resnametable);
-	return _delegatePrivateAirship(@_) unless @{$candidates};
-
-	my @usable = grep { length($_) <= 16 } @{$candidates};
-	unless (@usable) {
-		warning "[LastroAirship] Alias '$requested' resolves only to map names longer than the 16-byte Private Airship limit.\n";
-		return;
-	}
 
 	my $requiredItemID = $masterServer->{privateAirshipItemID} || 14527;
 	return _delegatePrivateAirship(@_)
 		if defined $itemID && ($itemID !~ /^\d+$/ || $itemID != $requiredItemID);
 
-	if ($pendingTask && $pendingTask->{lastro_airship_pending}) {
-		warning "[LastroAirship] A route airship transfer is already pending; try the manual alias command again after it finishes.\n";
+	if (length($requested) > 16) {
+		warning "[LastroAirship] Map name '$requested' is too long for the Lastro Private Airship Z16 field (maximum 16 characters).\n";
 		return;
 	}
 
-	if ($manualAlias) {
-		warning "[LastroAirship] Replacing the previous pending map-alias transfer request.\n";
+	if ($pendingTask && $pendingTask->{lastro_airship_pending}) {
+		warning "[LastroAirship] A route airship transfer is already pending; try the manual command again after it finishes.\n";
+		return;
 	}
 
-	$manualAlias = {
-		requested => $requested,
-		candidates => \@usable,
-		index => 0,
-		item_id => $requiredItemID,
-	};
-	_sendManualAliasCandidate();
+	return _delegatePrivateAirship(@_) unless $messageSender;
+
+	$char->{last_private_airship_item} = $requiredItemID if $char;
+	$char->{last_private_airship_map} = $requested if $char;
+	$messageSender->sendPrivateAirshipRequest($requested, $requiredItemID);
+	message "[LastroAirship] Requested Lastro raw map transfer to $requested.\n", 'info';
 	return;
 }
 
@@ -318,14 +265,6 @@ sub onMapRouteIterateStart {
 }
 
 sub onMapChanged {
-	if ($manualAlias && $field) {
-		my $current = normalizeMapName($field->baseName);
-		if ($manualAlias->{map} && $current eq $manualAlias->{map}) {
-			debug "[LastroAirship] Alias '$manualAlias->{requested}' resolved successfully to $current.\n", 'lastro_airship';
-			$manualAlias = undef;
-		}
-	}
-
 	return unless $pendingTask && $pendingTask->{lastro_airship_pending} && $field;
 
 	my $pending = $pendingTask->{lastro_airship_pending};
@@ -336,36 +275,14 @@ sub onMapChanged {
 
 sub onAirshipResult {
 	my (undef, $args) = @_;
+	return unless $pendingTask && $pendingTask->{lastro_airship_pending};
 	return unless defined $args->{type};
 
-	if ($manualAlias) {
-		my $type = $args->{type};
-		if ($type == 0) {
-			# Packet acceptance is not enough; wait for the actual map change.
-			$manualAlias->{accepted} = 1;
-			$manualAlias->{sent_at} = time;
-		} elsif ($type == 3) {
-			# Destination map invalid: this is the expected failure when a client
-			# resource alias maps to several server-side copies. Try the next copy.
-			_advanceManualAlias('was rejected as an invalid destination');
-		} else {
-			my $requested = $manualAlias->{requested};
-			$manualAlias = undef;
-			warning "[LastroAirship] Alias transfer '$requested' stopped after Private Airship result $type; this error is not destination-specific.\n";
-		}
-		return;
-	}
-
-	return unless $pendingTask && $pendingTask->{lastro_airship_pending};
 	$pendingTask->{lastro_airship_failed} = $args->{type} if $args->{type} != 0;
 }
 
 sub onMainLoopPre {
 	_installPrivateAirshipInterceptor();
-	return unless $manualAlias && $manualAlias->{sent_at};
-	return if time - $manualAlias->{sent_at} < _timeout();
-
-	_advanceManualAlias('timed out');
 }
 
 _installMapRouteInterceptor();
