@@ -1,100 +1,18 @@
 # ============================================================
-# Battle Sage
-# 普通攻击 + 自由念咒 Lv10 冰箭术
-# 使用旧 macro 插件，不是 eventMacro
+# Battle Sage / 贤者自由施法
 # ============================================================
-
-
-# ------------------------------------------------------------
-# 1. 普通攻击发生后，插入一次 Lv10 冰箭术
-# ------------------------------------------------------------
-
-automacro sage_start_coldbolt {
-    console /You attack Monster .+ \((\d+)\) \(Dmg:/
-    var castingColdBolt != 1
-    sp > 20%
-
-    # 非常关键：
-    # 不等待 attack AI 空闲，直接执行 Macro
-    overrideAI 1
-
-    # 不用默认的 1 秒 macro delay
-    macro_delay 0.05
-
-    # 触发瞬间就锁定，防止下一刀再次触发
-    set castingColdBolt 1
-
-    call sage_cast_coldbolt
-}
-
-macro sage_cast_coldbolt {
-#    log [SAGE] 普攻触发，开始 Lv10 冰箭术，目标 Monster #$.lastMatch1
-    do sm 火箭术 $.lastMatch1 10
-}
-
-
-# ------------------------------------------------------------
-# 2. Lv10 冰箭已经真正开始读条
-#    利用 Free Cast，再次发送普通攻击
-# ------------------------------------------------------------
-
-automacro sage_freecast_attack {
-    console /You are casting (?:火箭术|Cold Bolt) on Monster .+ \((\d+)\)/
-
-    var castingColdBolt = 1
-
-    overrideAI 1
-    macro_delay 0.05
-
-    call sage_resume_attack
-}
-
-macro sage_resume_attack {
-#    log [SAGE] 冰箭已开始读条，恢复普通攻击 Monster #$.lastMatch1
-    do a $.lastMatch1
-}
-
-
-# ------------------------------------------------------------
-# 3. 我们主动施放的 Lv10 冰箭完成
 #
-# 注意：
-# 自动念咒的 Lv3/Lv4/Lv5 不会匹配这里
-# ------------------------------------------------------------
-
-automacro sage_coldbolt_finished {
-    console /You use (?:火箭术|Cold Bolt) \(Lv: 10\) on Monster/
-
-    var castingColdBolt = 1
-
-    overrideAI 1
-    macro_delay 0.05
-
-    set castingColdBolt 0
-
-    call sage_coldbolt_done
-}
-
-macro sage_coldbolt_done {
-#    log [SAGE] 冰箭术完成，允许下一轮施法
-}
-
-
-# ------------------------------------------------------------
-# 4. 战斗结束后保险复位
-# ------------------------------------------------------------
-
-automacro sage_attack_finished {
-    console /Finished attacking/
-
-    overrideAI 1
-    macro_delay 0.05
-
-    set castingColdBolt 0
-
-    call sage_reset
-}
-
-macro sage_reset {
-#    log [SAGE] 战斗结束，Free Cast 状态复位
-}
+# 这里原来的 automacro 已由 sageFreeCastAttack 插件替代，因此本文件
+# 故意不再定义任何宏。不要同时恢复旧宏，否则一次读条可能重复发送
+# 普通攻击指令，并且旧宏的全局变量可能在施法失败后无法复位。
+#
+# 技能施放由 config.txt 中原生的 attackSkillSlot 决定；插件会在以下
+# 任一技能真正开始读条时，直接恢复当前怪物的普通攻击：
+#
+#   冰箭术 / MG_COLDBOLT       / ID 14
+#   火箭术 / MG_FIREBOLT       / ID 19
+#   雷击术 / MG_LIGHTNINGBOLT  / ID 20
+#   雷爆术 / MG_THUNDERSTORM   / ID 21
+#
+# 雷爆术是地面技能，插件不会依赖施法消息中的目标，而是使用当前
+# attack AI 的存活目标，所以它与三个单体技能走同一套逻辑。
