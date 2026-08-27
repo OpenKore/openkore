@@ -6,7 +6,7 @@ use strict;
 
 use Modules 'register';
 use base 'Task::Teleport';
-use Globals qw(%config $field %timeout);
+use Globals qw(%config $field %timeout $messageSender);
 use Translation qw(T TF);
 use Log qw(debug);
 
@@ -65,7 +65,7 @@ sub useSkill {
 	my $skill = new Skill(handle => 'AL_TELEPORT');
 
 	debug "Teleport $self->{actor} - Sending Teleport using Level 1\n", "teleport";
-	main::ai_skillUse($skill->getHandle(), 1, 0, 0, $self->{actor}->{ID});
+	$messageSender->sendSkillUse($skill->getIDN(), 1, $self->{actor}->{ID});
 	$timeout{ai_teleport}{time} = time;
 
 	# if ($use_lvl == 2) {
