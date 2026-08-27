@@ -2541,6 +2541,7 @@ ra_san03 5 149 ra_san02 284 149
 ra_san02 213 4 ra_san04 35 216
 ra_san04 35 221 ra_san02 213 9
 ra_san02 30 21 ra_san05 14 149
+ra_san01 139 13 ra_san03 119 283
 ra_san01 139 139 ra_temin 27 314
 tha_scene01 144 198 tha_t01 149 38
 tha_t01 149 33 hu_fild01 140 158
