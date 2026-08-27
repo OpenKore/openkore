@@ -75,6 +75,16 @@ sub resume {
 	$self->{retry}{time} += time - $self->{interruptionTime};
 }
 
+sub retrySkill {
+	my ($self) = @_;
+	return unless $self->canUseSkill;
+
+	$self->useSkill;
+	Plugins::callHook('teleport_sent' => $self->hookArgs);
+	$self->{retry}{time} = time;
+	return 1;
+}
+
 sub DESTROY {
 	my ($self) = @_;
 	Plugins::delHook($self->{hooks}) if $self->{hooks};
@@ -125,8 +135,7 @@ sub iterate {
 
 		} elsif($self->canUseSkill) { # 5 - try to use teleport skill
 			debug "Teleport $self->{actor} - Using skill to teleport\n", "teleport";
-			$self->useSkill;
-			Plugins::callHook('teleport_sent' => $self->hookArgs);
+			$self->retrySkill;
 
 		} elsif($item) { # 6 - try to use item
 			debug "Using item to teleport : $item->{name}\n", "teleport";

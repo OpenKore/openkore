@@ -875,23 +875,23 @@ sub route {
 sub useTeleport {
 	my ($self, $level) = @_;
 
-	if ($level == 1 && $config{teleportAuto_useSkill} == 4) {
-		$messageSender->sendWarpTele(26, 'Random');
+	my $teleportIndex = AI::findAction('teleport');
+	if ($level == 1 && defined $teleportIndex) {
+		my $task = $self->args($teleportIndex);
+		$task->retrySkill if $task->can('retrySkill') && $task->hookArgs->{level} == 1;
 		return;
 	}
 
-	if(!AI::inQueue("teleport","NPC")) {
-		require Task::Teleport::Random;
-		require Task::Teleport::Respawn;
+	return if AI::inQueue("teleport", "NPC");
 
-		my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
-		my $task = $tasks{$level}->new(actor => $self);
+	require Task::Teleport::Random;
+	require Task::Teleport::Respawn;
 
-		message T("Queueing teleport task level $level\n");
-		$self->queue('teleport', $task);
-	} else {
-		error T("NPC or Teleport in queue, finish and try again\n");
-	}
+	my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
+	my $task = $tasks{$level}->new(actor => $self);
+
+	message T("Queueing teleport task level $level\n");
+	$self->queue('teleport', $task);
 }
 
 sub processTask {
