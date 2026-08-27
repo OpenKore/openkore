@@ -29,7 +29,7 @@ automacro sage_start_coldbolt {
 
 macro sage_cast_coldbolt {
 #    log [SAGE] 普攻触发，开始 Lv10 冰箭术，目标 Monster #$.lastMatch1
-    do sm 火箭术 $.lastMatch1 10
+    do sm 冰箭术 $.lastMatch1 10
 }
 
 
@@ -39,7 +39,7 @@ macro sage_cast_coldbolt {
 # ------------------------------------------------------------
 
 automacro sage_freecast_attack {
-    console /You are casting (?:火箭术|Cold Bolt) on Monster .+ \((\d+)\)/
+    console /You are casting (?:冰箭术|火箭术) on Monster .+ \((\d+)\)/
 
     var castingColdBolt = 1
 
