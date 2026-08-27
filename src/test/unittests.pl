@@ -20,6 +20,7 @@ my @tests = qw(
 	HandConditionsTest
 	CastConditionsTest
 	TeleportFallbackTest
+	TeleportDirectWarpTest
 	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	TaskTalkNPCTest
