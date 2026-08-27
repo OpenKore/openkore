@@ -280,7 +280,7 @@ sub is_aggressive_towards_actor {
 
 	return unless $is_clean;
 	return unless exists $monstersTable{$monster->{nameID}};
-	return unless is_monster_ai_aggressive($monstersTable{$monster->{nameID}}{Ai});
+	return unless $monstersTable{$monster->{nameID}}{isAIMode_Aggressive};
 
 	my $monster_pos = calcPosFromPathfinding($field, $monster);
 	my $actor_pos = calcPosFromPathfinding($field, $actor);
