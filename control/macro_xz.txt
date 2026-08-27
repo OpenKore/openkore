@@ -11,8 +11,8 @@
 
 automacro sage_start_coldbolt {
     console /You attack Monster .+ \((\d+)\) \(Dmg:/
-    var castingColdBolt != 1
-    sp > 20%
+  #  var castingColdBolt != 1
+    sp > 2%
 
     # 非常关键：
     # 不等待 attack AI 空闲，直接执行 Macro
@@ -63,7 +63,7 @@ macro sage_resume_attack {
 # ------------------------------------------------------------
 
 automacro sage_coldbolt_finished {
-    console /You use (?:火箭术|Cold Bolt) \(Lv: 10\) on Monster/
+    console /You use (?:火箭术|冰箭术) \(Lv: 10\) on Monster/
 
     var castingColdBolt = 1
 
@@ -72,13 +72,7 @@ automacro sage_coldbolt_finished {
 
     set castingColdBolt 0
 
-    call sage_coldbolt_done
-}
-
-macro sage_coldbolt_done {
-#    log [SAGE] 冰箭术完成，允许下一轮施法
-}
-
+ }
 
 # ------------------------------------------------------------
 # 4. 战斗结束后保险复位

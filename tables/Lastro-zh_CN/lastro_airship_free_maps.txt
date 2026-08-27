@@ -35,6 +35,17 @@ veins
 xmas
 yuno
 glast_01
+izlu2dun
+force_map
+force_map1
+force_map2
+force_map3
+force_map4
+force_map5
+
+ra_temple
+
+tur_dun01
 
 # Prontera, Payon, Morroc and Geffen regions
 prt_fild00
@@ -60,6 +71,7 @@ pay_fild08
 pay_fild09
 pay_fild10
 pay_fild11
+pay_arche
 gef_fild00
 gef_fild01
 gef_fild02

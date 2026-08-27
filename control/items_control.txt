@@ -416,8 +416,8 @@ Animal Poop 0 0 1
 1060 0 0 1 # Golden Hair
 940 0 0 1 # Grasshopper's Leg
 1056 0 0 1 # Grit
-7115 0 0 1 # Harpy Feather
-7116 0 0 1 # Harpy Talon
+7115 0 1 0 1 0 # 哈比的羽毛
+7116 0 1 0 1 0 # 哈比的指甲
 950 0 0 1 # Heart of Mermaid
 947 0 0 1 # Horn
 1048 0 0 1 # Horrendous Hair
@@ -1765,3 +1765,4 @@ Spearman Scroll 10 0 0 0
 25150 0 0 0 0 0 # Hugging_Alice_Pilow
 26100 0 0 0 0 0 # Paradise_Foxtail_Staff_II
 26101 0 0 0 0 0 # Paradise_Foxtail_Staff_III
+25142 0 1 0 #喵族信物

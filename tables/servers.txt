@@ -320,6 +320,7 @@ sendCryptKeys 0x47DA30BB, 0x234A5224, 0x1B013ABC
 serverType kRO_RagexeRE_2021_11_03
 serverEncoding GBK
 addTableFolders Lastro-zh_CN;kRO/Ragexe_2021_11_03;kRO
+fields_folder fields/EP15.1
 lastroAirship 1
 lastroAutoFollow 1
 privateAirshipItemID 14527
