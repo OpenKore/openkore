@@ -875,6 +875,11 @@ sub route {
 sub useTeleport {
 	my ($self, $level) = @_;
 
+	if ($level == 1 && $config{teleportAuto_useSkill} == 4) {
+		$messageSender->sendWarpTele(26, 'Random');
+		return;
+	}
+
 	if(!AI::inQueue("teleport","NPC")) {
 		require Task::Teleport::Random;
 		require Task::Teleport::Respawn;
