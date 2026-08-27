@@ -1,0 +1,84 @@
+# ============================================================
+# SP 自适应寻怪
+#
+# SP > 50%：停止随机走路，空闲 3 秒后瞬移寻怪
+# SP <= 50%：恢复随机走路
+# SP <= 50% 时，同一随机路线连续超过 20 秒：强制瞬移一次
+# ============================================================
+
+# 高 SP：改为内置 idle teleport，不再启动新的随机走路
+automacro tele_search_high_sp {
+    sp > 50%
+    timeout 1
+    priority 10
+    eval Misc::inLockMap() && (($::config{teleportAuto_idle} || 0) != 1 || ($::config{route_randomWalk} || 0) != 0)
+    call tele_search_high_sp_apply
+}
+
+macro tele_search_high_sp_apply {
+    [
+        do conf route_randomWalk 0
+        do conf teleportAuto_idle 1
+        log [TELE-SEARCH] SP > 50%：切换为瞬移寻怪
+    ]
+}
+
+
+# 低 SP：停止 idle teleport，恢复随机走路
+automacro tele_search_low_sp {
+    sp <= 50%
+    timeout 1
+    priority 10
+    eval Misc::inLockMap() && (($::config{teleportAuto_idle} || 0) != 0 || ($::config{route_randomWalk} || 0) != 1)
+    call tele_search_low_sp_apply
+}
+
+macro tele_search_low_sp_apply {
+    [
+        do conf teleportAuto_idle 0
+        do conf route_randomWalk 1
+        log [TELE-SEARCH] SP <= 50%：切换为走路寻怪
+    ]
+}
+
+
+# 离开 lockMap 时关闭 idle teleport，避免回城后也不断瞬移
+automacro tele_search_outside_lock {
+    timeout 1
+    priority 10
+    eval !Misc::inLockMap() && (($::config{teleportAuto_idle} || 0) != 0)
+    call tele_search_outside_lock_apply
+}
+
+macro tele_search_outside_lock_apply {
+    [
+        do conf teleportAuto_idle 0
+        do conf route_randomWalk 1
+    ]
+}
+
+
+
+
+# ------------------------------------------------------------
+# 5. 低 SP 随机走路超过 20 秒时，瞬移重新找怪
+#
+# 只检查当前正在执行的随机 route；不会把坐下时残留在 AI
+# 队列中的旧 route 误判为仍在走路。同一条 route 只会触发一次。
+# ------------------------------------------------------------
+
+automacro tele_search_low_sp_walk_timeout {
+    sp <= 50%
+    timeout 1
+    priority 20
+    eval Misc::inLockMap() && !AI::inQueue("teleport", "NPC") && AI::is("route") && AI::args()->{isRandomWalk} && defined(AI::args()->{time_start}) && time - AI::args()->{time_start} >= 20 && (!defined($varStack{teleSearchLastRouteStart}) || $varStack{teleSearchLastRouteStart} != AI::args()->{time_start})
+    call tele_search_force_teleport
+}
+
+macro tele_search_force_teleport {
+    [
+        $teleSearchLastRouteStart = @eval(AI::args(AI::findAction("route"))->{time_start})
+        log [TELE-SEARCH] 低 SP 当前随机路线超过 20 秒，执行一次瞬移
+        do tele
+    ]
+}

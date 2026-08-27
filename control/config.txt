@@ -87,6 +87,8 @@ attackMaxRouteTime 4
 attackMinPlayerDistance 2
 attackMinPortalDistance 4
 attackUseWeapon 1
+# Continue the current weapon attack while Free Cast channels a supported spell.
+sageFreeCastAttack 1
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 1
@@ -602,8 +604,11 @@ pet_return 20
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.
 
-attackSkillSlot {
-	lvl
+# Sage Free Cast supports: MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT,
+# and MG_THUNDERSTORM. Change the handle below, or duplicate this block with
+# mutually exclusive conditions when different spells should be selected.
+attackSkillSlot MG_FIREBOLT {
+	lvl 10
 	dist 1
 	maxDist 1
 	maxCastTime 0
