@@ -89,6 +89,8 @@ attackMinPortalDistance 4
 attackUseWeapon 1
 # Continue the current weapon attack while Free Cast channels a supported spell.
 sageFreeCastAttack 1
+# Print schedule, range, retry, acknowledgement, and cancellation diagnostics.
+sageFreeCastAttack_debug 0
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 1
