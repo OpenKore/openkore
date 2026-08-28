@@ -47,7 +47,8 @@ use constant {
 	ROUTE_SOLUTION_READY => 3,
 	WALK_ROUTE_SOLUTION => 4,
 	ROUTE_CLIENT_PATH_MAX_DEVIATION => 4,
-	ROUTE_CLIENT_PATH_RESET_TRIM_STEPS => 4
+	ROUTE_CLIENT_PATH_RESET_TRIM_STEPS => 4,
+	ROUTE_MAX_MOVE_SELECTION_RESETS => 5
 };
 
 # Error code constants.
@@ -154,6 +155,7 @@ sub new {
 	}
 	
 	$self->{loop} = 0;
+	$self->{move_selection_reset_count} = 0;
 
 	$self->{solution} = [];
 	$self->{stage} = NOT_INITIALIZED;
@@ -353,7 +355,7 @@ sub iterate {
 		$self->{route_out_time} = time if !exists $self->{route_out_time};
 
 		if (!defined $self->{step_index}) {
-			$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'};
+			$self->{step_index} = _getInitialStepIndex($self);
 		}
 
 		my ($current_pos, $current_pos_to, $current_calc_pos);
@@ -427,9 +429,13 @@ sub iterate {
 			|| $self->{last_pos_to}{x} != $current_pos_to->{x}
 			|| $self->{last_pos_to}{y} != $current_pos_to->{y}
 		);
-		if ($actual_pos_moved && $self->{trimm_dev_block}) {
-			debug "Route $self->{actor} - clearing trimm_dev_block after actual movement to ($current_calc_pos->{x} $current_calc_pos->{y})\n", "route";
-			delete $self->{trimm_dev_block};
+		if ($actual_pos_moved) {
+			if ($self->{trimm_dev_block}) {
+				debug "Route $self->{actor} - clearing trimm_dev_block after actual movement to ($current_calc_pos->{x} $current_calc_pos->{y})\n", "route";
+				delete $self->{trimm_dev_block};
+			}
+			delete $self->{route_step_override};
+			$self->{move_selection_reset_count} = 0;
 		}
 		
 		$self->{lastStep} = 0;
@@ -792,9 +798,19 @@ sub setMove {
 }
 
 sub resetRoute {
-	my ($self) = @_;
+	my ($self, %args) = @_;
+	if (!$args{preserveMoveSelectionState}) {
+		delete $self->{route_step_override};
+		$self->{move_selection_reset_count} = 0;
+	}
 	$self->{solution} = [];
 	$self->{stage} = CALCULATE_ROUTE;
+}
+
+sub _getInitialStepIndex {
+	my ($self) = @_;
+	return $self->{route_step_override} if defined $self->{route_step_override};
+	return $config{$self->{actor}{configPrefix}.'route_step'};
 }
 
 sub bestSolutionAnchorIndex {
@@ -846,9 +862,20 @@ sub _maxPathDeviation {
 
 sub _resetRouteForMoveSelection {
 	my ($self, $reason) = @_;
+	$self->{move_selection_reset_count}++;
+	if ($self->{move_selection_reset_count} > ROUTE_MAX_MOVE_SELECTION_RESETS) {
+		warning TF("[Route] [%s] Unable to select a valid next move after %d route recalculations; stopping.\n",
+			$self->{actor}, ROUTE_MAX_MOVE_SELECTION_RESETS), "route";
+		$self->setError(STUCK, T("Stuck during route."));
+		Plugins::callHook('route', {status => 'stuck'});
+		return 1;
+	}
+
 	debug "Route $self->{actor} - movement interrupted: reset route ($reason)\n", "route";
-	$self->resetRoute();
-	$self->iterate();
+	# Do not call iterate() here. This helper is reached from iterate() while
+	# selecting a move; re-entering it synchronously can recurse forever when
+	# the same route step is rejected on every pass.
+	$self->resetRoute(preserveMoveSelectionState => 1);
 	return 1;
 }
 
@@ -860,6 +887,9 @@ sub _trimMoveStepOrReset {
 
 	if (($requested_move_step_index - $$move_step_index_ref) >= ROUTE_CLIENT_PATH_RESET_TRIM_STEPS) {
 		$self->{trimm_dev_block} = 1;
+		$self->{route_step_override} = $$move_step_index_ref
+			if !defined $self->{route_step_override}
+			|| $self->{route_step_override} > $$move_step_index_ref;
 		return _resetRouteForMoveSelection($self, "had to trim down $requested_move_step_index to $$move_step_index_ref while selecting next move");
 	}
 

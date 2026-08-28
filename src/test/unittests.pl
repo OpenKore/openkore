@@ -23,6 +23,7 @@ my @tests = qw(
 	TeleportSkillRetryTest
 	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
+	TaskRouteTest
 	TaskTalkNPCTest
 	PluginsHookTest
 	FileParsersTest
