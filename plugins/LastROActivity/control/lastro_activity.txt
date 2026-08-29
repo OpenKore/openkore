@@ -1,0 +1,45 @@
+# Safe LastRO activity baseline.
+# Every rule stays disabled until the announcement, internal map, target names/IDs,
+# entry dialog, and finish message are confirmed from server evidence.
+# Unknown maps, monsters, dialogs, and finish messages keep a rule disabled.
+
+[city_monster_party]
+enabled=0
+lead_seconds=10
+duration_seconds=900
+return_policy=privateairship:prontera
+
+[dungeon_monster_party]
+enabled=0
+lead_seconds=10
+duration_seconds=900
+return_policy=privateairship:prontera
+
+[dojo_challenge]
+enabled=0
+lead_seconds=10
+duration_seconds=900
+return_policy=privateairship:prontera
+
+[pool_challenge]
+enabled=0
+lead_seconds=10
+duration_seconds=900
+return_policy=privateairship:prontera
+
+[lottery]
+enabled=0
+lead_seconds=10
+entry_type=npc
+entry_map=prontera
+entry_x=152
+entry_y=129
+entry_npc=活动负责人#iz
+return_policy=privateairship:prontera
+# The NPC dialog and finish message are intentionally unknown; keep this rule disabled.
+
+[sky_chest]
+enabled=0
+lead_seconds=10
+duration_seconds=900
+return_policy=privateairship:prontera
