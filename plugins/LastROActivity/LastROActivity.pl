@@ -1242,6 +1242,26 @@ sub _launch_activity_macro {
 	return 1;
 }
 
+sub _confirm_entry_map_for_running {
+	return 0 unless defined $active_event;
+
+	my $event_map = _event_map($active_event->{rule}, $active_event);
+	my $current_map = _current_map(undef);
+	if (!defined $event_map) {
+		_mark_activity_failed('event map is unavailable before entry completed');
+		return 0;
+	}
+	if (!defined $current_map) {
+		_mark_activity_failed('current map is unavailable before entry completed');
+		return 0;
+	}
+	if (!_map_matches($current_map, $event_map)) {
+		_mark_activity_failed('left activity map before entry completed');
+		return 0;
+	}
+	return 1;
+}
+
 sub _finish_entry_macro {
 	my ($success, $reason) = @_;
 	my $stage = $pending_macro_stage;
@@ -1258,6 +1278,7 @@ sub _finish_entry_macro {
 
 	if ($stage eq 'entry') {
 		if (ref($state) eq 'LastROActivity::State' && $state->state eq 'ENTERING') {
+			return 0 unless _confirm_entry_map_for_running();
 			_transition_state('running');
 		}
 		$active_event->{entry_macro_complete} = 1 if ref($active_event) eq 'HASH';
@@ -1395,13 +1416,7 @@ sub _advance_state_machine_one_action {
 		# Confirmation flags can outlive a map packet.  Re-read the live field
 		# before promoting the activity so a departure cannot become RUNNING
 		# after the character has already left the event map.
-		my $event_map = _event_map($active_event->{rule}, $active_event);
-		my $current_map = _current_map(undef);
-		if (defined $event_map && defined $current_map
-			&& !_map_matches($current_map, $event_map)) {
-			_mark_activity_failed('left activity map before entry completed');
-			return;
-		}
+		return unless _confirm_entry_map_for_running();
 		_transition_state('running');
 	}
 

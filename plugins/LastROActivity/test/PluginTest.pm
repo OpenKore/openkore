@@ -1782,6 +1782,67 @@ RULES
 		done_testing();
 	};
 
+	subtest 'completed entry macro cannot promote an off-map activity' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = (
+			'event_map.rsw' => 1,
+			'other_map.rsw' => 1,
+			'prontera.rsw' => 1,
+		);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (macro => 1);
+		$macro::queue = undef;
+		%Commands::commands = (macro => sub { 1 });
+		$Commands::run_failure = sub {
+			my ($command) = @_;
+			$macro::queue = PluginTest::MacroQueue->new('completed_entry_macro', 1)
+				if $command eq 'macro completed_entry_macro -overrideAI -exclusive';
+			return 1;
+		};
+		$LastROActivity::clock = sub { 1_000 };
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'off_map_macro_completion', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', entry_macro => 'completed_entry_macro',
+			search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'off_map_macro_completion', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'ENTERING', 'finished entry macro is pending in ENTERING');
+
+		$Globals::field = PluginTest::Field->new('other_map');
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			LastROActivity::onMainLoopPre(undef, {now => 1_001});
+		}
+		isnt(LastROActivity::state(), 'RUNNING', 'off-map macro completion cannot enter RUNNING');
+		is(LastROActivity::state(), 'FAILED', 'off-map macro completion fails the activity');
+		like(LastROActivity::last_failure(), qr/map/i, 'off-map completion records a map failure');
+		is_deeply(\@Commands::run_calls,
+			['privateairship event_map', 'macro completed_entry_macro -overrideAI -exclusive',
+				'privateairship prontera'],
+			'off-map macro completion starts the fixed return exactly once');
+		$Commands::run_failure = undef;
+		$macro::queue = undef;
+		done_testing();
+	};
+
 	subtest 'activity cleanup clears NPC and teleport tasks' => sub {
 		LastROActivity::cleanup_and_restore('test reset');
 		%Plugins::registered_plugins = ();
