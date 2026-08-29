@@ -77,7 +77,7 @@ sub charBlockSize {
 # select the character-list layout during the first character-server login.
 sub character_info_switch {
 	my ($self) = @_;
-	return '082D' if $self->character_list_switch eq '099D'
+	return '082D' if ($self->character_list_switch eq '099D' || $self->character_list_switch eq '0B72')
 		&& exists $self->{recvPacketParser}{packet_list}{'082D'};
 	return '006B';
 }
@@ -85,7 +85,14 @@ sub character_info_switch {
 sub character_list_switch {
 	my ($self) = @_;
 	return '099D' if $self->{rpackets} && exists $self->{rpackets}{'099D'};
+	return '0B72' if $self->{rpackets} && exists $self->{rpackets}{'0B72'};
 	return '0072';
+}
+
+sub modern_character_list {
+	my ($self) = @_;
+	my $switch = $self->character_list_switch;
+	return $switch eq '099D' || $switch eq '0B72';
 }
 
 sub game_login {
@@ -117,7 +124,7 @@ sub game_login {
 		my $character_info_switch = $self->character_info_switch;
 		my $character_list_switch = $self->character_list_switch;
 		my @char_list = $self->getCharacters($session);
-		if ($character_list_switch eq '099D') {
+		if ($self->modern_character_list) {
 			$output = $self->{recvPacketParser}->reconstruct({
 				switch => $character_info_switch,
 				normal_slot => $charSvrSet{normal_slot},
@@ -128,12 +135,16 @@ sub game_login {
 				chars => \@char_list,
 			});
 
-			if ($charSvrSet{sync_Count} > 0) {
-				$output .= $self->{recvPacketParser}->reconstruct({
-					switch => 'sync_received_characters',
-					sync_Count => $charSvrSet{sync_Count},
-				});
-			}
+			# XKore2 exposes the bot's complete character list as one page.  The
+			# upstream server may advertise several pages for its normal slots,
+			# but forwarding that count would make the browser request pages that
+			# this proxy cannot populate.
+			$output .= $self->{recvPacketParser}->reconstruct({
+				switch => 'sync_received_characters',
+				sync_Count => 1,
+			});
+			$client->send($output);
+			return;
 		} else { # 006B
 			$output = $self->{recvPacketParser}->reconstruct({
 				switch => $character_info_switch,
@@ -202,6 +213,12 @@ sub char_login {
 
 sub sync_received_characters {
 	my ($self, $args, $client) = @_;
+	if ($self->modern_character_list) {
+		# 09A1 is the browser's character-list page request.  Every request is
+		# answered with a 099D/0B72 page; do not emit the legacy PIN handshake.
+		$self->sendCharInfo($args, $client);
+		return;
+	}
 	if ($nChar == 0) {
 		&sendCharInfo;
 		$nChar = 1;

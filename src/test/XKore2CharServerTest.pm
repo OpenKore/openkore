@@ -28,11 +28,14 @@ BEGIN {
 			packet_list => {
 				'0065' => ['game_login', 'a4 a4 a4 v C',
 					[qw(accountID sessionID sessionID2 userLevel accountSex)]],
+				'09A1' => ['sync_received_characters'],
 			},
 		}, shift;
 	}
 	sub reconstruct {
 		$_[0]{reconstruct_args} = $_[1];
+		return pack('v', 0x09A1)
+			if $_[1]{switch} eq 'sync_received_characters';
 		return 'packet';
 	}
 	sub sendToServer {
@@ -77,12 +80,22 @@ use Network::XKore2::CharServer;
 			packet_lut => {},
 			packet_list => $packet_list,
 			calls => [],
+			args => {},
 		}, shift;
 	}
 	sub reconstruct {
 		my ($self, $args) = @_;
 		push @{$self->{calls}}, $args->{switch};
-		return 'packet:' . $args->{switch};
+		$self->{args}{$args->{switch}} = $args;
+		return pack('v v C5 x20', 0x082D, 29,
+			$args->{normal_slot} || 0, $args->{premium_slot} || 0,
+			$args->{billing_slot} || 0, $args->{producible_slot} || 0,
+			$args->{valid_slot} || 0) if $args->{switch} eq '082D';
+		return pack('v V', 0x09A0, $args->{sync_Count} || 0)
+			if $args->{switch} eq 'sync_received_characters';
+		return pack('v v a175', 0x099D, 179, 'C' x 175)
+			if $args->{switch} eq '099D';
+		return pack('v', 0);
 	}
 }
 
@@ -116,9 +129,10 @@ sub start {
 		billing_slot => 0,
 		producible_slot => 0,
 		valid_slot => 3,
+		sync_Count => 1,
 	);
 
-		subtest '2021 RE character login emits modern character-list packet IDs' => sub {
+		subtest '2021 RE character login waits for 09A1 before sending character data' => sub {
 		my $account_id = pack('V', 2007306);
 		my $session = {
 			sessionID => 1,
@@ -141,11 +155,35 @@ sub start {
 			accountSex => 0,
 		}, $client);
 
-		is_deeply(
-			$parser->{calls},
-			[qw(082D 099D)],
-			'character handoff uses 082D slot info followed by 099D character data'
-		);
+		is_deeply($parser->{calls}, [qw(082D sync_received_characters)],
+			'initial handoff sends slot info and one character-list page notification');
+		is(unpack('V', $client->{sent}[0]), 2007306,
+			'initial response starts with the raw account ID');
+		is(unpack('v', $client->{sent}[1]), 0x082D,
+			'initial modern response starts with 082D slot info');
+		is(unpack('v', substr($client->{sent}[1], 29)), 0x09A0,
+			'initial modern response follows slot info with 09A0');
+		is(unpack('V', substr($client->{sent}[1], 31, 4)), 1,
+			'09A0 announces one character-list page');
+		my $has_early_character_or_pin = grep {
+			unpack('v', $_) == 0x099D || unpack('v', $_) == 0x08B9
+		} @{$client->{sent}};
+		ok(!$has_early_character_or_pin,
+			'initial modern response does not send character data or legacy PIN request');
+
+		$parser->{calls} = [];
+		$server->sync_received_characters({}, $client);
+		is_deeply($parser->{calls}, [qw(099D)],
+			'client 09A1 request receives the 099D character data page');
+		is(unpack('v', $client->{sent}[-1]), 0x099D,
+			'09A1 response is the 099D packet');
+		is(unpack('v', substr($client->{sent}[-1], 2, 2)), 179,
+			'099D response length includes one 175-byte character block');
+		is(scalar @{$parser->{args}{'099D'}{chars}}, 5,
+			'099D reconstruction receives the available character list');
+		$server->sync_received_characters({}, $client);
+		is(unpack('v', $client->{sent}[-1]), 0x099D,
+			'every additional 09A1 page request receives another 099D response');
 		ok(!$client->{closed}, 'valid character-server session remains open');
 	};
 
@@ -206,6 +244,20 @@ sub start {
 			'sendGameLogin supplies the configured client type');
 		ok(!exists $sender->{reconstruct_args}{sessionID2},
 			'modern sendGameLogin does not send a legacy sessionID2 field');
+	};
+
+	subtest '2021 RE sender registers the client character-list request' => sub {
+		require Network::Send::kRO::RagexeRE_2021_11_03;
+		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+
+		ok(exists $sender->{packet_list}{'09A1'},
+			'09A1 is present in the character-server client packet table');
+		is($sender->{packet_list}{'09A1'}[0], 'sync_received_characters',
+			'09A1 dispatches to the character-list response handler');
+		my $request = $sender->reconstruct({switch => 'sync_received_characters'});
+		is(unpack('v', $request), 0x09A1,
+			'reconstructed character-list request uses the 09A1 opcode');
+		is(length($request), 2, '09A1 request is exactly two bytes');
 	};
 
 	%Globals::charSvrSet = %previous_slots;
