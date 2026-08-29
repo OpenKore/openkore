@@ -8,6 +8,9 @@ DUMP.txt
 # Plugin files
 /profiles
 
+# Local agent worktrees
+.worktrees/
+
 # Backup files
 *~
 .#*
