@@ -235,6 +235,7 @@ sub _write_fixture {
 enabled=1
 announce_regex=活动
 lead_seconds=10
+duration_seconds=900
 RULES
 	close $fh;
 	return $path;
@@ -253,6 +254,7 @@ entry_item_id=14527
 map_source=static
 entry_map=event_map
 search_targets=event_egg,event_mvp
+duration_seconds=900
 RULES
 	close $fh;
 	return $path;
@@ -267,6 +269,7 @@ sub _write_active_fixture {
 enabled=1
 announce_regex=活动
 lead_seconds=12
+duration_seconds=900
 RULES
 	close $fh;
 	return ($folder, $path);
@@ -281,12 +284,14 @@ enabled=1
 announce_regex=活动
 lead_seconds=10
 priority=5
+duration_seconds=900
 
 [zzz_low]
 enabled=1
 announce_regex=活动
 lead_seconds=10
 priority=1
+duration_seconds=900
 RULES
 	close $fh;
 	return $path;
@@ -300,11 +305,13 @@ sub _write_multi_fixture {
 enabled=1
 announce_regex=活动
 lead_seconds=10
+duration_seconds=900
 
 [drop_event]
 enabled=1
 announce_regex=活动
 lead_seconds=10
+duration_seconds=900
 RULES
 	close $fh;
 	return $path;
@@ -319,6 +326,7 @@ sub _write_keep_fixture {
 enabled=1
 announce_regex=活动
 lead_seconds=10
+duration_seconds=900
 RULES
 	close $fh;
 	return $path;
@@ -648,6 +656,7 @@ sub start {
 				entry_item_id => 14527,
 				entry_map => 'event_map',
 				search_targets => [],
+				duration_seconds => 900,
 				validation_errors => [],
 			},
 			{event_id => 'no_targets', map => 'event_map'},
@@ -689,6 +698,7 @@ sub start {
 			entry_item_id => 14527,
 			entry_map => 'event_map',
 			search_targets => ['not_in_shared_control'],
+			duration_seconds => 900,
 			validation_errors => [],
 		};
 		my %before = %Globals::config;
@@ -760,6 +770,7 @@ sub start {
 				entry_item_id => 14527,
 				entry_map => 'event_map',
 				search_targets => ['event_egg'],
+				duration_seconds => 900,
 				validation_errors => [],
 			},
 			{event_id => 'command_failure', map => 'event_map'},
@@ -800,6 +811,7 @@ sub start {
 				entry_item_id => 14527,
 				entry_map => 'event_map',
 				search_targets => ['event_egg'],
+				duration_seconds => 900,
 				validation_errors => [],
 			},
 			{event_id => 'missing_server_item', map => 'event_map'},
@@ -896,6 +908,7 @@ sub start {
 enabled=1
 announce_regex=活动
 lead_seconds=10
+duration_seconds=900
 RULES
 		close $fh;
 		$Settings::load_path = $recovery_fixture;
@@ -1243,6 +1256,7 @@ RULES
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			entry_map => 'event_map',
+			duration_seconds => 900,
 			search_targets => [],
 			validation_errors => [],
 		};
@@ -1338,6 +1352,7 @@ RULES
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			entry_map => 'event_map',
+			duration_seconds => 900,
 			entry_macro => 'enter_event',
 			search_targets => ['event_egg'],
 			validation_errors => [],
@@ -1387,7 +1402,7 @@ RULES
 		my $rule = {
 			event_id => 'macro_disappears', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', entry_macro => 'enter_event',
+			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'enter_event',
 			search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'macro_disappears', rule => $rule, map => 'event_map'};
@@ -1435,13 +1450,18 @@ RULES
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			entry_map => 'event_map',
+			duration_seconds => 900,
 			search_targets => ['event_egg'],
 			validation_errors => [],
 		};
 		my $event = {event_id => 'rejected_entry', rule => $rule, map => 'event_map'};
 		is(LastROActivity::begin_activity($rule, $event), 1, 'entry request is accepted locally');
 		LastROActivity::onAirshipResult(undef, {type => 2});
-		is(LastROActivity::state(), 'FAILED', 'server rejection transitions the activity to FAILED');
+		is(LastROActivity::state(), 'DEPARTING', 'first server rejection retries entry while bounded');
+		LastROActivity::onAirshipResult(undef, {type => 2});
+		is(LastROActivity::state(), 'DEPARTING', 'second server rejection retries the final entry attempt');
+		LastROActivity::onAirshipResult(undef, {type => 2});
+		is(LastROActivity::state(), 'FAILED', 'exhausted server rejections transition the activity to FAILED');
 		like(join('', @Log::warnings), qr/not have enough|insufficient/i,
 			'airship rejection logs a human-readable reason');
 		done_testing();
@@ -1461,7 +1481,7 @@ RULES
 		my $rule = {
 			event_id => 'entering_state', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', search_targets => ['event_egg'], validation_errors => [],
+			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'entering_state', rule => $rule, map => 'event_map'};
 		{
@@ -1492,7 +1512,7 @@ RULES
 		my $rule = {
 			event_id => 'late_rejection', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', search_targets => ['event_egg'], validation_errors => [],
+			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'late_rejection', rule => $rule, map => 'event_map'};
 		{
@@ -1526,7 +1546,7 @@ RULES
 		my $rule = {
 			event_id => 'map_first_entry', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', entry_macro => 'enter_event',
+			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'enter_event',
 			search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'map_first_entry', rule => $rule, map => 'event_map'};
@@ -1569,7 +1589,7 @@ RULES
 		my $rule = {
 			event_id => 'orphan_result', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', search_targets => ['event_egg'], validation_errors => [],
+			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'orphan_result', rule => $rule, map => 'event_map'};
 		{
@@ -1608,7 +1628,7 @@ RULES
 		my $rule = {
 			event_id => 'map_first_timeout', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', timeout_seconds => 5,
+			entry_map => 'event_map', timeout_seconds => 5, duration_seconds => 900,
 			search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'map_first_timeout', rule => $rule, map => 'event_map'};
@@ -1645,7 +1665,7 @@ RULES
 		my $rule = {
 			event_id => 'return_rejection', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', timeout_seconds => 5,
+			entry_map => 'event_map', timeout_seconds => 5, duration_seconds => 900,
 			search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'return_rejection', rule => $rule, map => 'event_map'};
@@ -1696,7 +1716,7 @@ RULES
 		my $rule = {
 			event_id => 'nested_macro_error', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', entry_macro => 'root_entry_macro',
+			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'root_entry_macro',
 			search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'nested_macro_error', rule => $rule, map => 'event_map'};
@@ -1755,7 +1775,7 @@ RULES
 		my $rule = {
 			event_id => 'entry_map_departure', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', search_targets => ['event_egg'],
+			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'],
 			validation_errors => [],
 		};
 		my $event = {event_id => 'entry_map_departure', rule => $rule, map => 'event_map'};
@@ -1811,7 +1831,7 @@ RULES
 		my $rule = {
 			event_id => 'off_map_macro_completion', enabled => 1, announce_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
-			entry_map => 'event_map', entry_macro => 'completed_entry_macro',
+			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'completed_entry_macro',
 			search_targets => ['event_egg'], validation_errors => [],
 		};
 		my $event = {event_id => 'off_map_macro_completion', rule => $rule, map => 'event_map'};
@@ -2018,8 +2038,10 @@ RULES
 			LastROActivity::onAirshipResult(undef, {type => 2});
 			LastROActivity::onAirshipResult(undef, {type => 2});
 			LastROActivity::onAirshipResult(undef, {type => 2});
-			is_deeply(\@trace, ['macro stop', 'AI::clear attack move route mapRoute items_take items_gather take', 'AI::clear NPC teleport', 'privateairship prontera'],
-				'three failures do not issue repeated return requests');
+			is_deeply(\@trace, ['privateairship event_map', 'privateairship event_map', 'macro stop',
+				'AI::clear attack move route mapRoute items_take items_gather take',
+				'AI::clear NPC teleport', 'privateairship prontera'],
+				'three failures issue bounded entry retries and one return request');
 			$task7_confirm_return->();
 		}
 		is($cleanup_calls, 1, 'repeated airship failures clean up once');
@@ -2113,6 +2135,214 @@ RULES
 			],
 			'activity cleanup clears ordinary and activity-specific AI tasks',
 		);
+		done_testing();
+	};
+
+	subtest 'lifecycle validation fails closed with auditable completion and map errors' => sub {
+		# Start from the same trusted runtime fixture used by the lifecycle cases,
+		# then exercise validation before the snapshot/lock boundary.
+		$task7_setup_running->('task7_validation_seed');
+		LastROActivity::cleanup_and_restore('validation seed cleanup');
+		@Commands::run_calls = ();
+		my %before = %Globals::config;
+		my $make_rule = sub {
+			my ($id, $extra) = @_;
+			$extra ||= {};
+			return {
+				event_id => $id,
+				enabled => 1,
+				announce_regex => 'START',
+				entry_type => 'privateairship',
+				entry_item_id => 14527,
+				entry_map => 'event_map',
+				search_targets => ['event_egg'],
+				validation_errors => [],
+				%$extra,
+			};
+		};
+
+		my $rule = $make_rule->('task7_no_completion');
+		my $ok = LastROActivity::begin_activity($rule, {
+			event_id => $rule->{event_id}, map => 'event_map', rule => $rule,
+		});
+		is($ok, 0, 'enabled rule without finish evidence is rejected');
+		ok(!$rule->{enabled}, 'completion validation disables the rule');
+		like(join('', @{$rule->{validation_errors}}), qr/finish|duration/i,
+			'completion validation is attached to the rule');
+		is_deeply(\@Commands::run_calls, [], 'completion validation has no entry side effect');
+		is_deeply(\%Globals::config, \%before, 'completion validation leaves config untouched');
+
+		LastROActivity::cleanup_and_restore('between completion validation cases');
+		%Globals::config = %before;
+		@Commands::run_calls = ();
+		$rule = $make_rule->('task7_bad_finish', {
+			finish_regex => '[', duration_seconds => 900,
+		});
+		$ok = LastROActivity::begin_activity($rule, {
+			event_id => $rule->{event_id}, map => 'event_map', rule => $rule,
+		});
+		is($ok, 0, 'malformed finish pattern is rejected');
+		ok(!$rule->{enabled}, 'malformed finish pattern disables the rule');
+		like(join('', @{$rule->{validation_errors}}), qr/finish.*pattern|regex/i,
+			'malformed finish error is attached');
+
+		LastROActivity::cleanup_and_restore('between phase validation cases');
+		%Globals::config = %before;
+		@Commands::run_calls = ();
+		$rule = $make_rule->('task7_named_phase', {
+			phases => [{name => 'eggs'}], duration_seconds => 900,
+		});
+		$ok = LastROActivity::begin_activity($rule, {
+			event_id => $rule->{event_id}, map => 'event_map', rule => $rule,
+		});
+		is($ok, 0, 'phase without an explicit finish condition is rejected');
+		ok(!$rule->{enabled}, 'phase validation disables the rule');
+		like(join('', @{$rule->{validation_errors}}), qr/phase.*finish|condition/i,
+			'missing phase condition is attached');
+
+		LastROActivity::cleanup_and_restore('between static map validation cases');
+		%Globals::config = %before;
+		@Commands::run_calls = ();
+		$rule = $make_rule->('task7_unknown_static', {
+			entry_map => 'not_a_real_map', finish_regex => 'DONE', duration_seconds => 900,
+		});
+		$ok = LastROActivity::begin_activity($rule, {
+			event_id => $rule->{event_id}, map => 'not_a_real_map', rule => $rule,
+		});
+		is($ok, 0, 'unknown static map is rejected');
+		ok(!$rule->{enabled}, 'unknown static map disables the rule');
+		like(join('', @{$rule->{validation_errors}}), qr/unknown|map/i,
+			'unknown static map error is attached');
+
+		LastROActivity::cleanup_and_restore('between dynamic map validation cases');
+		%Globals::config = %before;
+		@Commands::run_calls = ();
+		$rule = $make_rule->('task7_unknown_dynamic', {
+			map_source => 'dynamic', finish_regex => 'DONE', duration_seconds => 900,
+		});
+		$ok = LastROActivity::begin_activity($rule, {
+			event_id => $rule->{event_id}, map => 'event_map', rule => $rule,
+		});
+		is($ok, 0, 'dynamic map without announcement metadata is rejected');
+		ok(!$rule->{enabled}, 'dynamic map error disables the rule');
+		like(join('', @{$rule->{validation_errors}}), qr/map/i,
+			'dynamic map error is attached');
+		done_testing();
+	};
+
+	subtest 'NPC lifecycle entries require trusted dialog evidence' => sub {
+		$task7_setup_running->('task7_npc_validation_seed');
+		LastROActivity::cleanup_and_restore('NPC validation seed cleanup');
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'task7_untrusted_npc', enabled => 1, announce_regex => 'START',
+			entry_type => 'npc', entry_map => 'event_map', entry_x => 10, entry_y => 20,
+			entry_npc => 'Guide#c', duration_seconds => 120, validation_errors => [],
+		};
+		my $ok = LastROActivity::begin_activity($rule, {
+			event_id => $rule->{event_id}, map => 'event_map', rule => $rule,
+		});
+		is($ok, 0, 'untrusted NPC lifecycle rule is rejected');
+		ok(!$rule->{enabled}, 'untrusted NPC rule is disabled');
+		like(join('', @{$rule->{validation_errors}}), qr/trusted|evidence|dialog/i,
+			'NPC trust failure is attached');
+		is_deeply(\@Commands::run_calls, [], 'unknown NPC dialog is never executed');
+
+		LastROActivity::cleanup_and_restore('between NPC trust cases');
+		$rule = {
+			event_id => 'task7_trusted_npc', enabled => 1, announce_regex => 'START',
+			entry_type => 'npc', entry_map => 'event_map', entry_x => 10, entry_y => 20,
+			entry_npc => 'Guide#c', duration_seconds => 120,
+			entry_npc_trusted => 1, entry_npc_evidence => 'server dialog transcript',
+			validation_errors => [],
+		};
+		@Commands::run_calls = ();
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			$ok = LastROActivity::begin_activity($rule, {
+				event_id => $rule->{event_id}, map => 'event_map', rule => $rule,
+			});
+		}
+		is($ok, 1, 'trusted NPC lifecycle rule may start');
+		is($Commands::run_calls[0], 'talknpc 10 20 c', 'trusted NPC entry executes its sequence');
+		done_testing();
+	};
+
+	subtest 'entry airship failures retry at most three times before one return' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_retry_cap');
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart);
+		$LastROActivity::pending_destination = 'event_map';
+		$LastROActivity::pending_destination_kind = 'entry';
+		$LastROActivity::pending_destination_deadline = 200;
+		$LastROActivity::airship_failure_count = 0;
+		@Commands::run_calls = ('privateairship event_map');
+
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			LastROActivity::onAirshipResult(undef, {type => 2});
+			is($LastROActivity::airship_failure_count, 1, 'first rejection is counted');
+			is($LastROActivity::pending_destination_kind, 'entry', 'first rejection schedules another entry attempt');
+			LastROActivity::onAirshipResult(undef, {type => 2});
+			is($LastROActivity::airship_failure_count, 2, 'second rejection is counted');
+			is($LastROActivity::pending_destination_kind, 'entry', 'second rejection schedules the final entry attempt');
+			LastROActivity::onAirshipResult(undef, {type => 2});
+			is($LastROActivity::airship_failure_count, 3, 'third rejection reaches the cap');
+			is(LastROActivity::state(), 'FAILED', 'exhausted entry retries fail the activity');
+			is_deeply(\@Commands::run_calls,
+				['privateairship event_map', 'privateairship event_map', 'privateairship event_map',
+					'privateairship prontera'],
+				'entry retries issue three bounded requests and one return');
+
+			LastROActivity::onAirshipResult(undef, {type => 2});
+			is_deeply(\@Commands::run_calls,
+				['privateairship event_map', 'privateairship event_map', 'privateairship event_map',
+					'privateairship prontera'],
+				'late rejection after exhaustion cannot issue another return');
+		}
+		$task7_confirm_return->();
+		done_testing();
+	};
+
+	subtest 'running map kick-out is a failure and skips finish macro' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_running_kickout', {
+			finish_macro => 'must_not_run',
+		});
+		@Commands::run_calls = ();
+		LastROActivity::onMapChange(undef, {map => 'other_map'});
+		is(LastROActivity::state(), 'FAILED', 'running map kick-out marks the activity failed');
+		like(LastROActivity::last_failure(), qr/left activity map/i,
+			'map kick-out keeps an actionable failure reason');
+		ok(!grep($_ eq 'macro must_not_run -overrideAI -exclusive', @Commands::run_calls),
+			'failure path does not launch the finish macro');
+		is(scalar(grep($_ eq 'privateairship prontera', @Commands::run_calls)), 1,
+			'failure path requests one return');
+		$task7_confirm_return->();
+		done_testing();
+	};
+
+	subtest 'cleanup finalizes and releases its lock when AI cleanup throws' => sub {
+		$task7_setup_running->('task7_cleanup_exception');
+		my $original_clear_activity = \&LastROActivity::clear_activity_ai;
+		my $original_ai_clear = \&AI::clear;
+		my $ok;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_activity_ai = sub { die "activity AI exploded\n" };
+			local *AI::clear = sub { die "final AI clear exploded\n" };
+			$ok = eval { LastROActivity::cleanup_and_restore('exception cleanup') };
+		}
+		ok(!defined($@) || $@ eq '', 'cleanup does not leak an exception to its caller');
+		is($ok, 0, 'cleanup surfaces an AI cleanup failure');
+		is($LastROActivity::cleanup_in_progress, 0, 'cleanup mutex is reset after an exception');
+		is(LastROActivity::activity_locked(), 0, 'cleanup releases the lock after an exception');
+		is(LastROActivity::active_event(), undef, 'cleanup clears the active event after an exception');
+		is($LastROActivity::active_snapshot, undef, 'cleanup clears the snapshot after an exception');
+		is(LastROActivity::state(), 'IDLE', 'cleanup resets lifecycle state after an exception');
+		like(LastROActivity::last_failure(), qr/AI|exploded|cleanup/i,
+			'cleanup exposes the exception as a failure reason');
 		done_testing();
 	};
 

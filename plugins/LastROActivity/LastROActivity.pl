@@ -443,6 +443,11 @@ sub _load_rules_file {
 sub _commit_rules {
 	my ($candidate, $resolved) = @_;
 	return 0 unless ref($candidate) eq 'HASH' && defined $resolved;
+	# Validate lifecycle completion evidence as soon as a candidate is loaded so
+	# malformed enabled rules cannot sit armed until their first announcement.
+	for my $rule (values %$candidate) {
+		_next_rule_validation($rule);
+	}
 	$rules = $candidate;
 	$rules_file = $resolved;
 	my $reconciled = eval {
@@ -456,6 +461,14 @@ sub _commit_rules {
 	}
 	$last_failure = undef;
 	return 1;
+}
+
+sub _next_rule_validation {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	return 1 unless defined $rule->{enabled}
+		&& "$rule->{enabled}" =~ /^\s*1\s*\z/;
+	return _validated_enabled_rule($rule) ? 1 : 0;
 }
 
 sub _reconcile_scheduled_events {
@@ -570,8 +583,14 @@ sub _validated_enabled_rule {
 	return 0 unless defined $rule->{enabled} && $rule->{enabled} =~ /^\s*1\s*\z/;
 	return 0 if ref($rule->{validation_errors}) eq 'ARRAY'
 		&& @{$rule->{validation_errors}};
-	return 0 if @{LastROActivity::Rules::validate_rule($rule)};
+	my $rule_errors = LastROActivity::Rules::validate_rule($rule);
+	if (ref($rule_errors) eq 'ARRAY' && @$rule_errors) {
+		_append_rule_validation_error($rule, $_) for @$rule_errors;
+		return 0;
+	}
 	return 0 unless defined $rule->{announce_regex} && $rule->{announce_regex} ne '';
+	my ($completion_ok) = _validate_completion_policy($rule);
+	return 0 unless $completion_ok;
 	return 1;
 }
 
@@ -611,6 +630,29 @@ sub _message_matches {
 	return (!$@ && $matched) ? 1 : 0;
 }
 
+sub _compile_activity_pattern {
+	my ($pattern, $label) = @_;
+	$label = 'activity pattern' unless defined $label && $label ne '';
+	return (undef, "$label is required") unless defined $pattern;
+	if (ref($pattern) eq 'CODE') {
+		return ($pattern, undef);
+	}
+	if (ref($pattern) eq 'Regexp') {
+		return ($pattern, undef);
+	}
+	return (undef, "$label must be a scalar, regexp, or code reference") if ref($pattern);
+	my $text = _trim($pattern);
+	return (undef, "$label is empty") if $text eq '';
+	return (undef, "$label contains a line break") if $text =~ /[\r\n]/;
+	my $compiled;
+	my $ok = eval {
+		$compiled = qr/$text/;
+		1;
+	};
+	return (undef, "invalid $label '$text'") unless $ok;
+	return ($compiled, undef);
+}
+
 sub _activity_pattern_matches {
 	my ($message, $pattern) = @_;
 	return 0 unless defined $message && defined $pattern;
@@ -618,16 +660,15 @@ sub _activity_pattern_matches {
 		my $matched = eval { $pattern->($message) };
 		return (!$@ && $matched) ? 1 : 0;
 	}
-	return _message_matches($message, $pattern) if ref($pattern) eq 'Regexp';
-	return 0 if ref($pattern);
-	my $text = _trim($pattern);
-	return 0 if $text eq '';
-	# Treat an explicitly regular expression as such.  Plain configured phrases
-	# are exact after trimming, which prevents a generic word like "DONE" from
-	# consuming another event's longer announcement.
-	return _message_matches($message, $text)
-		if $text =~ /[\\\[\]().*+?|{}^\$]/;
-	return _trim($message) eq $text ? 1 : 0;
+	my ($compiled) = _compile_activity_pattern($pattern);
+	return 0 unless defined $compiled;
+	# Finish and phase announcements are whole messages by default.  A rule can
+	# still use normal regexp operators (for example `DONE.*`) when it needs a
+	# variable suffix; there is no metacharacter heuristic or implicit substring
+	# matching.
+	my $candidate = _trim($message);
+	my $matched = eval { $candidate =~ /\A(?:$compiled)\z/ };
+	return (!$@ && $matched) ? 1 : 0;
 }
 
 sub _phase_pattern {
@@ -637,9 +678,6 @@ sub _phase_pattern {
 		return $phase->{$key}
 			if defined $phase->{$key} && _trim($phase->{$key}) ne '';
 	}
-	# A named phase is still useful evidence when a server announcement uses the
-	# phase label verbatim (for example, "eggs cleared").  Explicit regexes win.
-	return $phase->{name} if defined $phase->{name} && _trim($phase->{name}) ne '';
 	return undef;
 }
 
@@ -1237,6 +1275,110 @@ sub _append_rule_validation_error {
 	$rule->{enabled} = 0;
 }
 
+sub _validate_completion_policy {
+	my ($rule) = @_;
+	return (0, 'rule is unavailable') unless ref($rule) eq 'HASH';
+	my @errors;
+	my $finish_valid = 0;
+	if (exists $rule->{finish_regex} && defined $rule->{finish_regex}
+		&& (!ref($rule->{finish_regex}) || ref($rule->{finish_regex}) eq 'Regexp'
+			|| ref($rule->{finish_regex}) eq 'CODE')) {
+		my $finish = ref($rule->{finish_regex}) ? 'pattern' : _trim($rule->{finish_regex});
+		if ($finish ne '' || ref($rule->{finish_regex})) {
+			my (undef, $error) = _compile_activity_pattern(
+				$rule->{finish_regex}, 'finish pattern',
+			);
+			if (defined $error) {
+				push @errors, $error;
+			} else {
+				$finish_valid = 1;
+			}
+		}
+	}
+
+	my $phases = $rule->{phases};
+	my $phases_valid = 0;
+	if (defined $phases) {
+		if (ref($phases) ne 'ARRAY') {
+			push @errors, 'phases must be an array';
+		} elsif (@$phases) {
+			$phases_valid = 1;
+			for my $index (0 .. $#$phases) {
+				my $phase = $phases->[$index];
+				unless (ref($phase) eq 'HASH') {
+					push @errors, 'phase ' . ($index + 1) . ' must be a hash';
+					$phases_valid = 0;
+					next;
+				}
+				my $pattern = _phase_pattern($phase);
+				unless (defined $pattern) {
+					push @errors, 'phase ' . ($index + 1)
+						. ' requires an explicit finish condition';
+					$phases_valid = 0;
+					next;
+				}
+				my (undef, $error) = _compile_activity_pattern(
+					$pattern, 'phase ' . ($index + 1) . ' finish pattern',
+				);
+				if (defined $error) {
+					push @errors, $error;
+					$phases_valid = 0;
+				}
+			}
+		}
+	}
+
+	my $duration_valid = 0;
+	if (exists $rule->{duration_seconds} && defined $rule->{duration_seconds}) {
+		$duration_valid = defined _positive_number($rule->{duration_seconds}) ? 1 : 0;
+		push @errors, 'duration_seconds must be a positive number'
+			unless $duration_valid;
+	}
+
+	# A lifecycle must have at least one observable completion boundary.  A
+	# positive duration is the explicit fallback for activities whose server has
+	# no finish announcement; finish macros alone are not completion evidence.
+	unless ($finish_valid || $phases_valid || $duration_valid) {
+		push @errors, 'finish evidence, phases, or a positive duration is required';
+	}
+
+	if (@errors) {
+		_append_rule_validation_error($rule, $_) for @errors;
+		return (0, $errors[0]);
+	}
+	return (1, undef);
+}
+
+sub _validate_npc_evidence {
+	my ($rule) = @_;
+	return (0, 'NPC dialog evidence is required') unless ref($rule) eq 'HASH';
+	my $trusted = 0;
+	for my $key (qw(entry_npc_trusted npc_trusted trusted_npc)) {
+		if (exists $rule->{$key} && defined $rule->{$key}
+			&& "$rule->{$key}" =~ /^\s*1\s*\z/) {
+			$trusted = 1;
+			last;
+		}
+	}
+	my $evidence;
+	for my $key (qw(entry_npc_evidence npc_evidence npc_dialog_evidence entry_npc_metadata npc_metadata)) {
+		next unless exists $rule->{$key} && defined $rule->{$key};
+		my $candidate = $rule->{$key};
+		if (ref($candidate) eq 'HASH') {
+			$trusted = 1 if defined $candidate->{trusted}
+				&& "$candidate->{trusted}" =~ /^\s*1\s*\z/;
+			$evidence = $candidate->{text} || $candidate->{source}
+				|| $candidate->{message} || $candidate->{sequence};
+		} elsif (!ref($candidate)) {
+			$evidence = _trim($candidate);
+		}
+		last if defined $evidence && $evidence ne '';
+	}
+	return (0, 'trusted NPC dialog evidence is required')
+		unless $trusted && defined $evidence && $evidence ne '';
+	return (1, undef);
+}
+
 sub _search_row_enabled {
 	my ($key) = @_;
 	return 0 unless defined $key && $key ne '';
@@ -1313,6 +1455,8 @@ sub _activity_entry_validation {
 	my ($rule, $event) = @_;
 	return 'rule is not enabled or validated'
 		unless _validated_enabled_rule($rule);
+	my ($completion_ok, $completion_reason) = _validate_completion_policy($rule);
+	return $completion_reason unless $completion_ok;
 	my ($macro_ok, $macro_reason) = _validate_macro_fields($rule);
 	return $macro_reason unless $macro_ok;
 	my ($search_ok, $search_reason) = _validate_search_targets($rule);
@@ -1320,9 +1464,24 @@ sub _activity_entry_validation {
 	return 'not connected in game' unless _in_game();
 
 	my $map = _event_map($rule, $event);
-	return 'event map is missing' unless defined $map;
-	return 'event map name is too long' if length($map) > 16;
-	return "event map '$map' is unknown" unless _map_is_known($map);
+	unless (defined $map) {
+		my $reason = (defined $rule->{map_source}
+			&& lc(_trim($rule->{map_source})) eq 'dynamic')
+			? 'dynamic event map metadata is required'
+			: 'event map is missing';
+		_append_rule_validation_error($rule, $reason);
+		return $reason;
+	}
+	if (length($map) > 16) {
+		my $reason = 'event map name is too long';
+		_append_rule_validation_error($rule, $reason);
+		return $reason;
+	}
+	unless (_map_is_known($map)) {
+		my $reason = "event map '$map' is unknown";
+		_append_rule_validation_error($rule, $reason);
+		return $reason;
+	}
 
 	my $entry_type = lc(_trim($rule->{entry_type} || 'privateairship'));
 	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
@@ -1334,12 +1493,26 @@ sub _activity_entry_validation {
 		return 'entry_macro is required for macro entry' unless defined $macro;
 	} elsif ($entry_type eq 'npc') {
 		my $sequence = _npc_sequence($rule->{entry_npc});
-		return 'entry_npc is required for NPC entry'
-			unless defined $sequence;
-		return 'entry_x is required for NPC entry'
-			unless defined $rule->{entry_x} && "$rule->{entry_x}" =~ /^\d+\z/;
-		return 'entry_y is required for NPC entry'
-			unless defined $rule->{entry_y} && "$rule->{entry_y}" =~ /^\d+\z/;
+		unless (defined $sequence) {
+			my $reason = 'entry_npc is required for NPC entry';
+			_append_rule_validation_error($rule, $reason);
+			return $reason;
+		}
+		unless (defined $rule->{entry_x} && "$rule->{entry_x}" =~ /^\d+\z/) {
+			my $reason = 'entry_x is required for NPC entry';
+			_append_rule_validation_error($rule, $reason);
+			return $reason;
+		}
+		unless (defined $rule->{entry_y} && "$rule->{entry_y}" =~ /^\d+\z/) {
+			my $reason = 'entry_y is required for NPC entry';
+			_append_rule_validation_error($rule, $reason);
+			return $reason;
+		}
+		my ($npc_ok, $npc_reason) = _validate_npc_evidence($rule);
+		unless ($npc_ok) {
+			_append_rule_validation_error($rule, $npc_reason);
+			return $npc_reason;
+		}
 	} else {
 		return "unsupported entry_type '$entry_type'";
 	}
@@ -1609,6 +1782,9 @@ sub request_event_entry {
 	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
 		my (undef, $item_error) = _airship_item_id($rule);
 		die "$item_error\n" if defined $item_error;
+		$active_event->{airship_entry_attempts} =
+			($active_event->{airship_entry_attempts} || 0) + 1
+			if defined $active_event && ref($active_event) eq 'HASH';
 		_set_pending_destination($map, 'entry', $rule)
 			or die "invalid pending activity destination\n";
 		my ($requested, $command_error);
@@ -1912,6 +2088,19 @@ sub _restore_active_snapshot {
 	return 0;
 }
 
+sub _record_cleanup_failure {
+	my ($failure) = @_;
+	$failure = _trim($failure);
+	$failure = 'activity cleanup failed' if $failure eq '';
+	if (!defined $last_failure || $last_failure eq '') {
+		$last_failure = $failure;
+	} elsif (index($last_failure, $failure) < 0) {
+		$last_failure .= "; $failure";
+	}
+	warning "[LastROActivity] $failure\n";
+	return 0;
+}
+
 sub cleanup_and_restore {
 	my ($reason) = @_;
 	# Cleanup can be reached from a command, a map hook, a timeout, and an
@@ -1926,45 +2115,80 @@ sub cleanup_and_restore {
 	return 1 unless $has_lifecycle || $has_scheduled;
 	$cleanup_in_progress = 1;
 	my $cleanup_ok = 1;
-	if (defined $armed_event && defined $armed_event->{event_id}) {
-		my $cancelled = eval { $scheduler->cancel($armed_event->{event_id}); 1 };
-		if (!$cancelled) {
-			my $failure = _trim($@ || 'unable to cancel scheduled activity');
-			warning "[LastROActivity] Unable to cancel scheduled activity: $failure\n";
-			$last_failure = $failure;
+
+	# Each stage is isolated so a failing plugin callback cannot skip snapshot
+	# restoration or the final lock release.  False return values are failures
+	# too, while undef remains compatible with OpenKore APIs that signal success
+	# by completing without a value.
+	my $run_stage = sub {
+		my ($label, $callback) = @_;
+		my ($result, $exception);
+		my $ok = eval {
+			$result = $callback->();
+			1;
+		};
+		$exception = _trim($@ || "$label failed") unless $ok;
+		if (!$ok || (defined $result && !$result)) {
 			$cleanup_ok = 0;
+			_record_cleanup_failure($exception || "$label failed");
+			return 0;
 		}
+		return 1;
+	};
+
+	if (defined $armed_event && defined $armed_event->{event_id}) {
+		$run_stage->('unable to cancel scheduled activity', sub {
+			# A due event has already been removed from the scheduler; cancellation
+			# is therefore idempotent and a false return is not a cleanup failure.
+			$scheduler->cancel($armed_event->{event_id});
+			return 1;
+		});
 	}
 	if ($has_lifecycle && defined $active_event
 		&& !$active_event->{activity_ai_cleared}) {
 		$active_event->{activity_ai_cleared} = 1;
-		clear_activity_ai();
+		$run_stage->('activity AI cleanup failed', sub { return clear_activity_ai(); });
 	}
-	my $restore_ok = _restore_active_snapshot();
-	if (!$restore_ok) {
+
+	my $restore_ok;
+	my $restore_exception;
+	my $restore_eval = eval {
+		$restore_ok = _restore_active_snapshot();
+		1;
+	};
+	$restore_exception = _trim($@ || 'config restoration failed') unless $restore_eval;
+	if (!$restore_eval || !$restore_ok) {
+		$cleanup_ok = 0;
+		_record_cleanup_failure($restore_exception || 'config restoration failed');
 		# Restoration has been attempted and failed; discard the stale snapshot so
 		# a duplicate cleanup cannot replay side effects indefinitely.
 		$active_snapshot = undef;
-		$cleanup_ok = 0;
 	}
-	# The final AI clear is intentionally after restoration.  clear_activity_ai
-	# runs before the return request and is separately guarded by the event.
+
+	# The final AI clear is intentionally after restoration.  It is independent
+	# of the activity-specific clear above and must still run after any exception.
 	if ($has_lifecycle) {
-		my $ai_ok = eval {
-			AI::clear();
-			1;
-		};
-		if (!$ai_ok) {
-			my $failure = _trim($@ || 'AI clear failed');
-			$last_failure = $failure;
-			warning "[LastROActivity] Unable to clear AI during cleanup: $failure\n";
-			$cleanup_ok = 0;
-		}
+		$run_stage->('AI clear failed', sub { return AI::clear(); });
 	}
+
+	# These assignments are deliberately outside the guarded stages: they form
+	# the exception-safe finalization boundary for every cleanup attempt.
 	@pending_due = ();
 	@pending_manual = ();
-	_clear_pending_destination();
-	_clear_pending_macro();
+	my ($pending_exception, $pending_ok) = ('', 1);
+	for my $clearer (
+		['pending destination', \&_clear_pending_destination],
+		['pending macro', \&_clear_pending_macro],
+	) {
+		my ($label, $callback) = @$clearer;
+		my $ok = eval { $callback->(); 1 };
+		unless ($ok) {
+			$pending_ok = 0;
+			$pending_exception = _trim($@ || "$label cleanup failed");
+			_record_cleanup_failure($pending_exception);
+		}
+	}
+	$cleanup_ok = 0 unless $pending_ok;
 	$activity_started_at = undef;
 	$activity_entry_started_at = undef;
 	$activity_phase_index = undef;
@@ -1973,8 +2197,14 @@ sub cleanup_and_restore {
 	$active_event = undef;
 	$armed_event = undef;
 	$state = LastROActivity::State->new;
-	# This is the sole production release of the activity lock.
-	activity_lock(0);
+	# This is the sole production release of the activity lock.  Fall back to a
+	# direct assignment if a host callback has replaced activity_lock and throws.
+	my $lock_ok = eval { activity_lock(0); 1 };
+	unless ($lock_ok) {
+		$cleanup_ok = 0;
+		_record_cleanup_failure(_trim($@ || 'activity lock release failed'));
+		$activity_lock = 0;
+	}
 	$cleanup_in_progress = 0;
 	return $cleanup_ok;
 }
@@ -2063,7 +2293,9 @@ sub return_to_capital {
 			if !defined $error || $error eq '';
 		$last_failure = $error;
 		warning "[LastROActivity] Unable to return to prontera: $error.\n";
-		_complete_return(1);
+		# There is no transfer to confirm after a rejected command.  Use the
+		# unified failure cleanup, but never label this as a successful return.
+		cleanup_and_restore('return request failed');
 		return 0;
 	}
 	return 1;
@@ -2138,7 +2370,10 @@ sub onMapChange {
 	if (ref($state) eq 'LastROActivity::State' && $state->state eq 'RUNNING') {
 		my $event_map = _event_map($active_event->{rule}, $active_event);
 		if (defined $event_map && !_map_matches($map, $event_map)) {
-			finish_activity('left activity map');
+			# Leaving the event map is an operational failure, not a successful
+			# completion.  Route through the failure path so finish macros cannot
+			# run and the diagnostic survives the return cleanup.
+			_mark_activity_failed('left activity map');
 			return 1;
 		}
 	}
@@ -2180,7 +2415,35 @@ sub onAirshipResult {
 	my $reason = $reasons{$type} || "unknown Private Airship result code $type";
 	$airship_failure_count++ if $type != 0;
 	$pending_airship_result = $type;
-	if (($pending_destination_kind || '') eq 'entry') {
+	my $destination_kind = $pending_destination_kind || '';
+	if ($destination_kind eq 'entry') {
+		my $entry_state = ref($state) eq 'LastROActivity::State'
+			&& ($state->state eq 'DEPARTING' || $state->state eq 'ENTERING');
+		my $can_retry = $entry_state
+			&& !$entry_map_confirmed
+			&& $airship_failure_count < 3;
+		if ($can_retry) {
+			# A rejected entry is retried in the same lifecycle slot.  Retrying is
+			# deliberately bounded to three total attempts, and only applies while
+			# the activity is still entering; late packets in RUNNING are failures.
+			my $retry_map = $pending_destination;
+			my $retry_rule = ref($active_event) eq 'HASH'
+				? $active_event->{rule} : undef;
+			_clear_pending_destination();
+			$entry_map_confirmed = 0;
+			$entry_transfer_accepted = 0;
+			my ($retry_ok, $retry_error);
+			$retry_ok = eval {
+				request_event_entry($retry_rule, $active_event);
+				1;
+			};
+			$retry_error = _trim($@ || 'entry retry failed') unless $retry_ok;
+			if (!$retry_ok) {
+				_mark_activity_failed($retry_error);
+				return 0;
+			}
+			return 1;
+		}
 		_clear_pending_destination();
 	}
 	_mark_activity_failed($reason);
@@ -2211,11 +2474,17 @@ sub onUnload {
 	my $cleanup_ok;
 	if (defined $active_event) {
 		$cleanup_ok = _stop_active_activity('plugin unload');
-		# Hooks are removed immediately after this callback, so there is no map
-		# packet available to complete a successful return.  Force the same common
-		# finalizer after issuing the fixed return request.
-		if ($return_pending) {
-			$cleanup_ok = 0 unless _complete_return(1);
+		# Plugin teardown removes the map hook immediately, so an outstanding
+		# return cannot be confirmed.  Record that exceptional condition and use
+		# the common emergency finalizer to restore the snapshot and release the
+		# lock.  This is explicitly a failed/unconfirmed unload, never a success.
+		if ($return_pending || defined $active_event || defined $active_snapshot) {
+			my $reason = 'plugin unload: return to prontera was not confirmed';
+			$last_failure = $reason unless defined $last_failure && $last_failure ne '';
+			warning "[LastROActivity] $reason; performing emergency cleanup.\n";
+			my $emergency_ok = cleanup_and_restore('emergency plugin unload cleanup');
+			$cleanup_ok = 0 unless $emergency_ok;
+			$cleanup_ok = 0;
 		}
 	} else {
 		$cleanup_ok = cleanup_and_restore('plugin unload');
