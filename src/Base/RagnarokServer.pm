@@ -26,6 +26,20 @@ sub getServerType {
 	return $_[0]->{serverType};
 }
 
+# XKore2 may need to bind locally while advertising a routable public address
+# in the account/character/map handoff packets.
+sub setAdvertisedHost {
+	my ($self, $host) = @_;
+	$self->{BS_advertisedHost} = $host;
+}
+
+sub getHost {
+	my ($self) = @_;
+	return $self->{BS_advertisedHost}
+		if defined $self->{BS_advertisedHost};
+	return $self->SUPER::getHost;
+}
+
 sub setServerType {
 	my ($self, $serverType) = @_;
 	if ($self->{severType} != $serverType) {
