@@ -18,6 +18,8 @@ BEGIN {
 	package Globals;
 	our %config;
 	our %maps_lut;
+	our %mon_control;
+	our %monsters_lut;
 	our ($net, $char, $field, $masterServer);
 	sub import {
 		my $caller = caller;
@@ -35,8 +37,14 @@ BEGIN {
 	our @registrations;
 	our @hooks;
 	our %hook_callbacks;
+	our %registered_plugins;
 	sub import { return 1; }
-	sub register { push @registrations, [@_]; return 1; }
+	sub register {
+		push @registrations, [@_];
+		$registered_plugins{$_[0]} = 1 if defined $_[0];
+		return 1;
+	}
+	sub registered { return $registered_plugins{$_[0]} ? 1 : 0; }
 	sub addHooks {
 		push @hooks, map { $_->[0] } @_;
 		$hook_callbacks{$_->[0]} = $_->[1] for @_;
@@ -66,6 +74,7 @@ BEGIN {
 	our %commands;
 	our %descriptors;
 	our @run_calls;
+	our $run_failure;
 	sub import { return 1; }
 	sub register {
 		for my $command (@_) {
@@ -75,7 +84,16 @@ BEGIN {
 		return [map { $_->[0] } @_];
 	}
 	sub unregister { return 1; }
-	sub run { push @run_calls, $_[0]; push @PluginTest::trace, $_[0]; return 1; }
+	sub run {
+		my $command = $_[0];
+		push @run_calls, $command;
+		push @PluginTest::trace, $command;
+		if (ref($run_failure) eq 'CODE') {
+			return $run_failure->($command);
+		}
+		die $run_failure if defined $run_failure && $run_failure ne '';
+		return 1;
+	}
 
 	$INC{'Settings.pm'} = __FILE__;
 	package Settings;
@@ -220,6 +238,7 @@ enabled=1
 announce_regex=活动
 lead_seconds=10
 entry_type=privateairship
+entry_item_id=14527
 map_source=static
 entry_map=event_map
 search_targets=event_egg,event_mvp
@@ -307,10 +326,19 @@ sub _load_plugin {
 sub start {
 	my $fixture = _write_fixture();
 	%Globals::config = ();
+	%Globals::maps_lut = ();
+	%Globals::mon_control = ();
+	%Globals::monsters_lut = ();
+	$Globals::net = undef;
+	$Globals::char = undef;
+	$Globals::field = undef;
+	$Globals::masterServer = undef;
 	@Plugins::registrations = ();
 	@Plugins::hooks = ();
 	%Commands::commands = ();
+	%Plugins::registered_plugins = ();
 	@Commands::run_calls = ();
+	$Commands::run_failure = undef;
 	%Commands::descriptors = ();
 	@Settings::add_calls = ();
 	@Settings::control_folders = ('control');
@@ -482,16 +510,30 @@ sub start {
 			lastroAirship => 1,
 			privateAirshipItemID => 14527,
 		};
+		%Globals::mon_control = (
+			event_egg => {teleport_search => 1},
+			event_mvp => {teleport_search => 1},
+		);
+		%Globals::monsters_lut = (9001 => 'event_egg', 9002 => 'event_mvp');
 		@Plugins::registrations = ();
 		@Plugins::hooks = ();
 		%Plugins::hook_callbacks = ();
+		%Plugins::registered_plugins = (macro => 1);
 		%Commands::commands = (macro => sub { 1 });
 		%Commands::descriptors = ();
 		@Settings::add_calls = ();
 		@Commands::run_calls = ();
+		$Commands::run_failure = undef;
 		@AI::clear_calls = ();
 		@trace = ();
-		my $mon_control_file = File::Spec->catfile($RealBin, '..', '..', 'control', 'mon_control.txt');
+		my $repo_root = File::Spec->catdir($RealBin, '..', '..', '..');
+		my $mon_control_file = File::Spec->catfile($repo_root, 'control', 'mon_control.txt');
+		my $shared_control_dir = File::Spec->catdir($repo_root, 'control');
+		opendir my $shared_control_before_dh, $shared_control_dir
+			or die "Unable to read $shared_control_dir: $!";
+		my %shared_control_before = map { $_ => 1 }
+			grep { $_ ne '.' && $_ ne '..' } readdir $shared_control_before_dh;
+		closedir $shared_control_before_dh;
 		my $mon_control_before;
 		if (-f $mon_control_file) {
 			open my $mon_before_fh, '<:raw', $mon_control_file or die "Unable to read $mon_control_file: $!";
@@ -558,8 +600,21 @@ sub start {
 			$mon_control_after = <$mon_after_fh>;
 			close $mon_after_fh;
 		}
+		ok(-f $mon_control_file, 'repository shared monster control file was inspected');
 		is($mon_control_after, $mon_control_before,
 			'activity leaves the shared monster control file unchanged');
+		opendir my $shared_control_after_dh, $shared_control_dir
+			or die "Unable to read $shared_control_dir: $!";
+		my %shared_control_after = map { $_ => 1 }
+			grep { $_ ne '.' && $_ ne '..' } readdir $shared_control_after_dh;
+		closedir $shared_control_after_dh;
+		is_deeply(\%shared_control_after, \%shared_control_before,
+			'activity does not create shared control profiles');
+
+		ok(LastROActivity::cleanup_and_restore('successful cleanup'), 'successful cleanup returns true');
+		is_deeply(\%Globals::config, \%before, 'successful cleanup restores the exact config snapshot');
+		is(LastROActivity::activity_locked(), 0, 'successful cleanup releases the activity lock');
+		is(LastROActivity::active_event(), undef, 'successful cleanup clears the active event');
 		done_testing();
 	};
 
@@ -579,6 +634,7 @@ sub start {
 				enabled => 1,
 				announce_regex => '活动',
 				entry_type => 'privateairship',
+				entry_item_id => 14527,
 				entry_map => 'event_map',
 				search_targets => [],
 				validation_errors => [],
@@ -590,6 +646,157 @@ sub start {
 		is_deeply(\%Globals::config, \%before, 'missing search evidence leaves config untouched');
 		is(LastROActivity::activity_locked(), 0, 'failed validation leaves activity unlocked');
 		like(join('', @Log::warnings), qr/search_targets evidence/, 'missing search evidence is auditable');
+		done_testing();
+	};
+
+	subtest 'untrusted search targets fail closed and are recorded' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		%Globals::maps_lut = ('event_map.rsw' => 1);
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Globals::monsters_lut = (9001 => 'event_egg');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {
+			lastroAirship => 1,
+			privateAirshipItemID => 14527,
+		};
+		%Plugins::registered_plugins = (LastROActivity => 1);
+		@trace = ();
+		@Log::warnings = ();
+		my $rule = {
+			event_id => 'untrusted_target',
+			enabled => 1,
+			announce_regex => '活动',
+			entry_type => 'privateairship',
+			entry_item_id => 14527,
+			entry_map => 'event_map',
+			search_targets => ['not_in_shared_control'],
+			validation_errors => [],
+		};
+		my %before = %Globals::config;
+		my $ok = LastROActivity::begin_activity($rule, {
+			event_id => 'untrusted_target',
+			map => 'event_map',
+		});
+		is($ok, 0, 'untrusted search target rejects the event');
+		ok(!$rule->{enabled}, 'untrusted search target disables the rule');
+		like(join('', @{$rule->{validation_errors}}), qr/shared mon_control/, 'validation error is attached to the rule');
+		is_deeply(\@trace, [], 'untrusted search target has no side effects');
+		is_deeply(\%Globals::config, \%before, 'untrusted search target leaves config untouched');
+		done_testing();
+	};
+
+	subtest 'macro registry controls macro stop while AI is always cleared' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		my $lastro_command = $Commands::commands{lastroactivity};
+		%Commands::commands = (lastroactivity => $lastro_command, macro => sub { 1 });
+		@trace = ();
+		%Plugins::registered_plugins = (LastROActivity => 1);
+		LastROActivity::clear_normal_ai();
+		is_deeply(\@trace,
+			['AI::clear attack move route mapRoute items_take items_gather take'],
+			'unavailable macro plugin is not stopped');
+		@trace = ();
+		$Plugins::registered_plugins{macro} = 1;
+		LastROActivity::clear_normal_ai();
+		is_deeply(\@trace,
+			['macro stop', 'AI::clear attack move route mapRoute items_take items_gather take'],
+			'available macro plugin is stopped before AI clear');
+		done_testing();
+	};
+
+	subtest 'command failure rolls back the activity snapshot' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		my $lastro_command = $Commands::commands{lastroactivity};
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			lockMap_y => 66,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		my %before = %Globals::config;
+		%Globals::maps_lut = ('event_map.rsw' => 1);
+		%Globals::mon_control = (
+			event_egg => {teleport_search => 1},
+		);
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {
+			lastroAirship => 1,
+			privateAirshipItemID => 14527,
+		};
+		%Plugins::registered_plugins = (LastROActivity => 1);
+		%Commands::commands = (lastroactivity => $lastro_command);
+		@trace = ();
+		@Log::warnings = ();
+		$Commands::run_failure = 'privateairship failed';
+		my $ok = LastROActivity::begin_activity(
+			{
+				event_id => 'command_failure',
+				enabled => 1,
+				announce_regex => '活动',
+				entry_type => 'privateairship',
+				entry_item_id => 14527,
+				entry_map => 'event_map',
+				search_targets => ['event_egg'],
+				validation_errors => [],
+			},
+			{event_id => 'command_failure', map => 'event_map'},
+		);
+		$Commands::run_failure = undef;
+		is($ok, 0, 'entry command failure rejects the activity');
+		is_deeply(\%Globals::config, \%before, 'entry command failure restores the exact config');
+		is(LastROActivity::activity_locked(), 0, 'entry command failure releases the lock');
+		is(LastROActivity::state(), 'IDLE', 'entry command failure returns to idle');
+		is(LastROActivity::active_event(), undef, 'entry command failure clears active event');
+		like(join('', @Log::warnings), qr/privateairship failed/, 'entry command failure is logged');
+		done_testing();
+	};
+
+	subtest 'missing strict airship metadata fails closed' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		my %before = %Globals::config;
+		%Globals::maps_lut = ('event_map.rsw' => 1);
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1};
+		@trace = ();
+		@Log::warnings = ();
+		my $ok = LastROActivity::begin_activity(
+			{
+				event_id => 'missing_server_item',
+				enabled => 1,
+				announce_regex => '活动',
+				entry_type => 'privateairship',
+				entry_item_id => 14527,
+				entry_map => 'event_map',
+				search_targets => ['event_egg'],
+				validation_errors => [],
+			},
+			{event_id => 'missing_server_item', map => 'event_map'},
+		);
+		is($ok, 0, 'missing server item metadata rejects the event');
+		is_deeply(\@trace, [], 'missing server metadata has no side effects');
+		is_deeply(\%Globals::config, \%before, 'missing server metadata leaves config untouched');
+		like(join('', @Log::warnings), qr/server metadata/, 'missing server metadata is logged');
 		done_testing();
 	};
 
@@ -964,6 +1171,57 @@ RULES
 		is_deeply(LastROActivity::rules(), {}, 'generic reload clears deleted-file rules');
 		ok(!defined LastROActivity::armed_event(), 'generic reload clears deleted-file armed state');
 		is(scalar @{LastROActivity::scheduler()->due(8_190)}, 0, 'generic reload clears deleted-file timers');
+		done_testing();
+	};
+
+	subtest 'cleanup surfaces config restoration failures' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		my $snapshot = LastROActivity::State::snapshot_config(\%Globals::config);
+		LastROActivity::State::apply_activity_config(\%Globals::config, 7);
+		$LastROActivity::active_snapshot = $snapshot;
+		$LastROActivity::active_event = {event_id => 'restore_failure'};
+		LastROActivity::activity_lock(1);
+		@Log::warnings = ();
+		my $ok;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::State::restore_config = sub {
+				die "synthetic restore failure\n";
+			};
+			$ok = LastROActivity::cleanup_and_restore('restore failure');
+		}
+		is($ok, 0, 'cleanup reports a restoration failure');
+		is(LastROActivity::activity_locked(), 0, 'cleanup releases the lock after restoration failure');
+		is(LastROActivity::active_event(), undef, 'cleanup clears the active event after restoration failure');
+		like(join('', @Log::warnings), qr/synthetic restore failure/, 'cleanup logs the restoration failure');
+		like(LastROActivity::last_failure(), qr/synthetic restore failure/, 'cleanup exposes the restoration failure');
+		$LastROActivity::active_snapshot = undef;
+		done_testing();
+	};
+
+	# Keep unload last because it unregisters the command and hooks used by the
+	# remaining integration cases.
+	subtest 'plugin unload restores an active snapshot' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		my %before = %Globals::config;
+		$LastROActivity::active_snapshot = LastROActivity::State::apply_activity_config(\%Globals::config, 7);
+		$LastROActivity::active_event = {event_id => 'unload_event'};
+		LastROActivity::activity_lock(1);
+		LastROActivity::onUnload();
+		is_deeply(\%Globals::config, \%before, 'plugin unload restores the exact config');
+		is(LastROActivity::activity_locked(), 0, 'plugin unload releases the lock');
+		is($LastROActivity::active_snapshot, undef, 'plugin unload clears the snapshot');
 		done_testing();
 	};
 

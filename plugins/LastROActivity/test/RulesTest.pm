@@ -164,6 +164,7 @@ finish_regex=activity finished
 lead_seconds=07
 map_source=announcement
 entry_type=airship
+entry_item_id=14527
 entry_map=event_map
 entry_x=015
 entry_y=27
@@ -210,6 +211,44 @@ RULES
 			'orders phases by numeric index',
 		);
 		done_testing();
+	};
+
+	subtest 'validates the canonical airship item ID field' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[valid_item]
+enabled=0
+entry_item_id=14527
+
+[zero_item]
+enabled=1
+announce_regex=ready
+entry_item_id=0
+
+[bad_item]
+enabled=1
+announce_regex=ready
+entry_item_id=not_numeric
+
+[alias_item]
+enabled=1
+announce_regex=ready
+private_airship_item_id=14527
+RULES
+
+	is($rules->{valid_item}{entry_item_id}, 14527, 'parses the canonical item ID');
+	is_deeply(
+		$errors,
+		[
+			'zero_item: entry_item_id must be positive',
+			'bad_item: entry_item_id must be an integer',
+			'alias_item: unsupported key private_airship_item_id',
+		],
+		'rejects invalid and undeclared item fields',
+	);
+	ok(!$rules->{zero_item}{enabled}, 'zero item ID disables the rule');
+	ok(!$rules->{bad_item}{enabled}, 'non-numeric item ID disables the rule');
+	ok(!$rules->{alias_item}{enabled}, 'undeclared item alias disables the rule');
+	done_testing();
 	};
 
 	subtest 'rejects duplicates and invalid values while preserving disabled state' => sub {

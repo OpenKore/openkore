@@ -9,8 +9,30 @@ my %NUMERIC_FIELDS = map { $_ => 1 } qw(
 	lead_seconds
 	entry_x
 	entry_y
+	entry_item_id
 	duration_seconds
 	timeout_seconds
+);
+
+my %ALLOWED_FIELDS = map { $_ => 1 } qw(
+	enabled
+	announce_regex
+	start_regex
+	finish_regex
+	lead_seconds
+	map_source
+	entry_type
+	entry_map
+	entry_x
+	entry_y
+	entry_item_id
+	entry_npc
+	duration_seconds
+	entry_macro
+	finish_macro
+	return_policy
+	search_targets
+	priority
 );
 
 my %ENTRY_TYPES = map { $_ => 1 } qw(
@@ -116,6 +138,8 @@ sub parse_text {
 			$current->{search_targets} = [
 				grep { length $_ } map { _trim($_) } split /,/, $value, -1
 			];
+		} elsif (!$ALLOWED_FIELDS{$key}) {
+			push @{$current->{_parse_errors}}, "unsupported key $key";
 		} else {
 			$current->{$key} = _normalize_value($key, $value);
 		}
@@ -171,6 +195,14 @@ sub validate_rule {
 		}
 	}
 
+	if (defined $rule->{entry_item_id}) {
+		if ($rule->{entry_item_id} !~ /^\d+$/) {
+			push @errors, 'entry_item_id must be an integer';
+		} elsif ($rule->{entry_item_id} <= 0) {
+			push @errors, 'entry_item_id must be positive';
+		}
+	}
+
 	return \@errors;
 }
 
@@ -188,6 +220,7 @@ sub _new_rule {
 		entry_map => undef,
 		entry_x => undef,
 		entry_y => undef,
+		entry_item_id => undef,
 		entry_npc => undef,
 		duration_seconds => undef,
 		entry_macro => undef,
