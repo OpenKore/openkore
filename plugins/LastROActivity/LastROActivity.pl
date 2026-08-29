@@ -40,7 +40,9 @@ our ($hooks, $commands, $rules_preload_hook);
 our $macro_error_hook;
 our ($pending_destination, $pending_destination_kind, $pending_destination_deadline);
 our ($pending_airship_result, $pending_macro, $pending_macro_stage);
-our ($pending_macro_seen, $pending_macro_deadline, $return_pending);
+our ($pending_macro_seen, $pending_macro_deadline, $pending_macro_error);
+our $pending_macro_root_name;
+our $return_pending;
 our $entry_map_confirmed;
 our $entry_transfer_accepted;
 our $activity_started_at;
@@ -69,6 +71,8 @@ $pending_macro = undef;
 $pending_macro_stage = undef;
 $pending_macro_seen = 0;
 $pending_macro_deadline = undef;
+$pending_macro_error = undef;
+$pending_macro_root_name = undef;
 $return_pending = 0;
 $entry_map_confirmed = 0;
 $entry_transfer_accepted = 0;
@@ -807,6 +811,27 @@ sub _macro_queue_finished {
 	return (!$@ && $finished) ? 1 : 0;
 }
 
+sub _macro_error_belongs_to_pending {
+	my ($name) = @_;
+	return 0 unless defined $pending_macro;
+	return 1 unless defined $name && $name ne '' && $name ne $pending_macro;
+
+	# Macro::Utilities reports a child script's name while the package queue
+	# still points at the root script.  Match that root before deciding an error
+	# is unrelated.  If the queue has already disappeared, the pending marker is
+	# the only ownership signal left and the activity's exclusive macro owns it.
+	my $queue = _macro_queue();
+	if (defined $queue) {
+		my $queue_name = _macro_queue_name($queue);
+		return 1 unless defined $queue_name && $queue_name ne '';
+		return 1 if $queue_name eq $pending_macro;
+		return 1 if defined $pending_macro_root_name
+			&& $queue_name eq $pending_macro_root_name;
+		return 0;
+	}
+	return 1;
+}
+
 sub _transition_state {
 	my ($transition) = @_;
 	return 0 unless ref($state) eq 'LastROActivity::State';
@@ -844,6 +869,8 @@ sub _clear_pending_macro {
 	$pending_macro_stage = undef;
 	$pending_macro_seen = 0;
 	$pending_macro_deadline = undef;
+	$pending_macro_error = undef;
+	$pending_macro_root_name = undef;
 }
 
 sub _map_is_known {
@@ -1105,7 +1132,11 @@ sub clear_activity_ai {
 	# Keep the activity-specific cleanup separate from the final AI reset.  The
 	# latter runs only after the return map has been confirmed and the snapshot
 	# is back in place.
-	return clear_normal_ai();
+	my $ok = clear_normal_ai();
+	# NPC dialog and teleport actions can survive the ordinary interruption list
+	# and otherwise compete with the fixed return transfer or restored route.
+	AI::clear(qw(NPC teleport));
+	return $ok;
 }
 
 sub _set_pending_destination {
@@ -1195,6 +1226,8 @@ sub _launch_activity_macro {
 	$pending_macro_stage = $stage;
 	$pending_macro_seen = 0;
 	$pending_macro_deadline = _now() + _transfer_timeout($rule);
+	$pending_macro_error = undef;
+	$pending_macro_root_name = undef;
 	# The macro plugin's mainLoop_pre hook is normally registered before this
 	# plugin.  It can therefore finish and undefine the queue before our next
 	# hook invocation; record a matching queue that already exists now so that
@@ -1202,6 +1235,7 @@ sub _launch_activity_macro {
 	my $queue = _macro_queue();
 	if (defined $queue) {
 		my $queue_name = _macro_queue_name($queue);
+		$pending_macro_root_name = $queue_name if defined $queue_name && $queue_name ne '';
 		$pending_macro_seen = 1
 			if !defined $queue_name || $queue_name eq $name;
 	}
@@ -1211,6 +1245,10 @@ sub _launch_activity_macro {
 sub _finish_entry_macro {
 	my ($success, $reason) = @_;
 	my $stage = $pending_macro_stage;
+	if ($success && defined $pending_macro_error && $pending_macro_error ne '') {
+		$success = 0;
+		$reason = $pending_macro_error;
+	}
 	_clear_pending_macro();
 	return 1 unless defined $stage;
 	if (!$success) {
@@ -1354,6 +1392,16 @@ sub _advance_state_machine_one_action {
 		&& !defined $pending_macro
 		&& ref($state) eq 'LastROActivity::State'
 		&& $state->state eq 'ENTERING') {
+		# Confirmation flags can outlive a map packet.  Re-read the live field
+		# before promoting the activity so a departure cannot become RUNNING
+		# after the character has already left the event map.
+		my $event_map = _event_map($active_event->{rule}, $active_event);
+		my $current_map = _current_map(undef);
+		if (defined $event_map && defined $current_map
+			&& !_map_matches($current_map, $event_map)) {
+			_mark_activity_failed('left activity map before entry completed');
+			return;
+		}
 		_transition_state('running');
 	}
 
@@ -1746,6 +1794,15 @@ sub onMapChange {
 		return 1;
 	}
 
+	if (ref($state) eq 'LastROActivity::State'
+		&& ($state->state eq 'DEPARTING' || $state->state eq 'ENTERING')) {
+		my $event_map = _event_map($active_event->{rule}, $active_event);
+		if (defined $event_map && !_map_matches($map, $event_map)) {
+			_mark_activity_failed('left activity map before entry completed');
+			return 1;
+		}
+	}
+
 	if (ref($state) eq 'LastROActivity::State' && $state->state eq 'RUNNING') {
 		my $event_map = _event_map($active_event->{rule}, $active_event);
 		if (defined $event_map && !_map_matches($map, $event_map)) {
@@ -1802,9 +1859,10 @@ sub onMacroError {
 	return 0 unless defined $pending_macro;
 	return 0 unless ref($args) eq 'HASH';
 	my $name = $args->{name};
-	return 0 if defined $name && $name ne '' && $name ne $pending_macro;
+	return 0 unless _macro_error_belongs_to_pending($name);
 	my $reason = $args->{error} || $args->{message} || "macro '$pending_macro' failed";
-	_finish_entry_macro(0, _trim($reason));
+	$pending_macro_error = _trim($reason)
+		if !defined $pending_macro_error || $pending_macro_error eq '';
 	return 0;
 }
 

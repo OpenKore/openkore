@@ -1671,6 +1671,134 @@ RULES
 		done_testing();
 	};
 
+	subtest 'nested entry macro errors are not mistaken for queue completion' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (macro => 1);
+		$macro::queue = undef;
+		%Commands::commands = (macro => sub { 1 });
+		$Commands::run_failure = sub {
+			my ($command) = @_;
+			$macro::queue = PluginTest::MacroQueue->new('root_entry_macro', 0)
+				if $command eq 'macro root_entry_macro -overrideAI -exclusive';
+			return 1;
+		};
+		$LastROActivity::clock = sub { 1_000 };
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'nested_macro_error', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', entry_macro => 'root_entry_macro',
+			search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'nested_macro_error', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'ENTERING', 'root entry macro is pending');
+
+		# Macro::Utilities reports a nested child name and clears the queue after
+		# dispatching this hook.  The activity must retain the failure reason.
+		LastROActivity::onMacroError(undef, {
+			name => 'nested_child_macro',
+			error => 'nested child failed',
+			message => '[macro] nested_child_macro error',
+		});
+		$macro::queue = undef;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			LastROActivity::onMainLoopPre(undef, {now => 1_001});
+		}
+		is(LastROActivity::state(), 'FAILED', 'nested macro failure fails the activity');
+		like(LastROActivity::last_failure(), qr/nested child failed/i,
+			'nested macro failure is retained instead of reporting success');
+		is_deeply(\@Commands::run_calls,
+			['privateairship event_map', 'macro root_entry_macro -overrideAI -exclusive',
+				'privateairship prontera'],
+			'nested macro failure starts the fixed return exactly once');
+		$Commands::run_failure = undef;
+		$macro::queue = undef;
+		done_testing();
+	};
+
+	subtest 'leaving the confirmed entry map cannot promote the activity to running' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = (
+			'event_map.rsw' => 1,
+			'other_map.rsw' => 1,
+			'prontera.rsw' => 1,
+		);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Commands::commands = ();
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'entry_map_departure', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['event_egg'],
+			validation_errors => [],
+		};
+		my $event = {event_id => 'entry_map_departure', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'ENTERING', 'target map was confirmed');
+
+		$Globals::field = PluginTest::Field->new('other_map');
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			LastROActivity::onMainLoopPre(undef, {now => 1_001});
+		}
+		is(LastROActivity::state(), 'FAILED', 'map departure fails before running');
+		is_deeply(\@Commands::run_calls,
+			['privateairship event_map', 'privateairship prontera'],
+			'map departure starts the fixed return exactly once');
+		done_testing();
+	};
+
+	subtest 'activity cleanup clears NPC and teleport tasks' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Plugins::registered_plugins = ();
+		%Commands::commands = ();
+		@AI::clear_calls = ();
+		ok(LastROActivity::clear_activity_ai(), 'activity cleanup succeeds');
+		is_deeply(
+			\@AI::clear_calls,
+			[
+				'AI::clear attack move route mapRoute items_take items_gather take',
+				'AI::clear NPC teleport',
+			],
+			'activity cleanup clears ordinary and activity-specific AI tasks',
+		);
+		done_testing();
+	};
+
 	# Keep unload last because it unregisters the command and hooks used by the
 	# remaining integration cases.
 	subtest 'plugin unload restores an active snapshot' => sub {
