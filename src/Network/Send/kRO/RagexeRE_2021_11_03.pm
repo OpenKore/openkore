@@ -25,6 +25,10 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
+		# 2021 RE CH_ENTER carries userLevel as a 32-bit value and clientType
+		# as a 16-bit value.  The second 32-bit field remains the auth/session
+		# code consumed by the XKore2 character server.
+		'0065' => ['game_login', 'a4 a4 V v C', [qw(accountID sessionID userLevel clientType accountSex)]],
 		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
 		'0AFA' => ['check_bin', 'V a4', [qw(AID pinCode)]], #10
 	);

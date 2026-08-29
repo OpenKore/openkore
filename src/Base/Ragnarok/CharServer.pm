@@ -72,6 +72,22 @@ sub charBlockSize {
 	return $_[0]->{charBlockSize};
 }
 
+# A parser can expose more than one packet ID for the same handler name.  The
+# packet LUT is populated lazily by reconstruct(), so it cannot be used to
+# select the character-list layout during the first character-server login.
+sub character_info_switch {
+	my ($self) = @_;
+	return '082D' if $self->character_list_switch eq '099D'
+		&& exists $self->{recvPacketParser}{packet_list}{'082D'};
+	return '006B';
+}
+
+sub character_list_switch {
+	my ($self) = @_;
+	return '099D' if $self->{rpackets} && exists $self->{rpackets}{'099D'};
+	return '0072';
+}
+
 sub game_login {
 	# Character server login.
 	my ($self, $args, $client) = @_;
@@ -98,11 +114,12 @@ sub game_login {
 		$client->send($args->{accountID});
 
 		my $output;
-		# 099D
+		my $character_info_switch = $self->character_info_switch;
+		my $character_list_switch = $self->character_list_switch;
 		my @char_list = $self->getCharacters($session);
-		if ($self->{recvPacketParser}{packet_lut}{received_characters} eq '099D') {
+		if ($character_list_switch eq '099D') {
 			$output = $self->{recvPacketParser}->reconstruct({
-				switch => 'received_characters_info',
+				switch => $character_info_switch,
 				normal_slot => $charSvrSet{normal_slot},
 				premium_slot => $charSvrSet{premium_slot},
 				billing_slot => $charSvrSet{billing_slot},
@@ -119,7 +136,7 @@ sub game_login {
 			}
 		} else { # 006B
 			$output = $self->{recvPacketParser}->reconstruct({
-				switch => 'received_characters_info',
+				switch => $character_info_switch,
 				total_slot => $charSvrSet{total_slot},
 				premium_start_slot => $charSvrSet{premium_start_slot},
 				premium_end_slot => $charSvrSet{premium_end_slot},
@@ -143,7 +160,7 @@ sub sendCharInfo {
 	my @char_list = $self->getCharacters($client->{session});
 
 	$client->send($self->{recvPacketParser}->reconstruct({
-			switch => 'received_characters',
+			switch => $self->character_list_switch,
 			chars => \@char_list
 		}));
 }

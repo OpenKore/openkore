@@ -30,6 +30,7 @@ my @tests = qw(
 	DynamicPortalGroupsTest
 	NetworkTest
 	XKore2AccountServerTest
+	XKore2CharServerTest
 	QuestReceiveTest
 	FieldTest
 	XConfTest
