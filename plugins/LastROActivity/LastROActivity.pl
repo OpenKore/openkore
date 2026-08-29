@@ -32,9 +32,11 @@ use Settings;
 our ($scheduler, $state, $enabled, $lead_seconds, $teleport_idle);
 our ($rules, $rules_file, $rules_requested, $rules_file_handle);
 our $initialized;
+our $init_failure_signature;
+our $rule_load_context;
 our ($active_event, $armed_event, $last_failure, $active_snapshot);
 our (@pending_due, @pending_manual);
-our ($hooks, $commands);
+our ($hooks, $commands, $rules_preload_hook);
 our $clock = sub { time };
 
 $rules = {};
@@ -42,6 +44,8 @@ $rules_file = undef;
 $rules_requested = undef;
 $rules_file_handle = undef;
 $initialized = 0;
+$init_failure_signature = undef;
+$rule_load_context = undef;
 $state = LastROActivity::State->new;
 $last_failure = undef;
 $active_event = undef;
@@ -74,6 +78,11 @@ $hooks = Plugins::addHooks(
 	['AI_state_change',        \&onAIStateChange, undef],
 	['start3',                 \&onStart3, undef],
 );
+$rules_preload_hook = Plugins::addHook(
+	'pre_load_lastro_activity_rules',
+	\&onRulesPreLoad,
+	undef,
+) if defined &Plugins::addHook;
 
 $commands = Commands::register(
 	['lastroactivity', [
@@ -103,12 +112,52 @@ sub _config_nonnegative {
 }
 
 sub onStart3 {
-	return _initialize_from_config();
+	return _initialize_from_config(1);
+}
+
+sub _config_ready {
+	# An empty config hash is the observable state while OpenKore is still
+	# loading its control files.  Runtime hooks must wait for start3 or a
+	# populated config rather than freezing defaults too early.
+	return scalar(keys %Globals::config) > 0;
+}
+
+sub _config_signature {
+	my @keys = qw(
+		lastroActivity_enabled
+		lastroActivity_rulesFile
+		lastroActivity_leadSeconds
+		lastroActivity_teleportIdle
+	);
+	return join "\x1E", map {
+		my $encoded;
+		if (!exists $Globals::config{$_}) {
+			$encoded = "M$_";
+		} elsif (!defined $Globals::config{$_}) {
+			$encoded = "U$_";
+		} else {
+			my $value = "$Globals::config{$_}";
+			$encoded = "D$_:" . length($value) . ":$value";
+		}
+		$encoded;
+	} @keys;
+}
+
+sub _ensure_initialized {
+	my ($force) = @_;
+	return 1 if $initialized;
+	return 0 if !$force && !_config_ready();
+	my $signature = _config_signature();
+	return 0 if !$force
+		&& defined $init_failure_signature
+		&& $init_failure_signature eq $signature;
+	return _initialize_from_config($force);
 }
 
 sub _initialize_from_config {
+	my ($force) = @_;
 	return 1 if $initialized;
-	$initialized = 1;
+	return 0 if !$force && !_config_ready();
 
 	$enabled = _config_bool('lastroActivity_enabled', 1);
 	$lead_seconds = _config_nonnegative('lastroActivity_leadSeconds', 10);
@@ -117,7 +166,19 @@ sub _initialize_from_config {
 		lead_seconds => $lead_seconds,
 		clock => sub { _now() },
 	);
-	_register_rule_file();
+	my $loaded = _register_rule_file();
+	if (!$loaded) {
+		# A failed first load must remain retryable.  Remove a handle that was
+		# registered for the failed attempt so the next attempt cannot leak a
+		# duplicate Settings entry.
+		_remove_rule_handle($rules_file_handle);
+		$rules_file_handle = undef;
+		$initialized = 0;
+		$init_failure_signature = _config_signature();
+		return 0;
+	}
+	$initialized = 1;
+	$init_failure_signature = undef;
 	return 1;
 }
 
@@ -147,79 +208,299 @@ sub _bundled_rules_file {
 	return -f $path ? $path : undef;
 }
 
-sub _load_registered_rule_file {
-	my ($name, $handle) = @_;
-	$rules_file = undef;
+sub _resolved_rules_path {
+	my ($name) = @_;
+	return undef unless defined $name && $name ne '';
+	if ($name =~ m{[\\/]}) {
+		return -f $name ? $name : undef;
+	}
+	if (defined &Settings::getControlFilename) {
+		my $resolved = eval { Settings::getControlFilename($name) };
+		return $resolved if defined $resolved && -f $resolved;
+		return undef;
+	}
+	return -f $name ? $name : undef;
+}
 
-	my $loaded = eval { Settings::loadByHandle($handle); 1 };
-	warning "[LastROActivity] Unable to load rules file '$name': $@\n" if !$loaded && $@;
-	return 1 if defined $rules_file;
+sub onRulesPreLoad {
+	my ($hook_name, $args) = @_;
+	return 1 unless ref($args) eq 'HASH';
+	my $name = $rules_requested;
+	return 1 unless defined $name && $name ne '';
 
+	# Settings skips optional files without invoking their loader.  Resolve the
+	# same path here so a generic `reload all` cannot leave stale rules/timers.
+	return 1 if defined _resolved_rules_path($name);
 	my $fallback = _bundled_rules_file($name);
 	if (defined $fallback) {
-		_load_rules_file($fallback);
+		$args->{filename} = $fallback;
+		$args->{return} = 1;
 		return 1;
 	}
 
+	_fail_closed_rules("unable to load rules file '$name'");
+	$args->{return} = 1;
+	return 1;
+}
+
+sub _clear_scheduled_events {
+	if (ref($scheduler) && $scheduler->can('clear')) {
+		eval { $scheduler->clear(); 1 } or warning "[LastROActivity] Unable to clear scheduled activities: $@\n";
+	}
+	@pending_due = ();
+	@pending_manual = ();
+	$armed_event = undef;
+	$state = LastROActivity::State->new unless defined $active_event;
+}
+
+sub _fail_closed_rules {
+	my ($reason) = @_;
 	$rules = {};
+	$rules_file = undef;
+	_clear_scheduled_events();
+	$last_failure = _trim($reason) if defined $reason && _trim($reason) ne '';
 	return 0;
+}
+
+sub _remove_rule_handle {
+	my ($handle) = @_;
+	return 1 unless defined $handle && defined &Settings::removeFile;
+	my $ok = eval {
+		Settings::removeFile($handle);
+		1;
+	};
+	if (!$ok) {
+		warning "[LastROActivity] Unable to remove rules file handle: $@\n";
+		return 0;
+	}
+	return 1;
+}
+
+sub _load_candidate_file {
+	my ($filename) = @_;
+	return (0, undef, undef) unless defined $filename && $filename ne '' && -f $filename;
+
+	my $context = {};
+	my $ok = eval {
+		local $rule_load_context = $context;
+		_load_rules_file($filename);
+		1;
+	};
+	if (!$ok) {
+		my $exception = $@ || 'unknown loader exception';
+		warning "[LastROActivity] Unable to load rules file '$filename': $exception\n";
+		return (0, undef, undef);
+	}
+	return (0, undef, undef) unless $context->{loaded};
+	return (1, $context->{rules}, $context->{file});
+}
+
+sub _load_registered_rule_file {
+	my ($name, $handle) = @_;
+	my $context = {};
+	my $loaded = eval {
+		local $rule_load_context = $context;
+		Settings::loadByHandle($handle);
+		1;
+	};
+	if (!$loaded) {
+		my $exception = $@ || 'unknown loader exception';
+		warning "[LastROActivity] Unable to reload rules file '$name': $exception\n";
+		return (0, undef, undef);
+	}
+	return (1, $context->{rules}, $context->{file}) if $context->{loaded};
+	return (0, undef, undef) if $context->{failed};
+
+	my $fallback = _bundled_rules_file($name);
+	return _load_candidate_file($fallback) if defined $fallback;
+	return (0, undef, undef);
 }
 
 sub _register_rule_file {
 	my $name = _rules_name();
+	my $old_handle = $rules_file_handle;
+	my $old_name = $rules_requested;
+	if (defined $old_handle && (!defined $old_name || $old_name ne $name)) {
+		_remove_rule_handle($old_handle);
+		$rules_file_handle = undef;
+		$old_handle = undef;
+	}
 	$rules_requested = $name;
-	$rules = {};
-	$rules_file = undef;
 
 	my %options = (
 		loader => [\&_load_rules_file],
 		mustExist => 0,
+		internalName => 'lastro_activity_rules',
 	);
 	$options{autoSearch} = 0
 		if File::Spec->file_name_is_absolute($name) || $name =~ m{[\\/]};
 
-	my $handle = eval { Settings::addControlFile($name, %options) };
-	if (defined $handle && !$@) {
+	my ($handle, $add_error);
+	if (defined &Settings::addControlFile) {
+		my $added = eval {
+			$handle = Settings::addControlFile($name, %options);
+			1;
+		};
+		$add_error = $@ unless $added;
+	}
+	if (defined $add_error && $add_error ne '') {
+		warning "[LastROActivity] Unable to register rules file '$name': $add_error\n";
+		$rules_file_handle = undef;
+		return _fail_closed_rules($add_error);
+	}
+	if (defined $handle) {
 		$rules_file_handle = $handle;
-		return _load_registered_rule_file($name, $handle);
+		my ($ok, $candidate, $resolved) = _load_registered_rule_file($name, $handle);
+		return _commit_rules($candidate, $resolved) if $ok;
+		return _fail_closed_rules("unable to load rules file '$name'");
 	}
 
 	# A stripped-down unit harness may not provide Settings.  Loading a real
 	# configured path directly keeps the plugin safe in that environment.
-	_load_rules_file($name) if -f $name;
-	my $fallback = _bundled_rules_file($name);
-	_load_rules_file($fallback) if !defined $rules_file && defined $fallback;
-	return defined $rules_file ? 1 : 0;
+	my ($ok, $candidate, $resolved) = _load_candidate_file($name);
+	if (!$ok && !-f $name) {
+		my $fallback = _bundled_rules_file($name);
+		($ok, $candidate, $resolved) = _load_candidate_file($fallback) if defined $fallback;
+	}
+	return _commit_rules($candidate, $resolved) if $ok;
+	return _fail_closed_rules("unable to load rules file '$name'");
 }
 
 sub _load_rules_file {
 	my ($filename) = @_;
 	return unless defined $filename && $filename ne '';
 
-	my ($loaded, $errors) = LastROActivity::Rules::load_file($filename);
-	$rules = ref($loaded) eq 'HASH' ? $loaded : {};
-	$rules_file = $filename;
+	my ($loaded, $errors);
+	my $ok = eval {
+		($loaded, $errors) = LastROActivity::Rules::load_file($filename);
+		1;
+	};
+	if (!$ok) {
+		my $exception = $@ || 'unknown parser exception';
+		warning "[LastROActivity] Rules loader failed for '$filename': $exception\n";
+		if (ref($rule_load_context) eq 'HASH') {
+			$rule_load_context->{failed} = $exception;
+		} else {
+			_fail_closed_rules($exception);
+		}
+		return;
+	}
+	my $candidate = ref($loaded) eq 'HASH' ? $loaded : {};
 	$errors = [] unless ref($errors) eq 'ARRAY';
 	for my $error (@$errors) {
 		warning "[LastROActivity] $error\n";
 	}
-	return $rules;
+	if (ref($rule_load_context) eq 'HASH') {
+		$rule_load_context->{loaded} = 1;
+		$rule_load_context->{rules} = $candidate;
+		$rule_load_context->{file} = $filename;
+		$rule_load_context->{errors} = $errors;
+	} else {
+		$rules = $candidate;
+		$rules_file = $filename;
+		_reconcile_scheduled_events($candidate) if $initialized;
+	}
+	return $candidate;
+}
+
+sub _commit_rules {
+	my ($candidate, $resolved) = @_;
+	return 0 unless ref($candidate) eq 'HASH' && defined $resolved;
+	$rules = $candidate;
+	$rules_file = $resolved;
+	my $reconciled = eval {
+		_reconcile_scheduled_events($candidate);
+		1;
+	};
+	if (!$reconciled) {
+		my $exception = $@ || 'unknown scheduler reconciliation failure';
+		warning "[LastROActivity] Unable to reconcile scheduled activities: $exception\n";
+		return _fail_closed_rules($exception);
+	}
+	$last_failure = undef;
+	return 1;
+}
+
+sub _reconcile_scheduled_events {
+	my ($candidate) = @_;
+	my %survivors;
+
+	if (ref($scheduler) && $scheduler->can('events')) {
+		my $events = eval { $scheduler->events() };
+		if (ref($events) eq 'HASH') {
+			for my $event_id (keys %$events) {
+				my $event = $events->{$event_id};
+				my $rule = $candidate->{$event_id};
+				if (!_validated_enabled_rule($rule)) {
+					eval { $scheduler->cancel($event_id) };
+					next;
+				}
+				$event->{rule} = $rule if ref($event) eq 'HASH';
+				$survivors{$event_id} = $event;
+			}
+		}
+	}
+
+	my $filter_queue = sub {
+		my ($queue) = @_;
+		my @kept;
+		for my $event (@$queue) {
+			next unless ref($event) eq 'HASH';
+			my $rule = $candidate->{$event->{event_id}};
+			next unless _validated_enabled_rule($rule);
+			$event->{rule} = $rule;
+			push @kept, $event;
+		}
+		@$queue = @kept;
+	};
+	$filter_queue->(\@pending_due);
+	$filter_queue->(\@pending_manual);
+
+	# Keep status aligned with the earliest/highest-priority not-yet-dispatched
+	# candidate.  Active lifecycle state is owned by later tasks and is left
+	# untouched while its event is running.
+	my $winner;
+	for my $event (values %survivors, @pending_due, @pending_manual) {
+		next unless ref($event) eq 'HASH';
+		next if $event->{dispatched};
+		$winner = $event if !defined $winner || _event_precedes($event, $winner);
+	}
+	if (defined $active_event) {
+		if (defined $armed_event && defined $active_event->{event_id}
+			&& defined $armed_event->{event_id}
+			&& $armed_event->{event_id} eq $active_event->{event_id}) {
+			return 1;
+		}
+		$armed_event = $winner if defined $winner;
+		return 1;
+	}
+
+	$armed_event = $winner;
+	if (defined $armed_event) {
+		if ($state->state eq 'IDLE') {
+			eval { $state->transition('arm') };
+		}
+	} elsif ($state->state eq 'ARMED') {
+		$state = LastROActivity::State->new;
+	}
+	return 1;
 }
 
 sub reload_rules {
-	return _initialize_from_config() unless $initialized;
+	$init_failure_signature = undef unless $initialized;
+	return 0 unless _ensure_initialized();
 
 	my $name = _rules_name();
 	if (!defined $rules_file_handle || !defined $rules_requested || $name ne $rules_requested) {
-		if (defined $rules_file_handle) {
-			eval { Settings::removeFile($rules_file_handle) };
-		}
+		_remove_rule_handle($rules_file_handle);
 		$rules_file_handle = undef;
 		return _register_rule_file();
 	}
 
 	my $snapshot = $active_snapshot;
-	return 0 unless _load_registered_rule_file($name, $rules_file_handle);
+	my ($ok, $candidate, $resolved) = _load_registered_rule_file($name, $rules_file_handle);
+	return _fail_closed_rules("unable to reload rules file '$name'") unless $ok;
+	return 0 unless _commit_rules($candidate, $resolved);
 	# Rule reload must never rewrite a snapshot owned by an active event.
 	$active_snapshot = $snapshot;
 	return 1;
@@ -284,17 +565,26 @@ sub _observe_message {
 sub _event_precedes {
 	my ($candidate, $current) = @_;
 	return 1 unless ref($current) eq 'HASH';
+	return 0 unless ref($candidate) eq 'HASH';
 	return 1 if defined $candidate->{event_id}
 		&& defined $current->{event_id}
 		&& $candidate->{event_id} eq $current->{event_id};
 
-	return 1 if $candidate->{start_at} < $current->{start_at};
-	return 0 if $candidate->{start_at} > $current->{start_at};
-	return 1 if $candidate->{priority} > $current->{priority};
-	return 0 if $candidate->{priority} < $current->{priority};
-	return 1 if $candidate->{event_id} lt $current->{event_id};
-	return 0 if $candidate->{event_id} gt $current->{event_id};
-	return $candidate->{revision} < $current->{revision};
+	my $candidate_start = defined $candidate->{start_at} ? $candidate->{start_at} : 0;
+	my $current_start = defined $current->{start_at} ? $current->{start_at} : 0;
+	return 1 if $candidate_start < $current_start;
+	return 0 if $candidate_start > $current_start;
+	my $candidate_priority = defined $candidate->{priority} ? $candidate->{priority} : 0;
+	my $current_priority = defined $current->{priority} ? $current->{priority} : 0;
+	return 1 if $candidate_priority > $current_priority;
+	return 0 if $candidate_priority < $current_priority;
+	my $candidate_id = defined $candidate->{event_id} ? $candidate->{event_id} : '';
+	my $current_id = defined $current->{event_id} ? $current->{event_id} : '';
+	return 1 if $candidate_id lt $current_id;
+	return 0 if $candidate_id gt $current_id;
+	my $candidate_revision = defined $candidate->{revision} ? $candidate->{revision} : 0;
+	my $current_revision = defined $current->{revision} ? $current->{revision} : 0;
+	return $candidate_revision < $current_revision;
 }
 
 sub _arm_event {
@@ -317,11 +607,13 @@ sub _arm_event {
 
 sub onSystemMessage {
 	my $args = _hook_args(@_);
+	return undef unless _ensure_initialized();
 	return _observe_message(_message_from_args($args));
 }
 
 sub onPublicMessage {
 	my $args = _hook_args(@_);
+	return undef unless _ensure_initialized();
 	return _observe_message(_message_from_args($args));
 }
 
@@ -345,6 +637,7 @@ sub _start_due_event {
 
 sub onMainLoopPre {
 	my $args = _hook_args(@_);
+	return unless _ensure_initialized();
 	return unless $enabled;
 
 	my $now = _now($args);
@@ -420,6 +713,7 @@ sub commandHandler {
 	my $subcommand = lc(shift(@parts) || 'status');
 
 	if ($subcommand eq 'status' && !@parts) {
+		_ensure_initialized();
 		my $armed = $armed_event && $armed_event->{event_id};
 		my $trigger = $armed_event && $armed_event->{trigger_at};
 		$armed = 'none' unless defined $armed && $armed ne '';
@@ -439,6 +733,7 @@ sub commandHandler {
 	}
 
 	if ($subcommand eq 'run' && @parts == 1) {
+		return 0 unless _ensure_initialized();
 		return _manual_run($parts[0]);
 	}
 
@@ -489,11 +784,14 @@ sub onReload {
 
 sub onUnload {
 	if (defined $rules_file_handle) {
-		eval { Settings::removeFile($rules_file_handle) };
+		_remove_rule_handle($rules_file_handle);
 		$rules_file_handle = undef;
 	}
 	eval { Commands::unregister($commands) } if defined $commands;
 	eval { Plugins::delHooks($hooks) } if defined $hooks;
+	eval { Plugins::delHook($rules_preload_hook) }
+		if defined $rules_preload_hook && defined &Plugins::delHook;
+	$rules_preload_hook = undef;
 	$active_event = undef;
 	$armed_event = undef;
 	$active_snapshot = undef;

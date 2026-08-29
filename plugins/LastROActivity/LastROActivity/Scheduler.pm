@@ -136,6 +136,17 @@ sub cancel {
 	return 1;
 }
 
+sub clear {
+	my ($self) = @_;
+	$self->{timers} = {};
+	return 1;
+}
+
+sub events {
+	my ($self) = @_;
+	return { %{$self->{timers}} };
+}
+
 sub _enabled {
 	my ($enabled) = @_;
 	return defined $enabled && $enabled =~ /^\s*1\s*\z/;
