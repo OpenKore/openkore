@@ -27,6 +27,8 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	entry_y
 	entry_item_id
 	entry_npc
+	entry_npc_trusted
+	entry_npc_evidence
 	duration_seconds
 	entry_macro
 	finish_macro
@@ -222,6 +224,8 @@ sub _new_rule {
 		entry_y => undef,
 		entry_item_id => undef,
 		entry_npc => undef,
+		entry_npc_trusted => undef,
+		entry_npc_evidence => undef,
 		duration_seconds => undef,
 		entry_macro => undef,
 		finish_macro => undef,

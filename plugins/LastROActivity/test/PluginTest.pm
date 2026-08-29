@@ -2269,6 +2269,49 @@ RULES
 		done_testing();
 	};
 
+	subtest 'parsed trusted NPC evidence reaches the lifecycle validator' => sub {
+		$task7_setup_running->('task7_parsed_npc_seed');
+		LastROActivity::cleanup_and_restore('parsed NPC validation seed cleanup');
+		my ($fh, $path) = tempfile('lastro-activity-parsed-npc-XXXXXX', UNLINK => 1);
+		binmode $fh, ':encoding(UTF-8)';
+		print {$fh} <<'RULES';
+[parsed_trusted_npc]
+enabled=1
+announce_regex=START
+entry_type=npc
+entry_map=event_map
+entry_x=10
+entry_y=20
+entry_npc=Guide#c
+duration_seconds=120
+entry_npc_trusted=1
+entry_npc_evidence=server dialog transcript
+RULES
+		close $fh;
+		my ($parsed, $parse_errors) = LastROActivity::Rules::load_file($path);
+		is_deeply($parse_errors, [], 'trusted NPC evidence is accepted by the rules parser');
+		my $rule = $parsed->{parsed_trusted_npc};
+		ok($rule->{enabled}, 'parsed trusted NPC rule remains enabled');
+		is($rule->{entry_npc_trusted}, 1, 'trusted metadata reaches the plugin rule');
+		is($rule->{entry_npc_evidence}, 'server dialog transcript', 'dialog evidence reaches the plugin rule');
+		@Commands::run_calls = ();
+		my $event = {
+			event_id => $rule->{event_id},
+			rule => $rule,
+			map => 'event_map',
+		};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1,
+				'parsed trusted NPC rule starts through the lifecycle path');
+		}
+		is($Commands::run_calls[0], 'talknpc 10 20 c',
+			'parsed trusted NPC rule executes its TalkNPC sequence');
+		LastROActivity::cleanup_and_restore('parsed NPC test cleanup');
+		done_testing();
+	};
+
 	subtest 'entry airship failures retry at most three times before one return' => sub {
 		my ($rule, $event) = $task7_setup_running->('task7_retry_cap');
 		$LastROActivity::state = LastROActivity::State->new;
