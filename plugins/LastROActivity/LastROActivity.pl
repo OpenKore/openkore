@@ -5,6 +5,7 @@ use warnings;
 use utf8;
 
 use Time::HiRes qw(time);
+use File::Basename qw(dirname);
 use File::Spec;
 
 # Plugins are evaluated with do(), so add the sibling module directory without
@@ -30,22 +31,28 @@ use Settings;
 
 our ($scheduler, $state, $enabled, $lead_seconds, $teleport_idle);
 our ($rules, $rules_file, $rules_requested, $rules_file_handle);
+our $initialized;
 our ($active_event, $armed_event, $last_failure, $active_snapshot);
 our (@pending_due, @pending_manual);
 our ($hooks, $commands);
 our $clock = sub { time };
 
 $rules = {};
+$rules_file = undef;
+$rules_requested = undef;
+$rules_file_handle = undef;
+$initialized = 0;
 $state = LastROActivity::State->new;
 $last_failure = undef;
 $active_event = undef;
 $armed_event = undef;
+$active_snapshot = undef;
 @pending_due = ();
 @pending_manual = ();
 
-$enabled = _config_bool('lastroActivity_enabled', 1);
-$lead_seconds = _config_nonnegative('lastroActivity_leadSeconds', 10);
-$teleport_idle = _config_nonnegative('lastroActivity_teleportIdle', 1);
+$enabled = 1;
+$lead_seconds = 10;
+$teleport_idle = 1;
 $scheduler = LastROActivity::Scheduler->new(
 	lead_seconds => $lead_seconds,
 	clock => sub { _now() },
@@ -65,10 +72,12 @@ $hooks = Plugins::addHooks(
 	['packet_mapChange',       \&onMapChange, undef],
 	['lastro_airship_result',  \&onAirshipResult, undef],
 	['AI_state_change',        \&onAIStateChange, undef],
+	['start3',                 \&onStart3, undef],
 );
 
 $commands = Commands::register(
 	['lastroactivity', [
+		'LastROActivity activity scheduling',
 		['status', 'show LastRO activity state'],
 		['on', 'enable LastRO activity scheduling'],
 		['off', 'disable LastRO activity scheduling'],
@@ -77,8 +86,6 @@ $commands = Commands::register(
 		['reload', 'reload LastRO activity rules'],
 	], \&commandHandler],
 );
-
-_register_rule_file();
 
 sub _config_bool {
 	my ($key, $default) = @_;
@@ -95,6 +102,25 @@ sub _config_nonnegative {
 	return 0 + $value;
 }
 
+sub onStart3 {
+	return _initialize_from_config();
+}
+
+sub _initialize_from_config {
+	return 1 if $initialized;
+	$initialized = 1;
+
+	$enabled = _config_bool('lastroActivity_enabled', 1);
+	$lead_seconds = _config_nonnegative('lastroActivity_leadSeconds', 10);
+	$teleport_idle = _config_nonnegative('lastroActivity_teleportIdle', 1);
+	$scheduler = LastROActivity::Scheduler->new(
+		lead_seconds => $lead_seconds,
+		clock => sub { _now() },
+	);
+	_register_rule_file();
+	return 1;
+}
+
 sub _trim {
 	my ($value) = @_;
 	$value = '' unless defined $value;
@@ -108,9 +134,42 @@ sub _rules_name {
 	return $configured ne '' ? $configured : 'lastro_activity.txt';
 }
 
+sub _plugin_folder {
+	my $folder = eval { $Plugins::current_plugin_folder };
+	return defined $folder && $folder ne '' ? $folder : dirname(__FILE__);
+}
+
+sub _bundled_rules_file {
+	my ($name) = @_;
+	return undef unless defined $name && $name eq 'lastro_activity.txt';
+
+	my $path = File::Spec->catfile(_plugin_folder(), 'control', $name);
+	return -f $path ? $path : undef;
+}
+
+sub _load_registered_rule_file {
+	my ($name, $handle) = @_;
+	$rules_file = undef;
+
+	my $loaded = eval { Settings::loadByHandle($handle); 1 };
+	warning "[LastROActivity] Unable to load rules file '$name': $@\n" if !$loaded && $@;
+	return 1 if defined $rules_file;
+
+	my $fallback = _bundled_rules_file($name);
+	if (defined $fallback) {
+		_load_rules_file($fallback);
+		return 1;
+	}
+
+	$rules = {};
+	return 0;
+}
+
 sub _register_rule_file {
 	my $name = _rules_name();
 	$rules_requested = $name;
+	$rules = {};
+	$rules_file = undef;
 
 	my %options = (
 		loader => [\&_load_rules_file],
@@ -122,15 +181,15 @@ sub _register_rule_file {
 	my $handle = eval { Settings::addControlFile($name, %options) };
 	if (defined $handle && !$@) {
 		$rules_file_handle = $handle;
-		eval { Settings::loadByHandle($handle); 1 };
-		warning "[LastROActivity] Unable to load rules file '$name': $@\n" if $@;
-		return $handle;
+		return _load_registered_rule_file($name, $handle);
 	}
 
 	# A stripped-down unit harness may not provide Settings.  Loading a real
 	# configured path directly keeps the plugin safe in that environment.
 	_load_rules_file($name) if -f $name;
-	return undef;
+	my $fallback = _bundled_rules_file($name);
+	_load_rules_file($fallback) if !defined $rules_file && defined $fallback;
+	return defined $rules_file ? 1 : 0;
 }
 
 sub _load_rules_file {
@@ -148,22 +207,19 @@ sub _load_rules_file {
 }
 
 sub reload_rules {
+	return _initialize_from_config() unless $initialized;
+
 	my $name = _rules_name();
 	if (!defined $rules_file_handle || !defined $rules_requested || $name ne $rules_requested) {
 		if (defined $rules_file_handle) {
 			eval { Settings::removeFile($rules_file_handle) };
 		}
 		$rules_file_handle = undef;
-		_register_rule_file();
-		return 1;
+		return _register_rule_file();
 	}
 
 	my $snapshot = $active_snapshot;
-	my $loaded = eval { Settings::loadByHandle($rules_file_handle); 1 };
-	if (!$loaded) {
-		warning "[LastROActivity] Unable to reload rules: $@\n" if $@;
-		return 0;
-	}
+	return 0 unless _load_registered_rule_file($name, $rules_file_handle);
 	# Rule reload must never rewrite a snapshot owned by an active event.
 	$active_snapshot = $snapshot;
 	return 1;
@@ -225,6 +281,22 @@ sub _observe_message {
 	return $first_event;
 }
 
+sub _event_precedes {
+	my ($candidate, $current) = @_;
+	return 1 unless ref($current) eq 'HASH';
+	return 1 if defined $candidate->{event_id}
+		&& defined $current->{event_id}
+		&& $candidate->{event_id} eq $current->{event_id};
+
+	return 1 if $candidate->{start_at} < $current->{start_at};
+	return 0 if $candidate->{start_at} > $current->{start_at};
+	return 1 if $candidate->{priority} > $current->{priority};
+	return 0 if $candidate->{priority} < $current->{priority};
+	return 1 if $candidate->{event_id} lt $current->{event_id};
+	return 0 if $candidate->{event_id} gt $current->{event_id};
+	return $candidate->{revision} < $current->{revision};
+}
+
 sub _arm_event {
 	my ($event) = @_;
 	return 0 unless ref($event) eq 'HASH';
@@ -232,13 +304,14 @@ sub _arm_event {
 
 	if ($state->state eq 'RESUMED' || $state->state eq 'FAILED') {
 		$state = LastROActivity::State->new;
+		$armed_event = undef;
 	}
 	if ($state->state eq 'IDLE') {
 		$state->transition('arm');
 	}
 	return 0 unless $state->state eq 'ARMED';
 
-	$armed_event = $event;
+	$armed_event = $event if !defined $armed_event || _event_precedes($event, $armed_event);
 	return 1;
 }
 
@@ -423,6 +496,7 @@ sub onUnload {
 	eval { Plugins::delHooks($hooks) } if defined $hooks;
 	$active_event = undef;
 	$armed_event = undef;
+	$active_snapshot = undef;
 	return 1;
 }
 

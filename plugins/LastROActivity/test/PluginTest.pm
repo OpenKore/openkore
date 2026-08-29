@@ -6,7 +6,7 @@ use utf8;
 
 use FindBin qw($RealBin);
 use File::Spec;
-use File::Temp qw(tempfile);
+use File::Temp qw(tempfile tempdir);
 use Test::More;
 
 # Keep this test independent of OpenKore's native extensions.  The plugin only
@@ -30,10 +30,12 @@ BEGIN {
 	our $current_plugin_folder;
 	our @registrations;
 	our @hooks;
+	our %hook_callbacks;
 	sub import { return 1; }
 	sub register { push @registrations, [@_]; return 1; }
 	sub addHooks {
 		push @hooks, map { $_->[0] } @_;
+		$hook_callbacks{$_->[0]} = $_->[1] for @_;
 		return bless { hooks => [@_] }, 'Plugins::TestHookHandle';
 	}
 	sub delHooks { return 1; }
@@ -41,11 +43,13 @@ BEGIN {
 	$INC{'Commands.pm'} = __FILE__;
 	package Commands;
 	our %commands;
+	our %descriptors;
 	our @run_calls;
 	sub import { return 1; }
 	sub register {
 		for my $command (@_) {
 			$commands{$command->[0]} = $command->[2];
+			$descriptors{$command->[0]} = $command->[1];
 		}
 		return [map { $_->[0] } @_];
 	}
@@ -56,11 +60,13 @@ BEGIN {
 	package Settings;
 	our @add_calls;
 	our %handles;
+	our @control_folders = ('control');
 	our $load_path;
 	my $next_handle = 1;
 	sub import { return 1; }
 	sub addControlFile {
 		my ($name, %options) = @_;
+		$options{autoSearch} = 1 unless exists $options{autoSearch};
 		my $handle = $next_handle++;
 		$handles{$handle} = {name => $name, %options};
 		push @add_calls, [$name, \%options];
@@ -71,18 +77,37 @@ BEGIN {
 		my $entry = $handles{$handle};
 		my $loader = $entry && $entry->{loader};
 		return unless $loader;
+		my $path = $load_path;
+		if (!defined $path && $entry->{autoSearch}) {
+			for my $folder (@control_folders) {
+				my $candidate = File::Spec->catfile($folder, $entry->{name});
+				if (-f $candidate) {
+					$path = $candidate;
+					last;
+				}
+			}
+		}
+		$path = $entry->{name} unless defined $path;
+		return unless -f $path;
 		if (ref($loader) eq 'ARRAY') {
 			my @loader = @$loader;
 			my $callback = shift @loader;
-			$callback->($load_path || $entry->{name}, @loader);
+			$callback->($path, @loader);
 		} else {
-			$loader->($load_path || $entry->{name});
+			$loader->($path);
 		}
 		return 1;
 	}
 	sub removeFile { return 1; }
-	sub getControlFilename { return undef; }
-	sub getControlFolders { return ('control'); }
+	sub getControlFilename {
+		my ($name) = @_;
+		for my $folder (@control_folders) {
+			my $candidate = File::Spec->catfile($folder, $name);
+			return $candidate if -f $candidate;
+		}
+		return undef;
+	}
+	sub getControlFolders { return @control_folders; }
 
 	$INC{'AI.pm'} = __FILE__;
 	package AI;
@@ -122,7 +147,45 @@ RULES
 	return $path;
 }
 
+sub _write_active_fixture {
+	my $folder = tempdir('lastro-activity-control-XXXXXX', CLEANUP => 1);
+	my $path = File::Spec->catfile($folder, 'lastro_activity.txt');
+	open my $fh, '>:encoding(UTF-8)', $path or die "Unable to write $path: $!";
+	print {$fh} <<'RULES';
+[active_event]
+enabled=1
+announce_regex=活动
+lead_seconds=12
+RULES
+	close $fh;
+	return ($folder, $path);
+}
+
+sub _write_overlap_fixture {
+	my ($fh, $path) = tempfile('lastro-activity-overlap-XXXXXX', UNLINK => 1);
+	binmode $fh, ':encoding(UTF-8)';
+	print {$fh} <<'RULES';
+[aaa_high]
+enabled=1
+announce_regex=活动
+lead_seconds=10
+priority=5
+
+[zzz_low]
+enabled=1
+announce_regex=活动
+lead_seconds=10
+priority=1
+RULES
+	close $fh;
+	return $path;
+}
+
 sub _load_plugin {
+	local $SIG{__WARN__} = sub {
+		my $warning = shift;
+		CORE::warn($warning) unless $warning =~ /^Subroutine .* redefined /;
+	};
 	my $plugin = File::Spec->catfile($RealBin, '..', 'LastROActivity.pl');
 	my $result = do $plugin;
 	die "Unable to load LastROActivity.pl: $@ $!" if !defined $result;
@@ -130,30 +193,95 @@ sub _load_plugin {
 
 sub start {
 	my $fixture = _write_fixture();
-	$Settings::load_path = $fixture;
 	%Globals::config = ();
 	@Plugins::registrations = ();
 	@Plugins::hooks = ();
 	%Commands::commands = ();
 	@Commands::run_calls = ();
+	%Commands::descriptors = ();
+	@Settings::add_calls = ();
+	@Settings::control_folders = ('control');
+	$Settings::load_path = undef;
+	%Plugins::hook_callbacks = ();
 	@Log::messages = ();
 	@Log::warnings = ();
 	@Log::errors = ();
 
 	_load_plugin();
+	my $start3 = $Plugins::hook_callbacks{start3};
+	ok(ref($start3) eq 'CODE', 'defers config initialization to start3');
+	$start3->(undef, {});
 
 	subtest 'registers the plugin hooks and command' => sub {
 		is($Plugins::registrations[0][0], 'LastROActivity', 'registers LastROActivity');
 		is_deeply(
 			[sort @Plugins::hooks],
-			[sort qw(packet_sysMsg packet_pubMsg mainLoop_pre packet_mapChange lastro_airship_result AI_state_change)],
+			[sort qw(packet_sysMsg packet_pubMsg mainLoop_pre packet_mapChange lastro_airship_result AI_state_change start3)],
 			'registers all activity hooks',
 		);
 		ok(exists $Commands::commands{lastroactivity}, 'registers lastroactivity command');
+		is($Commands::descriptors{lastroactivity}[0], 'LastROActivity activity scheduling', 'command help has a top-level description');
+		is($Commands::descriptors{lastroactivity}[1][0], 'status', 'command help retains the status subcommand');
 		is(LastROActivity::enabled(), 1, 'missing enabled config defaults to on');
 		is(LastROActivity::lead_seconds(), 10, 'missing lead config defaults to ten seconds');
 		is(LastROActivity::teleport_idle(), 1, 'missing teleport idle config defaults to one');
 		is($Settings::add_calls[0][0], 'lastro_activity.txt', 'missing rules path uses active control filename');
+		is(
+			File::Spec->rel2abs(LastROActivity::rules_file()),
+			File::Spec->rel2abs(File::Spec->catfile($RealBin, '..', 'control', 'lastro_activity.txt')),
+			'missing active rules file falls back to the bundled plugin fixture',
+		);
+		ok(exists LastROActivity::rules()->{lottery}, 'bundled fixture is loaded when no active override exists');
+		done_testing();
+	};
+
+	subtest 'active control rules override the bundled fixture' => sub {
+		my ($active_folder, $active_path) = _write_active_fixture();
+		LastROActivity::onUnload();
+		%Globals::config = ();
+		$Settings::load_path = undef;
+		@Settings::control_folders = ($active_folder);
+		@Plugins::registrations = ();
+		@Plugins::hooks = ();
+		%Plugins::hook_callbacks = ();
+		%Commands::commands = ();
+		%Commands::descriptors = ();
+		@Settings::add_calls = ();
+		_load_plugin();
+		$Plugins::hook_callbacks{start3}->(undef, {});
+		is(File::Spec->rel2abs(LastROActivity::rules_file()), File::Spec->rel2abs($active_path), 'active control rules take precedence over bundled rules');
+		ok(exists LastROActivity::rules()->{active_event}, 'active control rule is loaded');
+		done_testing();
+	};
+
+	subtest 'uses values loaded before the deferred startup hook' => sub {
+		LastROActivity::onUnload();
+		%Globals::config = (
+			lastroActivity_enabled => 1,
+			lastroActivity_rulesFile => $fixture,
+			lastroActivity_leadSeconds => 25,
+			lastroActivity_teleportIdle => 3,
+		);
+		$Settings::load_path = $fixture;
+		@Plugins::registrations = ();
+		@Plugins::hooks = ();
+		%Plugins::hook_callbacks = ();
+		%Commands::commands = ();
+		@Commands::run_calls = ();
+		%Commands::descriptors = ();
+		@Settings::add_calls = ();
+		_load_plugin();
+		ok(LastROActivity::lead_seconds() == 10, 'plugin keeps safe defaults before start3');
+		$Plugins::hook_callbacks{start3}->(undef, {});
+		is(LastROActivity::enabled(), 1, 'deferred startup reads enabled config');
+		is(LastROActivity::lead_seconds(), 25, 'deferred startup reads lead config');
+		is(LastROActivity::teleport_idle(), 3, 'deferred startup reads teleport idle config');
+		is($Settings::add_calls[0][0], $fixture, 'deferred startup registers configured rules path');
+		$LastROActivity::clock = sub { 1_000 };
+		my $event = LastROActivity::onSystemMessage(undef, {Msg => '活动将在2小时后开始'});
+		is($event->{trigger_at}, 8_190, 'scheduler honors the rule-specific lead interval');
+		$Plugins::hook_callbacks{start3}->(undef, {});
+		is(scalar @Settings::add_calls, 1, 'repeated startup hook does not reinitialize state');
 		done_testing();
 	};
 
@@ -213,6 +341,62 @@ sub start {
 			LastROActivity::onMainLoopPre(undef, {now => 8_191});
 			is($begin_calls, 1, 'dispatched due event is not started twice');
 		}
+		done_testing();
+	};
+
+	subtest 'failed rule reloads do not retain stale rules' => sub {
+		my $missing_fixture = _write_fixture();
+		unlink $missing_fixture or die "Unable to remove $missing_fixture: $!";
+		%Globals::config = (lastroActivity_rulesFile => $missing_fixture);
+		$Settings::load_path = undef;
+		@Settings::control_folders = ('control');
+		my $command = $Commands::commands{lastroactivity};
+		is($command->('lastroactivity', 'reload'), 0, 'changed missing rules path reports reload failure');
+		is_deeply(LastROActivity::rules(), {}, 'changed missing rules path clears stale rules');
+		is($command->('lastroactivity', 'reload'), 0, 'unchanged missing rules path still reports reload failure');
+		is_deeply(LastROActivity::rules(), {}, 'unchanged missing rules path remains fail-closed');
+		done_testing();
+	};
+
+	subtest 'overlapping announcements keep the scheduler winner armed' => sub {
+		my $overlap_fixture = _write_overlap_fixture();
+		LastROActivity::onUnload();
+		%Globals::config = (lastroActivity_rulesFile => $overlap_fixture);
+		$Settings::load_path = $overlap_fixture;
+		@Settings::control_folders = ('control');
+		@Plugins::registrations = ();
+		@Plugins::hooks = ();
+		%Plugins::hook_callbacks = ();
+		%Commands::commands = ();
+		%Commands::descriptors = ();
+		@Settings::add_calls = ();
+		_load_plugin();
+		$Plugins::hook_callbacks{start3}->(undef, {});
+		$LastROActivity::clock = sub { 1_000 };
+		LastROActivity::onSystemMessage(undef, {Msg => '活动将在2小时后开始'});
+		is(LastROActivity::armed_event()->{event_id}, 'aaa_high', 'armed status follows scheduler priority ordering');
+		my $due = LastROActivity::scheduler()->due(8_190);
+		is($due->[0]{event_id}, 'aaa_high', 'scheduler dispatches the same highest-priority candidate first');
+		done_testing();
+	};
+
+	subtest 'pre-start3 reload initializes only once' => sub {
+		my $prestart_fixture = _write_fixture();
+		LastROActivity::onUnload();
+		%Globals::config = (lastroActivity_rulesFile => $prestart_fixture);
+		$Settings::load_path = $prestart_fixture;
+		@Plugins::registrations = ();
+		@Plugins::hooks = ();
+		%Plugins::hook_callbacks = ();
+		%Commands::commands = ();
+		%Commands::descriptors = ();
+		@Settings::add_calls = ();
+		_load_plugin();
+		my $command = $Commands::commands{lastroactivity};
+		is($command->('lastroactivity', 'reload'), 1, 'pre-start3 reload initializes successfully');
+		is(scalar @Settings::add_calls, 1, 'pre-start3 reload registers one rules handle');
+		$Plugins::hook_callbacks{start3}->(undef, {});
+		is(scalar @Settings::add_calls, 1, 'start3 does not duplicate a pre-start3 reload handle');
 		done_testing();
 	};
 
