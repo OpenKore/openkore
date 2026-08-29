@@ -34,10 +34,12 @@ sub parse_text {
 		_build_phases($current);
 		if (!$discard_current) {
 			my $rule_errors = validate_rule($current);
-			$current->{validation_errors} = [@$rule_errors];
-			if (@$rule_errors) {
+			my $parse_errors = delete $current->{_parse_errors} || [];
+			my @all_errors = (@$parse_errors, @$rule_errors);
+			$current->{validation_errors} = \@all_errors;
+			if (@all_errors) {
 				$current->{enabled} = 0;
-				push @errors, map { "$current_id: $_" } @$rule_errors;
+				push @errors, map { "$current_id: $_" } @all_errors;
 			}
 			$rules{$current_id} = $current;
 		}
@@ -81,22 +83,29 @@ sub parse_text {
 			next;
 		}
 
-		if (!defined $current || $discard_current) {
-			push @errors, "line $line_number: setting outside an event section"
-				if defined $current_id && !$discard_current;
+		if ($discard_current) {
+			next;
+		}
+		if (!defined $current) {
+			push @errors, "line $line_number: setting outside an event section";
 			next;
 		}
 
 		my ($key, $value) = split /=/, $line, 2;
 		if (!defined $value) {
-			push @errors, "$current_id: malformed setting on line $line_number";
+			push @{$current->{_parse_errors}}, "malformed setting on line $line_number";
 			next;
 		}
 
 		$key = _trim($key);
 		$value = _trim($value);
 		if ($key eq '') {
-			push @errors, "$current_id: empty setting name on line $line_number";
+			push @{$current->{_parse_errors}}, "empty setting name on line $line_number";
+			next;
+		}
+
+		if (_is_reserved_key($key)) {
+			push @{$current->{_parse_errors}}, "reserved key $key";
 			next;
 		}
 
@@ -138,12 +147,15 @@ sub validate_rule {
 	if ($rule->{enabled} && !_has_value($rule->{announce_regex})) {
 		push @errors, 'announce_regex required when enabled';
 	}
+	if (defined $rule->{enabled} && $rule->{enabled} !~ /^(?:0|1)$/) {
+		push @errors, 'enabled must be 0 or 1';
+	}
 
 	if (_has_value($rule->{entry_type}) && !$ENTRY_TYPES{$rule->{entry_type}}) {
 		push @errors, "invalid entry_type $rule->{entry_type}";
 	}
 
-	if (_has_value($rule->{duration_seconds})) {
+	if (defined $rule->{duration_seconds}) {
 		if ($rule->{duration_seconds} !~ /^[-+]?\d+$/) {
 			push @errors, 'duration_seconds must be an integer';
 		} elsif ($rule->{duration_seconds} <= 0) {
@@ -151,7 +163,7 @@ sub validate_rule {
 		}
 	}
 
-	if (_has_value($rule->{lead_seconds})) {
+	if (defined $rule->{lead_seconds}) {
 		if ($rule->{lead_seconds} !~ /^[-+]?\d+$/) {
 			push @errors, 'lead_seconds must be an integer';
 		} elsif ($rule->{lead_seconds} < 0) {
@@ -185,6 +197,7 @@ sub _new_rule {
 		phases => [],
 		validation_errors => [],
 		_phase_data => {},
+		_parse_errors => [],
 	};
 }
 
@@ -200,9 +213,15 @@ sub _build_phases {
 sub _normalize_value {
 	my ($key, $value) = @_;
 	return int($value) if $key eq 'enabled' && $value =~ /^[-+]?\d+$/;
-	return 0 if $key eq 'enabled';
 	return int($value) if $NUMERIC_FIELDS{$key} && $value =~ /^[-+]?\d+$/;
 	return $value;
+}
+
+sub _is_reserved_key {
+	my ($key) = @_;
+	return 1 if $key =~ /^_/;
+	return 1 if $key eq 'event_id' || $key eq 'phases' || $key eq 'validation_errors';
+	return 0;
 }
 
 sub _has_value {

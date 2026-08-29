@@ -60,6 +60,100 @@ RULES
 		done_testing();
 	};
 
+	subtest 'attaches parser syntax errors and reports orphan syntax' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+orphan=1
+
+[broken]
+enabled=1
+announce_regex=ready
+malformed syntax
+=bad
+RULES
+
+		is_deeply(
+			$errors,
+			[
+				'line 1: setting outside an event section',
+				'broken: malformed setting on line 6',
+				'broken: empty setting name on line 7',
+			],
+			'reports syntax errors in source order',
+		);
+		ok(!$rules->{broken}{enabled}, 'syntax errors disable the affected rule');
+		is_deeply(
+			$rules->{broken}{validation_errors},
+			[
+				'malformed setting on line 6',
+				'empty setting name on line 7',
+			],
+			'attaches syntax errors to the affected rule',
+		);
+		done_testing();
+	};
+
+	subtest 'rejects empty numeric values' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[empty_numeric]
+enabled=1
+announce_regex=ready
+lead_seconds=
+duration_seconds=
+RULES
+
+		is_deeply(
+			$errors,
+			[
+				'empty_numeric: duration_seconds must be an integer',
+				'empty_numeric: lead_seconds must be an integer',
+			],
+			'rejects explicit empty numeric settings',
+		);
+		ok(!$rules->{empty_numeric}{enabled}, 'empty numeric settings disable the rule');
+		is_deeply(
+			$rules->{empty_numeric}{validation_errors},
+			[
+				'duration_seconds must be an integer',
+				'lead_seconds must be an integer',
+			],
+			'attaches empty numeric errors to the rule',
+		);
+		done_testing();
+	};
+
+	subtest 'rejects reserved rule keys without corrupting parser state' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[canonical]
+event_id=spoofed
+enabled=1
+announce_regex=ready
+
+[phase_bomb]
+enabled=1
+announce_regex=ready
+_phase_data=oops
+phase.1.name=opening
+RULES
+
+		is_deeply(
+			$errors,
+			[
+				'canonical: reserved key event_id',
+				'phase_bomb: reserved key _phase_data',
+			],
+			'rejects section identity and internal state overrides',
+		);
+		is($rules->{canonical}{event_id}, 'canonical', 'preserves canonical section event ID');
+		ok(!$rules->{canonical}{enabled}, 'reserved event ID error disables the rule');
+		ok(!$rules->{phase_bomb}{enabled}, 'reserved internal key error disables the rule');
+		is_deeply(
+			$rules->{phase_bomb}{phases},
+			[{name => 'opening'}],
+			'valid phase data still materializes after a rejected internal key',
+		);
+		done_testing();
+	};
+
 	subtest 'normalizes numeric, search, and phase fields' => sub {
 		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
 [complex]
@@ -136,6 +230,14 @@ lead_seconds=-1
 [malformed_enabled]
 enabled=not-a-flag
 announce_regex=ignored
+
+[out_of_range]
+enabled=2
+announce_regex=ready
+
+[negative_enabled]
+enabled=-1
+announce_regex=ready
 RULES
 
 		is($rules->{duplicate}{announce_regex}, 'first', 'keeps the first definition');
@@ -146,11 +248,16 @@ RULES
 				'invalid: invalid entry_type unknown',
 				'invalid: duration_seconds must be positive',
 				'invalid: lead_seconds must be non-negative',
+				'malformed_enabled: enabled must be 0 or 1',
+				'out_of_range: enabled must be 0 or 1',
+				'negative_enabled: enabled must be 0 or 1',
 			],
 			'aggregates duplicate and validation errors in source order',
 		);
 		ok(!$rules->{invalid}{enabled}, 'invalid disabled rule remains disabled');
 		ok(!$rules->{malformed_enabled}{enabled}, 'malformed enabled value fails closed');
+		ok(!$rules->{out_of_range}{enabled}, 'out-of-range enabled value fails closed');
+		ok(!$rules->{negative_enabled}{enabled}, 'negative enabled value fails closed');
 		is_deeply(
 			$rules->{invalid}{validation_errors},
 			[

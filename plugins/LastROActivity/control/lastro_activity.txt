@@ -8,24 +8,28 @@ enabled=0
 lead_seconds=10
 duration_seconds=900
 return_policy=privateairship:prontera
+search_targets=
 
 [dungeon_monster_party]
 enabled=0
 lead_seconds=10
 duration_seconds=900
 return_policy=privateairship:prontera
+search_targets=
 
 [dojo_challenge]
 enabled=0
 lead_seconds=10
 duration_seconds=900
 return_policy=privateairship:prontera
+search_targets=
 
 [pool_challenge]
 enabled=0
 lead_seconds=10
 duration_seconds=900
 return_policy=privateairship:prontera
+search_targets=
 
 [lottery]
 enabled=0
@@ -36,6 +40,7 @@ entry_x=152
 entry_y=129
 entry_npc=活动负责人#iz
 return_policy=privateairship:prontera
+search_targets=
 # The NPC dialog and finish message are intentionally unknown; keep this rule disabled.
 
 [sky_chest]
@@ -43,3 +48,4 @@ enabled=0
 lead_seconds=10
 duration_seconds=900
 return_policy=privateairship:prontera
+search_targets=
