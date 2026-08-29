@@ -1843,6 +1843,262 @@ RULES
 		done_testing();
 	};
 
+	# Task 7 lifecycle fixtures keep each scenario focused on the public plugin
+	# boundaries while preserving the real State/Rules/Scheduler implementations.
+	my $task7_setup_running = sub {
+		my ($event_id, $extra) = @_;
+		$extra ||= {};
+		LastROActivity::cleanup_and_restore('task 7 reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			lockMap_y => 66,
+			lockMap_randX => 7,
+			lockMap_randY => 8,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		%Globals::maps_lut = (
+			'event_map.rsw' => 1,
+			'other_map.rsw' => 1,
+			'prontera.rsw' => 1,
+		);
+		$Globals::field = PluginTest::Field->new('event_map');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {
+			lastroAirship => 1,
+			privateAirshipItemID => 14527,
+		};
+		%Globals::mon_control = (
+			event_egg => {teleport_search => 1},
+			event_mvp => {teleport_search => 1},
+		);
+		%Globals::monsters_lut = (9001 => 'event_egg', 9002 => 'event_mvp');
+		%Plugins::registered_plugins = (macro => 1);
+		my $lastro_command = $Commands::commands{lastroactivity}
+			|| \&LastROActivity::commandHandler;
+		%Commands::commands = (lastroactivity => $lastro_command, macro => sub { 1 });
+		$Commands::run_failure = undef;
+		@Commands::run_calls = ();
+		@AI::clear_calls = ();
+		@Log::warnings = ();
+		@trace = ();
+
+		my $rule = {
+			event_id => $event_id,
+			enabled => 1,
+			announce_regex => 'START',
+			finish_regex => 'DONE',
+			entry_type => 'privateairship',
+			entry_item_id => 14527,
+			entry_map => 'event_map',
+			search_targets => ['event_egg'],
+			duration_seconds => 900,
+			validation_errors => [],
+			%$extra,
+		};
+		my $event = {event_id => $event_id, rule => $rule, map => 'event_map'};
+		$LastROActivity::active_event = $event;
+		$LastROActivity::armed_event = $event;
+		$LastROActivity::active_snapshot = LastROActivity::State::snapshot_config(
+			\%Globals::config,
+		);
+		LastROActivity::State::apply_activity_config(\%Globals::config, 7);
+		$LastROActivity::activity_lock = 1;
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_)
+			for qw(arm trigger snapshot depart enter running);
+		$LastROActivity::activity_started_at = 100;
+		$LastROActivity::activity_phase_started_at = 100;
+		$LastROActivity::clock = sub { 100 };
+		return ($rule, $event);
+	};
+
+	my $task7_confirm_return = sub {
+		$Globals::field = PluginTest::Field->new('prontera');
+		LastROActivity::onMapChange(undef, {});
+	};
+	my $task7_activity_message = sub {
+		my ($message) = @_;
+		return eval { LastROActivity::onActivityMessage($message) };
+	};
+	my $task7_timeout = sub {
+		my ($now) = @_;
+		return eval { LastROActivity::checkActivityTimeout($now) };
+	};
+
+	subtest 'active finish and phase messages are scoped and cleanup is idempotent' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_finish',
+			{
+				phases => [
+					{name => 'eggs', finish_regex => 'EGGS CLEARED', timeout_seconds => 30},
+					{name => 'mvp', finish_regex => 'MVP CLEARED', timeout_seconds => 30},
+				],
+			},
+		);
+		my %before = (
+			lockMap => 'pay_fild08', lockMap_x => 55, lockMap_y => 66,
+			lockMap_randX => 7, lockMap_randY => 8,
+			teleportAuto_search => 0, teleportAuto_idle => 0,
+		);
+		my $cleanup_calls = 0;
+		my $original_cleanup = \&LastROActivity::cleanup_and_restore;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::cleanup_and_restore = sub {
+				$cleanup_calls++;
+				return $original_cleanup->(@_);
+			};
+			is($task7_activity_message->('EGGS CLEARED'), 'phase',
+				'eggs announcement advances only the active phase');
+			is($LastROActivity::active_event->{phase_index}, 1,
+				'phase advances from eggs to MVP');
+			is($task7_activity_message->('UNRELATED DONE FROM ANOTHER EVENT'), undef,
+				'unrelated finish text is ignored');
+			is($task7_activity_message->('MVP CLEARED'), 'finish',
+				'final MVP phase finishes the active event');
+			$task7_confirm_return->();
+			# A duplicate map packet and duplicate finish signal must not clean twice.
+			$task7_activity_message->('MVP CLEARED');
+			$task7_confirm_return->();
+		}
+		is($cleanup_calls, 1, 'finish path invokes cleanup exactly once');
+		is_deeply(\%Globals::config, \%before, 'finish path restores the exact snapshot');
+		is(LastROActivity::activity_locked(), 0, 'finish path releases the lock');
+		done_testing();
+	};
+
+	subtest 'timeout API distinguishes entry failure from phase and overall finish' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_timeout',
+			{phases => [{name => 'eggs', finish_regex => 'EGGS CLEARED', timeout_seconds => 10}]},
+		);
+		is($task7_timeout->(109), undef,
+			'phase timeout is not reported before its deadline');
+		is($task7_timeout->(110), 'finish',
+			'phase timeout requests a finish');
+		$task7_confirm_return->();
+
+		($rule, $event) = $task7_setup_running->('task7_overall', {duration_seconds => 900});
+		is($task7_timeout->(1000), 'finish',
+			'overall duration timeout requests a finish');
+		$task7_confirm_return->();
+
+		($rule, $event) = $task7_setup_running->('task7_entry_timeout', {timeout_seconds => 5});
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart);
+		$LastROActivity::pending_destination = 'event_map';
+		$LastROActivity::pending_destination_kind = 'entry';
+		$LastROActivity::pending_destination_deadline = 105;
+		is($task7_timeout->(106), 'fail',
+			'entry timeout fails rather than finishing the activity');
+		$task7_confirm_return->();
+		done_testing();
+	};
+
+	subtest 'repeated airship failures and map kick-out use one return and one cleanup' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_airship_failures');
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart);
+		$LastROActivity::pending_destination = 'event_map';
+		$LastROActivity::pending_destination_kind = 'entry';
+		$LastROActivity::pending_destination_deadline = 200;
+		my $cleanup_calls = 0;
+		my $original_cleanup = \&LastROActivity::cleanup_and_restore;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::cleanup_and_restore = sub {
+				$cleanup_calls++;
+				return $original_cleanup->(@_);
+			};
+			LastROActivity::onAirshipResult(undef, {type => 2});
+			LastROActivity::onAirshipResult(undef, {type => 2});
+			LastROActivity::onAirshipResult(undef, {type => 2});
+			is_deeply(\@trace, ['macro stop', 'AI::clear attack move route mapRoute items_take items_gather take', 'AI::clear NPC teleport', 'privateairship prontera'],
+				'three failures do not issue repeated return requests');
+			$task7_confirm_return->();
+		}
+		is($cleanup_calls, 1, 'repeated airship failures clean up once');
+		is(LastROActivity::last_failure(), 'You do not have enough Private Airship items',
+			'failure reason is retained');
+
+		($rule, $event) = $task7_setup_running->('task7_kickout');
+		my %before = (
+			lockMap => 'pay_fild08', lockMap_x => 55, lockMap_y => 66,
+			lockMap_randX => 7, lockMap_randY => 8,
+			teleportAuto_search => 0, teleportAuto_idle => 0,
+		);
+		LastROActivity::onMapChange(undef, {map => 'other_map'});
+		$task7_confirm_return->();
+		is_deeply(\%Globals::config, \%before, 'map kick-out restores the snapshot');
+		is(LastROActivity::activity_locked(), 0, 'map kick-out releases the lock');
+		done_testing();
+	};
+
+	subtest 'running activity mutex ignores duplicate starts and manual stop/off stop macros' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_mutex');
+		$LastROActivity::initialized = 1;
+		$LastROActivity::rules = {task7_mutex => $rule};
+		my $state_before = LastROActivity::state();
+		is($task7_activity_message->('START'), undef,
+			'duplicate start announcement is not a finish signal');
+		is(LastROActivity::state(), $state_before, 'duplicate start does not interrupt RUNNING');
+		is(LastROActivity::active_event()->{event_id}, 'task7_mutex',
+			'active event remains the mutex owner');
+		my $before_commands = scalar @Commands::run_calls;
+		$Commands::commands{lastroactivity}->('lastroactivity', 'stop');
+		ok(grep($_ eq 'macro stop', @Commands::run_calls), 'manual stop stops an active macro');
+		ok(grep($_ eq 'privateairship prontera', @Commands::run_calls), 'manual stop uses the fixed return');
+		$task7_confirm_return->();
+
+		($rule, $event) = $task7_setup_running->('task7_off');
+		$Commands::commands{lastroactivity}->('lastroactivity', 'off');
+		ok(grep($_ eq 'privateairship prontera', @Commands::run_calls), 'off uses the fixed return for an active event');
+		$task7_confirm_return->();
+		$Commands::commands{lastroactivity}->('lastroactivity', 'on');
+		done_testing();
+	};
+
+	subtest 'malformed macros fail closed and NPC/macro entries perform work' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_bad_macro', {
+			entry_macro => 'bad macro name',
+		});
+		my %before = %Globals::config;
+		$LastROActivity::active_event = undef;
+		$LastROActivity::active_snapshot = undef;
+		$LastROActivity::activity_lock = 0;
+		my $ok = LastROActivity::begin_activity($rule, $event);
+		is($ok, 0, 'malformed entry macro rejects the activity');
+		is_deeply(\%Globals::config, \%before, 'malformed macro leaves config unchanged');
+		like(join('', @Log::warnings), qr/macro/i, 'malformed macro is logged');
+
+		@Commands::run_calls = ();
+		my $macro_rule = {
+			event_id => 'task7_macro_entry', enabled => 1, announce_regex => 'START',
+			entry_type => 'macro', entry_map => 'event_map', entry_macro => 'enter_event',
+			validation_errors => [],
+		};
+		ok(LastROActivity::request_event_entry($macro_rule, {map => 'event_map'}),
+			'macro entry is not a no-op');
+		ok(grep($_ eq 'macro enter_event -overrideAI -exclusive', @Commands::run_calls),
+			'macro entry launches the configured macro');
+
+		@Commands::run_calls = ();
+		my $npc_rule = {
+			event_id => 'task7_npc_entry', enabled => 1, announce_regex => 'START',
+			entry_type => 'npc', entry_map => 'event_map', entry_x => 10, entry_y => 20,
+			entry_npc => 'Guide#c', validation_errors => [],
+		};
+		ok(LastROActivity::request_event_entry($npc_rule, {map => 'event_map'}),
+			'NPC entry is not a no-op');
+		is($Commands::run_calls[0], 'talknpc 10 20 c', 'NPC entry issues a TalkNPC command');
+		done_testing();
+	};
+
 	subtest 'activity cleanup clears NPC and teleport tasks' => sub {
 		LastROActivity::cleanup_and_restore('test reset');
 		%Plugins::registered_plugins = ();

@@ -45,7 +45,10 @@ our $pending_macro_root_name;
 our $return_pending;
 our $entry_map_confirmed;
 our $entry_transfer_accepted;
-our $activity_started_at;
+our ($activity_started_at, $activity_entry_started_at);
+our ($activity_phase_index, $activity_phase_started_at);
+our $airship_failure_count;
+our $cleanup_in_progress;
 our $clock = sub { time };
 
 $rules = {};
@@ -77,6 +80,11 @@ $return_pending = 0;
 $entry_map_confirmed = 0;
 $entry_transfer_accepted = 0;
 $activity_started_at = undef;
+$activity_entry_started_at = undef;
+$activity_phase_index = undef;
+$activity_phase_started_at = undef;
+$airship_failure_count = 0;
+$cleanup_in_progress = 0;
 
 $enabled = 1;
 $lead_seconds = 10;
@@ -571,6 +579,9 @@ sub _observe_message {
 	my ($message, $received_at) = @_;
 	return undef unless $enabled;
 	return undef unless defined $message;
+	# The active lifecycle owns the event mutex.  Finish/phase handling is done
+	# by onActivityMessage; never arm or replace timers while it is running.
+	return undef if defined $active_event;
 	$received_at = _now() unless defined $received_at;
 
 	my $first_event;
@@ -600,15 +611,193 @@ sub _message_matches {
 	return (!$@ && $matched) ? 1 : 0;
 }
 
+sub _activity_pattern_matches {
+	my ($message, $pattern) = @_;
+	return 0 unless defined $message && defined $pattern;
+	if (ref($pattern) eq 'CODE') {
+		my $matched = eval { $pattern->($message) };
+		return (!$@ && $matched) ? 1 : 0;
+	}
+	return _message_matches($message, $pattern) if ref($pattern) eq 'Regexp';
+	return 0 if ref($pattern);
+	my $text = _trim($pattern);
+	return 0 if $text eq '';
+	# Treat an explicitly regular expression as such.  Plain configured phrases
+	# are exact after trimming, which prevents a generic word like "DONE" from
+	# consuming another event's longer announcement.
+	return _message_matches($message, $text)
+		if $text =~ /[\\\[\]().*+?|{}^\$]/;
+	return _trim($message) eq $text ? 1 : 0;
+}
+
+sub _phase_pattern {
+	my ($phase) = @_;
+	return undef unless ref($phase) eq 'HASH';
+	for my $key (qw(finish_regex condition_regex phase_regex message_regex regex complete_regex condition finish)) {
+		return $phase->{$key}
+			if defined $phase->{$key} && _trim($phase->{$key}) ne '';
+	}
+	# A named phase is still useful evidence when a server announcement uses the
+	# phase label verbatim (for example, "eggs cleared").  Explicit regexes win.
+	return $phase->{name} if defined $phase->{name} && _trim($phase->{name}) ne '';
+	return undef;
+}
+
+sub _phase_label {
+	my ($phase, $index) = @_;
+	return _trim($phase->{name}) if ref($phase) eq 'HASH'
+		&& defined $phase->{name} && _trim($phase->{name}) ne '';
+	return "phase " . (defined $index ? $index + 1 : 1);
+}
+
+sub _phase_list {
+	return () unless defined $active_event && ref($active_event->{rule}) eq 'HASH';
+	my $phases = $active_event->{rule}{phases};
+	return @$phases if ref($phases) eq 'ARRAY';
+	return ();
+}
+
+sub _set_running_state {
+	my ($now) = @_;
+	return 0 unless defined $active_event;
+	return 1 if ref($state) eq 'LastROActivity::State' && $state->state eq 'RUNNING';
+	return 0 unless ref($state) eq 'LastROActivity::State'
+		&& $state->state eq 'ENTERING';
+	$now = _now() unless defined $now;
+	return 0 unless _confirm_entry_map_for_running();
+	return 0 unless _transition_state('running');
+	$activity_started_at = $now;
+	$activity_entry_started_at = undef;
+	my @phases = _phase_list();
+	if (@phases) {
+		$activity_phase_index = 0;
+		$activity_phase_started_at = $now;
+		$active_event->{phase_index} = 0;
+		$active_event->{phase} = _phase_label($phases[0], 0);
+	} else {
+		$activity_phase_index = undef;
+		$activity_phase_started_at = undef;
+		delete $active_event->{phase_index};
+		delete $active_event->{phase};
+	}
+	return 1;
+}
+
 sub _check_finish_message {
 	my ($message) = @_;
-	return 0 unless defined $active_event && ref($active_event->{rule}) eq 'HASH';
-	return 0 unless ref($state) eq 'LastROActivity::State';
-	return 0 unless $state->state eq 'RUNNING';
-	my $pattern = $active_event->{rule}{finish_regex};
-	return 0 unless _message_matches($message, $pattern);
-	finish_activity('finish announcement matched');
-	return 1;
+	return defined onActivityMessage($message) ? 1 : 0;
+}
+
+sub onActivityMessage {
+	my ($message) = @_;
+	return undef unless defined $message;
+	return undef unless defined $active_event && ref($active_event->{rule}) eq 'HASH';
+	return undef unless ref($state) eq 'LastROActivity::State';
+	return undef unless $state->state eq 'RUNNING';
+
+	# Finish matching is deliberately scoped to the active rule.  Do not scan
+	# every configured rule here: another event's announcement must not end the
+	# activity currently holding the mutex.
+	my $finish_pattern = $active_event->{rule}{finish_regex};
+	if (_activity_pattern_matches($message, $finish_pattern)) {
+		finish_activity('finish announcement matched');
+		return 'finish';
+	}
+
+	my @phases = _phase_list();
+	if (@phases) {
+		# A phased monster activity advances only from its current phase condition;
+		# an out-of-order phase announcement is ignored.
+		my $index = defined $activity_phase_index ? $activity_phase_index : 0;
+		return undef if $index < 0 || $index > $#phases;
+		my $pattern = _phase_pattern($phases[$index]);
+		return undef unless _activity_pattern_matches($message, $pattern);
+
+		my $label = _phase_label($phases[$index], $index);
+		if ($index < $#phases) {
+			$activity_phase_index = $index + 1;
+			$activity_phase_started_at = _now();
+			$active_event->{phase_index} = $activity_phase_index;
+			$active_event->{phase} = _phase_label($phases[$activity_phase_index], $activity_phase_index);
+			return 'phase';
+		}
+
+		finish_activity("$label completed");
+		return 'finish';
+	}
+
+	return undef;
+}
+
+sub _positive_number {
+	my ($value) = @_;
+	return undef unless defined $value && "$value" =~ /^\s*\d+(?:\.\d+)?\s*\z/;
+	return 0 + $value if $value > 0;
+	return undef;
+}
+
+sub checkActivityTimeout {
+	my ($now) = @_;
+	$now = _now() unless defined $now;
+	return undef unless defined $active_event && ref($active_event->{rule}) eq 'HASH';
+	return undef unless ref($state) eq 'LastROActivity::State';
+	my $state_name = $state->state;
+	return undef if $state_name eq 'IDLE' || $state_name eq 'RESUMED';
+
+	my $rule = $active_event->{rule};
+	if (defined $pending_destination
+		&& ($pending_destination_kind || '') eq 'return'
+		&& defined $pending_destination_deadline
+		&& $now >= $pending_destination_deadline) {
+		_mark_activity_failed('return to prontera timed out')
+			if $state_name ne 'FAILED';
+		_complete_return(1);
+		return 'fail';
+	}
+	if ($state_name ne 'RUNNING'
+		&& $state_name ne 'FINISHING'
+		&& $state_name ne 'RETURNING'
+		&& $state_name ne 'FAILED') {
+		my $deadline;
+		my $reason = 'activity entry timed out';
+		if (defined $pending_destination_deadline) {
+			$deadline = $pending_destination_deadline;
+			$reason = 'Private Airship entry timed out';
+		} elsif (defined $pending_macro_deadline) {
+			$deadline = $pending_macro_deadline;
+			$reason = "macro '$pending_macro' timed out" if defined $pending_macro;
+		} elsif (defined $activity_entry_started_at) {
+			$deadline = $activity_entry_started_at + _transfer_timeout($rule);
+		}
+		if (defined $deadline && $now >= $deadline) {
+			_mark_activity_failed($reason);
+			return 'fail';
+		}
+		return undef;
+	}
+	return undef unless $state_name eq 'RUNNING';
+
+	my @phases = _phase_list();
+	if (@phases) {
+		my $index = defined $activity_phase_index ? $activity_phase_index : 0;
+		my $phase = $phases[$index];
+		my $timeout = _positive_number($phase->{timeout_seconds})
+			if ref($phase) eq 'HASH';
+		my $started = $activity_phase_started_at;
+		$started = $activity_started_at unless defined $started;
+		if (defined $timeout && defined $started && $now >= $started + $timeout) {
+			finish_activity(_phase_label($phase, $index) . ' timeout');
+			return 'finish';
+		}
+	}
+
+	my $duration = _positive_number($rule->{duration_seconds});
+	if (defined $duration && defined $activity_started_at
+		&& $now >= $activity_started_at + $duration) {
+		finish_activity('activity duration expired');
+		return 'finish';
+	}
+	return undef;
 }
 
 sub _event_precedes {
@@ -662,7 +851,9 @@ sub onSystemMessage {
 	my $args = _hook_args(@_);
 	return undef unless _ensure_initialized();
 	my $message = _message_from_args($args);
-	_check_finish_message($message);
+	my $had_active = defined $active_event;
+	my $activity_result = onActivityMessage($message);
+	return $activity_result if $had_active;
 	return _observe_message($message);
 }
 
@@ -670,7 +861,9 @@ sub onPublicMessage {
 	my $args = _hook_args(@_);
 	return undef unless _ensure_initialized();
 	my $message = _message_from_args($args);
-	_check_finish_message($message);
+	my $had_active = defined $active_event;
+	my $activity_result = onActivityMessage($message);
+	return $activity_result if $had_active;
 	return _observe_message($message);
 }
 
@@ -778,9 +971,47 @@ sub _transfer_timeout {
 
 sub _macro_name {
 	my ($name) = @_;
+	return undef if ref($name);
 	$name = _trim($name);
 	return undef if $name eq '' || $name =~ /[^A-Za-z0-9_.:-]/;
 	return $name;
+}
+
+sub _npc_sequence {
+	my ($npc) = @_;
+	return undef if ref($npc);
+	$npc = _trim($npc);
+	return undef if $npc eq '' || $npc =~ /[\r\n;|&<>"'`]/;
+	if ($npc =~ /\A[^#]+#([A-Za-z0-9_,.:-]+)\z/) {
+		return $1;
+	}
+	# A bare sequence is accepted for callers that already resolved the NPC;
+	# names containing whitespace or shell syntax remain fail-closed.
+	return $npc if $npc =~ /\A[A-Za-z0-9_,.:-]+\z/;
+	return undef;
+}
+
+sub _configured_macro {
+	my ($rule, $field) = @_;
+	return (undef, undef) unless ref($rule) eq 'HASH';
+	return (undef, undef) unless exists $rule->{$field};
+	my $raw = _trim($rule->{$field});
+	return (undef, undef) if $raw eq '';
+	my $name = _macro_name($raw);
+	return ($name, undef) if defined $name;
+	return (undef, "invalid $field '$raw'");
+}
+
+sub _validate_macro_fields {
+	my ($rule) = @_;
+	return (1, undef) unless ref($rule) eq 'HASH';
+	for my $field (qw(entry_macro finish_macro)) {
+		my (undef, $error) = _configured_macro($rule, $field);
+		next unless defined $error;
+		_append_rule_validation_error($rule, $error);
+		return (0, $error);
+	}
+	return (1, undef);
 }
 
 sub _macro_queue {
@@ -1082,6 +1313,8 @@ sub _activity_entry_validation {
 	my ($rule, $event) = @_;
 	return 'rule is not enabled or validated'
 		unless _validated_enabled_rule($rule);
+	my ($macro_ok, $macro_reason) = _validate_macro_fields($rule);
+	return $macro_reason unless $macro_ok;
 	my ($search_ok, $search_reason) = _validate_search_targets($rule);
 	return $search_reason unless $search_ok;
 	return 'not connected in game' unless _in_game();
@@ -1095,6 +1328,20 @@ sub _activity_entry_validation {
 	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
 		my ($ok, $reason) = _inventory_has_airship_item($rule);
 		return $reason unless $ok;
+	} elsif ($entry_type eq 'macro') {
+		my ($macro, $macro_error) = _configured_macro($rule, 'entry_macro');
+		return $macro_error if defined $macro_error;
+		return 'entry_macro is required for macro entry' unless defined $macro;
+	} elsif ($entry_type eq 'npc') {
+		my $sequence = _npc_sequence($rule->{entry_npc});
+		return 'entry_npc is required for NPC entry'
+			unless defined $sequence;
+		return 'entry_x is required for NPC entry'
+			unless defined $rule->{entry_x} && "$rule->{entry_x}" =~ /^\d+\z/;
+		return 'entry_y is required for NPC entry'
+			unless defined $rule->{entry_y} && "$rule->{entry_y}" =~ /^\d+\z/;
+	} else {
+		return "unsupported entry_type '$entry_type'";
 	}
 
 	return undef;
@@ -1189,7 +1436,11 @@ sub _maybe_start_entry_macro {
 	return 1 unless defined $active_event && $entry_map_confirmed;
 	return 0 unless _entry_transfer_ready();
 	my $rule = $active_event->{rule};
-	my $entry_macro = ref($rule) eq 'HASH' ? _macro_name($rule->{entry_macro}) : undef;
+	my ($entry_macro, $macro_error) = _configured_macro($rule, 'entry_macro');
+	if (defined $macro_error) {
+		_mark_activity_failed($macro_error);
+		return 0;
+	}
 	return 1 unless defined $entry_macro;
 	return 1 if $active_event->{entry_macro_started};
 	$active_event->{entry_macro_started} = 1;
@@ -1202,8 +1453,12 @@ sub _maybe_start_entry_macro {
 
 sub _launch_activity_macro {
 	my ($name, $stage, $rule) = @_;
+	my $raw_name = $name;
 	$name = _macro_name($name);
-	return 0 unless defined $name;
+	unless (defined $name) {
+		warning "[LastROActivity] Invalid macro name '" . _trim($raw_name) . "'.\n";
+		return 0;
+	}
 	unless (_macro_available()) {
 		warning "[LastROActivity] Macro plugin is unavailable for '$name'.\n";
 		return 0;
@@ -1278,8 +1533,7 @@ sub _finish_entry_macro {
 
 	if ($stage eq 'entry') {
 		if (ref($state) eq 'LastROActivity::State' && $state->state eq 'ENTERING') {
-			return 0 unless _confirm_entry_map_for_running();
-			_transition_state('running');
+			return 0 unless _set_running_state(_now());
 		}
 		$active_event->{entry_macro_complete} = 1 if ref($active_event) eq 'HASH';
 		return 1;
@@ -1294,6 +1548,14 @@ sub _finish_entry_macro {
 sub _mark_activity_failed {
 	my ($reason) = @_;
 	$reason = _trim($reason || 'activity failed');
+	# Once a lifecycle is already failed, retain the first actionable reason.
+	# Late duplicate packets are common during a rejected transfer and must not
+	# replace the diagnostic that caused the return.
+	if (ref($state) eq 'LastROActivity::State'
+		&& $state->state eq 'FAILED'
+		&& defined $last_failure && $last_failure ne '') {
+		return 0;
+	}
 	$last_failure = $reason;
 	warning "[LastROActivity] $reason.\n";
 
@@ -1365,7 +1627,41 @@ sub request_event_entry {
 		}
 		return 1;
 	}
-	return 1 if $entry_type eq 'macro' || $entry_type eq 'npc';
+	if ($entry_type eq 'macro') {
+		my ($macro, $macro_error) = _configured_macro($rule, 'entry_macro');
+		die "$macro_error\n" if defined $macro_error;
+		die "entry_macro is required for macro entry\n" unless defined $macro;
+		my $has_active = defined $active_event;
+		_launch_activity_macro($macro, 'entry', $rule)
+			or die "entry macro '$macro' could not start\n";
+		$active_event->{entry_macro_started} = 1 if $has_active
+			&& ref($active_event) eq 'HASH';
+		# Direct callers can use request_event_entry as a command-level API without
+		# adopting a lifecycle marker.  A real begin_activity call keeps the
+		# pending marker so mainLoop_pre can observe completion.
+		_clear_pending_macro() unless $has_active;
+		$entry_transfer_accepted = 1 if $has_active;
+		return 1;
+	}
+	if ($entry_type eq 'npc') {
+		my $sequence = _npc_sequence($rule->{entry_npc});
+		die "entry_npc must include a safe TalkNPC sequence\n"
+			unless defined $sequence;
+		my $x = $rule->{entry_x};
+		my $y = $rule->{entry_y};
+		die "entry coordinates are invalid\n"
+			unless defined $x && defined $y && "$x" =~ /^\d+\z/ && "$y" =~ /^\d+\z/;
+		my ($requested, $error);
+		my $ok = eval {
+			$requested = Commands::run("talknpc $x $y $sequence");
+			1;
+		};
+		$error = _trim($@ || 'talknpc command failed') unless $ok;
+		die "$error\n" if defined $error && $error ne '';
+		die "talknpc command returned failure\n" if defined $requested && !$requested;
+		$entry_transfer_accepted = 1 if defined $active_event;
+		return 1;
+	}
 	return 0;
 }
 
@@ -1374,24 +1670,23 @@ sub _start_due_event {
 	return 0 unless _event_can_start($event);
 	return 0 if defined $active_event;
 
-	$active_event = $event;
-	$armed_event = $event;
 	return begin_activity($event->{rule}, $event);
 }
 
 sub onMainLoopPre {
 	my $args = _hook_args(@_);
 	return unless _ensure_initialized();
-	return unless $enabled;
 
 	my $now = _now($args);
-	my $due = eval { $scheduler->due($now) };
-	if ($@) {
-		warning "[LastROActivity] Could not check due activities: $@\n";
-		$due = [];
+	if ($enabled) {
+		my $due = eval { $scheduler->due($now) };
+		if ($@) {
+			warning "[LastROActivity] Could not check due activities: $@\n";
+			$due = [];
+		}
+		push @pending_due, @$due if ref($due) eq 'ARRAY';
+		push @pending_due, splice(@pending_manual);
 	}
-	push @pending_due, @$due if ref($due) eq 'ARRAY';
-	push @pending_due, splice(@pending_manual);
 
 	# This is deliberately the only call site that starts a due event.  The
 	# state-machine implementation is filled in by the interruption task.
@@ -1416,57 +1711,41 @@ sub _advance_state_machine_one_action {
 		# Confirmation flags can outlive a map packet.  Re-read the live field
 		# before promoting the activity so a departure cannot become RUNNING
 		# after the character has already left the event map.
-		return unless _confirm_entry_map_for_running();
-		_transition_state('running');
+		return unless _set_running_state($now);
 	}
 
 	if (defined $pending_macro) {
-		my $queue = _macro_queue();
-		if (defined $queue) {
-			my $name = _macro_queue_name($queue);
-			if (!defined $name || $name eq $pending_macro) {
-				$pending_macro_seen = 1;
-				_finish_entry_macro(1) if _macro_queue_finished($queue);
-			}
-		} elsif ($pending_macro_seen) {
-			_finish_entry_macro(1);
-		} elsif (defined $pending_macro_deadline && $now >= $pending_macro_deadline) {
-			_finish_entry_macro(0, "macro '$pending_macro' timed out");
-		}
-	}
-
-	if (defined $pending_destination
-		&& defined $pending_destination_deadline
-		&& $now >= $pending_destination_deadline) {
-		my $kind = $pending_destination_kind || '';
-		if ($kind eq 'return') {
-			my $already_failed = ref($state) eq 'LastROActivity::State'
-				&& $state->state eq 'FAILED';
-			_mark_activity_failed('return to prontera timed out')
-				if defined $active_event && !$already_failed;
-			_complete_return(1);
+		if (defined $pending_macro_error && $pending_macro_error ne '') {
+			_finish_entry_macro(0, $pending_macro_error);
 		} else {
-			_clear_pending_destination();
-			_mark_activity_failed('Private Airship entry timed out');
+			my $queue = _macro_queue();
+			if (defined $queue) {
+				my $name = _macro_queue_name($queue);
+				if (!defined $name || $name eq $pending_macro) {
+					$pending_macro_seen = 1;
+					_finish_entry_macro(1) if _macro_queue_finished($queue);
+				}
+			} elsif ($pending_macro_seen) {
+				_finish_entry_macro(1);
+			} elsif (defined $pending_macro_deadline && $now >= $pending_macro_deadline) {
+				_finish_entry_macro(0, "macro '$pending_macro' timed out");
+			}
 		}
 	}
 
-	if (defined $active_event && ref($active_event->{rule}) eq 'HASH'
-		&& ref($state) eq 'LastROActivity::State'
-		&& $state->state eq 'RUNNING'
-		&& defined $activity_started_at
-		&& defined $active_event->{rule}{duration_seconds}
-		&& "$active_event->{rule}{duration_seconds}" =~ /^\s*\d+(?:\.\d+)?\s*\z/
-		&& $active_event->{rule}{duration_seconds} > 0
-		&& $now >= $activity_started_at + $active_event->{rule}{duration_seconds}) {
-		finish_activity('activity duration expired');
-	}
+	checkActivityTimeout($now);
 	return;
 }
 
 sub begin_activity {
 	my ($rule, $scheduled_event) = @_;
 	return 0 unless ref($scheduled_event) eq 'HASH';
+	if (defined $active_event) {
+		my $active_id = ref($active_event) eq 'HASH' ? $active_event->{event_id} : undef;
+		my $incoming_id = $scheduled_event->{event_id};
+		return 1 if defined $active_id && defined $incoming_id && $active_id eq $incoming_id;
+		return 0;
+	}
 	my $reason = _activity_entry_validation($rule, $scheduled_event);
 	if (defined $reason) {
 		my $cleanup_ok = cleanup_and_restore("validation failure for '$scheduled_event->{event_id}'");
@@ -1483,6 +1762,11 @@ sub begin_activity {
 	$active_event = $scheduled_event unless defined $active_event;
 	$armed_event = $scheduled_event;
 	$active_snapshot = undef;
+	$activity_started_at = undef;
+	$activity_entry_started_at = _now();
+	$activity_phase_index = undef;
+	$activity_phase_started_at = undef;
+	$airship_failure_count = 0;
 
 	my $ok = eval {
 		if ($state->state eq 'IDLE') {
@@ -1502,17 +1786,24 @@ sub begin_activity {
 		$state->transition('depart');
 		request_event_entry($rule, $scheduled_event)
 			or die "unable to request event entry\n";
-		$activity_started_at = _now();
 		1;
 	};
 	if (!$ok) {
 		my $failure = _trim($@ || 'activity start failed');
-		my $cleanup_ok = cleanup_and_restore("start failure for '$scheduled_event->{event_id}'");
-		if ($cleanup_ok) {
-			$last_failure = $failure;
+		my $had_activity = defined $active_event;
+		if ($had_activity && $activity_lock) {
+			# Once the snapshot/lock boundary has been crossed, every failure uses
+			# the same return path as a runtime failure.  Validation failures above
+			# occur before this boundary and can clean up synchronously.
+			_mark_activity_failed($failure);
 		} else {
-			my $restore_failure = $last_failure || 'config restoration failed';
-			$last_failure = "$failure; $restore_failure";
+			my $cleanup_ok = cleanup_and_restore("start failure for '$scheduled_event->{event_id}'");
+			if ($cleanup_ok) {
+				$last_failure = $failure;
+			} else {
+				my $restore_failure = $last_failure || 'config restoration failed';
+				$last_failure = "$failure; $restore_failure";
+			}
 		}
 		warning "[LastROActivity] Event '$scheduled_event->{event_id}' failed to start: $failure\n";
 		return 0;
@@ -1575,6 +1866,7 @@ sub commandHandler {
 
 	if (($subcommand eq 'on' || $subcommand eq 'off') && !@parts) {
 		$enabled = $subcommand eq 'on' ? 1 : 0;
+		_stop_active_activity('scheduling disabled') if !$enabled && defined $active_event;
 		message "[LastROActivity] scheduling " . ($enabled ? 'enabled' : 'disabled') . ".\n";
 		return 1;
 	}
@@ -1585,7 +1877,7 @@ sub commandHandler {
 	}
 
 	if ($subcommand eq 'stop' && !@parts) {
-		return cleanup_and_restore('manual stop');
+		return _stop_active_activity('manual stop');
 	}
 
 	if ($subcommand eq 'reload' && !@parts) {
@@ -1622,6 +1914,17 @@ sub _restore_active_snapshot {
 
 sub cleanup_and_restore {
 	my ($reason) = @_;
+	# Cleanup can be reached from a command, a map hook, a timeout, and an
+	# airship result in the same turn.  Once the first caller owns the finalizer,
+	# every later caller is a harmless no-op.
+	return 1 if $cleanup_in_progress;
+	my $has_lifecycle = defined $active_event
+		|| defined $active_snapshot
+		|| $activity_lock
+		|| $return_pending;
+	my $has_scheduled = defined $armed_event || @pending_due || @pending_manual;
+	return 1 unless $has_lifecycle || $has_scheduled;
+	$cleanup_in_progress = 1;
 	my $cleanup_ok = 1;
 	if (defined $armed_event && defined $armed_event->{event_id}) {
 		my $cancelled = eval { $scheduler->cancel($armed_event->{event_id}); 1 };
@@ -1632,17 +1935,61 @@ sub cleanup_and_restore {
 			$cleanup_ok = 0;
 		}
 	}
-	$cleanup_ok = 0 unless _restore_active_snapshot();
+	if ($has_lifecycle && defined $active_event
+		&& !$active_event->{activity_ai_cleared}) {
+		$active_event->{activity_ai_cleared} = 1;
+		clear_activity_ai();
+	}
+	my $restore_ok = _restore_active_snapshot();
+	if (!$restore_ok) {
+		# Restoration has been attempted and failed; discard the stale snapshot so
+		# a duplicate cleanup cannot replay side effects indefinitely.
+		$active_snapshot = undef;
+		$cleanup_ok = 0;
+	}
+	# The final AI clear is intentionally after restoration.  clear_activity_ai
+	# runs before the return request and is separately guarded by the event.
+	if ($has_lifecycle) {
+		my $ai_ok = eval {
+			AI::clear();
+			1;
+		};
+		if (!$ai_ok) {
+			my $failure = _trim($@ || 'AI clear failed');
+			$last_failure = $failure;
+			warning "[LastROActivity] Unable to clear AI during cleanup: $failure\n";
+			$cleanup_ok = 0;
+		}
+	}
 	@pending_due = ();
 	@pending_manual = ();
 	_clear_pending_destination();
 	_clear_pending_macro();
 	$activity_started_at = undef;
+	$activity_entry_started_at = undef;
+	$activity_phase_index = undef;
+	$activity_phase_started_at = undef;
+	$airship_failure_count = 0;
 	$active_event = undef;
 	$armed_event = undef;
 	$state = LastROActivity::State->new;
+	# This is the sole production release of the activity lock.
 	activity_lock(0);
+	$cleanup_in_progress = 0;
 	return $cleanup_ok;
+}
+
+sub _stop_active_activity {
+	my ($reason) = @_;
+	return cleanup_and_restore($reason) unless defined $active_event;
+	$active_event->{finish_reason} = _trim($reason)
+		if ref($active_event) eq 'HASH' && defined $reason;
+	_clear_pending_macro();
+	unless ($active_event->{activity_ai_cleared}) {
+		$active_event->{activity_ai_cleared} = 1;
+		clear_activity_ai();
+	}
+	return return_to_capital();
 }
 
 sub finish_activity {
@@ -1667,7 +2014,11 @@ sub finish_activity {
 		}
 
 		my $rule = $active_event->{rule};
-		my $finish_macro = ref($rule) eq 'HASH' ? _macro_name($rule->{finish_macro}) : undef;
+		my ($finish_macro, $macro_error) = _configured_macro($rule, 'finish_macro');
+		if (defined $macro_error) {
+			_mark_activity_failed($macro_error);
+			return 0;
+		}
 		if (defined $finish_macro && !$active_event->{finish_macro_complete}) {
 			unless (_launch_activity_macro($finish_macro, 'finish', $rule)) {
 				_mark_activity_failed("finish macro '$finish_macro' could not start");
@@ -1721,41 +2072,7 @@ sub return_to_capital {
 sub _complete_return {
 	my ($forced) = @_;
 	return 1 unless defined $active_event || defined $active_snapshot || $return_pending;
-
-	my $restore_ok = _restore_active_snapshot();
-	if (!$restore_ok) {
-		# Do not leave a stale snapshot attached to an event that is no longer
-		# active; the restoration failure is retained in last_failure.
-		$active_snapshot = undef;
-	}
-
-	my $ai_ok = eval {
-		AI::clear();
-		1;
-	};
-	if (!$ai_ok) {
-		my $failure = _trim($@ || 'AI clear failed');
-		$last_failure = $failure;
-		warning "[LastROActivity] Unable to clear AI after return: $failure\n";
-	}
-
-	if (ref($state) eq 'LastROActivity::State' && $state->state eq 'RETURNING') {
-		_transition_state('resume');
-	} elsif (ref($state) eq 'LastROActivity::State' && $state->state eq 'FAILED') {
-		$state = LastROActivity::State->new;
-	}
-
-	my $finished_id = ref($active_event) eq 'HASH' ? $active_event->{event_id} : undef;
-	_clear_pending_destination();
-	_clear_pending_macro();
-	$activity_started_at = undef;
-	$active_event = undef;
-	if (defined $armed_event
-		&& (!defined $finished_id || $armed_event->{event_id} eq $finished_id)) {
-		$armed_event = undef;
-	}
-	activity_lock(0);
-	return ($restore_ok && $ai_ok) ? 1 : 0;
+	return cleanup_and_restore($forced ? 'forced return completion' : 'return confirmed');
 }
 
 sub _confirm_entry_map {
@@ -1861,6 +2178,7 @@ sub onAirshipResult {
 		5 => 'wrong item for Private Airship',
 	);
 	my $reason = $reasons{$type} || "unknown Private Airship result code $type";
+	$airship_failure_count++ if $type != 0;
 	$pending_airship_result = $type;
 	if (($pending_destination_kind || '') eq 'entry') {
 		_clear_pending_destination();
@@ -1890,7 +2208,18 @@ sub onReload {
 }
 
 sub onUnload {
-	my $cleanup_ok = cleanup_and_restore('plugin unload');
+	my $cleanup_ok;
+	if (defined $active_event) {
+		$cleanup_ok = _stop_active_activity('plugin unload');
+		# Hooks are removed immediately after this callback, so there is no map
+		# packet available to complete a successful return.  Force the same common
+		# finalizer after issuing the fixed return request.
+		if ($return_pending) {
+			$cleanup_ok = 0 unless _complete_return(1);
+		}
+	} else {
+		$cleanup_ok = cleanup_and_restore('plugin unload');
+	}
 	if (defined $rules_file_handle) {
 		_remove_rule_handle($rules_file_handle);
 		$rules_file_handle = undef;
