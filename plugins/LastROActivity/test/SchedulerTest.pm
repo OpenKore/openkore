@@ -35,7 +35,12 @@ sub start {
 
 	subtest 'arms an event at the lead boundary and starts immediate events' => sub {
 		my $scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
-		my $rule = {event_id => 'city_monster_party', enabled => 1, lead_seconds => 10};
+		my $rule = {
+			event_id => 'city_monster_party',
+			enabled => 1,
+			announce_regex => '城市魔物派对',
+			lead_seconds => 10,
+		};
 		my $armed = $scheduler->observe($rule, '城市魔物派对将在2小时后开始', 1_000);
 
 		is($armed->{event_id}, 'city_monster_party', 'stores event ID');
@@ -45,9 +50,25 @@ sub start {
 		is(scalar @{$scheduler->due(8_190)}, 1, 'triggers at the ten-second boundary');
 		is(scalar @{$scheduler->due(9_000)}, 0, 'dispatched event is not returned twice');
 
+		my $unrelated_scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
+		ok(
+			!defined $unrelated_scheduler->observe(
+				$rule,
+				'维护将在2小时后开始',
+				10_000,
+			),
+			'unrelated countdown does not arm the activity rule',
+		);
+		is(
+			scalar @{$unrelated_scheduler->due(20_000)},
+			0,
+			'unrelated countdown does not become due',
+		);
+
 		my $immediate_rule = {
 			event_id => 'lottery',
 			enabled => 1,
+			announce_regex => '活动',
 			start_regex => '活动已经开始',
 			lead_seconds => 10,
 		};
@@ -64,7 +85,12 @@ sub start {
 			lead_seconds => 10,
 			clock => sub { 9_999 },
 		);
-		my $rule = {event_id => 'city_monster_party', enabled => 1, lead_seconds => 10};
+		my $rule = {
+			event_id => 'city_monster_party',
+			enabled => 1,
+			announce_regex => '城市魔物派对',
+			lead_seconds => 10,
+		};
 		$scheduler->observe($rule, '城市魔物派对将在1分钟后开始', 2_000);
 		my $replacement = $scheduler->observe($rule, '城市魔物派对将在1分钟后开始', 2_001);
 
@@ -75,12 +101,14 @@ sub start {
 		my $early_rule = {
 			event_id => 'early',
 			enabled => 1,
+			announce_regex => 'early',
 			lead_seconds => 10,
 			priority => 1,
 		};
 		my $high_priority_rule = {
 			event_id => 'high',
 			enabled => 1,
+			announce_regex => 'high',
 			lead_seconds => 10,
 			priority => 5,
 		};
@@ -119,6 +147,7 @@ sub start {
 		my $dynamic = {
 			event_id => 'dynamic',
 			enabled => 1,
+			announce_regex => '活动',
 			map_source => 'dynamic',
 		};
 		my $dynamic_event = $scheduler->observe(
@@ -131,6 +160,7 @@ sub start {
 		my $static = {
 			event_id => 'static',
 			enabled => 1,
+			announce_regex => '活动',
 			map_source => 'announcement',
 		};
 		my $static_event = $scheduler->observe(

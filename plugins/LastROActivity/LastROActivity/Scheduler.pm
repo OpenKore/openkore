@@ -66,6 +66,7 @@ sub observe {
 
 	$received_at = $self->{clock}->() if !defined $received_at;
 	return undef if !_is_number($received_at);
+	return undef if !_matches($message, $rule->{announce_regex});
 
 	my $countdown = parse_countdown($message);
 	if (!defined $countdown) {
