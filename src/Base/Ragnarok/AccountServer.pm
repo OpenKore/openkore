@@ -70,6 +70,12 @@ sub secureKey {
 	'key'
 }
 
+# Return the account-server response handler used by this server instance.
+# XKore2 overrides this for clients whose protocol has moved past 0x0069.
+sub account_server_info_switch {
+	return 'account_server_info';
+}
+
 sub master_login {
 	my ($self, $args, $client) = @_;
 
@@ -105,13 +111,15 @@ sub master_login {
 				port => $charServer->getPort,
 				name => $charServer->getName,
 				users => $charServer->getPlayersCount,
+				state => 0,
+				property => 0,
 				display => 5, # don't show number of players
 				ip_port => $ip . ':' . $charServer->getPort,
 			};
 		}
 		
 		$client->send($self->{recvPacketParser}->reconstruct({
-			switch => 'account_server_info',
+			switch => $self->account_server_info_switch,
 			# maybe sessionstore should store sessionID as bytes?
 			sessionID => pack('V', $session{sessionID}),
 			accountID => $session{accountID},
@@ -196,7 +204,7 @@ sub token_login {
 		}
 
 		$client->send($self->{recvPacketParser}->reconstruct({
-			switch => 'account_server_info',
+			switch => $self->account_server_info_switch,
 			# maybe sessionstore should store sessionID as bytes?
 			sessionID => pack('V', $session{sessionID}),
 			accountID => $session{accountID},
