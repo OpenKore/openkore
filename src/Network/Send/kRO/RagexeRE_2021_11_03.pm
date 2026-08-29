@@ -44,6 +44,29 @@ sub new {
 	return $self;
 }
 
+# 0x0065,17.  Keep the public OpenKore call signature used by the login
+# handoff, but map its legacy third argument to the modern user-level field.
+# The 2021 RE client also requires an explicit client type in this packet.
+sub sendGameLogin {
+	my ($self, $accountID, $sessionID, $userLevel, $sex) = @_;
+	# DirectConnection keeps the account-server fields as raw a4 values,
+	# while modern CZ_ENTER packs userLevel as a numeric V field.
+	$userLevel = unpack('V', $userLevel)
+		if defined $userLevel && !ref($userLevel) && length($userLevel) == 4;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'game_login',
+		accountID => $accountID,
+		sessionID => $sessionID,
+		userLevel => $userLevel,
+		clientType => $masterServer && defined $masterServer->{clientType}
+			? $masterServer->{clientType}
+			: 0,
+		accountSex => $sex,
+	}));
+	debug "Sent sendGameLogin\n", "sendPacket", 2;
+}
+
 # 0x0436,23
 sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;

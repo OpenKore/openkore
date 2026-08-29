@@ -31,6 +31,13 @@ BEGIN {
 			},
 		}, shift;
 	}
+	sub reconstruct {
+		$_[0]{reconstruct_args} = $_[1];
+		return 'packet';
+	}
+	sub sendToServer {
+		$_[0]{sent} = $_[1];
+	}
 
 	$INC{'Lastro/Airship.pm'} = __FILE__;
 	package Lastro::Airship;
@@ -181,6 +188,24 @@ sub start {
 			['game_login', 'a4 a4 V v C', [qw(accountID sessionID userLevel clientType accountSex)]],
 			'0065 uses the 2021 RE account, auth, user-level, client-type and sex layout'
 		);
+	};
+
+	subtest '2021 RE sendGameLogin maps legacy arguments to modern fields' => sub {
+		require Network::Send::kRO::RagexeRE_2021_11_03;
+		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+		$Globals::masterServer = {clientType => 4};
+		my $account_id = pack('V', 2007306);
+		my $auth_code = pack('V', 1);
+		my $user_level = pack('V', 1);
+
+		$sender->sendGameLogin($account_id, $auth_code, $user_level, 0);
+
+		is($sender->{reconstruct_args}{userLevel}, 1,
+			'sendGameLogin decodes the packed legacy third argument for modern userLevel');
+		is($sender->{reconstruct_args}{clientType}, 4,
+			'sendGameLogin supplies the configured client type');
+		ok(!exists $sender->{reconstruct_args}{sessionID2},
+			'modern sendGameLogin does not send a legacy sessionID2 field');
 	};
 
 	%Globals::charSvrSet = %previous_slots;
