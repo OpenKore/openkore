@@ -8,10 +8,35 @@ use Test::More;
 # The test exercises the pure packet-selection/login path; the production test
 # suite loads the normal dependency graph on hosts with a matching XSTools DLL.
 BEGIN {
+	$INC{'Carp/Assert.pm'} = __FILE__;
+	package Carp::Assert;
+	sub import {
+		my $caller = caller;
+		no strict 'refs';
+		*{"${caller}::DEBUG"} = sub () { 0 };
+		*{"${caller}::assert"} = \&assert;
+	}
+	sub assert { }
 
 	$INC{'Base/RagnarokServer.pm'} = __FILE__;
 	package Base::RagnarokServer;
-	sub new { bless {}, shift }
+        sub new { bless {}, shift }
+        sub getClientPacketTable { return $_[0]->{rpackets}; }
+        sub onClientData {
+		my ($self, $client, $data) = @_;
+		$client->{tokenizer}->add($data);
+		$client->{outbox} && $client->{outbox}->add($_) for $self->{sendPacketParser}->process(
+			$client->{tokenizer}, $self, $client
+		);
+	}
+        sub onClientNew {
+                my ($self, $client) = @_;
+                $client->{tokenizer} = Network::MessageTokenizer->new($self->getClientPacketTable());
+        }
+	sub unknownMessage {
+		my ($self, $args, $client) = @_;
+		$client->close();
+	}
 
 	$INC{'Misc.pm'} = __FILE__;
 	package Misc;
@@ -32,13 +57,31 @@ BEGIN {
 			},
 		}, shift;
 	}
-	sub reconstruct {
-		$_[0]{reconstruct_args} = $_[1];
-		return pack('v', 0x09A1)
-			if $_[1]{switch} eq 'sync_received_characters';
-		return 'packet';
-	}
-	sub sendToServer {
+        sub reconstruct {
+                $_[0]{reconstruct_args} = $_[1];
+                return pack('v', 0x09A1)
+                        if $_[1]{switch} eq 'sync_received_characters';
+                return 'packet';
+        }
+        sub process {
+                my ($self, $tokenizer, $handleContainer, @handleArguments) = @_;
+                my @result;
+                my $type;
+                while (my $message = $tokenizer->readNext(\$type)) {
+                        my $switch = Network::MessageTokenizer::getMessageID($message);
+                        if ($type == 0 && $switch eq '09A1') {
+                                $handleContainer->sync_received_characters({}, @handleArguments);
+                        } elsif ($type == 1) {
+                                $handleContainer->unknownMessage({
+                                        switch => $switch,
+                                        RAW_MSG => $message,
+                                }, @handleArguments);
+                        }
+                        push @result, $message;
+                }
+                return @result;
+        }
+        sub sendToServer {
 		$_[0]{sent} = $_[1];
 	}
 
@@ -65,6 +108,7 @@ BEGIN {
 }
 
 use Globals qw($char $masterServer %charSvrSet);
+use Network::MessageTokenizer;
 use Network::XKore2::CharServer;
 
 {
@@ -246,7 +290,7 @@ sub start {
 			'modern sendGameLogin does not send a legacy sessionID2 field');
 	};
 
-	subtest '2021 RE sender registers the client character-list request' => sub {
+		subtest '2021 RE sender registers the client character-list request' => sub {
 		require Network::Send::kRO::RagexeRE_2021_11_03;
 		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
 
@@ -258,6 +302,37 @@ sub start {
 		is(unpack('v', $request), 0x09A1,
 			'reconstructed character-list request uses the 09A1 opcode');
 		is(length($request), 2, '09A1 request is exactly two bytes');
+	};
+
+	subtest 'character-server client data dispatches 09A1 through the real tokenizer path' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+		my $server = bless {
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+			rpackets => { '099D' => { length => -1 } },
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+			hook_prefix => 'Network::ClientReceive',
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$server->onClientNew($client);
+		$server->sync_received_characters({}, $client);
+		$parser->{calls} = [];
+		$server->onClientData($client, pack('v', 0x09A1));
+
+		ok(!$client->{closed}, 'valid 09A1 request does not close the character-server connection');
+		is_deeply($parser->{calls}, [qw(099D)],
+			'09A1 reaches sync_received_characters through tokenizer and send parser');
+		is(unpack('v', $client->{sent}[-1]), 0x099D,
+			'tokenized 09A1 request produces a 099D character-list page');
 	};
 
 	%Globals::charSvrSet = %previous_slots;

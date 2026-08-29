@@ -72,6 +72,19 @@ sub charBlockSize {
 	return $_[0]->{charBlockSize};
 }
 
+# 09A1 is a client-only request in modern character selection.  It is absent
+# from the server receive table, so expose it only to this server's client
+# tokenizer without mutating the shared global packet table.
+sub getClientPacketTable {
+	my ($self) = @_;
+	my %packets = %{ $self->SUPER::getClientPacketTable() || {} };
+	if ($self->{sendPacketParser}
+		&& exists $self->{sendPacketParser}{packet_list}{'09A1'}) {
+		$packets{'09A1'} = { length => 2 };
+	}
+	return \%packets;
+}
+
 # A parser can expose more than one packet ID for the same handler name.  The
 # packet LUT is populated lazily by reconstruct(), so it cannot be used to
 # select the character-list layout during the first character-server login.

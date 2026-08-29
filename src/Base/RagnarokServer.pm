@@ -49,7 +49,7 @@ sub setServerType {
 		foreach my $client (@{$self->clients()}) {
 			my $buffer = $client->{tokenizer}->getBuffer();
 			$client->{tokenizer} = new Network::MessageTokenizer(
-				$self->{rpackets});
+				$self->getClientPacketTable());
 			$client->{tokenizer}->add($buffer);
 		}
 	}
@@ -59,10 +59,17 @@ sub getRecvPackets {
 	return $_[0]->{rpackets};
 }
 
+# Client-facing servers may need packet lengths that are not present in the
+# server receive table.  Keep the default table unchanged and let a concrete
+# server provide a narrow per-client extension when required.
+sub getClientPacketTable {
+	return $_[0]->{rpackets};
+}
+
 sub onClientNew {
 	my ($self, $client) = @_;
 	$client->{tokenizer} = new Network::MessageTokenizer(
-		$self->{rpackets});
+		$self->getClientPacketTable());
 }
 
 sub onClientData {
