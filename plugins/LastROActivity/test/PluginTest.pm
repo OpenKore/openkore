@@ -9,13 +9,16 @@ use File::Spec;
 use File::Temp qw(tempfile tempdir);
 use Test::More;
 
+our @trace;
+
 # Keep this test independent of OpenKore's native extensions.  The plugin only
 # needs the small portions of these packages that are exercised below.
 BEGIN {
 	$INC{'Globals.pm'} = __FILE__;
 	package Globals;
 	our %config;
-	our ($net, $char, $field);
+	our %maps_lut;
+	our ($net, $char, $field, $masterServer);
 	sub import {
 		my $caller = caller;
 		no strict 'refs';
@@ -23,6 +26,7 @@ BEGIN {
 		*{"${caller}::net"} = \$net;
 		*{"${caller}::char"} = \$char;
 		*{"${caller}::field"} = \$field;
+		*{"${caller}::masterServer"} = \$masterServer;
 	}
 
 	$INC{'Plugins.pm'} = __FILE__;
@@ -71,7 +75,7 @@ BEGIN {
 		return [map { $_->[0] } @_];
 	}
 	sub unregister { return 1; }
-	sub run { push @run_calls, $_[0]; return 1; }
+	sub run { push @run_calls, $_[0]; push @PluginTest::trace, $_[0]; return 1; }
 
 	$INC{'Settings.pm'} = __FILE__;
 	package Settings;
@@ -146,12 +150,37 @@ BEGIN {
 
 	$INC{'AI.pm'} = __FILE__;
 	package AI;
+	our @clear_calls;
 	sub import { return 1; }
-	sub clear { return 1; }
+	sub clear {
+		my $call = join(' ', 'AI::clear', @_);
+		push @clear_calls, $call;
+		push @PluginTest::trace, $call;
+		return 1;
+	}
 
 	$INC{'Network.pm'} = __FILE__;
 	package Network;
 	sub IN_GAME () { 5; }
+
+	package PluginTest::Net;
+	sub new { bless {}, shift; }
+	sub getState { return Network::IN_GAME; }
+
+	package PluginTest::Inventory;
+	sub new { my ($class, $items) = @_; bless {items => $items || {}}, $class; }
+	sub getByNameID {
+		my ($self, $item_id) = @_;
+		return $self->{items}{$item_id};
+	}
+
+	package PluginTest::Char;
+	sub new { my ($class, $inventory) = @_; bless {inventory => $inventory}, $class; }
+	sub inventory { return $_[0]->{inventory}; }
+
+	package PluginTest::Field;
+	sub new { my ($class, $map) = @_; bless {map => $map}, $class; }
+	sub baseName { return $_[0]->{map}; }
 
 	$INC{'Log.pm'} = __FILE__;
 	package Log;
@@ -177,6 +206,23 @@ sub _write_fixture {
 enabled=1
 announce_regex=活动
 lead_seconds=10
+RULES
+	close $fh;
+	return $path;
+}
+
+sub _write_interruption_fixture {
+	my ($fh, $path) = tempfile('lastro-activity-interrupt-XXXXXX', UNLINK => 1);
+	binmode $fh, ':encoding(UTF-8)';
+	print {$fh} <<'RULES';
+[monster_event]
+enabled=1
+announce_regex=活动
+lead_seconds=10
+entry_type=privateairship
+map_source=static
+entry_map=event_map
+search_targets=event_egg,event_mvp
 RULES
 	close $fh;
 	return $path;
@@ -408,6 +454,142 @@ sub start {
 			LastROActivity::onMainLoopPre(undef, {now => 8_191});
 			is($begin_calls, 1, 'dispatched due event is not started twice');
 		}
+		done_testing();
+	};
+
+	subtest 'due monster activity interrupts immediately and enters shared search mode' => sub {
+		my $interrupt_fixture = _write_interruption_fixture();
+		LastROActivity::onUnload();
+		%Globals::config = (
+			lastroActivity_rulesFile => $interrupt_fixture,
+			lastroActivity_teleportIdle => 7,
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			lockMap_y => 66,
+			lockMap_randX => 7,
+			lockMap_randY => 8,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		$Settings::load_path = $interrupt_fixture;
+		%Globals::maps_lut = ('event_map.rsw' => 1);
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::masterServer = {
+			lastroAirship => 1,
+			privateAirshipItemID => 14527,
+		};
+		@Plugins::registrations = ();
+		@Plugins::hooks = ();
+		%Plugins::hook_callbacks = ();
+		%Commands::commands = (macro => sub { 1 });
+		%Commands::descriptors = ();
+		@Settings::add_calls = ();
+		@Commands::run_calls = ();
+		@AI::clear_calls = ();
+		@trace = ();
+		my $mon_control_file = File::Spec->catfile($RealBin, '..', '..', 'control', 'mon_control.txt');
+		my $mon_control_before;
+		if (-f $mon_control_file) {
+			open my $mon_before_fh, '<:raw', $mon_control_file or die "Unable to read $mon_control_file: $!";
+			local $/;
+			$mon_control_before = <$mon_before_fh>;
+			close $mon_before_fh;
+		}
+		_load_plugin();
+		$Plugins::hook_callbacks{start3}->(undef, {});
+		$LastROActivity::clock = sub { 1_000 };
+
+		my %before = %Globals::config;
+		my $armed = LastROActivity::onSystemMessage(undef, {
+			Msg => '活动将在2小时后开始',
+		});
+		is($armed->{trigger_at}, 8_190, 'long countdown remains future');
+		is(LastROActivity::state(), 'ARMED', 'future event is armed');
+		LastROActivity::onMainLoopPre(undef, {now => 1_000});
+		is_deeply(\@trace, [], 'future armed event has no interruption side effects');
+		is_deeply(\%Globals::config, \%before, 'future armed event leaves config untouched');
+
+		# A same-ID announcement replaces the future timer and makes it due now.
+		LastROActivity::onSystemMessage(undef, {Msg => '活动将在10秒后开始'});
+		my $original_lock = \&LastROActivity::activity_lock;
+		my $original_apply = \&LastROActivity::State::apply_activity_config;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::activity_lock = sub {
+				push @trace, 'activity_lock:' . ($_[0] ? 'on' : 'off');
+				return $original_lock->(@_);
+			};
+			local *LastROActivity::State::apply_activity_config = sub {
+				push @trace, 'snapshot';
+				my $snapshot = $original_apply->(@_);
+				push @trace, 'config lockMap=' . $Globals::config{lockMap};
+				push @trace, 'config teleportAuto_search=' . $Globals::config{teleportAuto_search};
+				return $snapshot;
+			};
+			LastROActivity::onMainLoopPre(undef, {now => 1_000});
+		}
+
+		is_deeply(
+			\@trace,
+			[
+				'activity_lock:on',
+				'macro stop',
+				'AI::clear attack move route mapRoute items_take items_gather take',
+				'snapshot',
+				'config lockMap=',
+				'config teleportAuto_search=1',
+				'privateairship event_map',
+			],
+			'trigger interrupts before departure',
+		);
+		is(LastROActivity::state(), 'DEPARTING', 'due event transitions to departing');
+		is($Globals::config{lockMap}, '', 'activity clears lockMap in memory');
+		is($Globals::config{teleportAuto_search}, 1, 'activity enables search gate in memory');
+		is($Globals::config{teleportAuto_idle}, 7, 'activity applies configured idle interval');
+		is($LastROActivity::active_event->{event_id}, 'monster_event', 'active event is retained');
+		my $mon_control_after;
+		if (-f $mon_control_file) {
+			open my $mon_after_fh, '<:raw', $mon_control_file or die "Unable to read $mon_control_file: $!";
+			local $/;
+			$mon_control_after = <$mon_after_fh>;
+			close $mon_after_fh;
+		}
+		is($mon_control_after, $mon_control_before,
+			'activity leaves the shared monster control file unchanged');
+		done_testing();
+	};
+
+	subtest 'activity without search target evidence fails before mutation' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		@trace = ();
+		@Log::warnings = ();
+		my %before = %Globals::config;
+		my $ok = LastROActivity::begin_activity(
+			{
+				event_id => 'no_targets',
+				enabled => 1,
+				announce_regex => '活动',
+				entry_type => 'privateairship',
+				entry_map => 'event_map',
+				search_targets => [],
+				validation_errors => [],
+			},
+			{event_id => 'no_targets', map => 'event_map'},
+		);
+		is($ok, 0, 'missing search evidence rejects the event');
+		is_deeply(\@trace, [], 'missing search evidence has no side effects');
+		is_deeply(\%Globals::config, \%before, 'missing search evidence leaves config untouched');
+		is(LastROActivity::activity_locked(), 0, 'failed validation leaves activity unlocked');
+		like(join('', @Log::warnings), qr/search_targets evidence/, 'missing search evidence is auditable');
 		done_testing();
 	};
 

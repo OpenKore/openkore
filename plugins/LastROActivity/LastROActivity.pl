@@ -34,7 +34,7 @@ our ($rules, $rules_file, $rules_requested, $rules_file_handle);
 our $initialized;
 our $init_failure_signature;
 our $rule_load_context;
-our ($active_event, $armed_event, $last_failure, $active_snapshot);
+our ($active_event, $armed_event, $last_failure, $active_snapshot, $activity_lock);
 our (@pending_due, @pending_manual);
 our ($hooks, $commands, $rules_preload_hook);
 our $clock = sub { time };
@@ -51,6 +51,7 @@ $last_failure = undef;
 $active_event = undef;
 $armed_event = undef;
 $active_snapshot = undef;
+$activity_lock = 0;
 @pending_due = ();
 @pending_manual = ();
 
@@ -625,6 +626,234 @@ sub _event_can_start {
 	return 1;
 }
 
+sub _event_map {
+	my ($rule, $event) = @_;
+	return undef unless ref($rule) eq 'HASH';
+
+	my $map;
+	if (defined $rule->{map_source}
+		&& lc(_trim($rule->{map_source})) eq 'dynamic') {
+		# A dynamic rule must be backed by map metadata from the matching
+		# announcement; silently falling back to a stale configured map would
+		# send the character to the wrong activity.
+		$map = $event->{data_map}{map}
+			if ref($event) eq 'HASH'
+			&& ref($event->{data_map}) eq 'HASH';
+		return undef unless defined $map && _trim($map) ne '';
+	} else {
+		$map = $rule->{entry_map};
+		$map = $event->{map} if (!defined $map || $map eq '')
+			&& ref($event) eq 'HASH' && defined $event->{map};
+		$map = $event->{data_map}{map}
+			if (!defined $map || $map eq '')
+			&& ref($event) eq 'HASH'
+			&& ref($event->{data_map}) eq 'HASH';
+	}
+	return undef unless defined $map;
+
+	$map = _trim($map);
+	$map =~ s/\.(?:rsw|gat)\z//i;
+	return undef if $map eq '' || $map =~ /[\s;|&<>"'`]/;
+	return $map;
+}
+
+sub _map_is_known {
+	my ($map) = @_;
+	return 0 unless defined $map && $map ne '';
+	my $maps = \%Globals::maps_lut;
+	return 1 if defined $maps->{"$map.rsw"};
+	return 1 if defined $maps->{"$map.gat"};
+	return 1 if defined $maps->{$map};
+	return 0;
+}
+
+sub _in_game {
+	my $net = $Globals::net;
+	return 0 unless $net;
+	my $state = eval {
+		if (ref($net) eq 'HASH') {
+			exists $net->{state}
+				? $net->{state}
+				: (exists $net->{conState} ? $net->{conState} : undef);
+		} elsif ($net->can('getState')) {
+			$net->getState();
+		} else {
+			undef;
+		}
+	};
+	return 0 if $@ || !defined $state;
+	my $in_game = 5;
+	if (defined &Network::IN_GAME) {
+		my $constant = eval { Network::IN_GAME() };
+		$in_game = $constant if !$@ && defined $constant;
+	}
+	return $state == $in_game ? 1 : 0;
+}
+
+sub _airship_item_id {
+	my ($rule) = @_;
+	if (ref($rule) eq 'HASH') {
+		for my $key (qw(entry_item_id private_airship_item_id airship_item_id entry_item)) {
+			my $value = $rule->{$key};
+			return 0 + $value if defined $value && $value =~ /^\d+\z/;
+		}
+	}
+	my $master = $Globals::masterServer;
+	if (ref($master) eq 'HASH'
+		&& defined $master->{privateAirshipItemID}
+		&& $master->{privateAirshipItemID} =~ /^\d+\z/) {
+		return 0 + $master->{privateAirshipItemID};
+	}
+	return ref($master) eq 'HASH' && $master->{lastroAirship} ? 14527 : 25464;
+}
+
+sub _inventory_has_airship_item {
+	my ($rule) = @_;
+	my $char = $Globals::char;
+	return (0, 'character inventory is unavailable') unless $char;
+
+	my $inventory = eval {
+		if (ref($char) eq 'HASH') {
+			$char->{inventory};
+		} elsif ($char->can('inventory')) {
+			$char->inventory;
+		} else {
+			undef;
+		}
+	};
+	return (0, 'character inventory is unavailable') if $@ || !$inventory;
+
+	my $inventory_can_ready = eval { $inventory->can('isReady') };
+	if ($inventory_can_ready) {
+		my $ready = eval { $inventory->isReady() };
+		return (0, 'character inventory is not ready') if $@ || !$ready;
+	}
+
+	my $item_id = _airship_item_id($rule);
+	my $item = eval {
+		if (ref($inventory) eq 'HASH') {
+			exists $inventory->{$item_id}
+				? $inventory->{$item_id}
+				: (ref($inventory->{items}) eq 'HASH'
+					&& exists $inventory->{items}{$item_id}
+					? $inventory->{items}{$item_id}
+					: undef);
+		} elsif ($inventory->can('getByNameID')) {
+			$inventory->getByNameID($item_id);
+		} else {
+			undef;
+		}
+	};
+	return (0, 'Private Airship item is unavailable') if $@ || !$item;
+	return (0, 'Private Airship item is unavailable')
+		if ref($item) eq 'HASH'
+		&& (!exists $item->{amount} || !defined $item->{amount} || $item->{amount} <= 0);
+	return (1, undef);
+}
+
+sub _search_targets {
+	my ($rule) = @_;
+	return () unless ref($rule) eq 'HASH';
+	my $targets = $rule->{search_targets};
+	return grep { defined $_ && _trim($_) ne '' } @$targets
+		if ref($targets) eq 'ARRAY';
+	return (_trim($targets)) if defined $targets && _trim($targets) ne '';
+	return ();
+}
+
+sub _uses_search_mode {
+	my ($rule) = @_;
+	return 1 unless ref($rule) eq 'HASH';
+	return 1 if $rule->{search_mode} || $rule->{shared_search};
+	my $entry_type = lc(_trim($rule->{entry_type} || 'privateairship'));
+	return 0 if $entry_type eq 'npc' || $entry_type eq 'macro';
+	return 1;
+}
+
+sub _activity_entry_validation {
+	my ($rule, $event) = @_;
+	return 'rule is not enabled or validated'
+		unless _validated_enabled_rule($rule);
+	return 'not connected in game' unless _in_game();
+
+	my $map = _event_map($rule, $event);
+	return 'event map is missing' unless defined $map;
+	return 'event map name is too long' if length($map) > 16;
+	return "event map '$map' is unknown" unless _map_is_known($map);
+
+	my $entry_type = lc(_trim($rule->{entry_type} || 'privateairship'));
+	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
+		my ($ok, $reason) = _inventory_has_airship_item($rule);
+		return $reason unless $ok;
+	}
+
+	return 'search_targets evidence is required for shared search mode'
+		if _uses_search_mode($rule) && !_search_targets($rule);
+	return undef;
+}
+
+sub activity_lock {
+	return $activity_lock ? 1 : 0 unless @_;
+	my ($enabled_value) = @_;
+	$activity_lock = $enabled_value ? 1 : 0;
+	return $activity_lock;
+}
+
+sub _macro_available {
+	if (defined &Plugins::registered) {
+		my $registered = eval { Plugins::registered('macro') };
+		return $registered ? 1 : 0 unless $@;
+	}
+	my $entry = $Commands::commands{macro};
+	return 0 unless $entry;
+	return ref($entry) eq 'HASH'
+		? ref($entry->{callback}) eq 'CODE'
+		: ref($entry) eq 'CODE';
+}
+
+sub clear_normal_ai {
+	if (_macro_available()) {
+		eval { Commands::run('macro stop'); 1 }
+			or warning "[LastROActivity] Unable to stop the active macro: $@\n";
+	}
+	AI::clear(qw(attack move route mapRoute items_take items_gather take));
+	return 1;
+}
+
+sub enter_search_mode {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	return 1 unless _uses_search_mode($rule);
+	unless (_search_targets($rule)) {
+		warning "[LastROActivity] Event '$rule->{event_id}' has no search_targets evidence; refusing shared search mode.\n";
+		return 0;
+	}
+
+	my $snapshot = eval {
+		LastROActivity::State::apply_activity_config(\%Globals::config, $teleport_idle);
+	};
+	if ($@ || ref($snapshot) ne 'HASH') {
+		warning "[LastROActivity] Unable to snapshot activity config: " . ($@ || 'invalid snapshot') . "\n";
+		return 0;
+	}
+	$active_snapshot = $snapshot;
+	return 1;
+}
+
+sub request_event_entry {
+	my ($rule, $event) = @_;
+	my $map = _event_map($rule, $event || $active_event);
+	return 0 unless defined $map;
+	my $entry_type = lc(_trim($rule->{entry_type} || 'privateairship'));
+	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
+		my $requested = eval { Commands::run("privateairship $map") };
+		return 0 if $@ || (defined $requested && !$requested);
+		return 1;
+	}
+	return 1 if $entry_type eq 'macro' || $entry_type eq 'npc';
+	return 0;
+}
+
 sub _start_due_event {
 	my ($event) = @_;
 	return 0 unless _event_can_start($event);
@@ -667,10 +896,59 @@ sub _advance_state_machine_one_action {
 
 sub begin_activity {
 	my ($rule, $scheduled_event) = @_;
-	return 0 unless _validated_enabled_rule($rule);
 	return 0 unless ref($scheduled_event) eq 'HASH';
-	# This is the stable interruption boundary.  It intentionally performs no
-	# AI, inventory, map, or config mutation until Task 5 supplies validation.
+	my $reason = _activity_entry_validation($rule, $scheduled_event);
+	if (defined $reason) {
+		$last_failure = $reason;
+		warning "[LastROActivity] Event '$scheduled_event->{event_id}' cannot start: $reason.\n";
+		$active_event = undef if defined $active_event
+			&& (!defined $active_event->{event_id}
+				|| $active_event->{event_id} eq ($scheduled_event->{event_id} || ''));
+		$armed_event = undef if !defined $active_event;
+		$state = LastROActivity::State->new
+			if !defined $active_event && ref($state) eq 'LastROActivity::State';
+		return 0;
+	}
+
+	$active_event = $scheduled_event unless defined $active_event;
+	$armed_event = $scheduled_event;
+	$active_snapshot = undef;
+
+	my $ok = eval {
+		if ($state->state eq 'IDLE') {
+			$state->transition('arm');
+		} elsif ($state->state eq 'RESUMED' || $state->state eq 'FAILED') {
+			$state = LastROActivity::State->new;
+			$state->transition('arm');
+		}
+		$state->transition('trigger') if $state->state eq 'ARMED';
+		die "invalid activity state " . $state->state . "\n"
+			unless $state->state eq 'INTERRUPTING';
+		activity_lock(1);
+		clear_normal_ai();
+		enter_search_mode($rule)
+			or die "unable to enter shared search mode\n";
+		$state->transition('snapshot');
+		$state->transition('depart');
+		request_event_entry($rule, $scheduled_event)
+			or die "unable to request event entry\n";
+		1;
+	};
+	if (!$ok) {
+		my $failure = $@ || 'activity start failed';
+		$last_failure = _trim($failure);
+		warning "[LastROActivity] Event '$scheduled_event->{event_id}' failed to start: $failure";
+		if (defined $active_snapshot) {
+			eval { LastROActivity::State::restore_config(\%Globals::config, $active_snapshot) };
+		}
+		activity_lock(0);
+		$active_snapshot = undef;
+		$active_event = undef;
+		$armed_event = undef;
+		$state = LastROActivity::State->new;
+		return 0;
+	}
+	$last_failure = undef;
 	return 1;
 }
 
@@ -763,6 +1041,7 @@ sub cleanup_and_restore {
 	$active_event = undef;
 	$armed_event = undef;
 	$state = LastROActivity::State->new;
+	activity_lock(0);
 	return 1;
 }
 
@@ -795,6 +1074,7 @@ sub onUnload {
 	$active_event = undef;
 	$armed_event = undef;
 	$active_snapshot = undef;
+	$activity_lock = 0;
 	return 1;
 }
 
@@ -806,6 +1086,7 @@ sub scheduler { return $scheduler; }
 sub rules { return $rules; }
 sub active_event { return $active_event; }
 sub armed_event { return $armed_event; }
+sub activity_locked { return $activity_lock ? 1 : 0; }
 sub last_failure { return $last_failure; }
 sub rules_file { return $rules_file || $rules_requested; }
 
