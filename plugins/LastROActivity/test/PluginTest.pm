@@ -200,6 +200,17 @@ BEGIN {
 	sub new { my ($class, $map) = @_; bless {map => $map}, $class; }
 	sub baseName { return $_[0]->{map}; }
 
+	package macro;
+	our $queue;
+
+	package PluginTest::MacroQueue;
+	sub new {
+		my ($class, $name, $finished) = @_;
+		bless {name => $name, finished => $finished ? 1 : 0}, $class;
+	}
+	sub name { return $_[0]->{name}; }
+	sub finished { return $_[0]->{finished}; }
+
 	$INC{'Log.pm'} = __FILE__;
 	package Log;
 	our (@messages, @warnings, @errors, @debug);
@@ -1201,6 +1212,462 @@ RULES
 		like(join('', @Log::warnings), qr/synthetic restore failure/, 'cleanup logs the restoration failure');
 		like(LastROActivity::last_failure(), qr/synthetic restore failure/, 'cleanup exposes the restoration failure');
 		$LastROActivity::active_snapshot = undef;
+		done_testing();
+	};
+
+	subtest 'return flow restores the snapshot before clearing AI and releasing the lock' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			lockMap_y => 66,
+			lockMap_randX => 7,
+			lockMap_randY => 8,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		%Globals::maps_lut = (
+			'event_map.rsw' => 1,
+			'prontera.rsw' => 1,
+		);
+		$Globals::field = PluginTest::Field->new('event_map');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::masterServer = {
+			lastroAirship => 1,
+			privateAirshipItemID => 14527,
+		};
+		my $rule = {
+			event_id => 'return_order',
+			enabled => 1,
+			announce_regex => '活动',
+			entry_type => 'privateairship',
+			entry_item_id => 14527,
+			entry_map => 'event_map',
+			search_targets => [],
+			validation_errors => [],
+		};
+		my $event = {event_id => 'return_order', rule => $rule, map => 'event_map'};
+		$LastROActivity::active_event = $event;
+		$LastROActivity::armed_event = $event;
+		$LastROActivity::active_snapshot = LastROActivity::State::apply_activity_config(
+			\%Globals::config, 7,
+		);
+		$LastROActivity::activity_lock = 1;
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart enter running finish);
+		@trace = ();
+		@Commands::run_calls = ();
+		@AI::clear_calls = ();
+		my $original_restore = \&LastROActivity::State::restore_config;
+		my $original_lock = \&LastROActivity::activity_lock;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_activity_ai = sub {
+				push @trace, 'clear activity AI';
+				return 1;
+			};
+			local *LastROActivity::State::restore_config = sub {
+				push @trace, 'restore lockMap/pay_fild08';
+				push @trace, 'restore teleport settings';
+				return $original_restore->(@_);
+			};
+			local *LastROActivity::activity_lock = sub {
+				push @trace, 'activity_lock:' . ($_[0] ? 'on' : 'off') if @_;
+				return $original_lock->(@_);
+			};
+			is(LastROActivity::finish_activity('finish announcement'), 1,
+				'finish announcement starts the return path');
+			is_deeply(\@trace, ['clear activity AI', 'privateairship prontera'],
+				'return request waits for the map confirmation hook');
+			$Globals::field = PluginTest::Field->new('prontera');
+			push @trace, 'map confirmed prontera';
+			LastROActivity::onMapChange(undef, {});
+		}
+		is_deeply(
+			\@trace,
+			[
+				'clear activity AI',
+				'privateairship prontera',
+				'map confirmed prontera',
+				'restore lockMap/pay_fild08',
+				'restore teleport settings',
+				'AI::clear',
+				'activity_lock:off',
+			],
+			'return flow restores lockMap before AI clear',
+		);
+		is_deeply(\%Globals::config, {
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			lockMap_y => 66,
+			lockMap_randX => 7,
+			lockMap_randY => 8,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		}, 'return restores the exact pre-activity config');
+		is(LastROActivity::active_event(), undef, 'return clears the active event');
+		is(LastROActivity::activity_locked(), 0, 'return releases the activity lock');
+		done_testing();
+	};
+
+	subtest 'entry map confirmation starts an optional entry macro' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {
+			lastroAirship => 1,
+			privateAirshipItemID => 14527,
+		};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (macro => 1);
+		%Commands::commands = (macro => sub { 1 });
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'macro_entry',
+			enabled => 1,
+			announce_regex => '活动',
+			entry_type => 'privateairship',
+			entry_item_id => 14527,
+			entry_map => 'event_map',
+			entry_macro => 'enter_event',
+			search_targets => ['event_egg'],
+			validation_errors => [],
+		};
+		my $event = {event_id => 'macro_entry', rule => $rule, map => 'event_map'};
+		my $entry_ok;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			$entry_ok = LastROActivity::begin_activity($rule, $event);
+		}
+		is($entry_ok, 1, 'airship entry is requested');
+		is_deeply(\@Commands::run_calls, ['privateairship event_map'],
+			'macro is not launched before the destination map is confirmed');
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		LastROActivity::onMapChange(undef, {});
+		is_deeply(\@Commands::run_calls,
+			['privateairship event_map', 'macro enter_event -overrideAI -exclusive'],
+			'entry macro starts only after map confirmation');
+		is(LastROActivity::state(), 'ENTERING', 'entry macro keeps the activity in ENTERING');
+		done_testing();
+	};
+
+	subtest 'completed entry macro is recognized when its queue disappears' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (macro => 1);
+		$macro::queue = undef;
+		%Commands::commands = (macro => sub { 1 });
+		$Commands::run_failure = sub {
+			my ($command) = @_;
+			$macro::queue = PluginTest::MacroQueue->new('enter_event', 0)
+				if $command eq 'macro enter_event -overrideAI -exclusive';
+			return 1;
+		};
+		$LastROActivity::clock = sub { 1_000 };
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'macro_disappears', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', entry_macro => 'enter_event',
+			search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'macro_disappears', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'ENTERING', 'entry macro owns the ENTERING state');
+		$macro::queue = undef;
+		LastROActivity::onMainLoopPre(undef, {now => 1_001});
+		is(LastROActivity::state(), 'RUNNING', 'queue disappearance after launch marks the macro complete');
+		is($LastROActivity::pending_macro, undef, 'completed macro marker is cleared');
+		$Commands::run_failure = undef;
+		$macro::queue = undef;
+		done_testing();
+	};
+
+	subtest 'nonzero airship result fails the activity with a reason' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		%Globals::maps_lut = ('event_map.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {
+			lastroAirship => 1,
+			privateAirshipItemID => 14527,
+		};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		@Log::warnings = ();
+		my $rule = {
+			event_id => 'rejected_entry',
+			enabled => 1,
+			announce_regex => '活动',
+			entry_type => 'privateairship',
+			entry_item_id => 14527,
+			entry_map => 'event_map',
+			search_targets => ['event_egg'],
+			validation_errors => [],
+		};
+		my $event = {event_id => 'rejected_entry', rule => $rule, map => 'event_map'};
+		is(LastROActivity::begin_activity($rule, $event), 1, 'entry request is accepted locally');
+		LastROActivity::onAirshipResult(undef, {type => 2});
+		is(LastROActivity::state(), 'FAILED', 'server rejection transitions the activity to FAILED');
+		like(join('', @Log::warnings), qr/not have enough|insufficient/i,
+			'airship rejection logs a human-readable reason');
+		done_testing();
+	};
+
+	subtest 'map confirmation preserves ENTERING until the next lifecycle step' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		my $rule = {
+			event_id => 'entering_state', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'entering_state', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'ENTERING', 'map packet confirms the ENTERING state');
+		LastROActivity::onMainLoopPre(undef, {now => $LastROActivity::activity_started_at});
+		is(LastROActivity::state(), 'RUNNING', 'main loop advances confirmed entry to RUNNING');
+		done_testing();
+	};
+
+	subtest 'airship rejection after map confirmation still fails closed' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		my $rule = {
+			event_id => 'late_rejection', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'late_rejection', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			LastROActivity::begin_activity($rule, $event);
+		}
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		LastROActivity::onAirshipResult(undef, {type => 3});
+		is(LastROActivity::state(), 'FAILED', 'late rejection transitions the activity to FAILED');
+		like(LastROActivity::last_failure(), qr/destination map is invalid/i,
+			'late rejection keeps its reason');
+		done_testing();
+	};
+
+	subtest 'map-first entry waits for airship acceptance before running' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (macro => 1);
+		%Commands::commands = (macro => sub { 1 });
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'map_first_entry', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', entry_macro => 'enter_event',
+			search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'map_first_entry', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+
+		# Some servers deliver map_changed before the private-airship result.
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'ENTERING', 'map arrival confirms entry but does not run yet');
+		LastROActivity::onMainLoopPre(undef, {now => $LastROActivity::activity_started_at});
+		is(LastROActivity::state(), 'ENTERING', 'main loop waits for the accepted airship result');
+		is_deeply(\@Commands::run_calls, ['privateairship event_map'],
+			'entry macro is not launched before airship acceptance');
+
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		LastROActivity::onMapChange(undef, {});
+		is_deeply(\@Commands::run_calls,
+			['privateairship event_map', 'macro enter_event -overrideAI -exclusive'],
+			'accepted map-first entry launches its macro exactly once');
+		done_testing();
+	};
+
+	subtest 'airship results without a pending transfer are ignored' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		@Commands::run_calls = ();
+		@Log::warnings = ();
+		my $rule = {
+			event_id => 'orphan_result', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'orphan_result', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'ENTERING', 'accepted transfer remains in the entry state until the main loop');
+		my $failure_before = LastROActivity::last_failure();
+		LastROActivity::onAirshipResult(undef, {type => 3});
+		is(LastROActivity::state(), 'ENTERING', 'orphan result does not fail the active entry');
+		is(LastROActivity::last_failure(), $failure_before, 'orphan result does not overwrite failure state');
+		is_deeply(\@Commands::run_calls, ['privateairship event_map'],
+			'orphan result does not trigger a return request');
+		done_testing();
+	};
+
+	subtest 'map-first entry keeps a bounded airship handshake timeout' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (LastROActivity => 1);
+		%Commands::commands = ();
+		$LastROActivity::clock = sub { 1_000 };
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'map_first_timeout', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', timeout_seconds => 5,
+			search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'map_first_timeout', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		LastROActivity::onMainLoopPre(undef, {now => 1_006});
+		is(LastROActivity::state(), 'FAILED', 'missing airship acceptance fails after the handshake deadline');
+		is_deeply(\@Commands::run_calls,
+			['privateairship event_map', 'privateairship prontera'],
+			'timeout starts the single fixed return request');
+		done_testing();
+	};
+
+	subtest 'return rejection reason survives the bounded timeout cleanup' => sub {
+		LastROActivity::cleanup_and_restore('test reset');
+		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (LastROActivity => 1);
+		%Commands::commands = ();
+		$LastROActivity::clock = sub { 1_000 };
+		@Commands::run_calls = ();
+		my $rule = {
+			event_id => 'return_rejection', enabled => 1, announce_regex => '活动',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', timeout_seconds => 5,
+			search_targets => ['event_egg'], validation_errors => [],
+		};
+		my $event = {event_id => 'return_rejection', rule => $rule, map => 'event_map'};
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_normal_ai = sub { return 1 };
+			is(LastROActivity::begin_activity($rule, $event), 1, 'entry request starts');
+		}
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$Globals::field = PluginTest::Field->new('event_map');
+		LastROActivity::onMapChange(undef, {});
+		LastROActivity::onMainLoopPre(undef, {now => 1_000});
+		is(LastROActivity::state(), 'RUNNING', 'accepted entry reaches the activity state');
+		is(LastROActivity::finish_activity('finished'), 1, 'finish starts the return request');
+		LastROActivity::onAirshipResult(undef, {type => 3});
+		is(LastROActivity::state(), 'FAILED', 'return rejection marks the activity failed');
+		my $reason = LastROActivity::last_failure();
+		like($reason, qr/destination map is invalid/i, 'return rejection records its specific reason');
+		LastROActivity::onMainLoopPre(undef, {now => 1_006});
+		is(LastROActivity::active_event(), undef, 'timeout completes the failed return cleanup');
+		is(LastROActivity::last_failure(), $reason,
+			'timeout does not overwrite the original return rejection reason');
 		done_testing();
 	};
 
