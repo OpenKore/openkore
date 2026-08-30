@@ -2439,6 +2439,13 @@ sub _poll_activity_death {
 	my $char = $Globals::char;
 	return undef unless defined $char;
 	for my $member (_party_members($char)) {
+		my $online = _actor_value($member, 'online');
+		next if defined $online && !$online;
+		my $dead_time = _actor_value($member, 'dead_time');
+		next if defined $activity_started_at
+			&& defined $dead_time
+			&& "$dead_time" =~ /^\s*\d+(?:\.\d+)?\s*\z/
+			&& $dead_time < $activity_started_at;
 		next unless defined $member && _actor_is_dead($member);
 		if (_actor_can_resurrect($member)) {
 			my $name = _actor_value($member, 'name') || 'resurrection-capable party member';

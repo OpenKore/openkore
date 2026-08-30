@@ -2586,6 +2586,30 @@ RULES
 		done_testing();
 	};
 
+	subtest 'dojo ignores stale or offline party death records' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_stale_party_death',
+			{
+				round_start_regex => 'ROUND START',
+				round_success_regex => 'ROUND SUCCESS',
+			},
+		);
+		$Globals::jobs_lut{8} = 'Priest';
+		$Globals::char->{party} = {
+			users => {
+				stale_member => {jobID => 8, dead => 1, dead_time => 50, online => 1},
+				offline_member => {jobID => 8, dead => 1, dead_time => 200, online => 0},
+			},
+		};
+		@Commands::run_calls = ();
+		LastROActivity::onMainLoopPre(undef, {now => 200});
+		is(LastROActivity::state(), 'RUNNING',
+			'pre-existing or offline party death does not abort the dojo');
+		ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+			'stale or offline death does not request a return');
+		done_testing();
+	};
+
 	subtest 'explicit zero Resurrection level overrides job capability fallback' => sub {
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_zero_resurrection_skill',
