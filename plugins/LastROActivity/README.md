@@ -18,6 +18,17 @@ Do not set `enabled=1` while any map, announcement, entry, target, or finish
 value is inferred rather than confirmed. The production test and the runtime
 validator fail closed when an enabled rule is incomplete.
 
+An enabled rule must provide both `announce_regex` for the registered server
+announcement and `start_regex` for the scheduler's explicit start line. A
+countdown in the announcement may supply the timing, but it does not remove
+the requirement for those two evidence patterns.
+
+`map_source` accepts only `static`, `dynamic`, or `announcement`. `static` and
+`announcement` use the configured `entry_map`; `dynamic` requires a
+`data-map="<map>#<x>#<y>"` value in the matching announcement. Fixed map names
+must exist in the selected server map table, and dynamic announcement metadata
+is checked against the loaded map table before entry.
+
 ## Shared monster control
 
 There is one combat source for every character: `control/mon_control.txt`. Its

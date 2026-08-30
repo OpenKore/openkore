@@ -19,6 +19,8 @@ my @EVENT_IDS = qw(
 	sky_chest
 );
 
+my %MAP_SOURCES = map { $_ => 1 } qw(static dynamic announcement);
+
 sub _trim {
 	my ($value) = @_;
 	$value = '' unless defined $value;
@@ -72,8 +74,21 @@ sub _safe_map_name {
 	$map = _trim($map);
 	$map =~ s/\.(?:rsw|gat)$//i;
 	return 0 if length($map) > 16;
-	return 0 if $map =~ /[\s;|&<>"'`\r\n]/;
+	return 0 if $map =~ m{[\\/]};
+	return 0 if $map =~ /\.\./;
+	return 0 if $map =~ /:/;
+	return 0 if $map =~ /[\x00-\x1F\x7F]/;
+	return 0 if $map =~ /[\s;|&<>"'`]/;
 	return 1;
+}
+
+sub _known_map {
+	my ($map, $known_maps) = @_;
+	return 0 unless _safe_map_name($map);
+	return 0 unless ref($known_maps) eq 'HASH';
+	$map = _trim($map);
+	$map =~ s/\.(?:rsw|gat)$//i;
+	return $known_maps->{lc($map)} ? 1 : 0;
 }
 
 sub _safe_macro_name {
@@ -119,6 +134,40 @@ sub _load_shared_search_rows {
 	return (\%rows, undef);
 }
 
+sub _load_known_maps {
+	my ($repo_root) = @_;
+	my $path = File::Spec->catfile($repo_root, 'tables', 'Lastro-zh_CN', 'maps.txt');
+	open my $fh, '<:encoding(UTF-8)', $path or return (undef, "unable to read $path: $!");
+	my %maps;
+	while (my $line = <$fh>) {
+		$line =~ s/\r?\n$//;
+		next if $line =~ /^\s*(?:#|\/\/)/ || _trim($line) eq '';
+		my ($map) = split /#/, $line, 2;
+		$map = _trim($map);
+		$map =~ s/\.(?:rsw|gat)$//i;
+		next unless $map ne '';
+		$maps{lc($map)} = 1;
+	}
+	close $fh;
+	return (\%maps, undef);
+}
+
+sub _load_monster_names {
+	my ($repo_root) = @_;
+	my $path = File::Spec->catfile($repo_root, 'tables', 'monsters_table.txt');
+	open my $fh, '<:encoding(UTF-8)', $path or return ({}, "unable to read $path: $!");
+	my %names;
+	while (my $line = <$fh>) {
+		$line =~ s/\r?\n$//;
+		next if $line =~ /^\s*#/ || _trim($line) eq '';
+		my @fields = split /\t/, $line, -1;
+		next unless @fields >= 2 && $fields[0] =~ /^\d+$/;
+		$names{$fields[0]} = $fields[1] if _trim($fields[1]) ne '';
+	}
+	close $fh;
+	return (\%names, undef);
+}
+
 sub _search_targets {
 	my ($rule) = @_;
 	return () unless ref($rule) eq 'HASH';
@@ -138,8 +187,45 @@ sub _uses_search_mode {
 	return 1;
 }
 
+sub _search_row_enabled {
+	my ($shared_rows, $key) = @_;
+	return 0 unless ref($shared_rows) eq 'HASH' && defined $key && $key ne '';
+	my $fields = $shared_rows->{lc(_trim($key))};
+	return 0 unless ref($fields) eq 'ARRAY' && defined $fields->[2];
+	return "$fields->[2]" =~ /^\s*1\s*$/ ? 1 : 0;
+}
+
+sub _trusted_search_target {
+	my ($target, $shared_rows, $monster_names) = @_;
+	return 0 unless defined $target;
+	$target = _trim($target);
+	return 0 if $target eq '' || lc($target) eq 'all' || $target =~ /[\r\n]/;
+	return 0 if $target =~ /^0+$/;
+
+	if ($target =~ /^\d+$/) {
+		my $id = 0 + $target;
+		return 1 if _search_row_enabled($shared_rows, "$id");
+		if (ref($monster_names) eq 'HASH' && exists $monster_names->{"$id"}) {
+			return _search_row_enabled($shared_rows, $monster_names->{"$id"});
+		}
+		return 0;
+	}
+
+	my $name_key = lc($target);
+	return 1 if _search_row_enabled($shared_rows, $name_key);
+	if (ref($monster_names) eq 'HASH') {
+		for my $id (keys %$monster_names) {
+			my $name = $monster_names->{$id};
+			next unless defined $name && lc(_trim($name)) eq $name_key;
+			return 1 if _search_row_enabled($shared_rows, $id);
+			return 1 if _search_row_enabled($shared_rows, $name);
+		}
+	}
+	return 0;
+}
+
 sub _production_errors {
-	my ($rule, $shared_rows) = @_;
+	my ($rule, $shared_rows, $known_maps, $monster_names) = @_;
 	return () unless ref($rule) eq 'HASH' && _truthy($rule->{enabled});
 	my @errors;
 	if (ref($rule->{validation_errors}) eq 'ARRAY' && @{$rule->{validation_errors}}) {
@@ -150,19 +236,32 @@ sub _production_errors {
 	# rule must still identify the server line that is allowed to trigger it.
 	push @errors, 'announce_regex (start evidence) is required or invalid'
 		unless _valid_pattern($rule->{announce_regex});
-	if (defined $rule->{start_regex} && _trim($rule->{start_regex}) ne ''
-		&& !_valid_pattern($rule->{start_regex})) {
-		push @errors, 'start_regex is invalid';
-	}
+	push @errors, 'start_regex (scheduler start evidence) is required or invalid'
+		unless _valid_pattern($rule->{start_regex});
 
-	my $finish_ok = _valid_pattern($rule->{finish_regex});
+	my $finish_ok = 0;
+	my $finish_defined = defined $rule->{finish_regex};
+	my $finish_present = $finish_defined
+		&& (ref($rule->{finish_regex}) || _trim($rule->{finish_regex}) ne '');
+	if ($finish_present) {
+		if (_valid_pattern($rule->{finish_regex})) {
+			$finish_ok = 1;
+		} else {
+			push @errors, 'finish_regex is invalid';
+		}
+	}
 	if (ref($rule->{phases}) eq 'ARRAY' && @{$rule->{phases}}) {
 		my $phases_ok = 1;
 		for my $phase (@{$rule->{phases}}) {
 			my $pattern = _phase_finish_pattern($phase);
-			$phases_ok = 0 unless _valid_pattern($pattern);
+			unless (_valid_pattern($pattern)) {
+				$phases_ok = 0;
+				push @errors, 'phase finish evidence is missing or invalid';
+			}
 		}
 		$finish_ok = 1 if $phases_ok;
+	} elsif (defined $rule->{phases} && ref($rule->{phases}) ne 'ARRAY') {
+		push @errors, 'phases must be an array';
 	}
 	$finish_ok = 1 if _positive_number($rule->{duration_seconds});
 	push @errors, 'finish evidence or a positive duration is required'
@@ -170,13 +269,24 @@ sub _production_errors {
 
 	my $source = _trim($rule->{map_source});
 	my $entry_map = _trim($rule->{entry_map});
+	my $source_key = lc($source);
+	if ($source ne '' && !$MAP_SOURCES{$source_key}) {
+		push @errors, "map_source '$source' is not documented";
+	}
 	if ($source eq '' && $entry_map eq '') {
 		push @errors, 'map_source or entry_map is required';
 	} elsif (lc($source) eq 'dynamic') {
-		# Dynamic maps come from the matched announcement and do not have a
-		# statically known entry_map in the production fixture.
+		# Dynamic maps come from the matched announcement. If a static fallback is
+		# supplied anyway, still reject unsafe or unknown values rather than trusting
+		# stale configuration.
+		if ($entry_map ne '' && (!_safe_map_name($entry_map)
+			|| !_known_map($entry_map, $known_maps))) {
+			push @errors, 'dynamic entry_map is unsafe or unknown';
+		}
 	} elsif (!_safe_map_name($entry_map)) {
 		push @errors, 'a safe entry_map is required for a fixed map source';
+	} elsif (!_known_map($entry_map, $known_maps)) {
+		push @errors, "entry_map '$entry_map' is unknown";
 	}
 
 	my $return_policy = _trim($rule->{return_policy});
@@ -226,8 +336,7 @@ sub _production_errors {
 			for my $target (@targets) {
 				my $key = lc(_trim($target));
 				next if $seen{$key}++;
-				my $fields = $shared_rows->{$key};
-				if (ref($fields) ne 'ARRAY' || !defined $fields->[2] || "$fields->[2]" ne '1') {
+				if (!_trusted_search_target($target, $shared_rows, $monster_names)) {
 					push @errors, "search target '$target' is not present in shared mon_control with search=1";
 				}
 			}
@@ -242,6 +351,8 @@ sub start {
 	my $repo_root = File::Spec->catdir($RealBin, '..', '..', '..');
 	my $mon_control_file = File::Spec->catfile($repo_root, 'control', 'mon_control.txt');
 	my ($shared_rows, $shared_error) = _load_shared_search_rows($mon_control_file);
+	my ($known_maps, $map_error) = _load_known_maps($repo_root);
+	my ($monster_names, $monster_error) = _load_monster_names($repo_root);
 
 	subtest 'production fixture contains only safe disabled rules' => sub {
 		ok(-f $rules_file, 'bundled production rules file exists');
@@ -252,12 +363,16 @@ sub start {
 		is_deeply($errors, [], 'production fixture has no parser errors');
 		ok(!defined $shared_error, 'shared mon_control.txt is readable')
 			or diag($shared_error);
+		ok(!defined $map_error, 'server map table is readable')
+			or diag($map_error);
+		ok(!defined $monster_error, 'monster identity table is readable')
+			or diag($monster_error);
 
 		for my $id (@EVENT_IDS) {
 			ok(exists $rules->{$id}, "$id rule exists");
 			next unless exists $rules->{$id};
 			ok(!$rules->{$id}{enabled}, "$id remains disabled until evidence is complete");
-			my @violations = _production_errors($rules->{$id}, $shared_rows);
+			my @violations = _production_errors($rules->{$id}, $shared_rows, $known_maps, $monster_names);
 			ok(!@violations, "$id has no enabled-rule contract violations")
 				or diag(join('; ', @violations));
 		}
@@ -268,46 +383,74 @@ sub start {
 		my $complete = {
 			enabled => 1,
 			announce_regex => 'event ready',
+			start_regex => 'event starts',
 			finish_regex => 'event done',
-			map_source => 'fixed',
+			map_source => 'static',
 			entry_map => 'prontera',
 			entry_type => 'macro',
 			entry_macro => 'enter_event',
 			return_policy => 'privateairship:prontera',
 		};
-		is_deeply([_production_errors($complete, $shared_rows)], [],
+		is_deeply([_production_errors($complete, $shared_rows, $known_maps, $monster_names)], [],
 			'a complete macro rule satisfies the production contract');
 
 		my %missing_announcement = %$complete;
 		delete $missing_announcement{announce_regex};
-		like(join('; ', _production_errors(\%missing_announcement, $shared_rows)),
+		like(join('; ', _production_errors(\%missing_announcement, $shared_rows, $known_maps, $monster_names)),
 			qr/announce_regex/, 'missing announcement evidence is rejected');
+
+		my %missing_start = %$complete;
+		delete $missing_start{start_regex};
+		like(join('; ', _production_errors(\%missing_start, $shared_rows, $known_maps, $monster_names)),
+			qr/start_regex/, 'missing scheduler start evidence is rejected');
 
 		my %missing_finish = %$complete;
 		delete $missing_finish{finish_regex};
-		like(join('; ', _production_errors(\%missing_finish, $shared_rows)),
+		like(join('; ', _production_errors(\%missing_finish, $shared_rows, $known_maps, $monster_names)),
 			qr/finish evidence/, 'missing finish evidence is rejected');
+
+		my %malformed_finish = %$complete;
+		$malformed_finish{finish_regex} = '[';
+		$malformed_finish{duration_seconds} = 900;
+		like(join('; ', _production_errors(\%malformed_finish, $shared_rows, $known_maps, $monster_names)),
+			qr/finish_regex.*invalid|invalid.*finish/, 'malformed finish evidence is rejected even with duration fallback');
 
 		my %missing_map = %$complete;
 		delete @missing_map{qw(map_source entry_map)};
-		like(join('; ', _production_errors(\%missing_map, $shared_rows)),
+		like(join('; ', _production_errors(\%missing_map, $shared_rows, $known_maps, $monster_names)),
 			qr/map_source|entry_map/, 'missing map evidence is rejected');
+
+		my %unknown_map = %$complete;
+		$unknown_map{entry_map} = 'not_real';
+		like(join('; ', _production_errors(\%unknown_map, $shared_rows, $known_maps, $monster_names)),
+			qr/unknown|entry_map/, 'unknown map names are rejected');
+
+		my %traversal_map = %$complete;
+		$traversal_map{entry_map} = '../../x';
+		like(join('; ', _production_errors(\%traversal_map, $shared_rows, $known_maps, $monster_names)),
+			qr/unsafe|entry_map|map/, 'path traversal map names are rejected');
+
+		my %bad_map_source = %$complete;
+		$bad_map_source{map_source} = 'typo';
+		like(join('; ', _production_errors(\%bad_map_source, $shared_rows, $known_maps, $monster_names)),
+			qr/map_source/, 'undocumented map source values are rejected');
 
 		my %bad_return = %$complete;
 		$bad_return{return_policy} = 'prontera';
-		like(join('; ', _production_errors(\%bad_return, $shared_rows)),
+		like(join('; ', _production_errors(\%bad_return, $shared_rows, $known_maps, $monster_names)),
 			qr/return_policy/, 'non-canonical return policy is rejected');
 
 		my %missing_entry = %$complete;
 		delete $missing_entry{entry_macro};
-		like(join('; ', _production_errors(\%missing_entry, $shared_rows)),
+		like(join('; ', _production_errors(\%missing_entry, $shared_rows, $known_maps, $monster_names)),
 			qr/entry_macro/, 'missing entry macro is rejected');
 
 		my $npc_rule = {
 			enabled => 1,
 			announce_regex => 'event ready',
+			start_regex => 'event starts',
 			finish_regex => 'event done',
-			map_source => 'fixed',
+			map_source => 'static',
 			entry_map => 'prontera',
 			entry_type => 'npc',
 			entry_x => 152,
@@ -317,29 +460,49 @@ sub start {
 			entry_npc_evidence => 'server dialog transcript',
 			return_policy => 'privateairship:prontera',
 		};
-		is_deeply([_production_errors($npc_rule, $shared_rows)], [],
+		is_deeply([_production_errors($npc_rule, $shared_rows, $known_maps, $monster_names)], [],
 			'canonical trusted NPC metadata satisfies NPC entry validation');
 		my %untrusted_npc = %$npc_rule;
 		delete $untrusted_npc{entry_npc_evidence};
-		like(join('; ', _production_errors(\%untrusted_npc, $shared_rows)),
+		like(join('; ', _production_errors(\%untrusted_npc, $shared_rows, $known_maps, $monster_names)),
 			qr/entry_npc_evidence/, 'NPC entry without canonical evidence is rejected');
 
 		my $search_rule = {
 			enabled => 1,
 			announce_regex => 'event ready',
+			start_regex => 'event starts',
 			finish_regex => 'event done',
-			map_source => 'fixed',
+			map_source => 'static',
 			entry_map => 'prontera',
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			return_policy => 'privateairship:prontera',
 			search_targets => ['missing-event-monster'],
 		};
-		like(join('; ', _production_errors($search_rule, $shared_rows)),
+		like(join('; ', _production_errors($search_rule, $shared_rows, $known_maps, $monster_names)),
 			qr/search target|shared mon_control/, 'untrusted search target is rejected');
+		my %all_rows = %{defined $shared_rows ? $shared_rows : {}};
+		$all_rows{all} = [1, 0, 1];
+		my %all_target = %$search_rule;
+		$all_target{search_targets} = ['all'];
+		like(join('; ', _production_errors(\%all_target, \%all_rows, $known_maps, $monster_names)),
+			qr/search target|shared mon_control/, 'the all sentinel is rejected as a search target');
+		my ($known_target) = grep {
+			ref($shared_rows) eq 'HASH'
+			&& ref($shared_rows->{$_}) eq 'ARRAY'
+			&& defined $shared_rows->{$_}[2]
+			&& "$shared_rows->{$_}[2]" eq '1'
+		} keys %{defined $shared_rows ? $shared_rows : {}};
+		ok(defined $known_target, 'shared fixture exposes a search=1 row for positive target validation');
+		if (defined $known_target) {
+			my %trusted_target = %$search_rule;
+			$trusted_target{search_targets} = [$known_target];
+			is_deeply([_production_errors(\%trusted_target, $shared_rows, $known_maps, $monster_names)], [],
+				'a declared target resolves to a shared search=1 row');
+		}
 		my %missing_item = %$search_rule;
 		delete $missing_item{entry_item_id};
-		like(join('; ', _production_errors(\%missing_item, $shared_rows)),
+		like(join('; ', _production_errors(\%missing_item, $shared_rows, $known_maps, $monster_names)),
 			qr/entry_item_id/, 'airship entry without a confirmed item ID is rejected');
 		done_testing();
 	};
