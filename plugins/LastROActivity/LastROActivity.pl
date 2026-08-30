@@ -7,6 +7,7 @@ use utf8;
 use Time::HiRes qw(time);
 use File::Basename qw(dirname);
 use File::Spec;
+use Scalar::Util ();
 
 # Plugins are evaluated with do(), so add the sibling module directory without
 # assuming that an optional test harness has populated current_plugin_folder.
@@ -42,6 +43,7 @@ our ($pending_destination, $pending_destination_kind, $pending_destination_deadl
 our ($pending_airship_result, $pending_macro, $pending_macro_stage);
 our ($pending_macro_seen, $pending_macro_deadline, $pending_macro_error);
 our $pending_macro_root_name;
+our $pending_leave_npc;
 our $return_pending;
 our $entry_map_confirmed;
 our $entry_transfer_accepted;
@@ -78,6 +80,7 @@ $pending_macro_seen = 0;
 $pending_macro_deadline = undef;
 $pending_macro_error = undef;
 $pending_macro_root_name = undef;
+$pending_leave_npc = undef;
 $return_pending = 0;
 $entry_map_confirmed = 0;
 $entry_transfer_accepted = 0;
@@ -854,6 +857,8 @@ sub onActivityMessage {
 		}
 
 		if (_activity_pattern_matches($message, $rule->{round_success_regex})) {
+			return undef unless $active_event->{round_started};
+			return undef if $active_event->{round_success_seen};
 			$activity_round_count = 0 unless defined $activity_round_count;
 			$activity_round_count++;
 			$active_event->{round_count} = $activity_round_count;
@@ -1227,6 +1232,123 @@ sub _run_checked_command {
 	return (1, undef);
 }
 
+sub _observe_npc_queue {
+	return (undef, 'NPC queue observer is unavailable')
+		unless defined &AI::inQueue;
+
+	my ($queued, $ok) = (0, 0);
+	$ok = eval {
+		$queued = AI::inQueue('NPC');
+		1;
+	};
+	unless ($ok) {
+		my $error = _trim($@ || 'unable to inspect NPC queue');
+		return (undef, $error ne '' ? $error : 'unable to inspect NPC queue');
+	}
+	return ($queued ? 1 : 0, undef);
+}
+
+sub _npc_task_object {
+	my ($candidate) = @_;
+	return undef unless ref($candidate);
+	my $is_task = eval {
+		$candidate->can('getStatus') && $candidate->can('getError');
+	};
+	return $is_task ? $candidate : undef;
+}
+
+sub _npc_task_identity {
+	my ($task) = @_;
+	return undef unless ref($task);
+	return eval { Scalar::Util::refaddr($task) };
+}
+
+sub _npc_queue_task {
+	return wantarray ? (undef, undef) : undef
+		unless defined &AI::findAction;
+
+	my ($index, $index_ok) = (undef, 0);
+	$index_ok = eval {
+		$index = AI::findAction('NPC');
+		1;
+	};
+	return wantarray ? (undef, undef) : undef
+		unless $index_ok && defined $index && "$index" =~ /^\d+\z/;
+
+	# AI::args() intentionally exposes a hash view of the queue entry.  Keep
+	# the original blessed task from the backing arrays so status and identity
+	# checks remain meaningful in the real OpenKore runtime.
+	my @candidates;
+	push @candidates, $AI::ai_seq_args[$index]
+		if $index <= $#AI::ai_seq_args;
+
+	if (defined &AI::args) {
+		my ($args, $args_ok) = (undef, 0);
+		$args_ok = eval {
+			$args = AI::args($index);
+			1;
+		};
+		if ($args_ok) {
+			push @candidates, $args;
+			push @candidates, $args->{task}
+				if ref($args) eq 'HASH' && exists $args->{task};
+		}
+	}
+
+	for my $candidate (@candidates) {
+		my $task = _npc_task_object($candidate);
+		return wantarray ? ($task, 0 + $index) : $task
+			if defined $task;
+	}
+	return wantarray ? (undef, 0 + $index) : undef;
+}
+
+sub _npc_task_outcome {
+	my ($task) = @_;
+	return ('unknown', 'leave NPC task is unavailable') unless defined $task;
+
+	my ($status, $status_ok) = (undef, 0);
+	$status_ok = eval {
+		$status = $task->getStatus();
+		1;
+	};
+	return ('unknown', 'unable to inspect leave NPC task status') unless $status_ok;
+
+	my $done_status;
+	if (defined &Task::DONE) {
+		$done_status = eval { Task::DONE() };
+	}
+	my $is_done = defined $status && (
+		(defined $done_status && "$status" eq "$done_status")
+		|| "$status" eq 'DONE'
+		|| "$status" eq '4'
+	);
+	return ('pending', undef) unless $is_done;
+
+	my ($error, $error_ok) = (undef, 0);
+	$error_ok = eval {
+		$error = $task->getError();
+		1;
+	};
+	return ('failure', 'unable to inspect leave NPC task result') unless $error_ok;
+	return ('success', undef) unless defined $error;
+
+	my $message;
+	if (ref($error) eq 'HASH') {
+		for my $key (qw(message error code)) {
+			next unless exists $error->{$key} && defined $error->{$key};
+			my $value = _trim($error->{$key});
+			next if $value eq '';
+			$message = $value;
+			last;
+		}
+	} elsif (!ref($error)) {
+		$message = _trim($error);
+	}
+	$message = 'leave NPC task failed' unless defined $message && $message ne '';
+	return ('failure', "leave NPC task failed: $message");
+}
+
 sub _macro_name {
 	my ($name) = @_;
 	return undef if ref($name);
@@ -1360,6 +1482,12 @@ sub _clear_pending_macro {
 	$pending_macro_deadline = undef;
 	$pending_macro_error = undef;
 	$pending_macro_root_name = undef;
+}
+
+sub _clear_pending_leave_npc {
+	delete $active_event->{leave_npc_pending}
+		if ref($active_event) eq 'HASH';
+	$pending_leave_npc = undef;
 }
 
 sub _map_is_known {
@@ -2048,6 +2176,7 @@ sub _mark_activity_failed {
 		_transition_state('fail');
 	}
 	_clear_pending_macro();
+	_clear_pending_leave_npc();
 	if (defined $active_event && !$return_pending) {
 		unless ($active_event->{activity_ai_cleared}) {
 			$active_event->{activity_ai_cleared} = 1;
@@ -2207,6 +2336,44 @@ sub _actor_skill_level {
 	return 0;
 }
 
+sub _actor_resurrection_skill {
+	my ($actor) = @_;
+	return (0, 0) unless defined $actor;
+
+	my $skills = _actor_value($actor, 'skills');
+	if (ref($skills) eq 'HASH') {
+		for my $key (keys %$skills) {
+			next unless defined $key && uc($key) eq 'ALL_RESURRECTION';
+			my $entry = $skills->{$key};
+			my $level = ref($entry) eq 'HASH' ? $entry->{lv} : $entry;
+			return (1, 1)
+				if defined $level
+				&& "$level" =~ /^\s*\d+(?:\.\d+)?\s*\z/
+				&& $level > 0;
+			return (1, 0);
+		}
+	}
+
+	if (ref($actor) ne 'HASH') {
+		for my $method (qw(getSkillLevelByHandle getSkillLevel)) {
+			my ($level, $ok) = (undef, 0);
+			$ok = eval {
+				$level = $actor->$method('ALL_RESURRECTION');
+				1;
+			};
+			return (1, 1)
+				if $ok && defined $level
+				&& "$level" =~ /^\s*\d+(?:\.\d+)?\s*\z/
+				&& $level > 0;
+			# OpenKore's skill lookup returns zero for an absent skill as well
+			# as an explicitly unlearned one. Only a positive lookup is enough
+			# to override job metadata; zero must still allow Priest fallback.
+		}
+	}
+
+	return (0, 0);
+}
+
 sub _actor_job_name {
 	my ($actor) = @_;
 	return undef unless defined $actor;
@@ -2232,7 +2399,8 @@ sub _actor_job_name {
 sub _actor_can_resurrect {
 	my ($actor) = @_;
 	return 0 unless defined $actor;
-	return 1 if _actor_skill_level($actor, 'ALL_RESURRECTION') > 0;
+	my ($skill_present, $skill_capable) = _actor_resurrection_skill($actor);
+	return $skill_capable if $skill_present;
 	for my $key (qw(resurrection_capable can_resurrect)) {
 		my $value = _actor_value($actor, $key);
 		return 1 if defined $value && "$value" =~ /^\s*1\s*\z/;
@@ -2260,6 +2428,7 @@ sub _party_members {
 sub _poll_activity_death {
 	my ($now) = @_;
 	return undef unless defined $active_event && ref($active_event) eq 'HASH';
+	return undef unless _round_mode($active_event->{rule});
 	return undef if $return_pending;
 	return undef unless ref($state) eq 'LastROActivity::State';
 	my $state_name = $state->state;
@@ -2329,9 +2498,86 @@ sub onMainLoopPre {
 	_advance_state_machine_one_action($now);
 }
 
+sub _advance_pending_leave_npc {
+	my ($now) = @_;
+	return 0 unless ref($pending_leave_npc) eq 'HASH';
+
+	my ($queued, $error) = _observe_npc_queue();
+	unless (defined $queued) {
+		_clear_pending_leave_npc();
+		_mark_activity_failed(
+			$error && $error ne ''
+				? "unable to observe leave NPC queue: $error"
+				: 'unable to observe leave NPC queue',
+		);
+		return 1;
+	}
+
+	my ($task_outcome, $task_error) = ('unknown', undef);
+	if (defined $pending_leave_npc->{task}) {
+		($task_outcome, $task_error) = _npc_task_outcome($pending_leave_npc->{task});
+		if ($task_outcome eq 'failure') {
+			_clear_pending_leave_npc();
+			_mark_activity_failed($task_error || 'leave NPC task failed');
+			return 1;
+		}
+	}
+
+	if ($queued) {
+		my ($current_task, $current_index) = _npc_queue_task();
+		unless (defined $current_task) {
+			_clear_pending_leave_npc();
+			_mark_activity_failed('leave NPC task disappeared while queued');
+			return 1;
+		}
+		my $current_id = _npc_task_identity($current_task);
+		unless (defined $current_id
+			&& defined $pending_leave_npc->{task_id}
+			&& "$current_id" eq "$pending_leave_npc->{task_id}") {
+			_clear_pending_leave_npc();
+			_mark_activity_failed('leave NPC task was replaced while queued');
+			return 1;
+		}
+		if (defined $pending_leave_npc->{deadline}
+			&& $now >= $pending_leave_npc->{deadline}) {
+			_clear_pending_leave_npc();
+			_mark_activity_failed('leave NPC dialog timed out');
+			return 1;
+		}
+		return 1;
+	}
+
+	if (defined $pending_leave_npc->{task}) {
+		unless ($task_outcome eq 'success') {
+			_clear_pending_leave_npc();
+			_mark_activity_failed(
+				$task_error || 'leave NPC task completion was not observed',
+			);
+			return 1;
+		}
+	}
+
+	unless ($pending_leave_npc->{seen}) {
+		_clear_pending_leave_npc();
+		_mark_activity_failed('leave NPC queue completion was not observed');
+		return 1;
+	}
+
+	_clear_pending_leave_npc();
+	$active_event->{leave_npc_complete} = 1
+		if ref($active_event) eq 'HASH';
+	return_to_capital();
+	return 1;
+}
+
 sub _advance_state_machine_one_action {
 	my ($now) = @_;
 	$now = _now() unless defined $now;
+
+	if (defined $pending_leave_npc) {
+		_advance_pending_leave_npc($now);
+		return;
+	}
 
 	if (defined $active_event
 		&& $entry_map_confirmed
@@ -2400,6 +2646,7 @@ sub begin_activity {
 	$activity_round_count = 0;
 	$activity_round_started_at = undef;
 	$activity_self_dead_at = undef;
+	$pending_leave_npc = undef;
 	$airship_failure_count = 0;
 	$scheduled_event->{round_count} = 0;
 	$scheduled_event->{round} = 0;
@@ -2644,6 +2891,7 @@ sub cleanup_and_restore {
 	for my $clearer (
 		['pending destination', \&_clear_pending_destination],
 		['pending macro', \&_clear_pending_macro],
+		['pending leave NPC', \&_clear_pending_leave_npc],
 	) {
 		my ($label, $callback) = @$clearer;
 		my $ok = eval { $callback->(); 1 };
@@ -2661,6 +2909,7 @@ sub cleanup_and_restore {
 	$activity_round_count = 0;
 	$activity_round_started_at = undef;
 	$activity_self_dead_at = undef;
+	$pending_leave_npc = undef;
 	$airship_failure_count = 0;
 	$active_event = undef;
 	$armed_event = undef;
@@ -2683,6 +2932,7 @@ sub _stop_active_activity {
 	$active_event->{finish_reason} = _trim($reason)
 		if ref($active_event) eq 'HASH' && defined $reason;
 	_clear_pending_macro();
+	_clear_pending_leave_npc();
 	unless ($active_event->{activity_ai_cleared}) {
 		$active_event->{activity_ai_cleared} = 1;
 		_try_clear_activity_ai('activity stop cleanup');
@@ -2727,6 +2977,39 @@ sub _complete_round_limit {
 		return 0;
 	}
 	$active_event->{leave_npc_started} = 1;
+	if (defined &AI::inQueue) {
+		my ($queued, $queue_error) = _observe_npc_queue();
+		unless (defined $queued && $queued) {
+			_mark_activity_failed(
+				$queue_error && $queue_error ne ''
+					? "leave NPC queue was not confirmed: $queue_error"
+					: 'leave NPC queue was not confirmed',
+			);
+			return 0;
+		}
+		my ($task, $task_index) = _npc_queue_task();
+		unless (defined $task) {
+			_mark_activity_failed('leave NPC task could not be observed');
+			return 0;
+		}
+		my $task_id = _npc_task_identity($task);
+		unless (defined $task_id) {
+			_mark_activity_failed('leave NPC task identity could not be observed');
+			return 0;
+		}
+		$pending_leave_npc = {
+			seen => 1,
+			task => $task,
+			task_id => $task_id,
+			task_index => $task_index,
+			started_at => _now(),
+			deadline => _now() + _transfer_timeout($rule),
+		};
+		$active_event->{leave_npc_pending} = 1;
+		return 1;
+	}
+	# Hosts without AI::inQueue cannot expose asynchronous queue state.  Keep
+	# the historical command-level fallback for those minimal integrations.
 	return return_to_capital();
 }
 
@@ -2786,6 +3069,7 @@ sub return_to_capital {
 
 	_clear_pending_destination();
 	_clear_pending_macro();
+	_clear_pending_leave_npc();
 	my $rule = ref($active_event->{rule}) eq 'HASH' ? $active_event->{rule} : undef;
 	_set_pending_destination('prontera', 'return', $rule)
 		or return 0;
