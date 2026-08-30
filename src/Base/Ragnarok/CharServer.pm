@@ -109,6 +109,15 @@ sub character_list_switch {
 	# LastRO's 2021-11-03 character server answers 09A1 with LIST2
 	# (0B72), even though the shared table also contains the older 099D
 	# layout.  Keep 099D as the default for other server types.
+	# The shared recvpackets length table can be sparse after custom table
+	# merges, while Network::Receive still has the concrete 0B72 handler.  Use
+	# parser capability first so a modern client never gets the legacy 099D
+	# layout merely because a length entry was omitted from the shared table.
+	return '0B72'
+		if $server_type eq 'kRO_RagexeRE_2021_11_03'
+		&& $self->{recvPacketParser}
+		&& $self->{recvPacketParser}{packet_list}
+		&& exists $self->{recvPacketParser}{packet_list}{'0B72'};
 	return '0B72'
 		if $server_type eq 'kRO_RagexeRE_2021_11_03'
 		&& $self->{rpackets}
@@ -144,7 +153,7 @@ sub game_login {
 		# character server only. Right now there is the possibility that
 		# someone can login to another character server with a session
 		# that was already handled by this one.
-		$self->{sessionStore}->mark($session);
+		$self->{sessionStore}->mark($session->{sessionID});
 		$client->{session} = $session;
 		$session->{time} = time;
 		$client->send($args->{accountID});
@@ -198,11 +207,20 @@ sub sendCharInfo {
 	my ($self, $args, $client) = @_;
 
 	my @char_list = $self->getCharacters($client->{session});
+	my $switch = $self->character_list_switch;
+	my $packet = $self->{recvPacketParser}->reconstruct({
+		switch => $switch,
+		chars => \@char_list
+	});
 
-	$client->send($self->{recvPacketParser}->reconstruct({
-			switch => $self->character_list_switch,
-			chars => \@char_list
-		}));
+	# `PacketParser::reconstruct` normally gets variable-length metadata from
+	# the process-wide recvpackets table.  XKore2 can be started with a sparse
+	# custom table, so make the length self-consistent for character pages even
+	# when that shared entry is absent.
+	if (($switch eq '099D' || $switch eq '0B72') && length($packet) >= 4) {
+		substr($packet, 2, 2) = pack('v', length($packet));
+	}
+	$client->send($packet);
 }
 
 sub char_login {
@@ -210,7 +228,7 @@ sub char_login {
 	my ($self, $args, $client) = @_;
 	my $session = $client->{session};
 	if ($session) {
-		$self->{sessionStore}->mark($session);
+		$self->{sessionStore}->mark($session->{sessionID});
 		my @characters = $self->getCharacters();
 
 		if ($args->{slot} != $char->{slot}) {

@@ -119,6 +119,7 @@ use Network::XKore2::CharServer;
 			'0072' => ['received_characters'],
 			'082D' => ['received_characters_info'],
 			'099D' => ['received_characters'],
+			'0B72' => ['received_characters'],
 		};
 		bless {
 			packet_lut => {},
@@ -137,8 +138,10 @@ use Network::XKore2::CharServer;
 			$args->{valid_slot} || 0) if $args->{switch} eq '082D';
 		return pack('v V', 0x09A0, $args->{sync_Count} || 0)
 			if $args->{switch} eq 'sync_received_characters';
-		return pack('v v a175', 0x099D, 179, 'C' x 175)
+		return pack('v v a175', 0x099D, $self->{bad_length} ? 0 : 179, 'C' x 175)
 			if $args->{switch} eq '099D';
+		return pack('v v a175', 0x0B72, $self->{bad_length} ? 0 : 179, 'C' x 175)
+			if $args->{switch} eq '0B72';
 		return pack('v', 0);
 	}
 }
@@ -175,6 +178,51 @@ sub start {
 		valid_slot => 3,
 		sync_Count => 1,
 	);
+
+	subtest '2021 RE LastRO uses 0B72 through the complete 0065 to 09A1 flow' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		$parser->{bad_length} = 1;
+		# The handoff only needs the sender's client tokenizer/process path here;
+		# use the in-test sender stub so this behavior test is independent of
+		# optional generated packet modules.
+		my $sender = Network::Send::kRO::RagexeRE_2020_07_23->new;
+		my $server = bless {
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+			# Simulate a custom receive table that omitted 0B72 while the
+			# production receive parser still knows how to build it.
+			rpackets => { '099D' => { length => -1 } },
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+			hook_prefix => 'Network::ClientReceive',
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->game_login({
+			accountID => $account_id,
+			sessionID => pack('V', 1),
+			accountSex => 0,
+		}, $client);
+		$server->onClientNew($client);
+		$server->onClientData($client, pack('v', 0x09A1));
+
+		is($server->character_list_switch, '0B72',
+			'modern LastRO selects the LIST2 response from parser capability');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'complete login flow returns a LIST2 character page');
+		is(unpack('v', substr($client->{sent}[-1], 2, 2)), length($client->{sent}[-1]),
+			'LIST2 length field matches the complete response');
+		ok(!$client->{closed}, 'complete valid flow keeps the character connection open');
+		is($server->{sessionStore}{marked}, 1,
+			'valid character login refreshes the session by numeric session ID');
+	};
 
 	subtest '2021 RE LastRO prefers 0B72 character pages when both layouts are registered' => sub {
 		my $server = bless {
@@ -229,21 +277,26 @@ sub start {
 
 		$parser->{calls} = [];
 		$server->sync_received_characters({}, $client);
-		is_deeply($parser->{calls}, [qw(099D)],
-			'client 09A1 request receives the 099D character data page');
-		is(unpack('v', $client->{sent}[-1]), 0x099D,
-			'09A1 response is the 099D packet');
+		is_deeply($parser->{calls}, [qw(0B72)],
+			'client 09A1 request receives the 0B72 character data page');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'09A1 response is the 0B72 packet');
 		is(unpack('v', substr($client->{sent}[-1], 2, 2)), 179,
-			'099D response length includes one 175-byte character block');
-		is(scalar @{$parser->{args}{'099D'}{chars}}, 5,
-			'099D reconstruction receives the available character list');
+			'0B72 response length includes one 175-byte character block');
+		is(scalar @{$parser->{args}{'0B72'}{chars}}, 5,
+			'0B72 reconstruction receives the available character list');
 		$server->sync_received_characters({}, $client);
-		is(unpack('v', $client->{sent}[-1]), 0x099D,
-			'every additional 09A1 page request receives another 099D response');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'every additional 09A1 page request receives another 0B72 response');
 		ok(!$client->{closed}, 'valid character-server session remains open');
 	};
 
 	subtest 'legacy character login keeps legacy character-list packet IDs' => sub {
+		my $modern_master = $Globals::masterServer;
+		$Globals::masterServer = {
+			serverType => 'kRO_RagexeRE_2013_03_20',
+			charBlockSize => 106,
+		};
 		my $account_id = pack('V', 2007306);
 		my $session = {
 			sessionID => 1,
@@ -271,6 +324,7 @@ sub start {
 			[qw(006B 0072)],
 			'legacy handoff uses 006B character info followed by 0072 character data'
 		);
+		$Globals::masterServer = $modern_master;
 	};
 
 	subtest '2021 RE game-login packet names the modern client fields' => sub {
