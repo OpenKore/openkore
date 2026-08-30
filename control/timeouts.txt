@@ -27,7 +27,7 @@ setTitle 0.2
 poseidon_wait_reply 15
 
 # Activate AI after x seconds after the map's loaded
-ai 1
+ai 0.2
 
 # Retry move commands every x seconds, and give up if movement does not progress within x seconds.
 ai_move_retry 0.2
@@ -57,7 +57,7 @@ ai_mercenary_dance_attack_melee 0.2
 ai_mercenary_dance_attack_ranged 0.2
 
 # Check for monsters to attack every x seconds
-ai_attack_auto 0.3
+ai_attack_auto 0.2
 ai_homunculus_attack_auto 0.5
 ai_mercenary_attack_auto 0.5
 
@@ -100,10 +100,10 @@ ai_route_unstuck 2
 ai_items_take_delay 0
 
 # When your monster died, start checking for loot after x seconds
-ai_items_take_start.1
+ai_items_take_start 0
 
 # Stop checking for loot x seconds after it has begun checking
-ai_items_take_end 0.6
+ai_items_take_end 0.4
 
 # When standing near an item, send the 'take' packet every x seconds until
 # the item has been taken.
@@ -166,7 +166,7 @@ ai_sit_wait 0
 ai_safe_stand_up 2
 
 # Skill/item/equipment action cadence and their give-up windows.
-ai_skill_use 0.2
+ai_skill_use 0.1
 ai_skill_use_giveup 0.5
 ai_item_use_auto 0.2
 ai_item_equip_auto 0.3
@@ -176,14 +176,16 @@ ai_equip_giveup 2
 # Delays used by the different auto-teleport triggers.
 ai_teleport 0.2
 ai_teleport_away 3
-ai_teleport_idle 1
+ai_teleport_idle 0.4
 ai_teleport_portal 2
-ai_teleport_hp 0
+ai_teleport_hp 0.5
 ai_teleport_safe_force 120
 
 # Retry cadence and post-request delay for teleport attempts.
-ai_teleport_retry 0.2
-ai_teleport_delay 0.2
+ai_teleport_retry 0.15
+ai_teleport_delay 0
+
+
 
 # Wait x seconds for a portal transition to complete before continuing route logic.
 ai_portal_wait 0.5

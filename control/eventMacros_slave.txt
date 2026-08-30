@@ -10,6 +10,6 @@ automacro hunter_rescue {
 
 macro hunter_rescue_follow {
 	do autofollow on
-	pause 30
-	do autofollow off
+#	pause 30
+#	do autofollow off
 }

@@ -150,8 +150,8 @@ avoidObstaclesMonster 1961 {
 avoidObstaclesMonster 1988 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
-	drop_destination_when_near_dist 8
+	#danger_dist 1, 1
+	#drop_destination_when_near_dist 8
 }
 
 # Seaweed (MD_SEAWEED) - Mob-ID 2191
@@ -262,8 +262,8 @@ avoidObstaclesMonster 2720 {
 avoidObstaclesMonster 2735 {
 	enabled 1
 	penalty_dist 2000, 2000, 500, 222, 125, 80, 55, 40, 31, 24, 20, 16, 13
-	danger_dist 1, 1
-	drop_destination_when_near_dist 8
+	#danger_dist 1, 1
+	#drop_destination_when_near_dist 8
 }
 
 # Elusive Muscipular (C5_MUSCIPULAR) - Mob-ID 2738
@@ -417,3 +417,4 @@ avoidObstaclesMonster 21296 {
 	danger_dist 1, 1
 	drop_destination_when_near_dist 8
 }
+

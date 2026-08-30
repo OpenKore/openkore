@@ -1,0 +1,15 @@
+automacro TeleportOnBaphometJrDarkness {
+    spell Shadow Attribute Attack, Darkness Attack, Shadow Attack, 暗属性攻击
+    monster Baphomet Jr., 小恶魔
+    overrideAI 1
+    exclusive 1
+    call {
+        do tele
+    }
+    timeout 3
+}
+
+
+
+
+
