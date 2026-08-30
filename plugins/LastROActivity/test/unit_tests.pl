@@ -24,7 +24,7 @@ BEGIN {
 
 use Test::More qw(no_plan);
 
-my @tests = qw(RulesTest);
+my @tests = qw(RulesTest SchedulerTest StateTest ProductionRulesTest PluginTest);
 @tests = @ARGV if @ARGV;
 
 for my $module (@tests) {
