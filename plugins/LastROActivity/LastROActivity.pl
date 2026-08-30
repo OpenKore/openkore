@@ -46,6 +46,7 @@ our $pending_macro_root_name;
 our $pending_leave_npc;
 our $return_pending;
 our $entry_map_confirmed;
+our $entry_map_confirmation_source;
 our $entry_transfer_accepted;
 our ($activity_started_at, $activity_entry_started_at);
 our ($activity_phase_index, $activity_phase_started_at);
@@ -83,6 +84,7 @@ $pending_macro_root_name = undef;
 $pending_leave_npc = undef;
 $return_pending = 0;
 $entry_map_confirmed = 0;
+$entry_map_confirmation_source = undef;
 $entry_transfer_accepted = 0;
 $activity_started_at = undef;
 $activity_entry_started_at = undef;
@@ -2145,6 +2147,7 @@ sub _set_pending_destination {
 	$return_pending = $kind eq 'return' ? 1 : 0;
 	if ($kind eq 'entry') {
 		$entry_map_confirmed = 0;
+		$entry_map_confirmation_source = undef;
 		$entry_transfer_accepted = 0;
 	}
 	return defined $pending_destination ? 1 : 0;
@@ -2157,6 +2160,7 @@ sub _clear_pending_destination {
 	$pending_airship_result = undef;
 	$return_pending = 0;
 	$entry_map_confirmed = 0;
+	$entry_map_confirmation_source = undef;
 	$entry_transfer_accepted = 0;
 }
 
@@ -2373,6 +2377,7 @@ sub request_event_entry {
 				unless defined $command_error && $command_error ne '';
 			die "$command_error\n";
 		}
+		_confirm_entry_map_if_current($map);
 		return 1;
 	}
 	if ($entry_type eq 'macro') {
@@ -2389,6 +2394,7 @@ sub request_event_entry {
 		# pending marker so mainLoop_pre can observe completion.
 		_clear_pending_macro() unless $has_active;
 		$entry_transfer_accepted = 1 if $has_active;
+		_confirm_entry_map_if_current($map);
 		return 1;
 	}
 	if ($entry_type eq 'npc') {
@@ -2405,6 +2411,7 @@ sub request_event_entry {
 		);
 		die (($error || 'talknpc command failed') . "\n") unless $ok;
 		$entry_transfer_accepted = 1 if defined $active_event;
+		_confirm_entry_map_if_current($map);
 		return 1;
 	}
 	return 0;
@@ -2806,6 +2813,7 @@ sub begin_activity {
 	$scheduled_event->{round_start_message} = undef;
 	$scheduled_event->{round_start_at} = undef;
 	$scheduled_event->{round_identity} = undef;
+	$scheduled_event->{entry_confirmed} = 0;
 	$scheduled_event->{round_identities_seen} = {};
 	$scheduled_event->{round_identity_unknown_completed} = 0;
 
@@ -3210,9 +3218,18 @@ sub finish_activity {
 
 sub return_to_capital {
 	return 0 unless defined $active_event;
-	return 1 if $return_pending;
 	return 1 if defined $pending_macro
 		&& ($pending_macro_stage || '') eq 'finish';
+
+	# A map-loss hook can report prontera directly.  That packet is already the
+	# authoritative return confirmation; issuing another private-airship request
+	# would leave the failed lifecycle waiting for a transfer that cannot occur.
+	my $current_map = _current_map(undef);
+	if (defined $current_map && _map_matches($current_map, 'prontera')
+		&& _entry_map_confirmed_for_return()) {
+		return _complete_return();
+	}
+	return 1 if $return_pending;
 
 	_transition_to_finishing();
 	if (ref($state) eq 'LastROActivity::State' && $state->state eq 'FINISHING') {
@@ -3243,13 +3260,37 @@ sub return_to_capital {
 	return 1;
 }
 
+sub _entry_map_confirmed_for_return {
+	return 0 unless defined $active_event && ref($active_event) eq 'HASH';
+	return 1 if $active_event->{entry_confirmed};
+	return 1 if $entry_map_confirmed
+		&& defined $entry_map_confirmation_source
+		&& $entry_map_confirmation_source ne '';
+	# RUNNING is reachable only after _set_running_state validates the live
+	# event map, but keep the invariant for older/synthetic event records that
+	# do not carry the per-event marker.
+	return 1 if ref($state) eq 'LastROActivity::State'
+		&& $state->state eq 'RUNNING';
+	return 0;
+}
+
 sub _complete_return {
 	return 1 unless defined $active_event || defined $active_snapshot || $return_pending;
 	return cleanup_and_restore('return confirmed');
 }
 
+sub _confirm_entry_map_if_current {
+	my ($expected_map) = @_;
+	return 0 unless defined $expected_map;
+	my $current_map = _current_map(undef);
+	return 0 unless defined $current_map && _map_matches($current_map, $expected_map);
+	# The map object is read from the live field immediately after the entry
+	# command; no synthetic map-change event is manufactured for other maps.
+	return _confirm_entry_map($current_map, 'live_field');
+}
+
 sub _confirm_entry_map {
-	my ($map) = @_;
+	my ($map, $source) = @_;
 	return 0 unless defined $active_event;
 	return 0 unless ref($state) eq 'LastROActivity::State';
 	my $state_name = $state->state;
@@ -3265,6 +3306,14 @@ sub _confirm_entry_map {
 
 	$active_event->{entry_confirmed} = 1 if ref($active_event) eq 'HASH';
 	$entry_map_confirmed = 1;
+	# A live-field match proves where the character is, but not that an
+	# airship request was accepted.  A packet confirmation is authoritative and
+	# takes precedence if both observations are available.
+	$source = 'map_packet' unless defined $source && $source ne '';
+	$entry_map_confirmation_source = $source
+		if !defined $entry_map_confirmation_source
+		|| $source eq 'map_packet'
+		|| $entry_map_confirmation_source ne 'map_packet';
 	# The map packet is authoritative for arrival, but keep both the transfer
 	# marker and its deadline until the server result is observed so a late
 	# rejection (or a missing result) cannot silently turn into a running
@@ -3295,7 +3344,7 @@ sub onMapChange {
 		return _complete_return();
 	}
 
-	if (_confirm_entry_map($map)) {
+	if (_confirm_entry_map($map, 'map_packet')) {
 		return 1;
 	}
 
@@ -3361,7 +3410,8 @@ sub onAirshipResult {
 		my $entry_state = ref($state) eq 'LastROActivity::State'
 			&& ($state->state eq 'DEPARTING' || $state->state eq 'ENTERING');
 		my $can_retry = $entry_state
-			&& !$entry_map_confirmed
+			&& (!$entry_map_confirmed
+				|| ($entry_map_confirmation_source || '') eq 'live_field')
 			&& $airship_failure_count < 3;
 		if ($can_retry) {
 			# A rejected entry is retried in the same lifecycle slot.  Retrying is

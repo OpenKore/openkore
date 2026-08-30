@@ -68,16 +68,31 @@ perl plugins\LastROActivity\test\unit_tests.pl ProductionRulesTest
 exit=0; final plan 1..2
 
 perl plugins\LastROActivity\test\unit_tests.pl PluginTest
-exit=0; final plan 1..82
+exit=0; final plan 1..85
 ```
 
 The complete activity runner also exits `0`, reports no `not ok` assertions,
-and ends at `1..109`:
+and ends at `1..112`:
 
 ```text
 perl plugins\LastROActivity\test\unit_tests.pl
-exit=0; final plan 1..109
+exit=0; final plan 1..112
 ```
+
+Additional scoped lifecycle regressions now pass:
+
+- NPC, private-airship, and macro entry requests confirm an already-current
+  destination map and reach `RUNNING` without requiring a duplicate map packet;
+- a `RUNNING` map-loss packet received while the live map is already `prontera`
+  finalizes immediately, issues no second return transfer, and restores the
+  exact pre-activity configuration;
+- an unconfirmed entry timeout or command rejection while still on source
+  `prontera` retains the failed lifecycle and canonical return request, so a
+  delayed entry-map arrival cannot strand the character after premature
+  cleanup;
+- live-field entry confirmation remains retryable after a rejected airship
+  result, while an authoritative map-change confirmation still fails closed on
+  a late rejection.
 
 Pure-Perl syntax checks pass for `Rules.pm`, `Scheduler.pm`, `State.pm`, all
 five activity test modules, and `unit_tests.pl`. The deterministic stubbed

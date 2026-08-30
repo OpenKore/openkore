@@ -1948,6 +1948,206 @@ RULES
 		done_testing();
 	};
 
+	subtest 'same-map entry confirmation covers NPC airship and macro routes' => sub {
+		my $run_case = sub {
+			my ($label, $rule, $accept) = @_;
+			LastROActivity::cleanup_and_restore('same-map entry reset');
+			%Globals::config = (
+				lockMap => 'pay_fild08',
+				teleportAuto_search => 0,
+				teleportAuto_idle => 0,
+			);
+			%Globals::maps_lut = (
+				'event_map.rsw' => 1,
+				'prontera.rsw' => 1,
+			);
+			$Globals::field = PluginTest::Field->new($rule->{entry_map});
+			$Globals::net = PluginTest::Net->new;
+			$Globals::char = PluginTest::Char->new(
+				PluginTest::Inventory->new({14527 => {amount => 1}}),
+			);
+			$Globals::masterServer = {
+				lastroAirship => 1,
+				privateAirshipItemID => 14527,
+			};
+			%Globals::mon_control = (event_egg => {teleport_search => 1});
+			%Plugins::registered_plugins = (macro => 1);
+			$macro::queue = undef;
+			%Commands::commands = (macro => sub { 1 });
+			$Commands::run_failure = sub {
+				my ($command) = @_;
+				if ($command eq 'macro same_map_macro -overrideAI -exclusive') {
+					$macro::queue = PluginTest::MacroQueue->new('same_map_macro', 1);
+				}
+				return 1;
+			};
+			@Commands::run_calls = ();
+			my $event = {
+				event_id => $rule->{event_id},
+				rule => $rule,
+				map => $rule->{entry_map},
+			};
+			{
+				no warnings 'redefine';
+				local *LastROActivity::clear_normal_ai = sub { return 1 };
+				is(LastROActivity::begin_activity($rule, $event), 1,
+					"$label entry request succeeds");
+			}
+			is($LastROActivity::entry_map_confirmed, 1,
+				"$label confirms the already-current event map");
+			is(LastROActivity::state(), 'ENTERING',
+				"$label preserves the entering handshake until the main loop");
+			$accept->() if ref($accept) eq 'CODE';
+			LastROActivity::onMainLoopPre(undef, {now => 1_001});
+			is(LastROActivity::state(), 'RUNNING',
+				"$label reaches RUNNING without a map-change packet");
+			LastROActivity::cleanup_and_restore("$label same-map cleanup");
+			$Commands::run_failure = undef;
+			$macro::queue = undef;
+		};
+
+		$run_case->(
+			'NPC',
+			{
+				event_id => 'same_map_npc', enabled => 1,
+				announce_regex => 'START', start_regex => 'START',
+				entry_type => 'npc', entry_map => 'prontera', entry_x => 152, entry_y => 129,
+				entry_npc => 'Lottery Guide#ok', entry_npc_trusted => 1,
+				entry_npc_evidence => 'trusted lottery dialog transcript',
+				finish_regex => 'DONE', duration_seconds => 900, validation_errors => [],
+			},
+		);
+		$run_case->(
+			'airship',
+			{
+				event_id => 'same_map_airship', enabled => 1,
+				announce_regex => 'START', start_regex => 'START',
+				entry_type => 'privateairship', entry_item_id => 14527,
+				entry_map => 'event_map', finish_regex => 'DONE', duration_seconds => 900,
+				search_targets => ['event_egg'], validation_errors => [],
+			},
+			sub { LastROActivity::onAirshipResult(undef, {type => 0}) },
+		);
+		$run_case->(
+			'macro',
+			{
+				event_id => 'same_map_macro', enabled => 1,
+				announce_regex => 'START', start_regex => 'START',
+				entry_type => 'macro', entry_macro => 'same_map_macro',
+				entry_map => 'event_map', finish_regex => 'DONE', duration_seconds => 900,
+				validation_errors => [],
+			},
+		);
+		done_testing();
+	};
+
+	subtest 'source-prontera entry failures retain the canonical return' => sub {
+		my $run_case = sub {
+			my ($label, $trigger) = @_;
+			LastROActivity::cleanup_and_restore('source-prontera entry reset');
+			%Globals::config = (
+				lockMap => 'pay_fild08',
+				lockMap_x => 55,
+				lockMap_y => 66,
+				lockMap_randX => 7,
+				lockMap_randY => 8,
+				teleportAuto_search => 0,
+				teleportAuto_idle => 0,
+			);
+			my %before = %Globals::config;
+			%Globals::maps_lut = (
+				'event_map.rsw' => 1,
+				'prontera.rsw' => 1,
+			);
+			$Globals::field = PluginTest::Field->new('prontera');
+			$Globals::net = PluginTest::Net->new;
+			$Globals::char = PluginTest::Char->new(
+				PluginTest::Inventory->new({14527 => {amount => 1}}),
+			);
+			$Globals::masterServer = {
+				lastroAirship => 1,
+				privateAirshipItemID => 14527,
+			};
+			%Globals::mon_control = (event_egg => {teleport_search => 1});
+			%Plugins::registered_plugins = (macro => 1);
+			%Commands::commands = (macro => sub { 1 });
+			$LastROActivity::clock = sub { 2_000 };
+			@Commands::run_calls = ();
+			$Commands::run_failure = undef;
+			my $rule = {
+				event_id => "source_prontera_$label",
+				enabled => 1,
+				announce_regex => 'START',
+				start_regex => 'START',
+				entry_type => 'privateairship',
+				entry_item_id => 14527,
+				entry_map => 'event_map',
+				finish_regex => 'DONE',
+				duration_seconds => 900,
+				timeout_seconds => 5,
+				search_targets => ['event_egg'],
+				validation_errors => [],
+			};
+			my $event = {
+				event_id => $rule->{event_id},
+				rule => $rule,
+				map => 'event_map',
+			};
+			my $begin_ok;
+			{
+				no warnings 'redefine';
+				local *LastROActivity::clear_normal_ai = sub { return 1 };
+				$begin_ok = $trigger->($rule, $event);
+			}
+			is($begin_ok, $label eq 'timeout' ? 1 : 0,
+				"source-prontera $label has the expected entry outcome");
+
+			if ($label eq 'timeout') {
+				LastROActivity::onMainLoopPre(undef, {now => 2_006});
+			}
+			is(LastROActivity::state(), 'FAILED',
+				"source-prontera $label retains the failed lifecycle");
+			ok(defined LastROActivity::active_event(),
+				"source-prontera $label retains the active event for return confirmation");
+			ok($LastROActivity::return_pending,
+				"source-prontera $label keeps the return marker armed");
+			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+				"source-prontera $label issues the canonical return request");
+			is($Globals::config{teleportAuto_search}, 1,
+				"source-prontera $label keeps temporary search config until return confirmation");
+
+			if ($label eq 'timeout') {
+				# A delayed acceptance can move the character to the event map after the
+				# entry deadline.  Keep the failed return lifecycle alive until prontera
+				# is observed instead of stranding that transfer after premature cleanup.
+				LastROActivity::onAirshipResult(undef, {type => 0});
+				$Globals::field = PluginTest::Field->new('event_map');
+				LastROActivity::onMapChange(undef, {});
+				ok(defined LastROActivity::active_event(),
+					'delayed entry-map arrival does not strand the failed lifecycle');
+			}
+
+			$Commands::run_failure = undef;
+			$Globals::field = PluginTest::Field->new('prontera');
+			LastROActivity::onMapChange(undef, {});
+			is(LastROActivity::active_event(), undef,
+				"source-prontera $label cleans up after prontera confirmation");
+			is_deeply(\%Globals::config, \%before,
+				"source-prontera $label restores the exact original config");
+		};
+
+		$run_case->('timeout', sub {
+			my ($rule, $event) = @_;
+			return LastROActivity::begin_activity($rule, $event);
+		});
+		$run_case->('rejection', sub {
+			my ($rule, $event) = @_;
+			$Commands::run_failure = 'privateairship entry rejected';
+			return LastROActivity::begin_activity($rule, $event);
+		});
+		done_testing();
+	};
+
 	subtest 'airship results without a pending transfer are ignored' => sub {
 		LastROActivity::cleanup_and_restore('test reset');
 		%Globals::config = (lockMap => 'pay_fild08', teleportAuto_search => 0, teleportAuto_idle => 0);
@@ -2315,6 +2515,9 @@ RULES
 		$LastROActivity::state = LastROActivity::State->new;
 		$LastROActivity::state->transition($_)
 			for qw(arm trigger snapshot depart enter running);
+		# This fixture starts directly in RUNNING, so model the confirmation that
+		# _set_running_state would have recorded after validating the event map.
+		$event->{entry_confirmed} = 1;
 		$LastROActivity::activity_started_at = 100;
 		$LastROActivity::activity_phase_started_at = 100;
 		$task7_clock_now = 100;
@@ -3180,6 +3383,27 @@ RULES
 		$task7_confirm_return->();
 		is_deeply(\%Globals::config, \%before, 'map kick-out restores the snapshot');
 		is(LastROActivity::activity_locked(), 0, 'map kick-out releases the lock');
+		done_testing();
+	};
+
+	subtest 'running map loss already at prontera finalizes without a second transfer' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_prontera_map_loss');
+		my %before = (
+			lockMap => 'pay_fild08', lockMap_x => 55, lockMap_y => 66,
+			lockMap_randX => 7, lockMap_randY => 8,
+			teleportAuto_search => 0, teleportAuto_idle => 0,
+		);
+		@Commands::run_calls = ();
+		$Globals::field = PluginTest::Field->new('prontera');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'IDLE',
+			'prontera map-loss packet completes the failed lifecycle immediately');
+		is(LastROActivity::active_event(), undef,
+			'prontera map-loss packet clears the active event');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 0,
+			'already-confirmed prontera does not request a second transfer');
+		is_deeply(\%Globals::config, \%before,
+			'already-confirmed prontera restores the original config');
 		done_testing();
 	};
 
