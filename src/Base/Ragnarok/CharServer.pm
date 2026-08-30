@@ -73,14 +73,20 @@ sub charBlockSize {
 }
 
 # 09A1 is a client-only request in modern character selection.  It is absent
-# from the server receive table, so expose it only to this server's client
-# tokenizer without mutating the shared global packet table.
+# from some server receive tables, so expose it only to this server's client
+# tokenizer without mutating the shared global packet table.  Do not key this
+# on the sender parser: custom/server-specific send tables may omit the
+# request even though the browser still sends it.
 sub getClientPacketTable {
 	my ($self) = @_;
 	my %packets = %{ $self->SUPER::getClientPacketTable() || {} };
-	if ($self->{sendPacketParser}
-		&& exists $self->{sendPacketParser}{packet_list}{'09A1'}) {
+	if ($self->modern_character_list) {
 		$packets{'09A1'} = { length => 2 };
+		if ($self->{sendPacketParser}
+			&& !exists $self->{sendPacketParser}{packet_list}{'09A1'}) {
+			$self->{sendPacketParser}{packet_list}{'09A1'} =
+				['sync_received_characters'];
+		}
 	}
 	return \%packets;
 }

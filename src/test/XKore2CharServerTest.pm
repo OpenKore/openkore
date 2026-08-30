@@ -315,6 +315,9 @@ sub start {
 		};
 		my $parser = XKore2CharServerTest::Parser->new;
 		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+		# Exercise the compatibility path used by custom server tables: the
+		# client tokenizer and sender parser must both be repaired per instance.
+		delete $sender->{packet_list}{'09A1'};
 		my $server = bless {
 			recvPacketParser => $parser,
 			sendPacketParser => $sender,
@@ -333,6 +336,23 @@ sub start {
 			'09A1 reaches sync_received_characters through tokenizer and send parser');
 		is(unpack('v', $client->{sent}[-1]), 0x099D,
 			'tokenized 09A1 request produces a 099D character-list page');
+	};
+
+	subtest 'modern character server always exposes 09A1 to its client tokenizer' => sub {
+		my $server = bless {
+			rpackets => { '099D' => { length => -1 } },
+			sendPacketParser => bless({ packet_list => {} }, 'XKore2CharServerTest::SendParser'),
+		}, 'Network::XKore2::CharServer';
+		my $client_packets = $server->getClientPacketTable;
+
+		ok(exists $client_packets->{'09A1'},
+			'modern character-list request is tokenized even when sender table is sparse');
+		is($client_packets->{'09A1'}{length}, 2,
+			'09A1 client request keeps its fixed two-byte length');
+		ok(exists $server->{sendPacketParser}{packet_list}{'09A1'},
+			'modern character-list request is dispatched even when sender table is sparse');
+		is($server->{sendPacketParser}{packet_list}{'09A1'}[0], 'sync_received_characters',
+			'09A1 dispatches to the character-list response handler');
 	};
 
 	%Globals::charSvrSet = %previous_slots;
