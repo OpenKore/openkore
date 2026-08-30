@@ -651,8 +651,12 @@ sub _runtime_search_validation_available {
 	# A parser-origin rule from a future/alternate parser may omit entry_type but
 	# still carries validation_errors.  Keep that production route fail-closed.
 	return 1 if exists $rule->{validation_errors};
-	# Direct scheduler projections omit both parser metadata and entry type.
-	return 0;
+	# Direct scheduler projections omit parser metadata and entry_type.  They must
+	# opt into the legacy scheduler-only behavior explicitly; an unmarked direct
+	# search hash defaults to privateairship and is preflighted fail-closed.
+	return 0 if defined $rule->{scheduler_only}
+		&& "$rule->{scheduler_only}" =~ /^\s*1\s*\z/;
+	return 1;
 }
 
 sub _observe_message {

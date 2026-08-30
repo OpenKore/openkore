@@ -498,10 +498,36 @@ sub start {
 		ok(!$airship_rule->{enabled}, 'empty shared control disables the typed airship rule');
 		like(join('; ', @{$airship_rule->{validation_errors}}), qr/shared mon_control/,
 			'airship shared-control failure is attached to the rule');
+		my $unmarked_direct_search = {
+			event_id => 'unmarked_direct_search',
+			enabled => 1,
+			announce_regex => '活动',
+			start_regex => '活动',
+			duration_seconds => 900,
+			search_targets => ['bogus'],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($unmarked_direct_search),
+			'unmarked direct search rule fails closed without shared control');
+		ok(!$unmarked_direct_search->{enabled},
+			'unmarked direct search rule is disabled after failed preflight');
+		my $unmarked_errors = ref($unmarked_direct_search->{validation_errors}) eq 'ARRAY'
+			? join('; ', @{$unmarked_direct_search->{validation_errors}}) : '';
+		like($unmarked_errors, qr/shared mon_control/,
+			'unmarked direct search failure is attached to the rule');
+		my $marked_scheduler_only = {
+			%$unmarked_direct_search,
+			event_id => 'marked_scheduler_only',
+			enabled => 1,
+			scheduler_only => 1,
+		};
+		delete $marked_scheduler_only->{validation_errors};
+		ok(LastROActivity::_validated_enabled_rule($marked_scheduler_only),
+			'explicit scheduler_only marker preserves scheduler projection compatibility');
 		my $scheduler_projection = {
 			%$rule,
 			event_id => 'scheduler_projection',
 			enabled => 1,
+			scheduler_only => 1,
 		};
 		delete $scheduler_projection->{entry_type};
 		delete $scheduler_projection->{validation_errors};
