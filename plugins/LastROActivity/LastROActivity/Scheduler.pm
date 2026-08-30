@@ -66,6 +66,10 @@ sub observe {
 
 	$received_at = $self->{clock}->() if !defined $received_at;
 	return undef if !_is_number($received_at);
+	# Server status broadcasts can include a countdown for a future *next*
+	# event.  They are planning reminders, not evidence that the named rule is
+	# starting, even when the line happens to contain an event keyword.
+	return undef if $message =~ /下一次事件/;
 	return undef if !_matches($message, $rule->{announce_regex});
 	# A countdown only supplies timing.  The explicit start pattern remains the
 	# evidence that this particular server line is allowed to arm the rule.

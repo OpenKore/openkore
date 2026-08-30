@@ -1,39 +1,56 @@
-# Safe LastRO activity baseline.
-# Every rule stays disabled until the announcement, internal map, target names/IDs,
-# entry dialog, and finish message are confirmed from server evidence.
-# Unknown maps, monsters, dialogs, and finish messages keep a rule disabled.
+# LastRO announcement evidence fixture.
+# Raw enabled=1 flags are retained for manual announcement-routing tests.  The
+# runtime lifecycle validator still fails closed when entry items, shared
+# monster targets, or trusted NPC dialog evidence are missing.
+# Invasion lines for Alberta/Aldebaran and generic 下一次事件 reminders are
+# intentionally not represented by any rule.
 
 [city_monster_party]
-enabled=0
+enabled=1
+announce_regex=(?=.*\[随机事件\])(?=.*召唤师将在依斯鲁得岛举办魔物派对)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*召唤师将在依斯鲁得岛举办魔物派对)(?!.*下一次事件)
+finish_regex=魔物派对已结束
 lead_seconds=10
-duration_seconds=900
+map_source=dynamic
+entry_type=privateairship
 return_policy=privateairship:prontera
 search_targets=
 
 [dungeon_monster_party]
-enabled=0
+enabled=1
 lead_seconds=10
-duration_seconds=900
 return_policy=privateairship:prontera
 search_targets=
 
 [dojo_challenge]
-enabled=0
+enabled=1
+announce_regex=(?=.*\[随机事件\])(?=.*梦罗克道场)(?=.*深渊挑战)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*梦罗克道场)(?=.*深渊挑战)(?!.*下一次事件)
+finish_regex=梦罗克道场入口已关闭，深渊挑战已开始
 lead_seconds=10
-duration_seconds=900
+map_source=dynamic
+entry_type=privateairship
 return_policy=privateairship:prontera
 search_targets=
 
 [pool_challenge]
-enabled=0
+enabled=1
+announce_regex=(?=.*\[随机事件\])(?=.*斐杨道场)(?=.*深渊挑战)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*斐杨道场)(?=.*深渊挑战)(?!.*下一次事件)
+finish_regex=斐杨道场入口已关闭，深渊挑战已开始
 lead_seconds=10
-duration_seconds=900
+map_source=dynamic
+entry_type=privateairship
 return_policy=privateairship:prontera
 search_targets=
 
 [lottery]
-enabled=0
+enabled=1
+announce_regex=(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*开始啦)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*[0-9]+\s*秒钟?后)(?=.*开始啦)(?!.*下一次事件)
+finish_regex=抽奖活动已结束
 lead_seconds=10
+map_source=dynamic
 entry_type=npc
 entry_map=prontera
 entry_x=152
@@ -41,11 +58,13 @@ entry_y=129
 entry_npc=活动负责人#iz
 return_policy=privateairship:prontera
 search_targets=
-# The NPC dialog and finish message are intentionally unknown; keep this rule disabled.
+# The NPC dialog trust attestation is intentionally absent; runtime validation
+# must keep this route disabled even though its announcement and coordinates
+# are confirmed.
 
 [sky_chest]
-enabled=0
+enabled=1
 lead_seconds=10
-duration_seconds=900
 return_policy=privateairship:prontera
 search_targets=
+# No announcement, map, target, entry, or finish evidence was supplied.

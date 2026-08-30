@@ -321,26 +321,68 @@ sub start {
 	my ($shared_rows, $shared_error) = _load_shared_search_rows($mon_control_file);
 	my ($known_maps, $map_error) = _load_known_maps($repo_root);
 
-	subtest 'production fixture contains only safe disabled rules' => sub {
+	subtest 'production fixture preserves evidence-backed routing flags and lifecycle fail-closed checks' => sub {
 		ok(-f $rules_file, 'bundled production rules file exists');
 		my ($rules, $errors) = LastROActivity::Rules::load_file($rules_file);
 		ok(ref($rules) eq 'HASH', 'production rules load as a hash');
 		is_deeply([sort keys %{$rules || {}}], [sort @EVENT_IDS],
 			'fixture contains exactly the six first-phase event IDs');
-		is_deeply($errors, [], 'production fixture has no parser errors');
+		is_deeply(
+			$errors,
+			[
+				'dungeon_monster_party: announce_regex required when enabled',
+				'dungeon_monster_party: start_regex required when enabled',
+				'sky_chest: announce_regex required when enabled',
+				'sky_chest: start_regex required when enabled',
+			],
+			'raw-enabled sections without announcement evidence fail closed during parsing',
+		);
 		ok(!defined $shared_error, 'shared mon_control.txt is readable')
 			or diag($shared_error);
 		ok(!defined $map_error, 'server map table is readable')
 			or diag($map_error);
 
+		open my $raw_fh, '<:encoding(UTF-8)', $rules_file
+			or die "Unable to read $rules_file: $!";
+		local $/;
+		my $raw_text = <$raw_fh>;
+		close $raw_fh;
+		for my $id (@EVENT_IDS) {
+			like($raw_text, qr/\[$id\][^\[]*?\benabled=1\b/s,
+				"$id retains the requested raw enabled=1 flag");
+		}
+
+		my %effective_enabled = map { $_ => 1 } qw(
+			city_monster_party dojo_challenge pool_challenge lottery
+		);
 		for my $id (@EVENT_IDS) {
 			ok(exists $rules->{$id}, "$id rule exists");
 			next unless exists $rules->{$id};
-			ok(!$rules->{$id}{enabled}, "$id remains disabled until evidence is complete");
+			is($rules->{$id}{enabled}, $effective_enabled{$id} ? 1 : 0,
+				"$id has the expected effective enable state");
 			my @violations = _production_errors($rules->{$id}, $shared_rows, $known_maps);
-			ok(!@violations, "$id has no enabled-rule contract violations")
-				or diag(join('; ', @violations));
+			if ($effective_enabled{$id}) {
+				ok(@violations, "$id is not lifecycle-runnable without missing evidence");
+				like(join('; ', @violations), qr/(?:entry_item_id|entry_npc_trusted|search_targets)/,
+					"$id reports its missing lifecycle evidence");
+			} else {
+				is_deeply($rules->{$id}{validation_errors},
+					[
+						'announce_regex required when enabled',
+						'start_regex required when enabled',
+					],
+					"$id records the parser validation errors that forced effective disablement");
+			}
 		}
+
+		is($rules->{dojo_challenge}{map_source}, 'dynamic', 'morocc route declares dynamic map source');
+		is($rules->{pool_challenge}{map_source}, 'dynamic', 'payon route declares dynamic map source');
+		is($rules->{lottery}{map_source}, 'dynamic', 'lottery route declares dynamic map source');
+		is($rules->{city_monster_party}{map_source}, 'dynamic', 'party route declares dynamic map source');
+		is($rules->{lottery}{entry_map}, 'prontera', 'lottery retains confirmed capital entry map');
+		is($rules->{lottery}{entry_x}, 152, 'lottery retains confirmed NPC x coordinate');
+		is($rules->{lottery}{entry_y}, 129, 'lottery retains confirmed NPC y coordinate');
+		ok(!defined $rules->{lottery}{entry_npc_trusted}, 'lottery has no trusted dialog attestation');
 		done_testing();
 	};
 

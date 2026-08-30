@@ -4,8 +4,11 @@ use strict;
 use warnings;
 use utf8;
 
+use FindBin qw($RealBin);
+use File::Spec;
 use Test::More;
 
+use LastROActivity::Rules;
 use LastROActivity::Scheduler;
 
 sub start {
@@ -187,6 +190,128 @@ sub start {
 			6_000,
 		);
 		ok(!exists $static_event->{data_map}, 'does not attach dynamic data to static rules');
+		done_testing();
+	};
+
+	subtest 'routes confirmed LastRO announcements and ignores long reminders' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::load_file(
+			File::Spec->catfile($RealBin, '..', 'control', 'lastro_activity.txt'),
+		);
+		is_deeply(
+			$errors,
+			[
+				'dungeon_monster_party: announce_regex required when enabled',
+				'dungeon_monster_party: start_regex required when enabled',
+				'sky_chest: announce_regex required when enabled',
+				'sky_chest: start_regex required when enabled',
+			],
+			'raw-enabled sections without announcement evidence fail closed during parsing',
+		);
+
+		my @cases = (
+			{
+				id => 'dojo_challenge',
+				messages => [
+					'[随机事件] 梦罗克道场将在1分钟后开启，深渊挑战即将开始 data-map="morocc#159#99"',
+					'[随机事件] 梦罗克道场将在30秒后开启，深渊挑战即将开始 data-map="morocc#159#99"',
+					'[随机事件] 梦罗克道场将在10秒后开启，深渊挑战即将开始 data-map="morocc#159#99"',
+				],
+				finish => '梦罗克道场入口已关闭，深渊挑战已开始',
+				map => {map => 'morocc', x => 159, y => 99},
+			},
+			{
+				id => 'pool_challenge',
+				messages => [
+					'[随机事件] 斐杨道场将在1分钟后开启，深渊挑战即将开始 data-map="payon#184#102"',
+					'[随机事件] 斐杨道场将在30秒后开启，深渊挑战即将开始 data-map="payon#184#102"',
+					'[随机事件] 斐杨道场将在10秒后开启，深渊挑战即将开始 data-map="payon#184#102"',
+				],
+				finish => '斐杨道场入口已关闭，深渊挑战已开始',
+				map => {map => 'payon', x => 184, y => 102},
+			},
+			{
+				id => 'lottery',
+				messages => [
+					'[随机事件] 抽奖活动60秒后开始啦 data-map="prontera#152#129"',
+					'[随机事件] 抽奖活动30秒后开始啦 data-map="prontera#152#129"',
+					'[随机事件] 抽奖活动10秒后开始啦 data-map="prontera#152#129"',
+				],
+				finish => '抽奖活动已结束',
+				map => {map => 'prontera', x => 152, y => 129},
+			},
+			{
+				id => 'city_monster_party',
+				messages => [
+					'[随机事件] 10秒后召唤师将在依斯鲁得岛举办魔物派对 data-map="pvp_y_5-2#0#0"',
+				],
+				finish => '魔物派对已结束',
+				map => {map => 'pvp_y_5-2', x => 0, y => 0},
+			},
+		);
+
+		my $scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
+		my $received_at = 50_000;
+		for my $case (@cases) {
+			my $rule = $rules->{$case->{id}};
+			ok($rule->{enabled}, "$case->{id} is enabled for announcement routing");
+			for my $message (@{$case->{messages}}) {
+				like($message, qr/$rule->{announce_regex}/,
+					"$case->{id} announcement matches announce_regex");
+				like($message, qr/$rule->{start_regex}/,
+					"$case->{id} announcement matches start_regex");
+				my $countdown = LastROActivity::Scheduler::parse_countdown($message);
+				ok(defined $countdown, "$case->{id} variant has a parsed countdown");
+				my $event = $scheduler->observe($rule, $message, $received_at);
+				ok($event, "$case->{id} announcement arms one event");
+				is($event->{countdown_seconds}, $countdown,
+					"$case->{id} preserves the countdown duration");
+				is_deeply($event->{data_map}, $case->{map},
+					"$case->{id} preserves dynamic map metadata");
+				my $expected_trigger = $received_at + $countdown - 10;
+				$expected_trigger = $received_at if $expected_trigger < $received_at;
+				is($event->{trigger_at}, $expected_trigger,
+					"$case->{id} uses the ten-second lead window");
+				like($case->{finish}, qr/$rule->{finish_regex}/,
+					"$case->{id} finish text matches finish_regex");
+				$received_at += 100;
+			}
+		}
+
+		my $party = $rules->{city_monster_party};
+		my $immediate_scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
+		my $immediate = $immediate_scheduler->observe(
+			$party,
+			'[随机事件] 10秒后召唤师将在依斯鲁得岛举办魔物派对 data-map="pvp_y_5-2#0#0"',
+			60_000,
+		);
+		is($immediate->{trigger_at}, 60_000, '10-second party announcement triggers at receipt time');
+		is(scalar @{$immediate_scheduler->due(60_000)}, 1, '10-second party announcement is due immediately');
+
+		my $reminder = '[随机事件] 下一次事件将在2小时后发生，梦罗克道场稍后开放 data-map="morocc#159#99"';
+		ok(!defined $scheduler->observe($rules->{dojo_challenge}, $reminder, 70_000),
+			'long 下一次事件 reminder never arms a dojo rule');
+		ok(!defined $scheduler->observe($rules->{city_monster_party},
+			'[随机事件] 下一次事件将在10秒后发生，召唤师将在依斯鲁得岛举办魔物派对 data-map="pvp_y_5-2#0#0"',
+			70_001,
+		), '下一次事件 reminder never arms a party rule');
+
+		my @invasion_cases = (
+			['alberta', '[随机事件] invasion data-map="alberta#0#0"'],
+			['aldebaran', '[随机事件] invasion data-map="aldebaran#0#0"'],
+		);
+		my @routing_ids = qw(city_monster_party dojo_challenge pool_challenge lottery);
+		for my $invasion (@invasion_cases) {
+			my ($map, $message) = @$invasion;
+			is_deeply(
+				LastROActivity::Scheduler::extract_data_map($message),
+				{map => $map, x => 0, y => 0},
+				"$map invasion data-map is parsed but remains unbound",
+			);
+			for my $event_id (@routing_ids) {
+				ok(!defined $scheduler->observe($rules->{$event_id}, $message, 71_000),
+					"$map invasion does not arm $event_id");
+			}
+		}
 		done_testing();
 	};
 }

@@ -2,8 +2,10 @@
 
 LastROActivity listens for explicitly configured LastRO activity announcements,
 waits until the configured lead time, and temporarily hands control to the
-activity lifecycle. The bundled rules are a safe baseline: all six first-phase
-activities stay disabled until server evidence is recorded.
+activity lifecycle. The bundled rules preserve all six first-phase event IDs
+and the raw enable flags used by the announcement-evidence fixture. Effective
+runtime enablement is stricter: parser and lifecycle validation fail closed
+when evidence is incomplete.
 
 ## Enablement and timing
 
@@ -14,9 +16,11 @@ is found. `lastroActivity_leadSeconds` defaults to 10, so a countdown is acted
 on about ten seconds before the announced start. An armed countdown does not
 change AI, lock maps, inventory, or the shared monster-control file.
 
-Do not set `enabled=1` while any map, announcement, entry, target, or finish
-value is inferred rather than confirmed. The production test and the runtime
-validator fail closed when an enabled rule is incomplete.
+For a live configuration, do not set `enabled=1` while any map, announcement,
+entry, target, or finish value is inferred rather than confirmed. The bundled
+fixture intentionally keeps `enabled=1` in the source for evidence-backed
+announcement tests; the parser changes incomplete sections to effective
+`enabled=0`, and the lifecycle validator rejects missing entry evidence.
 
 An enabled rule must provide both `announce_regex` for the registered server
 announcement and `start_regex` for the scheduler's explicit start line. A
@@ -28,6 +32,36 @@ the requirement for those two evidence patterns.
 `data-map="<map>#<x>#<y>"` value in the matching announcement. Fixed map names
 must exist in the selected server map table, and dynamic announcement metadata
 is checked against the loaded map table before entry.
+
+## Current evidence fixture
+
+The four confirmed announcement routes below can be armed by the scheduler,
+but none is currently runnable end to end. Their missing lifecycle evidence is
+deliberate and must be supplied before a server trial.
+
+| Rule | Effective announcement routing | Lifecycle gate | Confirmed dynamic metadata |
+| --- | --- | --- | --- |
+| `city_monster_party` | `enabled=1` | Private Airship item and shared `search_targets` evidence are missing | `pvp_y_5-2#0#0` |
+| `dojo_challenge` | `enabled=1` | Private Airship item and shared `search_targets` evidence are missing | `morocc#159#99` |
+| `pool_challenge` | `enabled=1` | Private Airship item and shared `search_targets` evidence are missing | `payon#184#102` |
+| `lottery` | `enabled=1` | Trusted NPC dialog attestation is missing; `prontera#152#129` is retained as the confirmed entry NPC location | `prontera#152#129` |
+| `dungeon_monster_party` | Parser forces effective `enabled=0` | `announce_regex` and `start_regex` are absent | none |
+| `sky_chest` | Parser forces effective `enabled=0` | `announce_regex` and `start_regex` are absent | none |
+
+The source file's raw flags and the parsed effective state are intentionally
+different for the last two rows. Do not treat a raw flag as proof that an
+activity is runnable.
+
+The Morocc and Payon announcements are accepted with `1分钟后`, `30秒后`, or
+`10秒后`; lottery accepts `60秒后`, `30秒后`, or `10秒后`; the monster-party
+fixture has the confirmed `10秒后` form. A ten-second countdown is due at
+message receipt because the default lead time is also ten seconds.
+
+Lines containing `下一次事件` are planning reminders, not start evidence, and
+are rejected before a rule can be armed. Observed invasion metadata at
+`alberta#0#0` and `aldebaran#0#0` is intentionally unbound: no existing rule
+ID is mapped to either invasion, and no destination or monster data is
+invented for them.
 
 ## Shared monster control
 
@@ -83,10 +117,12 @@ logs, map-change packets, or a user-supplied dialog transcript:
   an NPC or macro.
 
 The lottery fixture retains the confirmed capital entry coordinates and NPC
-identifier, but its dialog and completion text are intentionally unknown, so
-it remains disabled. The other five fixtures likewise remain disabled until
-their maps, targets, and lifecycle text are supplied. Bounty, personal, and
-world tasks are outside this plugin's scope.
+identifier, but its trusted dialog sequence is intentionally unknown, so entry
+is rejected until an attestation is recorded. The monster-party and challenge
+fixtures likewise remain blocked until their item and shared-target evidence
+is supplied; the dungeon and chest sections are parser-disabled until their
+announcement lines are known. Bounty, personal, and world tasks are outside
+this plugin's scope.
 
 ## Checks
 

@@ -378,14 +378,90 @@ RULES
 		);
 
 		is_deeply([sort keys %{$rules}], [sort @expected_ids], 'fixture contains exactly six event rules');
-		is_deeply($errors, [], 'safe fixture has no parser errors');
+		is_deeply(
+			$errors,
+			[
+				'dungeon_monster_party: announce_regex required when enabled',
+				'dungeon_monster_party: start_regex required when enabled',
+				'sky_chest: announce_regex required when enabled',
+				'sky_chest: start_regex required when enabled',
+			],
+			'raw-enabled sections without announcement evidence fail closed during parsing',
+		);
+		my %expected_enabled = map { $_ => 1 } qw(
+			city_monster_party dojo_challenge pool_challenge lottery
+		);
 		for my $event_id (@expected_ids) {
-			ok(!$rules->{$event_id}{enabled}, "$event_id starts disabled");
+			is($rules->{$event_id}{enabled}, $expected_enabled{$event_id} ? 1 : 0,
+				"$event_id has the expected effective enable state");
 		}
+		ok(!$rules->{dungeon_monster_party}{enabled},
+			'dungeon_monster_party is effectively disabled after parser validation');
+		ok(!$rules->{sky_chest}{enabled},
+			'sky_chest is effectively disabled after parser validation');
 		is($rules->{lottery}{entry_map}, 'prontera', 'fixture retains confirmed lottery map');
 		is($rules->{lottery}{entry_x}, 152, 'fixture retains confirmed lottery x coordinate');
 		is($rules->{lottery}{entry_y}, 129, 'fixture retains confirmed lottery y coordinate');
 		is($rules->{lottery}{entry_npc}, '活动负责人#iz', 'fixture retains confirmed lottery NPC');
+		done_testing();
+	};
+
+	subtest 'loads the confirmed announcement evidence without inventing lifecycle data' => sub {
+		my $rules_file = File::Spec->catfile($RealBin, '..', 'control', 'lastro_activity.txt');
+		my ($rules, $errors) = LastROActivity::Rules::load_file($rules_file);
+		is_deeply(
+			$errors,
+			[
+				'dungeon_monster_party: announce_regex required when enabled',
+				'dungeon_monster_party: start_regex required when enabled',
+				'sky_chest: announce_regex required when enabled',
+				'sky_chest: start_regex required when enabled',
+			],
+			'incomplete raw-enabled sections fail closed during parsing',
+		);
+
+		open my $raw_fh, '<:encoding(UTF-8)', $rules_file
+			or die "Unable to read $rules_file: $!";
+		local $/;
+		my $raw_text = <$raw_fh>;
+		close $raw_fh;
+		for my $event_id (qw(city_monster_party dungeon_monster_party dojo_challenge pool_challenge lottery sky_chest)) {
+			like($raw_text, qr/\[$event_id\][^\[]*?\benabled=1\b/s,
+				"$event_id keeps the requested raw enabled=1 flag");
+		}
+		ok(!$rules->{dungeon_monster_party}{enabled},
+			'dungeon_monster_party effective rule is disabled');
+		ok(!$rules->{sky_chest}{enabled}, 'sky_chest effective rule is disabled');
+
+		my @routing_ids = qw(city_monster_party dojo_challenge pool_challenge lottery);
+		for my $event_id (@routing_ids) {
+			ok($rules->{$event_id}{enabled}, "$event_id keeps the requested enable flag for routing tests");
+			is($rules->{$event_id}{map_source}, 'dynamic', "$event_id uses dynamic announcement map metadata");
+		}
+
+		is($rules->{dojo_challenge}{finish_regex}, '梦罗克道场入口已关闭，深渊挑战已开始',
+			'morocc finish evidence is exact');
+		is($rules->{pool_challenge}{finish_regex}, '斐杨道场入口已关闭，深渊挑战已开始',
+			'payon finish evidence is exact');
+		is($rules->{lottery}{finish_regex}, '抽奖活动已结束', 'lottery finish evidence is exact');
+		is($rules->{city_monster_party}{finish_regex}, '魔物派对已结束',
+			'monster party finish evidence is exact');
+		ok(!defined $rules->{lottery}{entry_npc_trusted},
+			'lottery has no untrusted dialog attestation invented');
+		ok(!defined $rules->{lottery}{entry_npc_evidence},
+			'lottery has no dialog transcript invented');
+
+		my $morocc = '[随机事件] 梦罗克道场将在1分钟后开启，深渊挑战即将开始';
+		my $payon = '[随机事件] 斐杨道场将在30秒后开启，深渊挑战即将开始';
+		my $lottery = '[随机事件] 抽奖活动60秒后开始啦';
+		my $party = '[随机事件] 10秒后召唤师将在依斯鲁得岛举办魔物派对';
+		like($morocc, qr/$rules->{dojo_challenge}{start_regex}/, 'morocc start evidence matches');
+		like($payon, qr/$rules->{pool_challenge}{start_regex}/, 'payon start evidence matches');
+		like($lottery, qr/$rules->{lottery}{start_regex}/, 'lottery start evidence matches');
+		like($party, qr/$rules->{city_monster_party}{start_regex}/, 'party start evidence matches');
+		unlike('[随机事件] 下一次事件将在2小时后发生，梦罗克道场稍后开放',
+			qr/$rules->{dojo_challenge}{start_regex}/,
+			'next-event reminder is not start evidence');
 		done_testing();
 	};
 }
