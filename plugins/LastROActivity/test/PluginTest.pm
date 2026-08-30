@@ -213,7 +213,7 @@ BEGIN {
 
 	$INC{'Log.pm'} = __FILE__;
 	package Log;
-	our (@messages, @warnings, @errors, @debug);
+	our (@messages, @warnings, @errors, @debug, @hooks);
 	sub import {
 		my $caller = caller;
 		no strict 'refs';
@@ -221,10 +221,27 @@ BEGIN {
 			*{"${caller}::${name}"} = \&{$name};
 		}
 	}
-	sub message { push @messages, $_[0]; return 1; }
-	sub warning { push @warnings, $_[0]; return 1; }
-	sub error { push @errors, $_[0]; return 1; }
-	sub debug { push @debug, $_[0]; return 1; }
+	sub addHook {
+		my ($callback, $user_data) = @_;
+		push @hooks, [$callback, $user_data];
+		return $#hooks;
+	}
+	sub delHook {
+		my ($id) = @_;
+		$hooks[$id] = undef if defined $id && $id >= 0;
+		return 1;
+	}
+	sub _emit {
+		my ($type, $message) = @_;
+		for my $hook (@hooks) {
+			next unless ref($hook) eq 'ARRAY' && ref($hook->[0]) eq 'CODE';
+			$hook->[0]->($type, 'test', 1, 1, $message, $hook->[1]);
+		}
+	}
+	sub message { push @messages, $_[0]; _emit('message', $_[0]); return 1; }
+	sub warning { push @warnings, $_[0]; _emit('warning', $_[0]); return 1; }
+	sub error { push @errors, $_[0]; _emit('error', $_[0]); return 1; }
+	sub debug { push @debug, $_[0]; _emit('debug', $_[0]); return 1; }
 }
 
 sub _write_fixture {
@@ -234,6 +251,7 @@ sub _write_fixture {
 [far_event]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 duration_seconds=900
 RULES
@@ -248,6 +266,7 @@ sub _write_interruption_fixture {
 [monster_event]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 entry_type=privateairship
 entry_item_id=14527
@@ -268,6 +287,7 @@ sub _write_active_fixture {
 [active_event]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=12
 duration_seconds=900
 RULES
@@ -282,6 +302,7 @@ sub _write_overlap_fixture {
 [aaa_high]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 priority=5
 duration_seconds=900
@@ -289,6 +310,7 @@ duration_seconds=900
 [zzz_low]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 priority=1
 duration_seconds=900
@@ -304,12 +326,14 @@ sub _write_multi_fixture {
 [keep_event]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 duration_seconds=900
 
 [drop_event]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 duration_seconds=900
 RULES
@@ -325,6 +349,7 @@ sub _write_keep_fixture {
 [keep_event]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 duration_seconds=900
 RULES
@@ -366,6 +391,7 @@ sub start {
 	@Log::messages = ();
 	@Log::warnings = ();
 	@Log::errors = ();
+	@Log::hooks = ();
 
 	_load_plugin();
 	my $start3 = $Plugins::hook_callbacks{start3};
@@ -486,7 +512,96 @@ sub start {
 		done_testing();
 	};
 
+	subtest 'runtime rejects rules without start evidence or with unknown map sources' => sub {
+		my $missing_start = {
+			event_id => 'runtime_missing_start',
+			enabled => 1,
+			announce_regex => 'ready',
+			finish_regex => 'done',
+			duration_seconds => 30,
+			entry_map => 'event_map',
+			validation_errors => [],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($missing_start),
+			'enabled runtime rule without start_regex is rejected');
+		like(join('; ', @{$missing_start->{validation_errors}}), qr/start_regex/i,
+			'missing start evidence is recorded on the runtime rule');
+
+		my $unknown_source = {
+			event_id => 'runtime_unknown_source',
+			enabled => 1,
+			announce_regex => 'ready',
+			start_regex => 'starts',
+			finish_regex => 'done',
+			duration_seconds => 30,
+			map_source => 'not_documented',
+			entry_map => 'event_map',
+			validation_errors => [],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($unknown_source),
+			'enabled runtime rule with an unknown map source is rejected');
+		like(join('; ', @{$unknown_source->{validation_errors}}), qr/map_source/i,
+			'unknown map source is recorded on the runtime rule');
+		done_testing();
+	};
+
+	subtest 'off cancels armed timers, pending queues, and every scheduler timer' => sub {
+		LastROActivity::cleanup_and_restore('scheduled cancellation reset');
+		$LastROActivity::enabled = 1;
+		$LastROActivity::clock = sub { 1_000 };
+		$LastROActivity::scheduler = LastROActivity::Scheduler->new(
+			lead_seconds => 10,
+			clock => sub { 1_000 },
+		);
+		my $rule_a = {
+			event_id => 'off_armed',
+			enabled => 1,
+			announce_regex => 'off armed',
+			start_regex => 'off armed starts',
+			finish_regex => 'off armed done',
+			duration_seconds => 30,
+			map_source => 'static',
+			entry_map => 'event_map',
+			validation_errors => [],
+		};
+		my $rule_b = { %$rule_a, event_id => 'off_other', announce_regex => 'off other' };
+		$LastROActivity::rules = {$rule_a->{event_id} => $rule_a, $rule_b->{event_id} => $rule_b};
+		my $event_a = LastROActivity::scheduler()->observe($rule_a, 'off armed starts将在2小时后开始', 1_000);
+		my $event_b = LastROActivity::scheduler()->observe($rule_b, 'off other将在3小时后开始', 1_000);
+		LastROActivity::_arm_event($event_a);
+		push @LastROActivity::pending_due, $event_a;
+		push @LastROActivity::pending_manual, $event_b;
+		my $command = $Commands::commands{lastroactivity};
+		$command->('lastroactivity', 'off');
+		is(LastROActivity::enabled(), 0, 'off disables scheduling');
+		is(LastROActivity::armed_event(), undef, 'off clears the armed event');
+		is_deeply(LastROActivity::scheduler()->events(), {}, 'off clears every scheduler timer');
+		is(scalar @LastROActivity::pending_due, 0, 'off clears pending due events');
+		is(scalar @LastROActivity::pending_manual, 0, 'off clears pending manual events');
+		is(LastROActivity::state(), 'IDLE', 'off leaves no armed lifecycle state');
+
+		$command->('lastroactivity', 'on');
+		LastROActivity::onMainLoopPre(undef, {now => 100_000});
+		is(LastROActivity::active_event(), undef, 're-enabling cannot dispatch cancelled work');
+		done_testing();
+	};
+
 	subtest 'mainLoop_pre invokes the due start boundary exactly once' => sub {
+		$LastROActivity::clock = sub { 1_000 };
+		my $due_rule = {
+			event_id => 'due_event',
+			enabled => 1,
+			announce_regex => '活动',
+			start_regex => '活动',
+			lead_seconds => 10,
+			duration_seconds => 30,
+			validation_errors => [],
+		};
+		$LastROActivity::rules = {due_event => $due_rule};
+		my $due_event = LastROActivity::scheduler()->observe(
+			$due_rule, '活动将在2小时后开始', 1_000,
+		);
+		LastROActivity::_arm_event($due_event);
 		my $begin_calls = 0;
 		{
 			no warnings 'redefine';
@@ -652,6 +767,7 @@ sub start {
 				event_id => 'no_targets',
 				enabled => 1,
 				announce_regex => '活动',
+				start_regex => '活动',
 				entry_type => 'privateairship',
 				entry_item_id => 14527,
 				entry_map => 'event_map',
@@ -694,6 +810,7 @@ sub start {
 			event_id => 'untrusted_target',
 			enabled => 1,
 			announce_regex => '活动',
+			start_regex => '活动',
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			entry_map => 'event_map',
@@ -766,6 +883,7 @@ sub start {
 				event_id => 'command_failure',
 				enabled => 1,
 				announce_regex => '活动',
+				start_regex => '活动',
 				entry_type => 'privateairship',
 				entry_item_id => 14527,
 				entry_map => 'event_map',
@@ -807,6 +925,7 @@ sub start {
 				event_id => 'missing_server_item',
 				enabled => 1,
 				announce_regex => '活动',
+				start_regex => '活动',
 				entry_type => 'privateairship',
 				entry_item_id => 14527,
 				entry_map => 'event_map',
@@ -907,6 +1026,7 @@ sub start {
 [far_event]
 enabled=1
 announce_regex=活动
+start_regex=活动
 lead_seconds=10
 duration_seconds=900
 RULES
@@ -1253,6 +1373,7 @@ RULES
 			event_id => 'return_order',
 			enabled => 1,
 			announce_regex => '活动',
+			start_regex => '活动',
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			entry_map => 'event_map',
@@ -1349,6 +1470,7 @@ RULES
 			event_id => 'macro_entry',
 			enabled => 1,
 			announce_regex => '活动',
+			start_regex => '活动',
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			entry_map => 'event_map',
@@ -1400,7 +1522,7 @@ RULES
 		$LastROActivity::clock = sub { 1_000 };
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'macro_disappears', enabled => 1, announce_regex => '活动',
+			event_id => 'macro_disappears', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'enter_event',
 			search_targets => ['event_egg'], validation_errors => [],
@@ -1447,6 +1569,7 @@ RULES
 			event_id => 'rejected_entry',
 			enabled => 1,
 			announce_regex => '活动',
+			start_regex => '活动',
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
 			entry_map => 'event_map',
@@ -1479,7 +1602,7 @@ RULES
 		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
 		%Globals::mon_control = (event_egg => {teleport_search => 1});
 		my $rule = {
-			event_id => 'entering_state', enabled => 1, announce_regex => '活动',
+			event_id => 'entering_state', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'], validation_errors => [],
 		};
@@ -1510,7 +1633,7 @@ RULES
 		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
 		%Globals::mon_control = (event_egg => {teleport_search => 1});
 		my $rule = {
-			event_id => 'late_rejection', enabled => 1, announce_regex => '活动',
+			event_id => 'late_rejection', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'], validation_errors => [],
 		};
@@ -1544,7 +1667,7 @@ RULES
 		%Commands::commands = (macro => sub { 1 });
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'map_first_entry', enabled => 1, announce_regex => '活动',
+			event_id => 'map_first_entry', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'enter_event',
 			search_targets => ['event_egg'], validation_errors => [],
@@ -1587,7 +1710,7 @@ RULES
 		@Commands::run_calls = ();
 		@Log::warnings = ();
 		my $rule = {
-			event_id => 'orphan_result', enabled => 1, announce_regex => '活动',
+			event_id => 'orphan_result', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'], validation_errors => [],
 		};
@@ -1626,7 +1749,7 @@ RULES
 		$LastROActivity::clock = sub { 1_000 };
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'map_first_timeout', enabled => 1, announce_regex => '活动',
+			event_id => 'map_first_timeout', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', timeout_seconds => 5, duration_seconds => 900,
 			search_targets => ['event_egg'], validation_errors => [],
@@ -1663,7 +1786,7 @@ RULES
 		$LastROActivity::clock = sub { 1_000 };
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'return_rejection', enabled => 1, announce_regex => '活动',
+			event_id => 'return_rejection', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', timeout_seconds => 5, duration_seconds => 900,
 			search_targets => ['event_egg'], validation_errors => [],
@@ -1714,7 +1837,7 @@ RULES
 		$LastROActivity::clock = sub { 1_000 };
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'nested_macro_error', enabled => 1, announce_regex => '活动',
+			event_id => 'nested_macro_error', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'root_entry_macro',
 			search_targets => ['event_egg'], validation_errors => [],
@@ -1773,7 +1896,7 @@ RULES
 		%Commands::commands = ();
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'entry_map_departure', enabled => 1, announce_regex => '活动',
+			event_id => 'entry_map_departure', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, search_targets => ['event_egg'],
 			validation_errors => [],
@@ -1829,7 +1952,7 @@ RULES
 		$LastROActivity::clock = sub { 1_000 };
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'off_map_macro_completion', enabled => 1, announce_regex => '活动',
+			event_id => 'off_map_macro_completion', enabled => 1, announce_regex => '活动', start_regex => '活动',
 			entry_type => 'privateairship', entry_item_id => 14527,
 			entry_map => 'event_map', duration_seconds => 900, entry_macro => 'completed_entry_macro',
 			search_targets => ['event_egg'], validation_errors => [],
@@ -1911,6 +2034,7 @@ RULES
 			event_id => $event_id,
 			enabled => 1,
 			announce_regex => 'START',
+			start_regex => 'START',
 			finish_regex => 'DONE',
 			entry_type => 'privateairship',
 			entry_item_id => 14527,
@@ -2100,7 +2224,7 @@ RULES
 
 		@Commands::run_calls = ();
 		my $macro_rule = {
-			event_id => 'task7_macro_entry', enabled => 1, announce_regex => 'START',
+			event_id => 'task7_macro_entry', enabled => 1, announce_regex => 'START', start_regex => 'START',
 			entry_type => 'macro', entry_map => 'event_map', entry_macro => 'enter_event',
 			validation_errors => [],
 		};
@@ -2111,7 +2235,7 @@ RULES
 
 		@Commands::run_calls = ();
 		my $npc_rule = {
-			event_id => 'task7_npc_entry', enabled => 1, announce_regex => 'START',
+			event_id => 'task7_npc_entry', enabled => 1, announce_regex => 'START', start_regex => 'START',
 			entry_type => 'npc', entry_map => 'event_map', entry_x => 10, entry_y => 20,
 			entry_npc => 'Guide#c', validation_errors => [],
 		};
@@ -2152,6 +2276,7 @@ RULES
 				event_id => $id,
 				enabled => 1,
 				announce_regex => 'START',
+				start_regex => 'START',
 				entry_type => 'privateairship',
 				entry_item_id => 14527,
 				entry_map => 'event_map',
@@ -2235,7 +2360,7 @@ RULES
 		LastROActivity::cleanup_and_restore('NPC validation seed cleanup');
 		@Commands::run_calls = ();
 		my $rule = {
-			event_id => 'task7_untrusted_npc', enabled => 1, announce_regex => 'START',
+			event_id => 'task7_untrusted_npc', enabled => 1, announce_regex => 'START', start_regex => 'START',
 			entry_type => 'npc', entry_map => 'event_map', entry_x => 10, entry_y => 20,
 			entry_npc => 'Guide#c', duration_seconds => 120, validation_errors => [],
 		};
@@ -2250,7 +2375,7 @@ RULES
 
 		LastROActivity::cleanup_and_restore('between NPC trust cases');
 		$rule = {
-			event_id => 'task7_trusted_npc', enabled => 1, announce_regex => 'START',
+			event_id => 'task7_trusted_npc', enabled => 1, announce_regex => 'START', start_regex => 'START',
 			entry_type => 'npc', entry_map => 'event_map', entry_x => 10, entry_y => 20,
 			entry_npc => 'Guide#c', duration_seconds => 120,
 			entry_npc_trusted => 1, entry_npc_evidence => 'server dialog transcript',
@@ -2278,6 +2403,7 @@ RULES
 [parsed_trusted_npc]
 enabled=1
 announce_regex=START
+start_regex=START
 entry_type=npc
 entry_map=event_map
 entry_x=10
@@ -2386,6 +2512,109 @@ RULES
 		is(LastROActivity::state(), 'IDLE', 'cleanup resets lifecycle state after an exception');
 		like(LastROActivity::last_failure(), qr/AI|exploded|cleanup/i,
 			'cleanup exposes the exception as a failure reason');
+		done_testing();
+	};
+
+	subtest 'checked command failures fail entry and return without waiting for timeout' => sub {
+		# Entry rejection is reported by the command handler through Log::error,
+		# while Commands::run itself still returns success.
+		LastROActivity::cleanup_and_restore('command rejection reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			lockMap_y => 66,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		%Globals::maps_lut = ('event_map.rsw' => 1, 'prontera.rsw' => 1);
+		$Globals::field = PluginTest::Field->new('event_map');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(
+			PluginTest::Inventory->new({14527 => {amount => 1}}),
+		);
+		$Globals::masterServer = {lastroAirship => 1, privateAirshipItemID => 14527};
+		%Globals::mon_control = (event_egg => {teleport_search => 1});
+		%Plugins::registered_plugins = (LastROActivity => 1);
+		%Commands::commands = (lastroactivity => $Commands::commands{lastroactivity});
+		@Commands::run_calls = ();
+		@Log::errors = ();
+		$Commands::run_failure = sub {
+			my ($command) = @_;
+			if ($command eq 'privateairship event_map') {
+				Log::error('Destination map is invalid.');
+			}
+			return 1;
+		};
+		my $rule = {
+			event_id => 'entry_command_rejected',
+			enabled => 1,
+			announce_regex => 'START',
+			start_regex => 'START',
+			finish_regex => 'DONE',
+			entry_type => 'privateairship',
+			entry_item_id => 14527,
+			entry_map => 'event_map',
+			search_targets => ['event_egg'],
+			duration_seconds => 900,
+			validation_errors => [],
+		};
+		my $event = {event_id => $rule->{event_id}, rule => $rule, map => 'event_map'};
+		is(LastROActivity::begin_activity($rule, $event), 0,
+			'entry command rejection fails the activity immediately');
+		is(LastROActivity::state(), 'FAILED', 'entry rejection records a failed lifecycle');
+		like(LastROActivity::last_failure(), qr/invalid|rejected|privateairship/i,
+			'entry rejection keeps the command diagnostic');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			'entry rejection requests one fixed return without waiting for timeout');
+		$Commands::run_failure = undef;
+		$task7_confirm_return->();
+
+		# TalkNPC uses the same Commands::run masking behavior; a synchronous
+		# handler error must be surfaced to the activity caller as well.
+		@Commands::run_calls = ();
+		$Commands::run_failure = sub {
+			Log::error('Could not find an NPC.');
+			return 1;
+		};
+		my $npc_rule = {
+			event_id => 'npc_command_rejected',
+			enabled => 1,
+			announce_regex => 'START',
+			start_regex => 'START',
+			entry_type => 'npc',
+			entry_map => 'event_map',
+			entry_x => 10,
+			entry_y => 20,
+			entry_npc => 'Guide#c',
+			entry_npc_trusted => 1,
+			entry_npc_evidence => 'server dialog transcript',
+			validation_errors => [],
+		};
+		my ($npc_ok, $npc_error);
+		$npc_ok = eval { LastROActivity::request_event_entry($npc_rule, {map => 'event_map'}); 1 };
+		$npc_error = $@;
+		ok(!$npc_ok, 'TalkNPC command rejection is surfaced instead of accepted');
+		like($npc_error, qr/NPC|rejected|failed/i, 'TalkNPC rejection exposes its diagnostic');
+		$Commands::run_failure = undef;
+		done_testing();
+	};
+
+	subtest 'failure cleanup continues through an activity AI clear exception' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_clear_exception');
+		@Commands::run_calls = ();
+		my ($ok, $error);
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_activity_ai = sub { die "activity AI cleanup exploded\n" };
+			$ok = eval { LastROActivity::_mark_activity_failed('forced failure'); 1 };
+			$error = $@;
+		}
+		ok($ok, 'failure path contains an activity AI cleanup exception');
+		is($error, '', 'activity AI cleanup exception does not escape the failure path');
+		is(LastROActivity::state(), 'FAILED', 'failure state is retained after cleanup exception');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			'failure path still issues the fixed return after AI cleanup throws');
+		$task7_confirm_return->();
 		done_testing();
 	};
 

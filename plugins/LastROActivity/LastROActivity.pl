@@ -281,13 +281,42 @@ sub onRulesPreLoad {
 }
 
 sub _clear_scheduled_events {
+	my $ok = 1;
 	if (ref($scheduler) && $scheduler->can('clear')) {
-		eval { $scheduler->clear(); 1 } or warning "[LastROActivity] Unable to clear scheduled activities: $@\n";
+		my $cleared = eval { $scheduler->clear(); 1 };
+		unless ($cleared) {
+			$ok = 0;
+			warning "[LastROActivity] Unable to clear scheduled activities: $@\n";
+		}
 	}
 	@pending_due = ();
 	@pending_manual = ();
 	$armed_event = undef;
 	$state = LastROActivity::State->new unless defined $active_event;
+	return $ok;
+}
+
+sub _disable_scheduling {
+	$enabled = 0;
+	my $ok = _clear_scheduled_events();
+	if (defined $active_event) {
+		my ($stopped, $error);
+		my $stop_eval = eval {
+			$stopped = _stop_active_activity('scheduling disabled');
+			1;
+		};
+		unless ($stop_eval) {
+			$error = _trim($@ || 'active activity stop failed');
+			_record_cleanup_failure($error);
+			$ok = 0;
+		}
+		$ok = 0 if $stop_eval && defined $stopped && !$stopped;
+	}
+	# A stop/return callback can enqueue work while it is unwinding.  Clear only
+	# scheduler-owned future work once more, without touching an active return
+	# handshake or its lifecycle state.
+	$ok = 0 unless _clear_scheduled_events();
+	return $ok;
 }
 
 sub _fail_closed_rules {
@@ -917,9 +946,16 @@ sub _event_map {
 	my ($rule, $event) = @_;
 	return undef unless ref($rule) eq 'HASH';
 
+	my $source = lc(_trim($rule->{map_source}));
+	# An explicitly supplied source is a contract, not an arbitrary label.  Do
+	# not silently treat a typo as a fixed-map rule.
+	return undef if $source ne ''
+		&& $source ne 'static'
+		&& $source ne 'dynamic'
+		&& $source ne 'announcement';
+
 	my $map;
-	if (defined $rule->{map_source}
-		&& lc(_trim($rule->{map_source})) eq 'dynamic') {
+	if ($source eq 'dynamic') {
 		# A dynamic rule must be backed by map metadata from the matching
 		# announcement; silently falling back to a stale configured map would
 		# send the character to the wrong activity.
@@ -927,7 +963,14 @@ sub _event_map {
 			if ref($event) eq 'HASH'
 			&& ref($event->{data_map}) eq 'HASH';
 		return undef unless defined $map && _trim($map) ne '';
+	} elsif ($source eq 'static' || $source eq 'announcement') {
+		# Both documented fixed sources intentionally use the configured map.  A
+		# scheduler event's incidental map/data metadata is not a substitute for
+		# that operator-confirmed value.
+		$map = $rule->{entry_map};
 	} else {
+		# Rules written before map_source was introduced remain compatible, while
+		# still requiring the normal map validation before any transfer.
 		$map = $rule->{entry_map};
 		$map = $event->{map} if (!defined $map || $map eq '')
 			&& ref($event) eq 'HASH' && defined $event->{map};
@@ -940,7 +983,9 @@ sub _event_map {
 
 	$map = _trim($map);
 	$map =~ s/\.(?:rsw|gat)\z//i;
-	return undef if $map eq '' || $map =~ /[\s;|&<>"'`]/;
+	return undef if $map eq '' || $map =~ m{[\\/]}
+		|| $map =~ /\.\./ || $map =~ /[\x00-\x1F\x7F]/
+		|| $map =~ /[\s;|&<>"'`]/;
 	return $map;
 }
 
@@ -1005,6 +1050,75 @@ sub _transfer_timeout {
 	my $timeout = ref($rule) eq 'HASH' ? $rule->{timeout_seconds} : undef;
 	return 15 unless defined $timeout && "$timeout" =~ /^\s*\d+(?:\.\d+)?\s*\z/ && $timeout > 0;
 	return 0 + $timeout;
+}
+
+# Commands::run() deliberately reports that a command was dispatched, even
+# when the command handler rejected it and only emitted a Log::error/warning.
+# Activity transfers are safety-critical, so observe those synchronous log
+# records while the command is running and turn them into a checked result.
+sub _run_checked_command {
+	my ($command, %options) = @_;
+	my @diagnostics;
+	my $log_hook;
+	my $hook_installed = 0;
+	if (defined &Log::addHook) {
+		my $hook_ok = eval {
+			$log_hook = Log::addHook(sub {
+				my ($type, undef, undef, undef, $message) = @_;
+				return unless defined $message && !ref($message);
+				my $text = _trim($message);
+				return if $text eq '';
+				my $is_error = defined $type && $type eq 'error';
+				my $is_airship_warning = defined $type && $type eq 'warning'
+					&& $text =~ /(?:LastroAirship|Private\s+Airship|privateairship|airship\s+transfer|destination\s+map|source\s+map)/i;
+				push @diagnostics, $text if $is_error || $is_airship_warning;
+			}, undef);
+			$hook_installed = 1;
+			1;
+		};
+		# A host with a partial Log implementation should still be able to use
+		# the ordinary return/exception checks below.
+		$hook_installed = 0 if !$hook_ok;
+	}
+
+	my ($result, $exception);
+	my $ok = eval {
+		$result = Commands::run($command);
+		1;
+	};
+	$exception = _trim($@ || 'command failed') unless $ok;
+
+	if ($hook_installed) {
+		eval { Log::delHook($log_hook); 1 };
+	}
+
+	if (!$ok) {
+		return (0, $exception ne '' ? $exception : 'command failed');
+	}
+	if (defined $result && !$result) {
+		return (0, 'command returned failure');
+	}
+	if (@diagnostics) {
+		my %seen;
+		@diagnostics = grep { !$seen{$_}++ } @diagnostics;
+		return (0, join('; ', @diagnostics));
+	}
+
+	# The TalkNPC command queues work asynchronously.  When the real AI API is
+	# available, a successful Commands::run() without an NPC queue means the
+	# request was rejected or could not be scheduled.
+	if ($options{verify_npc} && defined &AI::inQueue) {
+		my ($queued, $queue_error);
+		my $queue_ok = eval {
+			$queued = AI::inQueue('NPC');
+			1;
+		};
+		$queue_error = _trim($@ || 'unable to inspect TalkNPC queue') unless $queue_ok;
+		return (0, $queue_error ne '' ? $queue_error : 'TalkNPC command did not queue an NPC task')
+			if !$queue_ok || !$queued;
+	}
+
+	return (1, undef);
 }
 
 sub _macro_name {
@@ -1146,9 +1260,14 @@ sub _map_is_known {
 	my ($map) = @_;
 	return 0 unless defined $map && $map ne '';
 	my $maps = \%Globals::maps_lut;
-	return 1 if defined $maps->{"$map.rsw"};
-	return 1 if defined $maps->{"$map.gat"};
-	return 1 if defined $maps->{$map};
+	my $wanted = lc("$map");
+	$wanted =~ s/\.(?:rsw|gat)\z//;
+	for my $key (keys %$maps) {
+		next unless defined $key;
+		my $candidate = lc("$key");
+		$candidate =~ s/\.(?:rsw|gat)\z//;
+		return 1 if $candidate eq $wanted && defined $maps->{$key};
+	}
 	return 0;
 }
 
@@ -1559,6 +1678,24 @@ sub clear_activity_ai {
 	return $ok;
 }
 
+sub _try_clear_activity_ai {
+	my ($context) = @_;
+	$context = 'activity AI cleanup' unless defined $context && $context ne '';
+	my ($result, $error);
+	my $ok = eval {
+		$result = clear_activity_ai();
+		1;
+	};
+	if (!$ok) {
+		$error = _trim($@ || "$context failed");
+	} elsif (defined $result && !$result) {
+		$error = "$context returned failure";
+	}
+	return 1 unless defined $error && $error ne '';
+	_record_cleanup_failure($error);
+	return 0;
+}
+
 sub _set_pending_destination {
 	my ($destination, $kind, $rule) = @_;
 	$pending_destination = _normalize_map_name($destination);
@@ -1742,7 +1879,7 @@ sub _mark_activity_failed {
 	if (defined $active_event && !$return_pending) {
 		unless ($active_event->{activity_ai_cleared}) {
 			$active_event->{activity_ai_cleared} = 1;
-			clear_activity_ai();
+			_try_clear_activity_ai('activity failure cleanup');
 		}
 		# A failed entry is still returned through the same one-shot capital
 		# request.  The return deadline prevents a rejected request from being
@@ -1787,19 +1924,12 @@ sub request_event_entry {
 			if defined $active_event && ref($active_event) eq 'HASH';
 		_set_pending_destination($map, 'entry', $rule)
 			or die "invalid pending activity destination\n";
-		my ($requested, $command_error);
-		my $command_ok = eval {
-			$requested = Commands::run("privateairship $map");
-			1;
-		};
-		$command_error = _trim($@ || 'privateairship command failed') unless $command_ok;
-		if (defined $command_error && $command_error ne '') {
+		my ($command_ok, $command_error) = _run_checked_command("privateairship $map");
+		unless ($command_ok) {
 			_clear_pending_destination();
+			$command_error = 'privateairship command failed'
+				unless defined $command_error && $command_error ne '';
 			die "$command_error\n";
-		}
-		if (defined $requested && !$requested) {
-			_clear_pending_destination();
-			die "privateairship command returned failure\n";
 		}
 		return 1;
 	}
@@ -1827,14 +1957,11 @@ sub request_event_entry {
 		my $y = $rule->{entry_y};
 		die "entry coordinates are invalid\n"
 			unless defined $x && defined $y && "$x" =~ /^\d+\z/ && "$y" =~ /^\d+\z/;
-		my ($requested, $error);
-		my $ok = eval {
-			$requested = Commands::run("talknpc $x $y $sequence");
-			1;
-		};
-		$error = _trim($@ || 'talknpc command failed') unless $ok;
-		die "$error\n" if defined $error && $error ne '';
-		die "talknpc command returned failure\n" if defined $requested && !$requested;
+		my ($ok, $error) = _run_checked_command(
+			"talknpc $x $y $sequence",
+			verify_npc => 1,
+		);
+		die (($error || 'talknpc command failed') . "\n") unless $ok;
 		$entry_transfer_accepted = 1 if defined $active_event;
 		return 1;
 	}
@@ -2041,8 +2168,11 @@ sub commandHandler {
 	}
 
 	if (($subcommand eq 'on' || $subcommand eq 'off') && !@parts) {
-		$enabled = $subcommand eq 'on' ? 1 : 0;
-		_stop_active_activity('scheduling disabled') if !$enabled && defined $active_event;
+		if ($subcommand eq 'off') {
+			_disable_scheduling();
+		} else {
+			$enabled = 1;
+		}
 		message "[LastROActivity] scheduling " . ($enabled ? 'enabled' : 'disabled') . ".\n";
 		return 1;
 	}
@@ -2217,7 +2347,7 @@ sub _stop_active_activity {
 	_clear_pending_macro();
 	unless ($active_event->{activity_ai_cleared}) {
 		$active_event->{activity_ai_cleared} = 1;
-		clear_activity_ai();
+		_try_clear_activity_ai('activity stop cleanup');
 	}
 	return return_to_capital();
 }
@@ -2240,7 +2370,7 @@ sub finish_activity {
 		$active_event->{finish_started} = 1;
 		unless ($active_event->{activity_ai_cleared}) {
 			$active_event->{activity_ai_cleared} = 1;
-			clear_activity_ai();
+			_try_clear_activity_ai('activity finish cleanup');
 		}
 
 		my $rule = $active_event->{rule};
@@ -2271,7 +2401,7 @@ sub return_to_capital {
 	if (ref($state) eq 'LastROActivity::State' && $state->state eq 'FINISHING') {
 		unless ($active_event->{activity_ai_cleared}) {
 			$active_event->{activity_ai_cleared} = 1;
-			clear_activity_ai();
+			_try_clear_activity_ai('return preparation');
 		}
 		_transition_state('return');
 	}
@@ -2282,15 +2412,10 @@ sub return_to_capital {
 	_set_pending_destination('prontera', 'return', $rule)
 		or return 0;
 
-	my ($result, $error);
-	my $ok = eval {
-		$result = Commands::run('privateairship prontera');
-		1;
-	};
-	$error = _trim($@ || 'privateairship return command failed') unless $ok;
-	if (!$ok || (defined $result && !$result)) {
-		$error = 'privateairship return command returned failure'
-			if !defined $error || $error eq '';
+	my ($ok, $error) = _run_checked_command('privateairship prontera');
+	unless ($ok) {
+		$error = 'privateairship return command failed'
+			unless defined $error && $error ne '';
 		$last_failure = $error;
 		warning "[LastROActivity] Unable to return to prontera: $error.\n";
 		# There is no transfer to confirm after a rejected command.  Use the

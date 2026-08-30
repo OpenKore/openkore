@@ -39,6 +39,7 @@ sub start {
 			event_id => 'city_monster_party',
 			enabled => 1,
 			announce_regex => '城市魔物派对',
+			start_regex => '城市魔物派对将在',
 			lead_seconds => 10,
 		};
 		my $armed = $scheduler->observe($rule, '城市魔物派对将在2小时后开始', 1_000);
@@ -89,6 +90,7 @@ sub start {
 			event_id => 'city_monster_party',
 			enabled => 1,
 			announce_regex => '城市魔物派对',
+			start_regex => '城市魔物派对将在',
 			lead_seconds => 10,
 		};
 		$scheduler->observe($rule, '城市魔物派对将在1分钟后开始', 2_000);
@@ -102,6 +104,7 @@ sub start {
 			event_id => 'early',
 			enabled => 1,
 			announce_regex => 'early',
+			start_regex => 'early将在',
 			lead_seconds => 10,
 			priority => 1,
 		};
@@ -109,6 +112,7 @@ sub start {
 			event_id => 'high',
 			enabled => 1,
 			announce_regex => 'high',
+			start_regex => 'high将在',
 			lead_seconds => 10,
 			priority => 5,
 		};
@@ -125,6 +129,18 @@ sub start {
 		ok($scheduler->cancel('city_monster_party'), 'cancel reports an armed event');
 		ok(!$scheduler->cancel('city_monster_party'), 'cancel reports no event after removal');
 		is(scalar @{$scheduler->due(5_050)}, 0, 'cancelled event is not due');
+
+		my $countdown_without_start = {
+			event_id => 'missing_start',
+			enabled => 1,
+			announce_regex => 'missing start',
+			lead_seconds => 10,
+		};
+		ok(!defined $scheduler->observe(
+			$countdown_without_start,
+			'missing start将在2小时后开始',
+			7_000,
+		), 'countdown cannot arm an enabled rule without start evidence');
 		done_testing();
 	};
 
@@ -148,6 +164,7 @@ sub start {
 			event_id => 'dynamic',
 			enabled => 1,
 			announce_regex => '活动',
+			start_regex => '活动将在',
 			map_source => 'dynamic',
 		};
 		my $dynamic_event = $scheduler->observe(
@@ -161,6 +178,7 @@ sub start {
 			event_id => 'static',
 			enabled => 1,
 			announce_regex => '活动',
+			start_regex => '活动将在',
 			map_source => 'announcement',
 		};
 		my $static_event = $scheduler->observe(

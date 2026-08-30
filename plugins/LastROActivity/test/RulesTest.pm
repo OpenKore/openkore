@@ -27,6 +27,7 @@ return_policy=privateairship:prontera
 [bad_rule]
 enabled=1
 announce_regex=bad
+start_regex=bad
 entry_type=unknown
 RULES
 
@@ -48,7 +49,7 @@ RULES
 		};
 		is_deeply(
 			LastROActivity::Rules::validate_rule($rule),
-			['announce_regex required when enabled'],
+			['announce_regex required when enabled', 'start_regex required when enabled'],
 			'requires announcement evidence for enabled rules',
 		);
 		is($rule->{enabled}, 1, 'validator does not mutate direct rule input');
@@ -60,6 +61,51 @@ RULES
 		done_testing();
 	};
 
+	subtest 'requires scheduler start evidence and documents transfer timeout' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[valid_timeout]
+enabled=0
+timeout_seconds=45
+
+[invalid_timeout]
+enabled=1
+announce_regex=ready
+start_regex=starts
+timeout_seconds=0
+
+[missing_start]
+enabled=1
+announce_regex=ready
+timeout_seconds=45
+RULES
+
+		is($rules->{valid_timeout}{timeout_seconds}, 45,
+			'parses the canonical top-level timeout_seconds field');
+		is_deeply(
+			$errors,
+			[
+				'invalid_timeout: timeout_seconds must be positive',
+				'missing_start: start_regex required when enabled',
+			],
+			'rejects non-positive timeouts and missing start evidence',
+		);
+		ok(!$rules->{invalid_timeout}{enabled}, 'invalid timeout disables the rule');
+		ok(!$rules->{missing_start}{enabled}, 'missing start evidence disables the rule');
+
+		my $bad_source = {
+			enabled => 1,
+			announce_regex => 'ready',
+			start_regex => 'starts',
+			map_source => 'arbitrary',
+		};
+		is_deeply(
+			LastROActivity::Rules::validate_rule($bad_source),
+			['map_source must be static, dynamic, or announcement'],
+			'rejects undocumented map-source values in direct validation',
+		);
+		done_testing();
+	};
+
 	subtest 'attaches parser syntax errors and reports orphan syntax' => sub {
 		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
 orphan=1
@@ -67,6 +113,7 @@ orphan=1
 [broken]
 enabled=1
 announce_regex=ready
+start_regex=ready
 malformed syntax
 =bad
 RULES
@@ -75,8 +122,8 @@ RULES
 			$errors,
 			[
 				'line 1: setting outside an event section',
-				'broken: malformed setting on line 6',
-				'broken: empty setting name on line 7',
+				'broken: malformed setting on line 7',
+				'broken: empty setting name on line 8',
 			],
 			'reports syntax errors in source order',
 		);
@@ -84,8 +131,8 @@ RULES
 		is_deeply(
 			$rules->{broken}{validation_errors},
 			[
-				'malformed setting on line 6',
-				'empty setting name on line 7',
+				'malformed setting on line 7',
+				'empty setting name on line 8',
 			],
 			'attaches syntax errors to the affected rule',
 		);
@@ -97,6 +144,7 @@ RULES
 [empty_numeric]
 enabled=1
 announce_regex=ready
+start_regex=ready
 lead_seconds=
 duration_seconds=
 RULES
@@ -127,10 +175,12 @@ RULES
 event_id=spoofed
 enabled=1
 announce_regex=ready
+start_regex=ready
 
 [phase_bomb]
 enabled=1
 announce_regex=ready
+start_regex=ready
 _phase_data=oops
 phase.1.name=opening
 RULES
@@ -222,16 +272,19 @@ entry_item_id=14527
 [zero_item]
 enabled=1
 announce_regex=ready
+start_regex=ready
 entry_item_id=0
 
 [bad_item]
 enabled=1
 announce_regex=ready
+start_regex=ready
 entry_item_id=not_numeric
 
 [alias_item]
 enabled=1
 announce_regex=ready
+start_regex=ready
 private_airship_item_id=14527
 RULES
 
@@ -269,14 +322,17 @@ lead_seconds=-1
 [malformed_enabled]
 enabled=not-a-flag
 announce_regex=ignored
+start_regex=ignored
 
 [out_of_range]
 enabled=2
 announce_regex=ready
+start_regex=ready
 
 [negative_enabled]
 enabled=-1
 announce_regex=ready
+start_regex=ready
 RULES
 
 		is($rules->{duplicate}{announce_regex}, 'first', 'keeps the first definition');

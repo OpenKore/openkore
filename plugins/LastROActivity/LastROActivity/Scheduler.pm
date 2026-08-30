@@ -67,10 +67,12 @@ sub observe {
 	$received_at = $self->{clock}->() if !defined $received_at;
 	return undef if !_is_number($received_at);
 	return undef if !_matches($message, $rule->{announce_regex});
+	# A countdown only supplies timing.  The explicit start pattern remains the
+	# evidence that this particular server line is allowed to arm the rule.
+	return undef if !_matches($message, $rule->{start_regex});
 
 	my $countdown = parse_countdown($message);
 	if (!defined $countdown) {
-		return undef if !_matches($message, $rule->{start_regex});
 		$countdown = 0;
 	}
 

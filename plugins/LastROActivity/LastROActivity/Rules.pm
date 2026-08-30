@@ -14,6 +14,8 @@ my %NUMERIC_FIELDS = map { $_ => 1 } qw(
 	timeout_seconds
 );
 
+my %MAP_SOURCES = map { $_ => 1 } qw(static dynamic announcement);
+
 my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	enabled
 	announce_regex
@@ -30,6 +32,7 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	entry_npc_trusted
 	entry_npc_evidence
 	duration_seconds
+	timeout_seconds
 	entry_macro
 	finish_macro
 	return_policy
@@ -173,8 +176,18 @@ sub validate_rule {
 	if ($rule->{enabled} && !_has_value($rule->{announce_regex})) {
 		push @errors, 'announce_regex required when enabled';
 	}
+	if ($rule->{enabled} && !_has_value($rule->{start_regex})) {
+		push @errors, 'start_regex required when enabled';
+	} elsif ($rule->{enabled} && !_valid_pattern($rule->{start_regex})) {
+		push @errors, 'start_regex is invalid';
+	}
 	if (defined $rule->{enabled} && $rule->{enabled} !~ /^(?:0|1)$/) {
 		push @errors, 'enabled must be 0 or 1';
+	}
+
+	if (_has_value($rule->{map_source})
+		&& !$MAP_SOURCES{lc(_trim($rule->{map_source}))}) {
+		push @errors, 'map_source must be static, dynamic, or announcement';
 	}
 
 	if (_has_value($rule->{entry_type}) && !$ENTRY_TYPES{$rule->{entry_type}}) {
@@ -194,6 +207,14 @@ sub validate_rule {
 			push @errors, 'lead_seconds must be an integer';
 		} elsif ($rule->{lead_seconds} < 0) {
 			push @errors, 'lead_seconds must be non-negative';
+		}
+	}
+
+	if (defined $rule->{timeout_seconds}) {
+		if ($rule->{timeout_seconds} !~ /^\d+(?:\.\d+)?$/) {
+			push @errors, 'timeout_seconds must be a positive number';
+		} elsif ($rule->{timeout_seconds} <= 0) {
+			push @errors, 'timeout_seconds must be positive';
 		}
 	}
 
@@ -227,6 +248,7 @@ sub _new_rule {
 		entry_npc_trusted => undef,
 		entry_npc_evidence => undef,
 		duration_seconds => undef,
+		timeout_seconds => undef,
 		entry_macro => undef,
 		finish_macro => undef,
 		return_policy => undef,
@@ -264,6 +286,21 @@ sub _is_reserved_key {
 sub _has_value {
 	my ($value) = @_;
 	return defined $value && $value ne '';
+}
+
+sub _valid_pattern {
+	my ($pattern) = @_;
+	return 0 unless _has_value($pattern);
+	return 1 if ref($pattern) eq 'Regexp';
+	return 0 if ref($pattern);
+	my $text = _trim($pattern);
+	return 0 if $text eq '' || $text =~ /[\r\n]/;
+	my $compiled;
+	my $ok = eval {
+		$compiled = qr/$text/;
+		1;
+	};
+	return $ok ? 1 : 0;
 }
 
 sub _trim {
