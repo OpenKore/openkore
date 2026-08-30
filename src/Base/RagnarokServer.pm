@@ -42,7 +42,7 @@ sub getHost {
 
 sub setServerType {
 	my ($self, $serverType) = @_;
-	if ($self->{severType} != $serverType) {
+	if (($self->{serverType} // '') ne ($serverType // '')) {
 		$self->{serverType} = $serverType;
 		$self->{recvPacketParser} = Network::Receive->create(undef, $serverType);
 		$self->{sendPacketParser} = Network::Send->create(undef, $serverType);
