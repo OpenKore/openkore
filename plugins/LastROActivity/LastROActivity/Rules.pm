@@ -194,6 +194,33 @@ sub validate_rule {
 		push @errors, "invalid entry_type $rule->{entry_type}";
 	}
 
+	# An explicitly typed entry is an assertion that the corresponding
+	# server-backed route has been confirmed.  Keep this parser check limited to
+	# presence/shape evidence; shared-control resolution belongs to the runtime
+	# validator where Globals is available.  Rules without an entry_type remain
+	# compatible with the scheduler-only fixtures and use the legacy defaults.
+	if ($rule->{enabled} && _has_value($rule->{entry_type})
+		&& $ENTRY_TYPES{$rule->{entry_type}}) {
+		my $entry_type = lc(_trim($rule->{entry_type}));
+		if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
+			if (!defined $rule->{entry_item_id} || _trim($rule->{entry_item_id}) eq '') {
+				push @errors, 'entry_item_id is required for airship entry';
+			}
+			unless (_has_search_targets($rule)) {
+				push @errors, 'search_targets evidence is required for shared search mode';
+			}
+		} elsif ($entry_type eq 'npc') {
+			unless (defined $rule->{entry_npc_trusted}
+				&& "$rule->{entry_npc_trusted}" =~ /^\s*1\s*$/) {
+				push @errors, 'entry_npc_trusted=1 is required for NPC entry';
+			}
+			unless (defined $rule->{entry_npc_evidence}
+				&& _trim($rule->{entry_npc_evidence}) ne '') {
+				push @errors, 'entry_npc_evidence is required for NPC entry';
+			}
+		}
+	}
+
 	if (defined $rule->{duration_seconds}) {
 		if ($rule->{duration_seconds} !~ /^[-+]?\d+$/) {
 			push @errors, 'duration_seconds must be an integer';
@@ -286,6 +313,16 @@ sub _is_reserved_key {
 sub _has_value {
 	my ($value) = @_;
 	return defined $value && $value ne '';
+}
+
+sub _has_search_targets {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	my $targets = $rule->{search_targets};
+	if (ref($targets) eq 'ARRAY') {
+		return scalar grep { defined $_ && _trim($_) ne '' } @$targets;
+	}
+	return defined $targets && _trim($targets) ne '';
 }
 
 sub _valid_pattern {

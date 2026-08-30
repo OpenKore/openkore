@@ -45,7 +45,6 @@ RULES
 		my $rule = {
 			enabled => 1,
 			announce_regex => '',
-			entry_type => 'npc',
 		};
 		is_deeply(
 			LastROActivity::Rules::validate_rule($rule),
@@ -58,6 +57,56 @@ RULES
 			[],
 			'allows a disabled rule without announcement evidence',
 		);
+		done_testing();
+	};
+
+	subtest 'disables explicitly configured entry rules when lifecycle evidence is incomplete' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[incomplete_airship]
+enabled=1
+announce_regex=ready
+start_regex=starts
+finish_regex=done
+map_source=static
+entry_map=prontera
+entry_type=privateairship
+return_policy=privateairship:prontera
+search_targets=
+
+[incomplete_npc]
+enabled=1
+announce_regex=ready
+start_regex=starts
+finish_regex=done
+map_source=static
+entry_map=prontera
+entry_type=npc
+entry_x=152
+entry_y=129
+entry_npc=Guide#c
+return_policy=privateairship:prontera
+RULES
+
+		is_deeply(
+			$errors,
+			[
+				'incomplete_airship: entry_item_id is required for airship entry',
+				'incomplete_airship: search_targets evidence is required for shared search mode',
+				'incomplete_npc: entry_npc_trusted=1 is required for NPC entry',
+				'incomplete_npc: entry_npc_evidence is required for NPC entry',
+			],
+			'rejects enabled entry rules without item/search or trusted NPC evidence',
+		);
+		ok(!$rules->{incomplete_airship}{enabled},
+			'airship rule is effectively disabled before scheduling');
+		ok(!$rules->{incomplete_npc}{enabled},
+			'NPC rule is effectively disabled before scheduling');
+		like(join('; ', @{$rules->{incomplete_airship}{validation_errors}}),
+			qr/entry_item_id.*search_targets|search_targets.*entry_item_id/,
+			'airship evidence errors are attached to the parsed rule');
+		like(join('; ', @{$rules->{incomplete_npc}{validation_errors}}),
+			qr/entry_npc_trusted.*entry_npc_evidence|entry_npc_evidence.*entry_npc_trusted/,
+			'NPC evidence errors are attached to the parsed rule');
 		done_testing();
 	};
 
@@ -381,18 +430,23 @@ RULES
 		is_deeply(
 			$errors,
 			[
+				'city_monster_party: entry_item_id is required for airship entry',
+				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
+				'dojo_challenge: entry_item_id is required for airship entry',
+				'dojo_challenge: search_targets evidence is required for shared search mode',
+				'pool_challenge: entry_item_id is required for airship entry',
+				'pool_challenge: search_targets evidence is required for shared search mode',
+				'lottery: entry_npc_trusted=1 is required for NPC entry',
+				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
 			'raw-enabled sections without announcement evidence fail closed during parsing',
 		);
-		my %expected_enabled = map { $_ => 1 } qw(
-			city_monster_party dojo_challenge pool_challenge lottery
-		);
 		for my $event_id (@expected_ids) {
-			is($rules->{$event_id}{enabled}, $expected_enabled{$event_id} ? 1 : 0,
+			is($rules->{$event_id}{enabled}, 0,
 				"$event_id has the expected effective enable state");
 		}
 		ok(!$rules->{dungeon_monster_party}{enabled},
@@ -412,8 +466,16 @@ RULES
 		is_deeply(
 			$errors,
 			[
+				'city_monster_party: entry_item_id is required for airship entry',
+				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
+				'dojo_challenge: entry_item_id is required for airship entry',
+				'dojo_challenge: search_targets evidence is required for shared search mode',
+				'pool_challenge: entry_item_id is required for airship entry',
+				'pool_challenge: search_targets evidence is required for shared search mode',
+				'lottery: entry_npc_trusted=1 is required for NPC entry',
+				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
@@ -435,7 +497,7 @@ RULES
 
 		my @routing_ids = qw(city_monster_party dojo_challenge pool_challenge lottery);
 		for my $event_id (@routing_ids) {
-			ok($rules->{$event_id}{enabled}, "$event_id keeps the requested enable flag for routing tests");
+			ok(!$rules->{$event_id}{enabled}, "$event_id is effectively disabled before lifecycle evidence is complete");
 			is($rules->{$event_id}{map_source}, 'dynamic', "$event_id uses dynamic announcement map metadata");
 		}
 

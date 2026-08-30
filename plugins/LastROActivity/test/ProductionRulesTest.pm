@@ -330,8 +330,16 @@ sub start {
 		is_deeply(
 			$errors,
 			[
+				'city_monster_party: entry_item_id is required for airship entry',
+				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
+				'dojo_challenge: entry_item_id is required for airship entry',
+				'dojo_challenge: search_targets evidence is required for shared search mode',
+				'pool_challenge: entry_item_id is required for airship entry',
+				'pool_challenge: search_targets evidence is required for shared search mode',
+				'lottery: entry_npc_trusted=1 is required for NPC entry',
+				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
@@ -352,27 +360,39 @@ sub start {
 				"$id retains the requested raw enabled=1 flag");
 		}
 
-		my %effective_enabled = map { $_ => 1 } qw(
-			city_monster_party dojo_challenge pool_challenge lottery
+		my %expected_validation_errors = (
+			city_monster_party => [
+				'entry_item_id is required for airship entry',
+				'search_targets evidence is required for shared search mode',
+			],
+			dungeon_monster_party => [
+				'announce_regex required when enabled',
+				'start_regex required when enabled',
+			],
+			dojo_challenge => [
+				'entry_item_id is required for airship entry',
+				'search_targets evidence is required for shared search mode',
+			],
+			pool_challenge => [
+				'entry_item_id is required for airship entry',
+				'search_targets evidence is required for shared search mode',
+			],
+			lottery => [
+				'entry_npc_trusted=1 is required for NPC entry',
+				'entry_npc_evidence is required for NPC entry',
+			],
+			sky_chest => [
+				'announce_regex required when enabled',
+				'start_regex required when enabled',
+			],
 		);
 		for my $id (@EVENT_IDS) {
 			ok(exists $rules->{$id}, "$id rule exists");
 			next unless exists $rules->{$id};
-			is($rules->{$id}{enabled}, $effective_enabled{$id} ? 1 : 0,
-				"$id has the expected effective enable state");
-			my @violations = _production_errors($rules->{$id}, $shared_rows, $known_maps);
-			if ($effective_enabled{$id}) {
-				ok(@violations, "$id is not lifecycle-runnable without missing evidence");
-				like(join('; ', @violations), qr/(?:entry_item_id|entry_npc_trusted|search_targets)/,
-					"$id reports its missing lifecycle evidence");
-			} else {
-				is_deeply($rules->{$id}{validation_errors},
-					[
-						'announce_regex required when enabled',
-						'start_regex required when enabled',
-					],
-					"$id records the parser validation errors that forced effective disablement");
-			}
+			is($rules->{$id}{enabled}, 0,
+				"$id has the expected fail-closed effective enable state");
+			is_deeply($rules->{$id}{validation_errors}, $expected_validation_errors{$id},
+				"$id records the parser validation errors that forced effective disablement");
 		}
 
 		is($rules->{dojo_challenge}{map_source}, 'dynamic', 'morocc route declares dynamic map source');

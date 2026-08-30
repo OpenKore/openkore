@@ -35,22 +35,23 @@ is checked against the loaded map table before entry.
 
 ## Current evidence fixture
 
-The four confirmed announcement routes below can be armed by the scheduler,
-but none is currently runnable end to end. Their missing lifecycle evidence is
-deliberate and must be supplied before a server trial.
+The four confirmed announcement routes below retain their raw `enabled=1`
+flags for evidence auditing, but parser validation makes their effective
+runtime state `enabled=0` until the missing lifecycle evidence is supplied.
+They must not be armed by a live plugin instance.
 
-| Rule | Effective announcement routing | Lifecycle gate | Confirmed dynamic metadata |
+| Rule | Raw source flag / effective runtime state | Lifecycle gate | Confirmed dynamic metadata |
 | --- | --- | --- | --- |
-| `city_monster_party` | `enabled=1` | Private Airship item and shared `search_targets` evidence are missing | `pvp_y_5-2#0#0` |
-| `dojo_challenge` | `enabled=1` | Private Airship item and shared `search_targets` evidence are missing | `morocc#159#99` |
-| `pool_challenge` | `enabled=1` | Private Airship item and shared `search_targets` evidence are missing | `payon#184#102` |
-| `lottery` | `enabled=1` | Trusted NPC dialog attestation is missing; `prontera#152#129` is retained as the confirmed entry NPC location | `prontera#152#129` |
-| `dungeon_monster_party` | Parser forces effective `enabled=0` | `announce_regex` and `start_regex` are absent | none |
-| `sky_chest` | Parser forces effective `enabled=0` | `announce_regex` and `start_regex` are absent | none |
+| `city_monster_party` | raw `1` / effective `0` | Private Airship item and shared `search_targets` evidence are missing | `pvp_y_5-2#0#0` |
+| `dojo_challenge` | raw `1` / effective `0` | Private Airship item and shared `search_targets` evidence are missing | `morocc#159#99` |
+| `pool_challenge` | raw `1` / effective `0` | Private Airship item and shared `search_targets` evidence are missing | `payon#184#102` |
+| `lottery` | raw `1` / effective `0` | Trusted NPC dialog attestation is missing; `prontera#152#129` is retained as the confirmed entry NPC location | `prontera#152#129` |
+| `dungeon_monster_party` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
+| `sky_chest` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
 
-The source file's raw flags and the parsed effective state are intentionally
-different for the last two rows. Do not treat a raw flag as proof that an
-activity is runnable.
+The source file's raw flags and parsed effective state are intentionally
+different for every row. Do not treat a raw flag as proof that an activity is
+runnable. Announcement-only evidence cannot activate a lifecycle.
 
 The Morocc and Payon announcements are accepted with `1分钟后`, `30秒后`, or
 `10秒后`; lottery accepts `60秒后`, `30秒后`, or `10秒后`; the monster-party

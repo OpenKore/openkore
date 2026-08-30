@@ -200,8 +200,16 @@ sub start {
 		is_deeply(
 			$errors,
 			[
+				'city_monster_party: entry_item_id is required for airship entry',
+				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
+				'dojo_challenge: entry_item_id is required for airship entry',
+				'dojo_challenge: search_targets evidence is required for shared search mode',
+				'pool_challenge: entry_item_id is required for airship entry',
+				'pool_challenge: search_targets evidence is required for shared search mode',
+				'lottery: entry_npc_trusted=1 is required for NPC entry',
+				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
@@ -250,9 +258,25 @@ sub start {
 		);
 
 		my $scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
+		my %routing_rules = map {
+			my $source = $rules->{$_};
+			$_ => {
+				event_id => $_,
+				enabled => 1,
+				announce_regex => $source->{announce_regex},
+				start_regex => $source->{start_regex},
+				finish_regex => $source->{finish_regex},
+				lead_seconds => $source->{lead_seconds},
+				map_source => $source->{map_source},
+			};
+		} qw(dojo_challenge pool_challenge lottery city_monster_party);
 		my $received_at = 50_000;
 		for my $case (@cases) {
-			my $rule = $rules->{$case->{id}};
+			# The production parser intentionally disables incomplete typed rules.
+			# These projections are scheduler-only synthetic fixtures, so the
+			# assertions exercise regex/countdown/map extraction independently of the
+			# lifecycle evidence gate.
+			my $rule = $routing_rules{$case->{id}};
 			ok($rule->{enabled}, "$case->{id} is enabled for announcement routing");
 			for my $message (@{$case->{messages}}) {
 				like($message, qr/$rule->{announce_regex}/,
@@ -277,7 +301,7 @@ sub start {
 			}
 		}
 
-		my $party = $rules->{city_monster_party};
+		my $party = $routing_rules{city_monster_party};
 		my $immediate_scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
 		my $immediate = $immediate_scheduler->observe(
 			$party,

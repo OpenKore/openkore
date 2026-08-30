@@ -618,9 +618,28 @@ sub _validated_enabled_rule {
 		return 0;
 	}
 	return 0 unless defined $rule->{announce_regex} && $rule->{announce_regex} ne '';
+	# Resolve declared shared-search targets before scheduling when the runtime
+	# control table is available.  Minimal scheduler fixtures often omit an
+	# entry_type and intentionally do not load Globals::mon_control; those retain
+	# their parser-compatible legacy behavior and are checked at entry time.
+	if (_runtime_search_validation_available($rule)) {
+		my ($search_ok) = _validate_search_targets($rule);
+		return 0 unless $search_ok;
+	}
 	my ($completion_ok) = _validate_completion_policy($rule);
 	return 0 unless $completion_ok;
 	return 1;
+}
+
+sub _runtime_search_validation_available {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	return 0 unless scalar keys %Globals::mon_control;
+	return 1 if $rule->{search_mode} || $rule->{shared_search};
+	return 0 unless exists $rule->{entry_type} && defined $rule->{entry_type}
+		&& _trim($rule->{entry_type}) ne '';
+	my $entry_type = lc(_trim($rule->{entry_type}));
+	return ($entry_type eq 'airship' || $entry_type eq 'privateairship') ? 1 : 0;
 }
 
 sub _observe_message {
@@ -1572,8 +1591,13 @@ sub _uses_search_mode {
 
 sub _activity_entry_validation {
 	my ($rule, $event) = @_;
-	return 'rule is not enabled or validated'
-		unless _validated_enabled_rule($rule);
+	unless (_validated_enabled_rule($rule)) {
+		if (ref($rule) eq 'HASH' && ref($rule->{validation_errors}) eq 'ARRAY'
+			&& @{$rule->{validation_errors}}) {
+			return $rule->{validation_errors}[0];
+		}
+		return 'rule is not enabled or validated';
+	}
 	my ($completion_ok, $completion_reason) = _validate_completion_policy($rule);
 	return $completion_reason unless $completion_ok;
 	my ($macro_ok, $macro_reason) = _validate_macro_fields($rule);

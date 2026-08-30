@@ -421,6 +421,27 @@ sub start {
 		done_testing();
 	};
 
+	subtest 'bundled incomplete raw-enabled rules never arm before lifecycle validation' => sub {
+		LastROActivity::scheduler()->clear();
+		my @incomplete_ids = qw(
+			city_monster_party
+			dojo_challenge
+			pool_challenge
+			lottery
+		);
+		for my $event_id (@incomplete_ids) {
+			ok(!$LastROActivity::rules->{$event_id}{enabled},
+				"$event_id is effectively disabled before scheduling");
+		}
+		my $event = LastROActivity::onSystemMessage(undef, {
+			Msg => '[随机事件] 抽奖活动10秒后开始啦 data-map="prontera#152#129"',
+		});
+		ok(!defined $event, 'announcement-only evidence cannot arm the incomplete lottery rule');
+		is_deeply(LastROActivity::scheduler()->events(), {},
+			'incomplete raw-enabled rules leave no scheduler timers');
+		done_testing();
+	};
+
 	subtest 'active control rules override the bundled fixture' => sub {
 		my ($active_folder, $active_path) = _write_active_fixture();
 		LastROActivity::onUnload();
@@ -818,6 +839,13 @@ sub start {
 			duration_seconds => 900,
 			validation_errors => [],
 		};
+		my %preflight_rule = %$rule;
+		$preflight_rule{validation_errors} = [];
+		ok(!LastROActivity::_validated_enabled_rule(\%preflight_rule),
+			'untrusted search target is rejected before scheduling when shared control is available');
+		ok(!$preflight_rule{enabled}, 'pre-schedule target validation disables the rule');
+		like(join('; ', @{$preflight_rule{validation_errors}}), qr/shared mon_control/,
+			'pre-schedule target failure is auditable');
 		my %before = %Globals::config;
 		my $ok = LastROActivity::begin_activity($rule, {
 			event_id => 'untrusted_target',
