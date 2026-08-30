@@ -176,6 +176,18 @@ sub start {
 		sync_Count => 1,
 	);
 
+	subtest '2021 RE LastRO prefers 0B72 character pages when both layouts are registered' => sub {
+		my $server = bless {
+			rpackets => {
+				'099D' => { length => -1 },
+				'0B72' => { length => -1 },
+			},
+		}, 'Network::XKore2::CharServer';
+
+		is($server->character_list_switch, '0B72',
+			'LastRO 2021 RE character-list response uses the 0B72 packet ID');
+	};
+
 		subtest '2021 RE character login waits for 09A1 before sending character data' => sub {
 		my $account_id = pack('V', 2007306);
 		my $session = {

@@ -108,6 +108,8 @@ use Network::XKore2::CharServer;
 	sub reconstruct {
 		my ($self, $args) = @_;
 		push @{$self->{calls}}, $args->{switch};
+		return pack('v v a175', 0x0B72, 179, 'C' x 175)
+			if $args->{switch} eq '0B72';
 		return pack('v v a175', 0x099D, 179, 'C' x 175)
 			if $args->{switch} eq '099D';
 		return pack('v', 0);
@@ -143,6 +145,7 @@ sub start {
 	%Globals::rpackets = (
 		'09A1' => { length => 2 },
 		'099D' => { length => -1 },
+		'0B72' => { length => -1 },
 	);
 
 	my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
@@ -169,10 +172,14 @@ sub start {
 		$server->onClientData($client, pack('v', 0x09A1));
 
 		ok(!$client->{closed}, 'valid 09A1 remains connected');
-		is_deeply($receiver->{calls}, ['099D'],
+		is_deeply($receiver->{calls}, ['0B72'],
 			'real Network::PacketParser process invokes character-list response');
-		is(unpack('v', $client->{sent}[-1]), 0x099D,
-			'09A1 receives a 099D character page');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'09A1 receives the LastRO 0B72 character page');
+		is(unpack('v', substr($client->{sent}[-1], 2, 2)), 179,
+			'0B72 response length includes one 175-byte character block');
+		is(length($client->{sent}[-1]), 179,
+			'0B72 response carries the complete character block without truncation');
 	};
 
 	%Globals::charSvrSet = %previous_slots;

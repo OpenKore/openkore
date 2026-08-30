@@ -103,6 +103,16 @@ sub character_info_switch {
 
 sub character_list_switch {
 	my ($self) = @_;
+	my $server_type = $self->{serverType}
+		|| ($masterServer && $masterServer->{serverType})
+		|| '';
+	# LastRO's 2021-11-03 character server answers 09A1 with LIST2
+	# (0B72), even though the shared table also contains the older 099D
+	# layout.  Keep 099D as the default for other server types.
+	return '0B72'
+		if $server_type eq 'kRO_RagexeRE_2021_11_03'
+		&& $self->{rpackets}
+		&& exists $self->{rpackets}{'0B72'};
 	return '099D' if $self->{rpackets} && exists $self->{rpackets}{'099D'};
 	return '0B72' if $self->{rpackets} && exists $self->{rpackets}{'0B72'};
 	return '0072';
