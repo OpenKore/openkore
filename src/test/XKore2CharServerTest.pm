@@ -160,6 +160,17 @@ use Network::XKore2::CharServer;
 	sub close { $_[0]{closed} = 1 }
 }
 
+{
+	package XKore2CharServerTest::ExplodingSender;
+	sub process { die "malformed client packet\n"; }
+}
+
+{
+	package XKore2CharServerTest::ExplodingReceiver;
+	sub new { bless { packet_list => { '0B72' => ['received_characters'] } }, shift }
+	sub reconstruct { die "character page reconstruction failed\n"; }
+}
+
 sub start {
 	my $previous_char = $Globals::char;
 	my $previous_master = $Globals::masterServer;
@@ -478,6 +489,155 @@ sub start {
 			'09A1 continues to receive the layout negotiated during game login');
 		ok(!$client->{closed},
 			'layout refresh does not close the already authenticated character client');
+	};
+
+	subtest 'XKore2 recovers an unknown 09A1 request without closing the character client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => $parser,
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+
+		$server->unknownMessage({
+			switch => '09A1',
+			RAW_MSG => pack('v', 0x09A1),
+		}, $client);
+
+		ok(!$client->{closed},
+			'unknown character-list request does not close an authenticated XKore2 client');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'unknown character-list request receives a character page fallback');
+	};
+
+	subtest 'XKore2 recovers a known but unhandled 09A1 request without closing the character client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => $parser,
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+
+		$server->unhandledMessage({
+			switch => '09A1',
+			RAW_MSG => pack('v', 0x09A1),
+		}, $client);
+
+		ok(!$client->{closed},
+			'unhandled character-list request does not close an authenticated XKore2 client');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'unhandled character-list request receives a character page fallback');
+	};
+
+	subtest 'XKore2 recovers a parser exception on 09A1 without closing the character client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => $parser,
+			sendPacketParser => bless({}, 'XKore2CharServerTest::ExplodingSender'),
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+		$server->onClientNew($client);
+
+		my $error;
+		{
+			local $@;
+			eval { $server->onClientData($client, pack('v', 0x09A1)); 1 };
+			$error = $@;
+		}
+
+		ok(!$error, 'parser exception is contained by the XKore2 character server');
+		ok(!$client->{closed},
+			'parser exception does not close an authenticated XKore2 client');
+		like($client->{xkore2_last_parse_error}, qr/malformed client packet/,
+			'parser exception is retained for diagnostics');
+		is(length($client->{tokenizer}->getBuffer()), 0,
+			'failed frame is removed from the client tokenizer buffer');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'parser exception on 09A1 receives a character page fallback');
+	};
+
+	subtest 'XKore2 sends a legal empty page when character page reconstruction fails' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => XKore2CharServerTest::ExplodingReceiver->new,
+			sendPacketParser => bless({}, 'XKore2CharServerTest::ExplodingSender'),
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+		$server->onClientNew($client);
+
+		my $error;
+		{
+			local $@;
+			eval { $server->onClientData($client, pack('v', 0x09A1)); 1 };
+			$error = $@;
+		}
+
+		ok(!$error, 'character page reconstruction failure is contained');
+		ok(!$client->{closed}, 'reconstruction failure does not close the client');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'reconstruction failure receives the modern character page opcode');
+		is(unpack('v', substr($client->{sent}[-1], 2, 2)), 4,
+			'empty fallback page carries a valid four-byte length');
+	};
+
+	subtest 'XKore2 keeps an unauthenticated client alive after an unknown packet' => sub {
+		my $server = bless {
+			rpackets => {},
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->unknownMessage({
+			switch => 'DEAD',
+			RAW_MSG => pack('v', 0xDEAD),
+		}, $client);
+
+		ok(!$client->{closed},
+			'unknown XKore2 packets never force-close the client socket');
 	};
 
 	%Globals::charSvrSet = %previous_slots;
