@@ -421,6 +421,65 @@ sub start {
 			'09A1 dispatches to the character-list response handler');
 	};
 
+	subtest 'XKore2 character server accepts 09A1 when server metadata is stale' => sub {
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $sender = Network::Send::kRO::RagexeRE_2020_07_23->new;
+		my $server = bless {
+			serverType => 'legacy',
+			rpackets => { '0072' => { length => 22 } },
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->onClientNew($client);
+		ok(exists $client->{tokenizer}{rpackets}{'09A1'},
+			'XKore2 client tokenizer always recognizes the browser character-list request');
+		$server->onClientData($client, pack('v', 0x09A1));
+		ok(!$client->{closed},
+			'a valid browser 09A1 request does not close the character-server socket');
+	};
+
+	subtest 'XKore2 keeps the negotiated character-list layout for a connected client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $sender = Network::Send::kRO::RagexeRE_2020_07_23->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => {
+				'099D' => { length => -1 },
+				'0B72' => { length => -1 },
+			},
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->game_login({
+			accountID => $account_id,
+			sessionID => pack('V', 1),
+			accountSex => 0,
+		}, $client);
+		$server->{serverType} = 'legacy';
+		$server->{rpackets} = { '0072' => { length => 22 } };
+		$parser->{calls} = [];
+		$server->onClientNew($client);
+		$server->onClientData($client, pack('v', 0x09A1));
+
+		is_deeply($parser->{calls}, [qw(0B72)],
+			'09A1 continues to receive the layout negotiated during game login');
+		ok(!$client->{closed},
+			'layout refresh does not close the already authenticated character client');
+	};
+
 	%Globals::charSvrSet = %previous_slots;
 	$Globals::masterServer = $previous_master;
 	$Globals::char = $previous_char;

@@ -133,6 +133,19 @@ sub modern_character_list {
 	return $switch eq '099D' || $switch eq '0B72';
 }
 
+sub character_list_switch_for_client {
+	my ($self, $client) = @_;
+	return $client->{character_list_switch}
+		if $client && defined $client->{character_list_switch};
+	return $self->character_list_switch;
+}
+
+sub modern_character_list_for_client {
+	my ($self, $client) = @_;
+	my $switch = $self->character_list_switch_for_client($client);
+	return $switch eq '099D' || $switch eq '0B72';
+}
+
 sub game_login {
 	# Character server login.
 	my ($self, $args, $client) = @_;
@@ -161,6 +174,7 @@ sub game_login {
 		my $output;
 		my $character_info_switch = $self->character_info_switch;
 		my $character_list_switch = $self->character_list_switch;
+		$client->{character_list_switch} = $character_list_switch;
 		my @char_list = $self->getCharacters($session);
 		if ($self->modern_character_list) {
 			$output = $self->{recvPacketParser}->reconstruct({
@@ -207,7 +221,7 @@ sub sendCharInfo {
 	my ($self, $args, $client) = @_;
 
 	my @char_list = $self->getCharacters($client->{session});
-	my $switch = $self->character_list_switch;
+	my $switch = $self->character_list_switch_for_client($client);
 	my $packet = $self->{recvPacketParser}->reconstruct({
 		switch => $switch,
 		chars => \@char_list
@@ -260,7 +274,7 @@ sub char_login {
 
 sub sync_received_characters {
 	my ($self, $args, $client) = @_;
-	if ($self->modern_character_list) {
+	if ($self->modern_character_list_for_client($client)) {
 		# 09A1 is the browser's character-list page request.  Every request is
 		# answered with a 099D/0B72 page; do not emit the legacy PIN handshake.
 		$self->sendCharInfo($args, $client);

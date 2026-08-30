@@ -19,6 +19,21 @@ use Globals qw($char $masterServer);
 use Base::Ragnarok::CharServer;
 use base qw(Base::Ragnarok::CharServer);
 
+# The browser always requests character-list pages with 0x09A1.  Keep this
+# client-facing request available even while the shared server metadata is
+# being refreshed between account and character connections.
+sub getClientPacketTable {
+	my ($self) = @_;
+	my %packets = %{ $self->SUPER::getClientPacketTable() || {} };
+	$packets{'09A1'} = { length => 2 };
+	if ($self->{sendPacketParser}
+		&& !$self->{sendPacketParser}{packet_list}{'09A1'}) {
+		$self->{sendPacketParser}{packet_list}{'09A1'} =
+			['sync_received_characters'];
+	}
+	return \%packets;
+}
+
 # Overrided method.
 sub getCharacters {
 	my ($self, $session) = @_;
