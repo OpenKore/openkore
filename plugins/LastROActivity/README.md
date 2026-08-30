@@ -97,6 +97,14 @@ failed entry. The original in-memory lock-map and teleport/search settings are
 restored only after the return map is confirmed; normal OpenKore routing then
 handles the trip back to the saved lock map.
 
+Round-based activities must provide both `round_start_regex` and
+`round_success_regex`.  Give `round_start_regex` a capture for the server's
+stable round number (or configure `round_id_regex` for a separate token).  The
+plugin remembers completed identities for the entire activity, so repeated
+packets cannot replay a success.  When a start packet has no verifiable
+identity, only the first such round is accepted; later unidentified starts are
+ignored until the rule supplies distinguishable evidence.
+
 NPC entry is additionally gated by the canonical metadata fields
 `entry_npc_trusted=1` and a non-empty `entry_npc_evidence`. These fields attest
 to a real server dialog sequence; they are not a substitute for testing the

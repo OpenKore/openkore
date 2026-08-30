@@ -1008,6 +1008,72 @@ RULES
 		done_testing();
 	};
 
+	subtest 'search target validation uses the exact shared-control key' => sub {
+		local %Globals::mon_control = (scorpion => {teleport_search => 1});
+		local %Globals::monsters_lut = (1001 => 'scorpion');
+		my $numeric_alias = {
+			event_id => 'numeric_alias', enabled => 1,
+			announce_regex => 'START', start_regex => 'START', finish_regex => 'DONE',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['1001'], duration_seconds => 60,
+			validation_errors => [],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($numeric_alias),
+			'a LUT name does not authorize a different declared numeric target');
+		ok(!$numeric_alias->{enabled}, 'numeric LUT alias failure disables the rule');
+		my $direct_name = {
+			%$numeric_alias, event_id => 'direct_name', enabled => 1,
+			search_targets => ['  ScOrPiOn  '], validation_errors => [],
+		};
+		ok(LastROActivity::_validated_enabled_rule($direct_name),
+			'the exact declared name is matched after canonical trim/case normalization');
+		done_testing();
+	};
+
+	subtest 'runtime validation rejects malformed announcement and return overrides' => sub {
+		local %Globals::mon_control = (event_egg => {teleport_search => 1});
+		my $bad_announce = {
+			event_id => 'runtime_bad_announce', enabled => 1,
+			announce_regex => '[', start_regex => 'START', finish_regex => 'DONE',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['event_egg'], duration_seconds => 60,
+			validation_errors => [],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($bad_announce),
+			'malformed announcement pattern fails runtime validation');
+		ok(!$bad_announce->{enabled}, 'malformed announcement disables the direct rule');
+		like(join('; ', @{$bad_announce->{validation_errors}}), qr/announce_regex|announcement.*pattern|invalid/i,
+			'malformed announcement error is attached to the direct rule');
+
+		my $bad_return = {
+			event_id => 'runtime_bad_return', enabled => 1,
+			announce_regex => 'START', start_regex => 'START', finish_regex => 'DONE',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['event_egg'], duration_seconds => 60,
+			return_policy => 'privateairship:payon', validation_errors => [],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($bad_return),
+			'non-canonical return override fails runtime validation');
+		ok(!$bad_return->{enabled}, 'invalid return override disables the direct rule');
+		like(join('; ', @{$bad_return->{validation_errors}}), qr/return_policy/i,
+			'invalid return policy error is attached to the direct rule');
+
+		my $bad_round_id = {
+			event_id => 'runtime_bad_round_id', enabled => 1,
+			announce_regex => 'START', start_regex => 'START', finish_regex => 'DONE',
+			round_start_regex => 'ROUND \\d+ START', round_id_regex => '[',
+			round_success_regex => 'ROUND SUCCESS',
+			entry_type => 'privateairship', entry_item_id => 14527,
+			entry_map => 'event_map', search_targets => ['event_egg'], duration_seconds => 60,
+			validation_errors => [],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($bad_round_id),
+			'malformed round identity pattern fails runtime validation');
+		like(join('; ', @{$bad_round_id->{validation_errors}}), qr/round identity|round_id|invalid/i,
+			'malformed round identity error is attached to the direct rule');
+		done_testing();
+	};
+
 	subtest 'macro registry controls macro stop while AI is always cleared' => sub {
 		LastROActivity::cleanup_and_restore('test reset');
 		my $lastro_command = $Commands::commands{lastroactivity};
@@ -1072,11 +1138,18 @@ RULES
 		);
 		$Commands::run_failure = undef;
 		is($ok, 0, 'entry command failure rejects the activity');
-		is_deeply(\%Globals::config, \%before, 'entry command failure restores the exact config');
-		is(LastROActivity::activity_locked(), 0, 'entry command failure releases the lock');
-		is(LastROActivity::state(), 'IDLE', 'entry command failure returns to idle');
-		is(LastROActivity::active_event(), undef, 'entry command failure clears active event');
+		is($Globals::config{teleportAuto_search}, 1,
+			'entry command failure keeps the temporary search configuration until return confirmation');
+		is(LastROActivity::activity_locked(), 1,
+			'entry command failure keeps the activity lock while return is unconfirmed');
+		is(LastROActivity::state(), 'FAILED', 'entry command failure records a failed lifecycle');
+		ok(defined LastROActivity::active_event(),
+			'entry command failure retains the active event for return confirmation');
 		like(join('', @Log::warnings), qr/privateairship failed/, 'entry command failure is logged');
+		$Globals::field = PluginTest::Field->new('prontera');
+		LastROActivity::onMapChange(undef, {});
+		is_deeply(\%Globals::config, \%before,
+			'entry command failure restores the exact config after prontera confirmation');
 		done_testing();
 	};
 
@@ -1987,9 +2060,16 @@ RULES
 		my $reason = LastROActivity::last_failure();
 		like($reason, qr/destination map is invalid/i, 'return rejection records its specific reason');
 		LastROActivity::onMainLoopPre(undef, {now => 1_006});
-		is(LastROActivity::active_event(), undef, 'timeout completes the failed return cleanup');
+		ok(defined LastROActivity::active_event(),
+			'timeout keeps the failed return lifecycle until a map confirmation');
+		is($Globals::config{teleportAuto_search}, 1,
+			'failed return timeout keeps the temporary search configuration');
 		is(LastROActivity::last_failure(), $reason,
 			'timeout does not overwrite the original return rejection reason');
+		$Globals::field = PluginTest::Field->new('prontera');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::active_event(), undef,
+			'prontera confirmation completes the failed return cleanup');
 		done_testing();
 	};
 
@@ -2259,7 +2339,7 @@ RULES
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_dojo_rounds',
 			{
-				round_start_regex => 'ROUND START',
+				round_start_regex => 'ROUND \\d+ START',
 				round_success_regex => 'ROUND SUCCESS',
 				max_rounds => 3,
 				leave_npc => 'Central Guide#ok,yes',
@@ -2271,8 +2351,8 @@ RULES
 		);
 		@Commands::run_calls = ();
 		is($event->{round_count} || 0, 0, 'dojo starts before its first round');
-		ok(defined $task7_activity_message->('ROUND START'),
-			'round start evidence is consumed');
+		ok(defined $task7_activity_message->('ROUND 1 START'),
+			'round 1 start evidence is consumed');
 		for my $round (1 .. 2) {
 			ok(defined $task7_activity_message->('ROUND SUCCESS'),
 				"round $round success is consumed");
@@ -2280,13 +2360,13 @@ RULES
 				"round $round increments the activity counter");
 			is(LastROActivity::state(), 'RUNNING',
 				"round $round keeps combat running");
-			$task7_clock_now++;
-			ok(defined $task7_activity_message->('ROUND START'),
+			$task7_clock_now += 3;
+			ok(defined $task7_activity_message->('ROUND ' . ($round + 1) . ' START'),
 				"round " . ($round + 1) . " start evidence is consumed")
 				if $round < 2;
 		}
-		$task7_clock_now++;
-		ok(defined $task7_activity_message->('ROUND START'),
+		$task7_clock_now += 3;
+		ok(defined $task7_activity_message->('ROUND 3 START'),
 			'round 3 start evidence is consumed');
 		ok(defined $task7_activity_message->('ROUND SUCCESS'),
 			'final round success is consumed');
@@ -2327,12 +2407,12 @@ RULES
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_dojo_duplicate_success',
 			{
-				round_start_regex => 'ROUND START',
+				round_start_regex => 'ROUND \\d+ START',
 				round_success_regex => 'ROUND SUCCESS',
 				max_rounds => 3,
 			},
 		);
-		ok(defined $task7_activity_message->('ROUND START'),
+		ok(defined $task7_activity_message->('ROUND 1 START'),
 			'first round start evidence is consumed');
 		ok(defined $task7_activity_message->('ROUND SUCCESS'),
 			'first round success is consumed');
@@ -2343,8 +2423,8 @@ RULES
 			'duplicate success without a new start is ignored');
 		is($event->{round_count}, 1,
 			'duplicate success does not increment the activity counter');
-		$task7_clock_now++;
-		ok(defined $task7_activity_message->('ROUND START'),
+		$task7_clock_now += 3;
+		ok(defined $task7_activity_message->('ROUND 2 START'),
 			'next round start evidence is consumed');
 		ok(defined $task7_activity_message->('ROUND SUCCESS'),
 			'next round success is consumed');
@@ -2357,28 +2437,128 @@ RULES
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_dojo_duplicate_round_start',
 			{
+				round_start_regex => 'ROUND \\d+ START',
+				round_success_regex => 'ROUND SUCCESS',
+				max_rounds => 3,
+			},
+		);
+		ok(defined $task7_activity_message->('ROUND 1 START'),
+			'first round start evidence is consumed');
+		ok(defined $task7_activity_message->('ROUND SUCCESS'),
+			'first round success is consumed');
+		is($event->{round_count}, 1, 'first success increments the activity counter once');
+		ok(defined $task7_activity_message->('ROUND 1 START'),
+			'duplicate start is observed without leaving the active state');
+		ok(!defined $task7_activity_message->('ROUND SUCCESS'),
+			'replayed success after a duplicate start is ignored');
+		is($event->{round_count}, 1,
+			'duplicate start and replayed success do not double-count the round');
+		$task7_clock_now += 3;
+		ok(defined $task7_activity_message->('ROUND 2 START'),
+			'a later round start remains eligible');
+		ok(defined $task7_activity_message->('ROUND SUCCESS'),
+			'a later round success is consumed');
+		is($event->{round_count}, 2, 'later round increments the activity counter');
+		done_testing();
+	};
+
+	subtest 'delayed duplicate dojo round starts stay suppressed while later rounds remain possible' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_delayed_duplicate_round_start',
+			{
+				round_start_regex => 'ROUND \\d+ START',
+				round_success_regex => 'ROUND SUCCESS',
+				max_rounds => 3,
+			},
+		);
+		ok(defined $task7_activity_message->('ROUND 1 START'), 'first round start is consumed');
+		ok(defined $task7_activity_message->('ROUND SUCCESS'), 'first round success is consumed');
+		is($event->{round_count}, 1, 'first round is counted once');
+		$task7_clock_now++;
+		$task7_clock_now += 5;
+		is($task7_activity_message->('ROUND 1 START'), 'round_start_duplicate',
+			'identical delayed start packet is still treated as a duplicate');
+		ok(!defined $task7_activity_message->('ROUND SUCCESS'),
+			'replayed success after a delayed duplicate start is ignored');
+		is($event->{round_count}, 1, 'delayed duplicate does not increment the counter');
+		$task7_clock_now += 10;
+		ok(defined $task7_activity_message->('ROUND 2 START'),
+			'a later genuine round start remains eligible');
+		ok(defined $task7_activity_message->('ROUND SUCCESS'),
+			'a later genuine round success is consumed');
+		is($event->{round_count}, 2, 'later genuine round increments the counter');
+		done_testing();
+	};
+
+	subtest 'unidentified round starts fail closed after the first completed round' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_unidentified_round_start',
+			{
 				round_start_regex => 'ROUND START',
 				round_success_regex => 'ROUND SUCCESS',
 				max_rounds => 3,
 			},
 		);
 		ok(defined $task7_activity_message->('ROUND START'),
-			'first round start evidence is consumed');
+			'first unidentified round start is accepted');
 		ok(defined $task7_activity_message->('ROUND SUCCESS'),
-			'first round success is consumed');
-		is($event->{round_count}, 1, 'first success increments the activity counter once');
-		ok(defined $task7_activity_message->('ROUND START'),
-			'duplicate start is observed without leaving the active state');
+			'first unidentified round success is accepted');
+		is($event->{round_count}, 1, 'first unidentified round is counted');
+		$task7_clock_now += 30;
+		is($task7_activity_message->('ROUND START'), 'round_start_duplicate',
+			'a delayed unidentified start is rejected without a time-window exception');
 		ok(!defined $task7_activity_message->('ROUND SUCCESS'),
-			'replayed success after a duplicate start is ignored');
-		is($event->{round_count}, 1,
-			'duplicate start and replayed success do not double-count the round');
-		$task7_clock_now++;
-		ok(defined $task7_activity_message->('ROUND START'),
-			'a later round start remains eligible');
-		ok(defined $task7_activity_message->('ROUND SUCCESS'),
-			'a later round success is consumed');
-		is($event->{round_count}, 2, 'later round increments the activity counter');
+			'a replayed success after an unidentified start cannot increment the count');
+		is($event->{round_count}, 1, 'unidentified replay leaves the count unchanged');
+		done_testing();
+	};
+
+	subtest 'return timeout waits for prontera confirmation before restoring the snapshot' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_return_timeout');
+		my %temporary = %Globals::config;
+		@Commands::run_calls = ();
+		ok(LastROActivity::return_to_capital(), 'return request enters the unified return state');
+		ok($LastROActivity::return_pending, 'return remains pending until a map packet');
+		is($LastROActivity::pending_destination_kind, 'return', 'pending destination is a return');
+		my $deadline = $LastROActivity::pending_destination_deadline;
+		ok(defined $deadline, 'return has a bounded observation deadline');
+		is($task7_timeout->($deadline + 1), 'fail', 'expired return deadline records failure');
+		is_deeply(
+			\%Globals::config,
+			\%temporary,
+			'timeout does not restore the temporary activity configuration',
+		);
+		ok(defined LastROActivity::active_event(), 'timeout keeps the lifecycle for map confirmation');
+		ok($LastROActivity::return_pending, 'timeout keeps the return marker armed');
+		ok(defined $LastROActivity::active_snapshot, 'timeout keeps the snapshot until confirmation');
+		$task7_confirm_return->();
+		is(LastROActivity::active_event(), undef, 'prontera confirmation finalizes the return');
+		is_deeply(\%Globals::config, {
+			lockMap => 'pay_fild08', lockMap_x => 55, lockMap_y => 66,
+			lockMap_randX => 7, lockMap_randY => 8,
+			teleportAuto_search => 0, teleportAuto_idle => 0,
+		}, 'prontera confirmation restores the original configuration');
+		done_testing();
+	};
+
+	subtest 'entry-state death polling ignores stale resurrection-capable party records' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_entry_stale_priest');
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart);
+		$LastROActivity::activity_started_at = undef;
+		$LastROActivity::activity_entry_started_at = 100;
+		$LastROActivity::pending_destination = 'event_map';
+		$LastROActivity::pending_destination_kind = 'entry';
+		$LastROActivity::pending_destination_deadline = 200;
+		$Globals::char->{party} = {
+			users => {stale_priest => {job => 'Priest', dead => 1, dead_time => 50, online => 1}},
+		};
+		@Commands::run_calls = ();
+		LastROActivity::onMainLoopPre(undef, {now => 100});
+		is(LastROActivity::state(), 'DEPARTING', 'entry remains pending despite a stale party death');
+		ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+			'entry-state stale death does not request a return');
+		LastROActivity::cleanup_and_restore('entry stale death test cleanup');
 		done_testing();
 	};
 
@@ -2605,7 +2785,7 @@ RULES
 		done_testing();
 	};
 
-	subtest 'party death clears a pending leave NPC task' => sub {
+	subtest 'party death polling stops once combat has finished' => sub {
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_dojo_leave_party_death',
 			{
@@ -2637,11 +2817,13 @@ RULES
 			$Globals::jobs_lut{8} = 'Priest';
 			$Globals::char->{party} = {users => {priest_member => {jobID => 8, dead => 1}}};
 			LastROActivity::onMainLoopPre(undef, {now => 102});
-			is(LastROActivity::state(), 'FAILED',
-				'Priest death fails the activity while leave NPC is pending');
-			ok(scalar(grep { $_ eq 'AI::clear NPC teleport' } @AI::clear_calls) >= 2,
-				'party-death cleanup clears the pending NPC task after round cleanup');
-			$task7_confirm_return->();
+			is(LastROActivity::state(), 'FINISHING',
+				'Priest death is not polled after combat has finished');
+			ok(defined $LastROActivity::pending_leave_npc,
+				'leave NPC state remains owned by its queue while finishing');
+			ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+				'finish-state party death does not issue an unrelated return');
+			LastROActivity::cleanup_and_restore('finish-state death test cleanup');
 		}
 		$Commands::run_failure = undef;
 		done_testing();
@@ -2651,15 +2833,15 @@ RULES
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_dojo_no_leave_evidence',
 			{
-				round_start_regex => 'ROUND START',
+				round_start_regex => 'ROUND \\d+ START',
 				round_success_regex => 'ROUND SUCCESS',
 				max_rounds => 3,
 			},
 		);
 		@Commands::run_calls = ();
 		for my $round (1 .. 3) {
-			$task7_clock_now++ if $round > 1;
-			$task7_activity_message->('ROUND START');
+			$task7_clock_now += 3 if $round > 1;
+			$task7_activity_message->('ROUND ' . $round . ' START');
 			$task7_activity_message->('ROUND SUCCESS');
 		}
 		is(LastROActivity::state(), 'FAILED',
@@ -2697,6 +2879,22 @@ RULES
 		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
 			'party death requests one return');
 		$task7_confirm_return->();
+
+		for my $job ('Baby Bishop', 'Arc Bishop') {
+			($rule, $event) = $task7_setup_running->("task7_${job}_death", {
+				round_start_regex => 'ROUND START',
+				round_success_regex => 'ROUND SUCCESS',
+			});
+			$Globals::char->{party} = {
+				users => {resurrection_member => {job => $job, dead => 1, online => 1}},
+			};
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 200});
+			is(LastROActivity::state(), 'FAILED', "$job is recognized as resurrection-capable");
+			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+				"$job death requests one return");
+			$task7_confirm_return->();
+		}
 
 		($rule, $event) = $task7_setup_running->(
 			'task7_skill_priest_death',

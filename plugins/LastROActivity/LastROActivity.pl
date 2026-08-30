@@ -625,6 +625,8 @@ sub _validated_enabled_rule {
 		_append_rule_validation_error($rule, $_) for @$rule_errors;
 		return 0;
 	}
+	my ($return_ok) = _validate_return_policy($rule);
+	return 0 unless $return_ok;
 	return 0 unless defined $rule->{announce_regex} && $rule->{announce_regex} ne '';
 	# Resolve declared shared-search targets before scheduling.  Minimal scheduler
 	# fixtures omit the entry_type key and intentionally do not load
@@ -794,6 +796,10 @@ sub _set_running_state {
 	$active_event->{round_success_seen} = 0 if ref($active_event) eq 'HASH';
 	$active_event->{round_start_message} = undef if ref($active_event) eq 'HASH';
 	$active_event->{round_start_at} = undef if ref($active_event) eq 'HASH';
+	$active_event->{round_identity} = undef if ref($active_event) eq 'HASH';
+	$active_event->{round_identities_seen} = {} if ref($active_event) eq 'HASH';
+	$active_event->{round_identity_unknown_completed} = 0
+		if ref($active_event) eq 'HASH';
 	my @phases = _phase_list();
 	if (@phases) {
 		$activity_phase_index = 0;
@@ -831,6 +837,82 @@ sub _max_rounds {
 	return 0 + $value;
 }
 
+sub _canonical_round_identity {
+	my ($identity) = @_;
+	return undef unless defined $identity && !ref($identity);
+	$identity = _trim($identity);
+	return undef if $identity eq '' || $identity =~ /[\r\n]/;
+	$identity =~ s/\s+/ /g;
+	if ($identity =~ /^[-+]?\d+\z/) {
+		$identity = 0 + $identity;
+	}
+	return lc($identity);
+}
+
+sub _regex_round_identity {
+	my ($message, $pattern, $allow_full_match, $allow_code_result) = @_;
+	return undef unless defined $message && defined $pattern;
+	if (ref($pattern) eq 'CODE') {
+		return undef unless $allow_code_result;
+		my $identity = eval { $pattern->($message) };
+		return _canonical_round_identity($identity)
+			if !$@ && defined $identity && !ref($identity) && "$identity" ne '';
+		return undef;
+	}
+	my ($compiled) = _compile_activity_pattern($pattern, 'round identity pattern');
+	return undef unless defined $compiled;
+	my ($matched, @captures);
+	my $ok = eval {
+		$matched = $message =~ $compiled;
+		if ($matched) {
+			for my $index (1 .. $#-) {
+				next unless defined $-[$index] && defined $+[$index]
+					&& $-[$index] >= 0 && $+[$index] >= $-[$index];
+				push @captures, substr($message, $-[$index], $+[$index] - $-[$index]);
+			}
+		}
+		1;
+	};
+	return undef unless $ok && $matched;
+	for my $capture (@captures) {
+		my $identity = _canonical_round_identity($capture);
+		return $identity if defined $identity;
+	}
+	return $allow_full_match ? _canonical_round_identity($&) : undef;
+}
+
+sub _round_identity {
+	my ($message, $rule) = @_;
+	return undef unless defined $message && ref($rule) eq 'HASH';
+
+	# A rule may provide a dedicated extractor when the server embeds a stable
+	# token that is not part of the start pattern. Captures from the start regex
+	# are the next strongest source of identity.
+	for my $field (qw(round_id_regex round_identity_regex)) {
+		if (exists $rule->{$field} && defined $rule->{$field}
+			&& (!ref($rule->{$field}) && _trim($rule->{$field}) ne '' || ref($rule->{$field}))) {
+			my $identity = _regex_round_identity($message, $rule->{$field}, 1, 1);
+			return $identity if defined $identity;
+		}
+	}
+	my $identity = _regex_round_identity($message, $rule->{round_start_regex}, 0, 0);
+	return $identity if defined $identity;
+
+	# Common human-readable round announcements carry an ordinal directly. Do
+	# not treat an arbitrary timestamp or changing prose as a round identity.
+	my $candidate = _trim($message);
+	if ($candidate =~ /\b(round|rnd|stage|wave)\s*(?:number\s*)?(?:[#:=\-]\s*)?(\d+)\b/i) {
+		return _canonical_round_identity(lc($1) . ':' . $2);
+	}
+	if ($candidate =~ /(?:\A|\s)第\s*(\d+)\s*(?:轮|回|階段|阶段)(?:\z|\s)/u) {
+		return _canonical_round_identity('round:' . $1);
+	}
+	if ($candidate =~ /\b(?:round|stage|wave)\s*(?:id|seq(?:uence)?)\s*[:=#-]\s*([A-Za-z0-9_.-]+)/i) {
+		return _canonical_round_identity('id:' . $1);
+	}
+	return undef;
+}
+
 sub _resurrection_wait_seconds {
 	my ($rule) = @_;
 	return 30 unless ref($rule) eq 'HASH';
@@ -855,10 +937,17 @@ sub onActivityMessage {
 			if ($active_event->{round_started}) {
 				return 'round_start_duplicate';
 			}
-			if (defined $active_event->{round_start_message}
-				&& $active_event->{round_start_message} eq $message
-				&& defined $active_event->{round_start_at}
-				&& $active_event->{round_start_at} == $now) {
+			my $identity = _round_identity($message, $rule);
+			my $seen = $active_event->{round_identities_seen};
+			$seen = {} unless ref($seen) eq 'HASH';
+			if (defined $identity && $seen->{$identity}) {
+				return 'round_start_duplicate';
+			}
+			# Once an unidentifiable round has completed, another unidentifiable
+			# start cannot be proven new. Fail closed instead of using a time window
+			# that would eventually admit a delayed replay.
+			if (!defined $identity && ($active_event->{round_identity_unknown_completed}
+				|| keys %$seen)) {
 				return 'round_start_duplicate';
 			}
 			$activity_round_started_at = $now;
@@ -866,6 +955,7 @@ sub onActivityMessage {
 			$active_event->{round_started_at} = $activity_round_started_at;
 			$active_event->{round_start_message} = $message;
 			$active_event->{round_start_at} = $activity_round_started_at;
+			$active_event->{round_identity} = $identity;
 			$active_event->{round_success_seen} = 0;
 			return 'round_start';
 		}
@@ -879,6 +969,14 @@ sub onActivityMessage {
 			$active_event->{round} = $activity_round_count;
 			$active_event->{round_started} = 0;
 			$active_event->{round_success_seen} = 1;
+			if (defined $active_event->{round_identity}) {
+				$active_event->{round_identities_seen} = {}
+					unless ref($active_event->{round_identities_seen}) eq 'HASH';
+				$active_event->{round_identities_seen}
+					{$active_event->{round_identity}} = 1;
+			} else {
+				$active_event->{round_identity_unknown_completed} = 1;
+			}
 			if ($activity_round_count >= _max_rounds($rule)) {
 				_complete_round_limit('maximum dojo rounds completed');
 				return 'finish';
@@ -943,7 +1041,9 @@ sub checkActivityTimeout {
 		&& $now >= $pending_destination_deadline) {
 		_mark_activity_failed('return to prontera timed out')
 			if $state_name ne 'FAILED';
-		_complete_return(1);
+		# A timeout is a failed observation, not proof of arrival. Keep the return
+		# marker and snapshot alive until packet_mapChange confirms prontera.
+		$pending_destination_deadline = undef;
 		return 'fail';
 	}
 	if ($state_name ne 'RUNNING'
@@ -1657,6 +1757,20 @@ sub _append_rule_validation_error {
 	$rule->{enabled} = 0;
 }
 
+sub _validate_return_policy {
+	my ($rule) = @_;
+	return (1, undef) unless ref($rule) eq 'HASH';
+	# An omitted policy is the legacy form of the canonical default. An explicit
+	# value, including an empty override, must name the one supported route.
+	return (1, undef) unless exists $rule->{return_policy}
+		&& defined $rule->{return_policy};
+	my $policy = _trim($rule->{return_policy});
+	return (1, undef) if $policy =~ /^privateairship:prontera$/i;
+	my $error = 'return_policy must be privateairship:prontera';
+	_append_rule_validation_error($rule, $error);
+	return (0, $error);
+}
+
 sub _validate_completion_policy {
 	my ($rule) = @_;
 	return (0, 'rule is unavailable') unless ref($rule) eq 'HASH';
@@ -1697,6 +1811,14 @@ sub _validate_completion_policy {
 		&& defined $rule->{round_start_regex}) {
 		my (undef, $error) = _compile_activity_pattern(
 			$rule->{round_start_regex}, 'round start pattern',
+		);
+		push @errors, $error if defined $error;
+	}
+	if (exists $rule->{round_id_regex}
+		&& defined $rule->{round_id_regex}
+		&& (ref($rule->{round_id_regex}) || _trim($rule->{round_id_regex}) ne '')) {
+		my (undef, $error) = _compile_activity_pattern(
+			$rule->{round_id_regex}, 'round identity pattern',
 		);
 		push @errors, $error if defined $error;
 	}
@@ -1824,7 +1946,9 @@ sub _leave_npc_configured {
 
 sub _search_row_enabled {
 	my ($key) = @_;
-	return 0 unless defined $key && $key ne '';
+	return 0 unless defined $key;
+	$key = lc(_trim($key));
+	return 0 if $key eq '';
 	my $row = $Globals::mon_control{$key};
 	return 0 unless ref($row) eq 'HASH';
 	my $search = $row->{teleport_search};
@@ -1836,26 +1960,13 @@ sub _trusted_search_target {
 	return 0 unless defined $target;
 	$target = _trim($target);
 	return 0 if $target eq '' || lc($target) eq 'all' || $target =~ /[\r\n]/;
+	return 0 if $target =~ /^0+\z/;
 
-	if ($target =~ /^\d+\z/) {
-		return 0 if $target == 0;
-		my $id = 0 + $target;
-		return 1 if _search_row_enabled("$id");
-		my $name = $Globals::monsters_lut{"$id"};
-		return 0 unless defined $name && !ref($name);
-		return _search_row_enabled(lc(_trim($name)));
-	}
-
-	my $name_key = lc($target);
-	return 1 if _search_row_enabled($name_key);
-	my $monsters = \%Globals::monsters_lut;
-	for my $id (keys %$monsters) {
-		my $name = $monsters->{$id};
-		next if !defined $name || ref($name);
-		next unless lc(_trim($name)) eq $name_key;
-		return 1 if _search_row_enabled("$id") || _search_row_enabled(lc(_trim($name)));
-	}
-	return 0;
+	# search_targets is evidence metadata, not a resolver input. Only the exact
+	# declared key (after the same trim/lowercase normalization as mon_control)
+	# may authorize a shared search row; monster LUT aliases are intentionally
+	# ignored.
+	return _search_row_enabled(lc($target));
 }
 
 sub _validate_search_targets {
@@ -2439,7 +2550,7 @@ sub _actor_can_resurrect {
 	return 0 unless defined $job;
 	# Acolyte is intentionally excluded: only jobs that are known to provide
 	# Resurrection are treated as an immediate-abandon trigger.
-	return 1 if $job =~ /(?:\b(?:high\s+)?priest\b|\barch\s*bishop\b|\barchbishop\b|\bcardinal\b|牧师|牧師|祭司|大主教|主教|神官|枢机|樞機)/i;
+	return 1 if $job =~ /(?:\b(?:high\s+)?priest\b|\b(?:baby|arc|arch)\s*bishop\b|\b(?:baby|arc|arch)bishop\b|\bcardinal\b|牧师|牧師|祭司|大主教|主教|神官|枢机|樞機)/i;
 	return 0;
 }
 
@@ -2462,8 +2573,11 @@ sub _poll_activity_death {
 	return undef if $return_pending;
 	return undef unless ref($state) eq 'LastROActivity::State';
 	my $state_name = $state->state;
-	return undef if $state_name eq 'IDLE' || $state_name eq 'RESUMED'
-		|| $state_name eq 'FAILED' || $state_name eq 'RETURNING';
+	# Death records are meaningful only once the destination map has been
+	# confirmed and combat is actually running. Polling during entry/finish can
+	# mistake stale party state for a death in the current activity.
+	return undef unless $state_name eq 'RUNNING';
+	return undef unless defined $activity_started_at;
 	$now = _now() unless defined $now;
 
 	my $char = $Globals::char;
@@ -2689,6 +2803,11 @@ sub begin_activity {
 	$scheduled_event->{round} = 0;
 	$scheduled_event->{round_started} = 0;
 	$scheduled_event->{round_success_seen} = 0;
+	$scheduled_event->{round_start_message} = undef;
+	$scheduled_event->{round_start_at} = undef;
+	$scheduled_event->{round_identity} = undef;
+	$scheduled_event->{round_identities_seen} = {};
+	$scheduled_event->{round_identity_unknown_completed} = 0;
 
 	my $ok = eval {
 		if ($state->state eq 'IDLE') {
@@ -3115,20 +3234,18 @@ sub return_to_capital {
 	unless ($ok) {
 		$error = 'privateairship return command failed'
 			unless defined $error && $error ne '';
-		$last_failure = $error;
+		# Keep the lifecycle in the return state even when the command is rejected.
+		# A later map packet is the only ordinary proof that makes restoration safe.
+		_mark_activity_failed($error);
 		warning "[LastROActivity] Unable to return to prontera: $error.\n";
-		# There is no transfer to confirm after a rejected command.  Use the
-		# unified failure cleanup, but never label this as a successful return.
-		cleanup_and_restore('return request failed');
 		return 0;
 	}
 	return 1;
 }
 
 sub _complete_return {
-	my ($forced) = @_;
 	return 1 unless defined $active_event || defined $active_snapshot || $return_pending;
-	return cleanup_and_restore($forced ? 'forced return completion' : 'return confirmed');
+	return cleanup_and_restore('return confirmed');
 }
 
 sub _confirm_entry_map {

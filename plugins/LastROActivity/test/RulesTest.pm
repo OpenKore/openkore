@@ -60,6 +60,89 @@ RULES
 		done_testing();
 	};
 
+	subtest 'rejects malformed enabled runtime patterns and non-canonical returns' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[bad_announce]
+enabled=1
+announce_regex=[
+start_regex=START
+entry_type=macro
+entry_macro=enter_event
+duration_seconds=60
+return_policy=privateairship:prontera
+
+[bad_finish]
+enabled=1
+announce_regex=START
+start_regex=START
+finish_regex=[
+entry_type=macro
+entry_macro=enter_event
+duration_seconds=60
+return_policy=privateairship:prontera
+
+[bad_round]
+enabled=1
+announce_regex=START
+start_regex=START
+round_start_regex=[
+round_success_regex=ROUND OK
+entry_type=macro
+entry_macro=enter_event
+duration_seconds=60
+return_policy=privateairship:prontera
+
+[bad_round_id]
+enabled=1
+announce_regex=START
+start_regex=START
+round_start_regex=ROUND .+ START
+round_id_regex=[
+round_success_regex=ROUND OK
+entry_type=macro
+entry_macro=enter_event
+duration_seconds=60
+return_policy=privateairship:prontera
+
+[bad_phase]
+enabled=1
+announce_regex=START
+start_regex=START
+entry_type=macro
+entry_macro=enter_event
+duration_seconds=60
+phase.1.finish_regex=[
+return_policy=privateairship:prontera
+
+[bad_return]
+enabled=1
+announce_regex=START
+start_regex=START
+entry_type=macro
+entry_macro=enter_event
+duration_seconds=60
+return_policy=privateairship:payon
+RULES
+
+		for my $id (qw(bad_announce bad_finish bad_round bad_round_id bad_phase bad_return)) {
+			ok(!$rules->{$id}{enabled}, "$id is disabled after validation failure");
+			ok(@{$rules->{$id}{validation_errors} || []}, "$id keeps validation errors");
+		}
+		like(join('; ', @{$rules->{bad_announce}{validation_errors}}), qr/announce_regex.*invalid/i,
+			'malformed announcement regex is rejected by the parser');
+		like(join('; ', @{$rules->{bad_finish}{validation_errors}}), qr/finish_regex.*invalid/i,
+			'malformed finish regex is rejected by the parser');
+		like(join('; ', @{$rules->{bad_round}{validation_errors}}), qr/round_start_regex.*invalid/i,
+			'malformed round regex is rejected by the parser');
+		like(join('; ', @{$rules->{bad_round_id}{validation_errors}}), qr/round_id_regex.*invalid/i,
+			'malformed round identity regex is rejected by the parser');
+		like(join('; ', @{$rules->{bad_phase}{validation_errors}}), qr/phase.*pattern.*invalid|phase.*invalid/i,
+			'malformed phase regex is rejected by the parser');
+		like(join('; ', @{$rules->{bad_return}{validation_errors}}), qr/return_policy/i,
+			'non-canonical return policy is rejected by the parser');
+		done_testing();
+	};
+
 	subtest 'disables explicitly configured entry rules when lifecycle evidence is incomplete' => sub {
 		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
 [incomplete_airship]
@@ -323,6 +406,7 @@ announce_regex=dojo
 start_regex=dojo starts
 finish_regex=dojo done
 round_start_regex=round starts
+round_id_regex=round (\d+) starts
 round_success_regex=round cleared
 max_rounds=5
 resurrection_wait_seconds=45
@@ -344,6 +428,8 @@ RULES
 			'parses a configured resurrection wait');
 		is($rules->{dojo_rounds}{round_start_regex}, 'round starts',
 			'parses round start evidence');
+		is($rules->{dojo_rounds}{round_id_regex}, 'round (\d+) starts',
+			'parses round identity evidence');
 		is($rules->{dojo_rounds}{round_success_regex}, 'round cleared',
 			'parses round success evidence');
 		is($rules->{dojo_rounds}{leave_npc}, 'Central Guide#ok,yes',

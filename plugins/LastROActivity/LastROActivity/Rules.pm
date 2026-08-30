@@ -36,6 +36,7 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	entry_npc_trusted
 	entry_npc_evidence
 	round_start_regex
+	round_id_regex
 	round_success_regex
 	max_rounds
 	resurrection_wait_seconds
@@ -188,6 +189,8 @@ sub validate_rule {
 
 	if ($rule->{enabled} && !_has_value($rule->{announce_regex})) {
 		push @errors, 'announce_regex required when enabled';
+	} elsif ($rule->{enabled} && !_valid_pattern($rule->{announce_regex})) {
+		push @errors, 'announce_regex is invalid';
 	}
 	if ($rule->{enabled} && !_has_value($rule->{start_regex})) {
 		push @errors, 'start_regex required when enabled';
@@ -196,6 +199,14 @@ sub validate_rule {
 	}
 	if (defined $rule->{enabled} && $rule->{enabled} !~ /^(?:0|1)$/) {
 		push @errors, 'enabled must be 0 or 1';
+	}
+
+	# A return policy is an assertion about the only supported cleanup route.
+	# Missing policy remains a legacy/default value, but an explicit override must
+	# be the canonical private-airship transfer to prontera.
+	if ($rule->{enabled} && defined $rule->{return_policy}
+		&& _trim($rule->{return_policy}) !~ /^privateairship:prontera$/i) {
+		push @errors, 'return_policy must be privateairship:prontera';
 	}
 
 	if (_has_value($rule->{map_source})
@@ -279,6 +290,40 @@ sub validate_rule {
 			push @errors, "$field is invalid";
 		}
 	}
+	if (defined $rule->{round_id_regex}
+		&& (_has_value($rule->{round_id_regex}) || ref($rule->{round_id_regex}))
+		&& !_valid_pattern($rule->{round_id_regex})) {
+		push @errors, 'round_id_regex is invalid';
+	}
+	if (defined $rule->{finish_regex}
+		&& (_has_value($rule->{finish_regex}) || ref($rule->{finish_regex}))
+		&& !_valid_pattern($rule->{finish_regex})) {
+		push @errors, 'finish_regex is invalid';
+	}
+
+	# Phase conditions are runtime message patterns too. Validate every supported
+	# alias here so malformed direct or parsed rules fail before scheduling.
+	if (defined $rule->{phases}) {
+		if (ref($rule->{phases}) ne 'ARRAY') {
+			push @errors, 'phases must be an array';
+		} else {
+			my @phase_pattern_fields = qw(
+				finish_regex condition_regex phase_regex message_regex regex
+				complete_regex condition finish
+			);
+			for my $index (0 .. $#{$rule->{phases}}) {
+				my $phase = $rule->{phases}[$index];
+				next unless ref($phase) eq 'HASH';
+				for my $field (@phase_pattern_fields) {
+					next unless exists $phase->{$field} && defined $phase->{$field};
+					next if !ref($phase->{$field}) && _trim($phase->{$field}) eq '';
+				unless (_valid_pattern($phase->{$field})) {
+					push @errors, 'phase ' . ($index + 1) . " $field is invalid";
+				}
+			}
+			}
+		}
+	}
 	if ($rule->{enabled}
 		&& ((_has_value($rule->{round_start_regex}) && !_has_value($rule->{round_success_regex}))
 			|| (_has_value($rule->{round_success_regex}) && !_has_value($rule->{round_start_regex})))) {
@@ -338,6 +383,7 @@ sub _new_rule {
 		entry_npc_trusted => undef,
 		entry_npc_evidence => undef,
 		round_start_regex => undef,
+		round_id_regex => undef,
 		round_success_regex => undef,
 		max_rounds => 3,
 		resurrection_wait_seconds => 30,
@@ -400,7 +446,7 @@ sub _has_search_targets {
 sub _valid_pattern {
 	my ($pattern) = @_;
 	return 0 unless _has_value($pattern);
-	return 1 if ref($pattern) eq 'Regexp';
+	return 1 if ref($pattern) eq 'Regexp' || ref($pattern) eq 'CODE';
 	return 0 if ref($pattern);
 	my $text = _trim($pattern);
 	return 0 if $text eq '' || $text =~ /[\r\n]/;
