@@ -12,6 +12,10 @@ my %NUMERIC_FIELDS = map { $_ => 1 } qw(
 	entry_item_id
 	duration_seconds
 	timeout_seconds
+	max_rounds
+	resurrection_wait_seconds
+	leave_x
+	leave_y
 );
 
 my %MAP_SOURCES = map { $_ => 1 } qw(static dynamic announcement);
@@ -31,6 +35,15 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	entry_npc
 	entry_npc_trusted
 	entry_npc_evidence
+	round_start_regex
+	round_success_regex
+	max_rounds
+	resurrection_wait_seconds
+	leave_npc
+	leave_npc_trusted
+	leave_npc_evidence
+	leave_x
+	leave_y
 	duration_seconds
 	timeout_seconds
 	entry_macro
@@ -245,6 +258,56 @@ sub validate_rule {
 		}
 	}
 
+	if (defined $rule->{max_rounds}) {
+		if ($rule->{max_rounds} !~ /^\d+$/) {
+			push @errors, 'max_rounds must be an integer';
+		} elsif ($rule->{max_rounds} <= 0) {
+			push @errors, 'max_rounds must be positive';
+		}
+	}
+
+	if (defined $rule->{resurrection_wait_seconds}) {
+		if ($rule->{resurrection_wait_seconds} !~ /^\d+$/) {
+			push @errors, 'resurrection_wait_seconds must be an integer';
+		} elsif ($rule->{resurrection_wait_seconds} <= 0) {
+			push @errors, 'resurrection_wait_seconds must be positive';
+		}
+	}
+
+	for my $field (qw(round_start_regex round_success_regex)) {
+		if (defined $rule->{$field} && !_valid_pattern($rule->{$field})) {
+			push @errors, "$field is invalid";
+		}
+	}
+	if ($rule->{enabled}
+		&& ((_has_value($rule->{round_start_regex}) && !_has_value($rule->{round_success_regex}))
+			|| (_has_value($rule->{round_success_regex}) && !_has_value($rule->{round_start_regex})))) {
+		push @errors, 'round_start_regex and round_success_regex must be configured together';
+	}
+
+	if (defined $rule->{leave_npc_trusted}
+		&& $rule->{leave_npc_trusted} !~ /^(?:0|1)$/) {
+		push @errors, 'leave_npc_trusted must be 0 or 1';
+	}
+
+	my $has_leave = 0;
+	for my $field (qw(leave_npc leave_npc_trusted leave_npc_evidence leave_x leave_y)) {
+		$has_leave = 1 if defined $rule->{$field} && _has_value($rule->{$field});
+	}
+	if ($has_leave) {
+		push @errors, 'leave_npc is required when leave metadata is configured'
+			unless _has_value($rule->{leave_npc});
+		push @errors, 'leave_npc_trusted=1 is required for leave NPC'
+			unless defined $rule->{leave_npc_trusted}
+				&& "$rule->{leave_npc_trusted}" =~ /^\s*1\s*$/;
+		push @errors, 'leave_npc_evidence is required for leave NPC'
+			unless _has_value($rule->{leave_npc_evidence});
+		for my $field (qw(leave_x leave_y)) {
+			push @errors, "$field is required for leave NPC"
+				unless defined $rule->{$field} && $rule->{$field} =~ /^\d+$/;
+		}
+	}
+
 	if (defined $rule->{entry_item_id}) {
 		if ($rule->{entry_item_id} !~ /^\d+$/) {
 			push @errors, 'entry_item_id must be an integer';
@@ -274,6 +337,15 @@ sub _new_rule {
 		entry_npc => undef,
 		entry_npc_trusted => undef,
 		entry_npc_evidence => undef,
+		round_start_regex => undef,
+		round_success_regex => undef,
+		max_rounds => 3,
+		resurrection_wait_seconds => 30,
+		leave_npc => undef,
+		leave_npc_trusted => undef,
+		leave_npc_evidence => undef,
+		leave_x => undef,
+		leave_y => undef,
 		duration_seconds => undef,
 		timeout_seconds => undef,
 		entry_macro => undef,

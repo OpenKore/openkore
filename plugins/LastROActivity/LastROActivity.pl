@@ -47,6 +47,8 @@ our $entry_map_confirmed;
 our $entry_transfer_accepted;
 our ($activity_started_at, $activity_entry_started_at);
 our ($activity_phase_index, $activity_phase_started_at);
+our ($activity_round_count, $activity_round_started_at);
+our $activity_self_dead_at;
 our $airship_failure_count;
 our $cleanup_in_progress;
 our $clock = sub { time };
@@ -83,6 +85,9 @@ $activity_started_at = undef;
 $activity_entry_started_at = undef;
 $activity_phase_index = undef;
 $activity_phase_started_at = undef;
+$activity_round_count = 0;
+$activity_round_started_at = undef;
+$activity_self_dead_at = undef;
 $airship_failure_count = 0;
 $cleanup_in_progress = 0;
 
@@ -630,6 +635,13 @@ sub _validated_enabled_rule {
 	}
 	my ($completion_ok) = _validate_completion_policy($rule);
 	return 0 unless $completion_ok;
+	if (_leave_npc_configured($rule)) {
+		my ($leave_ok, $leave_reason) = _validate_leave_npc($rule);
+		unless ($leave_ok) {
+			_append_rule_validation_error($rule, $leave_reason);
+			return 0;
+		}
+	}
 	return 1;
 }
 
@@ -771,6 +783,12 @@ sub _set_running_state {
 	return 0 unless _transition_state('running');
 	$activity_started_at = $now;
 	$activity_entry_started_at = undef;
+	$activity_round_count = 0;
+	$activity_round_started_at = undef;
+	$active_event->{round_count} = 0 if ref($active_event) eq 'HASH';
+	$active_event->{round} = 0 if ref($active_event) eq 'HASH';
+	$active_event->{round_started} = 0 if ref($active_event) eq 'HASH';
+	$active_event->{round_success_seen} = 0 if ref($active_event) eq 'HASH';
 	my @phases = _phase_list();
 	if (@phases) {
 		$activity_phase_index = 0;
@@ -791,6 +809,31 @@ sub _check_finish_message {
 	return defined onActivityMessage($message) ? 1 : 0;
 }
 
+sub _round_mode {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	return 0 unless exists $rule->{round_success_regex}
+		&& defined $rule->{round_success_regex}
+		&& _trim($rule->{round_success_regex}) ne '';
+	return 1;
+}
+
+sub _max_rounds {
+	my ($rule) = @_;
+	return 3 unless ref($rule) eq 'HASH';
+	my $value = $rule->{max_rounds};
+	return 3 unless defined $value && "$value" =~ /^\s*\d+\s*\z/ && $value > 0;
+	return 0 + $value;
+}
+
+sub _resurrection_wait_seconds {
+	my ($rule) = @_;
+	return 30 unless ref($rule) eq 'HASH';
+	my $value = $rule->{resurrection_wait_seconds};
+	return 30 unless defined $value && "$value" =~ /^\s*\d+\s*\z/ && $value > 0;
+	return 0 + $value;
+}
+
 sub onActivityMessage {
 	my ($message) = @_;
 	return undef unless defined $message;
@@ -798,10 +841,37 @@ sub onActivityMessage {
 	return undef unless ref($state) eq 'LastROActivity::State';
 	return undef unless $state->state eq 'RUNNING';
 
+	my $rule = $active_event->{rule};
+	if (_round_mode($rule)) {
+		my $round_start = $rule->{round_start_regex};
+		if (defined $round_start && _trim($round_start) ne ''
+			&& _activity_pattern_matches($message, $round_start)) {
+			$activity_round_started_at = _now();
+			$active_event->{round_started} = 1;
+			$active_event->{round_started_at} = $activity_round_started_at;
+			$active_event->{round_success_seen} = 0;
+			return 'round_start';
+		}
+
+		if (_activity_pattern_matches($message, $rule->{round_success_regex})) {
+			$activity_round_count = 0 unless defined $activity_round_count;
+			$activity_round_count++;
+			$active_event->{round_count} = $activity_round_count;
+			$active_event->{round} = $activity_round_count;
+			$active_event->{round_started} = 0;
+			$active_event->{round_success_seen} = 1;
+			if ($activity_round_count >= _max_rounds($rule)) {
+				_complete_round_limit('maximum dojo rounds completed');
+				return 'finish';
+			}
+			return 'round';
+		}
+	}
+
 	# Finish matching is deliberately scoped to the active rule.  Do not scan
 	# every configured rule here: another event's announcement must not end the
 	# activity currently holding the mutex.
-	my $finish_pattern = $active_event->{rule}{finish_regex};
+	my $finish_pattern = $rule->{finish_regex};
 	if (_activity_pattern_matches($message, $finish_pattern)) {
 		finish_activity('finish announcement matched');
 		return 'finish';
@@ -1451,6 +1521,29 @@ sub _validate_completion_policy {
 		}
 	}
 
+	# Round-based activities have an explicit completion boundary even when the
+	# server does not emit a separate final announcement.  Validate the success
+	# pattern here so direct (non-parser) rules receive the same gate.
+	my $round_success_valid = 0;
+	if (exists $rule->{round_success_regex}
+		&& defined $rule->{round_success_regex}) {
+		my (undef, $error) = _compile_activity_pattern(
+			$rule->{round_success_regex}, 'round success pattern',
+		);
+		if (defined $error) {
+			push @errors, $error;
+		} else {
+			$round_success_valid = 1;
+		}
+	}
+	if (exists $rule->{round_start_regex}
+		&& defined $rule->{round_start_regex}) {
+		my (undef, $error) = _compile_activity_pattern(
+			$rule->{round_start_regex}, 'round start pattern',
+		);
+		push @errors, $error if defined $error;
+	}
+
 	my $phases = $rule->{phases};
 	my $phases_valid = 0;
 	if (defined $phases) {
@@ -1493,7 +1586,7 @@ sub _validate_completion_policy {
 	# A lifecycle must have at least one observable completion boundary.  A
 	# positive duration is the explicit fallback for activities whose server has
 	# no finish announcement; finish macros alone are not completion evidence.
-	unless ($finish_valid || $phases_valid || $duration_valid) {
+	unless ($finish_valid || $phases_valid || $duration_valid || $round_success_valid) {
 		push @errors, 'finish evidence, phases, or a positive duration is required';
 	}
 
@@ -1532,6 +1625,44 @@ sub _validate_npc_evidence {
 	return (0, 'trusted NPC dialog evidence is required')
 		unless $trusted && defined $evidence && $evidence ne '';
 	return (1, undef);
+}
+
+sub _validate_leave_npc {
+	my ($rule) = @_;
+	return (0, 'leave NPC rule is unavailable') unless ref($rule) eq 'HASH';
+	my $sequence = _npc_sequence($rule->{leave_npc});
+	return (0, 'leave_npc must include a safe TalkNPC sequence')
+		unless defined $sequence;
+	return (0, 'leave_x is required for leave NPC')
+		unless defined $rule->{leave_x} && "$rule->{leave_x}" =~ /^\d+\z/;
+	return (0, 'leave_y is required for leave NPC')
+		unless defined $rule->{leave_y} && "$rule->{leave_y}" =~ /^\d+\z/;
+	return (0, 'leave_npc_trusted=1 is required for leave NPC')
+		unless defined $rule->{leave_npc_trusted}
+			&& "$rule->{leave_npc_trusted}" =~ /^\s*1\s*\z/;
+
+	my $evidence = $rule->{leave_npc_evidence};
+	my $evidence_text;
+	if (ref($evidence) eq 'HASH') {
+		$evidence_text = $evidence->{text} || $evidence->{source}
+			|| $evidence->{message} || $evidence->{sequence};
+	} elsif (defined $evidence && !ref($evidence)) {
+		$evidence_text = _trim($evidence);
+	}
+	return (0, 'trusted leave NPC dialog evidence is required')
+		unless defined $evidence_text && _trim($evidence_text) ne '';
+	return (1, undef);
+}
+
+sub _leave_npc_configured {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	for my $field (qw(leave_npc leave_npc_trusted leave_npc_evidence leave_x leave_y)) {
+		return 1 if exists $rule->{$field}
+			&& defined $rule->{$field}
+			&& (!ref($rule->{$field}) ? _trim($rule->{$field}) ne '' : 1);
+	}
+	return 0;
 }
 
 sub _search_row_enabled {
@@ -2017,11 +2148,167 @@ sub _start_due_event {
 	return begin_activity($event->{rule}, $event);
 }
 
+sub _actor_value {
+	my ($actor, $key) = @_;
+	return undef unless defined $actor && defined $key;
+	my ($value, $found);
+	my $read_ok = eval {
+		if (ref($actor) && exists $actor->{$key}) {
+			$value = $actor->{$key};
+			$found = 1;
+		}
+		1;
+	};
+	return $value if $read_ok && $found;
+	return undef;
+}
+
+sub _actor_is_dead {
+	my ($actor) = @_;
+	return 0 unless defined $actor;
+	for my $key (qw(dead isDead)) {
+		my $value = _actor_value($actor, $key);
+		return 1 if defined $value && "$value" =~ /^\s*1\s*\z/;
+	}
+	if (ref($actor) ne 'HASH') {
+		my ($value, $ok);
+		$ok = eval {
+			$value = $actor->isDead() if $actor->can('isDead');
+			1;
+		};
+		return 1 if $ok && defined $value && $value;
+	}
+	return 0;
+}
+
+sub _actor_skill_level {
+	my ($actor, $handle) = @_;
+	return 0 unless defined $actor && defined $handle;
+	my $skills = _actor_value($actor, 'skills');
+	if (ref($skills) eq 'HASH') {
+		for my $key (keys %$skills) {
+			next unless defined $key && uc($key) eq uc($handle);
+			my $entry = $skills->{$key};
+			my $level = ref($entry) eq 'HASH' ? $entry->{lv} : $entry;
+			return 0 + $level if defined $level && "$level" =~ /^\s*\d+(?:\.\d+)?\s*\z/ && $level > 0;
+		}
+	}
+	if (ref($actor) ne 'HASH') {
+		for my $method (qw(getSkillLevelByHandle getSkillLevel)) {
+			my ($level, $ok) = (0, 0);
+			$ok = eval {
+				$level = $actor->$method($handle);
+				1;
+			};
+			return 0 + $level if $ok && defined $level
+				&& "$level" =~ /^\s*\d+(?:\.\d+)?\s*\z/ && $level > 0;
+		}
+	}
+	return 0;
+}
+
+sub _actor_job_name {
+	my ($actor) = @_;
+	return undef unless defined $actor;
+	for my $key (qw(job_name job class)) {
+		my $value = _actor_value($actor, $key);
+		return $value if defined $value && !ref($value) && _trim($value) ne '';
+	}
+	my $job_id = _actor_value($actor, 'jobID');
+	if (defined $job_id && exists $Globals::jobs_lut{$job_id}) {
+		return $Globals::jobs_lut{$job_id};
+	}
+	if (ref($actor) ne 'HASH') {
+		my ($value, $ok);
+		$ok = eval {
+			$value = $actor->job() if $actor->can('job');
+			1;
+		};
+		return $value if $ok && defined $value && !ref($value) && _trim($value) ne '';
+	}
+	return undef;
+}
+
+sub _actor_can_resurrect {
+	my ($actor) = @_;
+	return 0 unless defined $actor;
+	return 1 if _actor_skill_level($actor, 'ALL_RESURRECTION') > 0;
+	for my $key (qw(resurrection_capable can_resurrect)) {
+		my $value = _actor_value($actor, $key);
+		return 1 if defined $value && "$value" =~ /^\s*1\s*\z/;
+	}
+	my $job = _actor_job_name($actor);
+	return 0 unless defined $job;
+	# Acolyte is intentionally excluded: only jobs that are known to provide
+	# Resurrection are treated as an immediate-abandon trigger.
+	return 1 if $job =~ /(?:\b(?:high\s+)?priest\b|\barch\s*bishop\b|\barchbishop\b|\bcardinal\b|牧师|牧師|祭司|大主教|主教|神官|枢机|樞機)/i;
+	return 0;
+}
+
+sub _party_members {
+	my ($char) = @_;
+	return () unless defined $char;
+	my $party = _actor_value($char, 'party');
+	return () unless ref($party) eq 'HASH';
+	my $users = $party->{users};
+	return () unless defined $users;
+	return values %$users if ref($users) eq 'HASH';
+	return @$users if ref($users) eq 'ARRAY';
+	return ();
+}
+
+sub _poll_activity_death {
+	my ($now) = @_;
+	return undef unless defined $active_event && ref($active_event) eq 'HASH';
+	return undef if $return_pending;
+	return undef unless ref($state) eq 'LastROActivity::State';
+	my $state_name = $state->state;
+	return undef if $state_name eq 'IDLE' || $state_name eq 'RESUMED'
+		|| $state_name eq 'FAILED' || $state_name eq 'RETURNING';
+	$now = _now() unless defined $now;
+
+	my $char = $Globals::char;
+	return undef unless defined $char;
+	for my $member (_party_members($char)) {
+		next unless defined $member && _actor_is_dead($member);
+		if (_actor_can_resurrect($member)) {
+			my $name = _actor_value($member, 'name') || 'resurrection-capable party member';
+			_mark_activity_failed("$name died during activity");
+			return 'fail';
+		}
+	}
+
+	if (_actor_is_dead($char)) {
+		if (_actor_can_resurrect($char)) {
+			_mark_activity_failed('resurrection-capable output character died');
+			return 'fail';
+		}
+		$activity_self_dead_at = $now unless defined $activity_self_dead_at;
+		$active_event->{self_dead_at} = $activity_self_dead_at;
+		my $wait_until = $activity_self_dead_at + _resurrection_wait_seconds($active_event->{rule});
+		$active_event->{self_dead_wait_until} = $wait_until;
+		if ($now >= $wait_until) {
+			_mark_activity_failed('output character remained dead past resurrection wait');
+			return 'fail';
+		}
+		return 'wait';
+	}
+
+	if (defined $activity_self_dead_at) {
+		$activity_self_dead_at = undef;
+		delete $active_event->{self_dead_at};
+		delete $active_event->{self_dead_wait_until};
+	}
+	return undef;
+}
+
 sub onMainLoopPre {
 	my $args = _hook_args(@_);
 	return unless _ensure_initialized();
 
 	my $now = _now($args);
+	my $death_result = _poll_activity_death($now);
+	return if defined $death_result;
 	if ($enabled) {
 		my $due = eval { $scheduler->due($now) };
 		if ($@) {
@@ -2110,7 +2397,14 @@ sub begin_activity {
 	$activity_entry_started_at = _now();
 	$activity_phase_index = undef;
 	$activity_phase_started_at = undef;
+	$activity_round_count = 0;
+	$activity_round_started_at = undef;
+	$activity_self_dead_at = undef;
 	$airship_failure_count = 0;
+	$scheduled_event->{round_count} = 0;
+	$scheduled_event->{round} = 0;
+	$scheduled_event->{round_started} = 0;
+	$scheduled_event->{round_success_seen} = 0;
 
 	my $ok = eval {
 		if ($state->state eq 'IDLE') {
@@ -2364,6 +2658,9 @@ sub cleanup_and_restore {
 	$activity_entry_started_at = undef;
 	$activity_phase_index = undef;
 	$activity_phase_started_at = undef;
+	$activity_round_count = 0;
+	$activity_round_started_at = undef;
+	$activity_self_dead_at = undef;
 	$airship_failure_count = 0;
 	$active_event = undef;
 	$armed_event = undef;
@@ -2390,6 +2687,46 @@ sub _stop_active_activity {
 		$active_event->{activity_ai_cleared} = 1;
 		_try_clear_activity_ai('activity stop cleanup');
 	}
+	return return_to_capital();
+}
+
+sub _complete_round_limit {
+	my ($reason) = @_;
+	return 1 unless defined $active_event;
+	return 1 if $return_pending;
+	$reason = _trim($reason || 'maximum activity rounds completed');
+	$active_event->{finish_reason} = $reason
+		if ref($active_event) eq 'HASH';
+
+	# Round completion owns a distinct leave path.  Stop combat before touching
+	# the NPC so an attack task cannot race the reward dialog.
+	_transition_to_finishing();
+	if (ref($state) eq 'LastROActivity::State'
+		&& $state->state eq 'FINISHING'
+		&& !$active_event->{activity_ai_cleared}) {
+		$active_event->{activity_ai_cleared} = 1;
+		_try_clear_activity_ai('round-limit activity cleanup');
+	}
+
+	my $rule = ref($active_event->{rule}) eq 'HASH' ? $active_event->{rule} : {};
+	my ($leave_ok, $leave_error) = _validate_leave_npc($rule);
+	unless ($leave_ok) {
+		# Missing or untrusted evidence is a normal fail-closed outcome: return to
+		# capital, but never synthesize a coordinate or dialog sequence.
+		_mark_activity_failed($leave_error || 'trusted leave NPC evidence is required');
+		return 0;
+	}
+
+	my $sequence = _npc_sequence($rule->{leave_npc});
+	my ($command_ok, $command_error) = _run_checked_command(
+		"talknpc $rule->{leave_x} $rule->{leave_y} $sequence",
+		verify_npc => 1,
+	);
+	unless ($command_ok) {
+		_mark_activity_failed($command_error || 'leave NPC command failed');
+		return 0;
+	}
+	$active_event->{leave_npc_started} = 1;
 	return return_to_capital();
 }
 

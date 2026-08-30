@@ -312,6 +312,47 @@ RULES
 		done_testing();
 	};
 
+	subtest 'defaults and parses dojo round and leave policy fields' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[dojo_defaults]
+enabled=0
+
+[dojo_rounds]
+enabled=0
+announce_regex=dojo
+start_regex=dojo starts
+finish_regex=dojo done
+round_start_regex=round starts
+round_success_regex=round cleared
+max_rounds=5
+resurrection_wait_seconds=45
+leave_npc=Central Guide#ok,yes
+leave_npc_trusted=1
+leave_npc_evidence=server transcript
+leave_x=12
+leave_y=34
+RULES
+
+		is_deeply($errors, [], 'round and leave fields parse without errors');
+		is($rules->{dojo_defaults}{max_rounds}, 3,
+			'dojo rules default max_rounds to three');
+		is($rules->{dojo_defaults}{resurrection_wait_seconds}, 30,
+			'dojo rules default resurrection wait to thirty seconds');
+		is($rules->{dojo_rounds}{max_rounds}, 5,
+			'parses a configured maximum round count');
+		is($rules->{dojo_rounds}{resurrection_wait_seconds}, 45,
+			'parses a configured resurrection wait');
+		is($rules->{dojo_rounds}{round_start_regex}, 'round starts',
+			'parses round start evidence');
+		is($rules->{dojo_rounds}{round_success_regex}, 'round cleared',
+			'parses round success evidence');
+		is($rules->{dojo_rounds}{leave_npc}, 'Central Guide#ok,yes',
+			'parses the leave NPC sequence');
+		is($rules->{dojo_rounds}{leave_x}, 12, 'parses leave NPC x coordinate');
+		is($rules->{dojo_rounds}{leave_y}, 34, 'parses leave NPC y coordinate');
+		done_testing();
+	};
+
 	subtest 'validates the canonical airship item ID field' => sub {
 		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
 [valid_item]

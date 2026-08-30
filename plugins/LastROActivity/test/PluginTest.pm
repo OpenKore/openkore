@@ -2229,6 +2229,137 @@ RULES
 		return eval { LastROActivity::checkActivityTimeout($now) };
 	};
 
+	subtest 'dojo rounds stop at the limit and use a trusted leave NPC' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_dojo_rounds',
+			{
+				round_start_regex => 'ROUND START',
+				round_success_regex => 'ROUND SUCCESS',
+				max_rounds => 3,
+				leave_npc => 'Central Guide#ok,yes',
+				leave_npc_trusted => 1,
+				leave_npc_evidence => 'trusted server dialog transcript',
+				leave_x => 12,
+				leave_y => 34,
+			},
+		);
+		@Commands::run_calls = ();
+		is($event->{round_count} || 0, 0, 'dojo starts before its first round');
+		ok(defined $task7_activity_message->('ROUND START'),
+			'round start evidence is consumed');
+		for my $round (1 .. 2) {
+			ok(defined $task7_activity_message->('ROUND SUCCESS'),
+				"round $round success is consumed");
+			is($event->{round_count}, $round,
+				"round $round increments the activity counter");
+			is(LastROActivity::state(), 'RUNNING',
+				"round $round keeps combat running");
+		}
+		ok(defined $task7_activity_message->('ROUND SUCCESS'),
+			'final round success is consumed');
+		is($event->{round_count}, 3, 'third success reaches the configured limit');
+		is(LastROActivity::state(), 'RETURNING',
+			'round limit stops combat and starts the return lifecycle');
+		is_deeply(\@Commands::run_calls,
+			['macro stop', 'talknpc 12 34 ok,yes', 'privateairship prontera'],
+			'round limit executes the trusted leave NPC before returning');
+		$task7_confirm_return->();
+		is(LastROActivity::active_event(), undef,
+			'round-limit return cleans up after prontera confirmation');
+		done_testing();
+	};
+
+	subtest 'dojo round limit fails closed without trusted leave evidence' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_dojo_no_leave_evidence',
+			{
+				round_success_regex => 'ROUND SUCCESS',
+				max_rounds => 3,
+			},
+		);
+		@Commands::run_calls = ();
+		$task7_activity_message->('ROUND SUCCESS');
+		$task7_activity_message->('ROUND SUCCESS');
+		$task7_activity_message->('ROUND SUCCESS');
+		is(LastROActivity::state(), 'FAILED',
+			'missing leave evidence fails the dojo at the round limit');
+		like(LastROActivity::last_failure(), qr/leave.*(?:NPC|evidence)|evidence.*leave/i,
+			'missing leave evidence is recorded');
+		ok(!grep(/^talknpc /, @Commands::run_calls),
+			'missing leave evidence never guesses a TalkNPC command');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			'fail-closed round completion still requests the fixed return');
+		$task7_confirm_return->();
+		done_testing();
+	};
+
+	subtest 'resurrection-capable party death abandons immediately' => sub {
+		my ($rule, $event) = $task7_setup_running->('task7_party_priest_death');
+		@Commands::run_calls = ();
+		$Globals::jobs_lut{8} = 'Priest';
+		$Globals::char->{party} = {
+			users => {
+				priest_member => {jobID => 8, dead => 1},
+			},
+		};
+		LastROActivity::onMainLoopPre(undef, {now => 200});
+		is(LastROActivity::state(), 'FAILED',
+			'dead Priest causes an immediate failed return');
+		like(LastROActivity::last_failure(), qr/(?:priest|resurrection|party).*(?:dead|died)/i,
+			'party death keeps an actionable diagnostic');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			'party death requests one return');
+		$task7_confirm_return->();
+
+		($rule, $event) = $task7_setup_running->('task7_skill_priest_death');
+		@Commands::run_calls = ();
+		$Globals::char->{party} = {
+			users => {
+				skill_member => {
+					dead => 1,
+					skills => {ALL_RESURRECTION => {lv => 1}},
+				},
+			},
+		};
+		LastROActivity::onMainLoopPre(undef, {now => 200});
+		is(LastROActivity::state(), 'FAILED',
+			'party member skill evidence also marks the activity failed');
+		$task7_confirm_return->();
+		done_testing();
+	};
+
+	subtest 'output character death waits for resurrection then abandons on timeout' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_self_death_wait',
+			{resurrection_wait_seconds => 30},
+		);
+		@Commands::run_calls = ();
+		$Globals::char->{dead} = 1;
+		LastROActivity::onMainLoopPre(undef, {now => 200});
+		is(LastROActivity::state(), 'RUNNING',
+			'self death enters a bounded resurrection wait');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 0,
+			'self death does not leave immediately');
+		LastROActivity::onMainLoopPre(undef, {now => 229});
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 0,
+			'self death remains pending before the wait deadline');
+		$Globals::char->{dead} = 0;
+		LastROActivity::onMainLoopPre(undef, {now => 229});
+		is(LastROActivity::state(), 'RUNNING',
+			'alive state clears the resurrection wait');
+		$Globals::char->{dead} = 1;
+		LastROActivity::onMainLoopPre(undef, {now => 300});
+		LastROActivity::onMainLoopPre(undef, {now => 330});
+		is(LastROActivity::state(), 'FAILED',
+			'expired resurrection wait abandons the activity');
+		like(LastROActivity::last_failure(), qr/resurrect|dead|wait/i,
+			'expired wait records a diagnostic');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			'expired wait requests one return');
+		$task7_confirm_return->();
+		done_testing();
+	};
+
 	subtest 'active finish and phase messages are scoped and cleanup is idempotent' => sub {
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_finish',
