@@ -49,8 +49,10 @@ once a target is found, OpenKore still applies the existing `attack`, distance,
 aggression, and skill settings from `mon_control.txt` to choose what to fight.
 
 For a monster-search rule, `search_targets` must list server-confirmed monster
-names or IDs that have a matching shared row with `search=1`. Do not add a
-target based on a translated display name or an unverified database entry.
+names or IDs that themselves have a matching shared row with `search=1`. The
+production gate requires the exact declared key; it does not infer an ID/name
+alias that may be absent from the runtime monster LUT. Do not add a target
+based on a translated display name or an unverified database entry.
 
 ## Entry and return
 
