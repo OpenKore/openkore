@@ -254,6 +254,9 @@ announce_regex=活动
 start_regex=活动
 lead_seconds=10
 duration_seconds=900
+# Scheduler-only projection: keep this fixture out of shared-search routing.
+entry_type=macro
+entry_macro=scheduler_only
 RULES
 	close $fh;
 	return $path;
@@ -290,6 +293,9 @@ announce_regex=活动
 start_regex=活动
 lead_seconds=12
 duration_seconds=900
+# Scheduler-only projection: keep this fixture out of shared-search routing.
+entry_type=macro
+entry_macro=scheduler_only
 RULES
 	close $fh;
 	return ($folder, $path);
@@ -306,6 +312,8 @@ start_regex=活动
 lead_seconds=10
 priority=5
 duration_seconds=900
+entry_type=macro
+entry_macro=scheduler_only
 
 [zzz_low]
 enabled=1
@@ -314,6 +322,8 @@ start_regex=活动
 lead_seconds=10
 priority=1
 duration_seconds=900
+entry_type=macro
+entry_macro=scheduler_only
 RULES
 	close $fh;
 	return $path;
@@ -329,6 +339,8 @@ announce_regex=活动
 start_regex=活动
 lead_seconds=10
 duration_seconds=900
+entry_type=macro
+entry_macro=scheduler_only
 
 [drop_event]
 enabled=1
@@ -336,6 +348,8 @@ announce_regex=活动
 start_regex=活动
 lead_seconds=10
 duration_seconds=900
+entry_type=macro
+entry_macro=scheduler_only
 RULES
 	close $fh;
 	return $path;
@@ -352,6 +366,8 @@ announce_regex=活动
 start_regex=活动
 lead_seconds=10
 duration_seconds=900
+entry_type=macro
+entry_macro=scheduler_only
 RULES
 	close $fh;
 	return $path;
@@ -439,6 +455,81 @@ sub start {
 		ok(!defined $event, 'announcement-only evidence cannot arm the incomplete lottery rule');
 		is_deeply(LastROActivity::scheduler()->events(), {},
 			'incomplete raw-enabled rules leave no scheduler timers');
+		done_testing();
+	};
+
+	subtest 'typed search routes fail closed when shared control is unavailable' => sub {
+		local %Globals::mon_control = ();
+		my $rule = {
+			event_id => 'empty_shared_control',
+			enabled => 1,
+			announce_regex => '活动',
+			start_regex => '活动',
+			finish_regex => '活动结束',
+			entry_type => 'privateairship',
+			entry_item_id => 14527,
+			search_targets => ['event_egg'],
+			duration_seconds => 900,
+			validation_errors => [],
+		};
+		my $previous_rules = $LastROActivity::rules;
+		$LastROActivity::rules = {empty_shared_control => $rule};
+		LastROActivity::scheduler()->clear();
+		my $event = LastROActivity::_observe_message('活动', 1_000);
+		ok(!defined $event,
+			'empty shared control rejects a typed search route before announcement scheduling');
+		ok(!$rule->{enabled}, 'empty shared control disables the typed search rule');
+		like(join('; ', @{$rule->{validation_errors}}), qr/shared mon_control/,
+			'empty shared control failure is attached to the rule');
+		is_deeply(LastROActivity::scheduler()->events(), {},
+			'empty shared control leaves no scheduler timer');
+		my $direct_rule = { %$rule, enabled => 1, validation_errors => [] };
+		ok(!LastROActivity::_validated_enabled_rule($direct_rule),
+			'direct typed-rule validation also fails closed without shared control');
+		my $airship_rule = {
+			%$rule,
+			event_id => 'empty_airship_control',
+			entry_type => 'airship',
+			enabled => 1,
+			validation_errors => [],
+		};
+		ok(!LastROActivity::_validated_enabled_rule($airship_rule),
+			'direct airship-rule validation also fails closed without shared control');
+		ok(!$airship_rule->{enabled}, 'empty shared control disables the typed airship rule');
+		like(join('; ', @{$airship_rule->{validation_errors}}), qr/shared mon_control/,
+			'airship shared-control failure is attached to the rule');
+		my $scheduler_projection = {
+			%$rule,
+			event_id => 'scheduler_projection',
+			enabled => 1,
+		};
+		delete $scheduler_projection->{entry_type};
+		delete $scheduler_projection->{validation_errors};
+		ok(LastROActivity::_validated_enabled_rule($scheduler_projection),
+			'key-absent scheduler projection remains compatible with empty shared control');
+
+		my ($implicit_rules, $implicit_errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[implicit_privateairship]
+enabled=1
+announce_regex=活动
+start_regex=活动
+finish_regex=活动结束
+entry_item_id=14527
+search_targets=event_egg
+duration_seconds=900
+RULES
+	is_deeply($implicit_errors, [], 'implicit privateairship fixture parses without syntax errors');
+	my $implicit_rule = $implicit_rules->{implicit_privateairship};
+	ok(exists $implicit_rule->{entry_type} && !defined $implicit_rule->{entry_type},
+		'parser keeps the omitted entry_type slot for its privateairship default');
+	ok(LastROActivity::_uses_search_mode($implicit_rule),
+		'omitted entry_type defaults to shared privateairship search mode');
+	ok(!LastROActivity::_validated_enabled_rule($implicit_rule),
+		'implicit privateairship route fails closed without shared control');
+	ok(!$implicit_rule->{enabled}, 'implicit privateairship route is disabled after preflight');
+	like(join('; ', @{$implicit_rule->{validation_errors}}), qr/shared mon_control/,
+		'implicit privateairship failure is attached to the rule');
+		$LastROActivity::rules = $previous_rules;
 		done_testing();
 	};
 
@@ -541,6 +632,8 @@ sub start {
 			finish_regex => 'done',
 			duration_seconds => 30,
 			entry_map => 'event_map',
+			entry_type => 'macro',
+			entry_macro => 'scheduler_only',
 			validation_errors => [],
 		};
 		ok(!LastROActivity::_validated_enabled_rule($missing_start),
@@ -557,6 +650,8 @@ sub start {
 			duration_seconds => 30,
 			map_source => 'not_documented',
 			entry_map => 'event_map',
+			entry_type => 'macro',
+			entry_macro => 'scheduler_only',
 			validation_errors => [],
 		};
 		ok(!LastROActivity::_validated_enabled_rule($unknown_source),
@@ -583,6 +678,8 @@ sub start {
 			duration_seconds => 30,
 			map_source => 'static',
 			entry_map => 'event_map',
+			entry_type => 'macro',
+			entry_macro => 'scheduler_only',
 			validation_errors => [],
 		};
 		my $rule_b = { %$rule_a, event_id => 'off_other', announce_regex => 'off other' };
@@ -616,6 +713,8 @@ sub start {
 			start_regex => '活动',
 			lead_seconds => 10,
 			duration_seconds => 30,
+			entry_type => 'macro',
+			entry_macro => 'scheduler_only',
 			validation_errors => [],
 		};
 		$LastROActivity::rules = {due_event => $due_rule};
@@ -1057,6 +1156,8 @@ announce_regex=活动
 start_regex=活动
 lead_seconds=10
 duration_seconds=900
+entry_type=macro
+entry_macro=scheduler_only
 RULES
 		close $fh;
 		$Settings::load_path = $recovery_fixture;

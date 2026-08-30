@@ -618,10 +618,12 @@ sub _validated_enabled_rule {
 		return 0;
 	}
 	return 0 unless defined $rule->{announce_regex} && $rule->{announce_regex} ne '';
-	# Resolve declared shared-search targets before scheduling when the runtime
-	# control table is available.  Minimal scheduler fixtures often omit an
-	# entry_type and intentionally do not load Globals::mon_control; those retain
-	# their parser-compatible legacy behavior and are checked at entry time.
+	# Resolve declared shared-search targets before scheduling.  Minimal scheduler
+	# fixtures omit the entry_type key and intentionally do not load
+	# Globals::mon_control; those retain their parser-compatible legacy behavior
+	# and are checked at entry time.  Parser-created rules always materialize the
+	# key (including an undef value), so an omitted configured type still uses the
+	# privateairship default and is preflighted here.
 	if (_runtime_search_validation_available($rule)) {
 		my ($search_ok) = _validate_search_targets($rule);
 		return 0 unless $search_ok;
@@ -634,12 +636,23 @@ sub _validated_enabled_rule {
 sub _runtime_search_validation_available {
 	my ($rule) = @_;
 	return 0 unless ref($rule) eq 'HASH';
-	return 0 unless scalar keys %Globals::mon_control;
 	return 1 if $rule->{search_mode} || $rule->{shared_search};
-	return 0 unless exists $rule->{entry_type} && defined $rule->{entry_type}
-		&& _trim($rule->{entry_type}) ne '';
-	my $entry_type = lc(_trim($rule->{entry_type}));
-	return ($entry_type eq 'airship' || $entry_type eq 'privateairship') ? 1 : 0;
+	# Non-search entry routes do not need shared monster-control resolution.
+	# Scheduler-only parser fixtures use an explicit synthetic macro route so
+	# their timing assertions stay independent of the live control table.
+	if (exists $rule->{entry_type}) {
+		my $entry_type = lc(_trim($rule->{entry_type}));
+		return 0 if $entry_type eq 'npc' || $entry_type eq 'macro';
+		# Rules parsed through LastROActivity::Rules always materialize this key,
+		# including undef/empty values.  Those values default to privateairship and
+		# therefore require shared-search preflight before scheduling.
+		return 1;
+	}
+	# A parser-origin rule from a future/alternate parser may omit entry_type but
+	# still carries validation_errors.  Keep that production route fail-closed.
+	return 1 if exists $rule->{validation_errors};
+	# Direct scheduler projections omit both parser metadata and entry type.
+	return 0;
 }
 
 sub _observe_message {
