@@ -25,6 +25,10 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
+		# 2021 RE CH_ENTER carries userLevel as a 32-bit value and clientType
+		# as a 16-bit value.  The second 32-bit field remains the auth/session
+		# code consumed by the XKore2 character server.
+		'0065' => ['game_login', 'a4 a4 V v C', [qw(accountID sessionID userLevel clientType accountSex)]],
 		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
 		'0AFA' => ['check_bin', 'V a4', [qw(AID pinCode)]], #10
 	);
@@ -38,6 +42,29 @@ sub new {
 	$self->{send_buy_bulk_market_pack} = 'V2';
 
 	return $self;
+}
+
+# 0x0065,17.  Keep the public OpenKore call signature used by the login
+# handoff, but map its legacy third argument to the modern user-level field.
+# The 2021 RE client also requires an explicit client type in this packet.
+sub sendGameLogin {
+	my ($self, $accountID, $sessionID, $userLevel, $sex) = @_;
+	# DirectConnection keeps the account-server fields as raw a4 values,
+	# while modern CZ_ENTER packs userLevel as a numeric V field.
+	$userLevel = unpack('V', $userLevel)
+		if defined $userLevel && !ref($userLevel) && length($userLevel) == 4;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'game_login',
+		accountID => $accountID,
+		sessionID => $sessionID,
+		userLevel => $userLevel,
+		clientType => $masterServer && defined $masterServer->{clientType}
+			? $masterServer->{clientType}
+			: 0,
+		accountSex => $sex,
+	}));
+	debug "Sent sendGameLogin\n", "sendPacket", 2;
 }
 
 # 0x0436,23

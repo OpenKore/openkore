@@ -44,7 +44,9 @@ force_map4
 force_map5
 
 ra_temple
-
+abbey01
+abbey02
+abbey03
 tur_dun01
 
 # Prontera, Payon, Morroc and Geffen regions

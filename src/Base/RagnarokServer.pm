@@ -26,16 +26,30 @@ sub getServerType {
 	return $_[0]->{serverType};
 }
 
+# XKore2 may need to bind locally while advertising a routable public address
+# in the account/character/map handoff packets.
+sub setAdvertisedHost {
+	my ($self, $host) = @_;
+	$self->{BS_advertisedHost} = $host;
+}
+
+sub getHost {
+	my ($self) = @_;
+	return $self->{BS_advertisedHost}
+		if defined $self->{BS_advertisedHost};
+	return $self->SUPER::getHost;
+}
+
 sub setServerType {
 	my ($self, $serverType) = @_;
-	if ($self->{severType} != $serverType) {
+	if (($self->{serverType} // '') ne ($serverType // '')) {
 		$self->{serverType} = $serverType;
 		$self->{recvPacketParser} = Network::Receive->create(undef, $serverType);
 		$self->{sendPacketParser} = Network::Send->create(undef, $serverType);
 		foreach my $client (@{$self->clients()}) {
 			my $buffer = $client->{tokenizer}->getBuffer();
 			$client->{tokenizer} = new Network::MessageTokenizer(
-				$self->{rpackets});
+				$self->getClientPacketTable());
 			$client->{tokenizer}->add($buffer);
 		}
 	}
@@ -45,10 +59,17 @@ sub getRecvPackets {
 	return $_[0]->{rpackets};
 }
 
+# Client-facing servers may need packet lengths that are not present in the
+# server receive table.  Keep the default table unchanged and let a concrete
+# server provide a narrow per-client extension when required.
+sub getClientPacketTable {
+	return $_[0]->{rpackets};
+}
+
 sub onClientNew {
 	my ($self, $client) = @_;
 	$client->{tokenizer} = new Network::MessageTokenizer(
-		$self->{rpackets});
+		$self->getClientPacketTable());
 }
 
 sub onClientData {

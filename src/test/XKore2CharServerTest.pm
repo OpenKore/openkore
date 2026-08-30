@@ -1,0 +1,649 @@
+# Regression tests for the character-server handoff used by XKore2.
+package XKore2CharServerTest;
+
+use strict;
+use Test::More;
+
+# Load the character-server implementation without the native XSTools module.
+# The test exercises the pure packet-selection/login path; the production test
+# suite loads the normal dependency graph on hosts with a matching XSTools DLL.
+BEGIN {
+	$INC{'Carp/Assert.pm'} = __FILE__;
+	package Carp::Assert;
+	sub import {
+		my $caller = caller;
+		no strict 'refs';
+		*{"${caller}::DEBUG"} = sub () { 0 };
+		*{"${caller}::assert"} = \&assert;
+	}
+	sub assert { }
+
+	$INC{'Base/RagnarokServer.pm'} = __FILE__;
+	package Base::RagnarokServer;
+        sub new { bless {}, shift }
+        sub getClientPacketTable { return $_[0]->{rpackets}; }
+        sub onClientData {
+		my ($self, $client, $data) = @_;
+		$client->{tokenizer}->add($data);
+		$client->{outbox} && $client->{outbox}->add($_) for $self->{sendPacketParser}->process(
+			$client->{tokenizer}, $self, $client
+		);
+	}
+        sub onClientNew {
+                my ($self, $client) = @_;
+                $client->{tokenizer} = Network::MessageTokenizer->new($self->getClientPacketTable());
+        }
+	sub unknownMessage {
+		my ($self, $args, $client) = @_;
+		$client->close();
+	}
+
+	$INC{'Misc.pm'} = __FILE__;
+	package Misc;
+	sub import { }
+
+	$INC{'I18N.pm'} = __FILE__;
+	package I18N;
+	sub import { }
+
+	$INC{'Network/Send/kRO/RagexeRE_2020_07_23.pm'} = __FILE__;
+	package Network::Send::kRO::RagexeRE_2020_07_23;
+	sub new {
+		bless {
+			packet_list => {
+				'0065' => ['game_login', 'a4 a4 a4 v C',
+					[qw(accountID sessionID sessionID2 userLevel accountSex)]],
+				'09A1' => ['sync_received_characters'],
+			},
+		}, shift;
+	}
+        sub reconstruct {
+                $_[0]{reconstruct_args} = $_[1];
+                return pack('v', 0x09A1)
+                        if $_[1]{switch} eq 'sync_received_characters';
+                return 'packet';
+        }
+        sub process {
+                my ($self, $tokenizer, $handleContainer, @handleArguments) = @_;
+                my @result;
+                my $type;
+                while (my $message = $tokenizer->readNext(\$type)) {
+                        my $switch = Network::MessageTokenizer::getMessageID($message);
+                        if ($type == 0 && $switch eq '09A1') {
+                                $handleContainer->sync_received_characters({}, @handleArguments);
+                        } elsif ($type == 1) {
+                                $handleContainer->unknownMessage({
+                                        switch => $switch,
+                                        RAW_MSG => $message,
+                                }, @handleArguments);
+                        }
+                        push @result, $message;
+                }
+                return @result;
+        }
+        sub sendToServer {
+		$_[0]{sent} = $_[1];
+	}
+
+	$INC{'Lastro/Airship.pm'} = __FILE__;
+	package Lastro::Airship;
+	sub import {
+		my ($class, @symbols) = @_;
+		my $caller = caller;
+		no strict 'refs';
+		*{"${caller}::$_"} = \&{$_} for @symbols;
+	}
+	sub isEnabled { 0 }
+	sub normalizeMapName { $_[0] }
+
+	$INC{'Log.pm'} = __FILE__;
+	package Log;
+	sub debug { }
+	sub import {
+		my ($class, @symbols) = @_;
+		my $caller = caller;
+		no strict 'refs';
+		*{"${caller}::$_"} = \&{$_} for @symbols;
+	}
+}
+
+use Globals qw($char $masterServer %charSvrSet);
+use Network::MessageTokenizer;
+use Network::XKore2::CharServer;
+
+{
+	package XKore2CharServerTest::Parser;
+	sub new {
+		my $packet_list = {
+			'006B' => ['received_characters_info'],
+			'0072' => ['received_characters'],
+			'082D' => ['received_characters_info'],
+			'099D' => ['received_characters'],
+			'0B72' => ['received_characters'],
+		};
+		bless {
+			packet_lut => {},
+			packet_list => $packet_list,
+			calls => [],
+			args => {},
+		}, shift;
+	}
+	sub reconstruct {
+		my ($self, $args) = @_;
+		push @{$self->{calls}}, $args->{switch};
+		$self->{args}{$args->{switch}} = $args;
+		return pack('v v C5 x20', 0x082D, 29,
+			$args->{normal_slot} || 0, $args->{premium_slot} || 0,
+			$args->{billing_slot} || 0, $args->{producible_slot} || 0,
+			$args->{valid_slot} || 0) if $args->{switch} eq '082D';
+		return pack('v V', 0x09A0, $args->{sync_Count} || 0)
+			if $args->{switch} eq 'sync_received_characters';
+		return pack('v v a175', 0x099D, $self->{bad_length} ? 0 : 179, 'C' x 175)
+			if $args->{switch} eq '099D';
+		return pack('v v a175', 0x0B72, $self->{bad_length} ? 0 : 179, 'C' x 175)
+			if $args->{switch} eq '0B72';
+		return pack('v', 0);
+	}
+}
+
+{
+	package XKore2CharServerTest::SessionStore;
+	sub new { bless { session => $_[1] }, shift }
+	sub get { $_[0]{session} }
+	sub mark { $_[0]{marked} = $_[1] }
+}
+
+{
+	package XKore2CharServerTest::Client;
+	sub new { bless { sent => [], closed => 0 }, shift }
+	sub send { push @{$_[0]{sent}}, $_[1] }
+	sub close { $_[0]{closed} = 1 }
+}
+
+{
+	package XKore2CharServerTest::ExplodingSender;
+	sub process { die "malformed client packet\n"; }
+}
+
+{
+	package XKore2CharServerTest::ExplodingReceiver;
+	sub new { bless { packet_list => { '0B72' => ['received_characters'] } }, shift }
+	sub reconstruct { die "character page reconstruction failed\n"; }
+}
+
+sub start {
+	my $previous_char = $Globals::char;
+	my $previous_master = $Globals::masterServer;
+	my %previous_slots = %Globals::charSvrSet;
+
+	$Globals::char = undef;
+	$Globals::masterServer = {
+		serverType => 'kRO_RagexeRE_2021_11_03',
+		charBlockSize => 175,
+	};
+	%Globals::charSvrSet = (
+		normal_slot => 3,
+		premium_slot => 0,
+		billing_slot => 0,
+		producible_slot => 0,
+		valid_slot => 3,
+		sync_Count => 1,
+	);
+
+	subtest '2021 RE LastRO uses 0B72 through the complete 0065 to 09A1 flow' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		$parser->{bad_length} = 1;
+		# The handoff only needs the sender's client tokenizer/process path here;
+		# use the in-test sender stub so this behavior test is independent of
+		# optional generated packet modules.
+		my $sender = Network::Send::kRO::RagexeRE_2020_07_23->new;
+		my $server = bless {
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+			# Simulate a custom receive table that omitted 0B72 while the
+			# production receive parser still knows how to build it.
+			rpackets => { '099D' => { length => -1 } },
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+			hook_prefix => 'Network::ClientReceive',
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->game_login({
+			accountID => $account_id,
+			sessionID => pack('V', 1),
+			accountSex => 0,
+		}, $client);
+		$server->onClientNew($client);
+		$server->onClientData($client, pack('v', 0x09A1));
+
+		is($server->character_list_switch, '0B72',
+			'modern LastRO selects the LIST2 response from parser capability');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'complete login flow returns a LIST2 character page');
+		is(unpack('v', substr($client->{sent}[-1], 2, 2)), length($client->{sent}[-1]),
+			'LIST2 length field matches the complete response');
+		ok(!$client->{closed}, 'complete valid flow keeps the character connection open');
+		is($server->{sessionStore}{marked}, 1,
+			'valid character login refreshes the session by numeric session ID');
+	};
+
+	subtest '2021 RE LastRO prefers 0B72 character pages when both layouts are registered' => sub {
+		my $server = bless {
+			rpackets => {
+				'099D' => { length => -1 },
+				'0B72' => { length => -1 },
+			},
+		}, 'Network::XKore2::CharServer';
+
+		is($server->character_list_switch, '0B72',
+			'LastRO 2021 RE character-list response uses the 0B72 packet ID');
+	};
+
+		subtest '2021 RE character login waits for 09A1 before sending character data' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			recvPacketParser => $parser,
+			rpackets => { '099D' => { length => -1 } },
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->game_login({
+			accountID => $account_id,
+			sessionID => pack('V', 1),
+			accountSex => 0,
+		}, $client);
+
+		is_deeply($parser->{calls}, [qw(082D sync_received_characters)],
+			'initial handoff sends slot info and one character-list page notification');
+		is(unpack('V', $client->{sent}[0]), 2007306,
+			'initial response starts with the raw account ID');
+		is(unpack('v', $client->{sent}[1]), 0x082D,
+			'initial modern response starts with 082D slot info');
+		is(unpack('v', substr($client->{sent}[1], 29)), 0x09A0,
+			'initial modern response follows slot info with 09A0');
+		is(unpack('V', substr($client->{sent}[1], 31, 4)), 1,
+			'09A0 announces one character-list page');
+		my $has_early_character_or_pin = grep {
+			unpack('v', $_) == 0x099D || unpack('v', $_) == 0x08B9
+		} @{$client->{sent}};
+		ok(!$has_early_character_or_pin,
+			'initial modern response does not send character data or legacy PIN request');
+
+		$parser->{calls} = [];
+		$server->sync_received_characters({}, $client);
+		is_deeply($parser->{calls}, [qw(0B72)],
+			'client 09A1 request receives the 0B72 character data page');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'09A1 response is the 0B72 packet');
+		is(unpack('v', substr($client->{sent}[-1], 2, 2)), 179,
+			'0B72 response length includes one 175-byte character block');
+		is(scalar @{$parser->{args}{'0B72'}{chars}}, 5,
+			'0B72 reconstruction receives the available character list');
+		$server->sync_received_characters({}, $client);
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'every additional 09A1 page request receives another 0B72 response');
+		ok(!$client->{closed}, 'valid character-server session remains open');
+	};
+
+	subtest 'legacy character login keeps legacy character-list packet IDs' => sub {
+		my $modern_master = $Globals::masterServer;
+		$Globals::masterServer = {
+			serverType => 'kRO_RagexeRE_2013_03_20',
+			charBlockSize => 106,
+		};
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			recvPacketParser => $parser,
+			rpackets => { '006B' => { length => 0 }, '0072' => { length => 22 } },
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->game_login({
+			accountID => $account_id,
+			sessionID => pack('V', 1),
+			accountSex => 0,
+		}, $client);
+
+		is_deeply(
+			$parser->{calls},
+			[qw(006B 0072)],
+			'legacy handoff uses 006B character info followed by 0072 character data'
+		);
+		$Globals::masterServer = $modern_master;
+	};
+
+	subtest '2021 RE game-login packet names the modern client fields' => sub {
+		require Network::Send::kRO::RagexeRE_2021_11_03;
+		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+
+		is_deeply(
+			$sender->{packet_list}{'0065'},
+			['game_login', 'a4 a4 V v C', [qw(accountID sessionID userLevel clientType accountSex)]],
+			'0065 uses the 2021 RE account, auth, user-level, client-type and sex layout'
+		);
+	};
+
+	subtest '2021 RE sendGameLogin maps legacy arguments to modern fields' => sub {
+		require Network::Send::kRO::RagexeRE_2021_11_03;
+		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+		$Globals::masterServer = {clientType => 4};
+		my $account_id = pack('V', 2007306);
+		my $auth_code = pack('V', 1);
+		my $user_level = pack('V', 1);
+
+		$sender->sendGameLogin($account_id, $auth_code, $user_level, 0);
+
+		is($sender->{reconstruct_args}{userLevel}, 1,
+			'sendGameLogin decodes the packed legacy third argument for modern userLevel');
+		is($sender->{reconstruct_args}{clientType}, 4,
+			'sendGameLogin supplies the configured client type');
+		ok(!exists $sender->{reconstruct_args}{sessionID2},
+			'modern sendGameLogin does not send a legacy sessionID2 field');
+	};
+
+		subtest '2021 RE sender registers the client character-list request' => sub {
+		require Network::Send::kRO::RagexeRE_2021_11_03;
+		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+
+		ok(exists $sender->{packet_list}{'09A1'},
+			'09A1 is present in the character-server client packet table');
+		is($sender->{packet_list}{'09A1'}[0], 'sync_received_characters',
+			'09A1 dispatches to the character-list response handler');
+		my $request = $sender->reconstruct({switch => 'sync_received_characters'});
+		is(unpack('v', $request), 0x09A1,
+			'reconstructed character-list request uses the 09A1 opcode');
+		is(length($request), 2, '09A1 request is exactly two bytes');
+	};
+
+	subtest 'character-server client data dispatches 09A1 through the real tokenizer path' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $sender = Network::Send::kRO::RagexeRE_2021_11_03->new;
+		# Exercise the compatibility path used by custom server tables: the
+		# client tokenizer and sender parser must both be repaired per instance.
+		delete $sender->{packet_list}{'09A1'};
+		my $server = bless {
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+			rpackets => { '099D' => { length => -1 } },
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+			hook_prefix => 'Network::ClientReceive',
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$server->onClientNew($client);
+		$server->sync_received_characters({}, $client);
+		$parser->{calls} = [];
+		$server->onClientData($client, pack('v', 0x09A1));
+
+		ok(!$client->{closed}, 'valid 09A1 request does not close the character-server connection');
+		is_deeply($parser->{calls}, [qw(099D)],
+			'09A1 reaches sync_received_characters through tokenizer and send parser');
+		is(unpack('v', $client->{sent}[-1]), 0x099D,
+			'tokenized 09A1 request produces a 099D character-list page');
+	};
+
+	subtest 'modern character server always exposes 09A1 to its client tokenizer' => sub {
+		my $server = bless {
+			rpackets => { '099D' => { length => -1 } },
+			sendPacketParser => bless({ packet_list => {} }, 'XKore2CharServerTest::SendParser'),
+		}, 'Network::XKore2::CharServer';
+		my $client_packets = $server->getClientPacketTable;
+
+		ok(exists $client_packets->{'09A1'},
+			'modern character-list request is tokenized even when sender table is sparse');
+		is($client_packets->{'09A1'}{length}, 2,
+			'09A1 client request keeps its fixed two-byte length');
+		ok(exists $server->{sendPacketParser}{packet_list}{'09A1'},
+			'modern character-list request is dispatched even when sender table is sparse');
+		is($server->{sendPacketParser}{packet_list}{'09A1'}[0], 'sync_received_characters',
+			'09A1 dispatches to the character-list response handler');
+	};
+
+	subtest 'XKore2 character server accepts 09A1 when server metadata is stale' => sub {
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $sender = Network::Send::kRO::RagexeRE_2020_07_23->new;
+		my $server = bless {
+			serverType => 'legacy',
+			rpackets => { '0072' => { length => 22 } },
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->onClientNew($client);
+		ok(exists $client->{tokenizer}{rpackets}{'09A1'},
+			'XKore2 client tokenizer always recognizes the browser character-list request');
+		$server->onClientData($client, pack('v', 0x09A1));
+		ok(!$client->{closed},
+			'a valid browser 09A1 request does not close the character-server socket');
+	};
+
+	subtest 'XKore2 keeps the negotiated character-list layout for a connected client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $sender = Network::Send::kRO::RagexeRE_2020_07_23->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => {
+				'099D' => { length => -1 },
+				'0B72' => { length => -1 },
+			},
+			recvPacketParser => $parser,
+			sendPacketParser => $sender,
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->game_login({
+			accountID => $account_id,
+			sessionID => pack('V', 1),
+			accountSex => 0,
+		}, $client);
+		$server->{serverType} = 'legacy';
+		$server->{rpackets} = { '0072' => { length => 22 } };
+		$parser->{calls} = [];
+		$server->onClientNew($client);
+		$server->onClientData($client, pack('v', 0x09A1));
+
+		is_deeply($parser->{calls}, [qw(0B72)],
+			'09A1 continues to receive the layout negotiated during game login');
+		ok(!$client->{closed},
+			'layout refresh does not close the already authenticated character client');
+	};
+
+	subtest 'XKore2 recovers an unknown 09A1 request without closing the character client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => $parser,
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+
+		$server->unknownMessage({
+			switch => '09A1',
+			RAW_MSG => pack('v', 0x09A1),
+		}, $client);
+
+		ok(!$client->{closed},
+			'unknown character-list request does not close an authenticated XKore2 client');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'unknown character-list request receives a character page fallback');
+	};
+
+	subtest 'XKore2 recovers a known but unhandled 09A1 request without closing the character client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => $parser,
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+
+		$server->unhandledMessage({
+			switch => '09A1',
+			RAW_MSG => pack('v', 0x09A1),
+		}, $client);
+
+		ok(!$client->{closed},
+			'unhandled character-list request does not close an authenticated XKore2 client');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'unhandled character-list request receives a character page fallback');
+	};
+
+	subtest 'XKore2 recovers a parser exception on 09A1 without closing the character client' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $parser = XKore2CharServerTest::Parser->new;
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => $parser,
+			sendPacketParser => bless({}, 'XKore2CharServerTest::ExplodingSender'),
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+		$server->onClientNew($client);
+
+		my $error;
+		{
+			local $@;
+			eval { $server->onClientData($client, pack('v', 0x09A1)); 1 };
+			$error = $@;
+		}
+
+		ok(!$error, 'parser exception is contained by the XKore2 character server');
+		ok(!$client->{closed},
+			'parser exception does not close an authenticated XKore2 client');
+		like($client->{xkore2_last_parse_error}, qr/malformed client packet/,
+			'parser exception is retained for diagnostics');
+		is(length($client->{tokenizer}->getBuffer()), 0,
+			'failed frame is removed from the client tokenizer buffer');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'parser exception on 09A1 receives a character page fallback');
+	};
+
+	subtest 'XKore2 sends a legal empty page when character page reconstruction fails' => sub {
+		my $account_id = pack('V', 2007306);
+		my $session = {
+			sessionID => 1,
+			accountID => $account_id,
+			sex => 0,
+			state => 'About to select character',
+			dummy => 1,
+		};
+		my $server = bless {
+			serverType => 'kRO_RagexeRE_2021_11_03',
+			rpackets => { '099D' => { length => -1 } },
+			recvPacketParser => XKore2CharServerTest::ExplodingReceiver->new,
+			sendPacketParser => bless({}, 'XKore2CharServerTest::ExplodingSender'),
+			sessionStore => XKore2CharServerTest::SessionStore->new($session),
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+		$client->{session} = $session;
+		$server->onClientNew($client);
+
+		my $error;
+		{
+			local $@;
+			eval { $server->onClientData($client, pack('v', 0x09A1)); 1 };
+			$error = $@;
+		}
+
+		ok(!$error, 'character page reconstruction failure is contained');
+		ok(!$client->{closed}, 'reconstruction failure does not close the client');
+		is(unpack('v', $client->{sent}[-1]), 0x0B72,
+			'reconstruction failure receives the modern character page opcode');
+		is(unpack('v', substr($client->{sent}[-1], 2, 2)), 4,
+			'empty fallback page carries a valid four-byte length');
+	};
+
+	subtest 'XKore2 keeps an unauthenticated client alive after an unknown packet' => sub {
+		my $server = bless {
+			rpackets => {},
+		}, 'Network::XKore2::CharServer';
+		my $client = XKore2CharServerTest::Client->new;
+
+		$server->unknownMessage({
+			switch => 'DEAD',
+			RAW_MSG => pack('v', 0xDEAD),
+		}, $client);
+
+		ok(!$client->{closed},
+			'unknown XKore2 packets never force-close the client socket');
+	};
+
+	%Globals::charSvrSet = %previous_slots;
+	$Globals::masterServer = $previous_master;
+	$Globals::char = $previous_char;
+	done_testing();
+}
+
+1;

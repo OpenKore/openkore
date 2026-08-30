@@ -48,6 +48,7 @@ all 0 1 0
 玻色克药水 10 0 0
 
 
+小恶魔角 0 1 0
 ##### HEAL/SUPPORT ITEMS #####
 # Adjust these to your needs
 
@@ -365,7 +366,7 @@ Animal Poop 0 0 1
 915 0 0 1 # Chrysalis
 735 0 0 1 # Chung Jah
 966 0 0 1 # Clam Flesh
-965 0 0 1 # Clam Shell
+965 0 1 0 # 蛤蜊外壳
 7030 0 0 1 # Claw of Desert Wolf
 7011 0 0 1 # Claw of Monkey
 7007 0 0 1 # Claw of Rat
@@ -376,7 +377,7 @@ Animal Poop 0 0 1
 7013 0 0 1 # Coral Reef
 7050 0 0 1 # Cotton Mat
 7037 0 0 1 # Coupon
-964 0 0 1 # Crab Shell
+964 0 1 0 # 螃蟹外壳
 747 0 0 1 # Crystal Mirror
 1045 0 0 1 # Cultish Masque
 7053 0 0 1 # Cyfar
@@ -410,14 +411,14 @@ Animal Poop 0 0 1
 749 0 0 1 # Frozen Rose
 #Garlet 0 0 1
 956 0 0 1 # Gill
-746 0 0 1 # Glass Bead
+746 0 1 0 # 玻璃珠
 7009 0 0 1 # Glitter Shell
 7152 0 0 1 # Glossy Hair
 1060 0 0 1 # Golden Hair
 940 0 0 1 # Grasshopper's Leg
-1056 0 0 1 # Grit
-7115 0 1 0 1 0 # 哈比的羽毛
-7116 0 1 0 1 0 # 哈比的指甲
+1056 0 1 0 # 黄玉碎片
+7115 0 1 0 # 哈比的羽毛
+7116 0 1 0 # 哈比的指甲
 950 0 0 1 # Heart of Mermaid
 947 0 0 1 # Horn
 1048 0 0 1 # Horrendous Hair
@@ -456,7 +457,7 @@ Animal Poop 0 0 1
 1095 0 0 1 # Needle of Alarm
 7102 0 0 1 # Nightmare
 1022 0 0 1 # Nine Tails
-960 0 0 1 # Nipper
+960 0 1 0 # 钳子
 941 0 0 1 # Nose Ring
 5037 0 0 1 # Nut Shell
 7002 0 0 1 # Ogre Tooth
@@ -506,7 +507,7 @@ Animal Poop 0 0 1
 7125 0 0 1 # Scorpion Claw
 1046 0 0 1 # Scorpion Nipper
 904 0 0 1 # Scorpion Tail
-7065 0 0 1 # Sea-otter Fur
+7065 0 1 0 # 海獭的皮革
 7100 0 0 1 # Sharp Leaf
 7112 0 0 1 # Sharp Paper
 Sharp scale 0 0 1
@@ -1766,3 +1767,12 @@ Spearman Scroll 10 0 0 0
 26100 0 0 0 0 0 # Paradise_Foxtail_Staff_II
 26101 0 0 0 0 0 # Paradise_Foxtail_Staff_III
 25142 0 1 0 #喵族信物
+1708 0 0 1 #克罗伊特弓 [3]
+1214 0 0 1 #大驹短剑 [3]
+1216 0 0 1 #双刃短剑 [2]
+2315 0 0 1 #钢铁锁子甲 [1]
+7063 0 1 0 #柔软的羽毛
+6263 0 1 0 #椰果
+12069 0 1 0 #人鱼料理
+12043 0 1 0 #酱爆牛排
+1038 2 #小恶魔角

@@ -29,6 +29,8 @@ my @tests = qw(
 	FileParsersTest
 	DynamicPortalGroupsTest
 	NetworkTest
+	XKore2AccountServerTest
+	XKore2CharServerTest
 	QuestReceiveTest
 	FieldTest
 	XConfTest

@@ -19,6 +19,16 @@ use Globals;
 use Base::Ragnarok::AccountServer;
 use base qw(Base::Ragnarok::AccountServer);
 
+# The 2021-11-03 RE client follows the post-2017 account-server protocol.
+# Its character-server list is 160 bytes per entry and is carried by 0x0AC4;
+# 0x0069 is the legacy 32-byte layout and the client will not advance to the
+# character server when it receives that layout.
+sub account_server_info_switch {
+	my ($self) = @_;
+	return '0AC4' if ($self->{serverType} || '') eq 'kRO_RagexeRE_2021_11_03';
+	return $self->SUPER::account_server_info_switch;
+}
+
 # Overrided method.
 sub login {
 	my ($self, $session, $username, $password_check_callback) = @_;

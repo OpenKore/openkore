@@ -35,18 +35,19 @@ our ($hooks, $sessionStore, $accountServer, $charServer, $mapServer ,$mapServerC
 #
 # Start the X-Kore 2 subsystem.
 sub start {
+	my $listenIP = $config{XKore_listenIp} || '127.0.0.1';
 	my $publicIP = $config{XKore_publicIp} || '127.0.0.1';
 	my $port = $config{XKore_listenPort} || 6900;
 	$sessionStore = new Base::Ragnarok::SessionStore();
 	$mapServer = new Network::XKore2::MapServer(
-		host => $publicIP,
+		host => $listenIP,
 		port => $config{XKore_listenPort_map} || undef,
 		serverType => $masterServer->{serverType},
 		rpackets => \%rpackets,
 		sessionStore => $sessionStore
 	);
 	$charServer = new Network::XKore2::CharServer(
-		host => $publicIP,
+		host => $listenIP,
 		port => $config{XKore_listenPort_char} || undef,
 		serverType => $masterServer->{serverType},
 		rpackets => \%rpackets,
@@ -56,7 +57,7 @@ sub start {
 	);
 	eval {
 		$accountServer = new Network::XKore2::AccountServer(
-			host         => $publicIP,
+			host         => $listenIP,
 			port         => $port,
 			serverType   => $masterServer->{serverType},
 			rpackets     => \%rpackets,
@@ -65,11 +66,14 @@ sub start {
 		);
 	};
 	if ( my $e = caught( 'SocketException' ) ) {
-		die "Unable to start the X-Kore proxy ($publicIP:$port): $@\n"
+		die "Unable to start the X-Kore proxy ($listenIP:$port): $@\n"
 			. "Make sure no other servers are running on port $port.";
 	} else {
 		die $@ if $@;
 	}
+	# Binding and advertising are separate concerns.  The public address is
+	# placed in the server-list/map handoff, but never passed to INET bind().
+	$_->setAdvertisedHost($publicIP) for ($accountServer, $charServer, $mapServer);
 	$hooks = Plugins::addHooks(
 		['packet_pre/sync_request_ex', \&sync_request_ex],
 		['packet_pre/map_loaded', \&map_loaded],
