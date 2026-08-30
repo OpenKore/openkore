@@ -792,6 +792,8 @@ sub _set_running_state {
 	$active_event->{round} = 0 if ref($active_event) eq 'HASH';
 	$active_event->{round_started} = 0 if ref($active_event) eq 'HASH';
 	$active_event->{round_success_seen} = 0 if ref($active_event) eq 'HASH';
+	$active_event->{round_start_message} = undef if ref($active_event) eq 'HASH';
+	$active_event->{round_start_at} = undef if ref($active_event) eq 'HASH';
 	my @phases = _phase_list();
 	if (@phases) {
 		$activity_phase_index = 0;
@@ -849,9 +851,21 @@ sub onActivityMessage {
 		my $round_start = $rule->{round_start_regex};
 		if (defined $round_start && _trim($round_start) ne ''
 			&& _activity_pattern_matches($message, $round_start)) {
-			$activity_round_started_at = _now();
+			my $now = _now();
+			if ($active_event->{round_started}) {
+				return 'round_start_duplicate';
+			}
+			if (defined $active_event->{round_start_message}
+				&& $active_event->{round_start_message} eq $message
+				&& defined $active_event->{round_start_at}
+				&& $active_event->{round_start_at} == $now) {
+				return 'round_start_duplicate';
+			}
+			$activity_round_started_at = $now;
 			$active_event->{round_started} = 1;
 			$active_event->{round_started_at} = $activity_round_started_at;
+			$active_event->{round_start_message} = $message;
+			$active_event->{round_start_at} = $activity_round_started_at;
 			$active_event->{round_success_seen} = 0;
 			return 'round_start';
 		}
@@ -1324,6 +1338,21 @@ sub _npc_task_outcome {
 		|| "$status" eq '4'
 	);
 	return ('pending', undef) unless $is_done;
+
+	# Task::TalkNPC can mark itself DONE when a map change or disconnect
+	# interrupts the conversation.  That is not evidence that the configured
+	# leave sequence completed, so inspect the task markers before accepting
+	# a successful result.  Test doubles and older task implementations may not
+	# expose these fields; in that case the normal status/error contract applies.
+	my $disconnected = _actor_value($task, 'disconnected');
+	return ('failure', 'leave NPC task was interrupted by disconnect')
+		if defined $disconnected && $disconnected;
+	my $map_change = _actor_value($task, 'map_change');
+	if (defined $map_change && $map_change) {
+		my $steps = _actor_value($task, 'steps');
+		return ('failure', 'leave NPC task was interrupted during map change')
+			if ref($steps) eq 'ARRAY' && @$steps;
+	}
 
 	my ($error, $error_ok) = (undef, 0);
 	$error_ok = eval {
@@ -2158,6 +2187,7 @@ sub _finish_entry_macro {
 sub _mark_activity_failed {
 	my ($reason) = @_;
 	$reason = _trim($reason || 'activity failed');
+	my $had_pending_leave_npc = defined $pending_leave_npc;
 	# Once a lifecycle is already failed, retain the first actionable reason.
 	# Late duplicate packets are common during a rejected transfer and must not
 	# replace the diagnostic that caused the return.
@@ -2178,7 +2208,7 @@ sub _mark_activity_failed {
 	_clear_pending_macro();
 	_clear_pending_leave_npc();
 	if (defined $active_event && !$return_pending) {
-		unless ($active_event->{activity_ai_cleared}) {
+		if (!$active_event->{activity_ai_cleared} || $had_pending_leave_npc) {
 			$active_event->{activity_ai_cleared} = 1;
 			_try_clear_activity_ai('activity failure cleanup');
 		}

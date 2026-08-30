@@ -806,6 +806,7 @@ RULES
 		$Globals::char = PluginTest::Char->new(
 			PluginTest::Inventory->new({14527 => {amount => 1}}),
 		);
+		delete $Globals::char->{party};
 		$Globals::field = PluginTest::Field->new('pay_fild08');
 		$Globals::masterServer = {
 			lastroAirship => 1,
@@ -2166,6 +2167,7 @@ RULES
 
 	# Task 7 lifecycle fixtures keep each scenario focused on the public plugin
 	# boundaries while preserving the real State/Rules/Scheduler implementations.
+	my $task7_clock_now = 100;
 	my $task7_setup_running = sub {
 		my ($event_id, $extra) = @_;
 		$extra ||= {};
@@ -2235,7 +2237,8 @@ RULES
 			for qw(arm trigger snapshot depart enter running);
 		$LastROActivity::activity_started_at = 100;
 		$LastROActivity::activity_phase_started_at = 100;
-		$LastROActivity::clock = sub { 100 };
+		$task7_clock_now = 100;
+		$LastROActivity::clock = sub { $task7_clock_now };
 		return ($rule, $event);
 	};
 
@@ -2277,10 +2280,12 @@ RULES
 				"round $round increments the activity counter");
 			is(LastROActivity::state(), 'RUNNING',
 				"round $round keeps combat running");
+			$task7_clock_now++;
 			ok(defined $task7_activity_message->('ROUND START'),
 				"round " . ($round + 1) . " start evidence is consumed")
 				if $round < 2;
 		}
+		$task7_clock_now++;
 		ok(defined $task7_activity_message->('ROUND START'),
 			'round 3 start evidence is consumed');
 		ok(defined $task7_activity_message->('ROUND SUCCESS'),
@@ -2338,12 +2343,42 @@ RULES
 			'duplicate success without a new start is ignored');
 		is($event->{round_count}, 1,
 			'duplicate success does not increment the activity counter');
+		$task7_clock_now++;
 		ok(defined $task7_activity_message->('ROUND START'),
 			'next round start evidence is consumed');
 		ok(defined $task7_activity_message->('ROUND SUCCESS'),
 			'next round success is consumed');
 		is($event->{round_count}, 2,
 			'counter resumes after the next explicit round start');
+		done_testing();
+	};
+
+	subtest 'duplicate dojo round starts do not replay a completed round' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_dojo_duplicate_round_start',
+			{
+				round_start_regex => 'ROUND START',
+				round_success_regex => 'ROUND SUCCESS',
+				max_rounds => 3,
+			},
+		);
+		ok(defined $task7_activity_message->('ROUND START'),
+			'first round start evidence is consumed');
+		ok(defined $task7_activity_message->('ROUND SUCCESS'),
+			'first round success is consumed');
+		is($event->{round_count}, 1, 'first success increments the activity counter once');
+		ok(defined $task7_activity_message->('ROUND START'),
+			'duplicate start is observed without leaving the active state');
+		ok(!defined $task7_activity_message->('ROUND SUCCESS'),
+			'replayed success after a duplicate start is ignored');
+		is($event->{round_count}, 1,
+			'duplicate start and replayed success do not double-count the round');
+		$task7_clock_now++;
+		ok(defined $task7_activity_message->('ROUND START'),
+			'a later round start remains eligible');
+		ok(defined $task7_activity_message->('ROUND SUCCESS'),
+			'a later round success is consumed');
+		is($event->{round_count}, 2, 'later round increments the activity counter');
 		done_testing();
 	};
 
@@ -2496,6 +2531,122 @@ RULES
 		done_testing();
 	};
 
+	subtest 'interrupted leave NPC task fails closed' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_dojo_leave_interrupted',
+			{
+				round_start_regex => 'ROUND START',
+				round_success_regex => 'ROUND SUCCESS',
+				max_rounds => 1,
+				leave_npc => 'Central Guide#ok,yes',
+				leave_npc_trusted => 1,
+				leave_npc_evidence => 'trusted server dialog transcript',
+				leave_x => 12,
+				leave_y => 34,
+			},
+		);
+		my $npc_queue_active = 0;
+		my $npc_task = PluginTest::NpcTask->new(1, undef);
+		$Commands::run_failure = sub {
+			my ($command) = @_;
+			$npc_queue_active = 1 if $command eq 'talknpc 12 34 ok,yes';
+			return 1;
+		};
+		@Commands::run_calls = ();
+		{
+			no warnings 'redefine';
+			local *AI::inQueue = sub { return $npc_queue_active ? 1 : 0 };
+			local *AI::findAction = sub { return $npc_queue_active ? 0 : undef };
+			local *AI::args = sub { return $npc_task };
+			$task7_activity_message->('ROUND START');
+			$task7_activity_message->('ROUND SUCCESS');
+			$npc_task->{map_change} = 1;
+			$npc_task->{steps} = ['c'];
+			$npc_queue_active = 0;
+			LastROActivity::onMainLoopPre(undef, {now => 102});
+			is(LastROActivity::state(), 'FAILED',
+				'map-change with unconsumed leave steps fails the activity');
+			like(LastROActivity::last_failure(), qr/interrupted|leave|NPC/i,
+				'interrupted leave task keeps a diagnostic');
+			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+				'interrupted leave task still requests one fixed return');
+			$task7_confirm_return->();
+
+			($rule, $event) = $task7_setup_running->(
+				'task7_dojo_leave_disconnected',
+				{
+					round_start_regex => 'ROUND START',
+					round_success_regex => 'ROUND SUCCESS',
+					max_rounds => 1,
+					leave_npc => 'Central Guide#ok,yes',
+					leave_npc_trusted => 1,
+					leave_npc_evidence => 'trusted server dialog transcript',
+					leave_x => 12,
+					leave_y => 34,
+				},
+			);
+			$npc_queue_active = 0;
+			$npc_task = PluginTest::NpcTask->new(1, undef);
+			$Commands::run_failure = sub {
+				my ($command) = @_;
+				$npc_queue_active = 1 if $command eq 'talknpc 12 34 ok,yes';
+				return 1;
+			};
+			$task7_activity_message->('ROUND START');
+			$task7_activity_message->('ROUND SUCCESS');
+			$npc_task->{disconnected} = 1;
+			$npc_queue_active = 0;
+			LastROActivity::onMainLoopPre(undef, {now => 102});
+			is(LastROActivity::state(), 'FAILED',
+				'disconnected leave task fails the activity');
+			$task7_confirm_return->();
+		}
+		$Commands::run_failure = undef;
+		done_testing();
+	};
+
+	subtest 'party death clears a pending leave NPC task' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_dojo_leave_party_death',
+			{
+				round_start_regex => 'ROUND START',
+				round_success_regex => 'ROUND SUCCESS',
+				max_rounds => 1,
+				leave_npc => 'Central Guide#ok,yes',
+				leave_npc_trusted => 1,
+				leave_npc_evidence => 'trusted server dialog transcript',
+				leave_x => 12,
+				leave_y => 34,
+			},
+		);
+		my $npc_queue_active = 0;
+		my $npc_task = PluginTest::NpcTask->new(1, undef);
+		$Commands::run_failure = sub {
+			my ($command) = @_;
+			$npc_queue_active = 1 if $command eq 'talknpc 12 34 ok,yes';
+			return 1;
+		};
+		@Commands::run_calls = ();
+		{
+			no warnings 'redefine';
+			local *AI::inQueue = sub { return $npc_queue_active ? 1 : 0 };
+			local *AI::findAction = sub { return $npc_queue_active ? 0 : undef };
+			local *AI::args = sub { return $npc_task };
+			$task7_activity_message->('ROUND START');
+			$task7_activity_message->('ROUND SUCCESS');
+			$Globals::jobs_lut{8} = 'Priest';
+			$Globals::char->{party} = {users => {priest_member => {jobID => 8, dead => 1}}};
+			LastROActivity::onMainLoopPre(undef, {now => 102});
+			is(LastROActivity::state(), 'FAILED',
+				'Priest death fails the activity while leave NPC is pending');
+			ok(scalar(grep { $_ eq 'AI::clear NPC teleport' } @AI::clear_calls) >= 2,
+				'party-death cleanup clears the pending NPC task after round cleanup');
+			$task7_confirm_return->();
+		}
+		$Commands::run_failure = undef;
+		done_testing();
+	};
+
 	subtest 'dojo round limit fails closed without trusted leave evidence' => sub {
 		my ($rule, $event) = $task7_setup_running->(
 			'task7_dojo_no_leave_evidence',
@@ -2506,7 +2657,8 @@ RULES
 			},
 		);
 		@Commands::run_calls = ();
-		for (1 .. 3) {
+		for my $round (1 .. 3) {
+			$task7_clock_now++ if $round > 1;
 			$task7_activity_message->('ROUND START');
 			$task7_activity_message->('ROUND SUCCESS');
 		}
@@ -2697,6 +2849,27 @@ RULES
 			'expired wait records a diagnostic');
 		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
 			'expired wait requests one return');
+		$task7_confirm_return->();
+		done_testing();
+	};
+
+	subtest 'Priest output character death abandons immediately' => sub {
+		my ($rule, $event) = $task7_setup_running->(
+			'task7_priest_output_death',
+			{
+				round_start_regex => 'ROUND START',
+				round_success_regex => 'ROUND SUCCESS',
+			},
+		);
+		$Globals::jobs_lut{8} = 'Priest';
+		$Globals::char->{jobID} = 8;
+		$Globals::char->{dead} = 1;
+		@Commands::run_calls = ();
+		LastROActivity::onMainLoopPre(undef, {now => 200});
+		is(LastROActivity::state(), 'FAILED',
+			'Priest output death abandons the dojo without waiting');
+		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			'Priest output death requests one fixed return');
 		$task7_confirm_return->();
 		done_testing();
 	};
