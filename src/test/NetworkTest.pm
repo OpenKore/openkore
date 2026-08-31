@@ -372,6 +372,24 @@ sub start {
 				is_deeply([unpack('V4', substr($packet, 18, 16))], [0, 0, 0, 14527],
 					'0A49 sends zero x/y/type and Lastro item ID 14527');
 			}
+
+			$instance->sendPrivateAirshipRequest('prontera', 14527, 152, 133, 1);
+			my $coordinate_packet = $net->{sent}[1];
+			is(length($coordinate_packet), 34, 'coordinate 0A49 remains 34 bytes');
+			is(substr($coordinate_packet, 2, 16), "prontera\0" . "\0" x 7,
+				'coordinate request packs the normalized map in Z16');
+			is_deeply(
+				[unpack('V4', substr($coordinate_packet, 18, 16))],
+				[152, 133, 1, 14527],
+				'coordinate request matches the web-client x/y/type/item layout',
+			);
+
+			$instance->sendPrivateAirshipRequest('prontera', 607, 10, 20, 1);
+			is_deeply(
+				[unpack('V4', substr($net->{sent}[2], 18, 16))],
+				[10, 20, 1, 607],
+				'coordinate request preserves an explicit item ID',
+			);
 		});
 		});
 		done_testing();

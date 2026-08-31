@@ -149,21 +149,24 @@ sub sendLastroAutoFollow {
 # 20-byte kRO request: map name, x, y, type and item ID.  World-map transfers
 # leave x/y/type at zero and use 14527 as the server-side transfer selector.
 sub sendPrivateAirshipRequest {
-	my ($self, $map_name, $nameID) = @_;
+	my ($self, $map_name, $nameID, $x, $y, $type) = @_;
 	return $self->SUPER::sendPrivateAirshipRequest($map_name, $nameID)
 		unless isEnabled($masterServer);
 
 	$map_name = normalizeMapName($map_name);
 	$nameID = 14527 unless defined $nameID;
+	$x = 0 unless defined $x;
+	$y = 0 unless defined $y;
+	$type = 0 unless defined $type;
 
 	# The inherited recvpackets table describes the legacy 22-byte packet and
 	# would truncate this browser-specific 34-byte outbound request.
 	$self->sendToServer(pack('v Z16 V4',
 		0x0A49,
 		stringToBytes($map_name),
-		0,
-		0,
-		0,
+		$x,
+		$y,
+		$type,
 		$nameID,
 	));
 }
