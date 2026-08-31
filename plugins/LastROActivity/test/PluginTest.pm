@@ -2548,6 +2548,51 @@ RULES
 	subtest 'tt transport resolves coordinates and keeps retry destinations stable' => sub {
 		my @transport_commands;
 
+		subtest 'tt destination enforces LastRO field bounds' => sub {
+			is(
+				LastROActivity::_destination_command({map => 'abcdefghijklmnop'}),
+				undef,
+				'a map that fills all 16 Z16 bytes is rejected',
+			);
+			is(
+				LastROActivity::_destination_command({map => 'abcdefghijklmno'}),
+				'tt abcdefghijklmno',
+				'a 15-byte map remains valid',
+			);
+			is(
+				LastROActivity::_destination_command({map => 'prontera', x => 65536, y => 1}),
+				undef,
+				'an x coordinate above unsigned 16-bit range is rejected',
+			);
+			is(
+				LastROActivity::_destination_command({map => 'prontera', x => 1, y => 65536}),
+				undef,
+				'a y coordinate above unsigned 16-bit range is rejected',
+			);
+			is(
+				LastROActivity::_destination_command({map => 'prontera', x => 0, y => 65535}),
+				'tt prontera 0 65535',
+				'unsigned 16-bit coordinate boundaries are accepted',
+			);
+			done_testing();
+		};
+
+		my ($validation_rule, $validation_event) = $task7_setup_running->(
+			'task7_tt_validation_bounds',
+			{
+				entry_type => 'tt',
+				map_source => 'static',
+				entry_map => 'abcdefghijklmnop',
+			},
+		);
+		$Globals::maps_lut{'abcdefghijklmnop.rsw'} = 1;
+		is(
+			LastROActivity::_activity_entry_validation($validation_rule, $validation_event),
+			'event map name is too long',
+			'activity validation applies the strict encoded map bound',
+		);
+		LastROActivity::cleanup_and_restore('tt validation bounds cleanup');
+
 		my ($dynamic_rule, $dynamic_event) = $task7_setup_running->(
 			'task7_tt_dynamic',
 			{entry_type => 'tt', map_source => 'dynamic'},
@@ -2635,6 +2680,71 @@ RULES
 		ok(!(grep { /^privateairship\b/ } @transport_commands),
 			'tt entry, retry, and return paths never execute privateairship');
 		LastROActivity::cleanup_and_restore('tt retry transport cleanup');
+
+		my ($confirm_rule, $confirm_event) = $task7_setup_running->(
+			'task7_tt_retained_confirmation',
+			{entry_type => 'tt', map_source => 'dynamic'},
+		);
+		$Globals::maps_lut{'morocc.rsw'} = 1;
+		$Globals::maps_lut{'payon.rsw'} = 1;
+		$confirm_event->{data_map} = {map => 'morocc', x => 159, y => 99};
+		$confirm_event->{entry_confirmed} = 0;
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart);
+		$LastROActivity::entry_map_confirmed = 0;
+		$LastROActivity::entry_map_confirmation_source = undef;
+		$LastROActivity::entry_transfer_accepted = 0;
+		$Globals::field = PluginTest::Field->new('event_map');
+		@Commands::run_calls = ();
+		ok(
+			LastROActivity::request_event_entry($confirm_rule, $confirm_event),
+			'initial dynamic request captures a destination for confirmation',
+		);
+		is(
+			$confirm_event->{destination}{map},
+			'morocc',
+			'initial dynamic destination is retained on the active event',
+		);
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		$confirm_event->{data_map} = {map => 'payon', x => 10, y => 20};
+		$Globals::field = PluginTest::Field->new('morocc');
+		ok(
+			LastROActivity::onMapChange(undef, {}),
+			'map confirmation uses the retained destination after announcement data changes',
+		);
+		is(
+			LastROActivity::state(),
+			'ENTERING',
+			'retained destination confirmation advances the entry state',
+		);
+		LastROActivity::onMainLoopPre(undef, {now => 101});
+		is(
+			LastROActivity::state(),
+			'RUNNING',
+			'entry promotion keeps using the retained destination after announcement data changes',
+		);
+		LastROActivity::cleanup_and_restore('tt retained confirmation cleanup');
+
+		my ($running_rule, $running_event) = $task7_setup_running->(
+			'task7_tt_retained_running_guard',
+			{entry_type => 'tt', map_source => 'dynamic'},
+		);
+		$Globals::maps_lut{'morocc.rsw'} = 1;
+		$Globals::maps_lut{'payon.rsw'} = 1;
+		$running_event->{destination} = {map => 'morocc', x => 159, y => 99};
+		$running_event->{data_map} = {map => 'payon', x => 10, y => 20};
+		$Globals::field = PluginTest::Field->new('morocc');
+		is(
+			LastROActivity::onMapChange(undef, {}),
+			0,
+			'current retained map is not treated as a departure after announcement data changes',
+		);
+		is(
+			LastROActivity::state(),
+			'RUNNING',
+			'RUNNING map guard uses the retained destination',
+		);
+		LastROActivity::cleanup_and_restore('tt retained running guard cleanup');
 		done_testing();
 	};
 

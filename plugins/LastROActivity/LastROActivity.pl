@@ -8,6 +8,7 @@ use Time::HiRes qw(time);
 use File::Basename qw(dirname);
 use File::Spec;
 use Scalar::Util ();
+use bytes ();
 
 # Plugins are evaluated with do(), so add the sibling module directory without
 # assuming that an optional test harness has populated current_plugin_folder.
@@ -23,6 +24,7 @@ BEGIN {
 use AI ();
 use Commands ();
 use Globals ();
+use I18N qw(stringToBytes);
 use LastROActivity::Rules;
 use LastROActivity::Scheduler;
 use LastROActivity::State;
@@ -1244,17 +1246,55 @@ sub _event_destination {
 	};
 }
 
+sub _active_event_destination_map {
+	return undef unless defined $active_event && ref($active_event) eq 'HASH';
+	if (ref($active_event->{destination}) eq 'HASH'
+		&& exists $active_event->{destination}{map}) {
+		# The destination captured for the request is authoritative.  In
+		# particular, dynamic announcement metadata can be replaced while the
+		# activity is entering or running.
+		return $active_event->{destination}{map};
+	}
+	# Legacy and synthetic event records may predate destination retention.
+	return _event_map($active_event->{rule}, $active_event);
+}
+
 sub _destination_command {
 	my ($destination) = @_;
 	return undef unless ref($destination) eq 'HASH';
 	my $map = _normalize_map_name($destination->{map});
 	return undef unless defined $map;
 	return undef if $map =~ m{[\\/]} || $map =~ /\.\./ || $map =~ /[\x00-\x1F\x7F]/;
+	return undef unless _lastro_map_fits($map);
 
 	my ($x, $y) = @{$destination}{qw(x y)};
-	return "tt $map" unless defined $x && defined $y
-		&& "$x" =~ /^\d+\z/ && "$y" =~ /^\d+\z/;
+	return "tt $map" unless (defined $x || defined $y);
+	return undef unless defined $x && defined $y
+		&& "$x" =~ /^\d+\z/ && "$y" =~ /^\d+\z/
+		&& $x <= 65535 && $y <= 65535;
 	return "tt $map $x $y";
+}
+
+sub _lastro_map_byte_length {
+	my ($map) = @_;
+	return undef unless defined $map;
+
+	if (ref($Globals::masterServer) eq 'HASH') {
+		my ($encoded, $ok);
+		$ok = eval {
+			$encoded = stringToBytes($map);
+			1;
+		};
+		return bytes::length($encoded) if $ok && defined $encoded;
+	}
+
+	return bytes::length($map);
+}
+
+sub _lastro_map_fits {
+	my ($map) = @_;
+	my $length = _lastro_map_byte_length($map);
+	return defined $length && $length < 16;
 }
 
 sub _uses_tt_transport {
@@ -2081,7 +2121,8 @@ sub _activity_entry_validation {
 		_append_rule_validation_error($rule, $reason);
 		return $reason;
 	}
-	if (length($map) > 16) {
+	my $normalized_map = _normalize_map_name($map);
+	if (defined $normalized_map && !_lastro_map_fits($normalized_map)) {
 		my $reason = 'event map name is too long';
 		_append_rule_validation_error($rule, $reason);
 		return $reason;
@@ -2305,7 +2346,7 @@ sub _launch_activity_macro {
 sub _confirm_entry_map_for_running {
 	return 0 unless defined $active_event;
 
-	my $event_map = _event_map($active_event->{rule}, $active_event);
+	my $event_map = _active_event_destination_map();
 	my $current_map = _current_map(undef);
 	if (!defined $event_map) {
 		_mark_activity_failed('event map is unavailable before entry completed');
@@ -3355,7 +3396,7 @@ sub _confirm_entry_map {
 	my $state_name = $state->state;
 	return 0 unless $state_name eq 'DEPARTING' || $state_name eq 'ENTERING';
 
-	my $event_map = _event_map($active_event->{rule}, $active_event);
+	my $event_map = _active_event_destination_map();
 	return 0 unless defined $event_map && _map_matches($map, $event_map);
 	if (defined $pending_destination) {
 		return 0 unless ($pending_destination_kind || '') eq 'entry';
@@ -3409,7 +3450,7 @@ sub onMapChange {
 
 	if (ref($state) eq 'LastROActivity::State'
 		&& ($state->state eq 'DEPARTING' || $state->state eq 'ENTERING')) {
-		my $event_map = _event_map($active_event->{rule}, $active_event);
+		my $event_map = _active_event_destination_map();
 		if (defined $event_map && !_map_matches($map, $event_map)) {
 			_mark_activity_failed('left activity map before entry completed');
 			return 1;
@@ -3417,7 +3458,7 @@ sub onMapChange {
 	}
 
 	if (ref($state) eq 'LastROActivity::State' && $state->state eq 'RUNNING') {
-		my $event_map = _event_map($active_event->{rule}, $active_event);
+		my $event_map = _active_event_destination_map();
 		if (defined $event_map && !_map_matches($map, $event_map)) {
 			# Leaving the event map is an operational failure, not a successful
 			# completion.  Route through the failure path so finish macros cannot
