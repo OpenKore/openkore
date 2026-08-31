@@ -487,10 +487,30 @@ sub start {
 		LastROActivity::scheduler()->clear();
 		ok($LastROActivity::rules->{city_monster_party}{enabled},
 			'city_monster_party is effectively enabled with normal combat mode');
-		for my $event_id (qw(dojo_challenge pool_challenge)) {
+		ok(exists $LastROActivity::rules->{dojo_challenge},
+			'dojo_challenge is the sole canonical dojo rule');
+		ok(!exists $LastROActivity::rules->{pool_challenge},
+			'pool_challenge duplicate is absent');
+		for my $event_id (qw(dojo_challenge sky_chest)) {
 			ok(!$LastROActivity::rules->{$event_id}{enabled},
 				"$event_id is effectively disabled before scheduling");
 		}
+		like(join('; ', @{$LastROActivity::rules->{sky_chest}{validation_errors}}),
+			qr/search target.*999999|shared mon_control/i,
+			'sky chest placeholder is blocked by shared-control validation');
+		ok(LastROActivity::_uses_search_mode($LastROActivity::rules->{sky_chest}),
+			'sky chest uses shared search mode through its typed tt route');
+		my $sky_message = '[随机事件] 天降宝箱将在30秒后出现 data-map="cmd_fild01#0#0"';
+		like($sky_message, qr/$LastROActivity::rules->{sky_chest}{announce_regex}/,
+			'sky chest announcement markers are retained in the loaded rule');
+		is_deeply(
+			LastROActivity::_event_destination(
+				$LastROActivity::rules->{sky_chest},
+				{data_map => {map => 'cmd_fild01', x => 0, y => 0}},
+			),
+			{map => 'cmd_fild01', x => 0, y => 0},
+			'sky chest dynamic data-map becomes the unchanged tt destination',
+		);
 		my $event = LastROActivity::onSystemMessage(undef, {
 			Msg => '[随机事件] 抽奖活动10秒后开始啦 data-map="prontera#152#133"',
 		});
@@ -500,6 +520,45 @@ sub start {
 		is(scalar keys %{LastROActivity::scheduler()->events()}, 1,
 			'Lottery announcement creates one scheduler timer');
 		LastROActivity::scheduler()->clear();
+		done_testing();
+	};
+
+	subtest 'generic activity patterns use arbitrary locations and whole-message finish matching' => sub {
+		my $rules = LastROActivity::rules();
+		ok(LastROActivity::_activity_pattern_matches('ABCD', '(?=.*AB)(?=.*CD).*'),
+			'whole-message lookahead matcher accepts a complete ASCII message');
+		for my $message (
+			'[随机事件] 梦罗克道场将在1分钟后开启，深渊挑战即将开始',
+			'[随机事件] 斐杨道场将在30秒后开启，深渊挑战即将开始',
+			'[随机事件] 普隆德拉道场将在2小时后开启，深渊挑战即将开始',
+		) {
+			like($message, qr/$rules->{dojo_challenge}{start_regex}/,
+				'dojo start pattern matches an arbitrary dojo location');
+		}
+		for my $message (
+			'梦罗克道场入口已关闭，深渊挑战已开始',
+			'斐杨道场入口已关闭，深渊挑战已开始',
+			'普隆德拉道场入口已关闭，深渊挑战已开始',
+		) {
+			ok(LastROActivity::_activity_pattern_matches(
+				$message, $rules->{dojo_challenge}{finish_regex},
+			), 'generic dojo finish pattern matches the complete message');
+		}
+		unlike(
+			'[随机事件] 下一次事件将在30秒后发生，普隆德拉道场稍后开放',
+			qr/$rules->{dojo_challenge}{start_regex}/,
+			'dojo next-event reminder remains excluded');
+		for my $city (qw(依斯鲁得岛 斐杨 普隆德拉)) {
+			like(
+				"[随机事件] 10秒后召唤师将在${city}举办魔物派对",
+				qr/$rules->{city_monster_party}{start_regex}/,
+				"monster party accepts $city",
+			);
+		}
+		unlike(
+			'[随机事件] 下一次事件将在10秒后发生，召唤师将在普隆德拉举办魔物派对',
+			qr/$rules->{city_monster_party}{start_regex}/,
+			'monster party next-event reminder remains excluded');
 		done_testing();
 	};
 

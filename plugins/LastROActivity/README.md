@@ -2,14 +2,15 @@
 
 LastROActivity listens for explicitly configured LastRO activity announcements,
 waits until the configured lead time, and temporarily hands control to the
-activity lifecycle. The bundled rules preserve all six first-phase event IDs
-and their raw enable flags. Effective runtime enablement is stricter: parser
-and lifecycle validation fail closed when evidence is incomplete.
+activity lifecycle. The bundled rules preserve all five canonical first-phase
+event IDs and their raw enable flags. Effective runtime enablement is stricter:
+parser and lifecycle validation fail closed when evidence is incomplete.
 
-The `city_monster_party` rule is an explicit normal-combat route. Its empty
-`search_targets` value is intentional because normal combat does not use the
-shared search gate. On entry, the plugin snapshots the original activity
-settings and temporarily sets `teleportAuto_search=0`,
+The `city_monster_party` rule matches `召唤师将在XXXX举办魔物派对` for any
+city and is an explicit normal-combat route. Its empty `search_targets` value
+is intentional because normal combat does not use the shared search gate. On
+entry, the plugin snapshots the original activity settings and temporarily sets
+`teleportAuto_search=0`,
 `teleportAuto_idle=1`, and `route_randomWalk=1`; it restores those settings
 after cleanup without changing `attackAuto` or `Globals::mon_control`.
 
@@ -28,7 +29,9 @@ normal-combat party route is the explicit exception to the search-target
 requirement. The bundled fixture intentionally keeps `enabled=1` in the source
 for evidence auditing; the parser changes incomplete sections to effective
 `enabled=0`. Lottery and the normal-combat party route are enabled in this
-fixture because their lifecycle evidence is complete.
+fixture because their lifecycle evidence is complete. `sky_chest` has
+announcement evidence, but its placeholder search target keeps it disabled by
+runtime validation.
 
 An enabled rule must provide both `announce_regex` for the registered server
 announcement and `start_regex` for the scheduler's explicit start line. A
@@ -69,20 +72,19 @@ rules and runtime commands use `tt`.
 
 ## Current evidence fixture
 
-The four confirmed announcement routes below retain their raw `enabled=1`
-flags for evidence auditing. The two search-mode combat routes remain
-effectively disabled until shared target evidence is supplied. The
-normal-combat party route and Lottery are effectively enabled because their
-lifecycle evidence is complete.
+The configured announcement routes below retain their raw `enabled=1` flags
+for evidence auditing. The two search-mode combat routes remain effectively
+disabled until shared target evidence is supplied. The normal-combat party
+route and Lottery are effectively enabled because their lifecycle evidence is
+complete.
 
 | Rule | Raw source flag / effective runtime state | Lifecycle gate | Confirmed entry metadata |
 | --- | --- | --- | --- |
-| `city_monster_party` | raw `1` / effective `1` | normal combat; empty `search_targets` is intentional | dynamic `pvp_y_5-2#0#0` |
-| `dojo_challenge` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `morocc#159#99` |
-| `pool_challenge` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `payon#184#102` |
+| `city_monster_party` | raw `1` / effective `1` | any city; normal combat; empty `search_targets` is intentional | dynamic `pvp_y_5-2#0#0` |
+| `dojo_challenge` | raw `1` / effective `0` | all dojo locations; `search_targets` evidence is missing | dynamic announcement map |
 | `lottery` | raw `1` / effective `1` | named NPC and repeating-dialog fields are complete | static `prontera 152 133`, `活动负责人#iz` |
 | `dungeon_monster_party` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
-| `sky_chest` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
+| `sky_chest` | raw `1` / effective `0` | placeholder `search_targets=999999` is absent from shared control | dynamic `cmd_fild01#0#0` |
 
 The source file's raw flags and parsed effective state are intentionally
 audited separately. Do not treat a raw flag as proof that an activity is
@@ -93,10 +95,12 @@ search-target gate. The activity snapshot still protects the user's route
 settings while temporary normal-combat values are applied:
 `teleportAuto_search=0`, `teleportAuto_idle=1`, and `route_randomWalk=1`.
 
-The Morocc and Payon announcements are accepted with `1分钟后`, `30秒后`, or
-`10秒后`; lottery accepts `60秒后`, `30秒后`, or `10秒后`; the monster-party
-fixture has the confirmed `10秒后` form. A ten-second countdown is due at
-message receipt because the default lead time is also ten seconds.
+Dojo announcements from Morocc, Payon, or any other dojo location are accepted
+with the scheduler's supported `小时`, `小時`, `时`, `分钟`, or `秒钟`
+countdown units. The same units are accepted for any-city monster-party and
+sky-chest announcements; Lottery retains its confirmed seconds forms. A
+ten-second countdown is due at message receipt because the default lead time is
+also ten seconds.
 
 Lines containing `下一次事件` are planning reminders, not start evidence, and
 are rejected before a rule can be armed. Observed invasion metadata at
@@ -129,6 +133,10 @@ have a matching shared row with `search=1`. The production gate requires the
 exact declared key; it does not infer an ID/name alias that may be absent from
 the runtime monster LUT. Do not add a target based on a translated display
 name or an unverified database entry.
+
+`sky_chest` deliberately declares `search_targets=999999` as a placeholder.
+There is no corresponding shared `mon_control.txt` row, so the rule remains
+disabled until the real monster ID and a matching `search=1` row are supplied.
 
 ## Lottery dialog
 
@@ -200,7 +208,7 @@ an installed, tested macro.
 
 ## Evidence checklist
 
-Before enabling any of the six rules, record all of the following from server
+Before enabling any of the five rules, record all of the following from server
 logs, map-change packets, or a user-supplied dialog transcript:
 
 - the exact announcement line and its start/countdown wording;
@@ -215,11 +223,12 @@ logs, map-change packets, or a user-supplied dialog transcript:
 
 Lottery is enabled with the confirmed `prontera 152 133` NPC identity and the
 bounded repeating first-option dialog mode. The normal-combat monster-party
-route is enabled with its explicit empty-search configuration; the dojo and
-pool challenge fixtures remain blocked until shared `search_targets` evidence
-is supplied. The dungeon and chest sections remain parser-disabled until their
-announcement lines are known. Bounty, personal, and world tasks are outside
-this plugin's scope.
+route is enabled with its explicit empty-search configuration. The generic
+dojo rule remains blocked until shared `search_targets` evidence is supplied;
+the sky-chest rule remains blocked until placeholder `999999` is replaced and
+its shared search row is confirmed. The dungeon section remains parser-disabled
+until its announcement lines are known. Bounty, personal, and world tasks are
+outside this plugin's scope.
 
 ## Checks
 

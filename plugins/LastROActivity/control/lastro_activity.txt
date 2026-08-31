@@ -2,6 +2,10 @@
 # Raw enabled=1 flags are retained for manual announcement-routing tests.  The
 # runtime lifecycle validator still fails closed when search-mode rules lack
 # shared monster targets or legacy fixed-dialog evidence is missing.
+# city_monster_party matches the confirmed summon wording for any city.
+# dojo_challenge is the sole canonical rule for every dojo location.
+# sky_chest uses placeholder search target ID 999999 and remains disabled until
+# the real monster ID is confirmed in shared control/mon_control.txt.
 # city_monster_party explicitly uses normal combat, so its empty
 # search_targets= value is intentional.  Its temporary activity settings are
 # teleportAuto_search=0, teleportAuto_idle=1, and route_randomWalk=1.
@@ -10,8 +14,8 @@
 
 [city_monster_party]
 enabled=1
-announce_regex=(?=.*\[随机事件\])(?=.*召唤师将在依斯鲁得岛举办魔物派对)(?!.*下一次事件)
-start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*召唤师将在依斯鲁得岛举办魔物派对)(?!.*下一次事件)
+announce_regex=(?=.*\[随机事件\])(?=.*召唤师将在[^\r\n，。]+举办魔物派对)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*召唤师将在[^\r\n，。]+举办魔物派对)(?!.*下一次事件)
 finish_regex=魔物派对已结束
 lead_seconds=10
 map_source=dynamic
@@ -29,20 +33,9 @@ search_targets=
 
 [dojo_challenge]
 enabled=1
-announce_regex=(?=.*\[随机事件\])(?=.*梦罗克道场)(?=.*深渊挑战)(?!.*下一次事件)
-start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*梦罗克道场)(?=.*深渊挑战)(?!.*下一次事件)
-finish_regex=梦罗克道场入口已关闭，深渊挑战已开始
-lead_seconds=10
-map_source=dynamic
-entry_type=tt
-return_policy=tt:prontera
-search_targets=
-
-[pool_challenge]
-enabled=1
-announce_regex=(?=.*\[随机事件\])(?=.*斐杨道场)(?=.*深渊挑战)(?!.*下一次事件)
-start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*斐杨道场)(?=.*深渊挑战)(?!.*下一次事件)
-finish_regex=斐杨道场入口已关闭，深渊挑战已开始
+announce_regex=(?=.*\[随机事件\])(?=.*道场)(?=.*深渊挑战)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*道场)(?=.*深渊挑战)(?!.*下一次事件)
+finish_regex=(?=.*道场入口已关闭)(?=.*深渊挑战已开始).*
 lead_seconds=10
 map_source=dynamic
 entry_type=tt
@@ -67,7 +60,12 @@ search_targets=
 
 [sky_chest]
 enabled=1
+announce_regex=(?=.*\[随机事件\])(?=.*天降宝箱)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*天降宝箱)(?!.*下一次事件)
 lead_seconds=10
+map_source=dynamic
+entry_type=tt
 return_policy=tt:prontera
-search_targets=
-# No announcement, map, target, entry, or finish evidence was supplied.
+search_targets=999999
+# The placeholder target keeps this search-mode rule disabled until a real
+# monster ID and a matching search=1 row are supplied in shared control.

@@ -14,7 +14,6 @@ my @EVENT_IDS = qw(
 	city_monster_party
 	dungeon_monster_party
 	dojo_challenge
-	pool_challenge
 	lottery
 	sky_chest
 );
@@ -341,18 +340,15 @@ sub start {
 		my ($rules, $errors) = LastROActivity::Rules::load_file($rules_file);
 		ok(ref($rules) eq 'HASH', 'production rules load as a hash');
 		is_deeply([sort keys %{$rules || {}}], [sort @EVENT_IDS],
-			'fixture contains exactly the six first-phase event IDs');
+			'fixture contains exactly the five canonical first-phase event IDs');
 		is_deeply(
 			$errors,
 			[
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
-				'pool_challenge: search_targets evidence is required for shared search mode',
-				'sky_chest: announce_regex required when enabled',
-				'sky_chest: start_regex required when enabled',
 			],
-			'raw-enabled sections without announcement evidence fail closed during parsing',
+			'raw-enabled sections without required parser evidence fail closed during parsing',
 		);
 		ok(!defined $shared_error, 'shared mon_control.txt is readable')
 			or diag($shared_error);
@@ -378,19 +374,15 @@ sub start {
 			dojo_challenge => [
 				'search_targets evidence is required for shared search mode',
 			],
-			pool_challenge => [
-				'search_targets evidence is required for shared search mode',
-			],
 			lottery => [],
-			sky_chest => [
-				'announce_regex required when enabled',
-				'start_regex required when enabled',
-			],
+			sky_chest => [],
 		);
 		for my $id (@EVENT_IDS) {
 			ok(exists $rules->{$id}, "$id rule exists");
 			next unless exists $rules->{$id};
-			my $expected_enabled = $id eq 'lottery' || $id eq 'city_monster_party' ? 1 : 0;
+			my $expected_enabled = $id eq 'lottery'
+				|| $id eq 'city_monster_party'
+				|| $id eq 'sky_chest' ? 1 : 0;
 			is($rules->{$id}{enabled}, $expected_enabled,
 				"$id has the expected effective enable state");
 			is_deeply($rules->{$id}{validation_errors}, $expected_validation_errors{$id},
@@ -398,13 +390,43 @@ sub start {
 		}
 
 		is($rules->{dojo_challenge}{map_source}, 'dynamic', 'morocc route declares dynamic map source');
-		is($rules->{pool_challenge}{map_source}, 'dynamic', 'payon route declares dynamic map source');
 		is($rules->{lottery}{map_source}, 'static', 'lottery route declares static map source');
 		is($rules->{city_monster_party}{map_source}, 'dynamic', 'party route declares dynamic map source');
+		is($rules->{sky_chest}{map_source}, 'dynamic', 'sky chest declares dynamic map source');
 		is($rules->{city_monster_party}{combat_mode}, 'normal',
 			'party route uses explicit normal combat mode');
 		is($rules->{city_monster_party}{random_walk}, 1,
 			'party route enables random walk in its rule metadata');
+		is($rules->{city_monster_party}{announce_regex},
+			'(?=.*\[随机事件\])(?=.*召唤师将在[^\\r\\n，。]+举办魔物派对)(?!.*下一次事件)',
+			'party announcement pattern is city-generic');
+		is($rules->{city_monster_party}{start_regex},
+			'(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*召唤师将在[^\\r\\n，。]+举办魔物派对)(?!.*下一次事件)',
+			'party start pattern keeps generic city and countdown evidence');
+		is($rules->{dojo_challenge}{announce_regex},
+			'(?=.*\[随机事件\])(?=.*道场)(?=.*深渊挑战)(?!.*下一次事件)',
+			'dojo announcement pattern is location-generic');
+		is($rules->{dojo_challenge}{start_regex},
+			'(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*道场)(?=.*深渊挑战)(?!.*下一次事件)',
+			'dojo start pattern keeps generic location and countdown evidence');
+		is($rules->{dojo_challenge}{finish_regex},
+			'(?=.*道场入口已关闭)(?=.*深渊挑战已开始).*',
+			'dojo finish pattern is location-generic and whole-message compatible');
+		is($rules->{sky_chest}{announce_regex},
+			'(?=.*\[随机事件\])(?=.*天降宝箱)(?!.*下一次事件)',
+			'sky chest announcement pattern requires the random event and chest markers');
+		is($rules->{sky_chest}{start_regex},
+			'(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*天降宝箱)(?!.*下一次事件)',
+			'sky chest start pattern keeps countdown evidence');
+		is($rules->{sky_chest}{entry_type}, 'tt', 'sky chest uses tt entry');
+		is($rules->{sky_chest}{return_policy}, 'tt:prontera', 'sky chest uses tt return');
+		is_deeply($rules->{sky_chest}{search_targets}, ['999999'],
+			'sky chest declares the explicit placeholder search target');
+		is($rules->{sky_chest}{enabled}, 1,
+			'sky chest remains parser-enabled until runtime shared-control validation');
+		ok(grep { $_ eq 'search target \'999999\' is not present in shared mon_control with search=1' }
+			_production_errors($rules->{sky_chest}, $shared_rows, $known_maps),
+			'sky chest placeholder fails the production shared-control gate');
 		is($rules->{lottery}{announce_regex},
 			'(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*开始啦)(?!.*下一次事件)',
 			'lottery announcement pattern is exact');
@@ -427,7 +449,7 @@ sub start {
 			'lottery uses the exact NPC name instead of a TalkNPC sequence');
 		is_deeply($rules->{lottery}{search_targets}, [],
 			'lottery keeps an empty search_targets value');
-		for my $id (qw(city_monster_party dojo_challenge pool_challenge)) {
+		for my $id (qw(city_monster_party dojo_challenge sky_chest)) {
 			is($rules->{$id}{entry_type}, 'tt', "$id uses tt entry");
 			is($rules->{$id}{return_policy}, 'tt:prontera', "$id uses tt return");
 			ok(!defined $rules->{$id}{entry_item_id}, "$id uses tt default item");

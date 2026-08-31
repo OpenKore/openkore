@@ -203,11 +203,8 @@ sub start {
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
-				'pool_challenge: search_targets evidence is required for shared search mode',
-				'sky_chest: announce_regex required when enabled',
-				'sky_chest: start_regex required when enabled',
 			],
-			'raw-enabled sections without announcement evidence fail closed during parsing',
+			'raw-enabled sections without required parser evidence fail closed during parsing',
 		);
 
 		my @cases = (
@@ -220,16 +217,6 @@ sub start {
 				],
 				finish => '梦罗克道场入口已关闭，深渊挑战已开始',
 				map => {map => 'morocc', x => 159, y => 99},
-			},
-			{
-				id => 'pool_challenge',
-				messages => [
-					'[随机事件] 斐杨道场将在1分钟后开启，深渊挑战即将开始 data-map="payon#184#102"',
-					'[随机事件] 斐杨道场将在30秒后开启，深渊挑战即将开始 data-map="payon#184#102"',
-					'[随机事件] 斐杨道场将在10秒后开启，深渊挑战即将开始 data-map="payon#184#102"',
-				],
-				finish => '斐杨道场入口已关闭，深渊挑战已开始',
-				map => {map => 'payon', x => 184, y => 102},
 			},
 			{
 				id => 'lottery',
@@ -263,7 +250,7 @@ sub start {
 				lead_seconds => $source->{lead_seconds},
 				map_source => $source->{map_source},
 			};
-		} qw(dojo_challenge pool_challenge lottery city_monster_party);
+		} qw(dojo_challenge lottery city_monster_party);
 		my $received_at = 50_000;
 		for my $case (@cases) {
 			# The production parser intentionally disables incomplete typed rules.
@@ -304,17 +291,30 @@ sub start {
 		my $immediate_scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
 		my $immediate = $immediate_scheduler->observe(
 			$party,
-			'[随机事件] 10秒后召唤师将在依斯鲁得岛举办魔物派对 data-map="pvp_y_5-2#0#0"',
+			'[随机事件] 10秒后召唤师将在普隆德拉举办魔物派对 data-map="pvp_y_5-2#0#0"',
 			60_000,
 		);
 		is($immediate->{trigger_at}, 60_000, '10-second party announcement triggers at receipt time');
 		is(scalar @{$immediate_scheduler->due(60_000)}, 1, '10-second party announcement is due immediately');
 
+		my $sky_rule = $rules->{sky_chest};
+		ok($sky_rule->{enabled}, 'sky chest remains parser-enabled for scheduler extraction');
+		is($sky_rule->{map_source}, 'dynamic', 'sky chest scheduler rule uses dynamic map source');
+		my $sky_message = '[随机事件] 天降宝箱将在30秒后出现 data-map="cmd_fild01#0#0"';
+		like($sky_message, qr/$sky_rule->{announce_regex}/,
+			'sky chest announcement matches its generic markers');
+		like($sky_message, qr/$sky_rule->{start_regex}/,
+			'sky chest start matches a supported countdown unit');
+		my $sky_event = $scheduler->observe($sky_rule, $sky_message, 69_000);
+		ok($sky_event, 'sky chest announcement arms a scheduler event before runtime validation');
+		is_deeply($sky_event->{data_map},
+			{map => 'cmd_fild01', x => 0, y => 0},
+			'sky chest preserves cmd_fild01 dynamic map metadata');
 		my $reminder = '[随机事件] 下一次事件将在2小时后发生，梦罗克道场稍后开放 data-map="morocc#159#99"';
 		ok(!defined $scheduler->observe($rules->{dojo_challenge}, $reminder, 70_000),
 			'long 下一次事件 reminder never arms a dojo rule');
 		ok(!defined $scheduler->observe($rules->{city_monster_party},
-			'[随机事件] 下一次事件将在10秒后发生，召唤师将在依斯鲁得岛举办魔物派对 data-map="pvp_y_5-2#0#0"',
+			'[随机事件] 下一次事件将在10秒后发生，召唤师将在普隆德拉举办魔物派对 data-map="pvp_y_5-2#0#0"',
 			70_001,
 		), '下一次事件 reminder never arms a party rule');
 
@@ -322,7 +322,7 @@ sub start {
 			['alberta', '[随机事件] invasion data-map="alberta#0#0"'],
 			['aldebaran', '[随机事件] invasion data-map="aldebaran#0#0"'],
 		);
-		my @routing_ids = qw(city_monster_party dojo_challenge pool_challenge lottery);
+		my @routing_ids = qw(city_monster_party dojo_challenge lottery);
 		for my $invasion (@invasion_cases) {
 			my ($map, $message) = @$invasion;
 			is_deeply(
