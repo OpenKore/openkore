@@ -6,6 +6,13 @@ activity lifecycle. The bundled rules preserve all six first-phase event IDs
 and their raw enable flags. Effective runtime enablement is stricter: parser
 and lifecycle validation fail closed when evidence is incomplete.
 
+The `city_monster_party` rule is an explicit normal-combat route. Its empty
+`search_targets` value is intentional because normal combat does not use the
+shared search gate. On entry, the plugin snapshots the original activity
+settings and temporarily sets `teleportAuto_search=0`,
+`teleportAuto_idle=1`, and `route_randomWalk=1`; it restores those settings
+after cleanup without changing `attackAuto` or `Globals::mon_control`.
+
 ## Enablement and timing
 
 `lastroActivity_enabled` in `control/config.txt` is the global scheduling
@@ -16,11 +23,12 @@ on about ten seconds before the announced start. An armed countdown does not
 change AI, lock maps, inventory, or the shared monster-control file.
 
 For a live configuration, do not set `enabled=1` while any map, announcement,
-entry, target, or finish value is inferred rather than confirmed. The bundled
-fixture intentionally keeps `enabled=1` in the source for evidence auditing;
-the parser changes incomplete sections to effective `enabled=0`. Lottery is the
-exception in this fixture because its named NPC, coordinates, dialog mode, and
-finish evidence are complete.
+entry, search target, or finish value is inferred rather than confirmed. The
+normal-combat party route is the explicit exception to the search-target
+requirement. The bundled fixture intentionally keeps `enabled=1` in the source
+for evidence auditing; the parser changes incomplete sections to effective
+`enabled=0`. Lottery and the normal-combat party route are enabled in this
+fixture because their lifecycle evidence is complete.
 
 An enabled rule must provide both `announce_regex` for the registered server
 announcement and `start_regex` for the scheduler's explicit start line. A
@@ -62,13 +70,14 @@ rules and runtime commands use `tt`.
 ## Current evidence fixture
 
 The four confirmed announcement routes below retain their raw `enabled=1`
-flags for evidence auditing. The three combat routes remain effectively
-disabled until shared target evidence is supplied. Lottery is effectively
-enabled because its named-dialog evidence is complete.
+flags for evidence auditing. The two search-mode combat routes remain
+effectively disabled until shared target evidence is supplied. The
+normal-combat party route and Lottery are effectively enabled because their
+lifecycle evidence is complete.
 
 | Rule | Raw source flag / effective runtime state | Lifecycle gate | Confirmed entry metadata |
 | --- | --- | --- | --- |
-| `city_monster_party` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `pvp_y_5-2#0#0` |
+| `city_monster_party` | raw `1` / effective `1` | normal combat; empty `search_targets` is intentional | dynamic `pvp_y_5-2#0#0` |
 | `dojo_challenge` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `morocc#159#99` |
 | `pool_challenge` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `payon#184#102` |
 | `lottery` | raw `1` / effective `1` | named NPC and repeating-dialog fields are complete | static `prontera 152 133`, `活动负责人#iz` |
@@ -78,6 +87,11 @@ enabled because its named-dialog evidence is complete.
 The source file's raw flags and parsed effective state are intentionally
 audited separately. Do not treat a raw flag as proof that an activity is
 runnable. Announcement-only evidence cannot activate a lifecycle.
+
+For `city_monster_party`, `combat_mode=normal` explicitly bypasses the shared
+search-target gate. The activity snapshot still protects the user's route
+settings while temporary normal-combat values are applied:
+`teleportAuto_search=0`, `teleportAuto_idle=1`, and `route_randomWalk=1`.
 
 The Morocc and Payon announcements are accepted with `1分钟后`, `30秒后`, or
 `10秒后`; lottery accepts `60秒后`, `30秒后`, or `10秒后`; the monster-party
@@ -109,11 +123,12 @@ creates an event-specific copy.
 once a target is found, OpenKore still applies the existing `attack`, distance,
 aggression, and skill settings from `mon_control.txt` to choose what to fight.
 
-For a monster-search rule, `search_targets` must list server-confirmed monster
-names or IDs that themselves have a matching shared row with `search=1`. The
-production gate requires the exact declared key; it does not infer an ID/name
-alias that may be absent from the runtime monster LUT. Do not add a target
-based on a translated display name or an unverified database entry.
+For a monster-search rule (a rule without `combat_mode=normal`),
+`search_targets` must list server-confirmed monster names or IDs that themselves
+have a matching shared row with `search=1`. The production gate requires the
+exact declared key; it does not infer an ID/name alias that may be absent from
+the runtime monster LUT. Do not add a target based on a translated display
+name or an unverified database entry.
 
 ## Lottery dialog
 
@@ -199,11 +214,12 @@ logs, map-change packets, or a user-supplied dialog transcript:
   an NPC or macro.
 
 Lottery is enabled with the confirmed `prontera 152 133` NPC identity and the
-bounded repeating first-option dialog mode. The monster-party and challenge
-fixtures remain blocked until shared `search_targets` evidence is supplied;
-the dungeon and chest sections remain parser-disabled until their announcement
-lines are known. Bounty, personal, and world tasks are outside this plugin's
-scope.
+bounded repeating first-option dialog mode. The normal-combat monster-party
+route is enabled with its explicit empty-search configuration; the dojo and
+pool challenge fixtures remain blocked until shared `search_targets` evidence
+is supplied. The dungeon and chest sections remain parser-disabled until their
+announcement lines are known. Bounty, personal, and world tasks are outside
+this plugin's scope.
 
 ## Checks
 

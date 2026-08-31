@@ -1,7 +1,10 @@
 # LastRO announcement evidence fixture.
 # Raw enabled=1 flags are retained for manual announcement-routing tests.  The
-# runtime lifecycle validator still fails closed when shared monster targets
-# or legacy fixed-dialog evidence is missing.
+# runtime lifecycle validator still fails closed when search-mode rules lack
+# shared monster targets or legacy fixed-dialog evidence is missing.
+# city_monster_party explicitly uses normal combat, so its empty
+# search_targets= value is intentional.  Its temporary activity settings are
+# teleportAuto_search=0, teleportAuto_idle=1, and route_randomWalk=1.
 # Invasion lines for Alberta/Aldebaran and generic 下一次事件 reminders are
 # intentionally not represented by any rule.
 

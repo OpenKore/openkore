@@ -29,11 +29,32 @@ fixed confirmed same-map Lottery cleanup.
 ### RED
 
 After adding the focused normal-combat, route-snapshot, and same-map Lottery
-tests before the production changes, the focused/unit test invocation exited
-non-zero. The failures covered the expected missing behavior: normal combat
-was rejected for absent search evidence, `route_randomWalk` was not part of the
+tests before the production changes, this focused command exited non-zero:
+
+```text
+perl plugins/LastROActivity/test/unit_tests.pl RulesTest StateTest ProductionRulesTest PluginTest
+```
+
+The failures covered the expected missing behavior: normal combat was rejected
+for absent search evidence, `route_randomWalk` was not part of the
 snapshot/config transition, and confirmed same-map Lottery cleanup still issued
 `tt prontera`.
+
+For the review follow-up, the exact focused RED command was:
+
+```text
+perl plugins/LastROActivity/test/unit_tests.pl ProductionRulesTest
+```
+
+Observed output before adding production `random_walk` validation:
+
+```text
+exit=1
+not ok 12 - invalid random_walk values are rejected
+#                   ''
+#     doesn't match '(?^:random_walk)'
+# Looks like you failed 1 test of 22.
+```
 
 ### GREEN
 
@@ -43,6 +64,16 @@ snapshot/config transition, and confirmed same-map Lottery cleanup still issued
   - Exit code 0; all plugin/module syntax checks reported `syntax OK`.
 - `git diff --check`
   - Exit code 0.
+
+## Review Follow-up
+
+- Documented the normal-combat party exception and temporary route settings in
+  the README and production fixture header.
+- Extended `ProductionRulesTest` to assert trimmed/case-insensitive normal mode,
+  `random_walk=1` with empty search targets, and rejection of invalid
+  `random_walk` values.
+- Added the missing production-level `random_walk` validation; the focused
+  `ProductionRulesTest` rerun exited 0 with both subtests passing.
 
 ## Residual Concerns
 

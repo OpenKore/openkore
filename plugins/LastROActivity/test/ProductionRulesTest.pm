@@ -206,6 +206,11 @@ sub _production_errors {
 		push @errors, 'combat_mode must be normal'
 			if ref($rule->{combat_mode}) || lc($combat_mode) ne 'normal';
 	}
+	if (defined $rule->{random_walk}) {
+		my $random_walk = ref($rule->{random_walk}) ? '' : _trim($rule->{random_walk});
+		push @errors, 'random_walk must be 0 or 1'
+			if ref($rule->{random_walk}) || $random_walk !~ /^(?:0|1)$/;
+	}
 
 	# The announcement is the start evidence. A countdown is optional, but the
 	# rule must still identify the server line that is allowed to trigger it.
@@ -445,6 +450,21 @@ sub start {
 		is_deeply([_production_errors($complete, $shared_rows, $known_maps)], [],
 			'a complete macro rule satisfies the production contract');
 
+		my $normal_party_rule = {
+			enabled => 1,
+			announce_regex => 'event ready',
+			start_regex => 'event starts',
+			finish_regex => 'event done',
+			map_source => 'dynamic',
+			entry_type => 'tt',
+			return_policy => 'tt:prontera',
+			combat_mode => ' NORMAL ',
+			random_walk => 1,
+			search_targets => [],
+		};
+		is_deeply([_production_errors($normal_party_rule, $shared_rows, $known_maps)], [],
+			'normal party mode accepts an empty search target list');
+
 		my %missing_announcement = %$complete;
 		delete $missing_announcement{announce_regex};
 		like(join('; ', _production_errors(\%missing_announcement, $shared_rows, $known_maps)),
@@ -496,7 +516,12 @@ sub start {
 		like(join('; ', _production_errors(\%bad_combat_mode, $shared_rows, $known_maps)),
 			qr/combat_mode/, 'unsupported combat modes are rejected');
 
-	my %missing_entry = %$complete;
+		my %bad_random_walk = %$complete;
+		$bad_random_walk{random_walk} = 'maybe';
+		like(join('; ', _production_errors(\%bad_random_walk, $shared_rows, $known_maps)),
+			qr/random_walk/, 'invalid random_walk values are rejected');
+
+		my %missing_entry = %$complete;
 		delete $missing_entry{entry_macro};
 		like(join('; ', _production_errors(\%missing_entry, $shared_rows, $known_maps)),
 			qr/entry_macro/, 'missing entry macro is rejected');
