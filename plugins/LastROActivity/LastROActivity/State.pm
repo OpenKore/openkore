@@ -12,6 +12,9 @@ my @CONFIG_KEYS = qw(
 	teleportAuto_search
 	teleportAuto_idle
 	route_randomWalk
+	attackAuto
+	itemsTakeAuto
+	itemsGatherAuto
 );
 
 my %TRANSITIONS = (
@@ -98,7 +101,7 @@ sub snapshot_config {
 }
 
 sub apply_activity_config {
-	my ($config, $search_idle, $combat_mode) = @_;
+	my ($config, $search_idle, $combat_mode, $activity) = @_;
 	my $old_snapshot = snapshot_config($config);
 
 	$config->{lockMap} = '';
@@ -106,6 +109,11 @@ sub apply_activity_config {
 		$config->{teleportAuto_search} = 0;
 		$config->{teleportAuto_idle} = 1;
 		$config->{route_randomWalk} = 1;
+		if (_is_dojo_activity($activity)) {
+			$config->{attackAuto} = 2;
+			$config->{itemsTakeAuto} = 2;
+			$config->{itemsGatherAuto} = 2;
+		}
 	} else {
 		$config->{teleportAuto_search} = 1;
 		$config->{teleportAuto_idle} = $search_idle;
@@ -145,6 +153,14 @@ sub _is_normal_combat_mode {
 	return defined $combat_mode
 		&& !ref($combat_mode)
 		&& $combat_mode =~ /^\s*normal\s*$/i;
+}
+
+sub _is_dojo_activity {
+	my ($activity) = @_;
+	return lc($activity->{entry_dialog_mode} || '') eq 'dojo'
+		if ref($activity) eq 'HASH';
+	return defined $activity && !ref($activity)
+		&& $activity =~ /^dojo_challenge$/i;
 }
 
 1;

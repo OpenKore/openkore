@@ -101,6 +101,9 @@ sub start {
 			teleportAuto_search => 0,
 			teleportAuto_idle => 0,
 			route_randomWalk => 0,
+			attackAuto => 1,
+			itemsTakeAuto => 0,
+			itemsGatherAuto => 0,
 			unrelated => 'untouched',
 		);
 		my %before = %config;
@@ -109,8 +112,8 @@ sub start {
 		is_deeply(
 			$snapshot,
 			{
-				values => { map { $_ => $before{$_} } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle route_randomWalk) },
-				present => { map { $_ => 1 } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle route_randomWalk) },
+				values => { map { $_ => $before{$_} } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle route_randomWalk attackAuto itemsTakeAuto itemsGatherAuto) },
+				present => { map { $_ => 1 } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle route_randomWalk attackAuto itemsTakeAuto itemsGatherAuto) },
 			},
 			'snapshot copies only activity settings and their presence',
 		);
@@ -143,6 +146,8 @@ sub start {
 		is($config{teleportAuto_idle}, 1, 'normal combat uses one-second teleport idle');
 		is($config{route_randomWalk}, 1, 'normal combat enables random walking');
 		is($config{attackAuto}, 7, 'normal combat leaves attackAuto unchanged');
+		ok(!exists $config{itemsTakeAuto}, 'normal combat does not create item pickup settings');
+		ok(!exists $config{itemsGatherAuto}, 'normal combat does not create item gathering settings');
 
 		LastROActivity::State::restore_config(\%config, $old_snapshot);
 		is_deeply(\%config, \%before, 'normal combat restores every original setting');
@@ -152,6 +157,34 @@ sub start {
 		ok(exists $missing_route{route_randomWalk}, 'normal apply creates a temporary route setting');
 		LastROActivity::State::restore_config(\%missing_route, $missing_snapshot);
 		ok(!exists $missing_route{route_randomWalk}, 'restore removes a route setting that was originally absent');
+		done_testing();
+	};
+
+	subtest 'dojo combat settings are temporary and restore all activity keys' => sub {
+		my %config = (
+			lockMap => 'pay_fild08',
+			lockMap_x => 55,
+			lockMap_y => 66,
+			lockMap_randX => 7,
+			lockMap_randY => 8,
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+			route_randomWalk => 0,
+			attackAuto => 1,
+			itemsTakeAuto => 0,
+			itemsGatherAuto => 0,
+		);
+		my %before = %config;
+		my $snapshot = LastROActivity::State::apply_activity_config(
+			\%config, 7, 'normal', 'dojo_challenge',
+		);
+		is($config{attackAuto}, 2, 'dojo enables attack automation');
+		is($config{itemsTakeAuto}, 2, 'dojo enables item pickup');
+		is($config{itemsGatherAuto}, 2, 'dojo enables item gathering');
+		is($config{teleportAuto_search}, 0, 'dojo keeps search teleport disabled');
+		is($config{route_randomWalk}, 1, 'dojo enables random walking');
+		LastROActivity::State::restore_config(\%config, $snapshot);
+		is_deeply(\%config, \%before, 'dojo restores every temporary setting');
 		done_testing();
 	};
 

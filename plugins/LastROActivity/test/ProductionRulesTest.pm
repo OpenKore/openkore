@@ -346,7 +346,6 @@ sub start {
 			[
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: search_targets evidence is required for shared search mode',
 			],
 			'raw-enabled sections without required parser evidence fail closed during parsing',
 		);
@@ -371,9 +370,7 @@ sub start {
 				'announce_regex required when enabled',
 				'start_regex required when enabled',
 			],
-			dojo_challenge => [
-				'search_targets evidence is required for shared search mode',
-			],
+			dojo_challenge => [],
 			lottery => [],
 			sky_chest => [],
 		);
@@ -382,6 +379,7 @@ sub start {
 			next unless exists $rules->{$id};
 			my $expected_enabled = $id eq 'lottery'
 				|| $id eq 'city_monster_party'
+				|| $id eq 'dojo_challenge'
 				|| $id eq 'sky_chest' ? 1 : 0;
 			is($rules->{$id}{enabled}, $expected_enabled,
 				"$id has the expected effective enable state");
@@ -409,9 +407,16 @@ sub start {
 		is($rules->{dojo_challenge}{start_regex},
 			'(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*道场)(?=.*深渊挑战)(?!.*下一次事件)',
 			'dojo start pattern keeps generic location and countdown evidence');
-		is($rules->{dojo_challenge}{finish_regex},
-			'(?=.*道场入口已关闭)(?=.*深渊挑战已开始).*',
-			'dojo finish pattern is location-generic and whole-message compatible');
+		is($rules->{dojo_challenge}{finish_regex}, '',
+			'dojo entrance-close line is not treated as activity completion');
+		is($rules->{dojo_challenge}{entry_npc_prefix}, '道馆管理员#',
+			'dojo uses the dynamic administrator prefix');
+		is($rules->{dojo_challenge}{entry_dialog_mode}, 'dojo',
+			'dojo uses the dedicated dialog state machine');
+		is($rules->{dojo_challenge}{combat_mode}, 'normal',
+			'dojo uses normal all-monster combat');
+		is($rules->{dojo_challenge}{max_rounds}, 3,
+			'dojo defaults to three waves');
 		is($rules->{sky_chest}{announce_regex},
 			'(?=.*\[随机事件\])(?=.*天降宝箱)(?!.*下一次事件)',
 			'sky chest announcement pattern requires the random event and chest markers');

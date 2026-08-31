@@ -491,10 +491,10 @@ sub start {
 			'dojo_challenge is the sole canonical dojo rule');
 		ok(!exists $LastROActivity::rules->{pool_challenge},
 			'pool_challenge duplicate is absent');
-		for my $event_id (qw(dojo_challenge sky_chest)) {
-			ok(!$LastROActivity::rules->{$event_id}{enabled},
-				"$event_id is effectively disabled before scheduling");
-		}
+		ok($LastROActivity::rules->{dojo_challenge}{enabled},
+			'dojo_challenge is enabled with dynamic NPC and normal-combat evidence');
+		ok(!$LastROActivity::rules->{sky_chest}{enabled},
+			'sky_chest is effectively disabled before scheduling');
 		like(join('; ', @{$LastROActivity::rules->{sky_chest}{validation_errors}}),
 			qr/search target.*999999|shared mon_control/i,
 			'sky chest placeholder is blocked by shared-control validation');
@@ -540,15 +540,8 @@ sub start {
 			like($message, qr/$rules->{dojo_challenge}{start_regex}/,
 				'dojo start pattern matches an arbitrary dojo location');
 		}
-		for my $message (
-			'梦罗克道场入口已关闭，深渊挑战已开始',
-			'斐杨道场入口已关闭，深渊挑战已开始',
-			'普隆德拉道场入口已关闭，深渊挑战已开始',
-		) {
-			ok(LastROActivity::_activity_pattern_matches(
-				$message, $rules->{dojo_challenge}{finish_regex},
-			), 'generic dojo finish pattern matches the complete message');
-		}
+		is($rules->{dojo_challenge}{finish_regex}, '',
+			'dojo entrance-close broadcast is not an activity finish pattern');
 		unlike(
 			'[随机事件] 下一次事件将在30秒后发生，普隆德拉道场稍后开放',
 			qr/$rules->{dojo_challenge}{start_regex}/,
@@ -4460,6 +4453,581 @@ RULES
 		$main_loop->();
 		$Commands::commands{lastroactivity}->('lastroactivity', 'stop');
 		is($LastROActivity::lottery_npc_id, undef, 'manual stop clears dialog actor state');
+		done_testing();
+	};
+
+	subtest 'dojo enters through a dynamic administrator and leaves after three waves' => sub {
+		LastROActivity::cleanup_and_restore('dojo dialog test reset');
+		my %before = (
+			lockMap => 'pay_fild08', lockMap_x => 55, lockMap_y => 66,
+			teleportAuto_search => 1, teleportAuto_idle => 9,
+			route_randomWalk => 0, attackAuto => 1,
+			itemsTakeAuto => 0, itemsGatherAuto => 0,
+		);
+		%Globals::config = %before;
+		%Globals::maps_lut = (
+			'pay_fild08.rsw' => 1, 'morocc.rsw' => 1, 'prontera.rsw' => 1,
+		);
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::net = PluginTest::Net->new;
+		$Globals::char = PluginTest::Char->new(PluginTest::Inventory->new);
+		$Globals::messageSender = PluginTest::MessageSender->new;
+		%Plugins::registered_plugins = (LastROActivity => 1);
+		%Globals::npcs = ();
+		@Globals::npcsID = ();
+		@PluginTest::send_talk_calls = ();
+		@PluginTest::continue_calls = ();
+		@PluginTest::response_calls = ();
+		@Commands::run_calls = ();
+		my $now = 2_000;
+		$LastROActivity::clock = sub { $now };
+		my $rule = {
+			event_id => 'dojo_challenge', enabled => 1,
+			announce_regex => '道场', start_regex => '深渊挑战',
+			map_source => 'dynamic', entry_type => 'tt',
+			entry_npc_prefix => '道馆管理员#', entry_dialog_mode => 'dojo',
+			combat_mode => 'normal', max_rounds => 3,
+			return_policy => 'tt:prontera', validation_errors => [],
+		};
+		my $event = {
+			event_id => 'dojo_challenge', rule => $rule,
+			data_map => {map => 'morocc', x => 159, y => 99},
+		};
+		ok(LastROActivity::begin_activity($rule, $event), 'dojo lifecycle starts');
+		is_deeply(\@Commands::run_calls, ['tt morocc 159 99'],
+			'dojo travels to the announcement coordinate');
+
+		my $entrance_id = pack('V', 0x11001427);
+		%Globals::npcs = ($entrance_id => {
+			ID => $entrance_id, name => '道馆管理员#moc',
+			pos => {x => 159, y => 102}, pos_to => {x => 159, y => 102},
+		});
+		@Globals::npcsID = ($entrance_id);
+		$Globals::field = PluginTest::Field->new('morocc');
+		LastROActivity::onMapChange(undef, {});
+		LastROActivity::onAirshipResult(undef, {type => 0});
+		LastROActivity::onMainLoopPre(undef, {now => $now});
+		is_deeply(\@PluginTest::send_talk_calls, [$entrance_id],
+			'dynamic administrator prefix is bound near the announcement coordinate');
+		LastROActivity::onNpcTalkContinue(undef, {ID => $entrance_id});
+		LastROActivity::onNpcTalkResponses(undef, {
+			ID => $entrance_id, responses => ['进入道馆', '我考虑一下', 'Cancel Chat'],
+		});
+		is_deeply(\@PluginTest::response_calls, [[$entrance_id, 1]],
+			'entrance selects the confirmed first option');
+
+		%Globals::npcs = ();
+		@Globals::npcsID = ();
+		$Globals::field = PluginTest::Field->new('1@dojo_unknown');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'RUNNING',
+			'an unknown map change after the entrance response confirms the instance');
+		is($Globals::config{teleportAuto_search}, 0, 'dojo disables search mode');
+		is($Globals::config{teleportAuto_idle}, 1, 'dojo enables idle teleport');
+		is($Globals::config{route_randomWalk}, 1, 'dojo enables random walk');
+		is($Globals::config{attackAuto}, 2, 'dojo attacks every visible monster');
+		is($Globals::config{itemsTakeAuto}, 2, 'dojo picks up nearby drops');
+		is($Globals::config{itemsGatherAuto}, 2, 'dojo gathers all drops');
+
+		my $central_id = pack('V', 0x22000001);
+		for my $round (1 .. 3) {
+			%Globals::npcs = ($central_id => {
+				ID => $central_id, name => '深渊奖励管理员',
+				pos => {x => 50, y => 50}, pos_to => {x => 50, y => 50},
+			});
+			@Globals::npcsID = ($central_id);
+			LastROActivity::onMainLoopPre(undef, {now => ++$now});
+			is($LastROActivity::active_event->{round_count}, $round,
+				"central NPC appearance records completed wave $round");
+			is(scalar @PluginTest::send_talk_calls, $round == 3 ? 2 : 1,
+				$round == 3 ? 'third completed wave opens the leave dialog'
+					: "completed wave $round waits for the next automatic wave");
+			last if $round == 3;
+			%Globals::npcs = ();
+			@Globals::npcsID = ();
+			LastROActivity::onMainLoopPre(undef, {now => ++$now});
+		}
+		LastROActivity::onNpcTalkContinue(undef, {ID => $central_id});
+		LastROActivity::onNpcTalkResponses(undef, {
+			ID => $central_id,
+			responses => ['继续挑战', '离开并领取奖励', 'Cancel Chat'],
+		});
+		is_deeply($PluginTest::response_calls[-1], [$central_id, 2],
+			'final dialog selects the uniquely identified leave option');
+		$Globals::field = PluginTest::Field->new('morocc');
+		LastROActivity::onMapChange(undef, {});
+		is(LastROActivity::state(), 'RETURNING',
+			'server warp after the leave choice starts the capital return');
+		is($Commands::run_calls[-1], 'tt prontera', 'dojo leaves through tt prontera');
+		$Globals::field = PluginTest::Field->new('prontera');
+		LastROActivity::onMapChange(undef, {});
+		is_deeply(\%Globals::config, \%before, 'capital confirmation restores all original settings');
+
+		%Globals::config = %before;
+		$Globals::field = PluginTest::Field->new('morocc');
+		@Commands::run_calls = ();
+		ok(LastROActivity::begin_activity($rule, $event),
+			'same-map dojo entrance still starts');
+		is_deeply(\@Commands::run_calls, ['move morocc 159 99'],
+			'same-map entrance routes locally instead of issuing an invalid tt');
+		is(LastROActivity::state(), 'ENTERING',
+			'same-map route reaches the NPC-entry state');
+		LastROActivity::cleanup_and_restore('same-map dojo test cleanup');
+		done_testing();
+	};
+
+	subtest 'dojo lifecycle hardening keeps dialog and return state bounded' => sub {
+		my $dojo_running = sub {
+			my ($event_id, $extra) = @_;
+			$extra ||= {};
+			my ($rule, $event) = $task7_setup_running->($event_id, {
+				entry_type => 'tt',
+				entry_dialog_mode => 'dojo',
+				entry_npc_prefix => '道馆管理员#',
+				entry_map => 'event_map',
+				combat_mode => 'normal',
+				max_rounds => 3,
+				timeout_seconds => 5,
+				duration_seconds => undef,
+				%$extra,
+			});
+			$event->{destination} = {map => 'event_map', x => 20, y => 20};
+			$event->{dojo_instance_map} = 'event_map';
+			$event->{entry_confirmed} = 1;
+			%Globals::npcs = ();
+			@Globals::npcsID = ();
+			return ($rule, $event);
+		};
+		my $dojo_entering = sub {
+			my ($event_id, $extra) = @_;
+			$extra ||= {};
+			my ($rule, $event) = $dojo_running->($event_id, {
+				%$extra,
+			});
+			$LastROActivity::state = LastROActivity::State->new;
+			$LastROActivity::state->transition($_)
+				for qw(arm trigger snapshot depart enter);
+			$LastROActivity::entry_map_confirmed = 1;
+			$LastROActivity::entry_transfer_accepted = 1;
+			$LastROActivity::activity_started_at = undef;
+			$LastROActivity::activity_entry_started_at = 100;
+			$event->{entry_confirmed} = 1;
+			return ($rule, $event);
+		};
+		my $set_npcs = sub {
+			my (@actors) = @_;
+			my $npc_map = eval { $Globals::field->baseName() } || 'event_map';
+			%Globals::npcs = map {
+				$_->{id} => {
+					ID => $_->{id}, name => $_->{name}, map => $npc_map,
+					pos => {x => $_->{x}, y => $_->{y}},
+					pos_to => {x => $_->{x}, y => $_->{y}},
+				}
+			} @actors;
+			@Globals::npcsID = map { $_->{id} } @actors;
+		};
+		my $central = sub {
+			my ($id, $name) = @_;
+			return {id => $id, name => $name || '深渊奖励管理员', x => 50, y => 50};
+		};
+		my $other = sub {
+			my ($id) = @_;
+			return {id => $id, name => '其他NPC', x => 70, y => 70};
+		};
+
+		subtest 'entry click is one-shot and missing instance map fails at entry timeout' => sub {
+			LastROActivity::cleanup_and_restore('dojo entry hardening reset');
+			%Globals::config = (
+				lockMap => 'pay_fild08', lockMap_x => 55, lockMap_y => 66,
+				teleportAuto_search => 1, teleportAuto_idle => 9,
+				route_randomWalk => 0, attackAuto => 1,
+				itemsTakeAuto => 0, itemsGatherAuto => 0,
+			);
+			%Globals::maps_lut = (
+				'pay_fild08.rsw' => 1, 'morocc.rsw' => 1,
+				'prontera.rsw' => 1,
+			);
+			$Globals::field = PluginTest::Field->new('pay_fild08');
+			$Globals::net = PluginTest::Net->new;
+			$Globals::char = PluginTest::Char->new(PluginTest::Inventory->new);
+			$Globals::messageSender = PluginTest::MessageSender->new;
+			%Plugins::registered_plugins = (LastROActivity => 1);
+			%Globals::npcs = ();
+			@Globals::npcsID = ();
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::continue_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			my $now = 1_000;
+			$LastROActivity::clock = sub { $now };
+			my $rule = {
+				event_id => 'dojo_entry_hardening', enabled => 1,
+				announce_regex => '道场', start_regex => '深渊挑战',
+				map_source => 'dynamic', entry_type => 'tt',
+				entry_npc_prefix => '道馆管理员#', entry_dialog_mode => 'dojo',
+				combat_mode => 'normal', max_rounds => 3, timeout_seconds => 5,
+				return_policy => 'tt:prontera', search_targets => [],
+				validation_errors => [],
+			};
+			my $event = {
+				event_id => 'dojo_entry_hardening', rule => $rule,
+				data_map => {map => 'morocc', x => 159, y => 99},
+			};
+			ok(LastROActivity::begin_activity($rule, $event),
+				'dojo entry lifecycle starts');
+			my $entrance_id = pack('V', 0x44000001);
+			$Globals::field = PluginTest::Field->new('morocc');
+			$set_npcs->({id => $entrance_id, name => '道馆管理员#moc', x => 159, y => 102});
+			LastROActivity::onMapChange(undef, {});
+			LastROActivity::onAirshipResult(undef, {type => 0});
+			$now = 1_001;
+			LastROActivity::onMainLoopPre(undef, {now => $now});
+			$now = 1_002;
+			LastROActivity::onMainLoopPre(undef, {now => $now});
+			is(scalar @PluginTest::send_talk_calls, 1,
+				'an active entrance dialog is not clicked again on the next loop');
+			LastROActivity::onNpcTalkContinue(undef, {ID => $entrance_id});
+			LastROActivity::onNpcTalkResponses(undef, {
+				ID => $entrance_id, responses => ['进入道馆', 'Cancel Chat'],
+			});
+			$now = 1_008;
+			LastROActivity::onMainLoopPre(undef, {now => $now});
+			is(LastROActivity::state(), 'FAILED',
+				'missing instance map change reaches the bounded entry timeout');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'missing instance map requests one fixed return');
+			ok(defined LastROActivity::active_event(),
+				'entry timeout retains the lifecycle until return confirmation');
+			$Globals::field = PluginTest::Field->new('prontera');
+			LastROActivity::onMapChange(undef, {});
+			done_testing();
+		};
+
+		subtest 'entering dojo dialog ignores same-prefix actor identity reuse' => sub {
+			my ($rule, $event) = $dojo_entering->('dojo_entering_actor_reuse');
+			my $reused_id = pack('V', 0x4400000A);
+			$Globals::field = PluginTest::Field->new('event_map');
+			$set_npcs->({id => $reused_id, name => '道馆管理员#entry', x => 20, y => 20});
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::continue_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			is(scalar @PluginTest::send_talk_calls, 1,
+				'entering NPC starts one active dojo dialog session');
+
+			# Reuse the numeric ID for a same-prefix NPC on another map and at a
+			# different position while the entrance dialog is still active.
+			$Globals::field = PluginTest::Field->new('other_map');
+			$set_npcs->({id => $reused_id, name => '道馆管理员#other', x => 80, y => 80});
+			LastROActivity::onNpcTalkContinue(undef, {ID => $reused_id});
+			LastROActivity::onNpcTalkResponses(undef, {
+				ID => $reused_id, responses => ['进入道馆', 'Cancel Chat'],
+			});
+			LastROActivity::onNpcTalkDone(undef, {ID => $reused_id});
+			is(scalar @PluginTest::continue_calls, 0,
+				'entering Continue packets from an identity-reused actor are ignored');
+			is(scalar @PluginTest::response_calls, 0,
+				'entering response packets from an identity-reused actor are ignored');
+			is(LastROActivity::state(), 'ENTERING',
+				'entering TalkDone from an identity-reused actor is ignored');
+			is($LastROActivity::dojo_session_active, 1,
+				'identity-reused TalkDone leaves the entrance dialog session active');
+			ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
+				'identity-reused entrance packets do not issue the capital return');
+			LastROActivity::cleanup_and_restore('dojo entering actor reuse test cleanup');
+			done_testing();
+		};
+
+		subtest 'ambiguous dojo entry options fail closed without a response' => sub {
+			my ($rule, $event) = $dojo_entering->('dojo_ambiguous_entry');
+			my $id = pack('V', 0x4400000B);
+			$Globals::field = PluginTest::Field->new('event_map');
+			$set_npcs->({id => $id, name => '道馆管理员#entry', x => 20, y => 20});
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			LastROActivity::onNpcTalkResponses(undef, {
+				ID => $id, responses => ['进入道馆', '進入道館', 'Cancel Chat'],
+			});
+			is(scalar @PluginTest::response_calls, 0,
+				'ambiguous entry options do not send a response');
+			is(LastROActivity::state(), 'FAILED',
+				'ambiguous entry options fail the activity closed');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'ambiguous entry options request one fixed return');
+			if (LastROActivity::state() eq 'FAILED' && $LastROActivity::return_pending) {
+				$task7_confirm_return->();
+			} else {
+				LastROActivity::cleanup_and_restore('ambiguous dojo entry test cleanup');
+			}
+			done_testing();
+		};
+
+		subtest 'packetless RUNNING leave dialog reaches its session deadline' => sub {
+			my ($rule, $event) = $dojo_running->('dojo_dialog_deadline', {
+				max_rounds => 1,
+				timeout_seconds => 5,
+			});
+			my $id = pack('V', 0x44000002);
+			$set_npcs->($central->($id));
+			@PluginTest::send_talk_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			ok(defined $event->{dojo_dialog_deadline},
+				'RUNNING dojo dialog records an event-owned deadline');
+			is(LastROActivity::state(), 'RUNNING',
+				'central NPC opens the bounded leave dialog');
+			LastROActivity::onMainLoopPre(undef, {now => 107});
+			is(LastROActivity::state(), 'FAILED',
+				'packetless leave dialog fails after transfer timeout');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'packetless leave dialog requests one fixed return');
+			$task7_confirm_return->();
+			done_testing();
+		};
+
+		subtest 'dojo return timeout retains the snapshot and return marker' => sub {
+			my ($rule, $event) = $dojo_running->('dojo_return_deadline');
+			my %temporary = %Globals::config;
+			@Commands::run_calls = ();
+			ok(LastROActivity::return_to_capital(),
+				'dojo return enters the unified return state');
+			my $deadline = $LastROActivity::pending_destination_deadline;
+			ok(defined $deadline, 'dojo return records a bounded transfer deadline');
+			is($task7_timeout->($deadline + 1), 'fail',
+				'expired dojo return records failure');
+			is_deeply(\%Globals::config, \%temporary,
+				'dojo return timeout does not restore temporary settings');
+			ok(defined LastROActivity::active_event(),
+				'dojo return timeout retains the active event');
+			ok($LastROActivity::return_pending,
+				'dojo return timeout retains the return marker');
+			$task7_confirm_return->();
+			done_testing();
+		};
+
+		subtest 'TalkDone and non-leave response evidence cannot authorize return' => sub {
+			my ($rule, $event) = $dojo_running->('dojo_leave_evidence', {max_rounds => 1});
+			my $id = pack('V', 0x44000003);
+			$set_npcs->($central->($id));
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			LastROActivity::onNpcTalkDone(undef, {ID => $id});
+			is(LastROActivity::state(), 'RUNNING',
+				'TalkDone without a sent leave response does not return');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 0,
+				'TalkDone without leave evidence does not issue tt prontera');
+
+			$task7_confirm_return->();
+			($rule, $event) = $dojo_running->('dojo_nonleave_response', {max_rounds => 1});
+			$set_npcs->($central->($id));
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			LastROActivity::onNpcTalkContinue(undef, {ID => $id});
+			LastROActivity::onNpcTalkResponses(undef, {
+				ID => $id, responses => ['领取奖励并继续挑战', 'Cancel Chat'],
+			});
+			is(scalar @PluginTest::response_calls, 0,
+				'reward-only continue options are never sent as leave');
+			is(LastROActivity::state(), 'FAILED',
+				'response sets without an explicit unique leave fail closed');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'non-leave response failure requests one fixed return');
+			$task7_confirm_return->();
+
+			($rule, $event) = $dojo_running->('dojo_leave_send_failure', {max_rounds => 1});
+			$set_npcs->($central->($id));
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			LastROActivity::onNpcTalkContinue(undef, {ID => $id});
+			{
+				no warnings 'redefine';
+				local *PluginTest::MessageSender::sendTalkResponse = sub {
+					die 'simulated dojo leave response failure';
+				};
+				LastROActivity::onNpcTalkResponses(undef, {
+					ID => $id, responses => ['离开并领取奖励', 'Cancel Chat'],
+				});
+			}
+			is($event->{dojo_leave_requested} || 0, 0,
+				'failed leave response does not record leave evidence');
+			is($LastROActivity::dojo_leave_requested || 0, 0,
+				'failed leave response leaves the global leave marker clear');
+			$task7_confirm_return->();
+
+			($rule, $event) = $dojo_running->('dojo_leave_response_rejected', {max_rounds => 1});
+			$set_npcs->($central->($id));
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			LastROActivity::onNpcTalkContinue(undef, {ID => $id});
+			{
+				no warnings 'redefine';
+				local *PluginTest::MessageSender::sendTalkResponse = sub {
+					push @PluginTest::response_calls, [$_[1], $_[2]];
+					return 0;
+				};
+				LastROActivity::onNpcTalkResponses(undef, {
+					ID => $id, responses => ['离开并领取奖励', 'Cancel Chat'],
+				});
+			}
+			is($event->{dojo_leave_requested} || 0, 0,
+				'defined-false leave response does not record leave evidence');
+			is($LastROActivity::dojo_leave_requested || 0, 0,
+				'defined-false leave response keeps the global leave marker clear');
+			is(LastROActivity::state(), 'FAILED',
+				'defined-false leave response fails the activity');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'defined-false leave response requests one fixed return');
+			$task7_confirm_return->();
+			done_testing();
+		};
+
+		subtest 'bound central NPC identity ignores unrelated visibility churn and allows ID replacement' => sub {
+			my ($rule, $event) = $dojo_running->('dojo_identity_binding', {max_rounds => 3});
+			my $central_id = pack('V', 0x44000004);
+			my $other_id = pack('V', 0x44000005);
+			my $replacement_id = pack('V', 0x44000006);
+			$set_npcs->($central->($central_id));
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			is($event->{round_count}, 1, 'first central NPC appearance counts one wave');
+			$set_npcs->($central->($central_id), $other->($other_id));
+			LastROActivity::onMainLoopPre(undef, {now => 102});
+			is($event->{round_count}, 1,
+				'unrelated NPC appearance does not clear the bound central visibility');
+			$set_npcs->($central->($central_id));
+			LastROActivity::onMainLoopPre(undef, {now => 103});
+			is($event->{round_count}, 1,
+				'unrelated NPC disappearance does not create a duplicate wave');
+			$set_npcs->();
+			LastROActivity::onMainLoopPre(undef, {now => 104});
+			$set_npcs->($central->($replacement_id));
+			LastROActivity::onMainLoopPre(undef, {now => 105});
+			is($event->{round_count}, 2,
+				'bound central reappearance counts one wave even when actor ID changes');
+			done_testing();
+		};
+
+		subtest 'reused dojo actor ID with a different identity cannot authorize dialog packets' => sub {
+			my ($rule, $event) = $dojo_running->('dojo_dialog_actor_reuse', {max_rounds => 1});
+			my $reused_id = pack('V', 0x44000009);
+			$set_npcs->($central->($reused_id));
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			is(scalar @PluginTest::send_talk_calls, 1,
+				'central NPC starts one active dojo dialog session');
+
+			# Reuse the same numeric actor ID for an unrelated actor on another
+			# map and at a different position while the dialog is still active.
+			$Globals::field = PluginTest::Field->new('other_map');
+			$set_npcs->({id => $reused_id, name => 'unrelated npc', x => 80, y => 80});
+			LastROActivity::onNpcTalkResponses(undef, {
+				ID => $reused_id, responses => ['离开并领取奖励', 'Cancel Chat'],
+			});
+			LastROActivity::onNpcTalkDone(undef, {ID => $reused_id});
+			is(scalar @PluginTest::response_calls, 0,
+				'unrelated actor response packets are ignored');
+			is(LastROActivity::state(), 'RUNNING',
+				'unrelated actor packets do not authorize the leave transition');
+			ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
+				'unrelated actor packets do not issue the capital return');
+			LastROActivity::cleanup_and_restore('dojo actor reuse test cleanup');
+			done_testing();
+		};
+
+		subtest 'successful leave warp clears dojo bindings before RETURNING' => sub {
+			my ($rule, $event) = $dojo_running->('dojo_leave_cleanup', {max_rounds => 1});
+			my $id = pack('V', 0x44000007);
+			$set_npcs->($central->($id));
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::response_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			LastROActivity::onNpcTalkContinue(undef, {ID => $id});
+			LastROActivity::onNpcTalkResponses(undef, {
+				ID => $id, responses => ['离开并领取奖励', 'Cancel Chat'],
+			});
+			$Globals::field = PluginTest::Field->new('other_map');
+			LastROActivity::onMapChange(undef, {});
+			is(LastROActivity::state(), 'RETURNING',
+				'successful leave warp enters RETURNING');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'successful leave warp requests tt prontera once');
+			is($LastROActivity::dojo_session_active || 0, 0,
+				'successful leave clears the active dojo session');
+			ok(!defined $LastROActivity::dojo_npc_id,
+				'successful leave clears the bound dialog actor');
+			is($LastROActivity::dojo_leave_requested || 0, 0,
+				'successful leave clears the leave marker during return');
+			$task7_confirm_return->();
+			done_testing();
+		};
+
+		subtest 'priest death clears AI once and uses bounded central-dialog or fixed-return fallback' => sub {
+			my ($rule, $event) = $dojo_running->('dojo_priest_death_timeout');
+			$Globals::jobs_lut{8} = 'Priest';
+			$Globals::char->{party} = {
+				users => {priest_member => {jobID => 8, dead => 1, online => 1}},
+			};
+			@AI::clear_calls = ();
+			@PluginTest::send_talk_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			ok($event->{dojo_force_leave},
+				'priest death requests a dojo leave');
+			ok(defined $event->{dojo_force_leave_deadline},
+				'priest death records a bounded leave deadline');
+			is(scalar @AI::clear_calls, 2,
+				'priest death clears combat and activity AI once immediately');
+			LastROActivity::onMainLoopPre(undef, {now => 102});
+			is(scalar @AI::clear_calls, 2,
+				'repeated priest death polling does not clear AI again');
+			LastROActivity::onMainLoopPre(undef, {now => 107});
+			is(LastROActivity::state(), 'FAILED',
+				'missing central NPC fails after the bounded priest leave wait');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'priest leave timeout issues only one fixed return');
+			$task7_confirm_return->();
+
+			($rule, $event) = $dojo_running->('dojo_priest_death_dialog');
+			$Globals::char->{party} = {
+				users => {priest_member => {jobID => 8, dead => 1, online => 1}},
+			};
+			my $id = pack('V', 0x44000008);
+			@AI::clear_calls = ();
+			@PluginTest::send_talk_calls = ();
+			@Commands::run_calls = ();
+			LastROActivity::onMainLoopPre(undef, {now => 101});
+			$set_npcs->($central->($id));
+			LastROActivity::onMainLoopPre(undef, {now => 102});
+			is(scalar @PluginTest::send_talk_calls, 1,
+				'central NPC appearing before the deadline opens the normal leave dialog');
+			LastROActivity::onNpcTalkContinue(undef, {ID => $id});
+
+			LastROActivity::onNpcTalkResponses(undef, {
+				ID => $id, responses => ['离开并领取奖励', 'Cancel Chat'],
+			});
+			$Globals::field = PluginTest::Field->new('other_map');
+			LastROActivity::onMapChange(undef, {});
+			is(LastROActivity::state(), 'RETURNING',
+				'priest leave uses the explicit central-NPC response before returning');
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				'priest central dialog still uses one fixed return');
+			$task7_confirm_return->();
+			done_testing();
+		};
+
 		done_testing();
 	};
 

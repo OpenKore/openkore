@@ -58,6 +58,8 @@ our $airship_failure_count;
 our $cleanup_in_progress;
 our ($lottery_npc_id, $lottery_npc_identity);
 our ($lottery_session_active, $lottery_reclick_pending);
+our ($dojo_npc_id, $dojo_npc_identity, $dojo_session_active);
+our ($dojo_entry_response_sent, $dojo_leave_requested);
 our $clock = sub { time };
 
 $rules = {};
@@ -103,6 +105,11 @@ $lottery_npc_id = undef;
 $lottery_npc_identity = undef;
 $lottery_session_active = 0;
 $lottery_reclick_pending = 0;
+$dojo_npc_id = undef;
+$dojo_npc_identity = undef;
+$dojo_session_active = 0;
+$dojo_entry_response_sent = 0;
+$dojo_leave_requested = 0;
 
 $enabled = 1;
 $lead_seconds = 10;
@@ -802,7 +809,15 @@ sub _set_running_state {
 	return 0 unless ref($state) eq 'LastROActivity::State'
 		&& $state->state eq 'ENTERING';
 	$now = _now() unless defined $now;
-	return 0 unless _confirm_entry_map_for_running();
+	if (_dojo_dialog_mode($active_event->{rule})) {
+		my $current_map = _current_map(undef);
+		my $entry_map = _active_event_destination_map();
+		return 0 unless defined $current_map && defined $entry_map
+			&& !_map_matches($current_map, $entry_map);
+		$active_event->{dojo_instance_map} = $current_map;
+	} else {
+		return 0 unless _confirm_entry_map_for_running();
+	}
 	return 0 unless _transition_state('running');
 	$activity_started_at = $now;
 	$activity_entry_started_at = undef;
@@ -818,6 +833,19 @@ sub _set_running_state {
 	$active_event->{round_identities_seen} = {} if ref($active_event) eq 'HASH';
 	$active_event->{round_identity_unknown_completed} = 0
 		if ref($active_event) eq 'HASH';
+	if (_dojo_dialog_mode($active_event->{rule})) {
+		$dojo_npc_id = undef;
+		$dojo_npc_identity = undef;
+		$dojo_session_active = 0;
+		$dojo_entry_response_sent = 0;
+		$active_event->{dojo_session_active} = 0;
+		delete $active_event->{dojo_entry_response_sent};
+		delete $active_event->{dojo_dialog_deadline};
+		delete $active_event->{dojo_npc_id};
+		delete $active_event->{dojo_npc_identity};
+		delete $active_event->{dojo_round_npc_identity};
+		$active_event->{dojo_round_npc_visible} = 0;
+	}
 	my @phases = _phase_list();
 	if (@phases) {
 		$activity_phase_index = 0;
@@ -1050,6 +1078,23 @@ sub onActivityMessage {
 
 sub onNpcTalkContinue {
 	my $args = _hook_args(@_);
+	if (_dojo_dialog_active()) {
+		my $incoming_id = _dialog_packet_id($args, 2);
+		return 0 unless defined $incoming_id && "$incoming_id" eq "$dojo_npc_id";
+		$active_event->{dojo_dialog_steps} = ($active_event->{dojo_dialog_steps} || 0) + 1;
+		if ($active_event->{dojo_dialog_steps} > 20) {
+			_mark_activity_failed('dojo dialog exceeded the bounded step limit');
+			return 0;
+		}
+		my $ok = eval {
+			die 'dojo Continue response is unavailable'
+				unless $messageSender && eval { $messageSender->can('sendTalkContinue') };
+			$messageSender->sendTalkContinue($incoming_id);
+			1;
+		};
+		_mark_activity_failed(_trim($@ || 'dojo Continue response failed')) unless $ok;
+		return $ok ? 1 : 0;
+	}
 	return 0 unless _lottery_dialog_active();
 	my $incoming_id = _dialog_packet_id($args, 2);
 	return 0 unless defined $incoming_id && defined $lottery_npc_id
@@ -1068,6 +1113,61 @@ sub onNpcTalkContinue {
 
 sub onNpcTalkResponses {
 	my $args = _hook_args(@_);
+	if (_dojo_dialog_active()) {
+		my $incoming_id = _dialog_packet_id($args, 4);
+		return 0 unless defined $incoming_id && "$incoming_id" eq "$dojo_npc_id";
+		my $rule = $active_event->{rule};
+		my $responses = ref($args) eq 'HASH' && ref($args->{responses}) eq 'ARRAY'
+			? $args->{responses} : [];
+		my $choice = 0;
+		my $is_entry_response = 0;
+		my $is_leave_response = 0;
+		if (ref($state) eq 'LastROActivity::State' && $state->state eq 'ENTERING') {
+			my @entry_matches = grep {
+				defined $responses->[$_]
+					&& $responses->[$_] =~ /(?:进入道馆|進入道館)/
+			} 0 .. $#$responses;
+			unless (@entry_matches == 1 && $entry_matches[0] == 0) {
+				_mark_activity_failed('dojo entrance option was not uniquely identified');
+				return 0;
+			}
+			$is_entry_response = 1;
+		}
+		if (ref($state) eq 'LastROActivity::State' && $state->state eq 'RUNNING'
+			&& ($active_event->{dojo_force_leave}
+				|| ($active_event->{round_count} || 0) >= _max_rounds($rule))) {
+			my @leave = grep {
+				defined $responses->[$_] && $responses->[$_] =~ /(?:离开|離開|离场|離場)/
+			} 0 .. $#$responses;
+			unless (@leave == 1) {
+				_mark_activity_failed('dojo leave option was not uniquely identified');
+				return 0;
+			}
+			$choice = $leave[0];
+			$is_leave_response = 1;
+		}
+		return 0 if @$responses && $choice >= @$responses;
+		my ($ok, $response_result);
+		$ok = eval {
+			die 'dojo menu response is unavailable'
+				unless $messageSender && eval { $messageSender->can('sendTalkResponse') };
+			$response_result = $messageSender->sendTalkResponse($incoming_id, $choice + 1);
+			die 'dojo menu response was rejected'
+				if defined $response_result && !$response_result;
+			1;
+		};
+		_mark_activity_failed(_trim($@ || 'dojo menu response failed')) unless $ok;
+		if ($ok && $is_entry_response) {
+			$dojo_entry_response_sent = 1;
+			$active_event->{dojo_entry_response_sent} = 1;
+			$activity_entry_started_at = _now();
+		}
+		if ($ok && $is_leave_response) {
+			$dojo_leave_requested = 1;
+			$active_event->{dojo_leave_requested} = 1;
+		}
+		return $ok ? 1 : 0;
+	}
 	return 0 unless _lottery_dialog_active();
 	my $incoming_id = _dialog_packet_id($args, 4);
 	return 0 unless defined $incoming_id && defined $lottery_npc_id
@@ -1086,6 +1186,21 @@ sub onNpcTalkResponses {
 
 sub onNpcTalkDone {
 	my $args = _hook_args(@_);
+	if (_dojo_dialog_active()) {
+		my $incoming_id = _dialog_packet_id($args, 2);
+		return 0 unless defined $incoming_id && "$incoming_id" eq "$dojo_npc_id";
+		$dojo_session_active = 0;
+		if (ref($active_event) eq 'HASH') {
+			$active_event->{dojo_session_active} = 0;
+			delete $active_event->{dojo_dialog_deadline};
+		}
+		if (ref($state) eq 'LastROActivity::State' && $state->state eq 'RUNNING') {
+			if ($dojo_leave_requested) {
+				return_to_capital();
+			}
+		}
+		return 1;
+	}
 	return 0 unless _lottery_dialog_active();
 	my $incoming_id = _dialog_packet_id($args, 2);
 	return 0 unless defined $incoming_id && defined $lottery_npc_id
@@ -1109,18 +1224,30 @@ sub _unsupported_lottery_dialog {
 	return 1;
 }
 
+sub _unsupported_dojo_dialog {
+	my ($args, $offset, $label) = @_;
+	return 0 unless _dojo_dialog_active();
+	my $incoming_id = _dialog_packet_id($args, $offset);
+	return 0 unless defined $incoming_id && "$incoming_id" eq "$dojo_npc_id";
+	_mark_activity_failed("dojo $label dialog is unsupported");
+	return 1;
+}
+
 sub onNpcTalkNumber {
 	my $args = _hook_args(@_);
+	return 1 if _unsupported_dojo_dialog($args, 2, 'number');
 	return _unsupported_lottery_dialog($args, 2, 'number');
 }
 
 sub onNpcTalkText {
 	my $args = _hook_args(@_);
+	return 1 if _unsupported_dojo_dialog($args, 2, 'text');
 	return _unsupported_lottery_dialog($args, 2, 'text');
 }
 
 sub onNpcStoreBegin {
 	my $args = _hook_args(@_);
+	return 1 if _unsupported_dojo_dialog($args, 2, 'shop');
 	return _unsupported_lottery_dialog($args, 2, 'shop');
 }
 
@@ -1150,6 +1277,20 @@ sub checkActivityTimeout {
 		# marker and snapshot alive until packet_mapChange confirms prontera.
 		$pending_destination_deadline = undef;
 		return 'fail';
+	}
+	if (_dojo_dialog_mode($active_event->{rule})) {
+		if (defined $active_event->{dojo_force_leave_deadline}
+			&& $now >= $active_event->{dojo_force_leave_deadline}
+			&& !$return_pending) {
+			_mark_activity_failed('dojo party-death leave timed out');
+			return 'fail';
+		}
+		if ($dojo_session_active
+			&& defined $active_event->{dojo_dialog_deadline}
+			&& $now >= $active_event->{dojo_dialog_deadline}) {
+			_mark_activity_failed('dojo dialog timed out');
+			return 'fail';
+		}
 	}
 	if ($state_name ne 'RUNNING'
 		&& $state_name ne 'FINISHING'
@@ -1482,6 +1623,7 @@ sub _clear_lottery_dialog {
 		delete $active_event->{lottery_session_active};
 		delete $active_event->{lottery_reclick_pending};
 	}
+	_clear_dojo_dialog();
 	return 1;
 }
 
@@ -1495,6 +1637,193 @@ sub _lottery_dialog_active {
 	return 0 unless _map_matches(_current_map(undef), 'prontera');
 	my $actor = _lottery_actor_by_id($lottery_npc_id);
 	return 0 unless defined $actor && _lottery_actor_identity_matches($actor, $lottery_npc_identity);
+	return 1;
+}
+
+sub _dojo_dialog_mode {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	return 0 unless lc(_trim($rule->{entry_type} || '')) eq 'tt';
+	return lc(_trim($rule->{entry_dialog_mode} || '')) eq 'dojo' ? 1 : 0;
+}
+
+sub _dojo_dialog_event {
+	return undef unless ref($active_event) eq 'HASH';
+	return _dojo_dialog_mode($active_event->{rule}) ? $active_event : undef;
+}
+
+sub _dojo_name_matches {
+	my ($name, $rule) = @_;
+	return 0 unless defined $name && ref($rule) eq 'HASH';
+	my $prefix = _trim($rule->{entry_npc_prefix});
+	$prefix = _trim($rule->{entry_npc_name}) if $prefix eq '';
+	return 0 if $prefix eq '';
+	return index($name, $prefix) == 0 ? 1 : 0;
+}
+
+sub _actor_near_position {
+	my ($actor, $x, $y, $radius) = @_;
+	return undef unless ref($actor) && defined $x && defined $y;
+	$radius = 8 unless defined $radius && "$radius" =~ /^\d+$/;
+	for my $field (qw(pos pos_to)) {
+		my $position = _actor_value($actor, $field);
+		next unless ref($position) eq 'HASH';
+		next unless defined $position->{x} && defined $position->{y};
+		next unless "$position->{x}" =~ /^\d+$/ && "$position->{y}" =~ /^\d+$/;
+		return {x => 0 + $position->{x}, y => 0 + $position->{y}}
+			if abs($position->{x} - $x) <= $radius && abs($position->{y} - $y) <= $radius;
+	}
+	return undef;
+}
+
+sub _dojo_actor_by_id {
+	my ($id) = @_;
+	return undef unless defined $id;
+	return $npcs{$id} if exists $npcs{$id} && ref($npcs{$id});
+	for my $key (keys %npcs) {
+		my $actor = $npcs{$key};
+		next unless ref($actor);
+		my $actor_id = _actor_value($actor, 'ID');
+		return $actor if defined $actor_id && "$actor_id" eq "$id";
+	}
+	return undef;
+}
+
+sub _dojo_actor_identity_matches {
+	my ($actor, $identity) = @_;
+	return 0 unless ref($actor) && ref($identity) eq 'HASH';
+	my $name = _lottery_actor_name($actor);
+	return 0 unless defined $name && defined $identity->{name}
+		&& $name eq $identity->{name};
+	my $actor_map = _actor_value($actor, 'map');
+	$actor_map = _current_map(undef) unless defined $actor_map;
+	return 0 unless _map_matches($actor_map, $identity->{map});
+	return 0 unless defined $identity->{x} && defined $identity->{y};
+	return defined _actor_near_position(
+		$actor, $identity->{x}, $identity->{y}, 0,
+	) ? 1 : 0;
+}
+
+sub _find_dojo_npc_identity {
+	my ($identity) = @_;
+	return wantarray ? (undef, undef) : undef
+		unless ref($identity) eq 'HASH';
+	my @ids = (@npcsID, keys %npcs);
+	my %seen;
+	for my $id (@ids) {
+		next unless defined $id && !$seen{"$id"}++;
+		my $actor = _dojo_actor_by_id($id);
+		next unless ref($actor) && _dojo_actor_identity_matches($actor, $identity);
+		my $actor_id = _actor_value($actor, 'ID');
+		$actor_id = $id unless defined $actor_id;
+		return wantarray ? ($actor_id, $identity) : $actor_id;
+	}
+	return wantarray ? (undef, undef) : undef;
+}
+
+sub _find_dojo_npc {
+	my ($rule, $entry) = @_;
+	return wantarray ? (undef, undef) : undef unless ref($rule) eq 'HASH';
+	my $expected_map = _current_map(undef);
+	my ($x, $y);
+	if ($entry) {
+		my $destination = _active_event_destination_map();
+		$expected_map = $destination;
+		if (ref($active_event) eq 'HASH' && ref($active_event->{destination}) eq 'HASH') {
+			($x, $y) = @{$active_event->{destination}}{qw(x y)};
+		}
+	}
+	my @ids = (@npcsID, keys %npcs);
+	my %seen;
+	my @candidates;
+	for my $id (@ids) {
+		next unless defined $id && !$seen{"$id"}++;
+		my $actor = _dojo_actor_by_id($id);
+		next unless ref($actor);
+		my $name = _lottery_actor_name($actor);
+		next if $entry && !_dojo_name_matches($name, $rule);
+		my $actor_map = _actor_value($actor, 'map');
+		$actor_map = _current_map(undef) unless defined $actor_map;
+		next if defined $expected_map && defined $actor_map && !_map_matches($actor_map, $expected_map);
+		my $position;
+		if (defined $x && defined $y) {
+			$position = _actor_near_position($actor, $x, $y, 10);
+			next unless defined $position;
+		} else {
+			$position = _actor_value($actor, 'pos') || _actor_value($actor, 'pos_to') || {};
+			$position = {} unless ref($position) eq 'HASH';
+		}
+		my $actor_id = _actor_value($actor, 'ID');
+		$actor_id = $id unless defined $actor_id;
+		my $identity = {name => $name, map => $expected_map, %$position};
+		push @candidates, [$actor_id, $identity];
+	}
+	# The public entrance is bound by the configured name prefix and proximity.
+	# Inside an unknown instance, only a single visible NPC is accepted as the
+	# central reward/leave NPC; ambiguity waits instead of guessing.
+	return wantarray ? @{$candidates[0]} : $candidates[0][0]
+		if @candidates == 1;
+	return wantarray ? (undef, undef) : undef;
+}
+
+sub _clear_dojo_dialog {
+	$dojo_npc_id = undef;
+	$dojo_npc_identity = undef;
+	$dojo_session_active = 0;
+	$dojo_entry_response_sent = 0;
+	$dojo_leave_requested = 0;
+	if (ref($active_event) eq 'HASH') {
+		delete $active_event->{dojo_npc_id};
+		delete $active_event->{dojo_npc_identity};
+		delete $active_event->{dojo_session_active};
+		delete $active_event->{dojo_entry_response_sent};
+		delete $active_event->{dojo_leave_requested};
+		delete $active_event->{dojo_dialog_deadline};
+		delete $active_event->{dojo_dialog_steps};
+		delete $active_event->{dojo_round_npc_identity};
+		delete $active_event->{dojo_round_npc_visible};
+		delete $active_event->{dojo_force_leave};
+		delete $active_event->{dojo_force_leave_reason};
+		delete $active_event->{dojo_force_leave_deadline};
+		delete $active_event->{dojo_instance_map};
+	}
+	return 1;
+}
+
+sub _dojo_dialog_active {
+	return 0 unless defined _dojo_dialog_event();
+	return 0 unless $dojo_session_active && defined $dojo_npc_id;
+	my $actor = _dojo_actor_by_id($dojo_npc_id);
+	return 0 unless defined $actor;
+	if (ref($state) eq 'LastROActivity::State'
+		&& ($state->state eq 'ENTERING' || $state->state eq 'RUNNING')) {
+		return _dojo_actor_identity_matches($actor, $dojo_npc_identity);
+	}
+	return 0;
+}
+
+sub _send_dojo_talk {
+	my ($id) = @_;
+	return 0 unless defined $id;
+	my ($ok, $error);
+	$ok = eval {
+		die 'dojo NPC dialog is unavailable'
+			unless $messageSender && eval { $messageSender->can('sendTalk') };
+		$messageSender->sendTalk($id);
+		1;
+	};
+	$error = _trim($@ || 'dojo NPC click failed') unless $ok;
+	unless ($ok) {
+		_mark_activity_failed($error);
+		return 0;
+	}
+	$dojo_session_active = 1;
+	if (ref($active_event) eq 'HASH') {
+		$active_event->{dojo_session_active} = 1;
+		$active_event->{dojo_dialog_steps} = 0;
+		$active_event->{dojo_dialog_deadline} = _now()
+			+ _transfer_timeout($active_event->{rule});
+	}
 	return 1;
 }
 
@@ -2224,7 +2553,9 @@ sub _validate_completion_policy {
 	# A lifecycle must have at least one observable completion boundary.  A
 	# positive duration is the explicit fallback for activities whose server has
 	# no finish announcement; finish macros alone are not completion evidence.
-	unless ($finish_valid || $phases_valid || $duration_valid || $round_success_valid) {
+	my $dojo_round_limit = _dojo_dialog_mode($rule) && _max_rounds($rule) > 0;
+	unless ($finish_valid || $phases_valid || $duration_valid || $round_success_valid
+		|| $dojo_round_limit) {
 		push @errors, 'finish evidence, phases, or a positive duration is required';
 	}
 
@@ -2734,6 +3065,7 @@ sub enter_search_mode {
 			\%Globals::config,
 			$teleport_idle,
 			$combat_mode,
+			$rule,
 		);
 	};
 	if ($@ || ref($snapshot) ne 'HASH') {
@@ -2759,6 +3091,16 @@ sub request_event_entry {
 		return 0 unless defined $map && defined $command;
 		$active_event->{destination} = {%$destination}
 			if ref($active_event) eq 'HASH' && ref($active_event->{destination}) ne 'HASH';
+		if (_dojo_dialog_mode($rule) && _map_matches(_current_map(undef), $map)) {
+			my ($x, $y) = @{$destination}{qw(x y)};
+			die "dojo entrance coordinates are required for same-map routing\n"
+				unless defined $x && defined $y && "$x" =~ /^\d+$/ && "$y" =~ /^\d+$/;
+			my ($move_ok, $move_error) = _run_checked_command("move $map $x $y");
+			die (($move_error || 'dojo same-map route failed') . "\n") unless $move_ok;
+			$entry_transfer_accepted = 1;
+			_confirm_entry_map_if_current($map);
+			return 1;
+		}
 		$active_event->{airship_entry_attempts} =
 			($active_event->{airship_entry_attempts} || 0) + 1
 			if defined $active_event && ref($active_event) eq 'HASH';
@@ -2998,7 +3340,8 @@ sub _party_members {
 sub _poll_activity_death {
 	my ($now) = @_;
 	return undef unless defined $active_event && ref($active_event) eq 'HASH';
-	return undef unless _round_mode($active_event->{rule});
+	return undef unless _round_mode($active_event->{rule})
+		|| _dojo_dialog_mode($active_event->{rule});
 	return undef if $return_pending;
 	return undef unless ref($state) eq 'LastROActivity::State';
 	my $state_name = $state->state;
@@ -3022,6 +3365,19 @@ sub _poll_activity_death {
 		next unless defined $member && _actor_is_dead($member);
 		if (_actor_can_resurrect($member)) {
 			my $name = _actor_value($member, 'name') || 'resurrection-capable party member';
+			if (_dojo_dialog_mode($active_event->{rule})) {
+				unless ($active_event->{dojo_force_leave}) {
+					$active_event->{dojo_force_leave} = 1;
+					$active_event->{dojo_force_leave_reason} = "$name died during activity";
+					$active_event->{dojo_force_leave_deadline} = $now
+						+ _transfer_timeout($active_event->{rule});
+					unless ($active_event->{activity_ai_cleared}) {
+						$active_event->{activity_ai_cleared} = 1;
+						_try_clear_activity_ai('dojo party-death leave');
+					}
+				}
+				next;
+			}
 			_mark_activity_failed("$name died during activity");
 			return 'fail';
 		}
@@ -3248,6 +3604,72 @@ sub _advance_lottery_dialog {
 	return 0;
 }
 
+sub _advance_dojo_dialog {
+	my ($now) = @_;
+	my $event = _dojo_dialog_event();
+	return 0 unless defined $event;
+	return 0 unless ref($state) eq 'LastROActivity::State';
+	my $state_name = $state->state;
+	if ($state_name eq 'ENTERING') {
+		return 0 if !$entry_map_confirmed || !_entry_transfer_ready();
+		# The server owns this dialog session.  Wait for its packets or the
+		# session/entry deadline instead of clicking the same actor each loop.
+		return 0 if $dojo_session_active || $dojo_entry_response_sent;
+		my ($id, $identity) = _find_dojo_npc($event->{rule}, 1);
+		unless (defined $id && ref($identity) eq 'HASH') {
+			if (defined $activity_entry_started_at
+				&& $now >= $activity_entry_started_at + _transfer_timeout($event->{rule})) {
+				_mark_activity_failed('dojo entrance NPC was not visible before entry timed out');
+			}
+			return 1 if ref($state) eq 'LastROActivity::State'
+				&& $state->state eq 'FAILED';
+			return 0;
+		}
+		$dojo_npc_id = $id;
+		$dojo_npc_identity = $identity;
+		$event->{dojo_npc_id} = $id;
+		return 1 unless _send_dojo_talk($id);
+		return 1;
+	}
+	return 0 unless $state_name eq 'RUNNING';
+	return 0 if $dojo_session_active || $dojo_leave_requested;
+	my ($id, $identity);
+	if (ref($event->{dojo_round_npc_identity}) eq 'HASH') {
+		# Once accepted, only the bound identity can close/open a wave.  Other
+		# NPCs must not turn an ambiguous snapshot into a false disappearance.
+		($id, $identity) = _find_dojo_npc_identity(
+			$event->{dojo_round_npc_identity},
+		);
+		unless (defined $id) {
+			$event->{dojo_round_npc_visible} = 0;
+			return 0;
+		}
+		$identity = $event->{dojo_round_npc_identity};
+	} else {
+		($id, $identity) = _find_dojo_npc($event->{rule}, 0);
+		unless (defined $id && ref($identity) eq 'HASH') {
+			$event->{dojo_round_npc_visible} = 0;
+			return 0;
+		}
+		$event->{dojo_round_npc_identity} = {%$identity};
+	}
+	unless ($event->{dojo_round_npc_visible}) {
+		$event->{dojo_round_npc_visible} = 1;
+		$event->{round_count} = ($event->{round_count} || 0) + 1;
+		$activity_round_count = $event->{round_count};
+	}
+	# The reward NPC's appearance is the observable completed-wave boundary.
+	# Ignore it until the configured limit; not talking lets the server start the
+	# next wave automatically.
+	return 0 if !$event->{dojo_force_leave}
+		&& ($event->{round_count} || 0) < _max_rounds($event->{rule});
+	$dojo_npc_id = $id;
+	$dojo_npc_identity = $identity;
+	$event->{dojo_npc_id} = $id;
+	_send_dojo_talk($id);
+	return 1;
+}
+
 sub _advance_state_machine_one_action {
 	my ($now) = @_;
 	$now = _now() unless defined $now;
@@ -3260,13 +3682,17 @@ sub _advance_state_machine_one_action {
 	if (defined _lottery_dialog_event()) {
 		return if _advance_lottery_dialog($now);
 	}
+	if (defined _dojo_dialog_event()) {
+		return if _advance_dojo_dialog($now);
+	}
 
 	if (defined $active_event
 		&& $entry_map_confirmed
 		&& _entry_transfer_ready()
 		&& !defined $pending_macro
 		&& ref($state) eq 'LastROActivity::State'
-		&& $state->state eq 'ENTERING') {
+		&& $state->state eq 'ENTERING'
+		&& !_dojo_dialog_mode($active_event->{rule})) {
 		# Confirmation flags can outlive a map packet.  Re-read the live field
 		# before promoting the activity so a departure cannot become RUNNING
 		# after the character has already left the event map.
@@ -3748,6 +4174,10 @@ sub return_to_capital {
 	return 0 unless defined $active_event;
 	return 1 if defined $pending_macro
 		&& ($pending_macro_stage || '') eq 'finish';
+	# A dojo dialog session belongs to the instance lifecycle.  Clear its actor
+	# and evidence bindings before entering RETURNING so late packets cannot
+	# authorize another response while the fixed capital transfer is pending.
+	_clear_dojo_dialog() if _dojo_dialog_mode($active_event->{rule});
 
 	# A map-loss hook can report prontera directly.  That packet is already the
 	# authoritative return confirmation; issuing another tt request
@@ -3873,6 +4303,29 @@ sub onMapChange {
 		return _complete_return();
 	}
 
+	# A dojo's tt destination is only the public entrance.  The confirmed
+	# entrance dialog then transfers the character to a server-chosen instance
+	# map, so that map change is the running-state evidence rather than an error.
+	if (_dojo_dialog_mode($active_event->{rule})
+		&& ref($state) eq 'LastROActivity::State'
+		&& $state->state eq 'ENTERING'
+		&& $entry_map_confirmed
+		&& $dojo_entry_response_sent
+		&& !_map_matches($map, _active_event_destination_map())) {
+		$active_event->{dojo_instance_map} = $map;
+		_set_running_state(_now());
+		return 1 if ref($state) eq 'LastROActivity::State'
+			&& $state->state eq 'RUNNING';
+	}
+	if (_dojo_dialog_mode($active_event->{rule})
+		&& $dojo_leave_requested
+		&& ref($state) eq 'LastROActivity::State'
+		&& $state->state eq 'RUNNING'
+		&& defined $active_event->{dojo_instance_map}
+		&& !_map_matches($map, $active_event->{dojo_instance_map})) {
+		return return_to_capital();
+	}
+
 	if (_confirm_entry_map($map, 'map_packet')) {
 		return 1;
 	}
@@ -3888,7 +4341,9 @@ sub onMapChange {
 	}
 
 	if (ref($state) eq 'LastROActivity::State' && $state->state eq 'RUNNING') {
-		my $event_map = _active_event_destination_map();
+		my $event_map = _dojo_dialog_mode($active_event->{rule})
+			? $active_event->{dojo_instance_map}
+			: _active_event_destination_map();
 		if (defined $event_map && !_map_matches($map, $event_map)) {
 			# Leaving the event map is an operational failure, not a successful
 			# completion.  Route through the failure path so finish macros cannot

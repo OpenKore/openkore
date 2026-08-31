@@ -202,7 +202,6 @@ sub start {
 			[
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: search_targets evidence is required for shared search mode',
 			],
 			'raw-enabled sections without required parser evidence fail closed during parsing',
 		);
@@ -281,8 +280,13 @@ sub start {
 				$expected_trigger = $received_at if $expected_trigger < $received_at;
 				is($event->{trigger_at}, $expected_trigger,
 					"$case->{id} uses the ten-second lead window");
-				like($case->{finish}, qr/$rule->{finish_regex}/,
-					"$case->{id} finish text matches finish_regex");
+				if ($case->{id} eq 'dojo_challenge') {
+					is($rule->{finish_regex}, '',
+						'dojo entrance-close line is not an activity finish signal');
+				} else {
+					like($case->{finish}, qr/$rule->{finish_regex}/,
+						"$case->{id} finish text matches finish_regex");
+				}
 				$received_at += 100;
 			}
 		}

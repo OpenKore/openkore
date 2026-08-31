@@ -4,12 +4,16 @@
 # shared monster targets or legacy fixed-dialog evidence is missing.
 # city_monster_party matches the confirmed summon wording for any city.
 # dojo_challenge is the sole canonical rule for every dojo location.
+# It uses the announcement coordinates, a nearby 道馆管理员# prefix, and
+# normal all-monster combat inside the server-selected instance.
 # sky_chest uses placeholder search target ID 999999 and remains disabled until
 # the real monster ID/shared search=1 evidence and a completion boundary are
 # confirmed.
 # city_monster_party explicitly uses normal combat, so its empty
 # search_targets= value is intentional.  Its temporary activity settings are
 # teleportAuto_search=0, teleportAuto_idle=1, and route_randomWalk=1.
+# Dojo additionally sets attackAuto/itemsTakeAuto/itemsGatherAuto to 2 and
+# restores their original in-memory values after returning to prontera.
 # Invasion lines for Alberta/Aldebaran and generic 下一次事件 reminders are
 # intentionally not represented by any rule.
 
@@ -36,10 +40,14 @@ search_targets=
 enabled=1
 announce_regex=(?=.*\[随机事件\])(?=.*道场)(?=.*深渊挑战)(?!.*下一次事件)
 start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*道场)(?=.*深渊挑战)(?!.*下一次事件)
-finish_regex=(?=.*道场入口已关闭)(?=.*深渊挑战已开始).*
+finish_regex=
 lead_seconds=10
 map_source=dynamic
 entry_type=tt
+combat_mode=normal
+entry_npc_prefix=道馆管理员#
+entry_dialog_mode=dojo
+max_rounds=3
 return_policy=tt:prontera
 search_targets=
 

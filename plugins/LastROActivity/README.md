@@ -73,15 +73,14 @@ rules and runtime commands use `tt`.
 ## Current evidence fixture
 
 The configured announcement routes below retain their raw `enabled=1` flags
-for evidence auditing. `dojo_challenge` remains disabled until its shared
-target evidence is supplied. `sky_chest` additionally needs a confirmed
-completion boundary. The normal-combat party route and Lottery are effectively
-enabled because their lifecycle evidence is complete.
+for evidence auditing. The normal-combat party route, the dynamic dojo route,
+and Lottery are effectively enabled. `sky_chest` still needs a real shared
+target and a confirmed completion boundary.
 
 | Rule | Raw source flag / effective runtime state | Lifecycle gate | Confirmed entry metadata |
 | --- | --- | --- | --- |
 | `city_monster_party` | raw `1` / effective `1` | any city; normal combat; empty `search_targets` is intentional | dynamic `pvp_y_5-2#0#0` |
-| `dojo_challenge` | raw `1` / effective `0` | all dojo locations; `search_targets` evidence is missing | dynamic announcement map |
+| `dojo_challenge` | raw `1` / effective `1` | dynamic administrator entry; normal combat; three-wave leave limit | dynamic announcement map and coordinates |
 | `lottery` | raw `1` / effective `1` | named NPC and repeating-dialog fields are complete | static `prontera 152 133`, `活动负责人#iz` |
 | `dungeon_monster_party` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
 | `sky_chest` | raw `1` / effective `0` | placeholder `999999` lacks shared search evidence; completion boundary is also missing | dynamic `cmd_fild01#0#0` |
@@ -140,6 +139,34 @@ disabled until the real monster ID and a matching `search=1` row are supplied.
 A separately confirmed finish pattern, phase boundary, round-success boundary,
 or positive duration is also required; none is currently configured.
 
+## Dojo dialog and waves
+
+The enabled `dojo_challenge` rule sends `tt <map> <x> <y>` using the matching
+announcement's `data-map`. At the public entrance it binds exactly one nearby
+NPC whose name starts with `道馆管理员#`; suffixes such as `#moc` remain dynamic.
+If the character is already on that public map, the plugin routes to the
+coordinates locally because LastRO rejects a same-map `tt` request.
+Continue packets are answered immediately and the confirmed first entry option
+is selected. A later map change away from that public map confirms entry into
+the server-selected instance, whose name does not need to be configured.
+
+The instance temporarily uses `teleportAuto_search=0`,
+`teleportAuto_idle=1`, `route_randomWalk=1`, `attackAuto=2`,
+`itemsTakeAuto=2`, and `itemsGatherAuto=2`. The shared monster-control file is
+not changed.
+
+A wave is counted when exactly one central NPC appears. For waves one and two
+the plugin does not talk, allowing the next wave to start automatically; the
+NPC must disappear before a later appearance counts again. On the third
+appearance (`max_rounds=3`) it opens the dialog and selects an option only when
+exactly one response contains `离开`/`離開`/`离场`/`離場`. Multiple visible
+NPCs or an ambiguous leave menu are fail-closed.
+
+`道场入口已关闭，深渊挑战已开始` is an entrance-close broadcast, not an
+activity finish signal. After the leave dialog closes, the plugin sends
+`tt prontera`, waits for map confirmation, restores every activity setting and
+the original lock map, then clears AI so ordinary routing resumes.
+
 ## Lottery dialog
 
 The enabled Lottery rule is deliberately exact:
@@ -194,7 +221,7 @@ in-memory lock-map and teleport/search settings are restored only after the
 return map is confirmed; normal OpenKore routing then handles the trip back to
 the saved lock map.
 
-Round-based activities must provide both `round_start_regex` and
+Legacy announcement-counted round activities must provide both `round_start_regex` and
 `round_success_regex`.  Give `round_start_regex` a capture for the server's
 stable round number (or configure `round_id_regex` for a separate token).  The
 plugin remembers completed identities for the entire activity, so repeated
@@ -226,7 +253,7 @@ logs, map-change packets, or a user-supplied dialog transcript:
 Lottery is enabled with the confirmed `prontera 152 133` NPC identity and the
 bounded repeating first-option dialog mode. The normal-combat monster-party
 route is enabled with its explicit empty-search configuration. The generic
-dojo rule remains blocked until shared `search_targets` evidence is supplied;
+dojo rule is enabled through its dynamic administrator and normal-combat path;
 the sky-chest rule remains blocked until placeholder `999999` is replaced, its
 shared search row is confirmed, and a completion boundary is documented. The
 dungeon section remains parser-disabled until its announcement lines are

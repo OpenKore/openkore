@@ -755,13 +755,13 @@ RULES
 			[
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: search_targets evidence is required for shared search mode',
 			],
 			'raw-enabled sections without required parser evidence fail closed during parsing',
 		);
 		for my $event_id (@expected_ids) {
 			my $expected_enabled = $event_id eq 'lottery'
 				|| $event_id eq 'city_monster_party'
+				|| $event_id eq 'dojo_challenge'
 				|| $event_id eq 'sky_chest' ? 1 : 0;
 			is($rules->{$event_id}{enabled}, $expected_enabled,
 				"$event_id has the expected effective enable state");
@@ -796,7 +796,6 @@ RULES
 			[
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: search_targets evidence is required for shared search mode',
 			],
 			'incomplete raw-enabled sections fail closed during parsing',
 		);
@@ -821,17 +820,18 @@ RULES
 				ok($rules->{$event_id}{enabled}, 'lottery is effectively enabled with complete named-dialog evidence');
 				is($rules->{$event_id}{map_source}, 'static', 'lottery uses its confirmed static NPC map');
 			} else {
-				ok($event_id eq 'city_monster_party'
-					? $rules->{$event_id}{enabled}
-					: !$rules->{$event_id}{enabled},
+				ok($rules->{$event_id}{enabled},
 					"$event_id has the expected lifecycle enable state");
 				is($rules->{$event_id}{map_source}, 'dynamic', "$event_id uses dynamic announcement map metadata");
 			}
 		}
 
-		is($rules->{dojo_challenge}{finish_regex},
-			'(?=.*道场入口已关闭)(?=.*深渊挑战已开始).*',
-			'dojo finish evidence is generic and whole-message compatible');
+		is($rules->{dojo_challenge}{finish_regex}, '',
+			'dojo entrance-close broadcast is not misused as activity completion');
+		is($rules->{dojo_challenge}{entry_npc_prefix}, '道馆管理员#',
+			'dojo entrance uses the confirmed dynamic administrator prefix');
+		is($rules->{dojo_challenge}{max_rounds}, 3,
+			'dojo defaults to three completed waves');
 		is($rules->{lottery}{finish_regex}, '抽奖活动已结束', 'lottery finish evidence is exact');
 		is($rules->{city_monster_party}{finish_regex}, '魔物派对已结束',
 			'monster party finish evidence is exact');
@@ -858,11 +858,6 @@ RULES
 		}
 		like($lottery, qr/$rules->{lottery}{start_regex}/, 'lottery start evidence matches');
 		like($party, qr/$rules->{city_monster_party}{start_regex}/, 'party start evidence matches');
-		for my $finish (qw(梦罗克 斐杨 普隆德拉)) {
-			like("${finish}道场入口已关闭，深渊挑战已开始",
-				qr/$rules->{dojo_challenge}{finish_regex}/,
-				"$finish dojo finish evidence matches");
-		}
 		unlike('[随机事件] 召唤师将在依斯鲁得岛举办魔物派对',
 			qr/$rules->{city_monster_party}{start_regex}/,
 			'party start evidence still requires a countdown');
@@ -875,6 +870,30 @@ RULES
 		unlike('[随机事件] 下一次事件将在2小时后发生，梦罗克道场稍后开放',
 			qr/$rules->{dojo_challenge}{start_regex}/,
 			'next-event reminder is not start evidence');
+		done_testing();
+	};
+
+	subtest 'accepts a dynamic dojo NPC prefix without shared search evidence' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[dojo_challenge]
+enabled=1
+announce_regex=道场
+start_regex=道场.*秒后
+finish_regex=道场入口已关闭
+map_source=dynamic
+entry_type=tt
+entry_npc_prefix=道馆管理员#
+entry_dialog_mode=dojo
+combat_mode=normal
+max_rounds=3
+return_policy=tt:prontera
+RULES
+		is_deeply($errors, [], 'dynamic dojo NPC metadata validates without search targets');
+		ok($rules->{dojo_challenge}{enabled}, 'dynamic dojo rule remains enabled');
+		is($rules->{dojo_challenge}{entry_npc_prefix}, '道馆管理员#',
+			'preserves the dynamic NPC prefix');
+		is($rules->{dojo_challenge}{map_source}, 'dynamic',
+			'preserves announcement map routing');
 		done_testing();
 	};
 }

@@ -35,6 +35,7 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	entry_item_id
 	entry_npc
 	entry_npc_name
+	entry_npc_prefix
 	entry_npc_trusted
 	entry_npc_evidence
 	entry_dialog_mode
@@ -238,14 +239,30 @@ sub validate_rule {
 
 	my $dialog_mode = _has_value($rule->{entry_dialog_mode})
 		? lc(_trim($rule->{entry_dialog_mode})) : '';
-	if ($dialog_mode ne '' && $dialog_mode ne 'repeat_first_until_finish') {
-		push @errors, 'entry_dialog_mode must be repeat_first_until_finish';
+	if ($dialog_mode ne '' && $dialog_mode ne 'repeat_first_until_finish'
+		&& $dialog_mode ne 'dojo') {
+		push @errors, 'entry_dialog_mode must be repeat_first_until_finish or dojo';
 	}
 	if ($rule->{enabled} && $dialog_mode eq 'repeat_first_until_finish') {
 		unless (_has_value($rule->{finish_regex})) {
 			push @errors, 'finish_regex is required for repeating NPC dialog';
 		} elsif (!_valid_pattern($rule->{finish_regex})) {
 			push @errors, 'finish_regex is invalid';
+		}
+	}
+	if ($rule->{enabled} && $dialog_mode eq 'dojo') {
+		unless (lc(_trim($rule->{entry_type})) eq 'tt') {
+			push @errors, 'entry_type=tt is required for dojo dialog';
+		}
+		unless (lc($combat_mode) eq 'normal') {
+			push @errors, 'combat_mode=normal is required for dojo dialog';
+		}
+		unless (_has_value($rule->{entry_npc_name}) || _has_value($rule->{entry_npc_prefix})) {
+			push @errors, 'entry_npc_name or entry_npc_prefix is required for dojo dialog';
+		}
+		if (_has_value($rule->{entry_npc_prefix})
+			&& (ref($rule->{entry_npc_prefix}) || $rule->{entry_npc_prefix} =~ /[\r\n]/)) {
+			push @errors, 'entry_npc_prefix is invalid';
 		}
 	}
 
@@ -324,7 +341,6 @@ sub validate_rule {
 			push @errors, 'resurrection_wait_seconds must be positive';
 		}
 	}
-
 	for my $field (qw(round_start_regex round_success_regex)) {
 		if (defined $rule->{$field} && !_valid_pattern($rule->{$field})) {
 			push @errors, "$field is invalid";
@@ -422,6 +438,7 @@ sub _new_rule {
 		entry_item_id => undef,
 		entry_npc => undef,
 		entry_npc_name => undef,
+		entry_npc_prefix => undef,
 		entry_npc_trusted => undef,
 		entry_npc_evidence => undef,
 		entry_dialog_mode => undef,
