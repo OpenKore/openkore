@@ -149,6 +149,14 @@ RULES
 			'unknown dialog mode',
 			qr/entry_dialog_mode must be repeat_first_until_finish/,
 		],
+		[
+			'missing finish pattern',
+			qr/finish_regex is required for repeating NPC dialog/,
+		],
+		[
+			'malformed finish pattern',
+			qr/finish_regex is invalid/,
+		],
 	);
 	for my $case (@invalid_cases) {
 		my ($label, $error_pattern) = @$case;
@@ -165,11 +173,14 @@ entry_x=152
 entry_y=133
 entry_npc_name=活动负责人#iz
 entry_dialog_mode=repeat_first_until_finish
+duration_seconds=900
 return_policy=tt:prontera
 RULES
 		$text =~ s/entry_npc_name=活动负责人#iz\n/entry_npc_name=\n/ if $label eq 'missing name';
 		$text =~ s/entry_y=133\n/entry_y=\n/ if $label eq 'missing coordinate';
 		$text =~ s/entry_dialog_mode=repeat_first_until_finish\n/entry_dialog_mode=guess_first\n/ if $label eq 'unknown dialog mode';
+		$text =~ s/finish_regex=抽奖活动已结束\n// if $label eq 'missing finish pattern';
+		$text =~ s/finish_regex=抽奖活动已结束\n/finish_regex=[\n/ if $label eq 'malformed finish pattern';
 		my ($invalid, $invalid_errors) = LastROActivity::Rules::parse_text($text);
 		ok(!$invalid->{lottery}{enabled}, "$label disables the rule");
 		like(join('; ', @{$invalid->{lottery}{validation_errors} || []}), $error_pattern,

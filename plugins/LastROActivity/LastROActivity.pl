@@ -943,9 +943,20 @@ sub onActivityMessage {
 	return undef unless defined $message;
 	return undef unless defined $active_event && ref($active_event->{rule}) eq 'HASH';
 	return undef unless ref($state) eq 'LastROActivity::State';
-	return undef unless $state->state eq 'RUNNING';
 
 	my $rule = $active_event->{rule};
+	my $state_name = $state->state;
+	# Lottery has a deferred first click.  A finish announcement can arrive while
+	# travel is still in DEPARTING/ENTERING, so consume it before mainLoop_pre can
+	# resolve or contact the NPC.
+	if (($state_name eq 'DEPARTING' || $state_name eq 'ENTERING')
+		&& defined _lottery_dialog_event()
+		&& _activity_pattern_matches($message, $rule->{finish_regex})) {
+		finish_activity('finish announcement matched');
+		return 'finish';
+	}
+	return undef unless $state_name eq 'RUNNING';
+
 	if (_round_mode($rule)) {
 		my $round_start = $rule->{round_start_regex};
 		if (defined $round_start && _trim($round_start) ne ''

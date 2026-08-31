@@ -4158,6 +4158,31 @@ RULES
 			LastROActivity::onMainLoopPre(undef, {now => $now});
 		};
 
+		# A finish announcement owns the active Lottery lifecycle even before map
+		# confirmation or the first NPC click.  Both entry states must stop before
+		# the deferred dialog action can run.
+		for my $entry_state (qw(DEPARTING ENTERING)) {
+			$setup->();
+			$confirm_map->() if $entry_state eq 'ENTERING';
+			is(LastROActivity::state(), $entry_state,
+				"Lottery reaches $entry_state before its first click");
+			my $finish_result = LastROActivity::onSystemMessage(undef, {
+				Msg => '抽奖活动已结束',
+			});
+			is($finish_result, 'finish',
+				"finish announcement is consumed while $entry_state");
+			is(LastROActivity::state(), 'RETURNING',
+				"finish announcement moves $entry_state directly to RETURNING");
+			is_deeply(\@PluginTest::send_talk_calls, [],
+				"finish announcement prevents the first click from $entry_state");
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
+				"finish announcement requests one tt prontera return from $entry_state");
+			is($LastROActivity::lottery_npc_id, undef,
+				"finish announcement clears Lottery dialog state from $entry_state");
+			$Globals::field = PluginTest::Field->new('prontera');
+			LastROActivity::onMapChange(undef, {});
+		}
+
 		$setup->();
 		$confirm_map->();
 		$main_loop->();

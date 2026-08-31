@@ -227,6 +227,13 @@ sub validate_rule {
 	if ($dialog_mode ne '' && $dialog_mode ne 'repeat_first_until_finish') {
 		push @errors, 'entry_dialog_mode must be repeat_first_until_finish';
 	}
+	if ($rule->{enabled} && $dialog_mode eq 'repeat_first_until_finish') {
+		unless (_has_value($rule->{finish_regex})) {
+			push @errors, 'finish_regex is required for repeating NPC dialog';
+		} elsif (!_valid_pattern($rule->{finish_regex})) {
+			push @errors, 'finish_regex is invalid';
+		}
+	}
 
 	# An explicitly typed entry is an assertion that the corresponding
 	# server-backed route has been confirmed.  Keep this parser check limited to
@@ -314,7 +321,8 @@ sub validate_rule {
 		&& !_valid_pattern($rule->{round_id_regex})) {
 		push @errors, 'round_id_regex is invalid';
 	}
-	if (defined $rule->{finish_regex}
+	if ($dialog_mode ne 'repeat_first_until_finish'
+		&& defined $rule->{finish_regex}
 		&& (_has_value($rule->{finish_regex}) || ref($rule->{finish_regex}))
 		&& !_valid_pattern($rule->{finish_regex})) {
 		push @errors, 'finish_regex is invalid';
