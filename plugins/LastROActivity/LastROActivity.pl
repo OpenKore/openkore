@@ -635,7 +635,7 @@ sub _validated_enabled_rule {
 	# Globals::mon_control; those retain their parser-compatible legacy behavior
 	# and are checked at entry time.  Parser-created rules always materialize the
 	# key (including an undef value), so an omitted configured type still uses the
-	# privateairship default and is preflighted here.
+	# tt default and is preflighted here.
 	if (_runtime_search_validation_available($rule)) {
 		my ($search_ok) = _validate_search_targets($rule);
 		return 0 unless $search_ok;
@@ -663,7 +663,7 @@ sub _runtime_search_validation_available {
 		my $entry_type = lc(_trim($rule->{entry_type}));
 		return 0 if $entry_type eq 'npc' || $entry_type eq 'macro';
 		# Rules parsed through LastROActivity::Rules always materialize this key,
-		# including undef/empty values.  Those values default to privateairship and
+		# including undef/empty values.  Those values default to tt and
 		# therefore require shared-search preflight before scheduling.
 		return 1;
 	}
@@ -672,7 +672,7 @@ sub _runtime_search_validation_available {
 	return 1 if exists $rule->{validation_errors};
 	# Direct scheduler projections omit parser metadata and entry_type.  They must
 	# opt into the legacy scheduler-only behavior explicitly; an unmarked direct
-	# search hash defaults to privateairship and is preflighted fail-closed.
+	# search hash defaults to tt and is preflighted fail-closed.
 	return 0 if defined $rule->{scheduler_only}
 		&& "$rule->{scheduler_only}" =~ /^\s*1\s*\z/;
 	return 1;
@@ -1214,6 +1214,53 @@ sub _event_map {
 		|| $map =~ /\.\./ || $map =~ /[\x00-\x1F\x7F]/
 		|| $map =~ /[\s;|&<>"'`]/;
 	return $map;
+}
+
+sub _event_destination {
+	my ($rule, $event) = @_;
+	return undef unless ref($rule) eq 'HASH';
+
+	my $entry_type = lc(_trim($rule->{entry_type} || 'tt'));
+	if ($entry_type eq 'npc'
+		&& lc(_trim($rule->{entry_dialog_mode})) eq 'repeat_first_until_finish') {
+		return {
+			map => _event_map($rule, $event),
+			x => $rule->{entry_x},
+			y => $rule->{entry_y},
+		};
+	}
+	if (lc(_trim($rule->{map_source})) eq 'dynamic') {
+		return undef unless ref($event) eq 'HASH' && ref($event->{data_map}) eq 'HASH';
+		return {
+			map => $event->{data_map}{map},
+			x => $event->{data_map}{x},
+			y => $event->{data_map}{y},
+		};
+	}
+	return {
+		map => _event_map($rule, $event),
+		x => $rule->{entry_x},
+		y => $rule->{entry_y},
+	};
+}
+
+sub _destination_command {
+	my ($destination) = @_;
+	return undef unless ref($destination) eq 'HASH';
+	my $map = _normalize_map_name($destination->{map});
+	return undef unless defined $map;
+	return undef if $map =~ m{[\\/]} || $map =~ /\.\./ || $map =~ /[\x00-\x1F\x7F]/;
+
+	my ($x, $y) = @{$destination}{qw(x y)};
+	return "tt $map" unless defined $x && defined $y
+		&& "$x" =~ /^\d+\z/ && "$y" =~ /^\d+\z/;
+	return "tt $map $x $y";
+}
+
+sub _uses_tt_transport {
+	my ($entry_type) = @_;
+	return $entry_type eq 'tt' || $entry_type eq 'airship'
+		|| $entry_type eq 'privateairship';
 }
 
 sub _normalize_map_name {
@@ -1767,8 +1814,8 @@ sub _validate_return_policy {
 	return (1, undef) unless exists $rule->{return_policy}
 		&& defined $rule->{return_policy};
 	my $policy = _trim($rule->{return_policy});
-	return (1, undef) if $policy =~ /^privateairship:prontera$/i;
-	my $error = 'return_policy must be privateairship:prontera';
+	return (1, undef) if $policy =~ /^(?:tt|privateairship):prontera$/i;
+	my $error = 'return_policy must be tt:prontera';
 	_append_rule_validation_error($rule, $error);
 	return (0, $error);
 }
@@ -2002,7 +2049,7 @@ sub _uses_search_mode {
 	my ($rule) = @_;
 	return 1 unless ref($rule) eq 'HASH';
 	return 1 if $rule->{search_mode} || $rule->{shared_search};
-	my $entry_type = lc(_trim($rule->{entry_type} || 'privateairship'));
+	my $entry_type = lc(_trim($rule->{entry_type} || 'tt'));
 	return 0 if $entry_type eq 'npc' || $entry_type eq 'macro';
 	return 1;
 }
@@ -2024,7 +2071,8 @@ sub _activity_entry_validation {
 	return $search_reason unless $search_ok;
 	return 'not connected in game' unless _in_game();
 
-	my $map = _event_map($rule, $event);
+	my $destination = _event_destination($rule, $event);
+	my $map = ref($destination) eq 'HASH' ? $destination->{map} : undef;
 	unless (defined $map) {
 		my $reason = (defined $rule->{map_source}
 			&& lc(_trim($rule->{map_source})) eq 'dynamic')
@@ -2044,10 +2092,13 @@ sub _activity_entry_validation {
 		return $reason;
 	}
 
-	my $entry_type = lc(_trim($rule->{entry_type} || 'privateairship'));
-	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
-		my ($ok, $reason) = _inventory_has_airship_item($rule);
-		return $reason unless $ok;
+	my $entry_type = lc(_trim($rule->{entry_type} || 'tt'));
+	if (_uses_tt_transport($entry_type)) {
+		unless (defined _destination_command($destination)) {
+			my $reason = 'event destination is invalid';
+			_append_rule_validation_error($rule, $reason);
+			return $reason;
+		}
 	} elsif ($entry_type eq 'macro') {
 		my ($macro, $macro_error) = _configured_macro($rule, 'entry_macro');
 		return $macro_error if defined $macro_error;
@@ -2180,9 +2231,9 @@ sub _entry_transfer_ready {
 	return 0 unless defined $active_event;
 	my $rule = $active_event->{rule};
 	my $entry_type = ref($rule) eq 'HASH'
-		? lc(_trim($rule->{entry_type} || 'privateairship'))
-		: 'privateairship';
-	return 1 unless $entry_type eq 'airship' || $entry_type eq 'privateairship';
+		? lc(_trim($rule->{entry_type} || 'tt'))
+		: 'tt';
+	return 1 unless _uses_tt_transport($entry_type);
 	return $entry_transfer_accepted ? 1 : 0;
 }
 
@@ -2359,27 +2410,35 @@ sub enter_search_mode {
 sub request_event_entry {
 	my ($rule, $event) = @_;
 	return 0 unless ref($rule) eq 'HASH';
-	my $map = _event_map($rule, $event || $active_event);
-	return 0 unless defined $map;
-	my $entry_type = lc(_trim($rule->{entry_type} || 'privateairship'));
-	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
-		my (undef, $item_error) = _airship_item_id($rule);
-		die "$item_error\n" if defined $item_error;
+	my $entry_type = lc(_trim($rule->{entry_type} || 'tt'));
+	if (_uses_tt_transport($entry_type)) {
+		my $destination = ref($active_event) eq 'HASH'
+			&& ref($active_event->{destination}) eq 'HASH'
+			? $active_event->{destination}
+			: _event_destination($rule, $event || $active_event);
+		return 0 unless ref($destination) eq 'HASH';
+		my $map = $destination->{map};
+		my $command = _destination_command($destination);
+		return 0 unless defined $map && defined $command;
+		$active_event->{destination} = {%$destination}
+			if ref($active_event) eq 'HASH' && ref($active_event->{destination}) ne 'HASH';
 		$active_event->{airship_entry_attempts} =
 			($active_event->{airship_entry_attempts} || 0) + 1
 			if defined $active_event && ref($active_event) eq 'HASH';
 		_set_pending_destination($map, 'entry', $rule)
 			or die "invalid pending activity destination\n";
-		my ($command_ok, $command_error) = _run_checked_command("privateairship $map");
+		my ($command_ok, $command_error) = _run_checked_command($command);
 		unless ($command_ok) {
 			_clear_pending_destination();
-			$command_error = 'privateairship command failed'
+			$command_error = 'tt command failed'
 				unless defined $command_error && $command_error ne '';
 			die "$command_error\n";
 		}
 		_confirm_entry_map_if_current($map);
 		return 1;
 	}
+	my $map = _event_map($rule, $event || $active_event);
+	return 0 unless defined $map;
 	if ($entry_type eq 'macro') {
 		my ($macro, $macro_error) = _configured_macro($rule, 'entry_macro');
 		die "$macro_error\n" if defined $macro_error;
@@ -3222,7 +3281,7 @@ sub return_to_capital {
 		&& ($pending_macro_stage || '') eq 'finish';
 
 	# A map-loss hook can report prontera directly.  That packet is already the
-	# authoritative return confirmation; issuing another private-airship request
+	# authoritative return confirmation; issuing another tt request
 	# would leave the failed lifecycle waiting for a transfer that cannot occur.
 	my $current_map = _current_map(undef);
 	if (defined $current_map && _map_matches($current_map, 'prontera')
@@ -3247,9 +3306,9 @@ sub return_to_capital {
 	_set_pending_destination('prontera', 'return', $rule)
 		or return 0;
 
-	my ($ok, $error) = _run_checked_command('privateairship prontera');
+	my ($ok, $error) = _run_checked_command('tt prontera');
 	unless ($ok) {
-		$error = 'privateairship return command failed'
+		$error = 'tt return command failed'
 			unless defined $error && $error ne '';
 		# Keep the lifecycle in the return state even when the command is rejected.
 		# A later map packet is the only ordinary proof that makes restoration safe.

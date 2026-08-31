@@ -35,6 +35,7 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	entry_npc
 	entry_npc_trusted
 	entry_npc_evidence
+	entry_dialog_mode
 	round_start_regex
 	round_id_regex
 	round_success_regex
@@ -55,6 +56,7 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 );
 
 my %ENTRY_TYPES = map { $_ => 1 } qw(
+	tt
 	airship
 	privateairship
 	npc
@@ -203,10 +205,11 @@ sub validate_rule {
 
 	# A return policy is an assertion about the only supported cleanup route.
 	# Missing policy remains a legacy/default value, but an explicit override must
-	# be the canonical private-airship transfer to prontera.
+	# be the canonical tt transfer to prontera.  The old private-airship spelling
+	# remains a compatibility alias for existing rule files.
 	if ($rule->{enabled} && defined $rule->{return_policy}
-		&& _trim($rule->{return_policy}) !~ /^privateairship:prontera$/i) {
-		push @errors, 'return_policy must be privateairship:prontera';
+		&& _trim($rule->{return_policy}) !~ /^(?:tt|privateairship):prontera$/i) {
+		push @errors, 'return_policy must be tt:prontera';
 	}
 
 	if (_has_value($rule->{map_source})
@@ -226,10 +229,7 @@ sub validate_rule {
 	if ($rule->{enabled} && _has_value($rule->{entry_type})
 		&& $ENTRY_TYPES{$rule->{entry_type}}) {
 		my $entry_type = lc(_trim($rule->{entry_type}));
-		if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
-			if (!defined $rule->{entry_item_id} || _trim($rule->{entry_item_id}) eq '') {
-				push @errors, 'entry_item_id is required for airship entry';
-			}
+		if ($entry_type eq 'tt' || $entry_type eq 'airship' || $entry_type eq 'privateairship') {
 			unless (_has_search_targets($rule)) {
 				push @errors, 'search_targets evidence is required for shared search mode';
 			}
@@ -382,6 +382,7 @@ sub _new_rule {
 		entry_npc => undef,
 		entry_npc_trusted => undef,
 		entry_npc_evidence => undef,
+		entry_dialog_mode => undef,
 		round_start_regex => undef,
 		round_id_regex => undef,
 		round_success_regex => undef,

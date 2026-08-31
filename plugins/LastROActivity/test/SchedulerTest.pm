@@ -200,13 +200,10 @@ sub start {
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: entry_item_id is required for airship entry',
 				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: entry_item_id is required for airship entry',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
-				'pool_challenge: entry_item_id is required for airship entry',
 				'pool_challenge: search_targets evidence is required for shared search mode',
 				'lottery: entry_npc_trusted=1 is required for NPC entry',
 				'lottery: entry_npc_evidence is required for NPC entry',

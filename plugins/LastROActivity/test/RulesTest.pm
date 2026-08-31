@@ -41,6 +41,74 @@ RULES
 		done_testing();
 	};
 
+	subtest 'accepts canonical tt routing and legacy transfer aliases' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[canonical]
+enabled=1
+announce_regex=START
+start_regex=START
+finish_regex=DONE
+map_source=static
+entry_type=tt
+entry_map=prontera
+entry_x=10
+entry_y=20
+return_policy=tt:prontera
+search_targets=1002
+
+[legacy_airship]
+enabled=1
+announce_regex=START
+start_regex=START
+finish_regex=DONE
+map_source=static
+entry_type=airship
+entry_map=prontera
+return_policy=privateairship:prontera
+search_targets=1002
+
+[legacy_privateairship]
+enabled=1
+announce_regex=START
+start_regex=START
+finish_regex=DONE
+map_source=static
+entry_type=privateairship
+entry_map=prontera
+return_policy=privateairship:prontera
+search_targets=1002
+
+[dialog_compatible]
+enabled=0
+entry_type=npc
+entry_dialog_mode=repeat_first_until_finish
+
+[bad_return]
+enabled=1
+announce_regex=START
+start_regex=START
+finish_regex=DONE
+map_source=static
+entry_type=tt
+entry_map=prontera
+return_policy=tt:payon
+search_targets=1002
+RULES
+
+		is_deeply($errors, ['bad_return: return_policy must be tt:prontera'],
+			'canonical tt rule validates while non-prontera return is rejected');
+		is($rules->{canonical}{entry_type}, 'tt', 'tt is a supported entry type');
+		is($rules->{canonical}{return_policy}, 'tt:prontera',
+			'tt:prontera is the canonical return policy');
+		ok($rules->{legacy_airship}{enabled},
+			'airship remains accepted as a tt compatibility input without an item ID');
+		ok($rules->{legacy_privateairship}{enabled},
+			'privateairship remains accepted as a tt compatibility input without an item ID');
+		is($rules->{dialog_compatible}{entry_dialog_mode}, 'repeat_first_until_finish',
+			'preserves the deferred NPC dialog mode field');
+		done_testing();
+	};
+
 	subtest 'validates enabled rules without changing direct input' => sub {
 		my $rule = {
 			enabled => 1,
@@ -173,20 +241,19 @@ RULES
 		is_deeply(
 			$errors,
 			[
-				'incomplete_airship: entry_item_id is required for airship entry',
 				'incomplete_airship: search_targets evidence is required for shared search mode',
 				'incomplete_npc: entry_npc_trusted=1 is required for NPC entry',
 				'incomplete_npc: entry_npc_evidence is required for NPC entry',
 			],
-			'rejects enabled entry rules without item/search or trusted NPC evidence',
+			'rejects enabled entry rules without search or trusted NPC evidence',
 		);
 		ok(!$rules->{incomplete_airship}{enabled},
 			'airship rule is effectively disabled before scheduling');
 		ok(!$rules->{incomplete_npc}{enabled},
 			'NPC rule is effectively disabled before scheduling');
 		like(join('; ', @{$rules->{incomplete_airship}{validation_errors}}),
-			qr/entry_item_id.*search_targets|search_targets.*entry_item_id/,
-			'airship evidence errors are attached to the parsed rule');
+			qr/search_targets/,
+			'airship compatibility rule keeps its search evidence error');
 		like(join('; ', @{$rules->{incomplete_npc}{validation_errors}}),
 			qr/entry_npc_trusted.*entry_npc_evidence|entry_npc_evidence.*entry_npc_trusted/,
 			'NPC evidence errors are attached to the parsed rule');
@@ -557,13 +624,10 @@ RULES
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: entry_item_id is required for airship entry',
 				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: entry_item_id is required for airship entry',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
-				'pool_challenge: entry_item_id is required for airship entry',
 				'pool_challenge: search_targets evidence is required for shared search mode',
 				'lottery: entry_npc_trusted=1 is required for NPC entry',
 				'lottery: entry_npc_evidence is required for NPC entry',
@@ -593,13 +657,10 @@ RULES
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: entry_item_id is required for airship entry',
 				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: entry_item_id is required for airship entry',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
-				'pool_challenge: entry_item_id is required for airship entry',
 				'pool_challenge: search_targets evidence is required for shared search mode',
 				'lottery: entry_npc_trusted=1 is required for NPC entry',
 				'lottery: entry_npc_evidence is required for NPC entry',

@@ -888,7 +888,7 @@ RULES
 				'snapshot',
 				'config lockMap=',
 				'config teleportAuto_search=1',
-				'privateairship event_map',
+				'tt event_map',
 			],
 			'trigger interrupts before departure',
 		);
@@ -1153,7 +1153,7 @@ RULES
 		done_testing();
 	};
 
-	subtest 'missing strict airship metadata fails closed' => sub {
+	subtest 'tt entry does not require private airship metadata' => sub {
 		LastROActivity::cleanup_and_restore('test reset');
 		%Globals::config = (
 			lockMap => 'pay_fild08',
@@ -1164,20 +1164,18 @@ RULES
 		%Globals::maps_lut = ('event_map.rsw' => 1);
 		%Globals::mon_control = (event_egg => {teleport_search => 1});
 		$Globals::net = PluginTest::Net->new;
-		$Globals::char = PluginTest::Char->new(
-			PluginTest::Inventory->new({14527 => {amount => 1}}),
-		);
-		$Globals::masterServer = {lastroAirship => 1};
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		$Globals::char = undef;
+		$Globals::masterServer = undef;
 		@trace = ();
-		@Log::warnings = ();
+		@Commands::run_calls = ();
 		my $ok = LastROActivity::begin_activity(
 			{
 				event_id => 'missing_server_item',
 				enabled => 1,
 				announce_regex => '活动',
 				start_regex => '活动',
-				entry_type => 'privateairship',
-				entry_item_id => 14527,
+				entry_type => 'tt',
 				entry_map => 'event_map',
 				search_targets => ['event_egg'],
 				duration_seconds => 900,
@@ -1185,10 +1183,14 @@ RULES
 			},
 			{event_id => 'missing_server_item', map => 'event_map'},
 		);
-		is($ok, 0, 'missing server item metadata rejects the event');
-		is_deeply(\@trace, [], 'missing server metadata has no side effects');
-		is_deeply(\%Globals::config, \%before, 'missing server metadata leaves config untouched');
-		like(join('', @Log::warnings), qr/server metadata/, 'missing server metadata is logged');
+		is($ok, 1, 'missing server item metadata no longer blocks tt entry');
+		is_deeply(\@Commands::run_calls, ['tt event_map'],
+			'tt entry dispatches without inventory or server item metadata');
+		is($Globals::config{teleportAuto_search}, 1,
+			'tt entry still applies the activity search configuration');
+		LastROActivity::cleanup_and_restore('tt metadata compatibility cleanup');
+		is_deeply(\%Globals::config, \%before,
+			'tt metadata compatibility cleanup restores the original configuration');
 		done_testing();
 	};
 
@@ -1664,7 +1666,7 @@ RULES
 			};
 			is(LastROActivity::finish_activity('finish announcement'), 1,
 				'finish announcement starts the return path');
-			is_deeply(\@trace, ['clear activity AI', 'privateairship prontera'],
+			is_deeply(\@trace, ['clear activity AI', 'tt prontera'],
 				'return request waits for the map confirmation hook');
 			$Globals::field = PluginTest::Field->new('prontera');
 			push @trace, 'map confirmed prontera';
@@ -1674,7 +1676,7 @@ RULES
 			\@trace,
 			[
 				'clear activity AI',
-				'privateairship prontera',
+				'tt prontera',
 				'map confirmed prontera',
 				'restore lockMap/pay_fild08',
 				'restore teleport settings',
@@ -1739,13 +1741,13 @@ RULES
 			$entry_ok = LastROActivity::begin_activity($rule, $event);
 		}
 		is($entry_ok, 1, 'airship entry is requested');
-		is_deeply(\@Commands::run_calls, ['privateairship event_map'],
+		is_deeply(\@Commands::run_calls, ['tt event_map'],
 			'macro is not launched before the destination map is confirmed');
 		$Globals::field = PluginTest::Field->new('event_map');
 		LastROActivity::onAirshipResult(undef, {type => 0});
 		LastROActivity::onMapChange(undef, {});
 		is_deeply(\@Commands::run_calls,
-			['privateairship event_map', 'macro enter_event -overrideAI -exclusive'],
+			['tt event_map', 'macro enter_event -overrideAI -exclusive'],
 			'entry macro starts only after map confirmation');
 		is(LastROActivity::state(), 'ENTERING', 'entry macro keeps the activity in ENTERING');
 		done_testing();
@@ -1937,13 +1939,13 @@ RULES
 		is(LastROActivity::state(), 'ENTERING', 'map arrival confirms entry but does not run yet');
 		LastROActivity::onMainLoopPre(undef, {now => $LastROActivity::activity_started_at});
 		is(LastROActivity::state(), 'ENTERING', 'main loop waits for the accepted airship result');
-		is_deeply(\@Commands::run_calls, ['privateairship event_map'],
+		is_deeply(\@Commands::run_calls, ['tt event_map'],
 			'entry macro is not launched before airship acceptance');
 
 		LastROActivity::onAirshipResult(undef, {type => 0});
 		LastROActivity::onMapChange(undef, {});
 		is_deeply(\@Commands::run_calls,
-			['privateairship event_map', 'macro enter_event -overrideAI -exclusive'],
+			['tt event_map', 'macro enter_event -overrideAI -exclusive'],
 			'accepted map-first entry launches its macro exactly once');
 		done_testing();
 	};
@@ -2111,7 +2113,7 @@ RULES
 				"source-prontera $label retains the active event for return confirmation");
 			ok($LastROActivity::return_pending,
 				"source-prontera $label keeps the return marker armed");
-			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 				"source-prontera $label issues the canonical return request");
 			is($Globals::config{teleportAuto_search}, 1,
 				"source-prontera $label keeps temporary search config until return confirmation");
@@ -2180,7 +2182,7 @@ RULES
 		LastROActivity::onAirshipResult(undef, {type => 3});
 		is(LastROActivity::state(), 'ENTERING', 'orphan result does not fail the active entry');
 		is(LastROActivity::last_failure(), $failure_before, 'orphan result does not overwrite failure state');
-		is_deeply(\@Commands::run_calls, ['privateairship event_map'],
+		is_deeply(\@Commands::run_calls, ['tt event_map'],
 			'orphan result does not trigger a return request');
 		done_testing();
 	};
@@ -2217,7 +2219,7 @@ RULES
 		LastROActivity::onMainLoopPre(undef, {now => 1_006});
 		is(LastROActivity::state(), 'FAILED', 'missing airship acceptance fails after the handshake deadline');
 		is_deeply(\@Commands::run_calls,
-			['privateairship event_map', 'privateairship prontera'],
+			['tt event_map', 'tt prontera'],
 			'timeout starts the single fixed return request');
 		done_testing();
 	};
@@ -2329,8 +2331,8 @@ RULES
 		like(LastROActivity::last_failure(), qr/nested child failed/i,
 			'nested macro failure is retained instead of reporting success');
 		is_deeply(\@Commands::run_calls,
-			['privateairship event_map', 'macro root_entry_macro -overrideAI -exclusive',
-				'privateairship prontera'],
+			['tt event_map', 'macro root_entry_macro -overrideAI -exclusive',
+				'tt prontera'],
 			'nested macro failure starts the fixed return exactly once');
 		$Commands::run_failure = undef;
 		$macro::queue = undef;
@@ -2379,7 +2381,7 @@ RULES
 		}
 		is(LastROActivity::state(), 'FAILED', 'map departure fails before running');
 		is_deeply(\@Commands::run_calls,
-			['privateairship event_map', 'privateairship prontera'],
+			['tt event_map', 'tt prontera'],
 			'map departure starts the fixed return exactly once');
 		done_testing();
 	};
@@ -2437,8 +2439,8 @@ RULES
 		is(LastROActivity::state(), 'FAILED', 'off-map macro completion fails the activity');
 		like(LastROActivity::last_failure(), qr/map/i, 'off-map completion records a map failure');
 		is_deeply(\@Commands::run_calls,
-			['privateairship event_map', 'macro completed_entry_macro -overrideAI -exclusive',
-				'privateairship prontera'],
+			['tt event_map', 'macro completed_entry_macro -overrideAI -exclusive',
+				'tt prontera'],
 			'off-map macro completion starts the fixed return exactly once');
 		$Commands::run_failure = undef;
 		$macro::queue = undef;
@@ -2537,6 +2539,104 @@ RULES
 		my ($now) = @_;
 		return eval { LastROActivity::checkActivityTimeout($now) };
 	};
+	my $task7_assert_no_privateairship = sub {
+		my ($label) = @_;
+		ok(!(grep { /^privateairship\b/ } @Commands::run_calls),
+			"$label never executes privateairship");
+	};
+
+	subtest 'tt transport resolves coordinates and keeps retry destinations stable' => sub {
+		my @transport_commands;
+
+		my ($dynamic_rule, $dynamic_event) = $task7_setup_running->(
+			'task7_tt_dynamic',
+			{entry_type => 'tt', map_source => 'dynamic'},
+		);
+		$Globals::maps_lut{'morocc.rsw'} = 1;
+		$dynamic_event->{data_map} = {map => 'morocc', x => 159, y => 99};
+		@Commands::run_calls = ();
+		ok(LastROActivity::request_event_entry($dynamic_rule, $dynamic_event),
+			'dynamic tt entry is requested');
+		is_deeply(\@Commands::run_calls, ['tt morocc 159 99'],
+			'dynamic event uses announcement coordinates');
+		is_deeply(
+			LastROActivity::_event_destination(
+				{
+					entry_type => 'npc',
+					entry_dialog_mode => 'repeat_first_until_finish',
+					map_source => 'dynamic',
+					entry_x => 152,
+					entry_y => 133,
+				},
+				{data_map => {map => 'morocc', x => 159, y => 99}},
+			),
+			{map => 'morocc', x => 152, y => 133},
+			'deferred NPC dialog mode keeps configured coordinates over announcement coordinates',
+		);
+		push @transport_commands, @Commands::run_calls;
+		LastROActivity::cleanup_and_restore('dynamic tt transport cleanup');
+
+		my ($static_rule, $static_event) = $task7_setup_running->(
+			'task7_tt_static',
+			{
+				entry_type => 'tt',
+				map_source => 'static',
+				entry_map => 'prontera',
+				entry_x => 152,
+				entry_y => 133,
+			},
+		);
+		@Commands::run_calls = ();
+		ok(LastROActivity::request_event_entry($static_rule, $static_event),
+			'static tt entry is requested');
+		is_deeply(\@Commands::run_calls, ['tt prontera 152 133'],
+			'static event uses configured coordinates');
+		push @transport_commands, @Commands::run_calls;
+		LastROActivity::cleanup_and_restore('static tt transport cleanup');
+
+		my ($return_rule, $return_event) = $task7_setup_running->('task7_tt_return');
+		@Commands::run_calls = ();
+		my $return_ok;
+		{
+			no warnings 'redefine';
+			local *LastROActivity::clear_activity_ai = sub { return 1 };
+			$return_ok = LastROActivity::return_to_capital();
+		}
+		ok($return_ok, 'tt return is requested');
+		is_deeply(\@Commands::run_calls, ['tt prontera'],
+			'return uses the new map-only command');
+		push @transport_commands, @Commands::run_calls;
+		$task7_confirm_return->();
+
+		my ($retry_rule, $retry_event) = $task7_setup_running->(
+			'task7_tt_retry',
+			{entry_type => 'tt', map_source => 'dynamic'},
+		);
+		$Globals::maps_lut{'morocc.rsw'} = 1;
+		$Globals::maps_lut{'payon.rsw'} = 1;
+		$retry_event->{data_map} = {map => 'morocc', x => 159, y => 99};
+		$retry_event->{entry_confirmed} = 0;
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart);
+		$LastROActivity::entry_map_confirmed = 0;
+		$LastROActivity::entry_map_confirmation_source = undef;
+		$LastROActivity::entry_transfer_accepted = 0;
+		$LastROActivity::airship_failure_count = 0;
+		@Commands::run_calls = ();
+		ok(LastROActivity::request_event_entry($retry_rule, $retry_event),
+			'first tt retry candidate is requested');
+		$retry_event->{data_map} = {map => 'payon', x => 10, y => 20};
+		LastROActivity::onAirshipResult(undef, {type => 2});
+		LastROActivity::onAirshipResult(undef, {type => 2});
+		is_deeply(\@Commands::run_calls,
+			['tt morocc 159 99', 'tt morocc 159 99', 'tt morocc 159 99'],
+			'rejections retry the first resolved destination instead of later announcement data');
+		push @transport_commands, @Commands::run_calls;
+		ok(!(grep { /^privateairship\b/ } @transport_commands),
+			'tt entry, retry, and return paths never execute privateairship');
+		LastROActivity::cleanup_and_restore('tt retry transport cleanup');
+		done_testing();
+	};
 
 	subtest 'dojo rounds stop at the limit and use a trusted leave NPC' => sub {
 		my ($rule, $event) = $task7_setup_running->(
@@ -2577,7 +2677,7 @@ RULES
 		is(LastROActivity::state(), 'RETURNING',
 			'round limit stops combat and starts the return lifecycle');
 		is_deeply(\@Commands::run_calls,
-			['macro stop', 'talknpc 12 34 ok,yes', 'privateairship prontera'],
+			['macro stop', 'talknpc 12 34 ok,yes', 'tt prontera'],
 			'round limit executes the trusted leave NPC before returning');
 		$task7_confirm_return->();
 		is(LastROActivity::active_event(), undef,
@@ -2759,7 +2859,7 @@ RULES
 		@Commands::run_calls = ();
 		LastROActivity::onMainLoopPre(undef, {now => 100});
 		is(LastROActivity::state(), 'DEPARTING', 'entry remains pending despite a stale party death');
-		ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+		ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
 			'entry-state stale death does not request a return');
 		LastROActivity::cleanup_and_restore('entry stale death test cleanup');
 		done_testing();
@@ -2809,10 +2909,10 @@ RULES
 			$task7_activity_message->('ROUND SUCCESS');
 			is(LastROActivity::state(), 'FINISHING',
 				'round limit remains in FINISHING while leave NPC is queued');
-			ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+			ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
 				'leave queue prevents an immediate return command');
 			LastROActivity::onMainLoopPre(undef, {now => 101});
-			ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+			ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
 				'active leave queue still blocks return on the next loop');
 			$npc_task->{status} = 4;
 			$npc_queue_active = 0;
@@ -2821,7 +2921,7 @@ RULES
 			LastROActivity::onMainLoopPre(undef, {now => 102});
 			is(LastROActivity::state(), 'RETURNING',
 				'queue disappearance advances the lifecycle to RETURNING');
-			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 				'return is issued once after leave queue completion');
 			$task7_confirm_return->();
 		}
@@ -2860,7 +2960,7 @@ RULES
 			'queue visibility without task identity fails the activity');
 		like(LastROActivity::last_failure(), qr/(?:task|observer|NPC)/i,
 			'unobservable leave task records a diagnostic');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'unobservable leave task requests one fixed return');
 		$task7_confirm_return->();
 		$Commands::run_failure = undef;
@@ -2906,7 +3006,7 @@ RULES
 				'completed leave task error fails the activity');
 			like(LastROActivity::last_failure(), qr/NPC|leave|dialog/i,
 				'leave task error is retained as a diagnostic');
-			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 				'failed leave task still requests one fixed return');
 			$task7_confirm_return->();
 		}
@@ -2951,7 +3051,7 @@ RULES
 				'map-change with unconsumed leave steps fails the activity');
 			like(LastROActivity::last_failure(), qr/interrupted|leave|NPC/i,
 				'interrupted leave task keeps a diagnostic');
-			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 				'interrupted leave task still requests one fixed return');
 			$task7_confirm_return->();
 
@@ -3024,7 +3124,7 @@ RULES
 				'Priest death is not polled after combat has finished');
 			ok(defined $LastROActivity::pending_leave_npc,
 				'leave NPC state remains owned by its queue while finishing');
-			ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+			ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
 				'finish-state party death does not issue an unrelated return');
 			LastROActivity::cleanup_and_restore('finish-state death test cleanup');
 		}
@@ -3053,7 +3153,7 @@ RULES
 			'missing leave evidence is recorded');
 		ok(!grep(/^talknpc /, @Commands::run_calls),
 			'missing leave evidence never guesses a TalkNPC command');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'fail-closed round completion still requests the fixed return');
 		$task7_confirm_return->();
 		done_testing();
@@ -3079,7 +3179,7 @@ RULES
 			'dead Priest causes an immediate failed return');
 		like(LastROActivity::last_failure(), qr/(?:priest|resurrection|party).*(?:dead|died)/i,
 			'party death keeps an actionable diagnostic');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'party death requests one return');
 		$task7_confirm_return->();
 
@@ -3094,7 +3194,7 @@ RULES
 			@Commands::run_calls = ();
 			LastROActivity::onMainLoopPre(undef, {now => 200});
 			is(LastROActivity::state(), 'FAILED', "$job is recognized as resurrection-capable");
-			is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 				"$job death requests one return");
 			$task7_confirm_return->();
 		}
@@ -3134,7 +3234,7 @@ RULES
 		LastROActivity::onMainLoopPre(undef, {now => 200});
 		is(LastROActivity::state(), 'RUNNING',
 			'non-dojo activity remains running after party death');
-		ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+		ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
 			'non-dojo party death does not request a return');
 		done_testing();
 	};
@@ -3158,7 +3258,7 @@ RULES
 		LastROActivity::onMainLoopPre(undef, {now => 200});
 		is(LastROActivity::state(), 'RUNNING',
 			'pre-existing or offline party death does not abort the dojo');
-		ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+		ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
 			'stale or offline death does not request a return');
 		done_testing();
 	};
@@ -3185,7 +3285,7 @@ RULES
 		LastROActivity::onMainLoopPre(undef, {now => 200});
 		is(LastROActivity::state(), 'RUNNING',
 			'zero explicit Resurrection level is treated as non-capable');
-		ok(!grep { $_ eq 'privateairship prontera' } @Commands::run_calls,
+		ok(!grep { $_ eq 'tt prontera' } @Commands::run_calls,
 			'zero explicit Resurrection level does not trigger a return');
 		done_testing();
 	};
@@ -3212,7 +3312,7 @@ RULES
 			'zero-valued skill lookup does not suppress Priest job fallback');
 		like(LastROActivity::last_failure(), qr/(?:priest|resurrection|party).*(?:dead|died)/i,
 			'blessed Priest fallback keeps an actionable diagnostic');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'blessed Priest fallback requests one return');
 		$task7_confirm_return->();
 		done_testing();
@@ -3232,10 +3332,10 @@ RULES
 		LastROActivity::onMainLoopPre(undef, {now => 200});
 		is(LastROActivity::state(), 'RUNNING',
 			'self death enters a bounded resurrection wait');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 0,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 0,
 			'self death does not leave immediately');
 		LastROActivity::onMainLoopPre(undef, {now => 229});
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 0,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 0,
 			'self death remains pending before the wait deadline');
 		$Globals::char->{dead} = 0;
 		LastROActivity::onMainLoopPre(undef, {now => 229});
@@ -3248,7 +3348,7 @@ RULES
 			'expired resurrection wait abandons the activity');
 		like(LastROActivity::last_failure(), qr/resurrect|dead|wait/i,
 			'expired wait records a diagnostic');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'expired wait requests one return');
 		$task7_confirm_return->();
 		done_testing();
@@ -3269,7 +3369,7 @@ RULES
 		LastROActivity::onMainLoopPre(undef, {now => 200});
 		is(LastROActivity::state(), 'FAILED',
 			'Priest output death abandons the dojo without waiting');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'Priest output death requests one fixed return');
 		$task7_confirm_return->();
 		done_testing();
@@ -3306,6 +3406,7 @@ RULES
 				'unrelated finish text is ignored');
 			is($task7_activity_message->('MVP CLEARED'), 'finish',
 				'final MVP phase finishes the active event');
+			$task7_assert_no_privateairship->('normal finish');
 			$task7_confirm_return->();
 			# A duplicate map packet and duplicate finish signal must not clean twice.
 			$task7_activity_message->('MVP CLEARED');
@@ -3326,11 +3427,13 @@ RULES
 			'phase timeout is not reported before its deadline');
 		is($task7_timeout->(110), 'finish',
 			'phase timeout requests a finish');
+		$task7_assert_no_privateairship->('phase timeout');
 		$task7_confirm_return->();
 
 		($rule, $event) = $task7_setup_running->('task7_overall', {duration_seconds => 900});
 		is($task7_timeout->(1000), 'finish',
 			'overall duration timeout requests a finish');
+		$task7_assert_no_privateairship->('overall timeout');
 		$task7_confirm_return->();
 
 		($rule, $event) = $task7_setup_running->('task7_entry_timeout', {timeout_seconds => 5});
@@ -3341,6 +3444,7 @@ RULES
 		$LastROActivity::pending_destination_deadline = 105;
 		is($task7_timeout->(106), 'fail',
 			'entry timeout fails rather than finishing the activity');
+		$task7_assert_no_privateairship->('entry timeout');
 		$task7_confirm_return->();
 		done_testing();
 	};
@@ -3363,10 +3467,11 @@ RULES
 			LastROActivity::onAirshipResult(undef, {type => 2});
 			LastROActivity::onAirshipResult(undef, {type => 2});
 			LastROActivity::onAirshipResult(undef, {type => 2});
-			is_deeply(\@trace, ['privateairship event_map', 'privateairship event_map', 'macro stop',
+			is_deeply(\@trace, ['tt event_map', 'tt event_map', 'macro stop',
 				'AI::clear attack move route mapRoute items_take items_gather take',
-				'AI::clear NPC teleport', 'privateairship prontera'],
+				'AI::clear NPC teleport', 'tt prontera'],
 				'three failures issue bounded entry retries and one return request');
+			$task7_assert_no_privateairship->('bounded rejection cleanup');
 			$task7_confirm_return->();
 		}
 		is($cleanup_calls, 1, 'repeated airship failures clean up once');
@@ -3380,6 +3485,7 @@ RULES
 			teleportAuto_search => 0, teleportAuto_idle => 0,
 		);
 		LastROActivity::onMapChange(undef, {map => 'other_map'});
+		$task7_assert_no_privateairship->('map loss');
 		$task7_confirm_return->();
 		is_deeply(\%Globals::config, \%before, 'map kick-out restores the snapshot');
 		is(LastROActivity::activity_locked(), 0, 'map kick-out releases the lock');
@@ -3400,7 +3506,7 @@ RULES
 			'prontera map-loss packet completes the failed lifecycle immediately');
 		is(LastROActivity::active_event(), undef,
 			'prontera map-loss packet clears the active event');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 0,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 0,
 			'already-confirmed prontera does not request a second transfer');
 		is_deeply(\%Globals::config, \%before,
 			'already-confirmed prontera restores the original config');
@@ -3420,12 +3526,14 @@ RULES
 		my $before_commands = scalar @Commands::run_calls;
 		$Commands::commands{lastroactivity}->('lastroactivity', 'stop');
 		ok(grep($_ eq 'macro stop', @Commands::run_calls), 'manual stop stops an active macro');
-		ok(grep($_ eq 'privateairship prontera', @Commands::run_calls), 'manual stop uses the fixed return');
+		ok(grep($_ eq 'tt prontera', @Commands::run_calls), 'manual stop uses the fixed return');
+		$task7_assert_no_privateairship->('manual stop');
 		$task7_confirm_return->();
 
 		($rule, $event) = $task7_setup_running->('task7_off');
 		$Commands::commands{lastroactivity}->('lastroactivity', 'off');
-		ok(grep($_ eq 'privateairship prontera', @Commands::run_calls), 'off uses the fixed return for an active event');
+		ok(grep($_ eq 'tt prontera', @Commands::run_calls), 'off uses the fixed return for an active event');
+		$task7_assert_no_privateairship->('lastroactivity off');
 		$task7_confirm_return->();
 		$Commands::commands{lastroactivity}->('lastroactivity', 'on');
 		done_testing();
@@ -3668,7 +3776,7 @@ RULES
 		$LastROActivity::pending_destination_kind = 'entry';
 		$LastROActivity::pending_destination_deadline = 200;
 		$LastROActivity::airship_failure_count = 0;
-		@Commands::run_calls = ('privateairship event_map');
+		@Commands::run_calls = ('tt event_map');
 
 		{
 			no warnings 'redefine';
@@ -3683,14 +3791,14 @@ RULES
 			is($LastROActivity::airship_failure_count, 3, 'third rejection reaches the cap');
 			is(LastROActivity::state(), 'FAILED', 'exhausted entry retries fail the activity');
 			is_deeply(\@Commands::run_calls,
-				['privateairship event_map', 'privateairship event_map', 'privateairship event_map',
-					'privateairship prontera'],
+				['tt event_map', 'tt event_map', 'tt event_map',
+					'tt prontera'],
 				'entry retries issue three bounded requests and one return');
 
 			LastROActivity::onAirshipResult(undef, {type => 2});
 			is_deeply(\@Commands::run_calls,
-				['privateairship event_map', 'privateairship event_map', 'privateairship event_map',
-					'privateairship prontera'],
+				['tt event_map', 'tt event_map', 'tt event_map',
+					'tt prontera'],
 				'late rejection after exhaustion cannot issue another return');
 		}
 		$task7_confirm_return->();
@@ -3708,7 +3816,7 @@ RULES
 			'map kick-out keeps an actionable failure reason');
 		ok(!grep($_ eq 'macro must_not_run -overrideAI -exclusive', @Commands::run_calls),
 			'failure path does not launch the finish macro');
-		is(scalar(grep($_ eq 'privateairship prontera', @Commands::run_calls)), 1,
+		is(scalar(grep($_ eq 'tt prontera', @Commands::run_calls)), 1,
 			'failure path requests one return');
 		$task7_confirm_return->();
 		done_testing();
@@ -3762,7 +3870,7 @@ RULES
 		@Log::errors = ();
 		$Commands::run_failure = sub {
 			my ($command) = @_;
-			if ($command eq 'privateairship event_map') {
+			if ($command eq 'tt event_map') {
 				Log::error('Destination map is invalid.');
 			}
 			return 1;
@@ -3786,7 +3894,7 @@ RULES
 		is(LastROActivity::state(), 'FAILED', 'entry rejection records a failed lifecycle');
 		like(LastROActivity::last_failure(), qr/invalid|rejected|privateairship/i,
 			'entry rejection keeps the command diagnostic');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'entry rejection requests one fixed return without waiting for timeout');
 		$Commands::run_failure = undef;
 		$task7_confirm_return->();
@@ -3834,7 +3942,7 @@ RULES
 		ok($ok, 'failure path contains an activity AI cleanup exception');
 		is($error, '', 'activity AI cleanup exception does not escape the failure path');
 		is(LastROActivity::state(), 'FAILED', 'failure state is retained after cleanup exception');
-		is(scalar(grep { $_ eq 'privateairship prontera' } @Commands::run_calls), 1,
+		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'failure path still issues the fixed return after AI cleanup throws');
 		$task7_confirm_return->();
 		done_testing();
