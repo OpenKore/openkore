@@ -8,8 +8,9 @@ use Scalar::Util qw(weaken refaddr);
 use AI;
 use Commands ();
 use Globals qw(%config $char $field $masterServer $messageSender %portals_lut %maps_lut);
+use I18N qw(stringToBytes);
 use Lastro::Airship qw(isEnabled normalizeMapName chooseRouteMap choosePreRouteMap);
-use Log qw(debug warning message);
+use Log qw(debug error warning message);
 use Plugins;
 use Settings;
 use Task::MapRoute ();
@@ -27,6 +28,9 @@ my $freeMapsFile;
 my $pendingTask;
 my $originalInitMapCalculator;
 my $originalPrivateAirshipCallback;
+my $commands = Commands::register(
+	['tt', 'tt <map> [x y [item_id]] - LastRO coordinate teleport', \&_cmdTeleport],
+);
 my $hooks = Plugins::addHooks(
 	['MapRoute_iterate_start', \&onMapRouteIterateStart, undef],
 	['Network::Receive::map_changed', \&onMapChanged, undef],
@@ -35,6 +39,7 @@ my $hooks = Plugins::addHooks(
 );
 
 sub onUnload {
+	Commands::unregister($commands) if $commands;
 	_restorePrivateAirshipInterceptor();
 	_restoreMapRouteInterceptor();
 	Plugins::delHooks($hooks);
@@ -42,6 +47,59 @@ sub onUnload {
 
 sub _enabled {
 	return isEnabled($masterServer) && (!defined $config{lastro_airshipRoute} || $config{lastro_airshipRoute});
+}
+
+sub _trim {
+	my ($value) = @_;
+	$value = '' unless defined $value;
+	$value =~ s/^\s+|\s+$//g;
+	return $value;
+}
+
+sub _cmdTeleport {
+	my ($switch, $args) = @_;
+	my @parts = grep { length } split /\s+/, _trim($args);
+	unless (@parts == 1 || @parts == 3 || @parts == 4) {
+		error "Usage: tt <map> [x y [item_id]]\n";
+		return;
+	}
+
+	my ($map, $x, $y, $item_id) = @parts;
+	$map = normalizeMapName($map);
+	if ($map eq '' || length(stringToBytes($map)) >= 16) {
+		error "tt map name must fit the LastRO Private Airship Z16 field.\n";
+		return;
+	}
+
+	my $type = @parts == 1 ? 0 : 1;
+	if ($type) {
+		unless ($x =~ /^\d+$/ && $x <= 65535 && $y =~ /^\d+$/ && $y <= 65535) {
+			error "tt coordinates must be unsigned 16-bit integers.\n";
+			return;
+		}
+	} else {
+		$x = 0;
+		$y = 0;
+	}
+
+	$item_id = 14527 unless defined $item_id;
+	unless ($item_id =~ /^\d+$/ && $item_id > 0 && $item_id <= 4294967295) {
+		error "tt item ID must be an unsigned 32-bit integer greater than zero.\n";
+		return;
+	}
+
+	unless (isEnabled($masterServer)) {
+		error "tt is available only for the configured LastRO server.\n";
+		return;
+	}
+	unless ($messageSender && $messageSender->can('sendPrivateAirshipRequest')) {
+		error "tt is unavailable for the active server type.\n";
+		return;
+	}
+
+	$messageSender->sendPrivateAirshipRequest($map, $item_id, $x, $y, $type);
+	message "[LastroAirship] Requested LastRO coordinate transfer to $map.\n", 'info';
+	return;
 }
 
 sub _freeMaps {

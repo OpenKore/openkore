@@ -49,7 +49,7 @@
 - Produces LastROActivity::Rules::parse_text($text) -> ($rules_hashref, $errors_arrayref).
 - Produces LastROActivity::Rules::load_file($path) -> ($rules_hashref, $errors_arrayref).
 - Produces LastROActivity::Rules::validate_rule($rule_hashref) -> $errors_arrayref.
-- A parsed rule has event_id, enabled, announce_regex, start_regex, finish_regex, lead_seconds, map_source, entry_type, entry_map, entry_x, entry_y, entry_npc, duration_seconds, entry_macro, finish_macro, return_policy, and phases.
+- A parsed rule has event_id, enabled, announce_regex, start_regex, finish_regex, lead_seconds, map_source, entry_type, entry_map, entry_x, entry_y, entry_npc, duration_seconds, entry_macro, finish_macro, return_policy, search_targets, and phases. `search_targets` is evidence metadata only; it never replaces or rewrites shared `mon_control.txt`.
 
 - [ ] **Step 1: Write the failing parser tests.**
 
@@ -87,7 +87,7 @@ Expected: FAIL because LastROActivity::Rules and the test runner do not exist.
 
 - [ ] **Step 3: Implement the parser and validator.**
 
-Use UTF-8 line reading, ignore blank/comment lines, start a section on [event_id], split each non-comment line on the first =, normalize numeric fields to integers, and collect repeated phase.<index>.<field> keys into an ordered phases array. Reject duplicate event IDs, enabled rules without announce_regex, invalid entry_type, non-positive duration, and lead_seconds < 0; attach each rule's validation_errors array and return the aggregate errors array without enabling the affected rule.
+Use UTF-8 line reading, ignore blank/comment lines, start a section on [event_id], split each non-comment line on the first =, normalize numeric fields to integers, split comma-separated `search_targets` into an array, and collect repeated phase.<index>.<field> keys into an ordered phases array. Reject duplicate event IDs, enabled rules without announce_regex, invalid entry_type, non-positive duration, and lead_seconds < 0; attach each rule's validation_errors array and return the aggregate errors array without enabling the affected rule.
 
 Use the following safe fixture entries in lastro_activity.txt: six event IDs (city_monster_party, dungeon_monster_party, dojo_challenge, pool_challenge, lottery, sky_chest), enabled=0 for every entry, confirmed lottery coordinates only, and explicit comments that unknown maps/dialog/finish messages keep a rule disabled. Do not invent monster names or map IDs.
 
@@ -320,7 +320,7 @@ At the due timestamp, validate the enabled rule, connected in-game state, target
 
 - [ ] **Step 4: Preserve shared monster control semantics.**
 
-Do not load, rewrite, or generate a per-event mon_control.txt. The plugin only relies on the existing shared rows whose third field is 1; all attack, teleport, skill-cancel, level, and weight fields continue to be read by OpenKore normally. Log a warning and fail the event if the rule declares no search-capable target evidence.
+Do not load, rewrite, or generate a per-event mon_control.txt. The plugin only relies on the existing shared rows whose third field is 1; all attack, teleport, skill-cancel, level, and weight fields continue to be read by OpenKore normally. Log a warning and fail the event if the rule declares no `search_targets` evidence.
 
 - [ ] **Step 5: Run focused tests and commit.**
 
@@ -441,7 +441,7 @@ git commit -m "feat: make activity cleanup and timeouts idempotent"
 
 **Interfaces:**
 - Production rules stay disabled until every required map/entry/finish value is present.
-- ProductionRulesTest loads the actual control file and fails if an enabled rule lacks a map source, start/finish evidence, valid return policy, or a usable entry.
+- ProductionRulesTest loads the actual control file and fails if an enabled rule lacks a map source, start/finish evidence, valid return policy, usable entry, or (for a monster-search rule) `search_targets` evidence.
 - mon_control.txt remains the single shared combat source; this task may only set the third field to 1 on confirmed event-monster rows while preserving existing first/second and remaining columns.
 
 - [ ] **Step 1: Write the production-rule validation test.**

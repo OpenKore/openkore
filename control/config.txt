@@ -998,3 +998,8 @@ avoidObstaclesDefaultPortals {
 #	target_isAIMode_TakesFixed_1_Damage_None 0
 #}
 macro_orphans terminate
+
+lastroActivity_enabled 1
+lastroActivity_rulesFile lastro_activity.txt
+lastroActivity_leadSeconds 10
+lastroActivity_teleportIdle 1
