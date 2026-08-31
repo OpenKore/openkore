@@ -141,11 +141,11 @@ plugin records a warning in the form `[LastROActivity] <reason>.`, restores the
 temporary activity settings through the common cleanup path, and requests
 `tt prontera`; it never guesses a value or a different NPC.
 
-For a normal run, the observable console/command sequence is:
+For a normal run, the expected transport and lifecycle sequence is:
 
 ```text
 tt prontera 152 133
-[LastROActivity] Lottery NPC bound: 活动负责人#iz at prontera 152 133
+[internal lifecycle event] Lottery NPC bound: 活动负责人#iz at prontera 152 133
 sendTalk(<actor-id>)
 sendTalkContinue(<actor-id>)
 sendTalkResponse(<actor-id>, 1)
@@ -153,11 +153,13 @@ sendTalkResponse(<actor-id>, 1)
 tt prontera
 ```
 
-The first and last lines are the exact transport commands. The middle lines
-represent the expected binding, response, finish, and return events; actor IDs
-are session-specific. Failures use `[LastROActivity] <reason>.` and still
-request `tt prontera`. A ten-second announcement is due at message receipt
-because the default `lead_seconds` is also ten seconds.
+The first and last lines are the exact transport commands. The binding line is
+an internal lifecycle event, not a default console message; confirm it from the
+following `sendTalk(<actor-id>)` or an enabled debug trace. The remaining lines
+represent the expected response, finish, and return events; actor IDs are
+session-specific. Failures use `[LastROActivity] <reason>.` and still request
+`tt prontera`. A ten-second announcement is due at message receipt because the
+default `lead_seconds` is also ten seconds.
 
 ## Entry and return
 
