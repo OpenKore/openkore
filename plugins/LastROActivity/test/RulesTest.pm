@@ -109,6 +109,76 @@ RULES
 		done_testing();
 	};
 
+	subtest 'parses and validates the named repeating Lottery dialog metadata' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[lottery]
+enabled=1
+announce_regex=抽奖活动
+start_regex=抽奖活动.*秒后
+finish_regex=抽奖活动已结束
+map_source=static
+entry_type=npc
+entry_map=prontera
+entry_x=152
+entry_y=133
+entry_npc_name=活动负责人#iz
+entry_dialog_mode=repeat_first_until_finish
+return_policy=tt:prontera
+RULES
+
+	is_deeply($errors, [], 'named Lottery rule has no validation errors');
+	ok($rules->{lottery}{enabled}, 'named Lottery rule remains enabled');
+	is($rules->{lottery}{entry_npc_name}, '活动负责人#iz',
+		'NPC suffix is retained as part of the exact name');
+	is($rules->{lottery}{entry_dialog_mode}, 'repeat_first_until_finish',
+		'named Lottery rule selects the repeating dialog mode');
+	is($rules->{lottery}{entry_map}, 'prontera', 'named Lottery map is exact');
+	is($rules->{lottery}{entry_x}, 152, 'named Lottery X coordinate is exact');
+	is($rules->{lottery}{entry_y}, 133, 'named Lottery Y coordinate is exact');
+
+	my @invalid_cases = (
+		[
+			'missing name',
+			qr/entry_npc_name is required for repeating NPC dialog/,
+		],
+		[
+			'missing coordinate',
+			qr/entry_y is required for NPC entry/,
+		],
+		[
+			'unknown dialog mode',
+			qr/entry_dialog_mode must be repeat_first_until_finish/,
+		],
+	);
+	for my $case (@invalid_cases) {
+		my ($label, $error_pattern) = @$case;
+		my $text = <<'RULES';
+[lottery]
+enabled=1
+announce_regex=抽奖活动
+start_regex=抽奖活动.*秒后
+finish_regex=抽奖活动已结束
+map_source=static
+entry_type=npc
+entry_map=prontera
+entry_x=152
+entry_y=133
+entry_npc_name=活动负责人#iz
+entry_dialog_mode=repeat_first_until_finish
+return_policy=tt:prontera
+RULES
+		$text =~ s/entry_npc_name=活动负责人#iz\n/entry_npc_name=\n/ if $label eq 'missing name';
+		$text =~ s/entry_y=133\n/entry_y=\n/ if $label eq 'missing coordinate';
+		$text =~ s/entry_dialog_mode=repeat_first_until_finish\n/entry_dialog_mode=guess_first\n/ if $label eq 'unknown dialog mode';
+		my ($invalid, $invalid_errors) = LastROActivity::Rules::parse_text($text);
+		ok(!$invalid->{lottery}{enabled}, "$label disables the rule");
+		like(join('; ', @{$invalid->{lottery}{validation_errors} || []}), $error_pattern,
+			"$label records a specific validation error");
+		ok(@$invalid_errors, "$label is reported to the parser caller");
+	}
+		done_testing();
+	};
+
 	subtest 'validates enabled rules without changing direct input' => sub {
 		my $rule = {
 			enabled => 1,

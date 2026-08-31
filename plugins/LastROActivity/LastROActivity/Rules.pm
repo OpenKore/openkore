@@ -33,6 +33,7 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	entry_y
 	entry_item_id
 	entry_npc
+	entry_npc_name
 	entry_npc_trusted
 	entry_npc_evidence
 	entry_dialog_mode
@@ -221,6 +222,12 @@ sub validate_rule {
 		push @errors, "invalid entry_type $rule->{entry_type}";
 	}
 
+	my $dialog_mode = _has_value($rule->{entry_dialog_mode})
+		? lc(_trim($rule->{entry_dialog_mode})) : '';
+	if ($dialog_mode ne '' && $dialog_mode ne 'repeat_first_until_finish') {
+		push @errors, 'entry_dialog_mode must be repeat_first_until_finish';
+	}
+
 	# An explicitly typed entry is an assertion that the corresponding
 	# server-backed route has been confirmed.  Keep this parser check limited to
 	# presence/shape evidence; shared-control resolution belongs to the runtime
@@ -234,13 +241,25 @@ sub validate_rule {
 				push @errors, 'search_targets evidence is required for shared search mode';
 			}
 		} elsif ($entry_type eq 'npc') {
-			unless (defined $rule->{entry_npc_trusted}
-				&& "$rule->{entry_npc_trusted}" =~ /^\s*1\s*$/) {
-				push @errors, 'entry_npc_trusted=1 is required for NPC entry';
-			}
-			unless (defined $rule->{entry_npc_evidence}
-				&& _trim($rule->{entry_npc_evidence}) ne '') {
-				push @errors, 'entry_npc_evidence is required for NPC entry';
+			if ($dialog_mode eq 'repeat_first_until_finish') {
+				unless (defined $rule->{entry_npc_name}
+					&& _trim($rule->{entry_npc_name}) ne '') {
+					push @errors, 'entry_npc_name is required for repeating NPC dialog';
+				}
+				for my $field (qw(entry_x entry_y)) {
+					unless (defined $rule->{$field} && "$rule->{$field}" =~ /^\d+$/) {
+						push @errors, "$field is required for NPC entry";
+					}
+				}
+			} else {
+				unless (defined $rule->{entry_npc_trusted}
+					&& "$rule->{entry_npc_trusted}" =~ /^\s*1\s*$/) {
+					push @errors, 'entry_npc_trusted=1 is required for NPC entry';
+				}
+				unless (defined $rule->{entry_npc_evidence}
+					&& _trim($rule->{entry_npc_evidence}) ne '') {
+					push @errors, 'entry_npc_evidence is required for NPC entry';
+				}
 			}
 		}
 	}
@@ -380,6 +399,7 @@ sub _new_rule {
 		entry_y => undef,
 		entry_item_id => undef,
 		entry_npc => undef,
+		entry_npc_name => undef,
 		entry_npc_trusted => undef,
 		entry_npc_evidence => undef,
 		entry_dialog_mode => undef,

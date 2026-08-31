@@ -23,7 +23,7 @@ BEGIN {
 
 use AI ();
 use Commands ();
-use Globals ();
+use Globals qw(%npcs @npcsID $messageSender);
 use I18N qw(stringToBytes);
 use LastROActivity::Rules;
 use LastROActivity::Scheduler;
@@ -56,6 +56,8 @@ our ($activity_round_count, $activity_round_started_at);
 our $activity_self_dead_at;
 our $airship_failure_count;
 our $cleanup_in_progress;
+our ($lottery_npc_id, $lottery_npc_identity);
+our ($lottery_session_active, $lottery_reclick_pending);
 our $clock = sub { time };
 
 $rules = {};
@@ -97,6 +99,10 @@ $activity_round_started_at = undef;
 $activity_self_dead_at = undef;
 $airship_failure_count = 0;
 $cleanup_in_progress = 0;
+$lottery_npc_id = undef;
+$lottery_npc_identity = undef;
+$lottery_session_active = 0;
+$lottery_reclick_pending = 0;
 
 $enabled = 1;
 $lead_seconds = 10;
@@ -118,9 +124,16 @@ $hooks = Plugins::addHooks(
 	['packet_pubMsg',          \&onPublicMessage, undef],
 	['mainLoop_pre',           \&onMainLoopPre, undef],
 	['packet_mapChange',       \&onMapChange, undef],
+	['disconnected',           \&onDisconnected, undef],
 	['lastro_airship_result',  \&onAirshipResult, undef],
 	['AI_state_change',        \&onAIStateChange, undef],
 	['start3',                 \&onStart3, undef],
+	['packet/npc_talk_continue', \&onNpcTalkContinue, undef],
+	['npc_talk_responses',      \&onNpcTalkResponses, undef],
+	['npc_talk_done',           \&onNpcTalkDone, undef],
+	['packet/npc_talk_number',  \&onNpcTalkNumber, undef],
+	['packet/npc_talk_text',    \&onNpcTalkText, undef],
+	['packet/npc_store_begin',   \&onNpcStoreBegin, undef],
 );
 $rules_preload_hook = Plugins::addHook(
 	'pre_load_lastro_activity_rules',
@@ -1023,6 +1036,82 @@ sub onActivityMessage {
 	return undef;
 }
 
+sub onNpcTalkContinue {
+	my $args = _hook_args(@_);
+	return 0 unless _lottery_dialog_active();
+	my $incoming_id = _dialog_packet_id($args, 2);
+	return 0 unless defined $incoming_id && defined $lottery_npc_id
+		&& $incoming_id eq $lottery_npc_id;
+	my ($ok, $error) = (0, undef);
+	$ok = eval {
+		die 'Lottery Continue response is unavailable'
+			unless $messageSender && eval { $messageSender->can('sendTalkContinue') };
+		$messageSender->sendTalkContinue($incoming_id);
+		1;
+	};
+	$error = _trim($@ || 'Lottery Continue response failed') unless $ok;
+	_mark_activity_failed($error) unless $ok;
+	return $ok ? 1 : 0;
+}
+
+sub onNpcTalkResponses {
+	my $args = _hook_args(@_);
+	return 0 unless _lottery_dialog_active();
+	my $incoming_id = _dialog_packet_id($args, 4);
+	return 0 unless defined $incoming_id && defined $lottery_npc_id
+		&& $incoming_id eq $lottery_npc_id;
+	my ($ok, $error) = (0, undef);
+	$ok = eval {
+		die 'Lottery menu response is unavailable'
+			unless $messageSender && eval { $messageSender->can('sendTalkResponse') };
+		$messageSender->sendTalkResponse($incoming_id, 1);
+		1;
+	};
+	$error = _trim($@ || 'Lottery menu response failed') unless $ok;
+	_mark_activity_failed($error) unless $ok;
+	return $ok ? 1 : 0;
+}
+
+sub onNpcTalkDone {
+	my $args = _hook_args(@_);
+	return 0 unless _lottery_dialog_active();
+	my $incoming_id = _dialog_packet_id($args, 2);
+	return 0 unless defined $incoming_id && defined $lottery_npc_id
+		&& $incoming_id eq $lottery_npc_id;
+	$lottery_session_active = 0;
+	$lottery_reclick_pending = 1;
+	if (ref($active_event) eq 'HASH') {
+		$active_event->{lottery_session_active} = 0;
+		$active_event->{lottery_reclick_pending} = 1;
+	}
+	return 1;
+}
+
+sub _unsupported_lottery_dialog {
+	my ($args, $offset, $label) = @_;
+	return 0 unless _lottery_dialog_active();
+	my $incoming_id = _dialog_packet_id($args, $offset);
+	return 0 unless defined $incoming_id && defined $lottery_npc_id
+		&& $incoming_id eq $lottery_npc_id;
+	_mark_activity_failed("Lottery $label dialog is unsupported");
+	return 1;
+}
+
+sub onNpcTalkNumber {
+	my $args = _hook_args(@_);
+	return _unsupported_lottery_dialog($args, 2, 'number');
+}
+
+sub onNpcTalkText {
+	my $args = _hook_args(@_);
+	return _unsupported_lottery_dialog($args, 2, 'text');
+}
+
+sub onNpcStoreBegin {
+	my $args = _hook_args(@_);
+	return _unsupported_lottery_dialog($args, 2, 'shop');
+}
+
 sub _positive_number {
 	my ($value) = @_;
 	return undef unless defined $value && "$value" =~ /^\s*\d+(?:\.\d+)?\s*\z/;
@@ -1244,6 +1333,157 @@ sub _event_destination {
 		x => $rule->{entry_x},
 		y => $rule->{entry_y},
 	};
+}
+
+sub _lottery_dialog_mode {
+	my ($rule) = @_;
+	return 0 unless ref($rule) eq 'HASH';
+	return 0 unless lc(_trim($rule->{entry_type} || '')) eq 'npc';
+	return lc(_trim($rule->{entry_dialog_mode} || ''))
+		eq 'repeat_first_until_finish' ? 1 : 0;
+}
+
+sub _lottery_dialog_event {
+	return undef unless ref($active_event) eq 'HASH';
+	my $rule = $active_event->{rule};
+	return undef unless _lottery_dialog_mode($rule);
+	my $event_id = defined $active_event->{event_id}
+		? $active_event->{event_id} : $rule->{event_id};
+	return undef unless defined $event_id && lc(_trim($event_id)) eq 'lottery';
+	return $active_event;
+}
+
+sub _dialog_packet_id {
+	my ($args, $raw_offset) = @_;
+	return undef unless ref($args) eq 'HASH';
+	return $args->{ID} if exists $args->{ID} && defined $args->{ID};
+	$raw_offset = 0 unless defined $raw_offset && "$raw_offset" =~ /^\d+$/;
+	my $raw = exists $args->{RAW_MSG} ? $args->{RAW_MSG} : $args->{RawMsg};
+	return undef unless defined $raw && !ref($raw);
+	return undef if length($raw) < $raw_offset + 4;
+	return substr($raw, $raw_offset, 4);
+}
+
+sub _lottery_actor_by_id {
+	my ($id) = @_;
+	return undef unless defined $id;
+	if (exists $npcs{$id}) {
+		my $actor = $npcs{$id};
+		return $actor if ref($actor);
+	}
+	for my $key (keys %npcs) {
+		my $actor = $npcs{$key};
+		next unless ref($actor);
+		my $actor_id = _actor_value($actor, 'ID');
+		return $actor if defined $actor_id && "$actor_id" eq "$id";
+	}
+	return undef;
+}
+
+sub _lottery_actor_name {
+	my ($actor) = @_;
+	return undef unless ref($actor);
+	my $name = _actor_value($actor, 'name');
+	if ((!defined $name || ref($name)) && ref($actor) ne 'HASH') {
+		my ($method_name, $method_ok) = (undef, 0);
+		$method_ok = eval {
+			$method_name = $actor->name() if $actor->can('name');
+			1;
+		};
+		$name = $method_name if $method_ok;
+	}
+	return undef if ref($name);
+	return $name;
+}
+
+sub _lottery_actor_position {
+	my ($actor, $x, $y) = @_;
+	return undef unless ref($actor) && defined $x && defined $y;
+	for my $field (qw(pos pos_to)) {
+		my $position = _actor_value($actor, $field);
+		next unless ref($position) eq 'HASH';
+		next unless defined $position->{x} && defined $position->{y};
+		next unless "$position->{x}" =~ /^\d+$/ && "$position->{y}" =~ /^\d+$/;
+		return {x => 0 + $position->{x}, y => 0 + $position->{y}}
+			if $position->{x} == $x && $position->{y} == $y;
+	}
+	return undef;
+}
+
+sub _lottery_actor_identity_matches {
+	my ($actor, $identity) = @_;
+	return 0 unless ref($actor) && ref($identity) eq 'HASH';
+	my $name = _lottery_actor_name($actor);
+	return 0 unless defined $name && defined $identity->{name} && $name eq $identity->{name};
+	return 0 unless _map_matches(_current_map(undef), $identity->{map});
+	return defined _lottery_actor_position($actor, $identity->{x}, $identity->{y}) ? 1 : 0;
+}
+
+sub _find_lottery_npc {
+	my ($rule) = @_;
+	return wantarray ? (undef, undef) : undef unless ref($rule) eq 'HASH';
+	my $wanted_name = $rule->{entry_npc_name};
+	my ($x, $y) = @{$rule}{qw(entry_x entry_y)};
+	return wantarray ? (undef, undef) : undef
+		unless defined $wanted_name && _trim($wanted_name) ne ''
+		&& defined $x && defined $y && "$x" =~ /^\d+$/ && "$y" =~ /^\d+$/;
+	my @ids = @npcsID;
+	my %seen;
+	my @candidates;
+	for my $id (@ids) {
+		next unless defined $id && !$seen{"$id"}++;
+		push @candidates, [$id, _lottery_actor_by_id($id)];
+	}
+	for my $key (keys %npcs) {
+		next if $seen{"$key"}++;
+		push @candidates, [$key, $npcs{$key}];
+	}
+	for my $candidate (@candidates) {
+		my ($id, $actor) = @$candidate;
+		next unless ref($actor);
+		my $name = _lottery_actor_name($actor);
+		next unless defined $name && $name eq $wanted_name;
+		my $position = _lottery_actor_position($actor, $x, $y);
+		next unless defined $position;
+		my $actor_id = _actor_value($actor, 'ID');
+		$actor_id = $id unless defined $actor_id;
+		next unless defined $actor_id;
+		my $identity = {
+			name => $name,
+			map => _normalize_map_name($rule->{entry_map}) || 'prontera',
+			x => $position->{x},
+			y => $position->{y},
+		};
+		return wantarray ? ($actor_id, $identity) : $actor_id;
+	}
+	return wantarray ? (undef, undef) : undef;
+}
+
+sub _clear_lottery_dialog {
+	$lottery_npc_id = undef;
+	$lottery_npc_identity = undef;
+	$lottery_session_active = 0;
+	$lottery_reclick_pending = 0;
+	if (ref($active_event) eq 'HASH') {
+		delete $active_event->{lottery_npc_id};
+		delete $active_event->{lottery_npc_identity};
+		delete $active_event->{lottery_session_active};
+		delete $active_event->{lottery_reclick_pending};
+	}
+	return 1;
+}
+
+sub _lottery_dialog_active {
+	my $event = _lottery_dialog_event();
+	return 0 unless defined $event;
+	return 0 unless $lottery_session_active;
+	return 0 unless defined $lottery_npc_id && ref($lottery_npc_identity) eq 'HASH';
+	return 0 unless ref($state) eq 'LastROActivity::State'
+		&& ($state->state eq 'ENTERING' || $state->state eq 'RUNNING');
+	return 0 unless _map_matches(_current_map(undef), 'prontera');
+	my $actor = _lottery_actor_by_id($lottery_npc_id);
+	return 0 unless defined $actor && _lottery_actor_identity_matches($actor, $lottery_npc_identity);
+	return 1;
 }
 
 sub _active_event_destination_map {
@@ -2145,11 +2385,19 @@ sub _activity_entry_validation {
 		return $macro_error if defined $macro_error;
 		return 'entry_macro is required for macro entry' unless defined $macro;
 	} elsif ($entry_type eq 'npc') {
-		my $sequence = _npc_sequence($rule->{entry_npc});
-		unless (defined $sequence) {
-			my $reason = 'entry_npc is required for NPC entry';
-			_append_rule_validation_error($rule, $reason);
-			return $reason;
+		if (_lottery_dialog_mode($rule)) {
+			unless (defined $rule->{entry_npc_name} && _trim($rule->{entry_npc_name}) ne '') {
+				my $reason = 'entry_npc_name is required for repeating NPC dialog';
+				_append_rule_validation_error($rule, $reason);
+				return $reason;
+			}
+		} else {
+			my $sequence = _npc_sequence($rule->{entry_npc});
+			unless (defined $sequence) {
+				my $reason = 'entry_npc is required for NPC entry';
+				_append_rule_validation_error($rule, $reason);
+				return $reason;
+			}
 		}
 		unless (defined $rule->{entry_x} && "$rule->{entry_x}" =~ /^\d+\z/) {
 			my $reason = 'entry_x is required for NPC entry';
@@ -2161,10 +2409,12 @@ sub _activity_entry_validation {
 			_append_rule_validation_error($rule, $reason);
 			return $reason;
 		}
-		my ($npc_ok, $npc_reason) = _validate_npc_evidence($rule);
-		unless ($npc_ok) {
-			_append_rule_validation_error($rule, $npc_reason);
-			return $npc_reason;
+		unless (_lottery_dialog_mode($rule)) {
+			my ($npc_ok, $npc_reason) = _validate_npc_evidence($rule);
+			unless ($npc_ok) {
+				_append_rule_validation_error($rule, $npc_reason);
+				return $npc_reason;
+			}
 		}
 	} else {
 		return "unsupported entry_type '$entry_type'";
@@ -2394,6 +2644,7 @@ sub _finish_entry_macro {
 sub _mark_activity_failed {
 	my ($reason) = @_;
 	$reason = _trim($reason || 'activity failed');
+	_clear_lottery_dialog();
 	my $had_pending_leave_npc = defined $pending_leave_npc;
 	# Once a lifecycle is already failed, retain the first actionable reason.
 	# Late duplicate packets are common during a rejected transfer and must not
@@ -2431,7 +2682,11 @@ sub enter_search_mode {
 	my ($rule) = @_;
 	return 0 unless ref($rule) eq 'HASH';
 	my ($search_ok, $search_reason) = _validate_search_targets($rule);
-	return 1 if !_uses_search_mode($rule);
+	# Named Lottery dialog entry does not use shared monster search, but it still
+	# crosses the activity snapshot boundary so cleanup restores the user's route
+	# settings exactly like the transport-backed activities.
+	my $needs_snapshot = _uses_search_mode($rule) || _lottery_dialog_mode($rule);
+	return 1 if !$needs_snapshot;
 	unless ($search_ok) {
 		warning "[LastROActivity] Event '$rule->{event_id}' cannot enter shared search mode: $search_reason.\n";
 		return 0;
@@ -2498,6 +2753,32 @@ sub request_event_entry {
 		return 1;
 	}
 	if ($entry_type eq 'npc') {
+		if (_lottery_dialog_mode($rule)) {
+			my $destination = ref($active_event) eq 'HASH'
+				&& ref($active_event->{destination}) eq 'HASH'
+				? $active_event->{destination}
+				: _event_destination($rule, $event || $active_event);
+			return 0 unless ref($destination) eq 'HASH';
+			my $destination_map = $destination->{map};
+			my $command = _destination_command($destination);
+			return 0 unless defined $destination_map && defined $command;
+			$active_event->{destination} = {%$destination}
+				if ref($active_event) eq 'HASH' && ref($active_event->{destination}) ne 'HASH';
+			_set_pending_destination($destination_map, 'entry', $rule)
+				or die "invalid pending Lottery destination\n";
+			my ($command_ok, $command_error) = _run_checked_command($command);
+			unless ($command_ok) {
+				_clear_pending_destination();
+				$command_error = 'tt command failed'
+					unless defined $command_error && $command_error ne '';
+				die "$command_error\n";
+			}
+			# A same-map request can be confirmed immediately, but the first NPC click
+			# remains deferred to mainLoop_pre so map confirmation and actor resolution
+			# stay in one non-reentrant lifecycle boundary.
+			_confirm_entry_map_if_current($destination_map);
+			return 1;
+		}
 		my $sequence = _npc_sequence($rule->{entry_npc});
 		die "entry_npc must include a safe TalkNPC sequence\n"
 			unless defined $sequence;
@@ -2828,6 +3109,104 @@ sub _advance_pending_leave_npc {
 	return 1;
 }
 
+sub _lottery_dialog_deadline {
+	my ($now) = @_;
+	$now = _now() unless defined $now;
+	return 0 unless defined $now;
+	if (defined $pending_destination_deadline) {
+		return $now >= $pending_destination_deadline ? 1 : 0;
+	}
+	if (defined $activity_entry_started_at) {
+		my $rule = ref($active_event) eq 'HASH' ? $active_event->{rule} : undef;
+		return $now >= $activity_entry_started_at + _transfer_timeout($rule) ? 1 : 0;
+	}
+	return 0;
+}
+
+sub _send_lottery_talk {
+	my ($id) = @_;
+	return 0 unless defined $id;
+	my $sender = $messageSender;
+	my ($ok, $error);
+	$ok = eval {
+		die "message sender is unavailable" unless $sender
+			&& eval { $sender->can('sendTalk') };
+		$sender->sendTalk($id);
+		1;
+	};
+	$error = _trim($@ || 'Lottery NPC click failed') unless $ok;
+	unless ($ok) {
+		_mark_activity_failed($error);
+		return 0;
+	}
+	return 1;
+}
+
+sub _advance_lottery_dialog {
+	my ($now) = @_;
+	my $event = _lottery_dialog_event();
+	return 0 unless defined $event;
+	return 0 unless ref($state) eq 'LastROActivity::State';
+	my $state_name = $state->state;
+
+	if ($state_name eq 'ENTERING' && $entry_map_confirmed) {
+		my ($actor, $identity);
+		if (defined $lottery_npc_id && ref($lottery_npc_identity) eq 'HASH') {
+			$actor = _lottery_actor_by_id($lottery_npc_id);
+			$identity = $lottery_npc_identity
+				if defined $actor && _lottery_actor_identity_matches($actor, $lottery_npc_identity);
+		} else {
+			my ($id, $found_identity) = _find_lottery_npc($event->{rule});
+			if (defined $id && ref($found_identity) eq 'HASH') {
+				$actor = _lottery_actor_by_id($id);
+				$identity = $found_identity
+					if defined $actor && _lottery_actor_identity_matches($actor, $found_identity);
+				if (defined $identity) {
+					$lottery_npc_id = $id;
+					$lottery_npc_identity = $identity;
+					$event->{lottery_npc_id} = $id;
+					$event->{lottery_npc_identity} = {%$identity};
+				}
+			}
+		}
+		unless (defined $actor && ref($identity) eq 'HASH') {
+			if (_lottery_dialog_deadline($now)) {
+				_mark_activity_failed('Lottery NPC was not visible before entry timed out');
+			}
+			return 1;
+		}
+		unless ($lottery_session_active) {
+			return 1 unless _send_lottery_talk($lottery_npc_id);
+			$lottery_session_active = 1;
+			$lottery_reclick_pending = 0;
+			$event->{lottery_session_active} = 1;
+			$event->{lottery_reclick_pending} = 0;
+			unless (_set_running_state($now)) {
+				_mark_activity_failed('Lottery entry could not enter the running state');
+				return 1;
+			}
+		}
+		return 1;
+	}
+
+	if ($state_name eq 'RUNNING' && $lottery_reclick_pending && !$lottery_session_active) {
+		my $actor = _lottery_actor_by_id($lottery_npc_id);
+		unless (defined $actor && _lottery_actor_identity_matches($actor, $lottery_npc_identity)) {
+			if (_lottery_dialog_deadline($now)) {
+				_mark_activity_failed('Lottery NPC disappeared before the next dialog session');
+			}
+			return 1;
+		}
+		return 1 unless _send_lottery_talk($lottery_npc_id);
+		$lottery_session_active = 1;
+		$lottery_reclick_pending = 0;
+		$event->{lottery_session_active} = 1;
+		$event->{lottery_reclick_pending} = 0;
+		return 1;
+	}
+	return 0;
+}
+
 sub _advance_state_machine_one_action {
 	my ($now) = @_;
 	$now = _now() unless defined $now;
@@ -2835,6 +3214,10 @@ sub _advance_state_machine_one_action {
 	if (defined $pending_leave_npc) {
 		_advance_pending_leave_npc($now);
 		return;
+	}
+
+	if (defined _lottery_dialog_event()) {
+		return if _advance_lottery_dialog($now);
 	}
 
 	if (defined $active_event
@@ -2896,6 +3279,7 @@ sub begin_activity {
 
 	$active_event = $scheduled_event unless defined $active_event;
 	$armed_event = $scheduled_event;
+	_clear_lottery_dialog();
 	$active_snapshot = undef;
 	$activity_started_at = undef;
 	$activity_entry_started_at = _now();
@@ -3089,6 +3473,7 @@ sub cleanup_and_restore {
 		|| $return_pending;
 	my $has_scheduled = defined $armed_event || @pending_due || @pending_manual;
 	return 1 unless $has_lifecycle || $has_scheduled;
+	_clear_lottery_dialog();
 	$cleanup_in_progress = 1;
 	my $cleanup_ok = 1;
 
@@ -3193,6 +3578,7 @@ sub cleanup_and_restore {
 sub _stop_active_activity {
 	my ($reason) = @_;
 	return cleanup_and_restore($reason) unless defined $active_event;
+	_clear_lottery_dialog();
 	$active_event->{finish_reason} = _trim($reason)
 		if ref($active_event) eq 'HASH' && defined $reason;
 	_clear_pending_macro();
@@ -3281,6 +3667,7 @@ sub finish_activity {
 	my ($reason) = @_;
 	return 1 unless defined $active_event;
 	return 1 if $return_pending;
+	_clear_lottery_dialog();
 	# A second finish signal must not bypass a configured finish macro that is
 	# still running; its completion callback owns the return request.
 	return 1 if defined $pending_macro
@@ -3325,8 +3712,12 @@ sub return_to_capital {
 	# authoritative return confirmation; issuing another tt request
 	# would leave the failed lifecycle waiting for a transfer that cannot occur.
 	my $current_map = _current_map(undef);
+	# Lottery's named dialog contract always uses the existing tt prontera
+	# cleanup, even when the event itself is hosted on prontera.  Keep the
+	# general same-map optimization for every other activity type.
+	my $force_lottery_return = defined _lottery_dialog_event();
 	if (defined $current_map && _map_matches($current_map, 'prontera')
-		&& _entry_map_confirmed_for_return()) {
+		&& _entry_map_confirmed_for_return() && !$force_lottery_return) {
 		return _complete_return();
 	}
 	return 1 if $return_pending;
@@ -3441,6 +3832,7 @@ sub onMapChange {
 	if (($return_pending
 			|| (ref($state) eq 'LastROActivity::State' && $state->state eq 'RETURNING'))
 		&& _map_matches($map, 'prontera')) {
+		_clear_lottery_dialog();
 		return _complete_return();
 	}
 
@@ -3452,6 +3844,7 @@ sub onMapChange {
 		&& ($state->state eq 'DEPARTING' || $state->state eq 'ENTERING')) {
 		my $event_map = _active_event_destination_map();
 		if (defined $event_map && !_map_matches($map, $event_map)) {
+			_clear_lottery_dialog();
 			_mark_activity_failed('left activity map before entry completed');
 			return 1;
 		}
@@ -3463,11 +3856,18 @@ sub onMapChange {
 			# Leaving the event map is an operational failure, not a successful
 			# completion.  Route through the failure path so finish macros cannot
 			# run and the diagnostic survives the return cleanup.
+			_clear_lottery_dialog();
 			_mark_activity_failed('left activity map');
 			return 1;
 		}
 	}
 	return 0;
+}
+
+sub onDisconnected {
+	_clear_lottery_dialog();
+	return 0 unless defined $active_event || defined $active_snapshot || $activity_lock;
+	return cleanup_and_restore('disconnected');
 }
 
 sub onAirshipResult {

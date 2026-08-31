@@ -20,9 +20,11 @@ BEGIN {
 	our %maps_lut;
 	our %mon_control;
 	our %monsters_lut;
+	our %npcs;
+	our @npcsID;
 	our @ai_seq;
 	our @ai_seq_args;
-	our ($net, $char, $field, $masterServer);
+	our ($net, $char, $field, $masterServer, $messageSender);
 	sub import {
 		my $caller = caller;
 		no strict 'refs';
@@ -31,6 +33,9 @@ BEGIN {
 		*{"${caller}::char"} = \$char;
 		*{"${caller}::field"} = \$field;
 		*{"${caller}::masterServer"} = \$masterServer;
+		*{"${caller}::npcs"} = \%npcs;
+		*{"${caller}::npcsID"} = \@npcsID;
+		*{"${caller}::messageSender"} = \$messageSender;
 	}
 
 	$INC{'Plugins.pm'} = __FILE__;
@@ -203,6 +208,17 @@ BEGIN {
 	package PluginTest::Field;
 	sub new { my ($class, $map) = @_; bless {map => $map}, $class; }
 	sub baseName { return $_[0]->{map}; }
+
+	package PluginTest::MessageSender;
+	our (@send_talk_calls, @continue_calls, @response_calls,
+		@number_calls, @text_calls, @shop_calls);
+	sub new { bless {}, shift; }
+	sub sendTalk { push @PluginTest::send_talk_calls, $_[1]; return 1; }
+	sub sendTalkContinue { push @PluginTest::continue_calls, $_[1]; return 1; }
+	sub sendTalkResponse { push @PluginTest::response_calls, [$_[1], $_[2]]; return 1; }
+	sub sendTalkNumber { push @PluginTest::number_calls, [$_[1], $_[2]]; return 1; }
+	sub sendTalkText { push @PluginTest::text_calls, [$_[1], $_[2]]; return 1; }
+	sub sendNPCBuySellList { push @PluginTest::shop_calls, $_[1]; return 1; }
 
 	package macro;
 	our $queue;
@@ -410,15 +426,24 @@ sub start {
 	%Globals::maps_lut = ();
 	%Globals::mon_control = ();
 	%Globals::monsters_lut = ();
+	%Globals::npcs = ();
+	@Globals::npcsID = ();
 	$Globals::net = undef;
 	$Globals::char = undef;
 	$Globals::field = undef;
 	$Globals::masterServer = undef;
+	$Globals::messageSender = undef;
 	@Plugins::registrations = ();
 	@Plugins::hooks = ();
 	%Commands::commands = ();
 	%Plugins::registered_plugins = ();
 	@Commands::run_calls = ();
+	@PluginTest::send_talk_calls = ();
+	@PluginTest::continue_calls = ();
+	@PluginTest::response_calls = ();
+	@PluginTest::number_calls = ();
+	@PluginTest::text_calls = ();
+	@PluginTest::shop_calls = ();
 	$Commands::run_failure = undef;
 	%Commands::descriptors = ();
 	@Settings::add_calls = ();
@@ -439,7 +464,7 @@ sub start {
 		is($Plugins::registrations[0][0], 'LastROActivity', 'registers LastROActivity');
 		is_deeply(
 			[sort @Plugins::hooks],
-			[sort qw(packet_sysMsg packet_pubMsg mainLoop_pre packet_mapChange lastro_airship_result AI_state_change start3)],
+			[sort qw(packet_sysMsg packet_pubMsg mainLoop_pre packet_mapChange lastro_airship_result AI_state_change start3 disconnected packet/npc_talk_continue npc_talk_responses npc_talk_done packet/npc_talk_number packet/npc_talk_text packet/npc_store_begin)],
 			'registers all activity hooks',
 		);
 		ok(exists $Commands::commands{lastroactivity}, 'registers lastroactivity command');
@@ -4055,6 +4080,201 @@ RULES
 		is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
 			'failure path still issues the fixed return after AI cleanup throws');
 		$task7_confirm_return->();
+		done_testing();
+	};
+
+	subtest 'Lottery binds one NPC and repeats only the first dialog option' => sub {
+		my $npc_id = pack('V', 0x12345678);
+		my $other_id = pack('V', 0x87654321);
+		my $now = 1_000;
+		my $rule;
+		my $event;
+
+		my $setup = sub {
+			my (%options) = @_;
+			LastROActivity::cleanup_and_restore('Lottery dialog test reset');
+			%Globals::config = (
+				lockMap => 'pay_fild08', lockMap_x => 55, lockMap_y => 66,
+				teleportAuto_search => 0, teleportAuto_idle => 0,
+			);
+			%Globals::maps_lut = ('pay_fild08.rsw' => 1, 'prontera.rsw' => 1);
+			$Globals::field = PluginTest::Field->new('pay_fild08');
+			$Globals::net = PluginTest::Net->new;
+			$Globals::char = PluginTest::Char->new(PluginTest::Inventory->new);
+			$Globals::messageSender = PluginTest::MessageSender->new;
+			# Isolate the dialog transport assertions from the preceding macro
+			# lifecycle fixtures. Lottery entry itself does not launch a macro.
+			%Plugins::registered_plugins = (LastROActivity => 1);
+			%Commands::commands = (lastroactivity => $Commands::commands{lastroactivity});
+			%Globals::npcs = ();
+			@Globals::npcsID = ();
+			if (!$options{missing}) {
+				my $actor = {
+					ID => $npc_id,
+					name => '活动负责人#iz',
+					pos => {x => 152, y => 133},
+					pos_to => {x => 152, y => 133},
+				};
+				if ($options{wrong_position}) {
+					$actor->{pos} = {x => 151, y => 133};
+					$actor->{pos_to} = {x => 151, y => 133};
+				}
+				%Globals::npcs = ($npc_id => $actor);
+				@Globals::npcsID = ($npc_id);
+			}
+			@PluginTest::send_talk_calls = ();
+			@PluginTest::continue_calls = ();
+			@PluginTest::response_calls = ();
+			@PluginTest::number_calls = ();
+			@PluginTest::text_calls = ();
+			@PluginTest::shop_calls = ();
+			@Commands::run_calls = ();
+			@Log::warnings = ();
+			$now = 1_000;
+			$LastROActivity::clock = sub { $now };
+			$rule = {
+				event_id => 'lottery', enabled => 1,
+				announce_regex => '抽奖活动', start_regex => '抽奖活动.*秒后',
+				finish_regex => '抽奖活动已结束', map_source => 'static',
+				entry_type => 'npc', entry_map => 'prontera', entry_x => 152, entry_y => 133,
+				entry_npc_name => '活动负责人#iz',
+				entry_dialog_mode => 'repeat_first_until_finish',
+				return_policy => 'tt:prontera', duration_seconds => 900,
+				validation_errors => [],
+			};
+			$event = {event_id => 'lottery', rule => $rule, map => 'prontera'};
+			my $ok = LastROActivity::begin_activity($rule, $event);
+			ok($ok, 'Lottery activity starts through the real lifecycle');
+			is_deeply(\@Commands::run_calls, ['tt prontera 152 133'],
+				'travel happens before NPC contact');
+			ok(!@PluginTest::send_talk_calls, 'NPC is not clicked before map confirmation');
+			return $ok;
+		};
+		my $confirm_map = sub {
+			$Globals::field = PluginTest::Field->new('prontera');
+			LastROActivity::onMapChange(undef, {});
+		};
+		my $main_loop = sub {
+			LastROActivity::onMainLoopPre(undef, {now => $now});
+		};
+
+		$setup->();
+		$confirm_map->();
+		$main_loop->();
+		is_deeply(\@PluginTest::send_talk_calls, [$npc_id],
+			'confirmed NPC is clicked once');
+		is(LastROActivity::state(), 'RUNNING',
+			'first click confirms entry and starts the activity');
+
+		LastROActivity::onNpcTalkContinue(undef, {ID => $npc_id});
+		is_deeply(\@PluginTest::continue_calls, [$npc_id],
+			'matching normalized Continue is answered immediately');
+		LastROActivity::onNpcTalkContinue(undef, {
+			RAW_MSG => pack('v', 0x00B5) . $npc_id,
+		});
+		is_deeply(\@PluginTest::continue_calls, [$npc_id, $npc_id],
+			'matching raw Continue packet is normalized at offset two');
+		LastROActivity::onNpcTalkResponses(undef, {
+			ID => $npc_id, responses => ['领取', '取消'],
+		});
+		is_deeply(\@PluginTest::response_calls, [[$npc_id, 1]],
+			'first wire response is selected immediately');
+		LastROActivity::onNpcTalkResponses(undef, {
+			RAW_MSG => pack('v', 0x00B7) . pack('v', 12) . $npc_id . "领取:取消\0",
+		});
+		is_deeply(\@PluginTest::response_calls, [[$npc_id, 1], [$npc_id, 1]],
+			'matching raw menu packet is normalized at offset four');
+
+		LastROActivity::onNpcTalkContinue(undef, {ID => $other_id});
+		LastROActivity::onNpcTalkResponses(undef, {
+			ID => $other_id, responses => ['领取', '取消'],
+		});
+		is_deeply(\@PluginTest::continue_calls, [$npc_id, $npc_id],
+			'different actor receives no Continue');
+		is_deeply(\@PluginTest::response_calls, [[$npc_id, 1], [$npc_id, 1]],
+			'different actor receives no response');
+
+		LastROActivity::onNpcTalkDone(undef, {ID => $npc_id});
+		LastROActivity::onNpcTalkDone(undef, {ID => $npc_id});
+		is($LastROActivity::lottery_reclick_pending, 1,
+			'duplicate close notifications coalesce into one pending click');
+		is($LastROActivity::lottery_session_active, 0,
+			'close marks the current dialog session inactive');
+		is_deeply(\@PluginTest::send_talk_calls, [$npc_id],
+			'close does not send recursively inside the hook');
+		$main_loop->();
+		is_deeply(\@PluginTest::send_talk_calls, [$npc_id, $npc_id],
+			'next mainLoop_pre starts exactly one new dialog session');
+
+		# Finish shuts down the dialog before issuing the retained tt return.
+		LastROActivity::onSystemMessage(undef, {Msg => '抽奖活动已结束'});
+		is($LastROActivity::lottery_npc_id, undef, 'finish clears the bound actor ID');
+		is($LastROActivity::lottery_session_active, 0, 'finish clears the session flag');
+		is($LastROActivity::lottery_reclick_pending, 0, 'finish clears the re-click flag');
+		ok(grep($_ eq 'tt prontera', @Commands::run_calls),
+			'finish uses the common tt prontera return');
+		my $talk_count = scalar @PluginTest::send_talk_calls;
+		LastROActivity::onNpcTalkContinue(undef, {ID => $npc_id});
+		$main_loop->();
+		is(scalar @PluginTest::send_talk_calls, $talk_count,
+			'finish prevents later responses and re-clicks');
+
+		# A same-name actor at the wrong coordinate never becomes the bound actor.
+		$setup->(wrong_position => 1);
+		$confirm_map->();
+		$main_loop->();
+		is_deeply(\@PluginTest::send_talk_calls, [],
+			'same-name actor at another coordinate is not bound');
+		$now = $LastROActivity::pending_destination_deadline + 1;
+		$main_loop->();
+		is(LastROActivity::state(), 'FAILED', 'missing matching NPC fails at the entry deadline');
+		is(scalar(grep($_ eq 'tt prontera', @Commands::run_calls)), 1,
+			'missing matching NPC requests one return');
+		LastROActivity::cleanup_and_restore('wrong-position cleanup');
+
+		# Unsupported dialog input fails closed only for the bound actor.
+		for my $unsupported (
+			['number', sub { LastROActivity::onNpcTalkNumber(undef, {ID => $npc_id}) }],
+			['text', sub { LastROActivity::onNpcTalkText(undef, {ID => $npc_id}) }],
+			['shop', sub { LastROActivity::onNpcStoreBegin(undef, {ID => $npc_id}) }],
+		) {
+			my ($label, $callback) = @$unsupported;
+			$setup->();
+			$confirm_map->();
+			$main_loop->();
+			$callback->();
+			like(LastROActivity::last_failure(), qr/$label/i,
+				"$label input records a failure for the bound actor");
+			is(scalar(grep($_ eq 'tt prontera', @Commands::run_calls)), 1,
+				"$label input uses the common return path");
+			my $before = scalar @Commands::run_calls;
+			LastROActivity::onNpcTalkNumber(undef, {ID => $other_id});
+			is(scalar @Commands::run_calls, $before,
+				"unsupported input from another actor is ignored");
+			LastROActivity::cleanup_and_restore("$label cleanup");
+		}
+
+		# Map loss and disconnect clear the same dialog state used by finish.
+		$setup->();
+		$confirm_map->();
+		$main_loop->();
+		$Globals::field = PluginTest::Field->new('pay_fild08');
+		LastROActivity::onMapChange(undef, {});
+		is($LastROActivity::lottery_npc_id, undef, 'map loss clears dialog actor state');
+		LastROActivity::cleanup_and_restore('map-loss cleanup');
+
+		$setup->();
+		$confirm_map->();
+		$main_loop->();
+		LastROActivity::onDisconnected();
+		is($LastROActivity::lottery_npc_id, undef, 'disconnect clears dialog actor state');
+		LastROActivity::cleanup_and_restore('disconnect cleanup');
+
+		$setup->();
+		$confirm_map->();
+		$main_loop->();
+		$Commands::commands{lastroactivity}->('lastroactivity', 'stop');
+		is($LastROActivity::lottery_npc_id, undef, 'manual stop clears dialog actor state');
 		done_testing();
 	};
 
