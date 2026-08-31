@@ -2,10 +2,12 @@
 
 ## Scope
 
-This change adds a LastRO-specific coordinate teleport command and uses it to
-make the existing `lottery` activity runnable. It does not change the behavior
-of the existing `privateairship` command, add bounty or hourly task automation,
-or infer dialog answers beyond Continue and the first menu option.
+This change adds a LastRO-specific coordinate teleport command, migrates every
+transfer issued by `LastROActivity` to that command, and uses it to make the
+existing `lottery` activity runnable. It does not change the behavior of the
+existing `privateairship` command outside `LastROActivity`, add bounty or hourly
+task automation, or infer dialog answers beyond Continue and the first menu
+option.
 
 ## Confirmed Protocol
 
@@ -70,6 +72,38 @@ The LastRO network sender will expose the coordinate fields through a
 backward-compatible extension of its existing private-airship send path.
 Existing two-argument callers continue to emit the current map-only packet.
 
+## Activity Transfer Policy
+
+`LastROActivity` will use `tt` as its only transfer command for activity entry,
+entry retries, failure cleanup, normal completion, and return to the capital.
+No runtime path in this plugin may execute `privateairship`.
+
+The activity destination is resolved once and retained for bounded retries:
+
+- a named NPC entry uses the rule's confirmed `entry_map`, `entry_x`, and
+  `entry_y`, even when announcement metadata points to a nearby clickable
+  coordinate;
+- a dynamic combat activity uses the map, X, and Y extracted together from
+  its matching `data-map="map#x#y"` announcement;
+- a static activity uses the configured map and uses configured X/Y when both
+  are present;
+- a destination without confirmed coordinates uses map-only `tt <map>` and
+  never invents a coordinate.
+
+Production combat rules will use `entry_type=tt`. Legacy `airship` and
+`privateairship` entry-type values may remain parser-compatible for user
+control files, but they are normalized to the same `tt` execution path and do
+not call the old command. The default item ID comes from `tt`, so activity
+rules no longer require an `entry_item_id` merely to use the fixed `14527`
+default.
+
+The canonical return policy becomes `tt:prontera` and executes `tt prontera`.
+The return needs only a confirmed capital map because its purpose is to
+restore the saved configuration and let the original lock map resume routing;
+no return coordinate will be invented. The old `privateairship:prontera`
+policy may be accepted as a compatibility alias, but it is also executed via
+`tt prontera`.
+
 ## Lottery Rule
 
 The production rule uses these confirmed values:
@@ -117,8 +151,8 @@ will follow this lifecycle:
    `mainLoop_pre` starts a new conversation. This avoids re-entrant packet
    sends and simultaneous sessions without adding an artificial time delay.
 9. Repeat steps 6-8 until the configured finish announcement is received.
-10. Stop all Lottery dialog responses and re-clicks, run the existing one-shot
-    return to `prontera`, restore the saved settings, clear AI, and allow the
+10. Stop all Lottery dialog responses and re-clicks, run the one-shot
+    `tt prontera` return, restore the saved settings, clear AI, and allow the
     saved lock map to resume normal routing.
 
 If the character is already in `prontera`, the coordinate request is still
@@ -152,14 +186,19 @@ uses the existing activity failure cleanup and return flow.
 
 ## Compatibility
 
-- `privateairship` keeps its current syntax and map-only behavior.
-- Existing LastRO route acceleration keeps sending map-only requests.
+- `privateairship` keeps its current syntax and behavior for callers outside
+  `LastROActivity`.
+- Every `LastROActivity` transfer uses `tt`; tests and documentation must not
+  retain a production activity command expectation containing
+  `privateairship`.
+- Existing LastRO route acceleration outside `LastROActivity` keeps sending
+  its current map-only requests.
 - Existing fixed-sequence NPC activity rules keep their current TalkNPC path.
 - No global `autoTalkCont` setting is enabled or changed.
 - Shared `mon_control.txt` is untouched because Lottery has no combat search
   targets.
-- The return policy remains `privateairship:prontera` for compatibility with
-  the existing state machine.
+- The canonical activity return policy is `tt:prontera`; the legacy policy is
+  only a parser compatibility alias and never selects the old command.
 
 ## Verification
 
@@ -172,6 +211,8 @@ Automated coverage will include:
 - production-rule parsing with the corrected NPC coordinate and named-dialog
   fields, with effective Lottery enablement;
 - immediate interruption followed by coordinate transfer before NPC contact;
+- coordinate entry and retry commands for all dynamic activity metadata, with
+  no `privateairship` command emitted by `LastROActivity`;
 - delayed NPC visibility after map load;
 - immediate Continue and first-option responses for the matching actor ID;
 - ignoring packets from another NPC;
@@ -180,6 +221,8 @@ Automated coverage will include:
 - unsupported dialog, missing NPC, map loss, transfer rejection, and timeout
   cleanup;
 - restoration of the original lock map and normal AI after return.
+- `tt prontera` as the only normal, failure, timeout, and manual-stop return
+  command.
 
 The focused sender, `LastroAirship`, and `LastROActivity` suites will run before
 the full relevant OpenKore test set. A manual server check will then verify
