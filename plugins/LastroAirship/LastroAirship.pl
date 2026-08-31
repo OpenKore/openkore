@@ -66,7 +66,7 @@ sub _cmdTeleport {
 
 	my ($map, $x, $y, $item_id) = @parts;
 	$map = normalizeMapName($map);
-	if ($map eq '' || length(stringToBytes($map)) > 16) {
+	if ($map eq '' || length(stringToBytes($map)) >= 16) {
 		error "tt map name must fit the LastRO Private Airship Z16 field.\n";
 		return;
 	}

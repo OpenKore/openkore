@@ -236,6 +236,7 @@ sub start {
 				{input => 'prontera 65536 133', label => 'x above u16'},
 				{input => 'prontera 152 nope', label => 'non-numeric y'},
 				{input => 'prontera 152 133 0', label => 'zero item ID'},
+				{input => 'abcdefghijklmnop', label => 'map fills Z16 payload'},
 				{input => 'map_name_longer_than_sixteen_bytes', label => 'map above Z16'},
 			) {
 				@{$sender->{calls}} = ();
