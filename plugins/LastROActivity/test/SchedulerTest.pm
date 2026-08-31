@@ -307,9 +307,25 @@ sub start {
 			'sky chest start matches a supported countdown unit');
 		my $sky_event = $scheduler->observe($sky_rule, $sky_message, 69_000);
 		ok($sky_event, 'sky chest announcement arms a scheduler event before runtime validation');
+		is($sky_event->{countdown_seconds}, 30,
+			'sky chest counted announcement preserves its countdown');
+		is($sky_event->{trigger_at}, 69_020,
+			'sky chest counted announcement keeps the ten-second lead window');
 		is_deeply($sky_event->{data_map},
 			{map => 'cmd_fild01', x => 0, y => 0},
 			'sky chest preserves cmd_fild01 dynamic map metadata');
+		my $sky_immediate_scheduler = LastROActivity::Scheduler->new(lead_seconds => 10);
+		my $sky_immediate = $sky_immediate_scheduler->observe(
+			$sky_rule,
+			'[随机事件] 天降宝箱出现 data-map="cmd_fild01#0#0"',
+			70_000,
+		);
+		ok($sky_immediate, 'sky chest no-countdown announcement arms an event');
+		is($sky_immediate->{trigger_at}, 70_000,
+			'sky chest no-countdown announcement triggers immediately');
+		is_deeply($sky_immediate->{data_map},
+			{map => 'cmd_fild01', x => 0, y => 0},
+			'sky chest no-countdown announcement preserves dynamic map coordinates');
 		my $reminder = '[随机事件] 下一次事件将在2小时后发生，梦罗克道场稍后开放 data-map="morocc#159#99"';
 		ok(!defined $scheduler->observe($rules->{dojo_challenge}, $reminder, 70_000),
 			'long 下一次事件 reminder never arms a dojo rule');

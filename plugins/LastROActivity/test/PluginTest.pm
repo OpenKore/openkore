@@ -498,6 +498,11 @@ sub start {
 		like(join('; ', @{$LastROActivity::rules->{sky_chest}{validation_errors}}),
 			qr/search target.*999999|shared mon_control/i,
 			'sky chest placeholder is blocked by shared-control validation');
+		my ($sky_completion_ok, $sky_completion_reason) =
+			LastROActivity::_validate_completion_policy($LastROActivity::rules->{sky_chest});
+		ok(!$sky_completion_ok, 'sky chest also requires a confirmed completion boundary');
+		like($sky_completion_reason || '', qr/finish evidence|positive duration|completion/i,
+			'sky chest completion validation reports the missing boundary');
 		ok(LastROActivity::_uses_search_mode($LastROActivity::rules->{sky_chest}),
 			'sky chest uses shared search mode through its typed tt route');
 		my $sky_message = '[随机事件] 天降宝箱将在30秒后出现 data-map="cmd_fild01#0#0"';

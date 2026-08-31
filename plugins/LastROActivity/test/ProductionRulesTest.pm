@@ -416,17 +416,23 @@ sub start {
 			'(?=.*\[随机事件\])(?=.*天降宝箱)(?!.*下一次事件)',
 			'sky chest announcement pattern requires the random event and chest markers');
 		is($rules->{sky_chest}{start_regex},
-			'(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*天降宝箱)(?!.*下一次事件)',
-			'sky chest start pattern keeps countdown evidence');
+			'(?=.*\[随机事件\])(?=.*天降宝箱)(?:(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后))?(?!.*下一次事件)',
+			'sky chest start pattern permits optional countdown evidence');
 		is($rules->{sky_chest}{entry_type}, 'tt', 'sky chest uses tt entry');
 		is($rules->{sky_chest}{return_policy}, 'tt:prontera', 'sky chest uses tt return');
 		is_deeply($rules->{sky_chest}{search_targets}, ['999999'],
 			'sky chest declares the explicit placeholder search target');
 		is($rules->{sky_chest}{enabled}, 1,
-			'sky chest remains parser-enabled until runtime shared-control validation');
+			'sky chest remains parser-enabled before shared-control and completion validation');
+		my @sky_production_errors = _production_errors(
+			$rules->{sky_chest}, $shared_rows, $known_maps,
+		);
 		ok(grep { $_ eq 'search target \'999999\' is not present in shared mon_control with search=1' }
-			_production_errors($rules->{sky_chest}, $shared_rows, $known_maps),
+			@sky_production_errors,
 			'sky chest placeholder fails the production shared-control gate');
+		ok(grep { $_ eq 'finish evidence or a positive duration is required' }
+			@sky_production_errors,
+			'sky chest also requires a confirmed completion boundary');
 		is($rules->{lottery}{announce_regex},
 			'(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*开始啦)(?!.*下一次事件)',
 			'lottery announcement pattern is exact');

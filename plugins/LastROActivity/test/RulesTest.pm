@@ -769,7 +769,7 @@ RULES
 		ok(!$rules->{dungeon_monster_party}{enabled},
 			'dungeon_monster_party is effectively disabled after parser validation');
 		ok($rules->{sky_chest}{enabled},
-			'sky_chest remains parser-enabled until shared-control validation');
+			'sky_chest remains parser-enabled before shared-control and lifecycle validation');
 		ok(!exists $rules->{pool_challenge},
 			'pool_challenge is removed in favor of the canonical dojo_challenge rule');
 		is($rules->{lottery}{entry_map}, 'prontera', 'fixture retains confirmed lottery map');
@@ -813,7 +813,7 @@ RULES
 		ok(!$rules->{dungeon_monster_party}{enabled},
 			'dungeon_monster_party effective rule is disabled');
 		ok($rules->{sky_chest}{enabled},
-			'sky_chest remains enabled after parser validation');
+			'sky_chest remains enabled after parser validation before runtime gates');
 
 		my @routing_ids = qw(city_monster_party dojo_challenge lottery);
 		for my $event_id (@routing_ids) {

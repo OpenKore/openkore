@@ -30,8 +30,8 @@ requirement. The bundled fixture intentionally keeps `enabled=1` in the source
 for evidence auditing; the parser changes incomplete sections to effective
 `enabled=0`. Lottery and the normal-combat party route are enabled in this
 fixture because their lifecycle evidence is complete. `sky_chest` has
-announcement evidence, but its placeholder search target keeps it disabled by
-runtime validation.
+announcement evidence, but its placeholder search target and missing completion
+boundary keep it disabled by runtime validation.
 
 An enabled rule must provide both `announce_regex` for the registered server
 announcement and `start_regex` for the scheduler's explicit start line. A
@@ -73,10 +73,10 @@ rules and runtime commands use `tt`.
 ## Current evidence fixture
 
 The configured announcement routes below retain their raw `enabled=1` flags
-for evidence auditing. The two search-mode combat routes remain effectively
-disabled until shared target evidence is supplied. The normal-combat party
-route and Lottery are effectively enabled because their lifecycle evidence is
-complete.
+for evidence auditing. `dojo_challenge` remains disabled until its shared
+target evidence is supplied. `sky_chest` additionally needs a confirmed
+completion boundary. The normal-combat party route and Lottery are effectively
+enabled because their lifecycle evidence is complete.
 
 | Rule | Raw source flag / effective runtime state | Lifecycle gate | Confirmed entry metadata |
 | --- | --- | --- | --- |
@@ -84,7 +84,7 @@ complete.
 | `dojo_challenge` | raw `1` / effective `0` | all dojo locations; `search_targets` evidence is missing | dynamic announcement map |
 | `lottery` | raw `1` / effective `1` | named NPC and repeating-dialog fields are complete | static `prontera 152 133`, `活动负责人#iz` |
 | `dungeon_monster_party` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
-| `sky_chest` | raw `1` / effective `0` | placeholder `search_targets=999999` is absent from shared control | dynamic `cmd_fild01#0#0` |
+| `sky_chest` | raw `1` / effective `0` | placeholder `999999` lacks shared search evidence; completion boundary is also missing | dynamic `cmd_fild01#0#0` |
 
 The source file's raw flags and parsed effective state are intentionally
 audited separately. Do not treat a raw flag as proof that an activity is
@@ -137,6 +137,8 @@ name or an unverified database entry.
 `sky_chest` deliberately declares `search_targets=999999` as a placeholder.
 There is no corresponding shared `mon_control.txt` row, so the rule remains
 disabled until the real monster ID and a matching `search=1` row are supplied.
+A separately confirmed finish pattern, phase boundary, round-success boundary,
+or positive duration is also required; none is currently configured.
 
 ## Lottery dialog
 
@@ -225,10 +227,10 @@ Lottery is enabled with the confirmed `prontera 152 133` NPC identity and the
 bounded repeating first-option dialog mode. The normal-combat monster-party
 route is enabled with its explicit empty-search configuration. The generic
 dojo rule remains blocked until shared `search_targets` evidence is supplied;
-the sky-chest rule remains blocked until placeholder `999999` is replaced and
-its shared search row is confirmed. The dungeon section remains parser-disabled
-until its announcement lines are known. Bounty, personal, and world tasks are
-outside this plugin's scope.
+the sky-chest rule remains blocked until placeholder `999999` is replaced, its
+shared search row is confirmed, and a completion boundary is documented. The
+dungeon section remains parser-disabled until its announcement lines are
+known. Bounty, personal, and world tasks are outside this plugin's scope.
 
 ## Checks
 

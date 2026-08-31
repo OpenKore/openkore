@@ -5,7 +5,8 @@
 # city_monster_party matches the confirmed summon wording for any city.
 # dojo_challenge is the sole canonical rule for every dojo location.
 # sky_chest uses placeholder search target ID 999999 and remains disabled until
-# the real monster ID is confirmed in shared control/mon_control.txt.
+# the real monster ID/shared search=1 evidence and a completion boundary are
+# confirmed.
 # city_monster_party explicitly uses normal combat, so its empty
 # search_targets= value is intentional.  Its temporary activity settings are
 # teleportAuto_search=0, teleportAuto_idle=1, and route_randomWalk=1.
@@ -61,11 +62,13 @@ search_targets=
 [sky_chest]
 enabled=1
 announce_regex=(?=.*\[随机事件\])(?=.*天降宝箱)(?!.*下一次事件)
-start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后)(?=.*天降宝箱)(?!.*下一次事件)
+start_regex=(?=.*\[随机事件\])(?=.*天降宝箱)(?:(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后))?(?!.*下一次事件)
 lead_seconds=10
 map_source=dynamic
 entry_type=tt
 return_policy=tt:prontera
 search_targets=999999
 # The placeholder target keeps this search-mode rule disabled until a real
-# monster ID and a matching search=1 row are supplied in shared control.
+# monster ID and a matching search=1 row are supplied in shared control. A
+# separately confirmed finish pattern, phase boundary, round-success boundary,
+# or positive duration is also required before lifecycle validation can enable it.
