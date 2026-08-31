@@ -245,3 +245,67 @@ target/shared `search=1` evidence and a separately confirmed completion
 boundary are supplied. No scheduler/runtime production code or shared
 `control/mon_control.txt` row was changed. The existing Perl locale and
 wide-character warnings remain in the test environment.
+
+## Fix Round 3
+
+### RED
+
+The mixed unsupported-countdown regression was added before changing the
+production pattern and run with:
+
+```powershell
+$env:OPENKORE_DIR='D:\openkore\.worktrees\lastro-activity-automation'; perl plugins/LastROActivity/test/unit_tests.pl SchedulerTest
+```
+
+The command exited with status `1`. The existing negative lookahead rejected
+`3天后`, but it accepted `3天2小时后` because the supported `2小时` segment
+was enough to satisfy the optional positive branch:
+
+```text
+not ok 75 - sky chest mixed unsupported countdown does not arm an event
+#   Failed test 'sky chest mixed unsupported countdown does not arm an event'
+#   at D:/openkore/.worktrees/lastro-activity-automation/plugins/LastROActivity/test/SchedulerTest.pm line 336.
+# Looks like you failed 1 test of 85.
+not ok 5 - routes confirmed LastRO announcements and ignores long reminders
+#   Failed test 'routes confirmed LastRO announcements and ignores long reminders'
+#   at D:/openkore/.worktrees/lastro-activity-automation/plugins/LastROActivity/test/SchedulerTest.pm line 365.
+```
+
+### GREEN
+
+The sky-chest negative lookahead was extended to consume any following
+supported numeric segments before `后`, so an unsupported unit anywhere in a
+countdown chain rejects the line while marker-only and supported countdown
+announcements remain valid. The focused covering suite was then run with:
+
+```powershell
+$env:OPENKORE_DIR='D:\openkore\.worktrees\lastro-activity-automation'; perl plugins/LastROActivity/test/unit_tests.pl SchedulerTest ProductionRulesTest PluginTest
+```
+
+Result: exit code `0`; SchedulerTest reports all `85` nested assertions
+passing, and the combined command completes successfully through `97`
+top-level test items. Supported counted announcements retain their countdown
+and lead window, marker-only sky-chest announcements still arm immediately,
+`3天后` remains rejected, and `3天2小时后` is now rejected.
+
+### Fix files
+
+- `plugins/LastROActivity/control/lastro_activity.txt`: reject unsupported
+  units anywhere in a numeric sky-chest countdown chain.
+- `plugins/LastROActivity/test/SchedulerTest.pm`: cover the mixed `3天2小时后`
+  announcement.
+- `plugins/LastROActivity/test/ProductionRulesTest.pm`: update the exact
+  production start-pattern expectation and description.
+- `.superpowers/sdd/2026-09-01-lastro-generic-events/task-1-report.md`: this
+  Fix Round 3 evidence.
+
+### Fix residual concerns
+
+`sky_chest` remains fail-closed until both the real server-confirmed monster
+target/shared `search=1` evidence and a separately confirmed completion
+boundary are supplied. The generic scheduler countdown parser and shared
+`control/mon_control.txt` remain unchanged; the sky-chest start evidence gate
+now rejects unsupported units in mixed chains before that parser can arm an
+event. The existing Perl locale and wide-character warnings remain in the
+test environment, and the pre-existing native build artifacts remain
+untracked.
