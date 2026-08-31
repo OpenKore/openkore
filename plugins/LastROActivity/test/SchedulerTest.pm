@@ -205,8 +205,6 @@ sub start {
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
 				'pool_challenge: search_targets evidence is required for shared search mode',
-				'lottery: entry_npc_trusted=1 is required for NPC entry',
-				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
@@ -237,12 +235,12 @@ sub start {
 			{
 				id => 'lottery',
 				messages => [
-					'[随机事件] 抽奖活动60秒后开始啦 data-map="prontera#152#129"',
-					'[随机事件] 抽奖活动30秒后开始啦 data-map="prontera#152#129"',
-					'[随机事件] 抽奖活动10秒后开始啦 data-map="prontera#152#129"',
+					'[随机事件] 抽奖活动60秒后开始啦 data-map="prontera#152#133"',
+					'[随机事件] 抽奖活动30秒后开始啦 data-map="prontera#152#133"',
+					'[随机事件] 抽奖活动10秒后开始啦 data-map="prontera#152#133"',
 				],
 				finish => '抽奖活动已结束',
-				map => {map => 'prontera', x => 152, y => 129},
+				map => {map => 'prontera', x => 152, y => 133},
 			},
 			{
 				id => 'city_monster_party',
@@ -286,8 +284,13 @@ sub start {
 				ok($event, "$case->{id} announcement arms one event");
 				is($event->{countdown_seconds}, $countdown,
 					"$case->{id} preserves the countdown duration");
-				is_deeply($event->{data_map}, $case->{map},
-					"$case->{id} preserves dynamic map metadata");
+				if ($case->{id} eq 'lottery') {
+					ok(!exists $event->{data_map},
+						'lottery static rule ignores announcement map metadata');
+				} else {
+					is_deeply($event->{data_map}, $case->{map},
+						"$case->{id} preserves dynamic map metadata");
+				}
 				my $expected_trigger = $received_at + $countdown - 10;
 				$expected_trigger = $received_at if $expected_trigger < $received_at;
 				is($event->{trigger_at}, $expected_trigger,

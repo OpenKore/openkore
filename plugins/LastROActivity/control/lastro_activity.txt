@@ -1,7 +1,7 @@
 # LastRO announcement evidence fixture.
 # Raw enabled=1 flags are retained for manual announcement-routing tests.  The
-# runtime lifecycle validator still fails closed when entry items, shared
-# monster targets, or trusted NPC dialog evidence are missing.
+# runtime lifecycle validator still fails closed when shared monster targets
+# or legacy fixed-dialog evidence is missing.
 # Invasion lines for Alberta/Aldebaran and generic 下一次事件 reminders are
 # intentionally not represented by any rule.
 
@@ -12,14 +12,14 @@ start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒
 finish_regex=魔物派对已结束
 lead_seconds=10
 map_source=dynamic
-entry_type=privateairship
-return_policy=privateairship:prontera
+entry_type=tt
+return_policy=tt:prontera
 search_targets=
 
 [dungeon_monster_party]
 enabled=1
 lead_seconds=10
-return_policy=privateairship:prontera
+return_policy=tt:prontera
 search_targets=
 
 [dojo_challenge]
@@ -29,8 +29,8 @@ start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒
 finish_regex=梦罗克道场入口已关闭，深渊挑战已开始
 lead_seconds=10
 map_source=dynamic
-entry_type=privateairship
-return_policy=privateairship:prontera
+entry_type=tt
+return_policy=tt:prontera
 search_targets=
 
 [pool_challenge]
@@ -40,8 +40,8 @@ start_regex=(?=.*\[随机事件\])(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒
 finish_regex=斐杨道场入口已关闭，深渊挑战已开始
 lead_seconds=10
 map_source=dynamic
-entry_type=privateairship
-return_policy=privateairship:prontera
+entry_type=tt
+return_policy=tt:prontera
 search_targets=
 
 [lottery]
@@ -50,21 +50,19 @@ announce_regex=(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*开始啦)(?!.*下�
 start_regex=(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*[0-9]+\s*秒钟?后)(?=.*开始啦)(?!.*下一次事件)
 finish_regex=抽奖活动已结束
 lead_seconds=10
-map_source=dynamic
+map_source=static
 entry_type=npc
 entry_map=prontera
 entry_x=152
-entry_y=129
-entry_npc=活动负责人#iz
-return_policy=privateairship:prontera
+entry_y=133
+entry_npc_name=活动负责人#iz
+entry_dialog_mode=repeat_first_until_finish
+return_policy=tt:prontera
 search_targets=
-# The NPC dialog trust attestation is intentionally absent; runtime validation
-# must keep this route disabled even though its announcement and coordinates
-# are confirmed.
 
 [sky_chest]
 enabled=1
 lead_seconds=10
-return_policy=privateairship:prontera
+return_policy=tt:prontera
 search_targets=
 # No announcement, map, target, entry, or finish evidence was supplied.

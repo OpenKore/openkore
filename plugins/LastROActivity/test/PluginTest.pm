@@ -483,24 +483,26 @@ sub start {
 		done_testing();
 	};
 
-	subtest 'bundled incomplete raw-enabled rules never arm before lifecycle validation' => sub {
+	subtest 'bundled rules honor parser lifecycle validation' => sub {
 		LastROActivity::scheduler()->clear();
 		my @incomplete_ids = qw(
 			city_monster_party
 			dojo_challenge
 			pool_challenge
-			lottery
 		);
 		for my $event_id (@incomplete_ids) {
 			ok(!$LastROActivity::rules->{$event_id}{enabled},
 				"$event_id is effectively disabled before scheduling");
 		}
 		my $event = LastROActivity::onSystemMessage(undef, {
-			Msg => '[随机事件] 抽奖活动10秒后开始啦 data-map="prontera#152#129"',
+			Msg => '[随机事件] 抽奖活动10秒后开始啦 data-map="prontera#152#133"',
 		});
-		ok(!defined $event, 'announcement-only evidence cannot arm the incomplete lottery rule');
-		is_deeply(LastROActivity::scheduler()->events(), {},
-			'incomplete raw-enabled rules leave no scheduler timers');
+		ok($LastROActivity::rules->{lottery}{enabled},
+			'lottery is effectively enabled with complete named-dialog evidence');
+		ok(defined $event, 'complete Lottery evidence arms the activity');
+		is(scalar keys %{LastROActivity::scheduler()->events()}, 1,
+			'Lottery announcement creates one scheduler timer');
+		LastROActivity::scheduler()->clear();
 		done_testing();
 	};
 

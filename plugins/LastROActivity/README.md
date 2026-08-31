@@ -3,9 +3,8 @@
 LastROActivity listens for explicitly configured LastRO activity announcements,
 waits until the configured lead time, and temporarily hands control to the
 activity lifecycle. The bundled rules preserve all six first-phase event IDs
-and the raw enable flags used by the announcement-evidence fixture. Effective
-runtime enablement is stricter: parser and lifecycle validation fail closed
-when evidence is incomplete.
+and their raw enable flags. Effective runtime enablement is stricter: parser
+and lifecycle validation fail closed when evidence is incomplete.
 
 ## Enablement and timing
 
@@ -18,9 +17,10 @@ change AI, lock maps, inventory, or the shared monster-control file.
 
 For a live configuration, do not set `enabled=1` while any map, announcement,
 entry, target, or finish value is inferred rather than confirmed. The bundled
-fixture intentionally keeps `enabled=1` in the source for evidence-backed
-announcement tests; the parser changes incomplete sections to effective
-`enabled=0`, and the lifecycle validator rejects missing entry evidence.
+fixture intentionally keeps `enabled=1` in the source for evidence auditing;
+the parser changes incomplete sections to effective `enabled=0`. Lottery is the
+exception in this fixture because its named NPC, coordinates, dialog mode, and
+finish evidence are complete.
 
 An enabled rule must provide both `announce_regex` for the registered server
 announcement and `start_regex` for the scheduler's explicit start line. A
@@ -33,24 +33,50 @@ the requirement for those two evidence patterns.
 must exist in the selected server map table, and dynamic announcement metadata
 is checked against the loaded map table before entry.
 
+## `tt` transport
+
+Activity transfers use the LastRO `tt` command. The accepted forms are:
+
+`tt <map> [x y [item_id]]`
+
+```text
+tt <map>
+tt <map> <x> <y>
+tt <map> <x> <y> <item_id>
+```
+
+The map-only form uses the default item `14527` and the map-only protocol
+variant. Coordinates select the coordinate variant; an explicit `item_id` is
+the final token and overrides `14527`. A return is always map-only:
+`tt prontera` (the configured return policy is `tt:prontera`).
+
+The resolved destination is retained from the first request through bounded
+retries. Coordinate precedence is: named repeating NPC rules use their
+configured `entry_x`/`entry_y`; `dynamic` rules use the matching announcement's
+`data-map`; `static` and `announcement` rules use their configured map and
+coordinates. Coordinates are emitted only as a complete pair. The parser still
+accepts legacy `airship`/`privateairship` entry types and
+`privateairship:prontera` return aliases for old control files, but production
+rules and runtime commands use `tt`.
+
 ## Current evidence fixture
 
 The four confirmed announcement routes below retain their raw `enabled=1`
-flags for evidence auditing, but parser validation makes their effective
-runtime state `enabled=0` until the missing lifecycle evidence is supplied.
-They must not be armed by a live plugin instance.
+flags for evidence auditing. The three combat routes remain effectively
+disabled until shared target evidence is supplied. Lottery is effectively
+enabled because its named-dialog evidence is complete.
 
-| Rule | Raw source flag / effective runtime state | Lifecycle gate | Confirmed dynamic metadata |
+| Rule | Raw source flag / effective runtime state | Lifecycle gate | Confirmed entry metadata |
 | --- | --- | --- | --- |
-| `city_monster_party` | raw `1` / effective `0` | Private Airship item and shared `search_targets` evidence are missing | `pvp_y_5-2#0#0` |
-| `dojo_challenge` | raw `1` / effective `0` | Private Airship item and shared `search_targets` evidence are missing | `morocc#159#99` |
-| `pool_challenge` | raw `1` / effective `0` | Private Airship item and shared `search_targets` evidence are missing | `payon#184#102` |
-| `lottery` | raw `1` / effective `0` | Trusted NPC dialog attestation is missing; `prontera#152#129` is retained as the confirmed entry NPC location | `prontera#152#129` |
+| `city_monster_party` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `pvp_y_5-2#0#0` |
+| `dojo_challenge` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `morocc#159#99` |
+| `pool_challenge` | raw `1` / effective `0` | `search_targets` evidence is missing | dynamic `payon#184#102` |
+| `lottery` | raw `1` / effective `1` | named NPC and repeating-dialog fields are complete | static `prontera 152 133`, `活动负责人#iz` |
 | `dungeon_monster_party` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
 | `sky_chest` | raw `1` / effective `0` | `announce_regex` and `start_regex` are absent | none |
 
 The source file's raw flags and parsed effective state are intentionally
-different for every row. Do not treat a raw flag as proof that an activity is
+audited separately. Do not treat a raw flag as proof that an activity is
 runnable. Announcement-only evidence cannot activate a lifecycle.
 
 The Morocc and Payon announcements are accepted with `1分钟后`, `30秒后`, or
@@ -89,13 +115,57 @@ production gate requires the exact declared key; it does not infer an ID/name
 alias that may be absent from the runtime monster LUT. Do not add a target
 based on a translated display name or an unverified database entry.
 
+## Lottery dialog
+
+The enabled Lottery rule is deliberately exact:
+
+```text
+entry_type=npc
+entry_map=prontera
+entry_x=152
+entry_y=133
+entry_npc_name=活动负责人#iz
+entry_dialog_mode=repeat_first_until_finish
+```
+
+`#iz` is part of the NPC name. After `tt prontera 152 133` is confirmed, the
+plugin binds only an actor with that exact name and position. It sends the
+first `sendTalk` on the next main-loop turn, answers Continue immediately, and
+sends wire response `1` immediately for the first menu option. A close packet
+marks one re-click for the next main-loop turn; it does not recurse in the hook,
+sleep, or add an artificial delay. The finish line `抽奖活动已结束` stops all
+responses and re-clicks, clears the dialog state, and starts the normal return.
+
+Number, text, shop, and any unsupported Lottery dialog input fail closed. The
+plugin records a warning in the form `[LastROActivity] <reason>.`, restores the
+temporary activity settings through the common cleanup path, and requests
+`tt prontera`; it never guesses a value or a different NPC.
+
+For a normal run, the observable console/command sequence is:
+
+```text
+tt prontera 152 133
+[LastROActivity] Lottery NPC bound: 活动负责人#iz at prontera 152 133
+sendTalk(<actor-id>)
+sendTalkContinue(<actor-id>)
+sendTalkResponse(<actor-id>, 1)
+抽奖活动已结束
+tt prontera
+```
+
+The first and last lines are the exact transport commands. The middle lines
+represent the expected binding, response, finish, and return events; actor IDs
+are session-specific. Failures use `[LastROActivity] <reason>.` and still
+request `tt prontera`. A ten-second announcement is due at message receipt
+because the default `lead_seconds` is also ten seconds.
+
 ## Entry and return
 
-Every activity uses the fixed return policy `privateairship:prontera`, which is
-executed as `privateairship prontera` after finish, timeout, map loss, or a
-failed entry. The original in-memory lock-map and teleport/search settings are
-restored only after the return map is confirmed; normal OpenKore routing then
-handles the trip back to the saved lock map.
+Every activity uses the fixed return policy `tt:prontera`, executed as
+`tt prontera` after finish, timeout, map loss, or a failed entry. The original
+in-memory lock-map and teleport/search settings are restored only after the
+return map is confirmed; normal OpenKore routing then handles the trip back to
+the saved lock map.
 
 Round-based activities must provide both `round_start_regex` and
 `round_success_regex`.  Give `round_start_regex` a capture for the server's
@@ -105,10 +175,11 @@ packets cannot replay a success.  When a start packet has no verifiable
 identity, only the first such round is accepted; later unidentified starts are
 ignored until the rule supplies distinguishable evidence.
 
-NPC entry is additionally gated by the canonical metadata fields
-`entry_npc_trusted=1` and a non-empty `entry_npc_evidence`. These fields attest
-to a real server dialog sequence; they are not a substitute for testing the
-sequence. Macro names must refer to an installed, tested macro.
+Legacy fixed-sequence NPC entry is gated by `entry_npc_trusted=1` and a
+non-empty `entry_npc_evidence`. The explicit Lottery repeating mode above uses
+the exact name, map, coordinate pair, supported mode, and finish regex instead;
+it does not require a legacy trust-attestation field. Macro names must refer to
+an installed, tested macro.
 
 ## Evidence checklist
 
@@ -125,13 +196,12 @@ logs, map-change packets, or a user-supplied dialog transcript:
 - the finish/reward macro text and any NPC result text when the activity uses
   an NPC or macro.
 
-The lottery fixture retains the confirmed capital entry coordinates and NPC
-identifier, but its trusted dialog sequence is intentionally unknown, so entry
-is rejected until an attestation is recorded. The monster-party and challenge
-fixtures likewise remain blocked until their item and shared-target evidence
-is supplied; the dungeon and chest sections are parser-disabled until their
-announcement lines are known. Bounty, personal, and world tasks are outside
-this plugin's scope.
+Lottery is enabled with the confirmed `prontera 152 133` NPC identity and the
+bounded repeating first-option dialog mode. The monster-party and challenge
+fixtures remain blocked until shared `search_targets` evidence is supplied;
+the dungeon and chest sections remain parser-disabled until their announcement
+lines are known. Bounty, personal, and world tasks are outside this plugin's
+scope.
 
 ## Checks
 

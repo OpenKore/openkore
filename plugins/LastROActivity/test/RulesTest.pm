@@ -20,9 +20,10 @@ lead_seconds=10
 entry_type=npc
 entry_map=prontera
 entry_x=152
-entry_y=129
-entry_npc=活动负责人#iz
-return_policy=privateairship:prontera
+entry_y=133
+entry_npc_name=活动负责人#iz
+entry_dialog_mode=repeat_first_until_finish
+return_policy=tt:prontera
 
 [bad_rule]
 enabled=1
@@ -33,8 +34,13 @@ RULES
 
 		is($rules->{lottery}{entry_map}, 'prontera', 'parses fixed NPC map');
 		is($rules->{lottery}{entry_x}, 152, 'parses NPC x coordinate');
+		is($rules->{lottery}{entry_y}, 133, 'parses confirmed NPC y coordinate');
+		is($rules->{lottery}{entry_npc_name}, '活动负责人#iz', 'parses exact NPC name');
+		is($rules->{lottery}{entry_dialog_mode}, 'repeat_first_until_finish',
+			'parses repeating dialog mode');
+		is($rules->{lottery}{return_policy}, 'tt:prontera', 'parses canonical return policy');
 		is($rules->{lottery}{lead_seconds}, 10, 'parses ten-second lead');
-		ok(!$rules->{lottery}{enabled}, 'lottery remains disabled without dialog data');
+		ok(!$rules->{lottery}{enabled}, 'explicitly disabled Lottery rule remains disabled');
 		is_deeply($errors, ['bad_rule: invalid entry_type unknown'], 'reports invalid enabled rule');
 		ok(!$rules->{bad_rule}{enabled}, 'invalid rule is not enabled');
 		is_deeply($rules->{lottery}{validation_errors}, [], 'valid disabled rule has no validation errors');
@@ -710,15 +716,14 @@ RULES
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
 				'pool_challenge: search_targets evidence is required for shared search mode',
-				'lottery: entry_npc_trusted=1 is required for NPC entry',
-				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
 			'raw-enabled sections without announcement evidence fail closed during parsing',
 		);
 		for my $event_id (@expected_ids) {
-			is($rules->{$event_id}{enabled}, 0,
+			my $expected_enabled = $event_id eq 'lottery' ? 1 : 0;
+			is($rules->{$event_id}{enabled}, $expected_enabled,
 				"$event_id has the expected effective enable state");
 		}
 		ok(!$rules->{dungeon_monster_party}{enabled},
@@ -727,8 +732,17 @@ RULES
 			'sky_chest is effectively disabled after parser validation');
 		is($rules->{lottery}{entry_map}, 'prontera', 'fixture retains confirmed lottery map');
 		is($rules->{lottery}{entry_x}, 152, 'fixture retains confirmed lottery x coordinate');
-		is($rules->{lottery}{entry_y}, 129, 'fixture retains confirmed lottery y coordinate');
-		is($rules->{lottery}{entry_npc}, '活动负责人#iz', 'fixture retains confirmed lottery NPC');
+		is($rules->{lottery}{entry_y}, 133, 'fixture retains confirmed lottery y coordinate');
+		is($rules->{lottery}{entry_npc_name}, '活动负责人#iz',
+			'fixture retains confirmed lottery NPC name');
+		is($rules->{lottery}{entry_dialog_mode}, 'repeat_first_until_finish',
+			'fixture retains repeating Lottery dialog mode');
+		is($rules->{lottery}{return_policy}, 'tt:prontera',
+			'fixture uses the canonical Lottery return policy');
+		ok(!defined $rules->{lottery}{entry_item_id},
+			'fixture does not require a Lottery entry item');
+		ok(!defined $rules->{lottery}{entry_npc},
+			'fixture does not use a TalkNPC sequence for Lottery');
 		done_testing();
 	};
 
@@ -743,8 +757,6 @@ RULES
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
 				'pool_challenge: search_targets evidence is required for shared search mode',
-				'lottery: entry_npc_trusted=1 is required for NPC entry',
-				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
@@ -766,8 +778,13 @@ RULES
 
 		my @routing_ids = qw(city_monster_party dojo_challenge pool_challenge lottery);
 		for my $event_id (@routing_ids) {
-			ok(!$rules->{$event_id}{enabled}, "$event_id is effectively disabled before lifecycle evidence is complete");
-			is($rules->{$event_id}{map_source}, 'dynamic', "$event_id uses dynamic announcement map metadata");
+			if ($event_id eq 'lottery') {
+				ok($rules->{$event_id}{enabled}, 'lottery is effectively enabled with complete named-dialog evidence');
+				is($rules->{$event_id}{map_source}, 'static', 'lottery uses its confirmed static NPC map');
+			} else {
+				ok(!$rules->{$event_id}{enabled}, "$event_id is effectively disabled before lifecycle evidence is complete");
+				is($rules->{$event_id}{map_source}, 'dynamic', "$event_id uses dynamic announcement map metadata");
+			}
 		}
 
 		is($rules->{dojo_challenge}{finish_regex}, '梦罗克道场入口已关闭，深渊挑战已开始',
@@ -777,10 +794,15 @@ RULES
 		is($rules->{lottery}{finish_regex}, '抽奖活动已结束', 'lottery finish evidence is exact');
 		is($rules->{city_monster_party}{finish_regex}, '魔物派对已结束',
 			'monster party finish evidence is exact');
+		is($rules->{lottery}{entry_npc_name}, '活动负责人#iz',
+			'lottery identity keeps the exact NPC suffix');
+		is($rules->{lottery}{entry_dialog_mode}, 'repeat_first_until_finish',
+			'lottery repeats the first dialog option until finish');
+		is($rules->{lottery}{entry_x}, 152, 'lottery static NPC x coordinate is exact');
+		is($rules->{lottery}{entry_y}, 133, 'lottery static NPC y coordinate is exact');
+		is($rules->{lottery}{return_policy}, 'tt:prontera', 'lottery uses tt for return');
 		ok(!defined $rules->{lottery}{entry_npc_trusted},
-			'lottery has no untrusted dialog attestation invented');
-		ok(!defined $rules->{lottery}{entry_npc_evidence},
-			'lottery has no dialog transcript invented');
+			'lottery does not require legacy trust attestation');
 
 		my $morocc = '[随机事件] 梦罗克道场将在1分钟后开启，深渊挑战即将开始';
 		my $payon = '[随机事件] 斐杨道场将在30秒后开启，深渊挑战即将开始';

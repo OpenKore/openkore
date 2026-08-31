@@ -258,8 +258,8 @@ sub _production_errors {
 	}
 
 	my $return_policy = _trim($rule->{return_policy});
-	push @errors, 'return_policy must be privateairship:prontera'
-		unless $return_policy =~ /^privateairship\s*:\s*prontera$/i;
+	push @errors, 'return_policy must be tt:prontera'
+		unless $return_policy =~ /^tt\s*:\s*prontera$/i;
 	for my $macro_field (qw(entry_macro finish_macro)) {
 		if (defined $rule->{$macro_field} && _trim($rule->{$macro_field}) ne ''
 			&& !_safe_macro_name($rule->{$macro_field})) {
@@ -268,24 +268,27 @@ sub _production_errors {
 	}
 
 	my $entry_type = lc(_trim($rule->{entry_type}));
-	$entry_type = 'privateairship' if $entry_type eq '';
-	if ($entry_type eq 'airship' || $entry_type eq 'privateairship') {
-		push @errors, 'entry_item_id is required for airship entry'
-			unless defined $rule->{entry_item_id}
-			&& "$rule->{entry_item_id}" =~ /^\d+$/
-			&& $rule->{entry_item_id} > 0;
+	$entry_type = 'tt' if $entry_type eq '';
+	if ($entry_type eq 'tt' || $entry_type eq 'airship' || $entry_type eq 'privateairship') {
+		# tt supplies the default transport item (14527); production validation
+		# only requires the shared search evidence for combat routes.
 	} elsif ($entry_type eq 'npc') {
 		push @errors, 'entry_map is required for NPC entry' unless _safe_map_name($entry_map);
 		push @errors, 'entry_x is required for NPC entry'
 			unless defined $rule->{entry_x} && "$rule->{entry_x}" =~ /^\d+$/;
 		push @errors, 'entry_y is required for NPC entry'
 			unless defined $rule->{entry_y} && "$rule->{entry_y}" =~ /^\d+$/;
-		push @errors, 'entry_npc is required for NPC entry'
-			unless _safe_npc_sequence($rule->{entry_npc});
-		push @errors, 'entry_npc_trusted=1 is required for NPC entry'
-			unless _truthy($rule->{entry_npc_trusted});
-		push @errors, 'entry_npc_evidence is required for NPC entry'
-			unless _has_value($rule->{entry_npc_evidence});
+		if (lc(_trim($rule->{entry_dialog_mode})) eq 'repeat_first_until_finish') {
+			push @errors, 'entry_npc_name is required for repeating NPC dialog'
+			unless _has_value($rule->{entry_npc_name});
+		} else {
+			push @errors, 'entry_npc is required for NPC entry'
+				unless _safe_npc_sequence($rule->{entry_npc});
+			push @errors, 'entry_npc_trusted=1 is required for NPC entry'
+				unless _truthy($rule->{entry_npc_trusted});
+			push @errors, 'entry_npc_evidence is required for NPC entry'
+				unless _has_value($rule->{entry_npc_evidence});
+		}
 	} elsif ($entry_type eq 'macro') {
 		push @errors, 'entry_macro is required for macro entry'
 			unless _safe_macro_name($rule->{entry_macro});
@@ -330,16 +333,11 @@ sub start {
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: entry_item_id is required for airship entry',
 				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
-				'dojo_challenge: entry_item_id is required for airship entry',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
-				'pool_challenge: entry_item_id is required for airship entry',
 				'pool_challenge: search_targets evidence is required for shared search mode',
-				'lottery: entry_npc_trusted=1 is required for NPC entry',
-				'lottery: entry_npc_evidence is required for NPC entry',
 				'sky_chest: announce_regex required when enabled',
 				'sky_chest: start_regex required when enabled',
 			],
@@ -362,7 +360,6 @@ sub start {
 
 		my %expected_validation_errors = (
 			city_monster_party => [
-				'entry_item_id is required for airship entry',
 				'search_targets evidence is required for shared search mode',
 			],
 			dungeon_monster_party => [
@@ -370,17 +367,12 @@ sub start {
 				'start_regex required when enabled',
 			],
 			dojo_challenge => [
-				'entry_item_id is required for airship entry',
 				'search_targets evidence is required for shared search mode',
 			],
 			pool_challenge => [
-				'entry_item_id is required for airship entry',
 				'search_targets evidence is required for shared search mode',
 			],
-			lottery => [
-				'entry_npc_trusted=1 is required for NPC entry',
-				'entry_npc_evidence is required for NPC entry',
-			],
+			lottery => [],
 			sky_chest => [
 				'announce_regex required when enabled',
 				'start_regex required when enabled',
@@ -389,20 +381,44 @@ sub start {
 		for my $id (@EVENT_IDS) {
 			ok(exists $rules->{$id}, "$id rule exists");
 			next unless exists $rules->{$id};
-			is($rules->{$id}{enabled}, 0,
-				"$id has the expected fail-closed effective enable state");
+			my $expected_enabled = $id eq 'lottery' ? 1 : 0;
+			is($rules->{$id}{enabled}, $expected_enabled,
+				"$id has the expected effective enable state");
 			is_deeply($rules->{$id}{validation_errors}, $expected_validation_errors{$id},
 				"$id records the parser validation errors that forced effective disablement");
 		}
 
 		is($rules->{dojo_challenge}{map_source}, 'dynamic', 'morocc route declares dynamic map source');
 		is($rules->{pool_challenge}{map_source}, 'dynamic', 'payon route declares dynamic map source');
-		is($rules->{lottery}{map_source}, 'dynamic', 'lottery route declares dynamic map source');
+		is($rules->{lottery}{map_source}, 'static', 'lottery route declares static map source');
 		is($rules->{city_monster_party}{map_source}, 'dynamic', 'party route declares dynamic map source');
+		is($rules->{lottery}{announce_regex},
+			'(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*开始啦)(?!.*下一次事件)',
+			'lottery announcement pattern is exact');
+		is($rules->{lottery}{start_regex},
+			'(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*[0-9]+\s*秒钟?后)(?=.*开始啦)(?!.*下一次事件)',
+			'lottery countdown pattern is exact');
 		is($rules->{lottery}{entry_map}, 'prontera', 'lottery retains confirmed capital entry map');
 		is($rules->{lottery}{entry_x}, 152, 'lottery retains confirmed NPC x coordinate');
-		is($rules->{lottery}{entry_y}, 129, 'lottery retains confirmed NPC y coordinate');
-		ok(!defined $rules->{lottery}{entry_npc_trusted}, 'lottery has no trusted dialog attestation');
+		is($rules->{lottery}{entry_y}, 133, 'lottery uses confirmed NPC Y');
+		is($rules->{lottery}{entry_npc_name}, '活动负责人#iz',
+			'NPC suffix remains part of the name');
+		is($rules->{lottery}{entry_dialog_mode}, 'repeat_first_until_finish',
+			'lottery repeats first-option dialog');
+		ok($rules->{lottery}{enabled}, 'lottery is effectively enabled');
+		is($rules->{lottery}{return_policy}, 'tt:prontera',
+			'lottery returns through tt');
+		ok(!defined $rules->{lottery}{entry_item_id},
+			'lottery does not require an entry item ID');
+		ok(!defined $rules->{lottery}{entry_npc},
+			'lottery uses the exact NPC name instead of a TalkNPC sequence');
+		is_deeply($rules->{lottery}{search_targets}, [],
+			'lottery keeps an empty search_targets value');
+		for my $id (qw(city_monster_party dojo_challenge pool_challenge)) {
+			is($rules->{$id}{entry_type}, 'tt', "$id uses tt entry");
+			is($rules->{$id}{return_policy}, 'tt:prontera', "$id uses tt return");
+			ok(!defined $rules->{$id}{entry_item_id}, "$id uses tt default item");
+		}
 		done_testing();
 	};
 
@@ -416,7 +432,7 @@ sub start {
 			entry_map => 'prontera',
 			entry_type => 'macro',
 			entry_macro => 'enter_event',
-			return_policy => 'privateairship:prontera',
+			return_policy => 'tt:prontera',
 		};
 		is_deeply([_production_errors($complete, $shared_rows, $known_maps)], [],
 			'a complete macro rule satisfies the production contract');
@@ -485,10 +501,26 @@ sub start {
 			entry_npc => 'Guide#c',
 			entry_npc_trusted => 1,
 			entry_npc_evidence => 'server dialog transcript',
-			return_policy => 'privateairship:prontera',
+			return_policy => 'tt:prontera',
 		};
 		is_deeply([_production_errors($npc_rule, $shared_rows, $known_maps)], [],
 			'canonical trusted NPC metadata satisfies NPC entry validation');
+		my $named_npc_rule = {
+			enabled => 1,
+			announce_regex => 'event ready',
+			start_regex => 'event starts',
+			finish_regex => 'event done',
+			map_source => 'static',
+			entry_map => 'prontera',
+			entry_type => 'npc',
+			entry_x => 152,
+			entry_y => 133,
+			entry_npc_name => '活动负责人#iz',
+			entry_dialog_mode => 'repeat_first_until_finish',
+			return_policy => 'tt:prontera',
+		};
+		is_deeply([_production_errors($named_npc_rule, $shared_rows, $known_maps)], [],
+			'named repeating NPC metadata satisfies Lottery entry validation');
 		my %untrusted_npc = %$npc_rule;
 		delete $untrusted_npc{entry_npc_evidence};
 		like(join('; ', _production_errors(\%untrusted_npc, $shared_rows, $known_maps)),
@@ -501,9 +533,8 @@ sub start {
 			finish_regex => 'event done',
 			map_source => 'static',
 			entry_map => 'prontera',
-			entry_type => 'privateairship',
-			entry_item_id => 14527,
-			return_policy => 'privateairship:prontera',
+			entry_type => 'tt',
+			return_policy => 'tt:prontera',
 			search_targets => ['missing-event-monster'],
 		};
 		like(join('; ', _production_errors($search_rule, $shared_rows, $known_maps)),
@@ -532,11 +563,11 @@ sub start {
 			$trusted_target{search_targets} = [$known_target];
 			is_deeply([_production_errors(\%trusted_target, $shared_rows, $known_maps)], [],
 				'a declared target resolves to a shared search=1 row');
+			my %without_item = %trusted_target;
+			delete $without_item{entry_item_id};
+			is_deeply([_production_errors(\%without_item, $shared_rows, $known_maps)], [],
+				'tt entry uses the default item without an entry_item_id');
 		}
-		my %missing_item = %$search_rule;
-		delete $missing_item{entry_item_id};
-		like(join('; ', _production_errors(\%missing_item, $shared_rows, $known_maps)),
-			qr/entry_item_id/, 'airship entry without a confirmed item ID is rejected');
 		done_testing();
 	};
 
