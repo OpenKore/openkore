@@ -336,6 +336,11 @@ sub start {
 		ok(!defined $sky_immediate_scheduler->observe(
 			$sky_rule, $sky_mixed_unsupported, 72_000,
 		), 'sky chest mixed unsupported countdown does not arm an event');
+		my $sky_mixed_unsupported_long_suffix =
+			'[随机事件] 天降宝箱将在3天2小时以后出现 data-map="cmd_fild01#0#0"';
+		ok(!defined $sky_immediate_scheduler->observe(
+			$sky_rule, $sky_mixed_unsupported_long_suffix, 73_000,
+		), 'sky chest mixed unsupported countdown with 以后 does not arm an event');
 		my $reminder = '[随机事件] 下一次事件将在2小时后发生，梦罗克道场稍后开放 data-map="morocc#159#99"';
 		ok(!defined $scheduler->observe($rules->{dojo_challenge}, $reminder, 70_000),
 			'long 下一次事件 reminder never arms a dojo rule');

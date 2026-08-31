@@ -309,3 +309,93 @@ now rejects unsupported units in mixed chains before that parser can arm an
 event. The existing Perl locale and wide-character warnings remain in the
 test environment, and the pre-existing native build artifacts remain
 untracked.
+
+## Fix Round 4
+
+### RED
+
+The mixed unsupported-countdown regression for the equivalent `以后` suffix
+was added before changing the production pattern and run with:
+
+```powershell
+$env:OPENKORE_DIR='D:\openkore\.worktrees\lastro-activity-automation'; perl plugins/LastROActivity/test/unit_tests.pl SchedulerTest
+```
+
+The command exited with status `1`. The existing guard only recognized a
+countdown ending in `后`, so `[随机事件] 天降宝箱将在3天2小时以后出现 ...`
+was treated as a marker-only announcement even though `parse_countdown`
+extracted the supported `2小时` segment:
+
+```text
+not ok 76 - sky chest mixed unsupported countdown with 以后 does not arm an event
+#   Failed test 'sky chest mixed unsupported countdown with 以后 does not arm an event'
+#   at D:/openkore/.worktrees/lastro-activity-automation/plugins/LastROActivity/test/SchedulerTest.pm line 341.
+# Looks like you failed 1 test of 86.
+not ok 5 - routes confirmed LastRO announcements and ignores long reminders
+#   Failed test 'routes confirmed LastRO announcements and ignores long reminders'
+#   at D:/openkore/.worktrees/lastro-activity-automation/plugins/LastROActivity/test/SchedulerTest.pm line 370.
+```
+
+### GREEN
+
+The sky-chest supported-countdown suffix now accepts `后`, `以后`, `後`, and
+`以後`. The unsupported-chain guard uses the same suffix set and restricts
+the unsupported-unit token to Unicode letters, preventing HTML/data-map
+punctuation from forming a false chain. The focused covering suite was run
+with:
+
+```powershell
+$env:OPENKORE_DIR='D:\openkore\.worktrees\lastro-activity-automation'; perl plugins/LastROActivity/test/unit_tests.pl SchedulerTest ProductionRulesTest PluginTest
+```
+
+Result: exit code `0`; SchedulerTest reports all `86` nested assertions
+passing, and the combined command completes successfully through `97`
+top-level test items. Supported counted announcements retain their countdown
+and lead window, marker-only sky-chest announcements still arm immediately,
+`3天后`, `3天2小时后`, and `3天2小时以后` are rejected, and next-event
+reminders remain excluded.
+
+### Fix files
+
+- `plugins/LastROActivity/control/lastro_activity.txt`: recognize equivalent
+  countdown suffixes and reject unsupported units in mixed chains without
+  treating HTML/data-map punctuation as a unit.
+- `plugins/LastROActivity/test/SchedulerTest.pm`: cover the mixed
+  `3天2小时以后` announcement.
+- `plugins/LastROActivity/test/ProductionRulesTest.pm`: update the exact
+  production start-pattern expectation and description.
+- `.superpowers/sdd/2026-09-01-lastro-generic-events/task-1-report.md`: this
+  Fix Round 4 evidence.
+
+### Fix residual concerns
+
+`sky_chest` remains fail-closed until both the real server-confirmed monster
+target/shared `search=1` evidence and a separately confirmed completion
+boundary are supplied. The generic scheduler countdown parser and shared
+`control/mon_control.txt` remain unchanged; the sky-chest start evidence gate
+now handles all four supported Chinese suffix spellings and rejects
+unsupported letter units before that parser can arm an event. The existing
+Perl locale and wide-character warnings remain in the test environment, and
+the pre-existing native build artifacts remain untracked.
+
+### Final verification
+
+The complete plugin suite was rerun after the Round 4 fix:
+
+```powershell
+perl plugins/LastROActivity/test/unit_tests.pl
+```
+
+Result: exit code `0`; all `121` top-level subtests passed. Include-aware
+syntax checks for the plugin entrypoint and its three modules each exited `0`
+with `syntax OK`:
+
+```powershell
+perl -I src -I src/deps -I plugins/LastROActivity -c plugins/LastROActivity/LastROActivity.pl
+perl -I src -I src/deps -I plugins/LastROActivity -c plugins/LastROActivity/LastROActivity/Rules.pm
+perl -I src -I src/deps -I plugins/LastROActivity -c plugins/LastROActivity/LastROActivity/Scheduler.pm
+perl -I src -I src/deps -I plugins/LastROActivity -c plugins/LastROActivity/LastROActivity/State.pm
+```
+
+`git diff --check` exited `0`, and the runtime scan found no direct
+`Commands::run("privateairship ...")` calls in `plugins/LastROActivity`.

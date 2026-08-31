@@ -416,7 +416,7 @@ sub start {
 			'(?=.*\[随机事件\])(?=.*天降宝箱)(?!.*下一次事件)',
 			'sky chest announcement pattern requires the random event and chest markers');
 		is($rules->{sky_chest}{start_regex},
-			'(?=.*\[随机事件\])(?=.*天降宝箱)(?:(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)后))?(?!.*[0-9]+\s*(?!(?:小时|小時|时|分钟?|秒钟?))[^\\d\\s]+(?:\s*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?))*\s*后)(?!.*下一次事件)',
+			'(?=.*\[随机事件\])(?=.*天降宝箱)(?:(?=.*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?)(?:以后|后|以後|後)))?(?!.*[0-9]+\s*(?!(?:小时|小時|时|分钟?|秒钟?))\\p{L}+(?:\s*[0-9]+\s*(?:小时|小時|时|分钟?|秒钟?))*\s*(?:以后|后|以後|後))(?!.*下一次事件)',
 			'sky chest start pattern permits no countdown but rejects unsupported units in countdown chains');
 		is($rules->{sky_chest}{entry_type}, 'tt', 'sky chest uses tt entry');
 		is($rules->{sky_chest}{return_policy}, 'tt:prontera', 'sky chest uses tt return');
