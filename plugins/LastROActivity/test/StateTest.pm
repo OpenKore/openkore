@@ -100,6 +100,7 @@ sub start {
 			lockMap_randY => 8,
 			teleportAuto_search => 0,
 			teleportAuto_idle => 0,
+			route_randomWalk => 0,
 			unrelated => 'untouched',
 		);
 		my %before = %config;
@@ -108,8 +109,8 @@ sub start {
 		is_deeply(
 			$snapshot,
 			{
-				values => { map { $_ => $before{$_} } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle) },
-				present => { map { $_ => 1 } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle) },
+				values => { map { $_ => $before{$_} } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle route_randomWalk) },
+				present => { map { $_ => 1 } qw(lockMap lockMap_x lockMap_y lockMap_randX lockMap_randY teleportAuto_search teleportAuto_idle route_randomWalk) },
 			},
 			'snapshot copies only activity settings and their presence',
 		);
@@ -123,6 +124,34 @@ sub start {
 
 		LastROActivity::State::restore_config(\%config, $old_snapshot);
 		is_deeply(\%config, \%before, 'restore returns the exact pre-activity config');
+		done_testing();
+	};
+
+	subtest 'normal combat applies idle and random-walk settings and restores presence' => sub {
+		my %config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 1,
+			teleportAuto_idle => 9,
+			route_randomWalk => 0,
+			attackAuto => 7,
+		);
+		my %before = %config;
+		my $snapshot = LastROActivity::State::snapshot_config(\%config);
+		my $old_snapshot = LastROActivity::State::apply_activity_config(\%config, 99, 'normal');
+		is_deeply($old_snapshot, $snapshot, 'normal apply returns the exact pre-activity snapshot');
+		is($config{teleportAuto_search}, 0, 'normal combat disables search teleporting');
+		is($config{teleportAuto_idle}, 1, 'normal combat uses one-second teleport idle');
+		is($config{route_randomWalk}, 1, 'normal combat enables random walking');
+		is($config{attackAuto}, 7, 'normal combat leaves attackAuto unchanged');
+
+		LastROActivity::State::restore_config(\%config, $old_snapshot);
+		is_deeply(\%config, \%before, 'normal combat restores every original setting');
+
+		my %missing_route = (lockMap => 'pay_fild08');
+		my $missing_snapshot = LastROActivity::State::apply_activity_config(\%missing_route, 1, 'normal');
+		ok(exists $missing_route{route_randomWalk}, 'normal apply creates a temporary route setting');
+		LastROActivity::State::restore_config(\%missing_route, $missing_snapshot);
+		ok(!exists $missing_route{route_randomWalk}, 'restore removes a route setting that was originally absent');
 		done_testing();
 	};
 

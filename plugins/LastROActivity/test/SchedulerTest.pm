@@ -200,7 +200,6 @@ sub start {
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',

@@ -671,6 +671,7 @@ sub _runtime_search_validation_available {
 	my ($rule) = @_;
 	return 0 unless ref($rule) eq 'HASH';
 	return 1 if $rule->{search_mode} || $rule->{shared_search};
+	return 0 if defined _combat_mode($rule) && _combat_mode($rule) eq 'normal';
 	# Non-search entry routes do not need shared monster-control resolution.
 	# Scheduler-only parser fixtures use an explicit synthetic macro route so
 	# their timing assertions stay independent of the live control table.
@@ -2088,6 +2089,24 @@ sub _search_targets {
 	return ();
 }
 
+sub _combat_mode {
+	my ($rule) = @_;
+	return undef unless ref($rule) eq 'HASH'
+		&& exists $rule->{combat_mode}
+		&& defined $rule->{combat_mode}
+		&& !ref($rule->{combat_mode});
+	return lc(_trim($rule->{combat_mode}));
+}
+
+sub _combat_mode_valid {
+	my ($rule) = @_;
+	return 1 unless ref($rule) eq 'HASH'
+		&& exists $rule->{combat_mode}
+		&& defined $rule->{combat_mode};
+	return 0 if ref($rule->{combat_mode});
+	return _combat_mode($rule) eq 'normal';
+}
+
 sub _append_rule_validation_error {
 	my ($rule, $error) = @_;
 	return unless ref($rule) eq 'HASH' && defined $error && $error ne '';
@@ -2339,6 +2358,7 @@ sub _validate_search_targets {
 sub _uses_search_mode {
 	my ($rule) = @_;
 	return 1 unless ref($rule) eq 'HASH';
+	return 0 if defined _combat_mode($rule) && _combat_mode($rule) eq 'normal';
 	return 1 if $rule->{search_mode} || $rule->{shared_search};
 	my $entry_type = lc(_trim($rule->{entry_type} || 'tt'));
 	return 0 if $entry_type eq 'npc' || $entry_type eq 'macro';
@@ -2692,11 +2712,17 @@ sub _mark_activity_failed {
 sub enter_search_mode {
 	my ($rule) = @_;
 	return 0 unless ref($rule) eq 'HASH';
+	unless (_combat_mode_valid($rule)) {
+		warning "[LastROActivity] Event '$rule->{event_id}' has unsupported combat_mode.\n";
+		return 0;
+	}
+	my $combat_mode = _combat_mode($rule);
 	my ($search_ok, $search_reason) = _validate_search_targets($rule);
 	# Named Lottery dialog entry does not use shared monster search, but it still
 	# crosses the activity snapshot boundary so cleanup restores the user's route
 	# settings exactly like the transport-backed activities.
-	my $needs_snapshot = _uses_search_mode($rule) || _lottery_dialog_mode($rule);
+	my $needs_snapshot = _uses_search_mode($rule) || _lottery_dialog_mode($rule)
+		|| (defined $combat_mode && $combat_mode eq 'normal');
 	return 1 if !$needs_snapshot;
 	unless ($search_ok) {
 		warning "[LastROActivity] Event '$rule->{event_id}' cannot enter shared search mode: $search_reason.\n";
@@ -2704,7 +2730,11 @@ sub enter_search_mode {
 	}
 
 	my $snapshot = eval {
-		LastROActivity::State::apply_activity_config(\%Globals::config, $teleport_idle);
+		LastROActivity::State::apply_activity_config(
+			\%Globals::config,
+			$teleport_idle,
+			$combat_mode,
+		);
 	};
 	if ($@ || ref($snapshot) ne 'HASH') {
 		warning "[LastROActivity] Unable to snapshot activity config: " . ($@ || 'invalid snapshot') . "\n";
@@ -3723,12 +3753,8 @@ sub return_to_capital {
 	# authoritative return confirmation; issuing another tt request
 	# would leave the failed lifecycle waiting for a transfer that cannot occur.
 	my $current_map = _current_map(undef);
-	# Lottery's named dialog contract always uses the existing tt prontera
-	# cleanup, even when the event itself is hosted on prontera.  Keep the
-	# general same-map optimization for every other activity type.
-	my $force_lottery_return = defined _lottery_dialog_event();
 	if (defined $current_map && _map_matches($current_map, 'prontera')
-		&& _entry_map_confirmed_for_return() && !$force_lottery_return) {
+		&& _entry_map_confirmed_for_return()) {
 		return _complete_return();
 	}
 	return 1 if $return_pending;

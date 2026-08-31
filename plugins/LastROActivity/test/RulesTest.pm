@@ -47,6 +47,49 @@ RULES
 		done_testing();
 	};
 
+	subtest 'accepts normal combat without search targets and rejects other modes' => sub {
+		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
+[normal_combat]
+enabled=1
+announce_regex=START
+start_regex=START
+finish_regex=DONE
+map_source=dynamic
+entry_type=tt
+combat_mode= NORMAL
+random_walk=1
+return_policy=tt:prontera
+search_targets=
+
+[unsupported_combat]
+enabled=1
+announce_regex=START
+start_regex=START
+finish_regex=DONE
+map_source=static
+entry_type=tt
+combat_mode=search
+return_policy=tt:prontera
+search_targets=confirmed_target
+RULES
+
+		is_deeply($errors, [
+			'unsupported_combat: combat_mode must be normal',
+		], 'only normal is accepted as an explicit combat mode');
+		ok($rules->{normal_combat}{enabled},
+			'normal combat remains enabled without search target evidence');
+		is($rules->{normal_combat}{combat_mode}, 'NORMAL',
+			'preserves the configured combat mode value for runtime normalization');
+		is($rules->{normal_combat}{random_walk}, 1,
+			'parses the normal-combat random walk setting');
+		ok(!$rules->{unsupported_combat}{enabled},
+			'unsupported combat modes fail closed');
+		like(join('; ', @{$rules->{unsupported_combat}{validation_errors} || []}),
+			qr/combat_mode must be normal/,
+			'unsupported combat mode records a validation error');
+		done_testing();
+	};
+
 	subtest 'accepts canonical tt routing and legacy transfer aliases' => sub {
 		my ($rules, $errors) = LastROActivity::Rules::parse_text(<<'RULES');
 [canonical]
@@ -711,7 +754,6 @@ RULES
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
@@ -722,7 +764,7 @@ RULES
 			'raw-enabled sections without announcement evidence fail closed during parsing',
 		);
 		for my $event_id (@expected_ids) {
-			my $expected_enabled = $event_id eq 'lottery' ? 1 : 0;
+			my $expected_enabled = $event_id eq 'lottery' || $event_id eq 'city_monster_party' ? 1 : 0;
 			is($rules->{$event_id}{enabled}, $expected_enabled,
 				"$event_id has the expected effective enable state");
 		}
@@ -752,7 +794,6 @@ RULES
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
@@ -782,7 +823,10 @@ RULES
 				ok($rules->{$event_id}{enabled}, 'lottery is effectively enabled with complete named-dialog evidence');
 				is($rules->{$event_id}{map_source}, 'static', 'lottery uses its confirmed static NPC map');
 			} else {
-				ok(!$rules->{$event_id}{enabled}, "$event_id is effectively disabled before lifecycle evidence is complete");
+				ok($event_id eq 'city_monster_party'
+					? $rules->{$event_id}{enabled}
+					: !$rules->{$event_id}{enabled},
+					"$event_id has the expected lifecycle enable state");
 				is($rules->{$event_id}{map_source}, 'dynamic', "$event_id uses dynamic announcement map metadata");
 			}
 		}

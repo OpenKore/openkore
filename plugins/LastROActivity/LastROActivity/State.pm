@@ -11,6 +11,7 @@ my @CONFIG_KEYS = qw(
 	lockMap_randY
 	teleportAuto_search
 	teleportAuto_idle
+	route_randomWalk
 );
 
 my %TRANSITIONS = (
@@ -97,12 +98,18 @@ sub snapshot_config {
 }
 
 sub apply_activity_config {
-	my ($config, $search_idle) = @_;
+	my ($config, $search_idle, $combat_mode) = @_;
 	my $old_snapshot = snapshot_config($config);
 
 	$config->{lockMap} = '';
-	$config->{teleportAuto_search} = 1;
-	$config->{teleportAuto_idle} = $search_idle;
+	if (_is_normal_combat_mode($combat_mode)) {
+		$config->{teleportAuto_search} = 0;
+		$config->{teleportAuto_idle} = 1;
+		$config->{route_randomWalk} = 1;
+	} else {
+		$config->{teleportAuto_search} = 1;
+		$config->{teleportAuto_idle} = $search_idle;
+	}
 
 	return $old_snapshot;
 }
@@ -128,6 +135,16 @@ sub restore_config {
 sub _die_unless_hashref {
 	my ($value, $name) = @_;
 	die "$name must be a hash reference" if ref($value) ne 'HASH';
+}
+
+sub _is_normal_combat_mode {
+	my ($combat_mode) = @_;
+	if (ref($combat_mode) eq 'HASH') {
+		$combat_mode = $combat_mode->{combat_mode};
+	}
+	return defined $combat_mode
+		&& !ref($combat_mode)
+		&& $combat_mode =~ /^\s*normal\s*$/i;
 }
 
 1;

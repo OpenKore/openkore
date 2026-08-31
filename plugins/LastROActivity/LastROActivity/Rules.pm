@@ -16,6 +16,7 @@ my %NUMERIC_FIELDS = map { $_ => 1 } qw(
 	resurrection_wait_seconds
 	leave_x
 	leave_y
+	random_walk
 );
 
 my %MAP_SOURCES = map { $_ => 1 } qw(static dynamic announcement);
@@ -53,6 +54,8 @@ my %ALLOWED_FIELDS = map { $_ => 1 } qw(
 	finish_macro
 	return_policy
 	search_targets
+	combat_mode
+	random_walk
 	priority
 );
 
@@ -204,6 +207,17 @@ sub validate_rule {
 		push @errors, 'enabled must be 0 or 1';
 	}
 
+	my $combat_mode = defined $rule->{combat_mode}
+		? _trim($rule->{combat_mode}) : '';
+	if (defined $rule->{combat_mode}
+		&& lc($combat_mode) ne 'normal') {
+		push @errors, 'combat_mode must be normal';
+	}
+	if (defined $rule->{random_walk}
+		&& $rule->{random_walk} !~ /^(?:0|1)$/) {
+		push @errors, 'random_walk must be 0 or 1';
+	}
+
 	# A return policy is an assertion about the only supported cleanup route.
 	# Missing policy remains a legacy/default value, but an explicit override must
 	# be the canonical tt transfer to prontera.  The old private-airship spelling
@@ -244,7 +258,7 @@ sub validate_rule {
 		&& $ENTRY_TYPES{$rule->{entry_type}}) {
 		my $entry_type = lc(_trim($rule->{entry_type}));
 		if ($entry_type eq 'tt' || $entry_type eq 'airship' || $entry_type eq 'privateairship') {
-			unless (_has_search_targets($rule)) {
+			unless (lc($combat_mode) eq 'normal' || _has_search_targets($rule)) {
 				push @errors, 'search_targets evidence is required for shared search mode';
 			}
 		} elsif ($entry_type eq 'npc') {
@@ -427,6 +441,8 @@ sub _new_rule {
 		finish_macro => undef,
 		return_policy => undef,
 		search_targets => [],
+		combat_mode => undef,
+		random_walk => undef,
 		phases => [],
 		validation_errors => [],
 		_phase_data => {},

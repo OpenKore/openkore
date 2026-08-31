@@ -485,12 +485,9 @@ sub start {
 
 	subtest 'bundled rules honor parser lifecycle validation' => sub {
 		LastROActivity::scheduler()->clear();
-		my @incomplete_ids = qw(
-			city_monster_party
-			dojo_challenge
-			pool_challenge
-		);
-		for my $event_id (@incomplete_ids) {
+		ok($LastROActivity::rules->{city_monster_party}{enabled},
+			'city_monster_party is effectively enabled with normal combat mode');
+		for my $event_id (qw(dojo_challenge pool_challenge)) {
 			ok(!$LastROActivity::rules->{$event_id}{enabled},
 				"$event_id is effectively disabled before scheduling");
 		}
@@ -503,6 +500,48 @@ sub start {
 		is(scalar keys %{LastROActivity::scheduler()->events()}, 1,
 			'Lottery announcement creates one scheduler timer');
 		LastROActivity::scheduler()->clear();
+		done_testing();
+	};
+
+	subtest 'normal combat enters with a snapshot without search evidence' => sub {
+		LastROActivity::cleanup_and_restore('normal combat test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 1,
+			teleportAuto_idle => 9,
+			route_randomWalk => 0,
+			attackAuto => 7,
+		);
+		%Globals::mon_control = (confirmed_target => {teleport_search => 1});
+		my %before_mon_control = %Globals::mon_control;
+		my $rule = {
+			event_id => 'normal_combat',
+			enabled => 1,
+			announce_regex => 'START',
+			start_regex => 'START',
+			finish_regex => 'DONE',
+			entry_type => 'tt',
+			combat_mode => ' normal ',
+			search_targets => [],
+			validation_errors => [],
+		};
+		ok(!LastROActivity::_uses_search_mode($rule),
+			'normal combat does not use shared search mode');
+		ok(LastROActivity::enter_search_mode($rule),
+			'normal combat still crosses the activity snapshot boundary');
+		is($Globals::config{teleportAuto_search}, 0,
+			'normal combat disables search teleporting');
+		is($Globals::config{teleportAuto_idle}, 1,
+			'normal combat uses one-second teleport idle');
+		is($Globals::config{route_randomWalk}, 1,
+			'normal combat enables route random walk');
+		is($Globals::config{attackAuto}, 7,
+			'normal combat does not change attackAuto');
+		is_deeply(\%Globals::mon_control, \%before_mon_control,
+			'normal combat does not change shared monster control');
+		ok(defined $LastROActivity::active_snapshot,
+			'normal combat stores the temporary config snapshot');
+		LastROActivity::cleanup_and_restore('normal combat test cleanup');
 		done_testing();
 	};
 
@@ -1723,6 +1762,60 @@ RULES
 		}, 'return restores the exact pre-activity config');
 		is(LastROActivity::active_event(), undef, 'return clears the active event');
 		is(LastROActivity::activity_locked(), 0, 'return releases the activity lock');
+		done_testing();
+	};
+
+	subtest 'confirmed Lottery return on prontera completes without a transfer request' => sub {
+		LastROActivity::cleanup_and_restore('same-map Lottery test reset');
+		%Globals::config = (
+			lockMap => 'pay_fild08',
+			teleportAuto_search => 0,
+			teleportAuto_idle => 0,
+		);
+		%Globals::maps_lut = (
+			'event_map.rsw' => 1,
+			'prontera.rsw' => 1,
+		);
+		$Globals::field = PluginTest::Field->new('prontera');
+		$Globals::net = PluginTest::Net->new;
+		my $rule = {
+			event_id => 'lottery',
+			enabled => 1,
+			announce_regex => '抽奖活动',
+			start_regex => '抽奖活动.*秒后',
+			finish_regex => '抽奖活动已结束',
+			entry_type => 'npc',
+			entry_map => 'prontera',
+			entry_x => 152,
+			entry_y => 133,
+			entry_npc_name => '活动负责人#iz',
+			entry_dialog_mode => 'repeat_first_until_finish',
+			return_policy => 'tt:prontera',
+			validation_errors => [],
+		};
+		my $event = {
+			event_id => 'lottery',
+			rule => $rule,
+			map => 'prontera',
+			destination => {map => 'prontera', x => 152, y => 133},
+			entry_confirmed => 1,
+		};
+		$LastROActivity::active_event = $event;
+		$LastROActivity::armed_event = $event;
+		$LastROActivity::active_snapshot = LastROActivity::State::snapshot_config(\%Globals::config);
+		$LastROActivity::activity_lock = 1;
+		$LastROActivity::entry_map_confirmed = 1;
+		$LastROActivity::entry_map_confirmation_source = 'map_packet';
+		$LastROActivity::state = LastROActivity::State->new;
+		$LastROActivity::state->transition($_) for qw(arm trigger snapshot depart enter running);
+		@Commands::run_calls = ();
+
+		ok(LastROActivity::return_to_capital(),
+			'confirmed same-map Lottery return completes through the common path');
+		is_deeply(\@Commands::run_calls, [],
+			'same-map Lottery return does not issue tt prontera');
+		is(LastROActivity::active_event(), undef,
+			'same-map Lottery return clears the active event');
 		done_testing();
 	};
 
@@ -4161,11 +4254,12 @@ RULES
 		};
 
 		# A finish announcement owns the active Lottery lifecycle even before map
-		# confirmation or the first NPC click.  Both entry states must stop before
-		# the deferred dialog action can run.
+		# confirmation or the first NPC click.  A confirmed same-map entry can finish
+		# synchronously without another tt request.
 		for my $entry_state (qw(DEPARTING ENTERING)) {
 			$setup->();
 			$confirm_map->() if $entry_state eq 'ENTERING';
+			my $same_map = $entry_state eq 'ENTERING';
 			is(LastROActivity::state(), $entry_state,
 				"Lottery reaches $entry_state before its first click");
 			my $finish_result = LastROActivity::onSystemMessage(undef, {
@@ -4173,12 +4267,12 @@ RULES
 			});
 			is($finish_result, 'finish',
 				"finish announcement is consumed while $entry_state");
-			is(LastROActivity::state(), 'RETURNING',
-				"finish announcement moves $entry_state directly to RETURNING");
+			is(LastROActivity::state(), $same_map ? 'IDLE' : 'RETURNING',
+				"finish announcement completes the $entry_state lifecycle");
 			is_deeply(\@PluginTest::send_talk_calls, [],
 				"finish announcement prevents the first click from $entry_state");
-			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), 1,
-				"finish announcement requests one tt prontera return from $entry_state");
+			is(scalar(grep { $_ eq 'tt prontera' } @Commands::run_calls), $same_map ? 0 : 1,
+				"finish announcement uses the same-map optimization from $entry_state");
 			is($LastROActivity::lottery_npc_id, undef,
 				"finish announcement clears Lottery dialog state from $entry_state");
 			$Globals::field = PluginTest::Field->new('prontera');
@@ -4233,13 +4327,13 @@ RULES
 		is_deeply(\@PluginTest::send_talk_calls, [$npc_id, $npc_id],
 			'next mainLoop_pre starts exactly one new dialog session');
 
-		# Finish shuts down the dialog before issuing the retained tt return.
+		# Finish shuts down the dialog and uses the same-map cleanup path.
 		LastROActivity::onSystemMessage(undef, {Msg => '抽奖活动已结束'});
 		is($LastROActivity::lottery_npc_id, undef, 'finish clears the bound actor ID');
 		is($LastROActivity::lottery_session_active, 0, 'finish clears the session flag');
 		is($LastROActivity::lottery_reclick_pending, 0, 'finish clears the re-click flag');
-		ok(grep($_ eq 'tt prontera', @Commands::run_calls),
-			'finish uses the common tt prontera return');
+		ok(!grep($_ eq 'tt prontera', @Commands::run_calls),
+			'finish uses the same-map common return without tt prontera');
 		my $talk_count = scalar @PluginTest::send_talk_calls;
 		LastROActivity::onNpcTalkContinue(undef, {ID => $npc_id});
 		$main_loop->();
@@ -4254,9 +4348,9 @@ RULES
 			'same-name actor at another coordinate is not bound');
 		$now = $LastROActivity::pending_destination_deadline + 1;
 		$main_loop->();
-		is(LastROActivity::state(), 'FAILED', 'missing matching NPC fails at the entry deadline');
-		is(scalar(grep($_ eq 'tt prontera', @Commands::run_calls)), 1,
-			'missing matching NPC requests one return');
+		is(LastROActivity::state(), 'IDLE', 'missing matching NPC completes same-map cleanup at the entry deadline');
+		is(scalar(grep($_ eq 'tt prontera', @Commands::run_calls)), 0,
+			'missing matching NPC does not request a redundant same-map return');
 		LastROActivity::cleanup_and_restore('wrong-position cleanup');
 
 		# Unsupported dialog input fails closed only for the bound actor.
@@ -4272,8 +4366,8 @@ RULES
 			$callback->();
 			like(LastROActivity::last_failure(), qr/$label/i,
 				"$label input records a failure for the bound actor");
-			is(scalar(grep($_ eq 'tt prontera', @Commands::run_calls)), 1,
-				"$label input uses the common return path");
+			is(scalar(grep($_ eq 'tt prontera', @Commands::run_calls)), 0,
+				"$label input uses the same-map common return path");
 			my $before = scalar @Commands::run_calls;
 			LastROActivity::onNpcTalkNumber(undef, {ID => $other_id});
 			is(scalar @Commands::run_calls, $before,

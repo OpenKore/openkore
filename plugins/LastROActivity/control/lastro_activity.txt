@@ -13,6 +13,8 @@ finish_regex=魔物派对已结束
 lead_seconds=10
 map_source=dynamic
 entry_type=tt
+combat_mode=normal
+random_walk=1
 return_policy=tt:prontera
 search_targets=
 

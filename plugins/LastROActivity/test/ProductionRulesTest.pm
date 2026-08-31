@@ -166,6 +166,8 @@ sub _search_targets {
 sub _uses_search_mode {
 	my ($entry_type, $rule) = @_;
 	return 0 if $entry_type eq 'npc' || $entry_type eq 'macro';
+	return 0 if ref($rule) eq 'HASH' && defined $rule->{combat_mode}
+		&& lc(_trim($rule->{combat_mode})) eq 'normal';
 	return 0 if ref($rule) eq 'HASH' && exists $rule->{search_mode}
 		&& !$rule->{search_mode};
 	return 1;
@@ -198,6 +200,11 @@ sub _production_errors {
 	my @errors;
 	if (ref($rule->{validation_errors}) eq 'ARRAY' && @{$rule->{validation_errors}}) {
 		push @errors, 'validation_errors are present on an enabled rule';
+	}
+	if (defined $rule->{combat_mode}) {
+		my $combat_mode = ref($rule->{combat_mode}) ? '' : _trim($rule->{combat_mode});
+		push @errors, 'combat_mode must be normal'
+			if ref($rule->{combat_mode}) || lc($combat_mode) ne 'normal';
 	}
 
 	# The announcement is the start evidence. A countdown is optional, but the
@@ -333,7 +340,6 @@ sub start {
 		is_deeply(
 			$errors,
 			[
-				'city_monster_party: search_targets evidence is required for shared search mode',
 				'dungeon_monster_party: announce_regex required when enabled',
 				'dungeon_monster_party: start_regex required when enabled',
 				'dojo_challenge: search_targets evidence is required for shared search mode',
@@ -359,9 +365,7 @@ sub start {
 		}
 
 		my %expected_validation_errors = (
-			city_monster_party => [
-				'search_targets evidence is required for shared search mode',
-			],
+			city_monster_party => [],
 			dungeon_monster_party => [
 				'announce_regex required when enabled',
 				'start_regex required when enabled',
@@ -381,7 +385,7 @@ sub start {
 		for my $id (@EVENT_IDS) {
 			ok(exists $rules->{$id}, "$id rule exists");
 			next unless exists $rules->{$id};
-			my $expected_enabled = $id eq 'lottery' ? 1 : 0;
+			my $expected_enabled = $id eq 'lottery' || $id eq 'city_monster_party' ? 1 : 0;
 			is($rules->{$id}{enabled}, $expected_enabled,
 				"$id has the expected effective enable state");
 			is_deeply($rules->{$id}{validation_errors}, $expected_validation_errors{$id},
@@ -392,6 +396,10 @@ sub start {
 		is($rules->{pool_challenge}{map_source}, 'dynamic', 'payon route declares dynamic map source');
 		is($rules->{lottery}{map_source}, 'static', 'lottery route declares static map source');
 		is($rules->{city_monster_party}{map_source}, 'dynamic', 'party route declares dynamic map source');
+		is($rules->{city_monster_party}{combat_mode}, 'normal',
+			'party route uses explicit normal combat mode');
+		is($rules->{city_monster_party}{random_walk}, 1,
+			'party route enables random walk in its rule metadata');
 		is($rules->{lottery}{announce_regex},
 			'(?=.*\[随机事件\])(?=.*抽奖活动)(?=.*开始啦)(?!.*下一次事件)',
 			'lottery announcement pattern is exact');
@@ -483,7 +491,12 @@ sub start {
 		like(join('; ', _production_errors(\%bad_return, $shared_rows, $known_maps)),
 			qr/return_policy/, 'non-canonical return policy is rejected');
 
-		my %missing_entry = %$complete;
+		my %bad_combat_mode = %$complete;
+		$bad_combat_mode{combat_mode} = 'search';
+		like(join('; ', _production_errors(\%bad_combat_mode, $shared_rows, $known_maps)),
+			qr/combat_mode/, 'unsupported combat modes are rejected');
+
+	my %missing_entry = %$complete;
 		delete $missing_entry{entry_macro};
 		like(join('; ', _production_errors(\%missing_entry, $shared_rows, $known_maps)),
 			qr/entry_macro/, 'missing entry macro is rejected');
