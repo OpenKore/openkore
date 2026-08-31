@@ -172,3 +172,76 @@ perl -I src -I src/deps -I plugins/LastROActivity -c plugins/LastROActivity/Last
 
 `git diff --check` exited `0`, and the runtime scan again found no direct
 `Commands::run("privateairship ...")` call in `plugins/LastROActivity`.
+
+## Fix Round 2
+
+### RED
+
+The unsupported-countdown regression was added before changing the production
+pattern and run with:
+
+```powershell
+$env:OPENKORE_DIR='D:\openkore\.worktrees\lastro-activity-automation'; perl plugins/LastROActivity/test/unit_tests.pl SchedulerTest
+```
+
+The command exited with status `1`. The new assertion failed because the
+optional sky-chest start branch accepted `3天后` as if it were a genuine
+no-countdown announcement:
+
+```text
+not ok 74 - sky chest unsupported countdown does not arm an event
+#   Failed test 'sky chest unsupported countdown does not arm an event'
+#   at D:/openkore/.worktrees/lastro-activity-automation/plugins/LastROActivity/test/SchedulerTest.pm line 331.
+# Looks like you failed 1 test of 84.
+not ok 5 - routes confirmed LastRO announcements and ignores long reminders
+#   Failed test 'routes confirmed LastRO announcements and ignores long reminders'
+#   at D:/openkore/.worktrees/lastro-activity-automation/plugins/LastROActivity/test/SchedulerTest.pm line 360.
+1..5
+# Looks like you failed 1 test of 5.
+```
+
+### GREEN
+
+After adding a negative lookahead for numeric text followed by an unsupported
+unit and `后`, the focused covering suite passed:
+
+```powershell
+$env:OPENKORE_DIR='D:\openkore\.worktrees\lastro-activity-automation'; perl plugins/LastROActivity/test/unit_tests.pl SchedulerTest ProductionRulesTest PluginTest
+```
+
+Result: exit code `0`; the SchedulerTest section reports all `84` nested
+assertions passing and the combined command completes successfully through
+the ProductionRulesTest and PluginTest sections (`97` top-level test items).
+Supported counted announcements retain their countdown and lead window,
+genuine no-countdown announcements arm immediately and retain `cmd_fild01#0#0`,
+and `3天后` does not arm.
+
+The complete plugin suite was then rerun:
+
+```powershell
+perl plugins/LastROActivity/test/unit_tests.pl
+```
+
+Result: exit code `0`; all `121` subtests passed. Include-aware syntax checks
+for `LastROActivity.pl`, `Rules.pm`, `Scheduler.pm`, and `State.pm` each exited
+`0` with `syntax OK`; `git diff --check` exited `0`; and the direct
+`Commands::run("privateairship ...")` scan found no calls.
+
+### Fix files
+
+- `plugins/LastROActivity/control/lastro_activity.txt`: reject unsupported
+  numeric countdown units while retaining supported and absent countdowns.
+- `plugins/LastROActivity/test/SchedulerTest.pm`: cover the unsupported `3天后`
+  announcement.
+- `plugins/LastROActivity/test/ProductionRulesTest.pm`: update the expected
+  production start pattern and description.
+- `.superpowers/sdd/2026-09-01-lastro-generic-events/task-1-report.md`: this
+  Fix Round 2 evidence.
+
+### Fix residual concerns
+
+`sky_chest` remains fail-closed until both the real server-confirmed monster
+target/shared `search=1` evidence and a separately confirmed completion
+boundary are supplied. No scheduler/runtime production code or shared
+`control/mon_control.txt` row was changed. The existing Perl locale and
+wide-character warnings remain in the test environment.

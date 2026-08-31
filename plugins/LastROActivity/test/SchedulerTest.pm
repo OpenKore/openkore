@@ -326,6 +326,11 @@ sub start {
 		is_deeply($sky_immediate->{data_map},
 			{map => 'cmd_fild01', x => 0, y => 0},
 			'sky chest no-countdown announcement preserves dynamic map coordinates');
+		my $sky_unsupported =
+			'[随机事件] 天降宝箱将在3天后出现 data-map="cmd_fild01#0#0"';
+		ok(!defined $sky_immediate_scheduler->observe(
+			$sky_rule, $sky_unsupported, 71_000,
+		), 'sky chest unsupported countdown does not arm an event');
 		my $reminder = '[随机事件] 下一次事件将在2小时后发生，梦罗克道场稍后开放 data-map="morocc#159#99"';
 		ok(!defined $scheduler->observe($rules->{dojo_challenge}, $reminder, 70_000),
 			'long 下一次事件 reminder never arms a dojo rule');
