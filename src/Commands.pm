@@ -6025,7 +6025,42 @@ sub cmdTalk {
 
 sub cmdTalkNPC {
 	my (undef, $args) = @_;
+	
+	if ($args =~ /^ID_(\d+)\s+(.*)$/i) {
+		my $nameID = $1;
+		my $sequence = $2;
 
+		message TF("Talking to NPC with nameID %s using sequence: %s\n", $nameID, $sequence);
+
+		AI::queue("NPC", new Task::TalkNPC(
+			type     => 'talk',
+			nameID   => $nameID,
+			sequence => $sequence
+		));
+		return;
+	}
+
+	if ($args =~ /^"([^"]+)"\s+(.*)$/) {
+		my $npcName = $1;
+		my $sequence = $2;
+
+		my $npc = $npcsList->getByName($npcName);
+		unless ($npc) {
+			error TF("Error in function 'talknpc': NPC named '%s' not found on current map.\n", $npcName);
+			return;
+		}
+
+		message TF("Talking to NPC %s (nameID: %s, binID: %s) using sequence: %s\n",
+			$npc->name, $npc->{nameID}, $npc->{binID}, $sequence);
+
+		AI::queue("NPC", new Task::TalkNPC(
+			type     => 'talk',
+			nameID   => $npc->{nameID},
+			sequence => $sequence
+		));
+		return;
+	}
+	
 	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+)(?: (.+))?$/;
 	unless (defined $x) {
 		error T("Syntax Error in function 'talknpc' (Talk to an NPC)\n" .
