@@ -42,20 +42,33 @@ use Task::TalkNPC;
 use Task::UseSkill;
 use Task::ErrorReport;
 use Utils::Exceptions;
+use Utils::Benchmark;
 
 # This is the main function from which the rest of the AI
 # will be invoked.
 sub iterate {
 	Benchmark::begin("ai_prepare") if DEBUG;
+	Benchmark::begin("ai_prepare_wipe") if DEBUG;
 	processWipeOldActors();
+	Benchmark::end("ai_prepare_wipe") if DEBUG;
+	Benchmark::begin("ai_prepare_avoid") if DEBUG;
 	processActorAvoid();
+	Benchmark::end("ai_prepare_avoid") if DEBUG;
+	Benchmark::begin("ai_prepare_playerInfo") if DEBUG;
 	processGetPlayerInfo();
+	Benchmark::end("ai_prepare_playerInfo") if DEBUG;
+	Benchmark::begin("ai_prepare_misc") if DEBUG;
 	processMisc();
+	Benchmark::end("ai_prepare_misc") if DEBUG;
+	Benchmark::begin("ai_prepare_portals") if DEBUG;
 	processReAddMissingPortals();
 	processPortalRecording();
+	Benchmark::end("ai_prepare_portals") if DEBUG;
 	Benchmark::end("ai_prepare") if DEBUG;
 
+	Benchmark::begin("ai_hook_start") if DEBUG;
 	Plugins::callHook('AI_start', {state => AI::state()});
+	Benchmark::end("ai_hook_start") if DEBUG;
 
 	return if AI::state() == AI::OFF();
 	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{welcomeText})) {
@@ -66,26 +79,40 @@ sub iterate {
 
 	##### MANUAL AI STARTS HERE #####
 
+	Benchmark::begin("ai_hook_premanual") if DEBUG;
 	Plugins::callHook('AI_pre/manual');
+	Benchmark::end("ai_hook_premanual") if DEBUG;
 	Benchmark::begin("AI (part 1)") if DEBUG;
-	return if processClientSuspend();
+	if (processClientSuspend()) {
+		Benchmark::end("AI (part 1)") if DEBUG;
+		return;
+	}
 	Benchmark::begin("AI (part 1.1)") if DEBUG;
+	Benchmark::begin("AI (part 1.1 look)") if DEBUG;
 	processLook();
 	$char->processTask('NPC');
+	Benchmark::end("AI (part 1.1 look)") if DEBUG;
+	Benchmark::begin("AI (part 1.1 items)") if DEBUG;
 	processEquip();
 	processDrop();
 	processEscapeUnknownMaps();
+	Benchmark::end("AI (part 1.1 items)") if DEBUG;
 	Benchmark::end("AI (part 1.1)") if DEBUG;
 	Benchmark::begin("AI (part 1.2)") if DEBUG;
+	Benchmark::begin("AI (part 1.2 tasks)") if DEBUG;
 	$char->processTask("sitting");
 	$char->processTask("standing");
 	$char->processTask("teleport");
+	Benchmark::end("AI (part 1.2 tasks)") if DEBUG;
 	AI::Attack::process();
 	Benchmark::end("AI (part 1.2)") if DEBUG;
 	Benchmark::begin("AI (part 1.3)") if DEBUG;
+	Benchmark::begin("AI (part 1.3 skill)") if DEBUG;
 	processSkillUse();
 	processAutoCommandUse();
 	processAutoAttack() if AI::state() == AI::AUTO();
+	Benchmark::end("AI (part 1.3 skill)") if DEBUG;
+	Benchmark::begin("AI (part 1.3 move)") if DEBUG;
 	$char->processTask("route", onError => sub {
 		my ($task, $error) = @_;
 		AI::Attack::note_approach_route_failure($task, $error);
@@ -96,6 +123,7 @@ sub iterate {
 	});
 	processTake();
 	$char->processTask('move');
+	Benchmark::end("AI (part 1.3 move)") if DEBUG;
 	Benchmark::end("AI (part 1.3)") if DEBUG;
 
 	Benchmark::begin("AI (part 1.4)") if DEBUG;
@@ -105,7 +133,9 @@ sub iterate {
 	Benchmark::begin("ai_autoSkillUse") if DEBUG;
 	processAutoSkillUse();
 	Benchmark::end("ai_autoSkillUse") if DEBUG;
+	Benchmark::begin("ai_feed") if DEBUG;
 	processFeed();
+	Benchmark::end("ai_feed") if DEBUG;
 	Benchmark::end("AI (part 1.4)") if DEBUG;
 
 	Benchmark::end("AI (part 1)") if DEBUG;
@@ -118,8 +148,11 @@ sub iterate {
 
 	##### AUTOMATIC AI STARTS HERE #####
 
+	Benchmark::begin("ai_hook_pre") if DEBUG;
 	Plugins::callHook('AI_pre', {state => AI::state()});
+	Benchmark::end("ai_hook_pre") if DEBUG;
 	Benchmark::begin("AI (part 2)") if DEBUG;
+	Benchmark::begin("AI (part 2.1)") if DEBUG;
 
 	ChatQueue::processFirst;
 
@@ -131,12 +164,15 @@ sub iterate {
 	processGuildAutoDeny();
 
 	Misc::checkValidity("AI part 1.1");
+	Benchmark::end("AI (part 2.1)") if DEBUG;
+	Benchmark::begin("AI (part 2.2)") if DEBUG;
 	#processAutoBreakTime(); moved to a plugin
 	processDead();
 	processTransferItems();
 	processCartAdd();
 	processCartGet();
 	processAutoMakeArrow();
+	Benchmark::end("AI (part 2.2)") if DEBUG;
 	Benchmark::end("AI (part 2)") if DEBUG;
 	Misc::checkValidity("AI part 2");
 
@@ -154,7 +190,9 @@ sub iterate {
 	Misc::checkValidity("AI (autocart)");
 	Benchmark::end("AI (part 3.1)") if DEBUG;
 
+	Benchmark::begin("ai_hook_middle") if DEBUG;
 	Plugins::callHook('AI_middle', {state => AI::state()});
+	Benchmark::end("ai_hook_middle") if DEBUG;
 
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
@@ -174,15 +212,22 @@ sub iterate {
 	Benchmark::end("AI (part 3)") if DEBUG;
 
 	Benchmark::begin("AI (part 4)") if DEBUG;
+	Benchmark::begin("AI (part 4.1)") if DEBUG;
 	processPartySkillUse();
 	processMonsterSkillUse();
+	Benchmark::end("AI (part 4.1)") if DEBUG;
 
 	Misc::checkValidity("AI part 3");
+	Benchmark::begin("AI (part 4.2)") if DEBUG;
 	processAutoEquip();
 	processAutoAttack();
+	Benchmark::end("AI (part 4.2)") if DEBUG;
+	Benchmark::begin("AI (part 4.3)") if DEBUG;
 	processItemsTake();
 	processItemsAutoGather();
 	processItemsGather();
+	Benchmark::end("AI (part 4.3)") if DEBUG;
+	Benchmark::begin("AI (part 4.4)") if DEBUG;
 	processAutoTeleport();
 	processAllowedMaps();
 	processAutoResponse();
@@ -192,11 +237,13 @@ sub iterate {
 	processAutoBuyerShopOpen();
 	processRepairAuto();
 	processSendIgnoreAll();
+	Benchmark::end("AI (part 4.4)") if DEBUG;
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
 	##########
 
+	Benchmark::begin("AI (part 5)") if DEBUG;
 	# DEBUG CODE
 	if (timeOut($ai_v{time}, 2) && $config{'debug'} >= 2) {
 		my $len = @ai_seq_args;
@@ -218,9 +265,12 @@ sub iterate {
 		debug "Executing queued command: $execCommand\n", "ai";
 		Commands::run($execCommand);
 	}
+	Benchmark::end("AI (part 5)") if DEBUG;
 
 
+	Benchmark::begin("ai_hook_post") if DEBUG;
 	Plugins::callHook('AI_post', {state => AI::state()});
+	Benchmark::end("ai_hook_post") if DEBUG;
 }
 
 
