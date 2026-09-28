@@ -26,12 +26,14 @@ use strict;
 use warnings;
 no warnings 'redefine';
 use Time::HiRes qw(usleep);
+use Carp::Assert;
 use utf8;
 
 use Modules 'register';
 use Globals qw(%config $quit);
 use Translation qw(T TF);
 use Utils::Exceptions;
+use Utils::Benchmark;
 
 
 ##
@@ -70,8 +72,12 @@ sub loadInterface {
 sub mainLoop {
 	my $self = shift;
 	while (!$quit) {
+		Benchmark::begin("mainLoop_sleep") if DEBUG;
 		usleep($config{sleepTime} || 10000);
+		Benchmark::end("mainLoop_sleep") if DEBUG;
+		Benchmark::begin("mainLoop_interfaceIterate") if DEBUG;
 		$self->iterate();
+		Benchmark::end("mainLoop_interfaceIterate") if DEBUG;
 		main::mainLoop();
 	}
 }
