@@ -144,6 +144,9 @@ async def bridge(path: str, **params: Any) -> dict[str, Any]:
     return data
 
 
+WALK_SNAP_RADIUS = 5  # move_to on a blocked cell walks to the nearest open cell this close
+
+
 async def command(cmd: str) -> dict[str, Any]:
     result = await bridge("/command", cmd=cmd)
     return {"command": cmd, "output": result.get("output", [])}
@@ -451,16 +454,35 @@ async def move_to(x: int | None = None, y: int | None = None, map: str | None = 
     """Walk somewhere: coordinates on the current map (x, y), coordinates on another
     map (x, y, map), a whole map (map only; OpenKore routes through portals), or a
     nearby portal (portal_id from look_around). The AI walks in the background;
-    use wait_for or get_status to follow it."""
+    use wait_for or get_status to follow it. Coordinates on a blocked cell of the
+    current map walk to the nearest open cell within 5 cells instead ("adjusted"
+    in the result); with none that close, nothing moves and the result is an error."""
+    adjusted = None
     if portal_id is not None:
         cmd = f"move {portal_id}"
     elif x is not None and y is not None:
+        cell = await bridge("/walkable", x=x, y=y, radius=WALK_SNAP_RADIUS)
+        if cell.get("map") and (not map or map == cell["map"]):
+            if not cell.get("inside"):
+                return {"error": f"({x},{y}) is outside the map {cell['map']}"}
+            if not cell.get("walkable"):
+                near = cell.get("nearest")
+                if not near:
+                    return {
+                        "error": f"({x},{y}) on {cell['map']} is blocked and no open cell is within "
+                        f"{WALK_SNAP_RADIUS} cells of it; pick another spot"
+                    }
+                adjusted = {"from": {"x": x, "y": y}, "to": {"x": near["x"], "y": near["y"]}}
+                x, y = near["x"], near["y"]
         cmd = f"move {x} {y}" + (f" {map}" if map else "")
     elif map:
         cmd = f"move {map}"
     else:
         return {"error": "give x and y, a map, or a portal_id"}
-    return await command(cmd)
+    result = await command(cmd)
+    if adjusted:
+        result["adjusted"] = adjusted
+    return result
 
 
 @game_tool(ACTION)

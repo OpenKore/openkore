@@ -32,6 +32,8 @@
 #   /skill_info?skill=X             in-game description of a skill (id, handle or name)
 #   /item_info?nameID=N             in-game description of an item type
 #   /map?cols=40&rows=20            coarse walkability map of the current field with markers
+#   /walkable?x=X&y=Y[&radius=R]    whether a cell of the current field is walkable, and the
+#                                   nearest walkable cell within R cells (default 5) when not
 #   /npc                            current NPC dialog, shop list and recent NPC messages
 #   /events?since=SEQ&limit=N       game events (hooks and selected console messages)
 #   /command?cmd=TEXT               run a console command, returns its console output
@@ -302,6 +304,8 @@ sub handleRequest {
 			itemInfo($args->{nameID});
 		} elsif ($file eq '/map') {
 			mapOverview(positiveInt($args->{cols}, 40), positiveInt($args->{rows}, 20));
+		} elsif ($file eq '/walkable') {
+			walkableCell($args->{x}, $args->{y}, $args->{radius});
 		} elsif ($file eq '/npc') {
 			npcDialog();
 		} elsif ($file eq '/events') {
@@ -720,6 +724,40 @@ sub mapOverview {
 		legend      => '. walkable  # blocked  @ you  P portal  N npc  M monster  p player; each character is ' . $scale . 'x' . $scale . ' cells; the top row is the north edge (highest y), the first column is x=0',
 		rows        => [reverse @grid],
 	};
+}
+
+# Whether (x, y) can be walked on, and when not, the walkable cell nearest to it within $radius cells
+# (straight-line distance; on a tie, the one nearer to the character). Clicking a wall in the client
+# does the same: the character walks to the closest open ground instead of refusing.
+sub walkableCell {
+	my ($x, $y, $radius) = @_;
+	return {inGame => JSON::PP::false} unless inGame() && $field;
+	return {error => 'x and y must be whole numbers'}
+	  unless defined $x && defined $y && $x =~ /^-?\d+$/ && $y =~ /^-?\d+$/;
+	$radius = positiveInt($radius, 5);
+	$radius = 15 if $radius > 15;
+	my ($width, $height) = ($field->width, $field->height);
+	my $inside = sub { $_[0] >= 0 && $_[1] >= 0 && $_[0] < $width && $_[1] < $height };
+	my $open = sub { $inside->(@_) && $field->isWalkable(@_) };
+	my %result = (map => mapName(), x => num($x), y => num($y), radius => num($radius),
+		inside => bool($inside->($x, $y)), walkable => bool($open->($x, $y)), nearest => undef);
+	return \%result if $open->($x, $y);
+	my $me = position($char) || {};
+	my ($best, $bestD, $bestMe);
+	foreach my $dy (-$radius .. $radius) {
+		foreach my $dx (-$radius .. $radius) {
+			my ($cx, $cy) = ($x + $dx, $y + $dy);
+			next unless $open->($cx, $cy);
+			my $d = sqrt($dx * $dx + $dy * $dy);
+			next if $d > $radius;
+			my $dMe = defined $me->{x} ? abs($cx - $me->{x}) + abs($cy - $me->{y}) : 0;
+			if (!defined $bestD || $d < $bestD || ($d == $bestD && $dMe < $bestMe)) {
+				($best, $bestD, $bestMe) = ([$cx, $cy], $d, $dMe);
+			}
+		}
+	}
+	$result{nearest} = {x => num($best->[0]), y => num($best->[1]), distance => num(sprintf('%.1f', $bestD))} if $best;
+	return \%result;
 }
 
 sub npcDialog {
