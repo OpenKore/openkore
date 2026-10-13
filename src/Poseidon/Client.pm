@@ -63,17 +63,16 @@ sub _connect {
 #
 # Disconnect from poseidon server when error ocurred.
 sub _disconnect_error {
-    my ($self, $msg) = @_;
+	my ($self, $msg) = @_;
 
-    my $error_msg = defined $msg ? $msg :
-        "The Poseidon server closed the connection unexpectedly or could not respond " .
-        "to your request due to a server bandwidth issue. Please report this bug.\n";
+	my $error_msg = defined $msg ? $msg :
+		"The Poseidon server closed the connection unexpectedly or could not respond " .
+		"to your request due to a server bandwidth issue. Please report this bug.\n";
 
-    error $error_msg;
-    $self->{socket} = undef;
-    $self->{timestamp} = undef;
-    offlineMode();
-    return undef;
+	error $error_msg;
+	$self->reset();
+	offlineMode();
+	return undef;
 }
 
 ##
@@ -143,8 +142,7 @@ sub getResult {
 		if ($ID ne "Poseidon Reply") {
 			return $self->_disconnect_error("The Poseidon server sent a wrong reply ID ($ID). Please report this bug.\n");
 		} else {
-			$self->{socket} = undef;
-			$self->{timestamp} = undef; 
+			$self->reset();
 			return $args->{packet};
 		}
 	} else {
@@ -165,6 +163,27 @@ sub getInstance {
 			$config{poseidonTimeout} || DEFAULT_POSEIDON_SERVER_TIMEOUT);
 	}
 	return $instance;
+}
+
+##
+# boolean $PoseidonClient->isWaitingQuery()
+#
+# Check if a GameGuard query is currently waiting for a Poseidon reply.
+sub isWaitingQuery {
+	my ($self) = @_;
+	return ($self->{timestamp} && $self->{socket}) ? 1 : 0;
+}
+
+##
+# void $PoseidonClient->reset()
+#
+# Close the socket and reset query tracking state.
+sub reset {
+	my ($self) = @_;
+	$self->{socket}->close if $self->{socket};
+	$self->{socket} = undef;
+	$self->{timestamp} = undef;
+	$self->{parser} = undef;
 }
 
 1;
