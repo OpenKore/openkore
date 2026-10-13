@@ -506,8 +506,9 @@ async def pick_up(item_id: int) -> dict[str, Any]:
 @game_tool(ACTION)
 async def talk_to_npc(npc_id: int) -> dict[str, Any]:
     """Start a conversation with an NPC (id from look_around). OpenKore does not walk
-    to it: be within about 12 cells first (move_to next to it and wait until you
-    arrive). Returns the dialog text and the numbered choices once the NPC answered."""
+    to it: the server accepts the talk from up to 14 cells away (move_to closer first
+    when it is farther). Returns the dialog text and the numbered choices once the NPC
+    answered."""
     seq = (await bridge("/npc"))["latestSeq"]
     result = await command(f"talk {npc_id}")
     dialog = await npc_state(seq, wait_seconds=10)
