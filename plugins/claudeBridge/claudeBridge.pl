@@ -32,6 +32,9 @@
 #   /skill_info?skill=X             in-game description of a skill (id, handle or name)
 #   /item_info?nameID=N             in-game description of an item type
 #   /map?cols=40&rows=20            coarse walkability map of the current field with markers
+#       [&scale=S][&all=1][&markers=0]  scale=S: S x S cells per character instead of the fit to cols x rows;
+#                                   all=1: '.' when any cell of the block is walkable (every cell read; default:
+#                                   the majority of up to 4x4 samples); markers=0: terrain only, no @ P N M p
 #   /walkable?x=X&y=Y[&radius=R]    whether a cell of the current field is walkable, and the
 #                                   nearest walkable cell within R cells (default 5) when not
 #   /npc                            current NPC dialog, shop list and recent NPC messages
@@ -73,6 +76,8 @@ use constant {
 	MAX_OUTPUT_LINES => 200,
 	DEFAULT_NEARBY   => 20,
 	MAX_DESC_CHARS   => 1500,
+	MAX_MAP_SCALE    => 64,       # cells per character of /map, at most
+	MAX_MAP_CHARS    => 40000,    # /map refuses an explicit scale that draws more characters than this
 };
 
 # Hooks whose arguments are recorded as events. A hook the current server
@@ -303,7 +308,8 @@ sub handleRequest {
 		} elsif ($file eq '/item_info') {
 			itemInfo($args->{nameID});
 		} elsif ($file eq '/map') {
-			mapOverview(positiveInt($args->{cols}, 40), positiveInt($args->{rows}, 20));
+			mapOverview(positiveInt($args->{cols}, 40), positiveInt($args->{rows}, 20),
+				positiveInt($args->{scale}, 0), flag($args->{all}, 0), flag($args->{markers}, 1));
 		} elsif ($file eq '/walkable') {
 			walkableCell($args->{x}, $args->{y}, $args->{radius});
 		} elsif ($file eq '/npc') {
@@ -660,57 +666,100 @@ sub itemInfo {
 # A coarse map of the whole field: one character per block of cells, so an
 # agent can see the shape of the map and where the things it knows about are.
 # Rows go from the top (high y) to the bottom (y = 0), like the game's minimap.
+# $scaleArg fixes the cells per character (0: the smallest scale that fits
+# $cols x $rows); $all judges a block from every one of its cells ('.' when any
+# is walkable) instead of a majority of a few samples; $markers = 0 draws the
+# terrain alone.
 sub mapOverview {
-	my ($cols, $rows) = @_;
+	my ($cols, $rows, $scaleArg, $all, $markers) = @_;
+	$markers = 1 unless defined $markers;
 	return {inGame => JSON::PP::false} unless inGame() && $field;
 	my ($width, $height) = ($field->width, $field->height);
 	return {error => 'field size unknown'} unless $width && $height;
 	my $scale = 1;
-	foreach my $s (1 .. 64) {
-		$scale = $s;
-		last if $width / $s <= $cols && $height / $s <= $rows;
+	if ($scaleArg) {
+		$scale = $scaleArg > MAX_MAP_SCALE ? MAX_MAP_SCALE : $scaleArg;
+	} else {
+		foreach my $s (1 .. MAX_MAP_SCALE) {
+			$scale = $s;
+			last if $width / $s <= $cols && $height / $s <= $rows;
+		}
 	}
 	my $gridCols = int(($width + $scale - 1) / $scale);
 	my $gridRows = int(($height + $scale - 1) / $scale);
-	my $samples = $scale > 4 ? 4 : $scale;    # sample a few cells per block
+	if ($gridCols * $gridRows > MAX_MAP_CHARS) {
+		my $min = int(sqrt($width * $height / MAX_MAP_CHARS)) + 1;
+		return {error => "scale $scale draws a ${gridCols}x$gridRows map (more than " . MAX_MAP_CHARS . " characters); use scale $min or more"};
+	}
 	my @grid;
-	foreach my $row (0 .. $gridRows - 1) {
-		my $y0 = $row * $scale;
-		my $line = '';
-		foreach my $col (0 .. $gridCols - 1) {
-			my $x0 = $col * $scale;
-			my ($walkable, $total) = (0, 0);
-			foreach my $sy (0 .. $samples - 1) {
-				my $y = $y0 + int(($sy + 0.5) * $scale / $samples);
-				next if $y >= $height;
-				foreach my $sx (0 .. $samples - 1) {
-					my $x = $x0 + int(($sx + 0.5) * $scale / $samples);
-					next if $x >= $width;
-					$total++;
-					$walkable++ if $field->isWalkable($x, $y);
-				}
+	if ($all) {
+		# Every cell of every block, from the raw field data (one byte per cell, y * width + x, bit 1 =
+		# walkable): OR a block row's cell rows together, keep bit 1, and a block is '.' when a byte of
+		# its slice is set. Well under a millisecond for a 400x400 field at scale 6.
+		my $raw = $field->{rawMap};
+		return {error => 'field data incomplete'} if !defined $raw || length($raw) < $width * $height;
+		my $mask = "\x01" x $width;
+		foreach my $row (0 .. $gridRows - 1) {
+			my $y0 = $row * $scale;
+			my $y1 = $y0 + $scale > $height ? $height : $y0 + $scale;    # a partial block at the north edge
+			my $any = "\0" x $width;
+			foreach my $y ($y0 .. $y1 - 1) {
+				$any |= substr($raw, $y * $width, $width);
 			}
-			$line .= !$total ? ' ' : $walkable * 2 >= $total ? '.' : '#';
+			$any &= $mask;
+			my $line = '';
+			foreach my $col (0 .. $gridCols - 1) {
+				my $x0 = $col * $scale;
+				my $n = $x0 + $scale > $width ? $width - $x0 : $scale;    # a partial block at the east edge
+				$line .= index(substr($any, $x0, $n), "\x01") >= 0 ? '.' : '#';
+			}
+			$grid[$row] = $line;
 		}
-		$grid[$row] = $line;
+	} else {
+		my $samples = $scale > 4 ? 4 : $scale;    # sample a few cells per block
+		foreach my $row (0 .. $gridRows - 1) {
+			my $y0 = $row * $scale;
+			my $line = '';
+			foreach my $col (0 .. $gridCols - 1) {
+				my $x0 = $col * $scale;
+				my ($walkable, $total) = (0, 0);
+				foreach my $sy (0 .. $samples - 1) {
+					my $y = $y0 + int(($sy + 0.5) * $scale / $samples);
+					next if $y >= $height;
+					foreach my $sx (0 .. $samples - 1) {
+						my $x = $x0 + int(($sx + 0.5) * $scale / $samples);
+						next if $x >= $width;
+						$total++;
+						$walkable++ if $field->isWalkable($x, $y);
+					}
+				}
+				$line .= !$total ? ' ' : $walkable * 2 >= $total ? '.' : '#';
+			}
+			$grid[$row] = $line;
+		}
 	}
-	my %markers;
-	my $mark = sub {
-		my ($actor, $symbol) = @_;
-		my $pos = position($actor) or return;
-		my ($col, $row) = (int($pos->{x} / $scale), int($pos->{y} / $scale));
-		return if $col < 0 || $col >= $gridCols || $row < 0 || $row >= $gridRows;
-		$markers{"$col,$row"} = $symbol unless $markers{"$col,$row"} && $markers{"$col,$row"} eq '@';
-	};
-	$mark->($_, 'M') foreach @{$monstersList->getItems()};
-	$mark->($_, 'p') foreach @{$playersList->getItems()};
-	$mark->($_, 'N') foreach @{$npcsList->getItems()};
-	$mark->($_, 'P') foreach @{$portalsList->getItems()};
-	$mark->($char, '@');
-	foreach my $key (keys %markers) {
-		my ($col, $row) = split /,/, $key;
-		substr($grid[$row], $col, 1) = $markers{$key};
+	if ($markers) {
+		my %markers;
+		my $mark = sub {
+			my ($actor, $symbol) = @_;
+			my $pos = position($actor) or return;
+			my ($col, $row) = (int($pos->{x} / $scale), int($pos->{y} / $scale));
+			return if $col < 0 || $col >= $gridCols || $row < 0 || $row >= $gridRows;
+			$markers{"$col,$row"} = $symbol unless $markers{"$col,$row"} && $markers{"$col,$row"} eq '@';
+		};
+		$mark->($_, 'M') foreach @{$monstersList->getItems()};
+		$mark->($_, 'p') foreach @{$playersList->getItems()};
+		$mark->($_, 'N') foreach @{$npcsList->getItems()};
+		$mark->($_, 'P') foreach @{$portalsList->getItems()};
+		$mark->($char, '@');
+		foreach my $key (keys %markers) {
+			my ($col, $row) = split /,/, $key;
+			substr($grid[$row], $col, 1) = $markers{$key};
+		}
 	}
+	my $legend = $all ? '. has a walkable cell  # none walkable' : '. walkable  # blocked';
+	$legend .= '  @ you  P portal  N npc  M monster  p player' if $markers;
+	$legend .= '; each character is ' . $scale . 'x' . $scale . ' cells; the top row is the north edge (highest y), the first column is x=0';
 	my $me = position($char) || {};
 	return {
 		map         => mapName(),
@@ -719,9 +768,11 @@ sub mapOverview {
 		width       => num($width),
 		height      => num($height),
 		scale       => num($scale),
+		gridCols    => num($gridCols),
+		gridRows    => num($gridRows),
 		x           => $me->{x},
 		y           => $me->{y},
-		legend      => '. walkable  # blocked  @ you  P portal  N npc  M monster  p player; each character is ' . $scale . 'x' . $scale . ' cells; the top row is the north edge (highest y), the first column is x=0',
+		legend      => $legend,
 		rows        => [reverse @grid],
 	};
 }
@@ -991,6 +1042,13 @@ sub percent {
 sub positiveInt {
 	my ($value, $default) = @_;
 	return defined $value && $value =~ /^\d+$/ && $value > 0 ? $value + 0 : $default;
+}
+
+# A query flag: absent or empty keeps the default; 0, false, no and off are false, anything else true.
+sub flag {
+	my ($value, $default) = @_;
+	return $default unless defined $value && $value ne '';
+	return $value =~ /^(?:0|false|no|off)$/i ? 0 : 1;
 }
 
 1;

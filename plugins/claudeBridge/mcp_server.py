@@ -333,12 +333,31 @@ async def describe_item(name_id: int) -> dict[str, Any]:
     return await bridge("/item_info", nameID=name_id)
 
 
+MAX_MAP_SCALE = 64  # cells per character the bridge accepts
+
+
 @game_tool(READ_ONLY)
-async def get_map_overview(cols: int = 40, rows: int = 20) -> dict[str, Any]:
+async def get_map_overview(
+    cols: int = 40, rows: int = 20, scale: int = 0, all: bool = False, markers: bool = True
+) -> dict[str, Any]:
     """A coarse map of the whole current field (like the minimap): rows of characters,
     '.' walkable, '#' blocked, '@' you, 'P' portal, 'N' npc, 'M' monster, 'p' player.
-    Each character covers scale x scale cells; the top row is the north edge."""
-    return await bridge("/map", cols=max(10, min(cols, 120)), rows=max(5, min(rows, 60)))
+    Each character covers scale x scale cells; the top row is the north edge. By default
+    the scale is the smallest that fits the map in cols x rows and a character is '.' when
+    most of its sampled cells are. scale=N forces N cells per character (the map is then
+    ceil(width/N) x ceil(height/N) characters: keep N large on a big map); all=true reads
+    every cell and marks '.' when any cell of the block is walkable (terrain for a program,
+    not a view); markers=false leaves out '@', 'P', 'N', 'M' and 'p'. gridCols and gridRows
+    give the size of the grid."""
+    fit = scale <= 0
+    return await bridge(
+        "/map",
+        cols=max(10, min(cols, 120)) if fit else None,
+        rows=max(5, min(rows, 60)) if fit else None,
+        scale=None if fit else min(scale, MAX_MAP_SCALE),
+        all=1 if all else None,
+        markers=None if markers else 0,
+    )
 
 
 @game_tool(READ_ONLY)
