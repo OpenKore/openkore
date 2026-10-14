@@ -577,9 +577,10 @@ async def npc_reply(action: Literal["continue", "choose", "number", "text", "clo
             "text": f"talk text {value}",
         }[action]
     result = await command(cmd)
-    failed = [line for line in result["output"] if "Error in function" in str(line)]
-    if failed:
-        return {"error": " ".join(str(line).strip() for line in failed), "output": result["output"]}
+    if any("Error in function" in str(line) for line in result["output"]):
+        # OpenKore's reason is the line after "Error in function ...": the agent needs it, not the header
+        reason = [str(line).strip() for line in result["output"] if "Error in function" not in str(line)]
+        return {"error": " ".join(reason) or "refused", "output": result["output"]}
     dialog = await npc_state(seq, closing=action == "close")
     return {**dialog, "output": result["output"]}
 
