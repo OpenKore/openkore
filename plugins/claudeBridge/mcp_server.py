@@ -550,6 +550,12 @@ async def npc_reply(action: Literal["continue", "choose", "number", "text", "clo
         return {"error": f"'{action}' needs a value"}
     current = await bridge("/npc")
     seq = current["latestSeq"]
+    if action == "close" and not current.get("active") and current.get("store"):
+        # A shop is a window, not a talk: 'talk no' fails, and the server refuses every
+        # walk until the shop is closed.
+        await bridge("/shop_close")
+        dialog = await npc_state(seq, wait_seconds=1.0, closing=True)
+        return {**dialog, "output": ["shop closed"]}
     if action == "close":
         # While a menu is shown, OpenKore only accepts a menu answer: its extra last
         # choice "Cancel Chat" sends the real cancel. 'talk no' would leave the AI stuck.
@@ -566,6 +572,9 @@ async def npc_reply(action: Literal["continue", "choose", "number", "text", "clo
             "text": f"talk text {value}",
         }[action]
     result = await command(cmd)
+    failed = [line for line in result["output"] if "Error in function" in str(line)]
+    if failed:
+        return {"error": " ".join(str(line).strip() for line in failed), "output": result["output"]}
     dialog = await npc_state(seq, closing=action == "close")
     return {**dialog, "output": result["output"]}
 

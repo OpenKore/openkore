@@ -392,6 +392,8 @@ sub handleRequest {
 			walkableCell($args->{x}, $args->{y}, $args->{radius});
 		} elsif ($file eq '/npc') {
 			npcDialog();
+		} elsif ($file eq '/shop_close') {
+			shopClose();
 		} elsif ($file eq '/events') {
 			eventsSince($args->{since}, positiveInt($args->{limit}, 100));
 		} elsif ($file eq '/command') {
@@ -915,6 +917,17 @@ sub npcDialog {
 		recent    => \@recent,
 		latestSeq => $eventSeq,
 	};
+}
+
+# Leaves an NPC shop. The server keeps the shop open (and refuses every walk) until the client
+# sends a buy or sell list; before PACKETVER 20131223 there is no close packet, so an empty buy
+# list (00C8) is the close, as the old client sends it. OpenKore keeps the item list after the
+# window is gone, so it is cleared here, or the shop would still show as open.
+sub shopClose {
+	return {error => 'no shop is open'} unless $storeList && $storeList->size;
+	$messageSender->sendToServer(pack('v2', 0x00C8, 4));
+	$storeList->clear;
+	return {closed => bool(1), latestSeq => $eventSeq};
 }
 
 sub eventsSince {
