@@ -205,8 +205,9 @@ sub onEventHook {
 		$data->{dead} = JSON::PP::true;
 		$data->{monster} = {%{$data->{monster} || {}}, %{damageTable($args->{monster})}} if ref $data->{monster} eq 'HASH';
 	} elsif ($hookName eq 'packet_skilluse') {
-		$data = skillUsed($args);
 		noteHit($args->{sourceID}, $args->{targetID}, $args->{damage});
+		return unless castInvolvesPlayer($args);    # a creature's cast on a creature is the skill log line's
+		$data = skillUsed($args);
 	} elsif ($hookName eq 'packet_mapChange') {
 		%firstHit = %lastHit = %hitTime = ();
 		$data = plain($args);
@@ -330,6 +331,17 @@ sub skillUsed {
 		$out{y} = num($args->{y});
 	}
 	return \%out;
+}
+
+# A cast worth an event: this character or a player is its source or its target.
+sub castInvolvesPlayer {
+	my ($args) = @_;
+	foreach my $id ($args->{sourceID}, $args->{targetID}) {
+		next unless defined $id && length $id;
+		return 1 if defined $accountID && $id eq $accountID;
+		return 1 if $playersList && $playersList->getByID($id);
+	}
+	return 0;
 }
 
 sub onLog {
@@ -1065,6 +1077,8 @@ sub damageTable {
 	my ($monster) = @_;
 	my %out;
 	return \%out unless blessed $monster;
+	$out{dmgFromYou} = num($monster->{dmgFromYou}) || 0;
+	$out{dmgToYou}   = num($monster->{dmgToYou})   || 0;
 	my @players;
 	foreach my $id (keys %{$monster->{dmgFromPlayer} || {}}) {
 		my $dmg = $monster->{dmgFromPlayer}{$id};
