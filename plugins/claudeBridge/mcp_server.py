@@ -556,6 +556,11 @@ async def npc_reply(action: Literal["continue", "choose", "number", "text", "clo
         await bridge("/shop_close")
         dialog = await npc_state(seq, wait_seconds=1.0, closing=True)
         return {**dialog, "output": ["shop closed"]}
+    if action == "close" and not current.get("active"):
+        # The conversation already ended (the NPC closed it, or a menu answer did):
+        # 'talk no' would fail with "You are not talking to an npc". Closing is done.
+        return {"active": False, "npc": None, "text": None, "choices": [], "closed": True,
+                "hint": None, "output": ["no conversation was open: it had already ended"]}
     if action == "close":
         # While a menu is shown, OpenKore only accepts a menu answer: its extra last
         # choice "Cancel Chat" sends the real cancel. 'talk no' would leave the AI stuck.
