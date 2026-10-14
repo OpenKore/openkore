@@ -914,6 +914,7 @@ sub npcDialog {
 		talk      => $talk,
 		store     => \@store,
 		storeNpc  => $storeList ? $storeList->{npcName} : undef,
+		shop      => bool(shopOpen()),
 		recent    => \@recent,
 		latestSeq => $eventSeq,
 	};
@@ -923,10 +924,18 @@ sub npcDialog {
 # sends a buy or sell list; before PACKETVER 20131223 there is no close packet, so an empty buy
 # list (00C8) is the close, as the old client sends it. OpenKore keeps the item list after the
 # window is gone, so it is cleared here, or the shop would still show as open.
+# The buy-or-sell choice that comes first already holds the shop open on the server.
+sub shopOpen {
+	return ($storeList && $storeList->size)
+	  || ($ai_v{npc_talk} && ($ai_v{npc_talk}{talk} // '') eq 'buy_or_sell' && %talk && $talk{ID});
+}
+
 sub shopClose {
-	return {error => 'no shop is open'} unless $storeList && $storeList->size;
+	return {error => 'no shop is open'} unless shopOpen();
 	$messageSender->sendToServer(pack('v2', 0x00C8, 4));
 	$storeList->clear;
+	undef %talk;
+	delete $ai_v{npc_talk};
 	return {closed => bool(1), latestSeq => $eventSeq};
 }
 

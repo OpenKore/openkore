@@ -550,7 +550,7 @@ async def npc_reply(action: Literal["continue", "choose", "number", "text", "clo
         return {"error": f"'{action}' needs a value"}
     current = await bridge("/npc")
     seq = current["latestSeq"]
-    if action == "close" and not current.get("active") and current.get("store"):
+    if action == "close" and current.get("shop"):
         # A shop is a window, not a talk: 'talk no' fails, and the server refuses every
         # walk until the shop is closed.
         await bridge("/shop_close")
