@@ -648,17 +648,31 @@ async def raise_stat(stat: Literal["str", "agi", "vit", "int", "dex", "luk"], po
     stat value; get_status shows statusPoints left."""
     points = max(1, min(points, 20))
     outputs: list[str] = []
+    raised = 0
     for _ in range(points):
-        outputs += (await command(f"stat_add {stat}"))["output"]
+        out = (await command(f"stat_add {stat}"))["output"]
+        outputs += out
+        if any("Error in function" in str(line) for line in out):
+            break  # refused (not enough points): the next ones would be refused too
+        raised += 1
         await asyncio.sleep(0.15)
     state = await bridge("/state")
-    return {"output": outputs[-5:], "stats": state.get("stats"), "statusPoints": state.get("statusPoints")}
+    result = {"output": outputs[-5:], "raised": raised, "stats": state.get("stats"),
+              "statusPoints": state.get("statusPoints")}
+    if raised == 0:
+        refused = [str(line).strip() for line in outputs if "Error in function" not in str(line)]
+        return {"error": " ".join(refused) or "refused", **result}
+    return result
 
 
 @game_tool(ACTION)
 async def raise_skill(skill_id: int) -> dict[str, Any]:
     """Spend one skill point on a skill (skill_id from get_skills)."""
-    return await command(f"skills add {skill_id}")
+    result = await command(f"skills add {skill_id}")
+    if any("Error in function" in str(line) for line in result["output"]):
+        refused = [str(line).strip() for line in result["output"] if "Error in function" not in str(line)]
+        return {"error": " ".join(refused) or "refused", **result}
+    return result
 
 
 @game_tool(ACTION)
