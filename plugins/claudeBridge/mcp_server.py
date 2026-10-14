@@ -299,7 +299,10 @@ async def look_around(
     (spells), nearest first. Each entry has an id (use it with attack, talk_to_npc,
     pick_up, move_to portal), an oid that stays the same while the actor is around,
     name, position and distance in cells. Monsters show attackingMe and hpPercent when
-    known; portals show destKnown."""
+    known, and what their damage tables say about other players: dmgFromPlayers
+    ([{oid, name, dmg}], largest first), dmgFromParty, firstAttackFrom and
+    lastAttackFrom ("you" or {oid, name}) and target ({kind: you|player|other, oid,
+    name}: whom the monster is attacking); portals show destKnown."""
     return await bridge("/nearby", limit=max(1, min(limit, 50)),
                         kinds=",".join(kinds) if kinds else None)
 
@@ -418,7 +421,10 @@ async def get_storage() -> dict[str, Any]:
 @game_tool(READ_ONLY)
 async def recent_events(since_seq: int | None = None, limit: int = 100) -> dict[str, Any]:
     """Game events: chat and private messages, NPC dialog, kills, deaths, exp, loot,
-    level ups, map changes, warnings and errors. With since_seq, the events after that
+    level ups, map changes, emotes, skill casts seen (skill_used: source, target,
+    skillName, damage, hpGained, onYou, byYou), warnings and errors. A death event
+    (target_died, monster_disappeared) carries the creature's damage table
+    (dmgFromPlayers, firstAttackFrom, lastAttackFrom). With since_seq, the events after that
     sequence number (oldest first); without it, the newest events. boot_id changes when
     the bot restarts (sequence numbers start again from 0); oldest_seq is the oldest
     event still kept."""
@@ -596,8 +602,9 @@ async def stand() -> dict[str, Any]:
 
 @game_tool(ACTION)
 async def emote(emotion: str) -> dict[str, Any]:
-    """Show an emotion above the character (a name or number from OpenKore's emotion
-    table, e.g. "heh", "ok", "hmm", "!", "?")."""
+    """Show an emotion above the character: an alias from the first column of
+    OpenKore's emotion table (tables/emotions.txt), e.g. "heh", "ok", "thx", "no1",
+    "hmm", "!", "?"; display names ("Thanks") and numbers are not accepted."""
     return await command(f"e {emotion}")
 
 

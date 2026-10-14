@@ -93,12 +93,17 @@ my @EVENT_HOOKS = qw(
 	party_invite incoming_deal quest_added quest_mission_updated
 	player_spawned player_disappeared
 	route fail_calc_map_route AI_state_change changed_status
-	packet/guild_request
+	packet/guild_request packet_skilluse
 );
 
 # Hooks recorded under another event type (guild invites have no hook of their
 # own; the packet handler's hook is used instead).
-my %EVENT_TYPE_FOR_HOOK = ('packet/guild_request' => 'guild_invite');
+my %EVENT_TYPE_FOR_HOOK = ('packet/guild_request' => 'guild_invite', 'packet_skilluse' => 'skill_used');
+
+# Who hit each creature first and last ("you" or the attacker's binary id), from the attack and skill packets:
+# OpenKore records lastAttackFrom for other players only, never for this character. Pruned by age and on a map change.
+my (%firstHit, %lastHit, %hitTime);
+use constant { HIT_MEMORY_MAX => 300, HIT_MEMORY_S => 120 };
 
 # Console message domains recorded as events, in addition to every warning and error.
 # (The "connection" domain is not recorded: it floods the ring and /health has the state.)
@@ -126,6 +131,7 @@ my $hooks = Plugins::addHooks(
 	['start3',           \&onStart],
 	['mainLoop_post',    \&onMainLoop],
 	['charSelectScreen', \&onCharSelect],
+	['packet_attack',    \&onAttackHook],
 	map { [$_, \&onEventHook] } @EVENT_HOOKS
 );
 my $logHook = Log::addHook(\&onLog);
@@ -192,10 +198,18 @@ sub onEventHook {
 		$counters{baseExp} += $monsterBaseExp || 0;
 		$counters{jobExp}  += $monsterJobExp  || 0;
 	} elsif ($hookName eq 'monster_disappeared') {
-		# Only deaths are interesting; walking out of view is not.
+		# Only deaths are interesting; walking out of view is not. A death carries the creature's damage table
+		# (who hit it, how much, first and last) while the actor still has it.
 		return unless ref $args eq 'HASH' && $args->{monster} && $args->{monster}{dead};
 		$data = plain($args);
 		$data->{dead} = JSON::PP::true;
+		$data->{monster} = {%{$data->{monster} || {}}, %{damageTable($args->{monster})}} if ref $data->{monster} eq 'HASH';
+	} elsif ($hookName eq 'packet_skilluse') {
+		$data = skillUsed($args);
+		noteHit($args->{sourceID}, $args->{targetID}, $args->{damage});
+	} elsif ($hookName eq 'packet_mapChange') {
+		%firstHit = %lastHit = %hitTime = ();
+		$data = plain($args);
 	} elsif ($hookName eq 'Network::Receive::map_changed') {
 		$data = plain($args);
 		$data->{map} = mapName();
@@ -243,6 +257,8 @@ sub enrichEvent {
 			$data->{statuses}  = \@names;
 			$data->{status}    = @names ? join(', ', @names) : 'none';
 		}
+	} elsif ($hookName eq 'target_died') {
+		$data->{monster} = {%{$data->{monster} || {}}, %{damageTable($args->{monster})}} if ref $data->{monster} eq 'HASH';
 	} elsif ($hookName eq 'job_changed') {
 		$data->{old_job_name} = jobName($args->{old_job});
 		$data->{new_job_name} = jobName($args->{new_job});
@@ -264,6 +280,56 @@ sub enrichEvent {
 	} elsif ($hookName eq 'fail_calc_map_route') {
 		$data->{map} = $args->{map_from};
 	}
+}
+
+sub onAttackHook {
+	my (undef, $args) = @_;
+	noteHit($args->{sourceID}, $args->{targetID}, $args->{dmg}) if ref $args eq 'HASH';
+}
+
+# A hit on a creature in view: remember who struck it first and last.
+sub noteHit {
+	my ($sourceID, $targetID, $damage) = @_;
+	return unless defined $sourceID && defined $targetID && length $targetID && $damage && $damage > 0;
+	return unless $monstersList && $monstersList->getByID($targetID);
+	my $who = (defined $accountID && $sourceID eq $accountID) ? 'you' : $sourceID;
+	$firstHit{$targetID} = $who unless exists $firstHit{$targetID};
+	$lastHit{$targetID} = $who;
+	$hitTime{$targetID} = time;
+	if (keys %hitTime > HIT_MEMORY_MAX) {
+		my $cutoff = time - HIT_MEMORY_S;
+		foreach my $id (keys %hitTime) {
+			next if $hitTime{$id} > $cutoff;
+			delete $firstHit{$id}; delete $lastHit{$id}; delete $hitTime{$id};
+		}
+	}
+}
+
+# A skill cast seen on screen (OpenKore's packet_skilluse): who, on whom, the client's name of the skill, the
+# damage, and the HP the target gained when OpenKore itself books the cast as a heal (its "(Gained: N hp)" rule);
+# for every other skill `amount` is the level. Ground casts carry x and y and no target.
+sub skillUsed {
+	my ($args) = @_;
+	my ($sourceID, $targetID, $skillID) = @{$args}{qw(sourceID targetID skillID)};
+	my $source = (defined $sourceID && length $sourceID && $sourceID ne "\0\0\0\0") ? eval { Actor::get($sourceID) } : undef;
+	my $target = (defined $targetID && length $targetID) ? eval { Actor::get($targetID) } : undef;
+	my $skill = defined $skillID ? eval { Skill->new(idn => $skillID) } : undef;
+	my %out = (
+		skillID   => num($skillID),
+		skillName => $skill ? eval { $skill->getName() } : undef,
+		damage    => num($args->{damage}) || 0,
+		amount    => num($args->{amount}) || 0,
+		onYou     => bool(defined $targetID && defined $accountID && $targetID eq $accountID),
+		byYou     => bool(defined $sourceID && defined $accountID && $sourceID eq $accountID),
+	);
+	$out{source} = actorSummary($source) if blessed $source;
+	$out{target} = actorSummary($target) if blessed $target;
+	$out{hpGained} = num($args->{amount}) if defined $skillID && $skillID == 28 && !$args->{damage} && $args->{amount};
+	if ($args->{x} || $args->{y}) {
+		$out{x} = num($args->{x});
+		$out{y} = num($args->{y});
+	}
+	return \%out;
 }
 
 sub onLog {
@@ -466,6 +532,7 @@ sub partySummary {
 		my $user = $party->{users}{$id};
 		next unless ref $user;
 		push @members, {
+			oid    => unpack('H*', $id),
 			name   => $user->{name},
 			map    => $user->{map},
 			online => bool($user->{online}),
@@ -547,6 +614,8 @@ sub addKindFields {
 			|| (defined $actor->{target} && defined $accountID && $actor->{target} eq $accountID));
 		$entry->{casting} = JSON::PP::true if ref $actor->{casting} eq 'HASH' && %{$actor->{casting}};
 		$entry->{ignored} = JSON::PP::true if $actor->{ignore};
+		my $table = damageTable($actor);
+		@{$entry}{keys %$table} = values %$table;
 	} elsif ($kind eq 'players') {
 		$entry->{job}     = jobName($actor->{jobID});
 		$entry->{level}   = num($actor->{lv}) if $actor->{lv};
@@ -986,6 +1055,54 @@ sub actorSummary {
 	my $pos = position($actor);
 	@out{qw(x y)} = @{$pos}{qw(x y)} if $pos;
 	return \%out;
+}
+
+# What a creature's damage tables say about other players: who hit it and how much (OpenKore's dmgFromPlayer, by
+# player, largest first), the party's share, who struck it first and last (this plugin's record), and whom it is
+# attacking. Names come from the players in view or the ones that just left; one OpenKore no longer knows is
+# "Unknown", which the agent treats as unattributable. Nothing here judges: the agent's harness does.
+sub damageTable {
+	my ($monster) = @_;
+	my %out;
+	return \%out unless blessed $monster;
+	my @players;
+	foreach my $id (keys %{$monster->{dmgFromPlayer} || {}}) {
+		my $dmg = $monster->{dmgFromPlayer}{$id};
+		next unless $dmg && $dmg > 0;
+		push @players, {oid => unpack('H*', $id), name => playerName($id), dmg => num($dmg)};
+	}
+	@players = sort { $b->{dmg} <=> $a->{dmg} } @players;
+	$out{dmgFromPlayers} = \@players if @players;
+	$out{dmgFromParty} = num($monster->{dmgFromParty}) if $monster->{dmgFromParty};
+	my $ID = $monster->{ID};
+	if (defined $ID) {
+		$out{firstAttackFrom} = attackerSummary($firstHit{$ID}) if defined $firstHit{$ID};
+		$out{lastAttackFrom}  = attackerSummary($lastHit{$ID})  if defined $lastHit{$ID};
+	}
+	my $t = $monster->{target};
+	if (defined $t && length $t) {
+		if (defined $accountID && $t eq $accountID) {
+			$out{target} = {kind => 'you'};
+		} elsif ($playersList && $playersList->getByID($t)) {
+			$out{target} = {kind => 'player', oid => unpack('H*', $t), name => playerName($t)};
+		} else {
+			$out{target} = {kind => 'other', oid => unpack('H*', $t)};
+		}
+	}
+	return \%out;
+}
+
+sub attackerSummary {
+	my ($who) = @_;
+	return 'you' if $who eq 'you';
+	return {oid => unpack('H*', $who), name => playerName($who)};
+}
+
+sub playerName {
+	my ($id) = @_;
+	my $actor = ($playersList && $playersList->getByID($id)) || $players_old{$id} || ($slavesList && $slavesList->getByID($id));
+	my $name = $actor ? eval { $actor->name } : undef;
+	return defined $name && $name ne '' ? $name : 'Unknown';
 }
 
 # Turns hook arguments and game state into JSON-safe data: actors become
