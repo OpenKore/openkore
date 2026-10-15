@@ -253,12 +253,21 @@ async def npc_state(since_seq: int, wait_seconds: float = 6.0, closing: bool = F
     return {
         "active": npc.get("active"),
         "npc": talk.get("name") or next((e["data"].get("name") for e in new if isinstance(e.get("data"), dict) and e["data"].get("name")), None),
-        "text": talk.get("msg"),
+        # once the NPC has closed the conversation its text is gone from the dialog: what it said is in the events
+        "text": talk.get("msg") or _said(new) or None,
         "choices": [{"index": i, "text": c} for i, c in enumerate(choices)],
         "closed": closed,
         "hint": "Answer with npc_reply: 'choose' with a choice index, 'continue' for Next, "
                 "'number'/'text' when asked for input, 'close' to leave." if npc.get("active") else None,
     }
+
+
+def _said(events: list[dict[str, Any]]) -> str:
+    """What the NPC said in these events: each npc_talk event carries its page's text so far, so the last event of
+    each page is that page; the pages joined."""
+    msgs = [str(e["data"]["msg"]) for e in events
+            if e.get("type") == "npc_talk" and isinstance(e.get("data"), dict) and e["data"].get("msg")]
+    return "\n".join(m for i, m in enumerate(msgs) if i + 1 == len(msgs) or not msgs[i + 1].startswith(m))
 
 
 def game_tool(annotations: ToolAnnotations):
@@ -536,8 +545,28 @@ async def talk_to_npc(npc_id: int) -> dict[str, Any]:
     answered."""
     seq = (await bridge("/npc"))["latestSeq"]
     result = await command(f"talk {npc_id}")
+    deadline = time.monotonic() + TALK_BUSY_WAIT_S
+    while _refused(result) and "already talking" in " ".join(map(str, result["output"])):
+        # The last conversation was just closed and OpenKore's talk task is still ending
+        # (its cancel timers): the talk is refused, not answered. Ask again once it is done.
+        if time.monotonic() >= deadline:
+            break
+        await asyncio.sleep(0.5)
+        seq = (await bridge("/npc"))["latestSeq"]
+        result = await command(f"talk {npc_id}")
+    if _refused(result):
+        reason = [str(line).strip() for line in result["output"] if "Error in function" not in str(line)]
+        return {"error": " ".join(reason) or "refused", "output": result["output"]}
     dialog = await npc_state(seq, wait_seconds=10)
     return {**dialog, "output": result["output"]}
+
+
+TALK_BUSY_WAIT_S = 5.0
+
+
+def _refused(result: dict[str, Any]) -> bool:
+    """Whether a console command's output holds OpenKore's "Error in function ..." line."""
+    return any("Error in function" in str(line) for line in result.get("output") or [])
 
 
 @game_tool(ACTION)
@@ -556,6 +585,11 @@ async def npc_reply(action: Literal["continue", "choose", "number", "text", "clo
         await bridge("/shop_close")
         dialog = await npc_state(seq, wait_seconds=1.0, closing=True)
         return {**dialog, "output": ["shop closed"]}
+    if action == "close" and not current.get("active"):
+        # The conversation already ended (the NPC closed it, or a menu answer did):
+        # 'talk no' would fail with "You are not talking to an npc". Closing is done.
+        return {"active": False, "npc": None, "text": None, "choices": [], "closed": True,
+                "hint": None, "output": ["no conversation was open: it had already ended"]}
     if action == "close":
         # While a menu is shown, OpenKore only accepts a menu answer: its extra last
         # choice "Cancel Chat" sends the real cancel. 'talk no' would leave the AI stuck.
@@ -572,9 +606,10 @@ async def npc_reply(action: Literal["continue", "choose", "number", "text", "clo
             "text": f"talk text {value}",
         }[action]
     result = await command(cmd)
-    failed = [line for line in result["output"] if "Error in function" in str(line)]
-    if failed:
-        return {"error": " ".join(str(line).strip() for line in failed), "output": result["output"]}
+    if any("Error in function" in str(line) for line in result["output"]):
+        # OpenKore's reason is the line after "Error in function ...": the agent needs it, not the header
+        reason = [str(line).strip() for line in result["output"] if "Error in function" not in str(line)]
+        return {"error": " ".join(reason) or "refused", "output": result["output"]}
     dialog = await npc_state(seq, closing=action == "close")
     return {**dialog, "output": result["output"]}
 
@@ -643,17 +678,31 @@ async def raise_stat(stat: Literal["str", "agi", "vit", "int", "dex", "luk"], po
     stat value; get_status shows statusPoints left."""
     points = max(1, min(points, 20))
     outputs: list[str] = []
+    raised = 0
     for _ in range(points):
-        outputs += (await command(f"stat_add {stat}"))["output"]
+        out = (await command(f"stat_add {stat}"))["output"]
+        outputs += out
+        if any("Error in function" in str(line) for line in out):
+            break  # refused (not enough points): the next ones would be refused too
+        raised += 1
         await asyncio.sleep(0.15)
     state = await bridge("/state")
-    return {"output": outputs[-5:], "stats": state.get("stats"), "statusPoints": state.get("statusPoints")}
+    result = {"output": outputs[-5:], "raised": raised, "stats": state.get("stats"),
+              "statusPoints": state.get("statusPoints")}
+    if raised == 0:
+        refused = [str(line).strip() for line in outputs if "Error in function" not in str(line)]
+        return {"error": " ".join(refused) or "refused", **result}
+    return result
 
 
 @game_tool(ACTION)
 async def raise_skill(skill_id: int) -> dict[str, Any]:
     """Spend one skill point on a skill (skill_id from get_skills)."""
-    return await command(f"skills add {skill_id}")
+    result = await command(f"skills add {skill_id}")
+    if any("Error in function" in str(line) for line in result["output"]):
+        refused = [str(line).strip() for line in result["output"] if "Error in function" not in str(line)]
+        return {"error": " ".join(refused) or "refused", **result}
+    return result
 
 
 @game_tool(ACTION)

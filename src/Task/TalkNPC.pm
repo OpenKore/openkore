@@ -582,8 +582,10 @@ sub iterate {
 					if (defined $choice && $choice < $#{$talk{responses}}) {
 						$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 
-					# Found response is fake 'Cancel Chat'
+					# Found response is fake 'Cancel Chat': the step is taken (the cancel answers it), so a
+					# 'npc_talk_done' that arrives first is a normal end, not "steps still to be done"
 					} elsif (defined $choice) {
+						shift @{$self->{steps}};
 						$self->{trying_to_cancel} = 1;
 						return;
 
@@ -603,8 +605,9 @@ sub iterate {
 						debug "$self->{target}: Sending talk response #$choice\n", "ai_npcTalk";
 						$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 
-					#Normal number response is a fake "Cancel Chat" response.
+					#Normal number response is a fake "Cancel Chat" response: taken, as above.
 					} elsif ($choice == $#{$talk{responses}}) {
+						shift @{$self->{steps}};
 						$self->{trying_to_cancel} = 1;
 						return;
 
