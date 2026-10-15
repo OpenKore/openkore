@@ -898,8 +898,9 @@ sub walkableCell {
 
 # A walk on the current map (x, y) or into a portal in view (its list index) that ends when the map changes.
 # The console's "move x y" and "move <portal#>" route to that map by name (Task::MapRoute): when the walk crosses
-# a portal, the route plans its way back to the old map and the body walks back in. A Task::Route (noMapRoute)
-# is done as soon as the character stands on another map (Task/Route.pm), so arriving through a portal ends it.
+# a portal, the route plans its way back to the old map and the body walks back in. A Task::Route is done as soon
+# as the character stands on another map (Task/Route.pm), so arriving through a portal ends it; with
+# stopWhenMapChanged it also ends at a portal that warps within the same map, instead of walking back into it.
 sub walkTo {
 	my ($x, $y, $portal) = @_;
 	return {error => 'the character is not in the game'} unless inGame() && $field && $char;
@@ -921,7 +922,11 @@ sub walkTo {
 	return {error => 'Unable to walk while inside a chat room'} if defined $currentChatRoom && $currentChatRoom ne '';
 	return {error => 'Unable to walk while the shop is open'} if $shopstarted;
 	AI::clear(qw/move route mapRoute/);
-	$char->route(undef, $tx, $ty, attackOnRoute => 1, noSitAuto => 1, noMapRoute => 1);
+	require Task::Route;
+	my $task = Task::Route->new(actor => $char, field => $field, x => $tx, y => $ty,
+		attackOnRoute => 1, noSitAuto => 1);
+	$task->{stopWhenMapChanged} = 1;    # not in the constructor's allowed keys: set on the task, as Actor::route does
+	$char->queue('route', $task);
 	return {
 		command => 'walk',
 		output => ["Walking to $what on " . mapName() . "; the walk ends if the map changes"],
