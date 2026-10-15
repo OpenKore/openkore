@@ -147,6 +147,12 @@ async def bridge(path: str, **params: Any) -> dict[str, Any]:
 WALK_SNAP_RADIUS = 5  # move_to on a blocked cell walks to the nearest open cell this close
 
 
+async def walk(**params: Any) -> dict[str, Any]:
+    """A walk on the current map that ends at a map change (the bridge's /walk), shaped like a command's result."""
+    result = await bridge("/walk", **params)
+    return {"command": result.get("command", "walk"), "output": result.get("output", [])}
+
+
 async def command(cmd: str) -> dict[str, Any]:
     result = await bridge("/command", cmd=cmd)
     return {"command": cmd, "output": result.get("output", [])}
@@ -490,10 +496,13 @@ async def move_to(x: int | None = None, y: int | None = None, map: str | None = 
     nearby portal (portal_id from look_around). The AI walks in the background;
     use wait_for or get_status to follow it. Coordinates on a blocked cell of the
     current map walk to the nearest open cell within 5 cells instead ("adjusted"
-    in the result); with none that close, nothing moves and the result is an error."""
+    in the result); with none that close, nothing moves and the result is an error.
+    A walk on the current map or into a portal ends when the map changes (it does
+    not walk back to the map it started on); a walk to another map routes through
+    portals to it."""
     adjusted = None
     if portal_id is not None:
-        cmd = f"move {portal_id}"
+        return await walk(portal=portal_id)
     elif x is not None and y is not None:
         cell = await bridge("/walkable", x=x, y=y, radius=WALK_SNAP_RADIUS)
         if cell.get("map") and (not map or map == cell["map"]):
@@ -508,6 +517,10 @@ async def move_to(x: int | None = None, y: int | None = None, map: str | None = 
                     }
                 adjusted = {"from": {"x": x, "y": y}, "to": {"x": near["x"], "y": near["y"]}}
                 x, y = near["x"], near["y"]
+            result = await walk(x=x, y=y)
+            if adjusted:
+                result["adjusted"] = adjusted
+            return result
         cmd = f"move {x} {y}" + (f" {map}" if map else "")
     elif map:
         cmd = f"move {map}"

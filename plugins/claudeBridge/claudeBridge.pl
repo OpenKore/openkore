@@ -390,6 +390,8 @@ sub handleRequest {
 				positiveInt($args->{scale}, 0), flag($args->{all}, 0), flag($args->{markers}, 1));
 		} elsif ($file eq '/walkable') {
 			walkableCell($args->{x}, $args->{y}, $args->{radius});
+		} elsif ($file eq '/walk') {
+			walkTo($args->{x}, $args->{y}, $args->{portal});
 		} elsif ($file eq '/npc') {
 			npcDialog();
 		} elsif ($file eq '/shop_close') {
@@ -892,6 +894,39 @@ sub walkableCell {
 	}
 	$result{nearest} = {x => num($best->[0]), y => num($best->[1]), distance => num(sprintf('%.1f', $bestD))} if $best;
 	return \%result;
+}
+
+# A walk on the current map (x, y) or into a portal in view (its list index) that ends when the map changes.
+# The console's "move x y" and "move <portal#>" route to that map by name (Task::MapRoute): when the walk crosses
+# a portal, the route plans its way back to the old map and the body walks back in. A Task::Route (noMapRoute)
+# is done as soon as the character stands on another map (Task/Route.pm), so arriving through a portal ends it.
+sub walkTo {
+	my ($x, $y, $portal) = @_;
+	return {error => 'the character is not in the game'} unless inGame() && $field && $char;
+	my ($tx, $ty, $what);
+	if (defined $portal && $portal ne '') {
+		return {error => 'portal must be a whole number'} unless $portal =~ /^\d+$/;
+		my $entry = $portalsID[$portal] && $portals{$portalsID[$portal]};
+		return {error => "no portal number $portal is in view"} unless $entry && $entry->{pos};
+		($tx, $ty) = ($entry->{pos}{x}, $entry->{pos}{y});
+		$what = "portal number $portal ($tx,$ty)";
+	} else {
+		return {error => 'x and y must be whole numbers'}
+		  unless defined $x && defined $y && $x =~ /^-?\d+$/ && $y =~ /^-?\d+$/;
+		return {error => "($x,$y) is outside the map " . mapName()} if $field->isOffMap($x, $y);
+		return {error => "($x,$y) on " . mapName() . " is not walkable"} unless $field->isWalkable($x, $y);
+		($tx, $ty) = ($x, $y);
+		$what = "($tx,$ty)";
+	}
+	return {error => 'Unable to walk while inside a chat room'} if defined $currentChatRoom && $currentChatRoom ne '';
+	return {error => 'Unable to walk while the shop is open'} if $shopstarted;
+	AI::clear(qw/move route mapRoute/);
+	$char->route(undef, $tx, $ty, attackOnRoute => 1, noSitAuto => 1, noMapRoute => 1);
+	return {
+		command => 'walk',
+		output => ["Walking to $what on " . mapName() . "; the walk ends if the map changes"],
+		map => mapName(), x => num($tx), y => num($ty), latestSeq => $eventSeq,
+	};
 }
 
 sub npcDialog {
