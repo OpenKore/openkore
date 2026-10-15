@@ -536,8 +536,28 @@ async def talk_to_npc(npc_id: int) -> dict[str, Any]:
     answered."""
     seq = (await bridge("/npc"))["latestSeq"]
     result = await command(f"talk {npc_id}")
+    deadline = time.monotonic() + TALK_BUSY_WAIT_S
+    while _refused(result) and "already talking" in " ".join(map(str, result["output"])):
+        # The last conversation was just closed and OpenKore's talk task is still ending
+        # (its cancel timers): the talk is refused, not answered. Ask again once it is done.
+        if time.monotonic() >= deadline:
+            break
+        await asyncio.sleep(0.5)
+        seq = (await bridge("/npc"))["latestSeq"]
+        result = await command(f"talk {npc_id}")
+    if _refused(result):
+        reason = [str(line).strip() for line in result["output"] if "Error in function" not in str(line)]
+        return {"error": " ".join(reason) or "refused", "output": result["output"]}
     dialog = await npc_state(seq, wait_seconds=10)
     return {**dialog, "output": result["output"]}
+
+
+TALK_BUSY_WAIT_S = 5.0
+
+
+def _refused(result: dict[str, Any]) -> bool:
+    """Whether a console command's output holds OpenKore's "Error in function ..." line."""
+    return any("Error in function" in str(line) for line in result.get("output") or [])
 
 
 @game_tool(ACTION)
