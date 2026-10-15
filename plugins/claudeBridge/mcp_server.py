@@ -253,12 +253,21 @@ async def npc_state(since_seq: int, wait_seconds: float = 6.0, closing: bool = F
     return {
         "active": npc.get("active"),
         "npc": talk.get("name") or next((e["data"].get("name") for e in new if isinstance(e.get("data"), dict) and e["data"].get("name")), None),
-        "text": talk.get("msg"),
+        # once the NPC has closed the conversation its text is gone from the dialog: what it said is in the events
+        "text": talk.get("msg") or _said(new) or None,
         "choices": [{"index": i, "text": c} for i, c in enumerate(choices)],
         "closed": closed,
         "hint": "Answer with npc_reply: 'choose' with a choice index, 'continue' for Next, "
                 "'number'/'text' when asked for input, 'close' to leave." if npc.get("active") else None,
     }
+
+
+def _said(events: list[dict[str, Any]]) -> str:
+    """What the NPC said in these events: each npc_talk event carries its page's text so far, so the last event of
+    each page is that page; the pages joined."""
+    msgs = [str(e["data"]["msg"]) for e in events
+            if e.get("type") == "npc_talk" and isinstance(e.get("data"), dict) and e["data"].get("msg")]
+    return "\n".join(m for i, m in enumerate(msgs) if i + 1 == len(msgs) or not msgs[i + 1].startswith(m))
 
 
 def game_tool(annotations: ToolAnnotations):
