@@ -102,6 +102,7 @@ sub start {
 			done_testing();
 		}
 	}
+	test_item_move_failed();
 }
 
 sub reduce_struct {
@@ -110,6 +111,43 @@ sub reduce_struct {
 	ref $got eq 'HASH' ? {map { exists $expected->{$_} ? ($_ => reduce_struct($got->{$_}, $expected->{$_})) : () } keys %$got}
 	: ref $got eq 'ARRAY' ? [List::MoreUtils::pairwise { reduce_struct($a, $b) } @$got, @$expected]
 	: $got
+}
+
+
+# ZC_MOVE_ITEM_FAILED (0AA7) is defined independently in ServerType0 and
+# kRO::Sakexe_0; verify both protocol families with captured failure packets.
+sub test_item_move_failed {
+	my $legacy = Network::Receive->create(undef, 'kRO_RagexeRE_0');
+	ok(!exists $legacy->{packet_list}{'0AA7'},
+		'legacy kRO RagexeRE_0 does not register 0AA7');
+
+	for my $serverType (0, 'kRO_RagexeRE_2021_11_03') {
+		subtest "0AA7 serverType $serverType" => sub {
+			my $receiver = Network::Receive->create(undef, $serverType);
+			ok($receiver, 'receive parser created');
+
+			is_deeply($receiver->{packet_list}{'0AA7'},
+				['item_move_failed', 'v2', [qw(index amount)]],
+				'item move failure maps to two 16-bit fields');
+
+			for my $case ([2, 12], [3, 14], [4, 2]) {
+				my ($index, $amount) = @$case;
+				subtest "index=$index amount=$amount" => sub {
+					my @warnings;
+					local *Network::Receive::warning = sub { push @warnings, $_[0]; };
+
+					my $args = $receiver->parse(pack('v3', 0x0AA7, $index, $amount), $receiver);
+					ok($args, 'packet recognized and handled');
+					is($args->{switch}, '0AA7', 'packet ID');
+					is($args->{index}, $index, 'decoded item index');
+					is($args->{amount}, $amount, 'decoded item quantity');
+					is_deeply(\@warnings,
+						["Item move failed (index: $index, amount: $amount).\n"],
+						'server rejection reported');
+				};
+			}
+		};
+	}
 }
 
 1;

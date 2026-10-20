@@ -239,6 +239,7 @@ sub route_crosses_prohibited_cells {
 sub default_settings {
 	return (
 		enable_move => 0,
+		in_lock_map_only => 0,
 		enable_remove => 0,
 		enable_avoid_portals => 0,
 		adjust_route_step => 0,
@@ -310,7 +311,7 @@ sub load_settings_from_config {
 		my $config_key = plugin_config_key($key);
 		next unless defined $config{$config_key} && $config{$config_key} ne '';
 
-		if ($key =~ /^enable_|^adjust_route_step$/) {
+		if ($key =~ /^enable_|^adjust_route_step$|^in_lock_map_only$/) {
 			$plugin_settings{$key} = normalize_bool($config{$config_key}, 'config.txt', $config_key);
 		} else {
 			$plugin_settings{$key} = normalize_number($config{$config_key}, 'config.txt', $config_key);
@@ -832,7 +833,14 @@ sub should_drop_target_from_obstacle {
 ## Returns: nothing directly; writes to `$args->{return}` when dropping.
 ## Notes: This keeps the core attack AI from tunneling into a target that has moved
 ## into an obstacle zone.
+# Restrict obstacle decisions to the configured hunting map, when requested.
+sub active_in_current_map {
+	return 1 unless $plugin_settings{in_lock_map_only};
+	return $field && $config{lockMap} && $field->baseName eq $config{lockMap};
+}
+
 sub on_shouldDropTarget {
+	return unless active_in_current_map();
 	my ($hook, $args) = @_;
 	return unless $args->{target};
 
@@ -847,6 +855,7 @@ sub on_shouldDropTarget {
 ## Notes: This is the earlier, cheaper target-selection gate that prevents bad
 ## targets from being scored in the first place.
 sub on_getBestTarget {
+	return unless active_in_current_map();
 	my ($hook, $args) = @_;
 	return unless $args->{possibleTargets} && ref $args->{possibleTargets} eq 'ARRAY';
 
@@ -1324,6 +1333,7 @@ sub filter_prohibited_cells_for_route_task {
 ## Notes: This is where the plugin injects local danger-aware route-step selection
 ## into the core movement loop.
 sub on_route_step {
+	return unless active_in_current_map();
 	my (undef, $args) = @_;
 	return unless $plugin_settings{adjust_route_step};
 	return unless scalar keys %obstaclesList;
@@ -1507,6 +1517,7 @@ sub get_actor_position {
 ## Notes: This keeps all per-tick maintenance in one place: route destination drops,
 ## stale hidden-obstacle cleanup, and repath dispatch.
 sub on_AI_pre_manual {
+	return unless active_in_current_map();
 	on_AI_pre_manual_drop_route_dest_near_Obstacle();
 	on_AI_pre_manual_removed_obstacle_still_in_list();
 	on_AI_pre_manual_repath();
@@ -1624,6 +1635,7 @@ sub get_task {
 ## Notes: This is the main integration point with pathfinding. It overlays blocked
 ## cells and the live weight grid only for routes on the current live field.
 sub on_getRoute {
+	return unless active_in_current_map();
 	my (undef, $args) = @_;
 	return unless scalar keys %obstaclesList;
 	return if !$field || $args->{field}->name ne $field->name;
@@ -1707,6 +1719,7 @@ sub build_weight_map_with_prohibited_cells {
 ## Notes: This is used by systems such as route destination filtering and
 ## `meetingPosition`, including the special rule that dangerous meeting cells are also banned.
 sub on_add_prohibited_cells {
+	return unless active_in_current_map();
 	my (undef, $args) = @_;
 	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
 
@@ -1806,6 +1819,7 @@ sub build_drop_destination_cells_for_field {
 ## Notes: This keeps destination filtering for other systems in sync with the same
 ## obstacle definitions used by routing.
 sub on_add_drop_destination_cells {
+	return unless active_in_current_map();
 	my (undef, $args) = @_;
 	return unless $args && $args->{cells} && ref $args->{cells} eq 'HASH';
 
