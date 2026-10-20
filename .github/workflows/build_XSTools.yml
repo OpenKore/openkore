@@ -39,7 +39,7 @@ jobs:
           strawberry_distr: 'https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-portable.zip'
 
         - os: windows-2025
-          python: 3
+          python: '3.11'
           architecture: x86
           perl: 5.32
           strawberry_distr: 'https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip'
@@ -50,7 +50,7 @@ jobs:
 
     # setup matrix:
     # - windows-2022 + python 2.7.18 x86 + strawberry perl 5.12 x86 + strawberry g++ x86
-    # - windows-2025 + python 3      x86 + strawberry perl 5.32 x86 + strawberry g++ x86
+    # - windows-2025 + python 3.11   x86 + strawberry perl 5.32 x86 + strawberry g++ x86
 
     ########################
     # preparing Windows OS #
