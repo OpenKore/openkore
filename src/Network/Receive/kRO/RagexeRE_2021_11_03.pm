@@ -19,8 +19,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	$self->{packet_list}{'0AA7'} = ['item_move_failed', 'v2', [qw(index amount)]]; # ZC_MOVE_ITEM_FAILED
-
 	return $self;
 }
 
