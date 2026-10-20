@@ -5314,6 +5314,16 @@ sub storage_items_nonstackable {
 	$storageTitle = $args->{title} ? $args->{title} : undef;
 }
 
+# 0AA7 ZC_MOVE_ITEM_FAILED: the server rejected an inventory/storage/cart
+# transfer. The packet contains only item index and amount (no reason code).
+# Inventory and storage must change only on their normal success packets.
+sub item_move_failed {
+	my ($self, $args) = @_;
+
+	warning TF("Item move failed (index: %d, amount: %d).\n",
+		$args->{index}, $args->{amount}), "storage";
+}
+
 sub storage_item_added {
 	my ($self, $args) = @_;
 

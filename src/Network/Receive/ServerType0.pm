@@ -701,6 +701,7 @@ sub new {
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
+		'0AA7' => ['item_move_failed', 'v2', [qw(index amount)]], # ZC_MOVE_ITEM_FAILED, 6 bytes
 		'0AA8' => ['misc_config', 'C3', [qw(show_eq_flag call_flag pet_autofeed_flag)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0AB8' => ['move_interrupt'],
