@@ -117,11 +117,7 @@ sub reduce_struct {
 # ZC_MOVE_ITEM_FAILED (0AA7) is defined independently in ServerType0 and
 # kRO::Sakexe_0; verify both protocol families with captured failure packets.
 sub test_item_move_failed {
-	my $legacy = Network::Receive->create(undef, 'kRO_RagexeRE_0');
-	ok(!exists $legacy->{packet_list}{'0AA7'},
-		'legacy kRO RagexeRE_0 does not register 0AA7');
-
-	for my $serverType (0, 'kRO_RagexeRE_2021_11_03') {
+	for my $serverType (0, 'kRO_Sakexe_0', 'kRO_RagexeRE_2021_11_03') {
 		subtest "0AA7 serverType $serverType" => sub {
 			my $receiver = Network::Receive->create(undef, $serverType);
 			ok($receiver, 'receive parser created');
