@@ -28,6 +28,12 @@ sub new {
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
+	my %handlers = qw(
+		inventory_expansion_result 0B18
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
 	return $self;
 }
 
