@@ -2,12 +2,14 @@ package AI::Slave;
 
 use strict;
 use Time::HiRes qw(time);
+use Carp::Assert;
 use base qw/Actor::Slave/;
 use Globals;
 use Log qw/message warning error debug/;
 use Utils;
 use Misc;
 use Translation;
+use Utils::Benchmark;
 
 use AI::SlaveAttack;
 
@@ -170,8 +172,11 @@ sub iterate {
 	$slave->{master_dist} = $slave->blockDistance_master;
 
 	##### MANUAL AI STARTS HERE #####
-	
+
+	Benchmark::begin("ai_slave_manual") if DEBUG;
+	Benchmark::begin("ai_slave_attack") if DEBUG;
 	AI::SlaveAttack::process($slave);
+	Benchmark::end("ai_slave_attack") if DEBUG;
 	$slave->processSkillUse;
 	$slave->processTask('route', onError => sub {
 		my ($task, $error) = @_;
@@ -181,16 +186,19 @@ sub iterate {
 		}
 	});
 	$slave->processTask('move');
+	Benchmark::end("ai_slave_manual") if DEBUG;
 
 	return unless ($slave->{slave_AI} == AI::AUTO());
 
 	##### AUTOMATIC AI STARTS HERE #####
-	
+
+	Benchmark::begin("ai_slave_auto") if DEBUG;
 	$slave->processWasFound;
 	$slave->processTeleportToMaster;
 	$slave->processAutoAttack;
 	$slave->processFollow;
 	$slave->processIdleWalk;
+	Benchmark::end("ai_slave_auto") if DEBUG;
 }
 
 sub get_follow_standby_limit {

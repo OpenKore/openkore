@@ -74,12 +74,14 @@ sub process {
 		# Stop immediately if the target disappeared or can no longer be resolved.
 		if (targetGone($ataqArgs, $ID)) {
 			finishAttacking($ataqArgs, $ID);
+			Benchmark::end("ai_attack") if DEBUG;
 			return;
 		}
 
 		my $target = Actor::get($ID);
 		unless ($target && $target->{type} ne 'Unknown') {
 			finishAttacking($ataqArgs, $ID);
+			Benchmark::end("ai_attack") if DEBUG;
 			return;
 		}
 
@@ -101,9 +103,12 @@ sub process {
 		$plugin_args{actor} = $char;
 		$plugin_args{configPrefix} = '';
 		$plugin_args{return} = 0;
+		Benchmark::begin("ai_attack_hook") if DEBUG;
 		Plugins::callHook('shouldDropTarget' => \%plugin_args);
+		Benchmark::end("ai_attack_hook") if DEBUG;
 		if ($plugin_args{return}) {
 			giveUp($ataqArgs, $ID, 2);
+			Benchmark::end("ai_attack") if DEBUG;
 			return;
 		}
 
@@ -111,12 +116,14 @@ sub process {
 		if (shouldGiveUp($ataqArgs, $ID)) {
 			message T("Can't reach or damage target\n"), "ai_attack";
 			giveUp($ataqArgs, $ID, 0);
+			Benchmark::end("ai_attack") if DEBUG;
 			return;
 		}
 
 		# Optionally swap to a more urgent aggressive target when our current one
 		# is passive, or when another aggressive target has a higher priority.txt
 		# priority than the monster we are currently hitting.
+		Benchmark::begin("ai_attack_targetSearch") if DEBUG;
 		if ($config{attackChangeTarget}) {
 			my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
 			my @aggressives = $effectiveAttackMode >= 0 ? ai_getAggressives($aggressiveType, $assistParty) : ();
@@ -141,12 +148,15 @@ sub process {
 						}
 						$target->{droppedForAggressive} = 1;
 						$char->attack($attackTarget);
+						Benchmark::end("ai_attack_targetSearch") if DEBUG;
+						Benchmark::end("ai_attack") if DEBUG;
 						AI::Attack::process();
 						return;
 					}
 				}
 			}
 		}
+		Benchmark::end("ai_attack_targetSearch") if DEBUG;
 
 		# Refuse targets that would count as kill-stealing according to the
 		# configured monster ownership rules.
@@ -160,6 +170,7 @@ sub process {
 				message T("Teleport due to dropping attack target\n"), "teleport";
 				ai_useTeleport(1);
 			}
+			Benchmark::end("ai_attack") if DEBUG;
 			return;
 		}
 		
@@ -170,6 +181,7 @@ sub process {
 			$char->sendAttackStop;
 				$target->{ignore} = 1;
 			AI::dequeue() while (AI::inQueue("attack"));
+			Benchmark::end("ai_attack") if DEBUG;
 			return;
 		}
 		
@@ -185,6 +197,7 @@ sub process {
 					message T("Teleport due to dropping hidden target\n");
 					ai_useTeleport(1);
 				}
+				Benchmark::end("ai_attack") if DEBUG;
 				return;
 			}
 
@@ -192,6 +205,7 @@ sub process {
 			# started approaching it.
 			if ($args->{attackID} && approach_target_route_needs_reset($ataqArgs, $target)) {
 				reset_approach_for_moved_target($ataqArgs, $target);
+				Benchmark::end("ai_attack") if DEBUG;
 				return;
 			}
 		}
@@ -226,7 +240,9 @@ sub process {
 					ai_setSuspend(0);
 					stand();
 				} else {
+					Benchmark::begin("ai_attack_main") if DEBUG;
 					main();
+					Benchmark::end("ai_attack_main") if DEBUG;
 				}
 				$timeout{ai_attack_main}{time} = time;
 			}
@@ -771,6 +787,8 @@ sub main {
 
 	Benchmark::end("ai_attack (part 1.2)") if DEBUG;
 	Benchmark::end("ai_attack (part 1)") if DEBUG;
+	Benchmark::begin("ai_attack (part 2)") if DEBUG;
+	Benchmark::begin("ai_attack (part 2.1)") if DEBUG;
 
 	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
 		debug "Deleting ai_attack_failed_give_up time.\n";
@@ -823,6 +841,8 @@ sub main {
 	if ($args->{sentApproach}) {
 		if (approach_target_route_needs_reset($args, $target)) {
 			reset_approach_for_moved_target($args, $target);
+			Benchmark::end("ai_attack (part 2.1)") if DEBUG;
+			Benchmark::end("ai_attack (part 2)") if DEBUG;
 			return;
 		}
 
@@ -833,6 +853,8 @@ sub main {
 
 		} elsif ($config{"attackWaitApproachFinish"}) {
 			debug TF("[attackWaitApproachFinish - Waiting] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			Benchmark::end("ai_attack (part 2.1)") if DEBUG;
+			Benchmark::end("ai_attack (part 2)") if DEBUG;
 			return;
 
 		} elsif ($canAttack == 2) {
@@ -841,6 +863,8 @@ sub main {
 			clear_approach_failure($args);
 		}
 	}
+	Benchmark::end("ai_attack (part 2.1)") if DEBUG;
+	Benchmark::begin("ai_attack (part 2.2)") if DEBUG;
 
 	my $found_action = 0;
 	my $failed_runFromTarget = 0;
@@ -1009,6 +1033,8 @@ sub main {
 		}
 		$found_action = 1;
 	}
+	Benchmark::end("ai_attack (part 2.2)") if DEBUG;
+	Benchmark::begin("ai_attack (part 2.3)") if DEBUG;
 
 	if (
 		!$found_action &&
@@ -1122,8 +1148,12 @@ sub main {
 		$args->{dmgTo_last} = $target->{dmgTo};
 		$found_action = 1;
 	}
+	Benchmark::end("ai_attack (part 2.3)") if DEBUG;
+	Benchmark::end("ai_attack (part 2)") if DEBUG;
 
-	Plugins::callHook('AI::Attack::main', {target => $target})
+	Benchmark::begin("ai_attack_hook_main") if DEBUG;
+	Plugins::callHook('AI::Attack::main', {target => $target});
+	Benchmark::end("ai_attack_hook_main") if DEBUG;
 }
 
 1;

@@ -2,6 +2,7 @@ package AI::SlaveManager;
 
 use strict;
 use Time::HiRes qw(time);
+use Carp::Assert;
 
 use Globals;
 use Log qw/message warning error debug/;
@@ -9,6 +10,7 @@ use AI;
 use Utils;
 use Misc;
 use Translation;
+use Utils::Benchmark;
 
 use AI::Slave;
 
@@ -79,7 +81,9 @@ sub iterate {
 
 	foreach my $slave (values %{$char->{slaves}}) {
 		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
+			Benchmark::begin($slave->isa('AI::Slave::Homunculus') ? "ai_slave_homunculus" : "ai_slave_mercenary") if DEBUG;
 			$slave->iterate;
+			Benchmark::end($slave->isa('AI::Slave::Homunculus') ? "ai_slave_homunculus" : "ai_slave_mercenary") if DEBUG;
 		}
 	}
 }
