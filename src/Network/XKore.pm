@@ -420,12 +420,13 @@ sub recv {
 	$self->{incomingPackets} .= $msg;
 
 	while ($self->{incomingPackets} ne "") {
-		last if (!length($self->{incomingPackets}));
+		# TCP can split both the three-byte header and its payload.
+		last if (length($self->{incomingPackets}) < 3);
 
 		my $type = substr($self->{incomingPackets}, 0, 1);
 		my $len = unpack("v",substr($self->{incomingPackets}, 1, 2));
 
-		last if ($len > length($self->{incomingPackets}));
+		last if (length($self->{incomingPackets}) < $len + 3);
 
 		$msg = substr($self->{incomingPackets}, 3, $len);
 		$self->{incomingPackets} = (length($self->{incomingPackets}) - $len - 3)?
