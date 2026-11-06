@@ -588,6 +588,16 @@ sub hackClient {
 #}
 sub onClientData {
 	my ($self, $msg) = @_;
+	# A relay over TCP frames the client's bytes at read boundaries, so one packet
+	# can span two S frames. Opt-in: holding bytes across frames trusts the packet
+	# lengths in recvpackets, which per-frame handling does not depend on.
+	if ($config{XKore_clientStream} && !$currentClientKey && !$messageSender->{encryption}->{crypt_key_3}) {
+		$self->{tokenizer}->add($msg);
+		$messageSender->sendToServer($_) for $messageSender->process(
+			$self->{tokenizer}, $clientPacketHandler
+		);
+		return;
+	}
 	my $additional_data;
 	my $type;
 
