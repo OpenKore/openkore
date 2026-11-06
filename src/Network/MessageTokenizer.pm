@@ -133,7 +133,9 @@ sub readNext {
 
 		$result = substr($$buffer, 0, 4);
 
-        if ($masterServer->{accountIdFromBuffer}) {
+        # 0283 wraps the ID in a packet: its first 4 bytes are not the ID, and taking
+        # them would leave its last 2 in the stream as an unknown message.
+        if ($masterServer->{accountIdFromBuffer} && $switch ne '0283') {
             $Globals::accountID = $result if $masterServer->{accountIdFromBuffer};
         }
 
