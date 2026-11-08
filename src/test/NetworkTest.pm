@@ -140,8 +140,10 @@ sub test_item_move_failed {
 					is_deeply(\@warnings,
 						["Item move failed (index: $index, amount: $amount).\n"],
 						'server rejection reported');
+					done_testing();
 				};
 			}
+			done_testing();
 		};
 	}
 }
