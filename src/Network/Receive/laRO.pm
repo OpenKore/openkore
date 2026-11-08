@@ -7,7 +7,10 @@ sub new {
     my ($class) = @_;
     my $self = $class->SUPER::new(@_);
 
-    my %packets = ();
+    my %packets = (
+        # The item ID is 4 bytes in this client.
+        '07FD' => ['special_item_obtain', 'v C V c/Z a*', [qw(len type nameID holder etc)]],
+    );
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
     $self->{vender_items_list_item_pack} = 'V v2 C V C2 a16 a25 V v C2';
