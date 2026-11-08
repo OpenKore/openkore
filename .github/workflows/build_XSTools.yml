@@ -39,14 +39,14 @@ jobs:
           strawberry_distr: 'https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-portable.zip'
 
         - os: windows-2025
-          python: '3.11'
+          python: 3.11
           architecture: x86
           perl: 5.32
           strawberry_distr: 'https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip'
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     # setup matrix:
     # - windows-2022 + python 2.7.18 x86 + strawberry perl 5.12 x86 + strawberry g++ x86
@@ -59,7 +59,7 @@ jobs:
     - name: (Windows 2022) Check the Python2 cache
       if: matrix.os == 'windows-2022'
       id: cache-python2
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: c:\python27
         key: ${{ runner.os }}-python-${{ matrix.python }}
@@ -87,7 +87,7 @@ jobs:
 
     - name: (Windows 2025) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
       if: matrix.os == 'windows-2025'
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python }}
         architecture: ${{ matrix.architecture }}
@@ -116,7 +116,7 @@ jobs:
 
     - name: Check the Strawberry cache
       id: cache-strawberry
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: c:\Strawberry
         key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
@@ -178,7 +178,7 @@ jobs:
     ####################
 
     - name: Making artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
@@ -210,7 +210,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     ########################
     # preparing Windows OS #
@@ -237,7 +237,7 @@ jobs:
     - name: Check the Strawberry cache
       id: cache-strawberry
       if: runner.os == 'Windows'
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: c:\Strawberry
         key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
@@ -258,7 +258,7 @@ jobs:
         perl --version
 
     - name: Restoring XTools from artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
@@ -307,13 +307,13 @@ jobs:
           perl: 5.12
 
         - os: ubuntu-latest
-          python: 3
+          python: 3.11
           architecture: x64
           perl: latest
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     # setup matrix:
     # - ubuntu-22.04          + python 2.7.18 x64 + perl 5.12        x64
@@ -339,7 +339,7 @@ jobs:
 
     - name: (${{ matrix.os }}) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
       if: matrix.os == 'ubuntu-latest'
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python }}
         architecture: ${{ matrix.architecture }}
@@ -394,7 +394,7 @@ jobs:
     ####################
 
     - name: Making artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
@@ -425,7 +425,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     ######################
     # preparing Linux OS #
@@ -446,7 +446,7 @@ jobs:
         perl --version
 
     - name: Restoring XTools from artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
@@ -487,7 +487,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: run "makedist.sh --help"
       shell: bash
