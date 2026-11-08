@@ -13,6 +13,9 @@ sub new {
         '0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
         '0BAF' => ['use_packageitem', 'v V V V', [qw(index accountID itemID boxIndex)]],
         '0228' => ['client_integrity_response', 'v a*', [qw(len data)]],
+        # The client's party creation and expanded emote: known so they are not logged as unknown.
+        '01E8' => ['party_organize', 'Z24 C2', [qw(name item_pickup item_division)]],
+        '0BE9' => ['emotion_expansion_request', 'a4', [qw(data)]],
     );
 
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
