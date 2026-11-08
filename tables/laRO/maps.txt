@@ -1378,3 +1378,22 @@ fv_nopk.rsw#Forest Valley#
 fv_pk.rsw#Forest Valley#
 
 xmas@chess.rsw#Christmas Dungeon#
+
+// Lab amicitia1
+la_pk#Lab amicitia#
+la_nopk#Lab amicitia#
+
+atr#Abadon Temple#
+
+//Parallel Field
+pw_fild01#Parallel Field#
+pw_fild02#Parallel Field#
+pw_fild03#Parallel Field#
+pw_fild04#Parallel Field#
+
+rolwar2025.rsw#ROL Championship 2025#
+
+cop_gef.rsw#Eclipse of Landverse : Geffen#
+
+// Landverse Group
+mor_lan01.rsw#Landverse Group Association#

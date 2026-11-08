@@ -455,7 +455,7 @@ You are prohibited to log in until %s.#
 's Earth #
 127.0.0.1#
 6900#
-https://landverse.maxion.gg#
+https://rolg.maxion.gg/#
 Kill %s#
 Very Strong #
 Very Very Strong #
@@ -609,51 +609,51 @@ N/A#
 Character in the same account already joined.#
 (%d ppl) - over the age 18#
  Provoke initiated.#
- Provoke canceled.#
+ Provoke cancelled.#
  Endure initiated.#
- Endure canceled.#
+ Endure cancelled.#
  Improve Concentration initiated.#
- Improve Concentration canceled.#
+ Improve Concentration cancelled.#
  Hiding initiated.#
- Hiding canceled.#
+ Hiding cancelled.#
  Cloaking initiated.#
- Cloaking canceled.#
+ Cloaking cancelled.#
  Poison React initiated.#
- Poison React canceled.#
+ Poison React cancelled.#
  Movement Speed reduced.#
- Quagmire canceled.#
+ Quagmire cancelled.#
  Defense increased.#
- Angelus canceled.#
- STR, INT and DEX increased.#
- Blessing canceled.#
- Signum Crusis initiated.#
- Signum Crusis canceled.#
+ Angelus cancelled.#
+ STR#
+ Blessing cancelled.#
+ Signum Crucis initiated.#
+ Signum Crucis cancelled.#
  Slow Poison initiated.#
- Slow Poison canceled.#
- SP Regeneration is increased.#
- Magnificat canceled.#
+ Slow Poison cancelled.#
+ SP regeneration is increased.#
+ Magnificat cancelled.#
  LUK increased.#
- Gloria canceled.#
+ Gloria cancelled.#
  You will receive double damage from 1 attack.#
- Lex Aeterna canceled.#
- Attack speed increased.#
- Attack speed reduced.#
+ Lex Aeterna cancelled.#
+ Attack Speed increased.#
+ Attack Speed reduced.#
  You have mounted a Pecopeco.#
  You have dismounted your Pecopeco.#
  You have rented a Falcon.#
  You have released your Falcon.#
  Play Dead initiated.#
- Play Dead canceled.#
+ Play Dead cancelled.#
  STR increased.#
- Crazy Uproar canceled.#
+ Crazy Uproar cancelled.#
  Energy Coat initiated.#
- Energy Coat canceled.#
+ Energy Coat cancelled.#
  Armor damaged.#
  Armor repaired.#
  Weapon damaged.#
  Weapon repaired.#
  Invisibility initiated.#
- Invisibility canceled.#
+ Invisibility cancelled.#
 Sorry. It is delayed due to the process of payment. Please re-connect in a minute.#
 You must unequip ammunition first.#
 Arrow List#
@@ -669,7 +669,7 @@ Your use of skills and chat have been reinstated.#
  Hungry#
  Neutral#
  Satisfied#
- Stuffed#
+ Very Satisfied#
  Awkward#
  Shy#
  Cordial#
@@ -1481,7 +1481,7 @@ Can't read a Magic Book anymore.#
 Waiting time has passed. Please log in again#
 Watch out! Same account is already logged in. Stop mobile verification and log in again after changing your password#
 Watch out! Same account is waiting for mobile verification. Stop mobile verification and log in again after changing your password#
-Game option                                                                                                 #
+Game option#
 Graphic Settings#
 Sound Settings#
 Press a key to assign. Pressing 'ESC' will remove the assigned key.#
@@ -1622,8 +1622,8 @@ Experience message#
 Party member's experience message#
 Quest information#
 Battlefield message#
-#
-Casts [%s] skill.#
+To [%s] #
+use [%s] skill.#
 Activate lock function#
 Deactivate lock function#
 %s has opened [%s] and recieved [%s].#
@@ -1786,7 +1786,7 @@ Too much results have been found. Please do a more precisely search.#
 Do you want to open a street stall?#
 Failed to recognize SSO.#
 Cannot move to the applied area.#
-searching  item including the word#
+searching item including the word#
 User has been expelled.#
 You have not accepted the user agreements yet.#
 You will not be disconnect from the game.#
@@ -1859,7 +1859,7 @@ Free Cash : %s C#
 Cash Points : %s C#
 You cannot summon a monster in this area.#
 Exceeded total free cash#
-Content has been saved in [SaveData_ExMacro%d]#
+The item is on cooldown, please wait %d seconds.#
 %d seconds left until you can use#
 Must be equipped with [Spear].#
 Available only on the dragon.#
@@ -1934,7 +1934,7 @@ This skill requires 1%% experience.#
 E X P : #
 Drop  : #
 Death Penalty: #
-%d%% (Internet cafe %d%% + TPLUS %d%% + Premium %d%% + %s Server %d%%)#
+%d%% (Internet cafe %d%% + Bonus %d%% + Premium %d%% + %s Server %d%%)#
 Amount of party members to cast the skill Chorus SP is low.#
 Relative character that has possession of the items cannot trade because amount is exceeded..#
 Relative character that has possession of the item amount which exceeds makes it impossible to trade.#
@@ -2328,7 +2328,7 @@ Confirm Deal#
 Below is the total cost:#
  Zeny#
 Press buy to confirm.#
-%.1f%% (Internet cafe %.1f%% + TPLUS %.1f%% + Premium %.1f%% + %s Server %.1f%%)#
+%.1f%% (Internet cafe %.1f%% + Bonus %.1f%% + Premium %.1f%% + %s Server %.1f%%)#
 Card Book#
 %d%% [ ( Basic 100%% + %s Server %d%% ) * Active %.1f ]#
 %d%% [ Basic 100%% + %s Server %d%% ]#
@@ -2986,7 +2986,7 @@ Opening shop is not allowed when there is other character#
 Failed to feed pet, please close RODEX window#
 Swap Equipment#
 Equip#
-Adamantine Blessing is required!#	
+Adamantine Blessing is required!#
 Equipment's refine level will be decreased when refine fails#
 Equipment will dissapear or refine level will decrease when refine fails#
 You cannot use RODEX while refining. RODEX has been closed.#
@@ -3030,7 +3030,7 @@ Profanity detected.\nPlease check again.#
 Please enter at least %d characters. If you don't have account, please click [Register] button to create account.#
 Please enter at least %d characters.#
 A work is in progress, please try again.#
-%.1f%% (PCcafe %.1f%% + TPLUS %.1f%% + %s Server %.1f%%)#
+%.1f%% (PCcafe %.1f%% + Bonus %.1f%% + %s Server %.1f%%)#
 Unable to register item#
 /100#
 /2000#
@@ -3299,7 +3299,7 @@ Other#
 Special#
 Charging#
 Purchase#
-https://landverse.maxion.gg/TopUp#
+https://rolg.maxion.gg//TopUp#
 Item Search#
 Free points#
 Use Free points#
@@ -3311,7 +3311,7 @@ Star Emperor(Boy)#
 Soul Reaper(Boy)#
 Your weight limit is over %d, HP and SP will not recover naturally.#
 The number of items that can be purchased in 8.#
-https://landverse.maxion.gg/#
+https://rolg.maxion.gg//#
 UNKNOWN ERROR:%d#
 NOT USER#
 THIS ACCOUNT ID IS BLOCKED#
@@ -3373,7 +3373,7 @@ Register#
 Contains words that cannot be used.#
 Join#
 PM#
-Party recruitment suspended#
+Stop Recruiting#
 Edit#
 Entire#
 [% s] has requested to join the party.#
@@ -3443,7 +3443,7 @@ Name with bad words can not be searched.#
 The party master cannot accept the request.#
 No party can be found.#
 Dealer#
-https://landverse.maxion.gg#
+https://rolg.maxion.gg/#
 UP#
 DOWN#
 You're already friends#
@@ -3464,12 +3464,12 @@ To keep your account secure, please login to MOTP homepage.\nPlease try to log i
 Physical attack and magical attack have been improved.#
 Physical attack and magical attack have been reduced.#
 ROVerse %s attendance reward#
-Event period: month %02d day %02d -  month %2d day %2d 24:00#
+Event period: month %02d day %02d -  month %2d day %2d 23:59#
 day %d#
 Click the item to claim day %d reward#
 You have claimed day %d reward#
 D-day#
-#
+Day#
 Attendance check failed. Please try again.#
 Attendance check#
 Currently there is no attendance check event.#
@@ -3595,12 +3595,12 @@ Would you like to retrieve the attachment of the selected email?#
 Would you like to retrieve all attached items in the [%s] mailbox?#
 Skill Bar 2#
 Change Skill Bar#
-��c#
-��e#
-����#
-��e#
-��C#
-��c#
+<#
+^#
+>#
+v#
+*#
+<<#
 This window cannot be closed while loading.#
 There is no Magic Spellbook available.#
 Items used during movement cannot be exchanged.#
@@ -3630,7 +3630,7 @@ AP#
 Go to destination#
 Commercial/Defense Check#
 Would you like to move to "%s" Management Territory?\n%d Zeny will be consumed with every move.\n(%d Zeny will be consumed during WoE times.)#
-\nManagement Territory: "%s"\n	\nDefense: %d / %d\nCommercial: %d / %d#
+\nManagement Territory: %s"\n,\nDefense: %d / %d\nCommercial: %d / %d"#
 This feature is not available in WoE territory.#
 This character has not acquired Basic Skills skill.#
 The connected IP cannot be used for Ragnarok:Zero.\nPlease contact the customer center or homepage.#
@@ -3645,7 +3645,7 @@ You don't have enough AP.#
 It cannot be combined due to it's high refine level.#
 The refine level is higher than required for the combination.#
 A card is inserted or it's enchanted.#
-��A#
+Inf#
 Z#
 Total : %s Zeny#
 Limited Account Sales Registration Window#
@@ -4001,7 +4001,7 @@ The time has expired and the tracking ends.#
 Target not found...#
 ^0054FF[Ability Correction] % d.%d %%^000000#
 You can no longer call NPCs.#
-In case of %d errors, it is permanently blocked according to the operation policy.#
+In case of %d wrong answer, you will be banned.#
 It cannot be summoned with your current job. You need to change to a higher job first.#
 Strip skills are not available for Madogear characters.#
 Map#
@@ -4021,3 +4021,78 @@ Remaining Time %02d: %02d: %02d#
 Detection mode has been activated. Enter the number displayed on the left of the screen with the keypad.#
 A penalty will be awarded when the remaining time expires or %d incorrect answers.#
 Enter security code#
+With %s #
+>> ItemName : %s /  Qty : %d / Sales Period : %d/%d %d:%d ~ %d/%d/%d %d:%d#
+~ %d/%d/%d %d:%d#
+Attacks skills are not available for party member in the party window.#
+Please try again after completing progress or invitation status.#
+Display max experience tax message#
+Equipment Properties#
+Display changes in equipment properties when equipment is equipped/unequipped#
+Show Alliance Chat Message#
+Send to Alliance#
+^FF2931The used Nyangvine Fruits are not refundable.#
+Refining is possible#
+Refining is impossible#
+Enchanting is possible#
+Enchanting is impossible#
+Grade enchant is possible#
+Grade enchant is impossible#
+Would you like to unequip it?#
+Invalid information for the selected item.#
+Rune Tablet: %s set#
+%s's Rune Piece#
+Upgrade probability#
+On failure, the success probability increases by %.2f%%#
+It is at the maximum upgrade rating.#
+Not possible in an inactive state.#
+Rune information does not exist.#
+%d set effect#
+Rune Tablet System#
+There is no equipped rune.#
+Please unequip the equipped rune.#
+Adventure Guide#
+RODex is not available during rune system usage.#
+Banking is not available during rune system usage.#
+RODex is not available while using rune system. RODex has been closed.#
+Banking is not available while using rune system. Bank UI has been closed.#
+There is a request to join the guild. You can check the request after you exit all the movement-related windows.#
+There is an alliance registration request. You can check the request after you exit all the movement-related windows.#
+There is a a friend registration request. You can check the request after you finish all the movement-related windows.#
+There is a request to join the party. You can check the request after you exit all the movement-related windows.#
+There is a trade request, I can check the request after I close all the movement related windows.#
+Warning#
+Your weight exceeds 70% of the limit, or your inventory is running out of 8 spaces or more.#
+Quest Board#
+Quest Information#
+Report User#
+You have already exceeded the number of daily reports.#
+Reporting %s succeeded.#
+The target is being reported by another player.#
+The target is under report protection.#
+Targets are no longer allowed to report more than the cumulative number of daily reports.#
+You have been reported by another player.#
+%d disassembled#
+Emotion purchase information has been initialized.#
+Rune set has already been installed.#
+Rune system configuration does not exist.#
+Not enough required items.#
+There is already an installed rune set. Please try again after unequipping the rune set.#
+No rune set is being installed.#
+Invalid rune tablet data. Please try again in a moment.#
+You cannot strengthen it anymore. It is already at the maximum strength.#
+Invalid rune tablet data. Please try again in a moment.#
+Invalid rune tablet data. Please try again in a moment.#
+Loading rune tablet data, please try again in a moment.#
+Invalid rune tablet data. Please try again in a moment.#
+The UI is not active.#
+Unknown error, please try again.#
+There is no item you are trying to disassemble.#
+There is not enough inventory space. Please empty the inventory space and try again.#
+Character weight is too heavy. Please lower the weight and try again.#
+The number of items already reached maximum amount (30000).#
+The UI is not active.#
+No disassembling information.#
+The number of items you want to disassemble is insufficient.#
+Reporting is not available in this area.#
+Graphics API#
