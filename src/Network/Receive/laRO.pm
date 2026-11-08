@@ -8,7 +8,6 @@ sub new {
     my $self = $class->SUPER::new(@_);
 
     my %packets = (
-        # Item IDs are 4 bytes in this client.
         '07FD' => ['special_item_obtain', 'v C V c/Z a*', [qw(len type nameID holder etc)]],
         '0B67' => ['party_show_picker', 'a4 V C2 a16 v C3', [qw(sourceID nameID identified broken cards location type upgrade grade)]],
         '0B4D' => ['cash_shop_limited_items', 'v2 a*', [qw(len unknown items)]],
@@ -37,7 +36,6 @@ sub new {
     return $self;
 }
 
-# Debug only: the bot does not buy from the cash shop.
 sub cash_shop_limited_items {
     my ($self, $args) = @_;
     for (my $i = 0; $i + 24 <= length $args->{items}; $i += 24) {
