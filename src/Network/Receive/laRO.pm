@@ -8,8 +8,9 @@ sub new {
     my $self = $class->SUPER::new(@_);
 
     my %packets = (
-        # The item ID is 4 bytes in this client.
+        # Item IDs are 4 bytes in this client.
         '07FD' => ['special_item_obtain', 'v C V c/Z a*', [qw(len type nameID holder etc)]],
+        '0B67' => ['party_show_picker', 'a4 V C2 a16 v C3', [qw(sourceID nameID identified broken cards location type upgrade grade)]],
     );
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
