@@ -63,8 +63,6 @@ public:
 		Item *item;
 		StrIntMap::iterator result = domainToId.find(domain);
 		if (result == domainToId.end()) {
-			// Not strdup/free: on Windows XSUB.h maps free to the interpreter's
-			// allocator, which is gone when this static object is destroyed at exit.
 			char *domainCopy = new char[strlen(domain) + 1];
 			strcpy(domainCopy, domain);
 			domains.push_front(domainCopy);
