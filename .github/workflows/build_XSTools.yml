@@ -307,7 +307,7 @@ jobs:
           perl: 5.12
 
         - os: ubuntu-latest
-          python: 3.11
+          python: '3.11'
           architecture: x64
           perl: latest
 
@@ -317,7 +317,7 @@ jobs:
 
     # setup matrix:
     # - ubuntu-22.04          + python 2.7.18 x64 + perl 5.12        x64
-    # - ubuntu-latest (24.04) + python 3      x64 + perl last (5.40) x64
+    # - ubuntu-latest (24.04) + python 3.11   x64 + perl last (5.40) x64
 
     ######################
     # preparing Linux OS #
