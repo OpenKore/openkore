@@ -8,6 +8,8 @@ sub new {
     my $self = $class->SUPER::new( @_ );
 
     my %packets = (
+        # The client's encoded move: known so it is not logged as unknown; never built.
+        '0BFF' => ['character_move_encoded', 'a4', [qw(data)]],
         '0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
         '0BAF' => ['use_packageitem', 'v V V V', [qw(index accountID itemID boxIndex)]],
         '0228' => ['client_integrity_response', 'v a*', [qw(len data)]],
