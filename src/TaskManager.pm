@@ -25,6 +25,7 @@ use Modules 'register';
 use Task;
 use Utils::Set;
 use Utils::CallbackList;
+use Utils::Benchmark;
 
 ##
 # TaskManager->new()
@@ -273,9 +274,12 @@ sub iterate {
 	my ($self) = @_;
 
 	$self->checkValidity() if DEBUG;
+	Benchmark::begin("taskManager_reschedule") if DEBUG;
 	$self->reschedule() if ($self->{shouldReschedule});
+	Benchmark::end("taskManager_reschedule") if DEBUG;
 	$self->checkValidity() if DEBUG;
 
+	Benchmark::begin("taskManager_tasks") if DEBUG;
 	my $activeTasks = $self->{activeTasks};
 	my $activeMutexes = $self->{activeMutexes};
 	for (my $i = 0; $i < @{$activeTasks}; $i++) {
@@ -302,6 +306,7 @@ sub iterate {
 			$self->{shouldReschedule} = 1;
 		}
 	}
+	Benchmark::end("taskManager_tasks") if DEBUG;
 	$self->checkValidity() if DEBUG;
 }
 

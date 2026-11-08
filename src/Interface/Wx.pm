@@ -37,6 +37,7 @@ use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
 		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN EVT_KEY_DOWN
 		EVT_BUTTON);
 use Time::HiRes qw(time sleep);
+use Carp::Assert;
 use File::Spec;
 use FindBin qw($RealBin);
 
@@ -64,6 +65,7 @@ use Commands;
 use Utils;
 use Translation qw/T TF/;
 use FileParsers;
+use Utils::Benchmark;
 
 our $CVS;
 our ($iterationTime, $updateUITime, $updateUITime2);
@@ -202,12 +204,14 @@ sub realMainLoop {
 sub iterate {
 	my $self = shift;
 
+	Benchmark::begin("mainLoop_interfaceIterate") if DEBUG;
 	if ($self->{iterating} == 0) {
 		$self->{console}->Refresh;
 		$self->{console}->Update;
 	}
 	$self->Yield();
 	$iterationTime = time;
+	Benchmark::end("mainLoop_interfaceIterate") if DEBUG;
 }
 
 sub getInput {

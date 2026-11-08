@@ -38,6 +38,7 @@ use Misc;
 use Plugins;
 use Utils;
 use Utils::Exceptions;
+use Utils::Benchmark;
 use Utils::Crypton;
 use Translation;
 
@@ -407,13 +408,20 @@ sub process {
 			my $switch = Network::MessageTokenizer::getMessageID($message);
 
 			# FIXME?
+			Benchmark::begin("packet_hook_pre") if DEBUG;
 			$self->parse_pre($handleContainer->{hook_prefix}, $switch, $message, \$message);
+			Benchmark::end("packet_hook_pre") if DEBUG;
 
 			my $willMangle = $handleContainer->can('willMangle') && $handleContainer->willMangle($switch);
 
-			if ($args = $self->parse($message, $handleContainer, @handleArguments)) {
+			Benchmark::begin("packet_parse") if DEBUG;
+			my $parsed = $self->parse($message, $handleContainer, @handleArguments);
+			Benchmark::end("packet_parse") if DEBUG;
+			if ($args = $parsed) {
 				if ($willMangle) {
+					Benchmark::begin("packet_mangle") if DEBUG;
 					$args->{mangle} = $handleContainer->mangle($args);
+					Benchmark::end("packet_mangle") if DEBUG;
 				}
 			} else {
 				$args = {
@@ -446,7 +454,9 @@ sub process {
 			#$result .= $args->{RAW_MSG};
 		} elsif ($args->{mangle} == 1) {
 			# Packet was mangled
+			Benchmark::begin("packet_reconstruct") if DEBUG;
 			push @result, $self->reconstruct($args);
+			Benchmark::end("packet_reconstruct") if DEBUG;
 			#$result .= $self->reconstruct($args);
 		} else {
 			# Packet was suppressed
