@@ -10,6 +10,7 @@ sub new {
     my %packets = (
         '0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
         '0BAF' => ['use_packageitem', 'v V V V', [qw(index accountID itemID boxIndex)]],
+        '0228' => ['client_integrity_response', 'v a*', [qw(len data)]],
     );
 
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
