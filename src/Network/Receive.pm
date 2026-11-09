@@ -1999,10 +1999,12 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Portal();
 			$actor->{appear_time} = time;
-			my $exists = portalExists($field->baseName, \%coordsTo);
-			$actor->{source}{map} = $field->baseName;
-			if ($exists ne "") {
-				$actor->setName("$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists));
+			if ($field) {
+				my $exists = portalExists($field->baseName, \%coordsTo);
+				$actor->{source}{map} = $field->baseName;
+				if ($exists ne "") {
+					$actor->setName("$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists));
+				}
 			}
 			$mustAdd = 1;
 
@@ -2235,7 +2237,7 @@ typedef enum <unnamed-tag> {
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::NPC")) {
 			my $ID = $args->{ID};
-			my $location = $field->baseName . " $actor->{pos}{x} $actor->{pos}{y}";
+			my $location = $field ? $field->baseName . " $actor->{pos}{x} $actor->{pos}{y}" : '';
 			if ($npcs_lut{$location}) {
 				$actor->setName($npcs_lut{$location});
 			}
@@ -2268,7 +2270,7 @@ typedef enum <unnamed-tag> {
 			my $domain = existsInList($config{friendlyAID}, unpack("V", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
-			playerLog("player " .$actor->{name} ." is near (" .$field->{baseName} .", lvl=" .$actor->{lv} .", job=" .$jobs_lut{$actor->{jobID}} .")") if (!$field->isCity);
+			playerLog("player " .$actor->{name} ." is near (" .$field->{baseName} .", lvl=" .$actor->{lv} .", job=" .$jobs_lut{$actor->{jobID}} .")") if ($field && !$field->isCity);
 			Plugins::callHook('player', {player => $actor}); #backwards compatibility
 
 			Plugins::callHook('player_exist', {player => $actor});
@@ -2319,7 +2321,7 @@ typedef enum <unnamed-tag> {
 			my $domain = existsInList($config{friendlyAID}, unpack("V", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
-			playerLog("player " .$actor->{name} ." is near (" .$field->{baseName} .", lvl=" .$actor->{lv} .", job=" .$jobs_lut{$actor->{jobID}} .")") if (!$field->isCity);
+			playerLog("player " .$actor->{name} ." is near (" .$field->{baseName} .", lvl=" .$actor->{lv} .", job=" .$jobs_lut{$actor->{jobID}} .")") if ($field && !$field->isCity);
 			Plugins::callHook('player', {player => $actor}); #backwards compatibailty
 
 			Plugins::callHook('player_connected', {player => $actor});
@@ -2765,7 +2767,7 @@ sub actor_info {
 		$player->{title}{ID} = $args->{titleID} if defined $args->{titleID};
 		message "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($player);
-		playerLog("player " .$player->{name} ." is near (" .$field->{baseName} .", lvl=" .$player->{lv} .", job=" .$jobs_lut{$player->{jobID}} .")") if (!$field->isCity);
+		playerLog("player " .$player->{name} ." is near (" .$field->{baseName} .", lvl=" .$player->{lv} .", job=" .$jobs_lut{$player->{jobID}} .")") if ($field && !$field->isCity);
 		Plugins::callHook('charNameUpdate', {player => $player});
 	}
 
@@ -2791,8 +2793,8 @@ sub actor_info {
 			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
 		}
 
-		my $location = $field->baseName . " $npc->{pos}{x} $npc->{pos}{y}";
-		if (!$npcs_lut{$location}) {
+		my $location = $field ? $field->baseName . " $npc->{pos}{x} $npc->{pos}{y}" : '';
+		if ($location && !$npcs_lut{$location}) {
 			$npcs_lut{$location} = $npc->{name};
 			updateNPCLUT(Settings::getTableFilename("npcs.txt"), $location, $npc->{name});
 		}
@@ -3065,7 +3067,7 @@ sub homunculus_info {
 		}
 
 		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
-		$char->{homunculus}{map} = $field->baseName;
+		$char->{homunculus}{map} = $field->baseName if $field;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			if ($char->{homunculus}->isa('AI::Slave::Homunculus')) {
 				# After a teleport the homunculus object is still AI::Slave::Homunculus, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Homunculus, so we change it back
@@ -3759,7 +3761,7 @@ sub inventory_item_added {
 		my $disp = TF("Item added to inventory: %s (%d) x %d - %s",
 			$item->{name}, $item->{binID}, $amount, $itemTypes_lut{$item->{type}});
 		message "$disp\n", "drop";
-		$disp .= " (". $field->baseName . ")\n";
+		$disp .= ($field ? " (" . $field->baseName . ")" : "") . "\n";
 		itemLog($disp);
 
 		Plugins::callHook('item_gathered', {
@@ -7310,7 +7312,7 @@ sub item_appeared {
 	# Take item as fast as possible
 	if (AI::state() == AI::AUTO() && pickupitems($item->{name}, $item->{nameID}) == 2
 	 && ($config{'itemsTakeAuto'} || $config{'itemsGatherAuto'})
-	 && (!$config{itemsGatherAuto_notInTown} || !$field->isCity)
+	 && (!$config{itemsGatherAuto_notInTown} || !$field || !$field->isCity)
 	 && (percent_weight($char) < $config{'itemsMaxWeight'})
 	 && distance($item->{pos}, $char->{pos_to}) <= 5) {
 		$messageSender->sendTake($args->{ID});
@@ -10485,10 +10487,10 @@ sub memo_success {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		warning T("Memo Failed\n");
-		Plugins::callHook('memo_fail', {field => $field->baseName});
+		Plugins::callHook('memo_fail', {field => $field ? $field->baseName : undef});
 	} else {
 		message T("Memo Succeeded\n"), "success";
-		Plugins::callHook('memo_success', {field => $field->baseName});
+		Plugins::callHook('memo_success', {field => $field ? $field->baseName : undef});
 	}
 }
 
@@ -11512,7 +11514,7 @@ sub mercenary_init {
 	my ($self, $args) = @_;
 
 	$char->{mercenary} = Actor::get($args->{ID}) if ($char->{mercenary}{ID} ne $args->{ID});
-	$char->{mercenary}{map} = $field->baseName;
+	$char->{mercenary}{map} = $field->baseName if $field;
 
 	my $slave = $char->{mercenary};
 
@@ -11958,7 +11960,7 @@ sub skill_cast {
 
 		# Skill area casting -> running to monster's back
 		my $ID;
-		if ($dist > 0 && AI::action() eq "attack" && ($ID = AI::args()->{ID}) && (my $monster2 = $monstersList->getByID($ID))) {
+		if ($field && $dist > 0 && AI::action() eq "attack" && ($ID = AI::args()->{ID}) && (my $monster2 = $monstersList->getByID($ID))) {
 			# Calculate X axis
 			if ($char->{pos_to}{x} - $monster2->{pos_to}{x} < 0) {
 				$coords{x} = $monster2->{pos_to}{x} + 3;

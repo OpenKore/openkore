@@ -4171,7 +4171,13 @@ sub cmdMove {
 				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
 				$file .= ".gz" if (! -f $file); # compressed file
 				if ($maps_lut{"${map_or_portal}.rsw"} || -f $file) {
-					my $move_field = new Field(name => $map_or_portal);
+					my $move_field = eval { new Field(name => $map_or_portal) };
+					if (my $e = caught('FileNotFoundException', 'IOException')) {
+						error TF("Cannot load field %s: %s\n", $map_or_portal, $e);
+						return;
+					} elsif ($@) {
+						die $@;
+					}
 					if (defined $x && defined $y) {
 						if ($move_field->isOffMap($x, $y)) {
 							error TF("Coordinates %s %s are off the map %s\n",$x, $y, $map_or_portal);
