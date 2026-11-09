@@ -8756,6 +8756,7 @@ sub party_organize_result {
 
 sub party_show_picker {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 
 	# wtf the server sends this packet for your own character? (rRo)
 	return if $args->{sourceID} eq $accountID;
