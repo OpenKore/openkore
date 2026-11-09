@@ -8642,6 +8642,7 @@ sub party_leader {
 
 sub party_hp_info {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 	my $ID = $args->{ID};
 
 	if ($char->{party}{users}{$ID}) {
@@ -8720,6 +8721,7 @@ sub party_leave {
 
 sub party_location {
 	my ($self, $args) = @_;
+	return unless changeToInGameState();
 
 	my $ID = $args->{ID};
 
