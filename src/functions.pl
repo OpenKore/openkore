@@ -1012,7 +1012,7 @@ sub mainLoop_initialized {
 					$messageSender->sendToServer($result);
 				}
 			} else {
-				$instance->reset()
+				$instance->reset();
 			}
 		}
 	}
