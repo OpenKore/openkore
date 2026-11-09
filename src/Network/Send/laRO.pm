@@ -1,7 +1,8 @@
 package Network::Send::laRO;
 use strict;
 use base    qw(Network::Send::kRO::RagexeRE_2021_11_03);
-use Globals qw($accountID);
+use Globals qw($accountID %talk);
+use I18N qw(stringToBytes);
 
 sub new {
     my ( $class ) = @_;
@@ -15,6 +16,7 @@ sub new {
         '0228' => ['client_integrity_response', 'v a*', [qw(len data)]],
         '01E8' => ['party_organize', 'Z24 C2', [qw(name item_pickup item_division)]],
         '0BE9' => ['emotion_expansion_request', 'a4', [qw(data)]],
+        '01D5' => ['npc_talk_text', 'v a4 a*', [qw(len ID text)]],
     );
 
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -44,6 +46,19 @@ sub sendUsePackageItem {
         accountID => int($acc),
         itemID    => int($itemID),
         boxIndex  => int($boxIndex),
+    }));
+}
+
+sub sendTalkText {
+    my ($self, $ID, $input) = @_;
+    delete $talk{msg};
+    delete $talk{image};
+    $input = stringToBytes($input);
+    $self->sendToServer($self->reconstruct({
+        switch => 'npc_talk_text',
+        len    => length($input) + 8,
+        ID     => $ID,
+        text   => $input,
     }));
 }
 
