@@ -727,6 +727,20 @@ achievement_tbl = {
 		reward = { title = 1099 },
 		score = 10
 	},
+	[300052] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Guardian of Midgard",
+		content = {
+			summary = "Guardian of Midgard",
+			details = "The \'Guardian of Midgard\' Guardian of Midgard  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1100 },
+		score = 10
+	},
 	[300056] = {
 		UI_Type = 0,
 		group = "CHATTING",
@@ -790,8 +804,8 @@ achievement_tbl = {
 		minor = 2,
 		title = "Festa dos Emoticons!",
 		content = {
-			summary = "Participe da Festa Ragnarok com o emoticon especial (๐^_^๐).",
-			details = "A celebração está no ar! Entre na Festa Ragnarok usando o emoticon (๐^_^๐) e mostre seu espírito festivo. Benefícios do Título\n\t- Nenhum, mas a diversão é garantida!"
+			summary = "Participe da Festa Ragnarok com o emoticon especial (�??^_^�??).",
+			details = "A celebração está no ar! Entre na Festa Ragnarok usando o emoticon (�??^_^�??) e mostre seu espírito festivo. Benefícios do Título\n\t- Nenhum, mas a diversão é garantida!"
 		},
 		resource = {},
 		reward = { title = 1108 },
@@ -839,6 +853,20 @@ achievement_tbl = {
 		reward = { title = 1115 },
 		score = 10
 	},
+	[300106] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Echo of Yggdrasill",
+		content = {
+			summary = "Echo of Yggdrasill",
+			details = "The \'Echo of Yggdrasill\' Echo of Yggdrasill  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1154 },
+		score = 10
+	},
 	[300130] = {
 		UI_Type = 0,
 		group = "CHATTING",
@@ -851,6 +879,398 @@ achievement_tbl = {
 		},
 		resource = {},
 		reward = { title = 1178 },
+		score = 10
+	},
+	[300142] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "The Explorer",
+		content = {
+			summary = "The Explorer",
+			details = "The \'The Explorer\' The Explorer  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1190 },
+		score = 10
+	},
+	[300143] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Pioneer",
+		content = {
+			summary = "Pioneer",
+			details = "The \'Pioneer\' Pioneer  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1191 },
+		score = 10
+	},
+	[300152] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "The Emperor",
+		content = {
+			summary = "The Emperor",
+			details = "\'The Emperor\' The Emperor  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1200 },
+		score = 10
+	},
+	[300169] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "King of the Jungle",
+		content = {
+			summary = "King of the Jungle",
+			details = "The \'King of the Jungle\' King of the Jungle  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1217 },
+		score = 10
+	},
+	[300172] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Deadman Walker",
+		content = {
+			summary = "Deadman Walker",
+			details = "The \'Deadman Walker\' Deadman Walker  .\nTitle Benefits\n\t- Allstats +2"
+		},
+		resource = {},
+		reward = { title = 1220 },
+		score = 10
+	},
+	[300173] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Yggdrasil Crown",
+		content = {
+			summary = "Major Yggdrasil Crown",
+			details = "The \'Major Yggdrasil Crown\' Major Yggdrasil Crown  .\nTitle Benefits\n\t- Allstats +5 ,Reduces damage taken from Demi-Human race enemies by 2%."
+		},
+		resource = {},
+		reward = { title = 1221 },
+		score = 10
+	},
+	[300174] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Yggdrasil Pillar",
+		content = {
+			summary = "Yggdrasil Pillar",
+			details = "The \'Yggdrasil Pillar\' Yggdrasil Pillar  .\nTitle Benefits\n\t- Allstats +5 Reduces damage taken from Demi-Human race enemies by 1%."
+		},
+		resource = {},
+		reward = { title = 1222 },
+		score = 10
+	},
+	[300175] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Yggdrasil Root",
+		content = {
+			summary = "Yggdrasil Root",
+			details = "The \'Yggdrasil Root\' Yggdrasil Root  .\nTitle Benefits\n\t- Allstats +4"
+		},
+		resource = {},
+		reward = { title = 1223 },
+		score = 10
+	},
+	[300176] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Yggdrasil Seed",
+		content = {
+			summary = "Yggdrasil Seed",
+			details = "The \'Yggdrasil Seed\' Yggdrasil Seed  .\nTitle Benefits\n\t- Allstats +3"
+		},
+		resource = {},
+		reward = { title = 1224 },
+		score = 10
+	},
+	[300178] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Parallel Adventure",
+		content = {
+			summary = "Parallel Adventure",
+			details = "The \'Parallel Adventure\' Parallel Adventure  .\nTitle Benefits\n\t- Allstats +2 atk+2 matk+2"
+		},
+		resource = {},
+		reward = { title = 1226 },
+		score = 10
+	},
+	[300193] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Yaksha",
+		content = {
+			summary = "Yaksha",
+			details = "The \'Yaksha\' Yaksha  .\nTitle Benefits\n\t- Nothing"
+		},
+		resource = {},
+		reward = { title = 1241 },
+		score = 10
+	},
+	[300196] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Yggdrasil Fallen One",
+		content = {
+			summary = "Yggdrasil Fallen One",
+			details = "The \'Yggdrasil Fallen One\' Yggdrasil Fallen One  .\nTitle Benefits\n\t- Allstats +5 ,Reduces damage taken from Demi-Human race enemies by 2%."
+		},
+		resource = {},
+		reward = { title = 1244 },
+		score = 10
+	},
+	[300197] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Yggdrasil Ruin",
+		content = {
+			summary = "Major Yggdrasil Ruin",
+			details = "The \'Major Yggdrasil Ruin\' Major Yggdrasil Ruin  .\nTitle Benefits\n\t- Allstats +5 Reduces damage taken from Demi-Human race enemies by 1%."
+		},
+		resource = {},
+		reward = { title = 1245 },
+		score = 10
+	},
+	[300198] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Yggdrasil Corrupted",
+		content = {
+			summary = "Major Yggdrasil Corrupted",
+			details = "The \'Major Yggdrasil Corrupted\' Major Yggdrasil Corrupted  .\nTitle Benefits\n\t- Allstats +4"
+		},
+		resource = {},
+		reward = { title = 1246 },
+		score = 10
+	},
+	[300199] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Yggdrasil Curse",
+		content = {
+			summary = "Major Yggdrasil Curse",
+			details = "The \'Major Yggdrasil Curse\' Major Yggdrasil Curse  .\nTitle Benefits\n\t- Allstats +3"
+		},
+		resource = {},
+		reward = { title = 1247 },
+		score = 10
+	},
+	[300201] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "The Nova Collector",
+		content = {
+			summary = "The Nova Collector",
+			details = "The \'Nova Collector\' The Nova Collector  .\nTitle Benefits\n\t- Exp 10%"
+		},
+		resource = {},
+		reward = { title = 1249 },
+		score = 10
+	},
+	[300210] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "The Miner",
+		content = {
+			summary = "The Miner",
+			details = "The \'The Miner\' The The Miner  .\nTitle Benefits\n\t"
+		},
+		resource = {},
+		reward = { title = 1258 },
+		score = 10
+	},
+	[300211] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "The Nova Collector II",
+		content = {
+			summary = "The Nova Collector II",
+			details = "The \'Nova Collector II\' The Nova Collector II  .\nTitle Benefits\n\t- All Stats +1\n\t- Exp 10%"
+		},
+		resource = {},
+		reward = { title = 1259 },
+		score = 10
+	},
+	[300212] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Guardian of Yggdrasil",
+		content = {
+			summary = "Major Guardian of Yggdrasil",
+			details = "The \'Major Guardian of Yggdrasil\' The Major Guardian of Yggdrasil  .\nTitle Benefits\n\t- All Stats +6\n\t- Reduces damage taken from Fire, Water, Earth, Wind property by 5%"
+		},
+		resource = {},
+		reward = { title = 1260 },
+		score = 10
+	},
+	[300213] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Yggdrasil Ascendant",
+		content = {
+			summary = "Major Yggdrasil Ascendant",
+			details = "The \'Major Yggdrasil Ascendant\' The Major Yggdrasil Ascendant  .\nTitle Benefits\n\t- All Stats +5\n\t- Reduces damage taken from Fire, Water, Earth, Wind property by 3%"
+		},
+		resource = {},
+		reward = { title = 1261 },
+		score = 10
+	},
+	[300214] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Yggdrasil Sentinel",
+		content = {
+			summary = "Major Yggdrasil Sentinel",
+			details = "The \'Major Yggdrasil Sentinel\' The Major Yggdrasil Sentinel  .\nTitle Benefits\n\t- All Stats +4\n\t- Reduces damage taken from Fire, Water, Earth, Wind property by 1%"
+		},
+		resource = {},
+		reward = { title = 1262 },
+		score = 10
+	},
+	[300215] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Major Yggdrasil Herald",
+		content = {
+			summary = "Major Yggdrasil Herald",
+			details = "The \'Major Yggdrasil Herald\' The Major Yggdrasil Herald  .\nTitle Benefits\n\t- All Stats +3"
+		},
+		resource = {},
+		reward = { title = 1263 },
+		score = 10
+	},
+	[300218] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Odin's Eye",
+		content = {
+			summary = "Odin's Eye",
+			details = "Granted to the ultimate visionary who perfectly foresaw the outcome of the Ragnarok Landverse Champion at RO Fiesta 2026.\nTitle Benefits\n\t- All Stats +5\n\t- Physical and magical damage against all sizes +5%"
+		},
+		resource = {},
+		reward = { title = 1266 },
+		score = 10
+	},
+	[300222] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "The Nova Collector III",
+		content = {
+			summary = "The Nova Collector III",
+			details = "Exchanged with NOVA Coin at the Nova Collector.\nTitle Benefits\n\t- ATK +5\n\t- MATK +5\n\t- EXP +10%"
+		},
+		resource = {},
+		reward = { title = 1270 },
+		score = 10
+	},
+	[300223] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "RO Festa Silver 2026",
+		content = {
+			summary = "RO Festa Silver 2026",
+			details = "Ragnarok Festa 2026 Silver Package.\nTitle Benefits\n\t- All Stats +4"
+		},
+		resource = {},
+		reward = { title = 1271 },
+		score = 10
+	},
+	[300224] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "RO Festa Golden 2026",
+		content = {
+			summary = "RO Festa Golden 2026",
+			details = "Ragnarok Festa 2026 Golden Package.\nTitle Benefits\n\t- All Stats +5"
+		},
+		resource = {},
+		reward = { title = 1272 },
+		score = 10
+	},
+	[300225] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "RO Festa Prismatic 2026",
+		content = {
+			summary = "RO Festa Prismatic 2026",
+			details = "Ragnarok Festa 2026 Prismatic Package.\nTitle Benefits\n\t- All Stats +6"
+		},
+		resource = {},
+		reward = { title = 1273 },
+		score = 10
+	},
+	[300226] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "ROLC Champion 2026",
+		content = {
+			summary = "ROLC Champion 2026",
+			details = "Granted to the champions of the Ragnarok Landverse Championship 2026.\nTitle Benefits\n\t- All Stats +7\n\t- Physical and magical damage against Demi-Human +2%"
+		},
+		resource = {},
+		reward = { title = 1274 },
 		score = 10
 	},
 }

@@ -205,6 +205,9 @@
 1@herbs.gat#1@herbs.gat#
 1@herbs.gnd#1@herbs.gnd#
 1@herbs.rsw#1@herbs.rsw#
+1@in_rogue.gat#in_rogue.gat#
+1@in_rogue.gnd#in_rogue.gnd#
+1@in_rogue.rsw#in_rogue.rsw#
 1@infi.gat#1@infi.gat#
 1@infi.gnd#1@infi.gnd#
 1@infi.rsw#1@infi.rsw#
@@ -307,6 +310,9 @@
 1@pump.gat#1@pump.gat#
 1@pump.gnd#1@pump.gnd#
 1@pump.rsw#1@pump.rsw#
+1@que_dan02.gat#que_dan02.gat#
+1@que_dan02.gnd#que_dan02.gnd#
+1@que_dan02.rsw#que_dan02.rsw#
 1@rev.gat#1@rev.gat#
 1@rev.gnd#1@rev.gnd#
 1@rev.rsw#1@rev.rsw#
@@ -382,6 +388,9 @@
 1@twsd.gat#1@twsd.gat#
 1@twsd.gnd#1@twsd.gnd#
 1@twsd.rsw#1@twsd.rsw#
+1@um_fild04.gat#um_fild04.gat#
+1@um_fild04.gnd#um_fild04.gnd#
+1@um_fild04.rsw#um_fild04.rsw#
 1@uns.gat#1@uns.gat#
 1@uns.gnd#1@uns.gnd#
 1@uns.rsw#1@uns.rsw#
@@ -598,8 +607,11 @@ ecl_tdun01.rsw#ecl_tdun01.rsw#
 ecl_tdun02.gat#ecl_tdun02.gat#
 ecl_tdun02.gnd#ecl_tdun02.gnd#
 ecl_tdun02.rsw#ecl_tdun02.rsw#
+ecl_tdun03.gat#ecl_tdun03.gat#
 ecl_tdun03.gat#nova_c.gat#
+ecl_tdun03.gnd#ecl_tdun03.gnd#
 ecl_tdun03.gnd#nova_c.gnd#
+ecl_tdun03.rsw#ecl_tdun03.rsw#
 ecl_tdun03.rsw#nova_c.rsw#
 eclage.gat#eclage.gat#
 eclage.gnd#eclage.gnd#
