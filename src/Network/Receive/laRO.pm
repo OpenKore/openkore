@@ -11,6 +11,7 @@ sub new {
         '07FD' => ['special_item_obtain', 'v C V c/Z a*', [qw(len type nameID holder etc)]],
         '0B67' => ['party_show_picker', 'a4 V C2 a16 v C3', [qw(sourceID nameID identified broken cards location type upgrade grade)]],
         '0B4D' => ['cash_shop_limited_items', 'v2 a*', [qw(len unknown items)]],
+        '0BEA' => ['emoticon', 'a4 v2', [qw(ID packID type)]],
     );
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
