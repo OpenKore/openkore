@@ -5721,7 +5721,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_amuletType"}) {return 0 unless $config{$prefix . "_amuletType"} eq $char->{amuletType}; }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
-	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field->baseName eq $config{lockMap}); }
+	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field && $field->baseName eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
 	if ($config{$prefix . "_notWhileCasting"} > 0) { return 0 if (exists $char->{casting}); }
 	if ($config{$prefix . "_whileCasting"} > 0) { return 0 unless (exists $char->{casting}); }
@@ -5729,8 +5729,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_whileBeingCasted"}) { return 0 unless actorIsBeingCastedOn($char, $config{$prefix . "_whileBeingCasted"}); }
 	if ($config{$prefix . "_whenNoNearPartyMemberCasting"}) { return 0 if nearPartyMemberIsCasting($config{$prefix . "_whenNoNearPartyMemberCasting"}); }
 	if ($config{$prefix . "_whenNearPartyMemberCasting"}) { return 0 unless nearPartyMemberIsCasting($config{$prefix . "_whenNearPartyMemberCasting"}); }
-	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field->isCity); }
-	if ($config{$prefix . "_inTown"} > 0) { return 0 unless ($field->isCity); }
+	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field && $field->isCity); }
+	if ($config{$prefix . "_inTown"} > 0) { return 0 unless ($field && $field->isCity); }
 
 	my $check_not_monsters = defined $config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i);
 	my $check_monsters = defined $config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i);
@@ -5884,11 +5884,11 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inMap"}) {
-		return 0 unless (existsInList($config{$prefix . "_inMap"}, $field->baseName));
+		return 0 unless ($field && existsInList($config{$prefix . "_inMap"}, $field->baseName));
 	}
 
 	if ($config{$prefix."_notInMap"}) {
-		return 0 if (existsInList($config{$prefix . "_notInMap"}, $field->baseName));
+		return 0 if ($field && existsInList($config{$prefix . "_notInMap"}, $field->baseName));
 	}
 
 	if ($config{$prefix."_whenEquipped"}) {
@@ -5966,7 +5966,7 @@ sub checkSelfCondition {
 
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);
-		return 0 unless ($field->isWater($pos->{x}, $pos->{y}));
+		return 0 unless ($field && $field->isWater($pos->{x}, $pos->{y}));
 	}
 
 	if ($config{$prefix.'_devotees'}) {
@@ -6499,7 +6499,7 @@ sub closeBuyerShop {
 # Returns 1 (true) if character is located in its lockmap.
 # Returns 0 (false) if character is not located in lockmap.
 sub inLockMap {
-	if ($field->baseName eq $config{'lockMap'}) {
+	if ($field && $field->baseName eq $config{'lockMap'}) {
 		return 1;
 	} else {
 		return 0;

@@ -144,6 +144,7 @@ sub iterate {
 
 	Misc::checkValidity("AI part 1");
 	return unless AI::state() == AI::AUTO();
+	return unless $field;
 
 
 	##### AUTOMATIC AI STARTS HERE #####
@@ -545,7 +546,7 @@ sub processPortalRecording {
 	my $first = 1;
 	my ($foundID, $smallDist, $dist);
 
-	if (!$field->baseName) {
+	if (!$field || !$field->baseName) {
 		debug "[processPortalRecording] Field name not known - abort\n", "portalRecord";
 		return;
 	}
@@ -3321,6 +3322,7 @@ sub processAutoEquip {
 
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
+	return if (!$field);
 	my $attackAuto = getAttackAutoMode();
 	return if defined $attackAuto && $attackAuto == -1;
 
@@ -3332,7 +3334,6 @@ sub processAutoAttack {
 
 	return if (AI::inQueue("attack"));
 	
-	return if (!$field);
 	if (AI::isIdle() || AI::is(qw/route follow sitAuto take items_gather items_take/)
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::inQueue("take", "items_take"))
