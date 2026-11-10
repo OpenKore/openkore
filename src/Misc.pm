@@ -6727,7 +6727,7 @@ sub setCharDeleteDate {
 	}
 
 	if ($masterServer->{charDeleteDateType} == 1) { # New clients receive deleteTime as 'time remaining'
-		$deleteDate = int(time) + $deleteDate;
+		$deleteDate = int(time) + unpack('l', pack('L', $deleteDate));
 	}
 
 	$chars[$slot]{deleteDate} = getFormattedDate($deleteDate);
