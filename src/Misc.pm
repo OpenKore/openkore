@@ -5241,6 +5241,10 @@ sub compilePortals {
 						$missingMap{$map} = 1;
 					}
 				}
+				if ($missingMap{$map}) {
+					$portals_los{$spawn}{$portal} = 0;
+					next;
+				}
 
 				my %start = %{$mapSpawns{$map}{$spawn}};
 				my %dest = %{$mapPortals{$map}{$portal}};
