@@ -28,7 +28,7 @@ foreach my $name (sort(listMaps("."))) {
 	print "[gat_to_fld2] Converting map '".$name."'\n";
 	undef $@;
 	eval  {
-		gat_to_fld2("$name.gat", "$name.fld2", readWaterLevel("$name.rsw"));
+		gat_to_fld2("$name.gat", "$name.fld2", readWaterLevel($name));
 	};
 	if ($@) {
 		print "[gat_to_fld2] Error converting map '".$name."': ".$@."\n";
@@ -50,17 +50,44 @@ sub listMaps {
 }
 
 ##
-# float readWaterLevel(String rswFile)
+# float readWaterLevel(String name)
 #
-# Read the map's water level from the corresponding RSW file.
+# Read the map's water level as the client does: from the GND file from version 1.8 on,
+# otherwise from the RSW file. Returns undef if the map has none.
 sub readWaterLevel {
-	my ($rswFile) = @_;
+	my ($name) = @_;
 	my ($f, $buf);
 
-	if (!open($f, "<", $rswFile)) {
-		die "Cannot open $rswFile for reading.\n";
+	if (open($f, "<", "$name.gnd")) {
+		binmode $f;
+		my $gnd = do { local $/; <$f> };
+		close $f;
+		my ($major, $minor, $width, $height, $textures, $length) = unpack("x4 C2 V2 x4 V2", $gnd);
+		if ($major == 1 && $minor >= 8) {
+			my $at = 26 + $textures * $length;
+			$at += 16 + unpack("x$at V", $gnd) * 256;
+			$at += 4 + unpack("x$at V", $gnd) * 40 + $width * $height * 28 + 24;
+			my ($columns, $rows) = unpack("x$at V2", $gnd);
+			if ($columns * $rows != 1) {
+				print "[gat_to_fld2] Map '$name' splits its water in zones, which is not supported: converted without water\n";
+				return undef;
+			}
+			return unpack("x" . ($at + 8) . " f", $gnd);
+		}
 	}
-	seek $f, 166, 0;
+
+	if (!open($f, "<", "$name.rsw")) {
+		die "Cannot open $name.rsw for reading.\n";
+	}
+	binmode $f;
+	read $f, $buf, 6;
+	my $version = unpack("x4 n", $buf);
+	if ($version >= 0x0206) {
+		close $f;
+		print "[gat_to_fld2] Map '$name' keeps its water in $name.gnd, which is missing or older than 1.8: converted without water\n";
+		return undef;
+	}
+	seek $f, $version >= 0x0205 ? 171 : $version >= 0x0202 ? 167 : 166, 0;
 	read $f, $buf, 4;
 	close $f;
 
@@ -112,7 +139,7 @@ sub gat_to_fld2 {
 		# we're actually checking whether this block
 		# is below the map's water level.
 		# Block is below water level.
-		} elsif ($averageDepth > $waterLevel) {
+		} elsif (defined $waterLevel && $averageDepth > $waterLevel) {
 			# add bitflag water to non-water blocks
 			print $out pack("C", (($TILE_TYPE[$type] & TILE_WATER) == TILE_WATER) ? $TILE_TYPE[$type] : $TILE_TYPE[$type]|TILE_WATER);
 		# Block is above water level
