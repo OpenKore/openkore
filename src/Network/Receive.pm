@@ -3611,7 +3611,7 @@ sub char_delete2_result {
 	my $result = $args->{result};
 	my $deleteDate = $args->{deleteDate};
 
-	if ($result && $deleteDate) {
+	if ($result == 1 && $deleteDate) {
 		setCharDeleteDate($messageSender->{char_delete_slot}, $deleteDate);
 		message TF("Your character will be delete, left %s\n", $chars[$messageSender->{char_delete_slot}]{deleteDate}), "connection";
 	} elsif ($result == 0) {
