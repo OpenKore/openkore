@@ -46,4 +46,20 @@ sub cash_shop_limited_items {
     }
 }
 
+sub equipitem_damaged {
+    my ($self, $args) = @_;
+    return unless Network::Receive::changeToInGameState();
+
+    my $char = $Globals::char;
+    if ($args->{ID} eq $Globals::accountID) {
+        my $slot = $Globals::equipSlot_lut{$args->{slot}} or return;
+        my $item = $char->{equipment}{$slot} or return;
+        Log::warning sprintf($Globals::msgTable[1301], $item->{name}) . "\n";
+    } elsif (my $member = $char->{party} && $char->{party}{users}{$args->{ID}}) {
+        my %part = (2 => 1303, 32 => 1303, 16 => 1304);
+        my $part = $part{$args->{slot}} or return;
+        Log::warning sprintf($Globals::msgTable[1302], $member->name, $Globals::msgTable[$part]) . "\n";
+    }
+}
+
 1;
