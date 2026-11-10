@@ -52,7 +52,7 @@ sub listMaps {
 ##
 # float readWaterLevel(String rswFile)
 #
-# Read the map's water level from the corresponding RSW file.
+# Read the map's water level from the corresponding RSW file, or undef if it has none.
 sub readWaterLevel {
 	my ($rswFile) = @_;
 	my ($f, $buf);
@@ -60,7 +60,14 @@ sub readWaterLevel {
 	if (!open($f, "<", $rswFile)) {
 		die "Cannot open $rswFile for reading.\n";
 	}
-	seek $f, 166, 0;
+	binmode $f;
+	read $f, $buf, 6;
+	my $version = unpack("x4 n", $buf);
+	if ($version >= 0x0206) {
+		close $f;
+		return undef;
+	}
+	seek $f, $version >= 0x0205 ? 171 : $version >= 0x0202 ? 167 : 166, 0;
 	read $f, $buf, 4;
 	close $f;
 
@@ -112,7 +119,7 @@ sub gat_to_fld2 {
 		# we're actually checking whether this block
 		# is below the map's water level.
 		# Block is below water level.
-		} elsif ($averageDepth > $waterLevel) {
+		} elsif (defined $waterLevel && $averageDepth > $waterLevel) {
 			# add bitflag water to non-water blocks
 			print $out pack("C", (($TILE_TYPE[$type] & TILE_WATER) == TILE_WATER) ? $TILE_TYPE[$type] : $TILE_TYPE[$type]|TILE_WATER);
 		# Block is above water level
