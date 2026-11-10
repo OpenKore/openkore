@@ -7481,6 +7481,7 @@ sub map_change {
 		if (my $e = caught('FileNotFoundException', 'IOException')) {
 			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
 			undef $field;
+			$missingFieldName = $map;
 		} elsif ($@) {
 			die $@;
 		}
@@ -7548,6 +7549,7 @@ sub map_changed {
 		if (my $e = caught('FileNotFoundException', 'IOException')) {
 			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
 			undef $field;
+			$missingFieldName = $map;
 		} elsif ($@) {
 			die $@;
 		}
@@ -8408,6 +8410,7 @@ sub received_character_ID_and_Map {
 		if (my $e = caught('FileNotFoundException', 'IOException')) {
 			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
 			undef $field;
+			$missingFieldName = $map;
 		} elsif ($@) {
 			die $@;
 		}
