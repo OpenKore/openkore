@@ -523,6 +523,7 @@ sub initHandlers {
 		['reload', [
 			T("Reload configuration files."),
 			["all", T("reload all control and table files")],
+			["field", T("load the field file of the current map again")],
 			[T("<names>"), T("reload control files in the list of <names>")],
 			[T("all except <names>"), T("reload all files except those in the list of <names>")]
 			], \&cmdReload],
@@ -5082,6 +5083,21 @@ sub cmdReload {
 	if ($args eq '') {
 		error T("Syntax Error in function 'reload' (Reload Configuration Files)\n" .
 			"Usage: reload <name|\"all\">\n");
+	} elsif ($args eq 'field') {
+		my $map = $field ? $field->name : $missingFieldName;
+		if (!defined $map) {
+			error T("No map to load a field for.\n");
+			return;
+		}
+		my $newField = eval { new Field(name => $map) };
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map, $e);
+		} elsif ($@) {
+			die $@;
+		} else {
+			$field = $newField;
+			message TF("Field %s loaded\n", $field->baseName), "success";
+		}
 	} else {
 		parseReload($args);
 	}

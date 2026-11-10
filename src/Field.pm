@@ -122,7 +122,7 @@ sub _resolveFieldFileFromFolders {
 		}
 	}
 
-	$FIELD_FILE_RESOLUTION_CACHE{$cacheKey} = $resolvedFile || '';
+	$FIELD_FILE_RESOLUTION_CACHE{$cacheKey} = $resolvedFile if $resolvedFile;
 	return $resolvedFile;
 }
 
