@@ -775,7 +775,8 @@ sub loadDistanceMap {
 # Note: field data files (.fld2/.fld2.gz) are loaded from $Settings::fields_folder by default.
 # To override this per server, add `fields_folder <path>` (or `fieldsFolder`) in that
 # server block in tables/servers.txt, e.g. `fields_folder fields/ROla`.
-# Lookup order is: server-specific folder first, then global $Settings::fields_folder.
+# Lookup order is: $Settings::fields_folder/custom (your own field files, ignored by git),
+# then the server-specific folder, then global $Settings::fields_folder.
 # $Settings::maps_folder is only used by image() for generated/loaded map images.
 #
 # This method is like calling the constructor with the 'name' argument,
@@ -802,6 +803,7 @@ sub loadByName {
 	
 	my @fieldFolders = grep { defined $_ && $_ ne '' } ($fieldsFolder);
 	push @fieldFolders, $Settings::fields_folder if !defined($fieldsFolder) || $fieldsFolder ne $Settings::fields_folder;
+	unshift @fieldFolders, File::Spec->catdir($Settings::fields_folder, 'custom');
 
 	my $resolvedFile = _resolveFieldFileFromFolders($file, @fieldFolders);
 

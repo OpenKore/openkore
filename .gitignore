@@ -8,6 +8,9 @@ DUMP.txt
 # Plugin files
 /profiles
 
+# Your own field files, looked up before the bundled ones
+/fields/custom/
+
 # Backup files
 *~
 .#*
