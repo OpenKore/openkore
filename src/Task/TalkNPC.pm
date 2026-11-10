@@ -884,7 +884,7 @@ sub cancelTalk {
 	}
 
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
-		$messageSender->sendTalkResponse($talk{ID}, $#{$talk{responses}});
+		$messageSender->sendTalkResponse($talk{ID}, 255);
 		$self->{sent_talk_response_cancel} = 1;
 		$self->{sent_talk_resp_cancel_time}{time} = time;
 		$self->{sent_talk_resp_cancel_time}{timeout} = 5;
