@@ -23,6 +23,7 @@ use strict;
 use warnings;
 no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
+use Scalar::Util qw(refaddr weaken);
 use utf8;
 
 use Modules 'register';
@@ -46,6 +47,7 @@ use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_
 
 our (%commands, %completions);
 my $needsInit = 1;
+my $pendingPackage;
 
 undef %commands;
 undef %completions;
@@ -396,7 +398,9 @@ sub initHandlers {
 			], \&cmdUseItemOnPlayer],
 		['is', [
 			T("Use item on yourself."),
-			[T("<inventory item #>"), T("use item on yourself")]
+			[T("<inventory item #>"), T("use item on yourself")],
+			["choose <option>", T("claim a reward from the selected package")],
+			["cancel", T("cancel package selection")]
 			], \&cmdUseItemOnSelf],
 		['kill', [
 			T("Attack another player (PVP/GVG only)."),
@@ -429,10 +433,6 @@ sub initHandlers {
 			], \&cmdNPCCreateRequest],
 		['nl', T("List NPCs that are on screen."), \&cmdNPCList],
 		['openbuyershop', undef, \&cmdOpenBuyerShop],
-        ['openpackage', [
-            T("Use package item with selection."),
-            [T("<item name> <boxIndex>"), T("use package item selecting option")]
-        ], \&cmdOpenPackage],
 		['openshop', T("Open your vending shop."), \&cmdOpenShop],
 		['p', [
 			T("Chat in the party chat."),
@@ -4247,38 +4247,6 @@ sub cmdNPCList {
 	message $msg, "list";
 }
 
-sub cmdOpenPackage {
-    my (undef, $args) = @_;
-
-    unless ($args) {
-        error "Usage: openpackage <item name> <boxIndex>\n";
-        return;
-    }
-
-    my @parts = split(/\s+/, $args);
-    my $boxIndex = pop @parts;
-    my $itemName = join(' ', @parts);
-
-    my $item = $char->inventory->getByName($itemName);
-
-    unless ($item) {
-        error "Item '$itemName' not found in inventory.\n";
-        return;
-    }
-
-    my $realIndex = unpack("v", $item->{ID});
-    my $nameID    = $item->{nameID};
-    $boxIndex = int($boxIndex);
-
-    message "Using package item: $item->{name} (slot $realIndex / binID $item->{binID}) option $boxIndex\n";
-
-    $messageSender->sendUsePackageItem(
-        $realIndex,
-        $nameID,
-        $boxIndex
-    );
-}
-
 sub cmdOpenShop {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
@@ -6388,6 +6356,31 @@ sub cmdUseItemOnSelf {
 		return;
 	}
 	my (undef, $args) = @_;
+	my ($option) = $args =~ /\Achoose\s+([0-9]+)\z/;
+	if (($args eq 'cancel' || defined $option) && keys %{$messageSender->itemPackageCatalog}) {
+		if ($args eq 'cancel') {
+			undef $pendingPackage;
+			message T("Package selection cancelled.\n");
+			return;
+		}
+		my $selected = $pendingPackage && $pendingPackage->{item};
+		my $item = $selected && $char->inventory->getByID($selected->{ID});
+		my $options = $item && $messageSender->itemPackageOptions($item->{nameID});
+		if (!$item || refaddr($item) != refaddr($selected) || $item->{nameID} != $pendingPackage->{nameID}
+			|| !$options) {
+			undef $pendingPackage;
+			error T("The selected package is unavailable. Use 'is' to select a package.\n");
+			return;
+		}
+		$option = int($option);
+		unless (exists $options->{$option}) {
+			error TF("Option %d is unavailable for %s.\n", $option, $item->{name});
+			return;
+		}
+		undef $pendingPackage;
+		message TF("Opening %s with option %d.\n", $item->{name}, $option);
+		return $messageSender->sendUsePackageItem(unpack('v', $item->{ID}), $item->{nameID}, $option);
+	}
 	if ($args eq "") {
 		error T("Syntax Error in function 'is' (Use Item on Yourself)\n" .
 			"Usage: is <item>\n");
@@ -6399,7 +6392,24 @@ sub cmdUseItemOnSelf {
 			"Inventory Item %s does not exist.\n", $args);
 		return;
 	}
-	$item->use;
+	my $options = $messageSender->itemPackageOptions($item->{nameID});
+	unless ($options) {
+		return $item->use;
+	}
+	unless (keys %$options) {
+		undef $pendingPackage;
+		error TF("No valid reward options are listed for %s in itempackages.txt.\n", $item->{name});
+		return;
+	}
+	$pendingPackage = {item => $item, nameID => $item->{nameID}};
+	weaken($pendingPackage->{item});
+	my $menu = TF("Choose a reward for %s.\n", $item->{name});
+	for my $option (sort { $a <=> $b } keys %$options) {
+		my @rewards = map { $_->[1] . ' x ' . ($items_lut{$_->[0]} // "#$_->[0]") } @{$options->{$option}};
+		$menu .= "$option  " . join(', ', @rewards) . "\n";
+	}
+	$menu .= T("Use 'is choose <option>' to claim it or 'is cancel' to cancel.\n");
+	message $menu, 'list';
 }
 
 sub cmdUseSkill {
