@@ -5,7 +5,7 @@ use Plugins;
 use Utils;
 use Globals qw(%config $net $char $messageSender);
 use Log qw(message debug error);
-use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
+use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK STATUS_POW STATUS_STA STATUS_WIS STATUS_SPL STATUS_CON STATUS_CRT);
 use Settings qw(%sys);
 use Translation;
 
@@ -66,7 +66,7 @@ sub changeStatus {
 		$waiting_hooks = Plugins::addHooks(
 			['packet/stats_added', \&on_possible_raise_chance_or_answer],
 			['packet/stats_info', \&on_possible_raise_chance_or_answer],
-			['packet/stat_info', \&on_possible_raise_chance_or_answer] # 9 is points_free
+			['packet/stat_info', \&on_possible_raise_chance_or_answer] # 9 is points_free, 231 is traitpoint
 		);
 		debug $translator->translate("[raiseStat] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n");
 	} elsif ($new_status == ADDING) {
@@ -86,7 +86,7 @@ sub changeStatus {
 sub on_possible_raise_chance_or_answer {
 	my $hookName = shift;
 	my $args = shift;
-	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 9);
+	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 9 && $args->{type} != 231);
 	debug $translator->translate("[raiseStat] Received a raise chance or answer\n");
 	changeStatus(ADDING);
 }
@@ -116,6 +116,11 @@ sub getNextStat {
 #  canRaise() is the function responsible for checking if
 #  we have enough free points to raise '$next_stat'.
 sub canRaise {
+	if ($next_stat =~ /^(pow|sta|wis|spl|con|crt)$/) {
+		return $char->{traitpoint} &&
+			$char->{"need_".$next_stat} &&
+			$char->{traitpoint} >= $char->{"need_".$next_stat};
+	}
     $char->{points_free} and
     $char->{"points_".$next_stat} and
     $char->{points_free} >= $char->{"points_".$next_stat};
@@ -152,6 +157,12 @@ sub raiseStat {
 		int => STATUS_INT,
 		dex => STATUS_DEX,
 		luk => STATUS_LUK,
+		pow => STATUS_POW,
+		sta => STATUS_STA,
+		wis => STATUS_WIS,
+		spl => STATUS_SPL,
+		con => STATUS_CON,
+		crt => STATUS_CRT,
 	}->{$next_stat});
 }
 
@@ -184,7 +195,7 @@ sub validateSteps {
 	my @steps = split(/\s*,+\s*/, $list);
 	undef @stats_to_add;
 	foreach my $step (@steps) {
-		if ($step =~ /^(\d+)\s+(str|vit|dex|int|luk|agi)$/) {
+		if ($step =~ /^(\d+)\s+(str|vit|dex|int|luk|agi|pow|sta|wis|spl|con|crt)$/) {
 			my $value = $1;
 			my $stat = $2;
 			if ($value > 99 && !$config{statsAdd_over_99}) {
@@ -192,7 +203,7 @@ sub validateSteps {
 				return 0;
 			}
 			push(@stats_to_add, {'value' => $value, 'stat' => $stat});
-		} elsif ($step =~ /^(str|vit|dex|int|luk|agi)\s+(\d+)$/) {
+		} elsif ($step =~ /^(str|vit|dex|int|luk|agi|pow|sta|wis|spl|con|crt)\s+(\d+)$/) {
 			my $stat = $1;
 			my $value = $2;
 			if ($value > 99 && !$config{statsAdd_over_99}) {
