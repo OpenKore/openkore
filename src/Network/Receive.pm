@@ -1351,7 +1351,15 @@ sub map_load_error {
 }
 
 our %stat_info_handlers = (
-	VAR_SPEED, sub { $_[0]{walk_speed} = $_[1] / 1000 },
+	VAR_SPEED, sub {
+		my ($actor, $value) = @_;
+		my $speed = $value / 1000;
+		return if defined $actor->{walk_speed} && $actor->{walk_speed} == $speed;
+		$actor->{walk_speed} = $speed;
+		return unless defined $actor->{solution_calc_time};
+		delete $actor->{solution_calc_time};
+		set_actor_solution($actor);
+	},
 	VAR_EXP, sub {
 		my ($actor, $value) = @_;
 
