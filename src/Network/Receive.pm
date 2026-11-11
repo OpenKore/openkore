@@ -1707,7 +1707,7 @@ sub stat_info {
 sub stats_added {
 	my ($self, $args) = @_;
 
-	if ($args->{val} == 207) { # client really checks this and not the result field?
+	if (defined $args->{result} ? !$args->{result} : $args->{val} == 207) {
 		error T("Not enough stat points to add\n");
 	} else {
 		if ($args->{type} == VAR_STR) {
