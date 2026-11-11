@@ -37,8 +37,11 @@ use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
+use FileParsers ();
 use Misc;
-use Log qw(debug);
+use Log qw(debug error);
+use Settings ();
+use Translation qw(T);
 
 sub new {
 	my ( $class ) = @_;
@@ -667,6 +670,14 @@ sub sendDrop {
 
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
+	my $packages = $self->itemPackageCatalog;
+	if (keys %$packages && $char) {
+		my $item = $char->inventory->getByID($ID);
+		if ($item && exists $packages->{$item->{nameID}}) {
+			error T("This package requires a reward choice. Use 'is' to see its options.\n");
+			return;
+		}
+	}
 	$self->sendToServer($self->reconstruct({switch => 'item_use', ID => $ID, targetID => $targetID}));
 	debug sprintf("Item Use: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
@@ -3575,6 +3586,33 @@ sub sendSelectAccessibleMapname {
         char_slot	=> $config{char},
         map_slot	=> $map_slot,
     }));
+}
+
+sub itemPackageCatalog {
+	my ($self) = @_;
+	unless (exists $self->{itemPackages}) {
+		my %packages;
+		my $table = Settings::addTableFile('itempackages.txt',
+			loader => [\&FileParsers::parseDataFile2, \%packages], mustExist => 0);
+		Settings::loadByHandle($table);
+		Settings::removeFile($table);
+		$self->{itemPackages} = \%packages;
+	}
+	return $self->{itemPackages};
+}
+
+sub itemPackageOptions {
+	my ($self, $nameID) = @_;
+	my $catalog = $self->itemPackageCatalog;
+	return unless exists $catalog->{$nameID};
+	my %options;
+	for my $entry (split ' ', $catalog->{$nameID} // '') {
+		return {} unless $entry =~ /\A(0|[1-9][0-9]*)=([0-9]+:[0-9]+(?:,[0-9]+:[0-9]+)*)\z/;
+		my ($option, $rewards) = ($1, $2);
+		return {} if $option > 0xFFFFFFFF || exists $options{$option};
+		$options{$option} = [map { [split /:/, $_, 2] } split /,/, $rewards];
+	}
+	return \%options;
 }
 
 # 0BAF CZ_USE_PACKAGEITEM
