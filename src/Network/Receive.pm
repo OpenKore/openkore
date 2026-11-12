@@ -7856,6 +7856,8 @@ sub npc_talk_text {
 # 00C4 <shop id>.L
 sub npc_store_begin {
 	my ($self, $args) = @_;
+	my $sellAutoIndex = AI::findAction("sellAuto");
+	$args->{mangle} = 2 if defined $sellAutoIndex && AI::args($sellAutoIndex)->{sentNpcTalk};
 	undef %talk;
 	$talk{ID} = $args->{ID};
 	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
@@ -7929,6 +7931,8 @@ sub npc_store_info {
 # 00C7 <packet len>.W { <index>.W <price>.L <overcharge price>.L }*
 sub npc_sell_list {
 	my ($self, $args) = @_;
+	my $sellAutoIndex = AI::findAction("sellAuto");
+	$args->{mangle} = 2 if defined $sellAutoIndex && AI::args($sellAutoIndex)->{sentNpcTalk};
 	#sell list, similar to buy list
 	if (length($args->{RAW_MSG}) > 4) {
 		my $msg = $args->{RAW_MSG};
