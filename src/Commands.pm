@@ -5532,7 +5532,6 @@ sub cmdStats {
 				$ID = STATUS_LUK;
 			}
 
-			$char->{$arg} += 1;
 			$messageSender->sendAddStatusPoint($ID);
 		}
 	} else {
