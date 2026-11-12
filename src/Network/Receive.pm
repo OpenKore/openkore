@@ -8002,7 +8002,7 @@ sub buy_result {
 # 2 versions of same packet. $self->{npc_market_info_pack} (PACKET_ZC_NPC_MARKET_OPEN_sub) should be changed in own serverType file if needed
 sub npc_market_info {
 	my ($self, $args) = @_;
-	my $pack = $self->{npc_market_info_pack} || 'v C V2 v';
+	my $pack = $args->{switch} eq '0B7A' ? 'V C V2 v V' : $self->{npc_market_info_pack} || 'v C V2 v';
 	my $len = length pack $pack;
 
 	$storeList->clear;
@@ -8076,6 +8076,8 @@ sub npc_market_purchase_result {
 	if (AI::is("buyAuto")) {
 		AI::args()->{recv_buy_packet} = 1;
 	}
+
+	return if $args->{switch} eq '0B4E';
 
 	my $pack = $self->{npc_market_info_pack} || 'v C V2 v';
 	my $len = length pack $pack;
