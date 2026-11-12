@@ -7992,6 +7992,8 @@ sub buy_result {
 	}
 	if (AI::is("buyAuto")) {
 		AI::args()->{recv_buy_packet} = 1;
+		AI::args()->{recv_buy_packet_overweight} = 1 if $args->{fail} == 2;
+		delete AI::args()->{weight_recovery} if $args->{fail} == 0;
 	}
 	Plugins::callHook('buy_result', {fail => $args->{fail}});
 }
