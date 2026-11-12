@@ -748,6 +748,7 @@ sub new {
 		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
 		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
+		'0B4E' => ['npc_market_purchase_result', 'v v a*', [qw(len result itemList)]],
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
         '0B62' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], #-1
@@ -756,6 +757,7 @@ sub new {
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'0B76' => ['homunculus_property', 'Z24 C v11 V6 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B77' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
+		'0B7A' => ['npc_market_info', 'v a*', [qw(len itemList)]],
 		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
 		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
