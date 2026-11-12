@@ -809,6 +809,7 @@ sub shouldStartAutoBuy {
 	undef $ai_v{'temp'}{'found'};
 	for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 		next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
+		next if ($config{"buyAuto_${i}_price"} && $char->{zeny} < $config{"buyAuto_${i}_price"});
 		my $amount;
 		if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
 			$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
