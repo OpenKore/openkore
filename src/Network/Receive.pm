@@ -1664,6 +1664,7 @@ sub stat_info {
 		'01AB' => exists $args->{ID} && Actor::get($args->{ID}),
 		'07DB' => $char->{homunculus},
 		'0ACB' => $char,
+		'0BA5' => $char->{homunculus},
 	}->{$args->{switch}};
 
 	if ($args->{switch} eq "081E") {
