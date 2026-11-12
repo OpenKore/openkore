@@ -1701,13 +1701,14 @@ sub stat_info {
 # TODO: merge with stat_info
 # Notifies the client, about the result of an status change request (ZC_STATUS_CHANGE_ACK).
 # 00BC <status id>.W <result>.B <value>.B
+# 0B25 <status id>.W <result>.B <value>.B (ZC_ADVANCED_STATUS_CHANGE_ACK)
 # result:
 #     0 = failure
 #     1 = success
 sub stats_added {
 	my ($self, $args) = @_;
 
-	if ($args->{val} == 207) { # client really checks this and not the result field?
+	if ($args->{val} == 207 || (defined $args->{result} && $args->{result} != 1)) { # client really checks this and not the result field?
 		error T("Not enough stat points to add\n");
 	} else {
 		if ($args->{type} == VAR_STR) {

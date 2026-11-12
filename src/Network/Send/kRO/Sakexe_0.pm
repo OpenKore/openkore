@@ -318,6 +318,7 @@ sub new {
 		'0B19' => ['inventory_expansion_rejected'], #2
 		'0B1C' => ['ping'], #2
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
+		'0B24' => ['send_add_trait_status_point', 'v2', [qw(statusID Amount)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 

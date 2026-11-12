@@ -339,6 +339,7 @@ sub new {
 		'0B19' => ['inventory_expansion_rejected'], #2
 		'0B1C' => ['ping'], #2
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
+		'0B24' => ['send_add_trait_status_point', 'v2', [qw(statusID Amount)]],
 		'0C23' => ['send_otp_login', 'a6 C', [qw(otp padding)]],
 		'0841' => ['select_accessible_mapname', 'C C', [qw(char_slot map_slot)]],
 		'0BAF' => ['use_packageitem', 'v a4 V V', [qw(index accountID itemID boxIndex)]],
