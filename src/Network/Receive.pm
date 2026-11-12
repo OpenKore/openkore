@@ -1708,7 +1708,7 @@ sub stat_info {
 sub stats_added {
 	my ($self, $args) = @_;
 
-	if (defined $args->{result} ? !$args->{result} : $args->{val} == 207 || (defined $args->{result} && $args->{result} != 1)) {
+	if (defined $args->{result} ? $args->{result} != 1 : $args->{val} == 207) {
 		error T("Not enough stat points to add\n");
 	} else {
 		if ($args->{type} == VAR_STR) {
