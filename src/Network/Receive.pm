@@ -1708,7 +1708,7 @@ sub stat_info {
 sub stats_added {
 	my ($self, $args) = @_;
 
-	if ($args->{val} == 207 || (defined $args->{result} && $args->{result} != 1)) { # client really checks this and not the result field?
+	if (defined $args->{result} ? !$args->{result} : $args->{val} == 207 || (defined $args->{result} && $args->{result} != 1)) {
 		error T("Not enough stat points to add\n");
 	} else {
 		if ($args->{type} == VAR_STR) {
@@ -2080,7 +2080,7 @@ sub actor_display {
 			$actor->{appear_time} = time;
 			$mustAdd = 1;
 		}
-		
+
 		$actor->setName($jobs_lut{$args->{type}});
 	}
 
@@ -3115,7 +3115,7 @@ sub homunculus_info {
 # Minimap indicator.
 sub minimap_indicator {
 	my ($self, $args) = @_;
-	
+
 	my $marker_type = defined $args->{type}
 		? "type:$args->{type}"
 		: "effect:" . (defined $args->{effect} ? $args->{effect} : '-');
@@ -6113,12 +6113,12 @@ sub deal_begin {
 		error T("That person is too far from you to trade.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
 		undef %outgoingDeal;
-		
+
 	} elsif ($args->{type} == 2) {
 		error T("That person is in another deal.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
 		undef %outgoingDeal;
-		
+
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -6137,17 +6137,17 @@ sub deal_begin {
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 		Plugins::callHook('engaged_deal', {name => $currentDeal{name}});
-		
+
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
 		undef %outgoingDeal;
-		
+
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
 		undef %outgoingDeal;
-		
+
 	}
 }
 
@@ -8135,7 +8135,7 @@ sub deal_add_you {
 	}
 
 	my $id = unpack('v',$args->{ID});
-	
+
 	if ($id == 0) {
 		message "You added Zeny to Deal (suposedly $currentDeal{'you_zeny'} z).\n";
 		return;
@@ -8338,15 +8338,15 @@ sub received_login_token {
             $master->{ip},
             $master->{port}
         );
-    
+
     } elsif ($login_type == 400 || $login_type == 1000) {
         die 'ERROR: otpSeed is not set in config.txt' unless $config{otpSeed};
 
         my $otp;
         Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
-    	unless (defined $otp && length $otp) { 
+    	unless (defined $otp && length $otp) {
 			error "No Plugin returned a OTP code for account $config{username}\n", 'connection';
-			$otp = $interface->query(T(', please enter your OTP: ')); 
+			$otp = $interface->query(T(', please enter your OTP: '));
 		}
         $messageSender->sendOtpToServer($otp);
 
@@ -8354,16 +8354,16 @@ sub received_login_token {
         error "OTP token malformed for account $config{username}\n", 'connection';
         my $otp = $interface->query(T('Please enter the OTP code: '));
         $messageSender->sendOtpToServer($otp);
-    
+
     } elsif ($login_type == 500) {
         error "Wrong OTP for account $config{username}\n", 'connection';
         my $otp = $interface->query(T('Please enter the OTP code: '));
         $messageSender->sendOtpToServer($otp);
-    
+
     } elsif ($login_type == 600) {
         error "Password Error for account $config{username}\n", 'connection';
         Misc::quit();
-    
+
     } elsif ($login_type == 900) {
 		error "You need to setup your OTP for account $config{username}\n", 'connection';
 		Misc::quit();
@@ -8499,7 +8499,7 @@ sub actor_movement_interrupted {
 	if ($actor->isa('Actor::You')) {
 		debug "Your movement was interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
 		AI::clear("move");
-	
+
 	} elsif ($actor) {
 		debug TF("[%s] Movement interrupted, coordinates: %s %s\n", $actor, $coords{x}, $coords{y}), "parseMsg_move";
 	}
@@ -11011,7 +11011,7 @@ sub combo_delay {
 		my $window_seconds = $char->{combo_state}{delay} / 1000;
 		my $remaining_seconds = $char->{combo_state}{expires_at} - time;
 		$remaining_seconds = 0 if $remaining_seconds < 0;
-		
+
 		$args->{actor} = Actor::get($args->{ID});
 
 		debug sprintf(
@@ -11587,7 +11587,7 @@ sub monster_ranged_attack {
 		$monster->{movetoattack_pos} = {%coords1};
 		$monster->{movetoattack_time} = time;
 	}
-	
+
 	$char->{movetoattack_targetID} = $ID;
 
 	$char->{movetoattack_pos} = {%coords2};
