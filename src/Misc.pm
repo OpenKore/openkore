@@ -5064,6 +5064,11 @@ sub avoidGM_talk {
 # Disconnects / teleports if a player is detected.
 sub avoidList_near {
 	my $return = 0;
+	if (defined $ai_v{avoidList_reconnect}) {
+		return 1 if AI::inQueue('teleport');
+		relog(delete $ai_v{avoidList_reconnect}, 1);
+		return 1;
+	}
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
 	for my $player (@$playersList) {
@@ -5089,25 +5094,25 @@ sub avoidList_near {
 
 		my $msg;
 		if ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 1 && $avoidPlayer->{disconnect_on_sight} == 1)
-			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight})
-			|| ($avoidJob && $avoidJob->{teleport_on_sight} &&  $avoidJob->{disconnect_on_sight}) ) {
+			|| ($avoidID && $avoidID->{teleport_on_sight} == 1 && $avoidID->{disconnect_on_sight} == 1)
+			|| ($avoidJob && $avoidJob->{teleport_on_sight} == 1 && $avoidJob->{disconnect_on_sight} == 1) ) {
 			# like avoidGM_near Mode 1: teleport & disconnect
 			ai_useTeleport(1);
 			$msg = TF("Player %s (%d, %s) is nearby (%s), teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $field->baseName, $config{avoidList_reconnect});
-			relog($config{avoidList_reconnect}, 1);
+			$ai_v{avoidList_reconnect} = $config{avoidList_reconnect} || 5;
 			$return = 1;
 
-		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} && $avoidPlayer->{disconnect_on_sight})
-			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight})
-			|| ($avoidJob && $avoidJob->{teleport_on_sight} &&  $avoidJob->{disconnect_on_sight}) ) {
+		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 2 && $avoidPlayer->{disconnect_on_sight} == 1)
+			|| ($avoidID && $avoidID->{teleport_on_sight} == 2 && $avoidID->{disconnect_on_sight} == 1)
+			|| ($avoidJob && $avoidJob->{teleport_on_sight} == 2 && $avoidJob->{disconnect_on_sight} == 1) ) {
 			# like avoidGM_near Mode 5: respawn & disconnect
 			ai_useTeleport(2);
 			$msg = TF("Player %s (%d, %s) is nearby (%s), respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $field->baseName, $config{avoidList_reconnect});
-			relog($config{avoidList_reconnect}, 1);
+			$ai_v{avoidList_reconnect} = $config{avoidList_reconnect} || 5;
 			$return = 1;
 
 		} elsif ( !$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) ||
-			($avoidID && $avoidID->{disconnect_on_sight}) && ($avoidJob && $avoidJob->{disconnect_on_sight}) ) ) {
+			($avoidID && $avoidID->{disconnect_on_sight}) || ($avoidJob && $avoidJob->{disconnect_on_sight}) ) ) {
 			# like avoidGM_near Mode 2: disconnect
 			$msg = TF("Player %s (%d, %s) is nearby (%s), disconnect for %s seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $field->baseName, $config{avoidList_reconnect});
 			relog($config{avoidList_reconnect}, 1);
@@ -5130,12 +5135,14 @@ sub avoidList_near {
 			warning "$msg\n";
 			chatLog("k", "*** $msg ***\n");
 		}
+		return $return if defined $ai_v{avoidList_reconnect};
 
 	}
 	return $return;
 }
 
 sub avoidList_ID {
+	return if defined $ai_v{avoidList_reconnect};
 	return if (!($config{avoidList}) || ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap}));
 
 	my $avoidID = unpack("V", shift);
