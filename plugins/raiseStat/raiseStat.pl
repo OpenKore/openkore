@@ -19,6 +19,8 @@ Plugins::register('raiseStat', $translator->translate('automatically raise chara
 my $base_hooks = Plugins::addHooks(
 	['start3',        \&checkConfig],
 	['postloadfiles', \&checkConfig],
+	['disconnected',  \&on_disconnect],
+	['serverDisconnect/success', \&on_disconnect],
     ['configModify',  \&on_configModify]
    );
 
@@ -27,6 +29,7 @@ my $waiting_hooks;
 my $adding_hook;
 my $next_stat;
 my $status;
+my $waiting_for_answer;
 my $timeout = { time => 0, timeout => 1 };
 
 use constant {
@@ -39,6 +42,10 @@ sub on_unload {
    Plugins::delHook($base_hooks);
    changeStatus(INACTIVE);
    message $translator->translate("[raiseStat] Plugin unloading or reloading\n"), 'success';
+}
+
+sub on_disconnect {
+	undef $waiting_for_answer;
 }
 
 ################################################################
@@ -56,9 +63,11 @@ sub on_unload {
 #  will try to raise stats if possible.
 sub changeStatus {
 	my $new_status = shift;
+	$new_status = AWAITING_CHANCE_OR_ANSWER if ($new_status == ADDING && $waiting_for_answer);
 	Plugins::delHook($waiting_hooks) if ($status == AWAITING_CHANCE_OR_ANSWER);
 	Plugins::delHook($adding_hook) if ($status == ADDING);
 	if ($new_status == INACTIVE) {
+		undef $waiting_for_answer;
 		undef $next_stat;
 		undef @stats_to_add;
 		debug $translator->translate("[raiseStat] Plugin stage changed to 'INACTIVE'\n");
@@ -86,7 +95,13 @@ sub changeStatus {
 sub on_possible_raise_chance_or_answer {
 	my $hookName = shift;
 	my $args = shift;
-	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 9 && $args->{type} != 231);
+	if ($hookName eq 'packet/stat_info') {
+		return if $waiting_for_answer;
+		return if ($args && $args->{type} != 9 && $args->{type} != 231 && ($args->{type} < 247 || $args->{type} > 252));
+	}
+	return if ($waiting_for_answer && $hookName eq 'packet/stats_info');
+	return if ($waiting_for_answer && $hookName eq 'packet/stats_added' && $args->{type} != $waiting_for_answer);
+	undef $waiting_for_answer;
 	debug $translator->translate("[raiseStat] Received a raise chance or answer\n");
 	changeStatus(ADDING);
 }
@@ -150,7 +165,7 @@ sub on_ai_pre {
 #  prints it on console.
 sub raiseStat {
 	message $translator->translatef("[raiseStat] Auto-adding stat '%s' to '%d'\n", $next_stat, $char->{$next_stat}+1);
-	$messageSender->sendAddStatusPoint({
+	my $stat_id = {
 		str => STATUS_STR,
 		agi => STATUS_AGI,
 		vit => STATUS_VIT,
@@ -163,7 +178,9 @@ sub raiseStat {
 		spl => STATUS_SPL,
 		con => STATUS_CON,
 		crt => STATUS_CRT,
-	}->{$next_stat});
+	}->{$next_stat};
+	$waiting_for_answer = $stat_id if ($stat_id >= STATUS_POW && $stat_id <= STATUS_CRT);
+	$messageSender->sendAddStatusPoint($stat_id);
 }
 
 ################################################################
