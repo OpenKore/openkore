@@ -2102,7 +2102,7 @@ sub processAutoBuy {
 				delete $args->{sentBuyPacket_time};
 				delete $args->{recv_buy_packet};
 				$args->{recv_buy_packet_time} = time;
-				if (delete $args->{recv_buy_packet_overweight} && !$args->{weight_recovery}) {
+				if (delete $args->{recv_buy_packet_overweight} && !$args->{weight_recovery} && (!defined $config{buyAuto_freeWeightOnOverweight} || $config{buyAuto_freeWeightOnOverweight})) {
 					if ($config{storageAuto} && ($config{storageAuto_npc} || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem}) && ai_storageAutoCheck()) {
 						$args->{weight_recovery} = 1;
 						AI::queue("storageAuto", {forcedByBuy => 1});

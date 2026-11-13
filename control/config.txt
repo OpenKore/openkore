@@ -731,6 +731,8 @@ useSelf_item {
 
 ######## Autostorage/autosell ########
 
+buyAuto_freeWeightOnOverweight 1
+
 buyAuto {
 	npc
 	npc_steps b
