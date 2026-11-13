@@ -3736,8 +3736,9 @@ sub printItemDesc {
 	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
 	my $option_index = 1;
 	foreach ( @options ) {
-		if ( $itemOptionHandle{$_->{type}} && $itemOption_lut{$itemOptionHandle{$_->{type}}} ) {
-			$msg .= TF("OPTION %s: ", $option_index) . sprintf($itemOption_lut{$itemOptionHandle{$_->{type}}}, $_->{value}) . "\n";
+		my $option = ($itemOptionHandle{$_->{type}} && $itemOption_lut{$itemOptionHandle{$_->{type}}}) || $itemOption_lut{$_->{type}};
+		if ( $option ) {
+			$msg .= TF("OPTION %s: ", $option_index) . sprintf($option, $_->{value}) . "\n";
 		} else {
 			$msg .= TF("OPTION %s: Option (%d, %d, %d)\n", $option_index, $_->{type}, $_->{value},$_->{param});
 		}
