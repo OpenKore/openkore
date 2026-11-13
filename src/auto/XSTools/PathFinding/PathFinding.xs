@@ -161,8 +161,14 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 		session->min_y = (int) SvUV (min_y);
 		session->max_y = (int) SvUV (max_y);
 
-		srand(time(0));
 		session->randomFactor = (unsigned int) SvUV (randomFactor);
+		if (session->randomFactor) {
+			static bool seeded = false;
+			if (!seeded) {
+				srand(time(0));
+				seeded = true;
+			}
+		}
 		session->useManhattan = (unsigned short) SvUV (useManhattan);
 
 		// Min and max check
