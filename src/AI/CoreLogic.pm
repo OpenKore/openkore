@@ -3070,6 +3070,8 @@ sub processAutoItemUse {
 ##### AUTO-SKILL USE #####
 sub processAutoSkillUse {
 	return if ($char->{muted});
+	my $routeIndex = AI::findAction("route");
+	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && AI::args($routeIndex)->getSubtask->isa('Task::TalkNPC'));
 	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport) ) || (AI::action() eq "skill_use" && AI::args()->{tag} eq "attackSkill")) {
 		my %self_skill;
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
