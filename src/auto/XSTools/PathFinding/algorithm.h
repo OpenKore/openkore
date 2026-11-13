@@ -23,7 +23,7 @@ typedef struct {
 
 typedef struct {
 	bool avoidWalls;
-	const char *map_base_weight;
+	const signed char *map_base_weight;
 
 	bool customWeights;
 	unsigned int *second_weight_map;

@@ -41,7 +41,7 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 		SV * max_y
 
 	PREINIT:
-		char *weight_map_data = NULL;
+		signed char *weight_map_data = NULL;
 
 	CODE:
 
@@ -145,7 +145,7 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 		}
 
 		/* Get the weight_map data */
-		weight_map_data = (char *) SvPV_nolen (SvRV (weight_map));
+		weight_map_data = (signed char *) SvPV_nolen (SvRV (weight_map));
 		session->map_base_weight = weight_map_data;
 
 		session->width = (int) SvUV (width);
