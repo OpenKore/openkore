@@ -6891,6 +6891,7 @@ sub solveItemLink {
 	}
 
 	my ($itemstr, $infostr) = ($1, $2);
+	$infostr =~ tr/)+,\-/(*+,/ if $packetParser && exists $packetParser->{oldItemLink} && !$packetParser->{oldItemLink} && $infostr !~ /[(*]/;
 	my ($loc, $showslots, $id) = $itemstr =~ /([\d\w]{5})(\d)([\d\w]+)/;
 	my ($refine) = $infostr =~ /%([\d\w]+)/;
 	my ($itemtype) = $infostr =~ /&([\d\w]+)/;
@@ -6900,7 +6901,7 @@ sub solveItemLink {
 	};
 
 	foreach my $card (map { $_ } $infostr =~ /\(([\d\w]+)/g) {
-		$item_info->{cards} .= pack('v', fromBase62($card));
+		$item_info->{cards} .= pack($masterServer->{itemListType} ? 'V' : 'v', fromBase62($card));
 	}
 
 	foreach my $opt (map { $_ } $infostr =~ /\*([\d\w\+,]+)/g) {
@@ -6920,8 +6921,8 @@ sub solveMessage {
 	# <ITEML>.*</ITEML> to readable item name
 	# Sell<ITEML>0000y1kk&0g)00)00)00)00+05,00-01+0B,00-0m</ITEML>500k
 	# S><ITEML>0000y1nC&05)00)00+0h,00-0C+0F,00-0h</ITEML><ITEML>000021jM&01)00)00+0h,00-0N+0B,00-0g</ITEML><ITEML>000021jM&01)00)00+0f,00-02+0B,00-0e</ITEML>
-	if ($msg =~ /<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/) {
-		$msg =~ s/<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/solveItemLink($1)/eg;
+	if ($msg =~ /<ITEML>([a-zA-Z0-9%&'(),+\-*]*)<\/ITEML>/) {
+		$msg =~ s/<ITEML>([a-zA-Z0-9%&'(),+\-*]*)<\/ITEML>/solveItemLink($1)/eg;
 	}
 	Plugins::callHook('solveMessage', { msg => \$msg });
 	return $msg;

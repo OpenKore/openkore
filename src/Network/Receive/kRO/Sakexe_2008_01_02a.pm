@@ -22,7 +22,9 @@ use base qw(Network::Receive::kRO::Sakexe_2007_11_27a);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+	$self->{oldItemLink} = 1;
+	return $self;
 }
 
 1;

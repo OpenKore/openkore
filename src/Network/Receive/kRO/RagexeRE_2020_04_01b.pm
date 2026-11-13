@@ -18,6 +18,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2020_03_04a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	$self->{oldItemLink} = 0;
 
 	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25 V v';
 	$self->{npc_store_info_pack} = "V V C V";
