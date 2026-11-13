@@ -6428,15 +6428,20 @@ sub friend_list {
 	undef %friends;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $entry_size = ($masterServer && $masterServer->{friendListEntrySize} || 32) == 8 ? 8 : 32;
+	if (!($masterServer && $masterServer->{friendListEntrySize}) && ($msg_size - 4) % 32 && ($msg_size - 4) % 8 == 0) {
+		$entry_size = 8;
+	}
+	$self->{friendListEntrySize} = $entry_size;
 
 	my $ID = 0;
-	for (my $i = 4; $i < $msg_size; $i += 32) {
+	for (my $i = 4; $i + $entry_size <= $msg_size; $i += $entry_size) {
 		binAdd(\@friendsID, $ID);
 		($friends{$ID}{'accountID'},
 		$friends{$ID}{'charID'},
-		$friends{$ID}{'name'}) = unpack('a4 a4 Z24', substr($args->{RAW_MSG}, $i, 32));
+		$friends{$ID}{'name'}) = unpack('a4 a4 Z*', substr($msg, $i, $entry_size));
 
-		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'});
+		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'} // '');
 		$friends{$ID}{'online'} = 0;
 		$ID++;
 	}
@@ -6458,6 +6463,7 @@ sub friend_logon {
 
 	for (my $i = 0; $i < @friendsID; $i++) {
 		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
+			$friends{$i}{'name'} = bytesToString(unpack('Z24', substr($args->{RAW_MSG}, 11, 24))) if length($args->{RAW_MSG}) >= 35;
 			$friends{$i}{'online'} = 1 - $isNotOnline;
 			if ($isNotOnline) {
 				message TF("Friend %s has disconnected\n", $friends{$i}{name}), undef, 1;
