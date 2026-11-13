@@ -5683,7 +5683,9 @@ sub checkSelfCondition {
 							|| $config{$prefix."_equip_midHead"}
 							|| $config{$prefix."_equip_lowHead"}
 							);
-			return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
+			my $level = $config{$prefix . "_lvl"} || $char->getSkillLevel($skill);
+			$level = 1 if ($prefix =~ /^(?:useSelf_skill|partySkill)_\d+$/ && $config{useSelf_skill_smartHeal} && !$config{$prefix . "_noSmartHeal"} && $skill->getHandle eq 'AL_HEAL');
+			return 0 unless ($char->{sp} >= $skill->getSP($level));
 			
 		} elsif ($has_homunculus && $char->{homunculus}->checkSkillOwnership($skill)) {
 			return 0 unless ($char->{homunculus}->getSkillLevel($skill));
