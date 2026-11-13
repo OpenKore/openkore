@@ -110,6 +110,7 @@ sub iterate {
 	Benchmark::begin("AI (part 1.3 skill)") if DEBUG;
 	processSkillUse();
 	processAutoCommandUse();
+	processSitAuto() if AI::state() == AI::AUTO() && $field;
 	processAutoAttack() if AI::state() == AI::AUTO();
 	Benchmark::end("AI (part 1.3 skill)") if DEBUG;
 	Benchmark::begin("AI (part 1.3 move)") if DEBUG;
