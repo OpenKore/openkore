@@ -560,6 +560,7 @@ sub initHandlers {
 			["read <mail_# | mail_id>", T("open the selected Rodex mail")],
 			["getitems", T("get items of current rodex mail")],
 			["getitems <mail_# | mail_id>", T("get items of rodex mail")],
+			["getall", T("get all attachments in the current rodex mailbox")],
 			["getzeny", T("get zeny of current rodex mail")],
 			["getzeny <mail_# | mail_id>", T("get zeny of rodex mail")],
 			["write", T("open a box to start write a rodex mail")],
@@ -7463,6 +7464,39 @@ sub cmdAchieve {
 	}
 }
 
+sub rodexGetAll {
+	return unless $rodexList && $rodexList->{getall};
+
+	if (!exists $rodexList->{last_page}) {
+		unless (defined $rodexList->{current_page_last_mailID}) {
+			delete $rodexList->{getall};
+			error T("Cannot request the next rodex mail page.\n");
+			return;
+		}
+		$messageSender->rodex_next_maillist($rodexCurrentType, $rodexList->{current_page_last_mailID}, $rodexList->{current_page_last_mailID2} || 0);
+		return;
+	}
+
+	delete $rodexList->{getall};
+	my ($items, $zeny) = (0, 0);
+	for my $mail (values %{$rodexList->{mails}}) {
+		my $type = defined $mail->{openType} ? $mail->{openType} : $rodexCurrentType;
+		next if $type != $rodexCurrentType;
+		my $flags = $mail->{attachment_flags} || 0;
+		if (($flags & 4) && !$mail->{getall_pending_items}) {
+			$mail->{getall_pending_items} = 1;
+			$messageSender->rodex_request_items($mail->{mailID1}, $mail->{mailID2}, $type);
+			$items++;
+		}
+		if (($flags & 2) && !$mail->{getall_pending_zeny}) {
+			$mail->{getall_pending_zeny} = 1;
+			$messageSender->rodex_request_zeny($mail->{mailID1}, $mail->{mailID2}, $type);
+			$zeny++;
+		}
+	}
+	message TF("Rodex getall requested %d item and %d zeny attachments.\n", $items, $zeny);
+}
+
 sub cmdRodex {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
@@ -7921,6 +7955,20 @@ sub cmdRodex {
 		message T("Sending rodex mail.\n");
 		$messageSender->rodex_send_mail();
 
+	} elsif ($arg1 eq 'getall') {
+		if (!defined $rodexList) {
+			error T("Your rodex mail box is closed.\n");
+			return;
+		} elsif (defined $rodexWrite) {
+			error T("You are writing a rodex mail.\n");
+			return;
+		} elsif ($rodexList->{getall}) {
+			error T("Rodex getall is already loading mail pages.\n");
+			return;
+		}
+		$rodexList->{getall} = 1;
+		rodexGetAll();
+
 	} elsif ($arg1 eq 'getitems') {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
@@ -8060,7 +8108,7 @@ sub cmdRodex {
 
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|draft|send>]\n");
+			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getall|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|draft|send>]\n");
 	}
 }
 

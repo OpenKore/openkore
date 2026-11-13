@@ -8908,13 +8908,15 @@ sub rodex_mail_list {
 	}
 
 	if ($args->{switch} eq '09F0' || $args->{switch} eq '0A7D') {
-		$rodexCurrentType = $args->{attach};
+		$rodexCurrentType = $args->{type};
 	}
 
+	my $previousMails;
 	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2'  || $args->{switch} eq '0B5F') {
-		$rodexList->{current_page} = 0;
-		$rodexList = {};
-		$rodexList->{mails} = {};
+		$previousMails = $rodexList->{mails};
+		my $getall = $rodexList->{getall};
+		$rodexList = { current_page => 0, mails => {} };
+		$rodexList->{getall} = $getall if $getall;
 	} else {
 		$rodexList->{current_page}++;
 	}
@@ -8943,8 +8945,16 @@ sub rodex_mail_list {
 
 		$i+= $mail->{Titlelength};
 
+		my $previous = $previousMails && $previousMails->{$mail->{mailID1}};
+		if ($previous && $previous->{mailID2} == $mail->{mailID2}
+			&& (!defined $previous->{openType} || !defined $mail->{openType} || $previous->{openType} == $mail->{openType})) {
+			$mail->{getall_pending_items} = $previous->{getall_pending_items} if $previous->{getall_pending_items};
+			$mail->{getall_pending_zeny} = $previous->{getall_pending_zeny} if $previous->{getall_pending_zeny};
+		}
 		$rodexList->{mails}{$mail->{mailID1}} = $mail;
 		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
+		$rodexList->{current_page_last_mailID2} = $mail->{mailID2};
+		$mail->{attachment_flags} = $mail->{attach};
 
 		my %attach = (
 			#0 => '-',		# no attach
@@ -8968,6 +8978,7 @@ sub rodex_mail_list {
 		'last_mailID' => $rodexList->{current_page_last_mailID},
 		'isEnd' => $args->{isEnd},
 	});
+	Commands::rodexGetAll() if $rodexList && $rodexList->{getall};
 }
 
 sub rodex_read_mail {
@@ -9183,6 +9194,8 @@ sub rodex_write_result {
 
 sub rodex_get_zeny {
 	my ( $self, $args ) = @_;
+	my $mail = $rodexList && $rodexList->{mails}{$args->{mailID1}};
+	delete $mail->{getall_pending_zeny} if $mail;
 
 	if ($args->{fail}) {
 		error T("You failed to get the zeny of the rodex mail.\n");
@@ -9190,6 +9203,8 @@ sub rodex_get_zeny {
 	}
 
 	message T("The zeny of the rodex mail was requested with success.\n");
+	return unless $mail;
+	$mail->{attachment_flags} &= ~2 if defined $mail->{attachment_flags};
 
 	$rodexList->{mails}{ $args->{mailID1} }{zeny1} = 0;
 	$rodexList->{mails}{ $args->{mailID1} }{attach} = $rodexList->{mails}{ $args->{mailID1} }{attach} eq 'z' ? 0 : 'i';
@@ -9197,6 +9212,8 @@ sub rodex_get_zeny {
 
 sub rodex_get_item {
 	my ( $self, $args ) = @_;
+	my $mail = $rodexList && $rodexList->{mails}{$args->{mailID1}};
+	delete $mail->{getall_pending_items} if $mail;
 
 	if ($args->{fail}) {
 		error T("You failed to get the items of the rodex mail.\n");
@@ -9204,6 +9221,8 @@ sub rodex_get_item {
 	}
 
 	message T("The items of the rodex mail were requested with success.\n");
+	return unless $mail;
+	$mail->{attachment_flags} &= ~4 if defined $mail->{attachment_flags};
 
 	$rodexList->{mails}{$args->{mailID1}}{items} = [];
 	$rodexList->{mails}{$args->{mailID1}}{attach} = $rodexList->{mails}{$args->{mailID1}}{attach} eq 'i' ? undef : 'z';
