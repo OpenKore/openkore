@@ -2106,7 +2106,7 @@ sub processAutoBuy {
 						$args->{weight_recovery} = 1;
 						AI::queue("storageAuto", {forcedByBuy => 1});
 						Plugins::callHook('AI_storage_auto_queued');
-					} elsif ((!defined $config{buyAuto_onFail_sell} || $config{buyAuto_onFail_sell}) && $config{sellAuto} && $config{sellAuto_npc} && ai_sellAutoCheck()) {
+					} elsif ((!defined $config{buyAuto_sellOnOverweight} || $config{buyAuto_sellOnOverweight}) && $config{sellAuto} && $config{sellAuto_npc} && ai_sellAutoCheck()) {
 						$args->{weight_recovery} = 1;
 						AI::queue("sellAuto", {forcedByBuy => 1});
 						Plugins::callHook('AI_sell_auto_queued');
