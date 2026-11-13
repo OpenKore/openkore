@@ -3172,7 +3172,21 @@ sub processPartySkillUse {
 				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $party_skill_dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
 				my $realActorPos = calcPosFromPathfinding($field, $player);
 				my $distance = blockDistance($realMyPos, $realActorPos);
-				next unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist));
+				unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist)) {
+					my (undef, $max, $inclusive) = getRange($party_skill_dist);
+					$max-- if defined($max) && !$inclusive;
+					if ($config{"partySkill_${i}_moveToTarget"} && !$config{"partySkill_${i}_isSelfSkill"}
+						&& $party_skill{owner}{ID} eq $char->{ID} && (AI::isIdle() || AI::is(qw(sitAuto follow)))
+						&& defined($max) && $max >= 0 && $distance > $max
+						&& timeOut($ai_v{"partySkill_${i}_move_time"}{$ID}, $timeout{ai_move_giveup}{timeout})
+						&& checkPlayerCondition("partySkill_${i}_target", $ID)) {
+						$ai_v{"partySkill_${i}_move_time"}{$ID} = time;
+						ai_route($field->baseName, $realActorPos->{x}, $realActorPos->{y}, noMapRoute => 1, noSitAuto => 1, distFromGoal => $max);
+						stand() if $char->{sitting};
+						return;
+					}
+					next;
+				}
 				next unless (checkPlayerCondition("partySkill_$i"."_target", $ID));
 
 				$party_skill{ID} = $party_skill{skillObject}->getHandle;
