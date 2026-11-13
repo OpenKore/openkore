@@ -505,6 +505,7 @@ sub ai_route { $char->route(@_) }
 sub ai_sellAutoCheck {
 	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped} || $item->{unsellable});
+		next if ($config{sellAuto_keepEnhanced} && $item->isEnhanced);
 		my $control = Misc::items_control($item->{name}, $item->{nameID});
 		if ($control->{sell} && $item->{amount} > $control->{keep}) {
 			return 1;

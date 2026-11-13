@@ -387,6 +387,8 @@ sub usable     	{ (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0
 sub equippable	{ (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1)[$_[0]{type}] }
 sub mergeable 	{ (0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)[$_[0]{type}] }
 
+sub isEnhanced { $_[0]{upgrade} || $_[0]{grade} || ($_[0]{cards} || '') =~ /[^\x00]/ || ($_[0]{options} || '') =~ /[^\x00]/ }
+
 ##
 # $ActorItem->equippedInSlot(slot)
 # slot: slot to check
