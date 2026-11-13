@@ -431,7 +431,7 @@ sub ai_slave_getAggressives {
 		next if (!Misc::slave_checkMonsterCleanness($slave, $ID));
 		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $pos = calcPosition($monster);
-		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followAttackDistance'} || $config{$slave->{configPrefix}.'followDistanceMax'}));
 
 		if (Misc::is_aggressive_slave($slave, $monster, $control, $type, $party)) {
 			if ($wantArray) {

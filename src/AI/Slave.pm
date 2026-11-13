@@ -347,6 +347,7 @@ sub processFollow {
 
 	my $max_dist = $config{$slave->{configPrefix}.'followDistanceMax'};
 	$max_dist = 10 unless defined $max_dist;
+	$max_dist = $config{$slave->{configPrefix}.'followAttackDistance'} || $max_dist if $slave->inQueue('attack');
 
 	my $dist1 = $slave->{master_dist};
 	my $dist2 = blockDistance($char->{pos_to}, $slave->{pos_to});
@@ -533,7 +534,8 @@ sub processAutoAttack {
 		($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk})
 	);
 	return unless (timeOut($timeout{$slave->{ai_attack_auto_timeout}}));
-	return unless ($slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'});
+	my $attack_follow_distance = $config{$slave->{configPrefix}.'followAttackDistance'} || $config{$slave->{configPrefix}.'followDistanceMax'};
+	return unless ($slave->{master_dist} <= $attack_follow_distance);
 	#next unless ((AI::action() ne "move" && AI::action() ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'});
 	return unless (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity);
 	return unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"));
@@ -593,7 +595,7 @@ sub processAutoAttack {
 			my $target_pos = calcPosition($monster);
 			my $master_pos = $char->position;
 
-			next if (blockDistance($master_pos, $target_pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+			next if (blockDistance($master_pos, $target_pos) > $attack_follow_distance);
 
 			# List monsters that master and other slaves are attacking
 			if (
