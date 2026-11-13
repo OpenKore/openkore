@@ -48,6 +48,7 @@ use Utils;
 use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
+use Actor::Item ();
 use Actor::Slave::Homunculus;
 use Actor::Slave::Mercenary;
 use Actor::Slave::Unknown;
@@ -5576,6 +5577,11 @@ sub item_list_nonstackable {
 		$arguments->{hook} = 'packet_inventory';
 		$arguments->{getter} = sub { $char->inventory->getByID($_[0]{ID}) };
 		$arguments->{adder} = sub { $char->inventory->add($_[0]) };
+		for my $item (@{$arguments->{items}}) {
+			my $existing = $char->inventory->getByID($item->{ID});
+			$item->{amount} = $existing->{amount} if $existing && $existing->{nameID} == $item->{nameID}
+				&& (grep { $item->{type} == $_ } (Actor::Item::TYPE_ARROW, Actor::Item::TYPE_AMMO, Actor::Item::TYPE_SHURIKEN, Actor::Item::TYPE_CANNONBALL));
+		}
 
 	} elsif ( $args->{type} == INVTYPE_CART ) {
 		$arguments->{hook} = 'packet_cart',
