@@ -12207,6 +12207,13 @@ sub isvr_disconnect {
 
 sub skill_use_failed {
 	my ($self, $args) = @_;
+	if ($args->{skillID} == 212 && $args->{cause} == 0 && AI::action() eq 'skill_use') {
+		my $use = AI::args();
+		my $index = AI::findAction('attack');
+		if (defined $index && ($use->{tag} || '') eq 'attackSkill' && $config{$use->{prefix} . '_fromBehind'} && $use->{target} eq AI::args($index)->{ID}) {
+			AI::args($index)->{backstabFailed} = 1;
+		}
+	}
 
 	my %basefailtype = (
 		0 => $msgTable[160],#"skill failed"

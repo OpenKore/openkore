@@ -604,6 +604,7 @@ pet_return 20
 
 attackSkillSlot {
 	lvl
+	fromBehind 0
 	dist 1
 	maxDist 1
 	maxCastTime 0
