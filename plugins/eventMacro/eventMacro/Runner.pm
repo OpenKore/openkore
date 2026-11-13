@@ -464,7 +464,7 @@ sub scanBlocks {
 	my $block_starts = [];
 
 	for (my $line = 0; $line < @{$script}; $line++) {
-		if ($script->[$line] =~ /^(if|switch|while|case)\s+\(.*\)\s+{$|^(else)\s+.*{/) {
+		if ($script->[$line] =~ /^(if|switch|while|case)\s*\(.*\)\s*{$|^(else)\s+.*{/) {
 			push @$block_starts, { type => $1 || $2, start => $line };
 		} elsif ($script->[$line] eq '}') {
 			my $block = pop @$block_starts;
@@ -596,7 +596,7 @@ sub define_next_valid_command {
 		# While statement: while (foo <= bar) {
 		######################################
 		if ($self->{current_line} =~ /^while\s*\(/) {
-			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s+{$/;
+			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s*{$/;
 
 			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3;
 
@@ -1418,7 +1418,7 @@ sub parse_and_check_condition_text {
 
 	#the last group in the array is always the full statement
 	#so post_if is what lies after end of main group
-	my $post_if = substr ($line_script, $groups[-1]{end}+1);
+	my $post_if = substr ($line_script, $groups[-1]{end});
 	$post_if    =~ s/^\s+|\s+$//g;
 	my $result  = $self->parse_condition_text_groups(\@groups);
 	return if defined $self->error;
