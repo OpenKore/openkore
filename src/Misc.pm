@@ -3269,7 +3269,7 @@ sub meetingPosition {
 		} else {
 			$runFromTarget_minStep = $config{runFromTarget_minStep};
 		}
-		$followDistanceMax = $config{followDistanceMax};
+		$followDistanceMax = $config{followAttackDistance} || $config{followDistanceMax};
 		$attackCanSnipe = $config{attackCanSnipe};
 		if ($config{follow}) {
 			foreach (keys %players) {
@@ -3294,7 +3294,7 @@ sub meetingPosition {
 		} else {
 			$runFromTarget_minStep =  $config{$actor->{configPrefix}.'runFromTarget_minStep'};
 		}
-		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
+		$followDistanceMax = $config{$actor->{configPrefix}.'followAttackDistance'} || $config{$actor->{configPrefix}.'followDistanceMax'};
 		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
 		$master = $char;
 		$masterPos = 1;

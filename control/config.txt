@@ -196,6 +196,7 @@ followEmotion 1
 followEmotion_distance 4
 followFaceDirection 0
 followDistanceMax 6
+followAttackDistance 0
 followDistanceMin 3
 followLostStep 12
 followSitAuto 0
@@ -488,6 +489,7 @@ mercenary_idleWalkType 1
 mercenary_followMode 1
 mercenary_followDistanceMin 3
 mercenary_followDistanceMax 10
+mercenary_followAttackDistance 0
 
 mercenary_moveNearWhenIdle 1
 mercenary_moveNearWhenIdle_minDistance 3
@@ -559,6 +561,7 @@ homunculus_idleWalkType 1
 homunculus_followMode 1
 homunculus_followDistanceMin 3
 homunculus_followDistanceMax 10
+homunculus_followAttackDistance 0
 
 homunculus_moveNearWhenIdle 1
 homunculus_moveNearWhenIdle_minDistance 3
