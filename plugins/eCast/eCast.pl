@@ -93,7 +93,6 @@ use Misc qw(bulkConfigModify isCellOccupied);
 use Translation qw(T TF);
 use Utils;
 use AI;
-use POSIX qw(floor);
 
 use constant {
 	PLUGIN_NAME => 'eCast',
