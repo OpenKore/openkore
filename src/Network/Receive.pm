@@ -3006,11 +3006,11 @@ sub homunculus_state_handler {
 		}
 
 		if ($args->{state} & 4) {
-			$char->{homunculus_info}{dead} = 1;
-			message T("Your Homunculus is dead\n"), 'homunculus';
-		} else {
 			$char->{homunculus_info}{dead} = 0;
 			message T("Your Homunculus is not dead\n"), 'homunculus';
+		} else {
+			$char->{homunculus_info}{dead} = 1;
+			message T("Your Homunculus is dead\n"), 'homunculus';
 		}
 
 	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
@@ -3025,8 +3025,8 @@ sub homunculus_state_handler {
 		}
 
 		if (($args->{state} & 4) && !($slave->{state} & 4)) {
-			$char->{homunculus_info}{dead} = 1;
-			message T("Your Homunculus died!\n"), 'homunculus';
+			$char->{homunculus_info}{dead} = 0;
+			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 1) && ($slave->{state} & 1)) {
@@ -3040,8 +3040,8 @@ sub homunculus_state_handler {
 		}
 
 		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
-			$char->{homunculus_info}{dead} = 0;
-			message T("Your Homunculus was resurrected!\n"), 'homunculus';
+			$char->{homunculus_info}{dead} = 1;
+			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
 }
