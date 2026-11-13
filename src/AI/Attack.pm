@@ -636,6 +636,43 @@ sub main {
 
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
+	if ($args->{backstabReposition}) {
+		unless (actorFinishedMovement($char, $field, 0.1, 1)) {
+			Benchmark::end("ai_attack (part 1.1)") if DEBUG;
+			Benchmark::end("ai_attack (part 1)") if DEBUG;
+			return;
+		}
+		delete $args->{backstabReposition};
+	}
+	if (delete $args->{backstabFailed} && $realMonsterDist == 1) {
+		my $dx = $realMonsterPos->{x} <=> $realMyPos->{x};
+		my $dy = $realMonsterPos->{y} <=> $realMyPos->{y};
+		my $blocked = !$field->isWalkable($realMonsterPos->{x} + $dx, $realMonsterPos->{y} + $dy);
+		my @offsets = ([0,-1], [1,-1], [1,0], [1,1], [0,1], [-1,1], [-1,0], [-1,-1]);
+		my $direction = $target->{look}{body};
+		my @candidates = $blocked ? @offsets : defined $direction && $direction >= 0 && $direction < 8
+			? @offsets[($direction + 7) % 8, $direction, ($direction + 1) % 8] : ();
+		@candidates = sort {
+			blockDistance($realMyPos, {x => $realMonsterPos->{x} + $a->[0], y => $realMonsterPos->{y} + $a->[1]})
+			<=> blockDistance($realMyPos, {x => $realMonsterPos->{x} + $b->[0], y => $realMonsterPos->{y} + $b->[1]})
+		} @candidates;
+		require Task::Route;
+		for my $offset (@candidates) {
+			my ($x, $y) = ($realMonsterPos->{x} + $offset->[0], $realMonsterPos->{y} + $offset->[1]);
+			last if !$blocked && $x == $realMyPos->{x} && $y == $realMyPos->{y};
+			next if $x == $realMyPos->{x} && $y == $realMyPos->{y};
+			next unless $field->isWalkable($x, $y);
+			next if $blocked && !$field->isWalkable($realMonsterPos->{x} - $offset->[0], $realMonsterPos->{y} - $offset->[1]);
+			next if isCellOccupied({x => $x, y => $y}, $char);
+			next unless Task::Route->getRoute(undef, $field, $realMyPos, {x => $x, y => $y}, 0, 0, 1, 0, 1);
+			$args->{backstabReposition} = 1;
+			$args->{backstabRetry} = 1;
+			$char->route(undef, $x, $y, noMapRoute => 1, maxRouteTime => $config{attackMaxRouteTime}, avoidWalls => 0, randomFactor => 0, useManhattan => 1);
+			Benchmark::end("ai_attack (part 1.1)") if DEBUG;
+			Benchmark::end("ai_attack (part 1)") if DEBUG;
+			return;
+		}
+	}
 
 	if (abort_repeated_failed_approach($args, $ID, $target, $realMyPos)) {
 		return;
@@ -777,6 +814,27 @@ sub main {
 			$i++;
 		}
 	}
+
+	if (($args->{attackMethod}{type} || '') eq 'skill' && $config{"attackSkillSlot_" . $args->{attackMethod}{skillSlot} . "_fromBehind"} && !$config{"attackSkillSlot_" . $args->{attackMethod}{skillSlot} . "_isSelfSkill"} && !$args->{backstabRetry} && defined $target->{look}{body}) {
+		my @offsets = ([0,-1], [1,-1], [1,0], [1,1], [0,1], [-1,1], [-1,0], [-1,-1]);
+		my $dir = $target->{look}{body} % 8;
+		my @behind = @offsets[($dir + 7) % 8, $dir, ($dir + 1) % 8];
+		my @cells = map { { x => $realMonsterPos->{x} + $_->[0], y => $realMonsterPos->{y} + $_->[1] } } @behind;
+		unless (grep { $_->{x} == $realMyPos->{x} && $_->{y} == $realMyPos->{y} } @cells) {
+			require Task::Route;
+			for my $pos (@cells) {
+				next unless $field->isWalkable($pos->{x}, $pos->{y});
+				next if isCellOccupied($pos, $char);
+				next unless Task::Route->getRoute(undef, $field, $realMyPos, $pos, 0, 0, 1, 0, 1);
+				$args->{backstabReposition} = 1;
+				$char->route(undef, $pos->{x}, $pos->{y}, noMapRoute => 1, maxRouteTime => $config{attackMaxRouteTime}, avoidWalls => 0, randomFactor => 0, useManhattan => 1);
+				Benchmark::end("ai_attack (part 1.2)") if DEBUG;
+				Benchmark::end("ai_attack (part 1)") if DEBUG;
+				return;
+			}
+		}
+	}
+	delete $args->{backstabRetry};
 
 	$args->{attackMethod}{maxDistance} ||= $config{attackMaxDistance};
 	$args->{attackMethod}{distance} ||= $config{attackDistance};
