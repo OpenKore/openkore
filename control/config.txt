@@ -731,8 +731,6 @@ useSelf_item {
 
 ######## Autostorage/autosell ########
 
-buyAuto_onFail_sell 1
-
 buyAuto {
 	npc
 	npc_steps b
