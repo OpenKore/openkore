@@ -746,6 +746,7 @@ sub new {
 		'0B1B' => ['load_confirm'],
 		'0B1D' => ['ping'], #2
 		'0B20' => ['hotkeys', 'C v a*', [qw(rotate tab hotkeys)]],#herc PR 2468
+		'0B25' => ['stats_added', 'v C C', [qw(type result val)]], # 6
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
 		'0B32' => ['skills_list'],

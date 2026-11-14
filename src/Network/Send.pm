@@ -1668,11 +1668,14 @@ sub sendUnequip {
 }
 
 sub sendAddStatusPoint {
-    my ($self, $ID,$Amount) = @_;
+    my ($self, $ID, $Amount) = @_;
+    my $switch = ($ID >= STATUS_POW && $ID <= STATUS_CRT)
+        ? 'send_add_trait_status_point'
+        : 'send_add_status_point';
     $self->sendToServer($self->reconstruct({
-        switch => 'send_add_status_point',
+        switch => $switch,
         statusID => $ID,
-        Amount => '1',
+        Amount => $Amount || 1,
     }));
 }
 
