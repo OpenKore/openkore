@@ -1853,6 +1853,10 @@ sub stat_info2 {
 		$char->{luk} = $val;
 		$char->{luk_bonus} = $val2;
 		debug "Luck: $val + $val2\n", "parseMsg";
+	} elsif ($type >= VAR_SP_POW && $type <= VAR_SP_CRT) {
+		my $stat = (qw(pow sta wis spl con crt))[$type - VAR_SP_POW];
+		$char->{$stat} = $val;
+		$char->{"${stat}_bonus"} = $val2;
 	}
 	$char->inventory->onStatInfo2() if (!$masterServer->{itemListType});
 
