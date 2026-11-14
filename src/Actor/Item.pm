@@ -112,8 +112,6 @@ our @slots = qw(
 sub new {
 	my $class = $_[0];
 	my $self = $class->SUPER::new(T('Item'));
-	$self->{name} = 'Uninitialized Item';
-	$self->{ID} = 0;
 	$self->{amount} = 0;
 	$self->{type} = 0;
 	$self->{equipped} = 0;

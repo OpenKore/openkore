@@ -15,7 +15,10 @@ sub new {
 	$char = new Actor::You;
 	$char->{equipment} = {};
 
-	$char->inventory->add(Actor::Item->new);
+	my $item = Actor::Item->new;
+	$item->{ID} = pack('v', 0);
+	$item->{name} = 'Item';
+	$char->inventory->add($item);
 	
 	return bless {}, $_[0];
 }
