@@ -5810,8 +5810,7 @@ sub checkSelfCondition {
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $item = $char->inventory->getByName($itemName);
- 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+			return 0 if !inRange($char->inventory->sumByName($itemName), $count);
 		}
 	}
 
@@ -5820,8 +5819,7 @@ sub checkSelfCondition {
 		foreach my $input (split / *, */, $config{$prefix."_inInventoryID"}) {
 			my ($itemName, $count) = $input =~ /^(.*?)(?:\s*([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $item = $char->inventory->getByNameID($itemName);
- 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+			return 0 if !inRange($char->inventory->sumByNameID($itemName), $count);
 		}
 	}
 
