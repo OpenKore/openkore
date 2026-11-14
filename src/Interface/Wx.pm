@@ -1124,6 +1124,7 @@ sub onMinimizeToTray {
 	my $title = ($char) ? "$char->{name} - $Settings::NAME" : "$Settings::NAME";
 	$tray->SetIcon($self->{frame}->GetIcon, $title);
 	EVT_TASKBAR_LEFT_DOWN($tray, sub {
+		return unless $tray;
 		$tray->RemoveIcon;
 		undef $tray;
 		$self->{frame}->Show(1);
