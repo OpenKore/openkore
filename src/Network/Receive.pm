@@ -7293,7 +7293,7 @@ sub item_used {
 
 			} else {
 				Misc::clearTeleportItemPendingUse($itemID);
-				message TF("You failed to use item: %s (%d)\n", $item ? $item->{name} : "#$itemID", $remaining), "useItem", 1;
+				message TF("You failed to use item: %s (%d)\n", $item ? $item->{name} : "#$itemID", $item->{binID}), "useItem", 1;
 			}
  		} else {
 			if ($success == 1) {
