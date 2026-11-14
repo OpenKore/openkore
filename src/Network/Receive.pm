@@ -4281,21 +4281,30 @@ sub login_pin_new_code_result {
 
 sub actor_status_active {
 	my ($self, $args) = @_;
+
 	return unless changeToInGameState();
+
 	my ($type, $ID, $tick, $unknown1, $unknown2, $unknown3, $unknown4) = @{$args}{qw(type ID tick unknown1 unknown2 unknown3 unknown4)};
 	my $flag = (exists $args->{flag}) ? $args->{flag} : 1;
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
+
 	$char->cart->changeType($unknown1) if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 #	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1}); # need test for '08FF'
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
+
 	# Rolling Cutter counters.
-	if ( $type == 0x153 && $char->{spirits} != $unknown1 ) {
-		$char->{spirits} = $unknown1 || 0;
-		if ( $ID eq $accountID ) {
-			message TF( "You have %s %s(s) now\n", $char->{spirits}, 'counters' ), "parseMsg_statuslook", 1;
-		} else {
-			message TF( "%s has %s %s(s) now\n", $args->{actor}, $char->{spirits}, 'counters' ), "parseMsg_statuslook", 1;
+	if ($type == 0x153) {
+		my $spirits = $unknown1 || 0;
+
+		if ($ID eq $accountID) {
+			if (($char->{spirits} || 0) != $spirits) {
+				$char->{spirits} = $spirits;
+				message TF("You have %s %s(s) now\n", $char->{spirits}, 'counters'), "parseMsg_statuslook", 1;
+			}
+		} elsif (($args->{actor}{spirits} || 0) != $spirits) {
+			$args->{actor}{spirits} = $spirits;
+			message TF("%s has %s %s(s) now\n", $args->{actor}, $args->{actor}{spirits}, 'counters'), "parseMsg_statuslook", 1;
 		}
 	}
 }
