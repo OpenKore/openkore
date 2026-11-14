@@ -5497,9 +5497,10 @@ sub getEquippedItemSlot {
 }
 
 sub checkSelfCondition {
-	my $prefix = shift;
+	my ($prefix, $ai_state) = @_;
 	return 0 if (!$prefix);
 	return 0 if ($config{$prefix . "_disabled"});
+	$ai_state = AI::state() unless defined $ai_state;
 
 	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle());
 
@@ -5513,11 +5514,11 @@ sub checkSelfCondition {
 	# *_manualAI 1 = manual only
 	# *_manualAI 2 = auto or manual
 	if ($config{$prefix . "_manualAI"} == 0 || !(defined $config{$prefix . "_manualAI"})) {
-		return 0 unless AI::state() == AI::AUTO();
+		return 0 unless $ai_state == AI::AUTO();
 	} elsif ($config{$prefix . "_manualAI"} == 1){
-		return 0 unless AI::state() == AI::MANUAL();
+		return 0 unless $ai_state == AI::MANUAL();
 	} else {
-		return 0 if AI::state() == AI::OFF();
+		return 0 if $ai_state == AI::OFF();
 	}
 
 	if ($config{$prefix . "_hp"}) {

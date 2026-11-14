@@ -3069,15 +3069,21 @@ sub processAutoItemUse {
 
 ##### AUTO-SKILL USE #####
 sub processAutoSkillUse {
+	my ($homunculus) = @_;
 	return if ($char->{muted});
-	my $routeIndex = AI::findAction("route");
-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && AI::args($routeIndex)->getSubtask->isa('Task::TalkNPC'));
-	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport) ) || (AI::action() eq "skill_use" && AI::args()->{tag} eq "attackSkill")) {
+	if (!$homunculus) {
+		my $routeIndex = AI::findAction("route");
+		return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && AI::args($routeIndex)->getSubtask->isa('Task::TalkNPC'));
+	}
+	if ($homunculus ? ($homunculus->isIdle() || $homunculus->is(qw(route move follow attack))) : (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport)) || (AI::action() eq "skill_use" && AI::args()->{tag} eq "attackSkill"))) {
 		my %self_skill;
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
-			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
+			next unless $config{"useSelf_skill_$i"};
+			my $skill = Skill->new(auto => $config{"useSelf_skill_$i"});
+			next if ($skill->getOwnerType() == Skill::OWNER_HOMUN()) != !!$homunculus;
+			if (checkSelfCondition("useSelf_skill_$i", $homunculus ? $homunculus->{slave_AI} : undef)) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$self_skill{skillObject} = Skill->new(auto => $config{"useSelf_skill_$i"});
+				$self_skill{skillObject} = $skill;
 				$self_skill{ID} = $self_skill{skillObject}->getHandle();
 				$self_skill{owner} = $self_skill{skillObject}->getOwner();
 				unless ($self_skill{ID}) {
@@ -3086,7 +3092,7 @@ sub processAutoSkillUse {
 					configModify("useSelf_skill_${i}_disabled", 1);
 					next;
 				}
-				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"} || $char->getSkillLevel($self_skill{skillObject});
+				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"} || ($homunculus || $char)->getSkillLevel($self_skill{skillObject});
 				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
 				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
 				$self_skill{prefix} = "useSelf_skill_$i";
@@ -3134,15 +3140,18 @@ sub processAutoSkillUse {
 
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
+	my ($homunculus) = @_;
 	return if ($char->{muted});
-	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
-		my $realMyPos = calcPosFromPathfinding($field, $char);
+	if ($homunculus ? ($homunculus->isIdle() || $homunculus->is(qw(route move follow attack))) : (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))) {
+		my $realMyPos = calcPosFromPathfinding($field, $homunculus || $char);
 		my %party_skill;
 		PARTYSKILL:
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
-			next unless checkSelfCondition("partySkill_$i");
-			$party_skill{skillObject} = Skill->new(auto => $config{"partySkill_$i"});
+			my $skill = Skill->new(auto => $config{"partySkill_$i"});
+			next if ($skill->getOwnerType() == Skill::OWNER_HOMUN()) != !!$homunculus;
+			next unless checkSelfCondition("partySkill_$i", $homunculus ? $homunculus->{slave_AI} : undef);
+			$party_skill{skillObject} = $skill;
 			$party_skill{owner} = $party_skill{skillObject}->getOwner;
 
 			foreach my $ID ($accountID, @slavesID, @playersID) {
@@ -3176,7 +3185,7 @@ sub processPartySkillUse {
 				next unless (checkPlayerCondition("partySkill_$i"."_target", $ID));
 
 				$party_skill{ID} = $party_skill{skillObject}->getHandle;
-				$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
+				$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || ($homunculus || $char)->getSkillLevel($party_skill{skillObject});
 				$party_skill{target} = $player->{name};
 				$party_skill{targetActor} = $player;
 				$party_skill{x} = $realActorPos->{x};
