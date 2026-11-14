@@ -67,7 +67,7 @@ sub new {
 		}
 
 		my $toolbar = new Wx::ToolBar($self, wxID_ANY, wxDefaultPosition, [-1, $size],
-			wxTB_HORIZONTAL | wxNO_BORDER | wxTB_3DBUTTONS | wxTB_FLAT);
+			wxTB_HORIZONTAL | wxNO_BORDER | (eval { Wx::wxTB_3DBUTTONS() } || 0) | wxTB_FLAT);
 		$toolbar->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 		$toolbar->SetToolBitmapSize(new Wx::Size(12, 12));
 		$toolbar->AddTool(1, T('Detach'), $detachBitmap, T('Detach tab'));
