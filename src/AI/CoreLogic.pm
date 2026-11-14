@@ -2029,6 +2029,7 @@ sub processAutoSell {
 			@sellList = ();
 			for my $item (@{$char->inventory}) {
 				next if ($item->{equipped} || !$item->{sellable});
+				next if ($config{sellAuto_keepEnhanced} && $item->isEnhanced);
 
 				my $control = items_control($item->{name}, $item->{nameID});
 

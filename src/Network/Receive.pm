@@ -3753,6 +3753,7 @@ sub inventory_item_added {
 			$item->{identified} = $args->{identified};
 			$item->{broken} = $args->{broken};
 			$item->{upgrade} = $args->{upgrade};
+			$item->{grade} = $args->{grade};
 			$item->{cards} = ($args->{switch} eq '029A') ? $args->{cards} + $args->{cards_ext}: $args->{cards};
 			if ($args->{switch} eq '029A') {
 				$args->{cards} .= $args->{cards_ext};
