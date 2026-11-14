@@ -7288,7 +7288,7 @@ sub item_used {
 
 				$hook_args{item} = $item;
 				$hook_args{binID} = $item->{binID};
-				$hook_args{name} => $item->{name};
+				$hook_args{name} = $item->{name};
 				$hook_args{amount} = $amount;
 
 			} else {
