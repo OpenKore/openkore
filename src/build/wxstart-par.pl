@@ -1,6 +1,6 @@
 BEGIN {
     if (!exists $ENV{wx_msw_dark_mode}) {
-        $ENV{wx_msw_dark_mode} = 2;
+        $ENV{wx_msw_dark_mode} = 1;
         my $exe = $ENV{PAR_PROGNAME} || $^X;
         exec { $exe } $exe, @ARGV or die "restart failed: $!";
     }
