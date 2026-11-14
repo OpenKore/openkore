@@ -3262,9 +3262,9 @@ sub processPartySkillUse {
 sub processMonsterSkillUse {
 	return if ($char->{muted});
 	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
-		my $i = 0;
-		my $prefix = "monsterSkill_$i";
-		while ($config{$prefix}) {
+		for (my $i = 0; exists $config{"monsterSkill_$i"}; $i++) {
+			my $prefix = "monsterSkill_$i";
+			next unless $config{$prefix};
 			# monsterSkill can be used on any monster that we could
 			# attackAuto
 			for my $monster (@$monstersList) {
@@ -3287,8 +3287,6 @@ sub processMonsterSkillUse {
 					last;
 				}
 			}
-			$i++;
-			$prefix = "monsterSkill_$i";
 		}
 	}
 }
