@@ -672,6 +672,7 @@ partySkill {
 	lvl
 	dist 1
 	maxDist 8
+	moveToTarget 0
 	maxCastTime 0
 	minCastTime 0
 	target
