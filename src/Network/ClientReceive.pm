@@ -122,7 +122,7 @@ sub restart {
 	my ($self, $args) = @_;
 	
 	AI::clear('clientSuspend');
-	$char->clientSuspend($args->{switch}, $timeout{'ai_clientSuspend'}{'timeout'});
+	$char->clientSuspend($args->{switch}, $timeout{'ai_clientSuspend'}{'timeout'}) if $char;
 }
 
 sub party_chat {

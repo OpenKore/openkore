@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include "common.h"
+#include "../thirdlib/minhook/include/MinHook.h"
 #include <string>
 #include <string.h>
 
@@ -121,8 +122,10 @@ koreConnectionMain ()
 			isAliveChanged = true;
 			if (!isAlive)
 				debug ("Failed\n");
-			else
+			else {
+				debug ("Connected\n");
 				koreClientTimeout = GetTickCount ();
+			}
 			reconnectTimeout = GetTickCount ();
 		}
 
@@ -154,6 +157,7 @@ koreConnectionMain ()
 				}
 
 				if (dataAvailableFromKore2) {
+					dataAvailableFromKore2 = false;
 					EnterCriticalSection (&CS_dataAvailableFromKore);
 					dataAvailableFromKore = true;
 					LeaveCriticalSection (&CS_dataAvailableFromKore);
@@ -214,6 +218,7 @@ koreConnectionMain ()
 int WINAPI
 MyWSASend (SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD lpNumberOfBytesSent, DWORD dwFlags, LPWSAOVERLAPPED lpOverlapped, LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine)
 {
+	debug ("MyWSASend called (s=%d)\n", (int)s);
 	return OriginalWSASendProc(s,lpBuffers,dwBufferCount,lpNumberOfBytesSent,dwFlags,lpOverlapped,lpCompletionRoutine);
 }
 
@@ -225,6 +230,7 @@ MyWSASendTo (SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD lpNumber
 int WINAPI
 MyWSARecv (SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD lpNumberOfBytesRecvd, LPDWORD lpFlags, LPWSAOVERLAPPED lpOverlapped, LPWSAOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine)
 {
+	debug ("MyWSARecv called (s=%d)\n", (int)s);
 	return OriginalWSARecvProc(s,lpBuffers,dwBufferCount,lpNumberOfBytesRecvd,lpFlags,lpOverlapped,lpCompletionRoutine);
 }
 
@@ -237,13 +243,19 @@ MyWSARecvFrom (SOCKET s, LPWSABUF lpBuffers, DWORD dwBufferCount, LPDWORD lpNumb
 int WINAPI
 MySelect (int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds, const struct timeval *timeout)
 {
-	EnterCriticalSection (&CS_dataAvailableFromKore);
-	if (dataAvailableFromKore) {
-		dataAvailableFromKore = false;
+	if (readfds != NULL) {
+		EnterCriticalSection (&CS_dataAvailableFromKore);
+		if (dataAvailableFromKore) {
+			dataAvailableFromKore = false;
+			LeaveCriticalSection (&CS_dataAvailableFromKore);
+			if (writefds != NULL)
+				FD_ZERO (writefds);
+			if (exceptfds != NULL)
+				FD_ZERO (exceptfds);
+			return 1;
+		}
 		LeaveCriticalSection (&CS_dataAvailableFromKore);
-		return 1;
 	}
-	LeaveCriticalSection (&CS_dataAvailableFromKore);
 	return OriginalSelectProc(nfds, readfds, writefds, exceptfds, timeout);
 }
 
@@ -251,12 +263,17 @@ int WINAPI
 MySend (SOCKET s, char* buf, int len, int flags)
 {
 	int ret;
+	bool isRoSocket;
+
+	EnterCriticalSection (&CS_ro);
+	isRoSocket = (s == roServer);
+	LeaveCriticalSection (&CS_ro);
+
+	if (!isRoSocket)
+		return OriginalSendProc (s, buf, len, flags);
 
 	// See if the socket to the RO server is still alive, and make
 	// sure WSAGetLastError() returns the right error if something's wrong
-	EnterCriticalSection (&CS_ro);
-	roServer = s;
-	LeaveCriticalSection (&CS_ro);
 	ret = OriginalSendProc (s, buf, 0, flags);
 
 	if (ret != SOCKET_ERROR && len > 0) {
@@ -303,10 +320,14 @@ MyRecv (SOCKET s, char* buf, int len, int flags)
 {
 	int ret = 0;
 	int ret2 = 0;
+	bool isRoSocket;
 
 	EnterCriticalSection (&CS_ro);
-	roServer = s;
+	isRoSocket = (s == roServer);
 	LeaveCriticalSection (&CS_ro);
+
+	if (!isRoSocket)
+		return OriginalRecvProc (s, buf, len, flags);
 
 	// Is Kore running?
 	EnterCriticalSection (&CS_koreClientIsAlive);
@@ -355,15 +376,14 @@ MyRecv (SOCKET s, char* buf, int len, int flags)
 	} else {
 		EnterCriticalSection (&CS_rosend);
 		int roSendBufsize = roSendBuf.size();
-		LeaveCriticalSection (&CS_rosend);
 		if (roSendBufsize) {
 			// Flush out anything left thats kore->ROclient
 			ret = roSendBufsize < len? roSendBufsize : len;
-			EnterCriticalSection (&CS_rosend);
 			memcpy (buf, (char *) roSendBuf.c_str(), ret);
 			roSendBuf.erase(0, ret);
 			LeaveCriticalSection (&CS_rosend);
 		} else {
+			LeaveCriticalSection (&CS_rosend);
 			ret2 = OriginalRecvProc(s, buf, len, flags);
 			if (ret2 == 0 || (ret2 == SOCKET_ERROR && WSAGetLastError () != WSAEWOULDBLOCK)) {
 				EnterCriticalSection(&CS_ro);
@@ -386,20 +406,31 @@ MyRecvFrom (SOCKET s, char* buf, int len, int flags, struct sockaddr* from, int 
 int WINAPI
 MyConnect (SOCKET s, struct sockaddr* name, int namelen)
 {
-	EnterCriticalSection (&CS_ro);
-	roServer = s;
-	LeaveCriticalSection (&CS_ro);
-	return OriginalConnectProc(s, name, namelen);
+	bool isIgnoredPort = false;
+	unsigned short port = 0;
+	if (name != NULL && namelen >= (int)sizeof(struct sockaddr_in) && name->sa_family == AF_INET) {
+		struct sockaddr_in *addr = (struct sockaddr_in *) name;
+		port = ntohs (addr->sin_port);
+		if (port == XKORE_SERVER_PORT || port == 80 || port == 443 || port == 8888 || port == 0 || port == 2052 || port == 3000)
+			isIgnoredPort = true;
+	}
+	if (!isIgnoredPort) {
+		EnterCriticalSection (&CS_ro);
+		roServer = s;
+		LeaveCriticalSection (&CS_ro);
+	}
+	int ret = OriginalConnectProc(s, name, namelen);
+	int err = WSAGetLastError ();
+	debug ("MyConnect(s=%d, port=%u) -> ret=%d, err=%d\n", (int)s, port, ret, err);
+	WSASetLastError (err);
+	return ret;
 }
 
 int WINAPI
 MyWSAAsyncSelect (SOCKET s, HWND hWnd, unsigned int wMsg, long lEvent)
 {
-	EnterCriticalSection (&CS_ro);
-	roServer = s;
-	LeaveCriticalSection (&CS_ro);
-	OriginalWSAAsyncSelectProc(s,hWnd,wMsg,lEvent);
-	return 0;
+	debug ("MyWSAAsyncSelect(s=%d, lEvent=0x%lx)\n", (int)s, lEvent);
+	return OriginalWSAAsyncSelectProc(s,hWnd,wMsg,lEvent);
 }
 
 FARPROC WINAPI
@@ -458,44 +489,27 @@ MyGetProcAddress (HMODULE hModule, LPCSTR lpProcName)
 static void
 DoHookProcs ()
 {
-	// Read the comment for HookImportedFunction() in utils-netredirect.cpp
-	// about what's going on here
+	if (MH_Initialize () != MH_OK) {
+		debug ("MH_Initialize failed\n");
+		return;
+	}
 
-	OriginalWSASendProc = (MyWSASendProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSASend", (PROC)MyWSASend);
+	MH_CreateHookApi (L"ws2_32.dll", "WSASend", (LPVOID)MyWSASend, (LPVOID *)&OriginalWSASendProc);
+	MH_CreateHookApi (L"ws2_32.dll", "WSASendTo", (LPVOID)MyWSASendTo, (LPVOID *)&OriginalWSASendToProc);
+	MH_CreateHookApi (L"ws2_32.dll", "WSARecv", (LPVOID)MyWSARecv, (LPVOID *)&OriginalWSARecvProc);
+	MH_CreateHookApi (L"ws2_32.dll", "WSARecvFrom", (LPVOID)MyWSARecvFrom, (LPVOID *)&OriginalWSARecvFromProc);
+	MH_CreateHookApi (L"ws2_32.dll", "send", (LPVOID)MySend, (LPVOID *)&OriginalSendProc);
+	MH_CreateHookApi (L"ws2_32.dll", "sendto", (LPVOID)MySendTo, (LPVOID *)&OriginalSendToProc);
+	MH_CreateHookApi (L"ws2_32.dll", "recv", (LPVOID)MyRecv, (LPVOID *)&OriginalRecvProc);
+	MH_CreateHookApi (L"ws2_32.dll", "recvfrom", (LPVOID)MyRecvFrom, (LPVOID *)&OriginalRecvFromProc);
+	MH_CreateHookApi (L"ws2_32.dll", "connect", (LPVOID)MyConnect, (LPVOID *)&OriginalConnectProc);
+	MH_CreateHookApi (L"ws2_32.dll", "select", (LPVOID)MySelect, (LPVOID *)&OriginalSelectProc);
+	MH_CreateHookApi (L"ws2_32.dll", "WSAAsyncSelect", (LPVOID)MyWSAAsyncSelect, (LPVOID *)&OriginalWSAAsyncSelectProc);
+	// MH_CreateHookApi (L"kernel32.dll", "GetProcAddress", (LPVOID)MyGetProcAddress, (LPVOID *)&OriginalGetProcAddressProc);
 
-	OriginalWSASendToProc = (MyWSASendToProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSASendTo", (PROC)MyWSASendTo);
-
-	OriginalWSARecvProc = (MyWSARecvProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSARecv", (PROC)MyWSARecv);
-
-	OriginalWSARecvFromProc = (MyWSARecvFromProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSARecvFrom", (PROC)MyWSARecvFrom);
-
-	OriginalSendProc = (MySendProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"send", (PROC)MySend);
-
-	OriginalSendToProc = (MySendToProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"sendto", (PROC)MySendTo);
-
-	OriginalRecvProc = (MyRecvProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"recv", (PROC)MyRecv);
-
-	OriginalRecvFromProc = (MyRecvFromProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"recvfrom", (PROC)MyRecvFrom);
-
-	OriginalConnectProc = (MyConnectProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"connect", (PROC)MyConnect);
-
-	OriginalSelectProc = (MySelectProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"select", (PROC)MySelect);
-
-	OriginalWSAAsyncSelectProc = (MyWSAAsyncSelectProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"WS2_32.DLL", (PSTR)"WSAAsyncSelect", (PROC)MyWSAAsyncSelect);
-
-	OriginalGetProcAddressProc = (MyGetProcAddressProc)
-			HookImportedFunction( GetModuleHandle(0), (PSTR)"KERNEL32.DLL", (PSTR)"GetProcAddress", (PROC)MyGetProcAddress);
+	if (MH_EnableHook (MH_ALL_HOOKS) != MH_OK) {
+		debug ("MH_EnableHook failed\n");
+	}
 }
 
 static void
@@ -617,8 +631,10 @@ DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
 		// If we're injected on Win9x, then init() must
 		// be called from a different function (see above).
 		// This is because Kore LoadLibrary() this dll when on Win9x.
-		if (isNT)
-			init ();
+		if (isNT) {
+			ULONG threadID;
+			CreateThread (NULL, 0, (LPTHREAD_START_ROUTINE) init, NULL, 0, &threadID);
+		}
 		#endif
 		break;
 
