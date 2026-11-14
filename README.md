@@ -34,8 +34,6 @@ git clone https://github.com/OpenKore/openkore.git
 2. Configure OpenKore: [documentation](https://openkore.com/wiki/Category:control).
 3. Run openkore.pl _(You can run start.exe or wxstart.exe if you use Windows)_.
 
-On Windows, native Wx dark mode requires WxPerl built with wxWidgets 3.3 or newer. Set `wx_msw_dark_mode=2` before running `openkore.pl --interface=Wx`. The bundled `wxstart.exe` does not yet support dark mode.
-
 ## F.A.Q. (Frequently Asked Questions)
 <!-- Source: https://forums.openkore.com/viewtopic.php?f=0&t=11287 -->
  1. **Have a problem?**

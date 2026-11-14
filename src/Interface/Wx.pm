@@ -28,7 +28,7 @@ package Interface::Wx;
 # Note: some wx constants are defined by Wx::Event only if corresponding events are imported
 
 BEGIN {
-	require Wx::Perl::Packager if ($^O eq 'MSWin32' && defined $ENV{INTERPRETER});
+	require Wx::Perl::Packager if ($^O eq 'MSWin32' && defined $ENV{INTERPRETER} && !$ENV{PAR_PROGNAME});
 }
 
 use strict;
