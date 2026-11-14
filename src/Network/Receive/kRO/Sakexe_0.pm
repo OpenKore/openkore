@@ -1380,7 +1380,7 @@ sub skill_used_no_damage {
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
 		&& $skillsArea{$args->{skillHandle}} != 2); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
-			$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
+			$args->{sourceID} eq $accountID or $char->{slaves} && $char->{slaves}{$args->{sourceID}} or $args->{sourceID} eq $args->{targetID};
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 	if ($args->{sourceID} eq $accountID) {
 		my $pos = calcPosFromPathfinding($field, $char);

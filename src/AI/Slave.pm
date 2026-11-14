@@ -186,6 +186,8 @@ sub iterate {
 		}
 	});
 	$slave->processTask('move');
+	AI::CoreLogic::processAutoSkillUse($slave);
+	AI::CoreLogic::processPartySkillUse($slave);
 	Benchmark::end("ai_slave_manual") if DEBUG;
 
 	return unless ($slave->{slave_AI} == AI::AUTO());
