@@ -2,7 +2,12 @@ BEGIN {
     if (!exists $ENV{wx_msw_dark_mode}) {
         $ENV{wx_msw_dark_mode} = 1;
         my $exe = $ENV{PAR_PROGNAME} || $^X;
-        exec { $exe } $exe, @ARGV or die "restart failed: $!";
+        exec { $exe } map {
+            my $arg = $_;
+            $arg =~ s/(\\*)"/$1$1\\"/g;
+            $arg =~ s/(\\*)$/$1$1/;
+            qq("$arg");
+        } ($exe, @ARGV) or die "restart failed: $!";
     }
 }
 use strict;
