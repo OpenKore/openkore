@@ -59,9 +59,9 @@ sub new {
 		input_part => '',
 	};
 	bless $self, $class;
-	$self->{out_con} = new Win32::Console(STD_OUTPUT_HANDLE()) 
+	$self->{out_con} = new Interface::Console::Win32::Handle(STD_OUTPUT_HANDLE())
 			or die "Could not init output Console: $!\n";
-	$self->{in_con} = new Win32::Console(STD_INPUT_HANDLE()) 
+	$self->{in_con} = new Interface::Console::Win32::Handle(STD_INPUT_HANDLE())
 			or die "Could not init input Console: $!\n";
 	$self->setWinDim();
 	
@@ -74,6 +74,17 @@ sub DESTROY {
 	my $self = shift;
 
 	$self->color('reset');
+}
+
+{
+	package Interface::Console::Win32::Handle;
+	our @ISA = ('Win32::Console');
+	sub new {
+		my $self = shift->SUPER::new(@_);
+		$self->{owner_pid} = $$;
+		return $self;
+	}
+	sub DESTROY { $_[0]->SUPER::DESTROY if $_[0]->{owner_pid} == $$ }
 }
 
 sub setWinDim {
