@@ -59,9 +59,9 @@ sub setupDialog {
 sub wxFilePath {
 	my ($path) = @_;
 	if ($^O eq 'MSWin32' && defined $path && !utf8::is_utf8($path)) {
-		require Win32;
-		my $codepage = Win32::GetACP();
-		my $encoding = $codepage == 65001 ? 'UTF-8' : 'cp' . $codepage;
+		require Translation;
+		my $encoding = Translation::getLocaleCharset();
+		$encoding = 'UTF-8' if uc($encoding) eq 'CP65001';
 		return Encode::decode($encoding, $path) if Encode::find_encoding($encoding);
 	}
 	return $path;
