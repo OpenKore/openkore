@@ -1471,6 +1471,7 @@ sub cmdCard {
 				"Can't use command while not connected to server.\n");
 		} elsif ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
+			undef @cardMergeItemsID;
 			$messageSender->sendCardMerge(-1, -1);
 			message T("Cancelling card merge.\n");
 		} else {
@@ -1516,6 +1517,7 @@ sub cmdCard {
 	} elsif ($arg1 eq "use") {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->inventory->get($arg2)) {
+				undef @cardMergeItemsID;
 				$cardMergeIndex = $arg2;
 				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{ID});
 				message TF("Sending merge list request for %s...\n",
