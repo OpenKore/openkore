@@ -6543,8 +6543,8 @@ sub friend_response {
 	my $type = $args->{type};
 	my $name = bytesToString($args->{name});
 	if ($type == 0) {
-		my $ID = @friendsID;
-		binAdd(\@friendsID, $ID);
+		my $ID = binAdd(\@friendsID, scalar @friendsID);
+		$friendsID[$ID] = $ID;
 		$friends{$ID}{accountID} = substr($args->{RAW_MSG}, 4, 4);
 		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
 		$friends{$ID}{name} = $name;
