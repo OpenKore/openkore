@@ -10979,6 +10979,7 @@ sub card_merge_list {
 	my $msg = $args->{RAW_MSG};
 	my ($len) = unpack("x2 v", $msg);
 
+	undef @cardMergeItemsID;
 	my $index;
 	for (my $i = 4; $i < $len; $i += 2) {
 		$index = unpack("a2", substr($msg, $i, 2));
