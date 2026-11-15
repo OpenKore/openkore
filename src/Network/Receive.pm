@@ -6381,16 +6381,13 @@ sub errors {
 		$net->serverDisconnect();
 	}
 	if ($args->{type} == 0) {
-		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
+		error T("Disconnected by server (code 0)\n"), "connection";
+	} elsif ($args->{type} == 1) {
 		if ($config{'dcOnServerShutDown'} == 1) {
 			error T("Auto disconnecting on ServerShutDown!\n");
 			chatLog("k", T("*** Server shutting down , auto disconnect! ***\n"));
 			$quit = 1;
-		} else {
-			error T("Server shutting down\n"), "connection";
-		}
-	} elsif ($args->{type} == 1) {
-		if ($config{'dcOnServerClose'} == 1) {
+		} elsif ($config{'dcOnServerClose'} == 1) {
 			error T("Auto disconnecting on ServerClose!\n");
 			chatLog("k", T("*** Server is closed , auto disconnect! ***\n"));
 			$quit = 1;
