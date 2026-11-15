@@ -3,13 +3,14 @@ package Interface::Wx::Utils;
 use strict;
 use FindBin qw($RealBin);
 use File::Spec;
+use Encode ();
 use Exporter;
 use base qw(Exporter);
 
 use Wx ':everything';
 use Wx::Event qw(EVT_BUTTON);
 
-our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile);
+our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile wxFilePath);
 our %files;
 our @searchPath;
 our $pngAdded;
@@ -55,11 +56,22 @@ sub setupDialog {
 	});
 }
 
+sub wxFilePath {
+	my ($path) = @_;
+	if ($^O eq 'MSWin32' && defined $path && !utf8::is_utf8($path)) {
+		require Win32;
+		my $codepage = Win32::GetACP();
+		my $encoding = $codepage == 65001 ? 'UTF-8' : 'cp' . $codepage;
+		return Encode::decode($encoding, $path) if Encode::find_encoding($encoding);
+	}
+	return $path;
+}
+
 sub dataFile {
 	my $default = File::Spec->catfile($RealBin, 'src', 'Interface', 'Wx');
 	foreach my $dir (@searchPath, $default) {
 		my $file = File::Spec->catfile($dir, $_[0]);
-		return $file if (-f $file);
+		return wxFilePath($file) if (-f $file);
 	}
 }
 

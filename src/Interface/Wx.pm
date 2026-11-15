@@ -49,6 +49,7 @@ use Modules;
 use Field;
 use I18N qw/bytesToString/;
 
+use Interface::Wx::Utils qw(wxFilePath);
 use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
 use Interface::Wx::LogView;
@@ -139,7 +140,7 @@ sub OnInit {
 
 	{
 		my $icon = [$0 =~ m{^(.*?)((\w|\.)*)$}]->[0] . 'src/build/openkore.ico';
-		$self->{frame}->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ANY)) if -f $icon;
+		$self->{frame}->SetIcon(new Wx::Icon(wxFilePath($icon), wxBITMAP_TYPE_ANY)) if -f $icon;
 	}
 
 	return 1;
