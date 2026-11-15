@@ -403,6 +403,7 @@ playerLog 0
 logDead 1
 
 questDisplayStyle 2
+showFullItemOptions 1
 
 chatTitleOversize 0
 shopTitleOversize 0
