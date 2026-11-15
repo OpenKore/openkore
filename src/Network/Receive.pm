@@ -5207,7 +5207,7 @@ sub npc_chat {
 	# like public_chat, but also has color
 
 	my $actor = $args->{actor};
-	my $message = $args->{message}; # needs bytesToString or not?
+	my $message = bytesToString($args->{message});
 	my $position = sprintf("[%s %d, %d]",
 		$field ? $field->baseName : T("Unknown field,"),
 		@{$char->{pos_to}}{qw(x y)});
