@@ -1259,6 +1259,16 @@ sub connection_refused {
 # 0A18 <start time>.L <position>.3B <x size>.B <y size>.B <font>.W <sex>.B (ZC_ACCEPT_ENTER3)
 sub map_loaded {
 	my ($self, $args) = @_;
+	if ($net->version == 1 && !UNIVERSAL::isa($chars[$config{char}], 'Actor::You')) {
+		$net->{uninitializedCharacter} = 1;
+		$net->setState(Network::IN_GAME_BUT_UNINITIALIZED);
+		undef $conState_tries;
+		if ($config{verbose}) {
+			my $prompt = $net->{connectionContext} && $masterServer && $map_port != $masterServer->{port} ? TF("Please relogin to enable X-%s.\n", $Settings::NAME) : TF("Please restart the Ragnarok Online client to enable X-%s.\n", $Settings::NAME);
+			message $prompt, 'connection';
+		}
+		return;
+	}
 	$net->setState(Network::IN_GAME);
 	undef $conState_tries;
 	$char = $chars[$config{char}];
