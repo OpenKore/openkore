@@ -10570,7 +10570,6 @@ sub memo_success {
 
 sub change_to_constate25 {
 	$net->setState(2.5);
-	undef $accountID;
 }
 
 # TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
