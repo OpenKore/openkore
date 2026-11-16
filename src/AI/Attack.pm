@@ -480,28 +480,7 @@ sub finishAttacking {
 			ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 		}
 
-		# Maintain the historical per-monster kill counters used elsewhere by the
-		# bot and logs.
-		## kokal start
-		## mosters counting
-		my $i = 0;
-		my $found = 0;
-		while ($monsters_Killed[$i]) {
-			if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ID}{'nameID'}) {
-				$monsters_Killed[$i]{'count'}++;
-				monsterLog($monsters_Killed[$i]{'name'});
-				$found = 1;
-				last;
-			}
-			$i++;
-		}
-		if (!$found) {
-			$monsters_Killed[$i]{'nameID'} = $monsters_old{$ID}{'nameID'};
-			$monsters_Killed[$i]{'name'} = $monsters_old{$ID}{'name'};
-			$monsters_Killed[$i]{'count'} = 1;
-			monsterLog($monsters_Killed[$i]{'name'})
-		}
-		## kokal end
+		countMonsterKill($monsters_old{$ID});
 
 	} elsif ($config{teleportAuto_lostTarget}) {
 		message T("Target lost, teleporting.\n"), "ai_attack";

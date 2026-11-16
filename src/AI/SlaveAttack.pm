@@ -267,26 +267,7 @@ sub finishAttacking {
 
 		$slave->clientSuspend(0, $timeout{$slave->{ai_attack_waitAfterKill_timeout}}{'timeout'});
 
-		## kokal start
-		## mosters counting
-		my $i = 0;
-		my $found = 0;
-		while ($monsters_Killed[$i]) {
-			if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ID}{'nameID'}) {
-				$monsters_Killed[$i]{'count'}++;
-				monsterLog($monsters_Killed[$i]{'name'});
-				$found = 1;
-				last;
-			}
-			$i++;
-		}
-		if (!$found) {
-			$monsters_Killed[$i]{'nameID'} = $monsters_old{$ID}{'nameID'};
-			$monsters_Killed[$i]{'name'} = $monsters_old{$ID}{'name'};
-			$monsters_Killed[$i]{'count'} = 1;
-			monsterLog($monsters_Killed[$i]{'name'})
-		}
-		## kokal end
+		countMonsterKill($monsters_old{$ID});
 
 	} else {
 		message TF("%s target lost\n", $slave), 'slave_attack';
