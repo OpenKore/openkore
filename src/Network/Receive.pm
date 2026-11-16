@@ -2463,6 +2463,7 @@ sub actor_died_or_disappeared {
 		} elsif ($args->{type} == 1) {
 			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
 			$monster->{dead} = 1;
+			countMonsterKill($monster) if $monster->{lastDamageFromSelfOrSlave};
 			$self->{_last_killed_monster_nameID} = $monster->{nameID};
 			$self->{_last_killed_monster_time} = time;
 

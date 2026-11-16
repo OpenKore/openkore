@@ -224,6 +224,7 @@ our @EXPORT = (
 	portalExistsAirship
 	redirectXKoreMessages
 	monKilled
+	countMonsterKill
 	getActorName
 	getActorNames
 	findPartyUserID
@@ -4153,6 +4154,11 @@ sub switchConfigFile {
 
 sub updateDamageTables {
 	my ($sourceID, $targetID, $damage) = @_;
+	if ($damage > 0 && (my $monster = $monstersList->getByID($targetID))) {
+		$monster->{lastDamageFromSelfOrSlave} = $sourceID eq $accountID || isMySlaveID($sourceID) ? 1
+			: $playersList->getByID($sourceID) || $slavesList->getByID($sourceID) || $monstersList->getByID($sourceID) ? 0
+			: undef;
+	}
 
 	# Track deltaHp
 	#
@@ -5385,6 +5391,20 @@ sub redirectXKoreMessages {
 	$message =~ s/\n*$//s;
 	$message =~ s/\n/\\n/g;
 	sendMessage($messageSender, "k", $message);
+}
+
+sub countMonsterKill {
+	my ($monster) = @_;
+	return if $monster->{killCounted} || (defined $monster->{lastDamageFromSelfOrSlave} && !$monster->{lastDamageFromSelfOrSlave});
+	$monster->{killCounted} = 1;
+	my $i = 0;
+	$i++ while $monsters_Killed[$i] && $monsters_Killed[$i]{nameID} ne $monster->{nameID};
+	if ($monsters_Killed[$i]) {
+		$monsters_Killed[$i]{count}++;
+	} else {
+		$monsters_Killed[$i] = {nameID => $monster->{nameID}, name => $monster->{name}, count => 1};
+	}
+	monsterLog($monsters_Killed[$i]{name});
 }
 
 sub monKilled {
