@@ -1,7 +1,7 @@
 BEGIN {
-    delete $ENV{PAR_GLOBAL_TEMP} if delete $ENV{OPENKORE_WX_RESTART_TEMP};
-    my $root = delete $ENV{OPENKORE_WX_RESTART_ROOT};
-    if (!$root && $^O eq 'MSWin32') {
+    $ENV{wx_msw_dark_mode} = 1 unless exists $ENV{wx_msw_dark_mode};
+    my $root;
+    if ($^O eq 'MSWin32') {
         $root = eval {
             require Config;
             require Win32::API;
@@ -27,23 +27,6 @@ BEGIN {
         } || 0;
     }
     $main::OPENKORE_WX_ROOT_PID = $root;
-    if (!exists $ENV{wx_msw_dark_mode}) {
-        $ENV{wx_msw_dark_mode} = 1;
-        if (!exists $ENV{PAR_GLOBAL_TEMP} && $ENV{PAR_TEMP}) {
-            $ENV{PAR_GLOBAL_TEMP} = $ENV{PAR_TEMP};
-            $ENV{OPENKORE_WX_RESTART_TEMP} = 1;
-        }
-        $ENV{OPENKORE_WX_RESTART_ROOT} = $root if $root;
-        my $exe = $ENV{PAR_PROGNAME} || $^X;
-        my $status = system { $exe } map {
-            my $arg = $_;
-            $arg =~ s/(\\*)"/$1$1\\"/g;
-            $arg =~ s/(\\*)$/$1$1/;
-            qq("$arg");
-        } ($exe, @ARGV);
-        die "restart failed: $!" if $status == -1;
-        exit($status >> 8);
-    }
 }
 use strict;
 use File::Basename qw(dirname);
