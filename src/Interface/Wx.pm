@@ -422,6 +422,15 @@ sub createInterface {
 
 	# Hide console on Win32
 	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
+		eval {
+			if ($ENV{PAR_PROGNAME} && $main::OPENKORE_WX_ROOT_PID) {
+				require Win32::API;
+				my $window = Win32::API->new('kernel32', 'GetConsoleWindow', '', 'N')->Call();
+				my $pid = pack('L', 0);
+				Win32::API->new('user32', 'GetWindowThreadProcessId', 'NP', 'N')->Call($window, $pid);
+				Win32::API->new('user32', 'ShowWindow', 'NN', 'N')->Call($window, 0) if unpack('L', $pid) == $main::OPENKORE_WX_ROOT_PID;
+			}
+		};
 		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 }
