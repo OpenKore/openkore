@@ -1331,9 +1331,10 @@ sub cmdAutoSell {
 		# Simulate list of items to sell
 		my @sellItems;
 		my $msg = center(T(" Items to sell (simulation) "), 50, '-') ."\n".
-				T("Amount  Item Name\n");
+				" " . T("Amount  Item Name\n");
 		for my $item (@{$char->inventory}) {
 			next if ($item->{unsellable});
+			next if ($config{sellAuto_keepEnhanced} && $item->isEnhanced);
 			my $control = items_control($item->{name},$item->{nameID});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 				my %obj;
@@ -1342,8 +1343,8 @@ sub cmdAutoSell {
 				my $item_name = $item->{name};
 				$item_name .= T(" (if unequipped)") if ($item->{equipped});
 				$msg .= swrite(
-						"@>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-						[$item->{amount}, $item_name]);
+						"@>>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+						[$obj{amount}, $item_name]);
 			}
 		}
 		$msg .= ('-'x50) . "\n";
