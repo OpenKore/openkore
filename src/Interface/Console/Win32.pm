@@ -66,7 +66,7 @@ sub new {
 	$self->setWinDim();
 	
 	$self->{out_con}->Cursor(0, $self->{in_line});
-	$self->{codepage} = $self->{out_con}->OutputCP;
+	$self->{codepage} = Win32::Console::OutputCP();
 	return $self;
 }
 

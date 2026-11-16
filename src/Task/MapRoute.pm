@@ -170,6 +170,12 @@ sub iterate {
 	Plugins::callHook("MapRoute_iterate_start", \%hookArgs);
 	return if ($hookArgs{return});
 
+	if (delete $self->{npcRelogPending}) {
+		delete @{$self}{qw(mapSolution mapChanged substage timeout)};
+		$self->initMapCalculator();
+		return;
+	}
+
 	if (!defined $self->{mapBlockPruneTime} || timeOut($self->{mapBlockPruneTime}, 60)) {
 		$self->prunePerMapBlocks();
 		$self->{mapBlockPruneTime} = time;
@@ -393,6 +399,7 @@ sub iterate {
 										$self->{mapSolution}[0]{pos}{y} = $airship_fail_plugin_args{y};
 										$self->setNpcTalk();
 									} else {
+										return if $self->_relogAfterNpcFailure('portals_airships');
 										error TF("Failed to teleport using airship NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
 										$self->_suspendCurrentRouteSourceForRecalc('portals_airships', '[route_removeMissingPortals_NPC] Deleting airship NPC.')
 											if $config{route_removeMissingPortals_NPC};
@@ -519,6 +526,7 @@ sub iterate {
 						$self->{mapSolution}[0]{pos}{y} = $teleport_missing_plugin_args{y};
 						$self->setNpcTalk();
 					} else {
+						return if $self->_relogAfterNpcFailure('portals_lut');
 						error TF("Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
 						
 						$self->_suspendCurrentRouteSourceForRecalc('portals_lut', '[route_removeMissingPortals_NPC] Deleting portal NPC.')
@@ -896,6 +904,17 @@ sub _currentPortalUpdateCandidate {
 		oldDestY     => $dest_y,
 		time         => time,
 	};
+}
+
+sub _relogAfterNpcFailure {
+	my ($self, $dataset) = @_;
+	return unless $config{route_relogOnNpcFailure} && !$net->version && $self->{actor} == $char;
+	my $source = $self->_currentRouteSourceID();
+	return if $self->{npcRelogged}{$dataset}{$source};
+	$self->{npcRelogged}{$dataset}{$source} = 1;
+	$self->{npcRelogPending} = 1;
+	Misc::relog();
+	return 1;
 }
 
 sub _suspendCurrentRouteSourceForRecalc {

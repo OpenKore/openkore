@@ -47,6 +47,21 @@ static string xkoreSendBuf("");	// Data to send to the X-Kore server
 
 #define SLEEP_TIME 10
 
+static void
+appendConnectionContext (SOCKET s)
+{
+	sockaddr_in address;
+	int size = sizeof (address);
+	if (getpeername (s, (sockaddr *) &address, &size) != 0 || address.sin_family != AF_INET)
+		return;
+	const unsigned short length = 7;
+	xkoreSendBuf.append ("C", 1);
+	xkoreSendBuf.append ((const char *) &length, 2);
+	xkoreSendBuf.append ("\x01", 1);
+	xkoreSendBuf.append ((const char *) &address.sin_addr.s_addr, 4);
+	xkoreSendBuf.append ((const char *) &address.sin_port, 2);
+}
+
 
 // Process a packet that the X-Kore server sent us
 static void
@@ -295,6 +310,7 @@ MySend (SOCKET s, char* buf, int len, int flags)
 
 			// We put this packet in a string, and let the X-Kore client thread send it
 			EnterCriticalSection (&CS_send);
+			appendConnectionContext (s);
 			xkoreSendBuf.append (newbuf, len + 3);
 			LeaveCriticalSection (&CS_send);
 			free (newbuf);
@@ -348,6 +364,7 @@ MyRecv (SOCKET s, char* buf, int len, int flags)
 				memcpy (newbuf + 3, buf, ret2);
 
 				EnterCriticalSection(&CS_send);
+				appendConnectionContext (s);
 				xkoreSendBuf.append (newbuf, ret2 + 3);
 				LeaveCriticalSection(&CS_send);
 

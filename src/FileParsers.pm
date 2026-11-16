@@ -769,28 +769,30 @@ sub parseShopControl {
 		$real_price =~ s/,//g;
 
 		my ($priceMax, $priceCommas, $priceMaxCommas);
-		if ($real_price =~ /../) {
-			($real_price, $priceMax) = split(/\../, $real_price);
-			($priceCommas, $priceMaxCommas) = split(/\../, $price);
+		if ($real_price =~ /\.\./) {
+			($real_price, $priceMax) = split(/\.\./, $real_price, 2);
+			($priceCommas, $priceMaxCommas) = split(/\.\./, $price, 2);
 		}
 
 		my $loc = Translation::TF("Line %s: Item '%s'", $linenum, $name);
-		if ($real_price !~ /^\d+$/) {
+		if ($real_price !~ /^[0-9]+$/ || (defined $priceMax && $priceMax !~ /^[0-9]+$/)) {
 			push(@errors, Translation::TF("%s has non-integer price: %s", $loc, $price));
-		} elsif (!$priceMax && ($price ne $real_price && formatNumber($real_price) ne $price) ||
-				 $priceMax  && ($priceCommas ne $real_price && formatNumber($real_price) ne $priceCommas ||
+		} elsif (!defined $priceMax && ($price ne $real_price && formatNumber($real_price) ne $price) ||
+				 defined $priceMax && ($priceCommas ne $real_price && formatNumber($real_price) ne $priceCommas ||
 							   $priceMaxCommas ne $priceMax && formatNumber($priceMax) ne $priceMaxCommas))
 		{
 			push(@errors, Translation::TF("%s has incorrect comma placement in price: %s", $loc, $price));
 		} elsif ($real_price < 0) {
 			push(@errors, Translation::TF("%s has non-positive price: %s", $loc, $price));
-		} elsif ($real_price > 1000000000) {
+		} elsif ($real_price > 1000000000 || (defined $priceMax && $priceMax > 1000000000)) {
 			push(@errors, Translation::TF("%s has price over 1,000,000,000: %s", $loc, $price));
+		} elsif (defined $priceMax && $priceMax < $real_price) {
+			push(@errors, Translation::TF("%s has maximum price below minimum: %s", $loc, $price));
 		} elsif ($amount > 30000) {
 			push(@errors, Translation::TF("%s has amount over 30,000: %s", $loc, $amount));
+		} else {
+			push(@{$shop->{items}}, {name => $name, price => $real_price, priceMax => $priceMax, amount => $amount});
 		}
-
-		push(@{$shop->{items}}, {name => $name, price => $real_price, priceMax => $priceMax, amount => $amount});
 	}
 
 	if (@errors) {

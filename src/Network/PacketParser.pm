@@ -48,6 +48,7 @@ our @EXPORT = qw(
 	ACTION_ATTACK_MULTIPLE ACTION_ATTACK_MULTIPLE_NOMOTION
 	ACTION_ATTACK_CRITICAL ACTION_ATTACK_LUCKY ACTION_TOUCHSKILL
 	STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK
+	STATUS_POW STATUS_STA STATUS_WIS STATUS_SPL STATUS_CON STATUS_CRT
 );
 
 ### CATEGORY: Ragnarok Online constants
@@ -72,6 +73,12 @@ use constant {
 	STATUS_INT => 0x10,
 	STATUS_DEX => 0x11,
 	STATUS_LUK => 0x12,
+	STATUS_POW => 0xdb,
+	STATUS_STA => 0xdc,
+	STATUS_WIS => 0xdd,
+	STATUS_SPL => 0xde,
+	STATUS_CON => 0xdf,
+	STATUS_CRT => 0xe0,
 };
 
 ### CATEGORY: Hash members
@@ -401,6 +408,10 @@ sub process {
 	while (my $message = $tokenizer->readNext(\$type)) {
 		$handleContainer->{bytesProcessed} += length($message);
 		$handleContainer->{lastPacketTime} = time;
+		if ($net && $net->version == 1 && $net->getState == Network::IN_GAME_BUT_UNINITIALIZED && $net->{uninitializedCharacter}) {
+			push @result, $message;
+			next;
+		}
 
 		my $args;
 

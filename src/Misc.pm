@@ -224,6 +224,7 @@ our @EXPORT = (
 	portalExistsAirship
 	redirectXKoreMessages
 	monKilled
+	countMonsterKill
 	getActorName
 	getActorNames
 	findPartyUserID
@@ -4153,6 +4154,11 @@ sub switchConfigFile {
 
 sub updateDamageTables {
 	my ($sourceID, $targetID, $damage) = @_;
+	if ($damage > 0 && (my $monster = $monstersList->getByID($targetID))) {
+		$monster->{lastDamageFromSelfOrSlave} = $sourceID eq $accountID || isMySlaveID($sourceID) ? 1
+			: $playersList->getByID($sourceID) || $slavesList->getByID($sourceID) || $monstersList->getByID($sourceID) ? 0
+			: undef;
+	}
 
 	# Track deltaHp
 	#
@@ -5387,6 +5393,20 @@ sub redirectXKoreMessages {
 	sendMessage($messageSender, "k", $message);
 }
 
+sub countMonsterKill {
+	my ($monster) = @_;
+	return if $monster->{killCounted} || (defined $monster->{lastDamageFromSelfOrSlave} && !$monster->{lastDamageFromSelfOrSlave});
+	$monster->{killCounted} = 1;
+	my $i = 0;
+	$i++ while $monsters_Killed[$i] && $monsters_Killed[$i]{nameID} ne $monster->{nameID};
+	if ($monsters_Killed[$i]) {
+		$monsters_Killed[$i]{count}++;
+	} else {
+		$monsters_Killed[$i] = {nameID => $monster->{nameID}, name => $monster->{name}, count => 1};
+	}
+	monsterLog($monsters_Killed[$i]{name});
+}
+
 sub monKilled {
 	$monkilltime = time();
 	# if someone kills it
@@ -5497,9 +5517,10 @@ sub getEquippedItemSlot {
 }
 
 sub checkSelfCondition {
-	my $prefix = shift;
+	my ($prefix, $ai_state) = @_;
 	return 0 if (!$prefix);
 	return 0 if ($config{$prefix . "_disabled"});
+	$ai_state = AI::state() unless defined $ai_state;
 
 	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle());
 
@@ -5513,11 +5534,11 @@ sub checkSelfCondition {
 	# *_manualAI 1 = manual only
 	# *_manualAI 2 = auto or manual
 	if ($config{$prefix . "_manualAI"} == 0 || !(defined $config{$prefix . "_manualAI"})) {
-		return 0 unless AI::state() == AI::AUTO();
+		return 0 unless $ai_state == AI::AUTO();
 	} elsif ($config{$prefix . "_manualAI"} == 1){
-		return 0 unless AI::state() == AI::MANUAL();
+		return 0 unless $ai_state == AI::MANUAL();
 	} else {
-		return 0 if AI::state() == AI::OFF();
+		return 0 if $ai_state == AI::OFF();
 	}
 
 	if ($config{$prefix . "_hp"}) {
