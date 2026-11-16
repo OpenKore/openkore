@@ -5607,14 +5607,18 @@ sub cmdStatus {
 		return;
 	}
 
-	if ($char->{'exp_last'} > $char->{'exp'}) {
+	if (defined $char->{exp_last_delta}) {
+		$baseEXPKill = $char->{exp_last_delta};
+	} elsif ($char->{'exp_last'} > $char->{'exp'}) {
 		$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
 	} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
 		$baseEXPKill = 0;
 	} else {
 		$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
 	}
-	if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
+	if (defined $char->{exp_job_last_delta}) {
+		$jobEXPKill = $char->{exp_job_last_delta};
+	} elsif ($char->{'exp_job_last'} > $char->{'exp_job'}) {
 		$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
 	} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
 		$jobEXPKill = 0;
@@ -5653,9 +5657,7 @@ sub cmdStatus {
 	my $totalelasped_string = sprintf("%.2f", $totalelasped);
 	my $elasped_string = sprintf("%.2f", $elasped);
 
-	my $msg = center(T(" Status "), 56, '-') ."\n" .
-		swrite(
-		TF("\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
+	my $statusFormat = TF("\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"                                 AP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
@@ -5665,11 +5667,19 @@ sub cmdStatus {
 		"Total Damage: \@<<<<<<<<<<<<< Dmg/sec: \@<<<<<<<<<<<<<<\n" .
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>",
-		(exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
+		(exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0));
+	my $expWidth = 42;
+	for my $value ($base_string, $job_string) {
+		$expWidth = length($value) - 1 if defined $value && length($value) > $expWidth + 1;
+	}
+	$statusFormat =~ s/\@>{42}/'@' . ('>' x $expWidth)/ge if $expWidth > 42;
+	my $statusWidth = $expWidth + 14;
+	my $msg = center(T(" Status "), $statusWidth, '-') . "\n" .
+		swrite($statusFormat,
 		[$char->{'name'}, $hp_string, $job_name_string, $sp_string, $ap_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]).
-		('-'x56) . "\n";
+		('-'x$statusWidth) . "\n";
 		$msg .= TF("Statuses: %s\n", $char->statusesStringAndTime(1));
 
 	message $msg, "info";

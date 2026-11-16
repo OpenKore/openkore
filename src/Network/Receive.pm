@@ -30,6 +30,7 @@ use Utils::Assert;
 use Scalar::Util;
 use Socket qw(inet_aton inet_ntoa);
 use Compress::Zlib;
+use Math::BigInt;
 
 use AI;
 use Globals;
@@ -575,36 +576,65 @@ use constant {
 #     0 = normal exp gained/lost
 #     1 = quest exp gained/lost
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
+sub _signedExp64 {
+	my ($low, $high) = @_;
+	my $value = Math::BigInt->new("$high")->blsft(32)->badd("$low");
+	$value->bsub('18446744073709551616') if $high >= 2147483648;
+	return $value->bstr();
+}
+
+sub _formatExpMessage {
+	my $format = shift;
+	$format =~ s/%d/%s/g;
+	return sprintf($format, @_);
+}
+
 sub exp {
 	my ($self, $args) = @_;
 
+	my $value = $args->{val};
+	if (($args->{switch} || '') eq '0ACC') {
+		$value = _signedExp64($value, $args->{val2});
+	} elsif (($args->{switch} || '') eq '07F6' && $value >= 2147483648) {
+		$value -= 4294967296;
+	}
+
+	my $standalone = $args->{type} == VAR_EXP && delete $self->{pendingBaseExp} && $value > 0;
+	my ($domain, $verbosity) = $standalone ? ('exp', 1) : ('exp2', 2);
 	my $max = {VAR_EXP, $char->{exp_max}, VAR_JOBEXP, $char->{exp_job_max}}->{$args->{type}};
-	$args->{percent} = $max ? $args->{val} / $max * 100 : 0;
+	$args->{percent} = $max ? $value / $max * 100 : 0;
 
 	if ($args->{flag} == EXP_FROM_BATTLE) {
 		if ($args->{type} == VAR_EXP) {
-			message TF("Base Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Base Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
-			message TF("Job Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Job Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} else {
-			message TF("Unknown (type=%d) Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
+			message _formatExpMessage(T("Unknown (type=%d) Exp gained: %d\n"), $args->{type}, $value), $domain, $verbosity;
 		}
 	} elsif ($args->{flag} == EXP_FROM_QUEST) {
 		if ($args->{type} == VAR_EXP) {
-			message TF("Base Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Base Quest Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
-			message TF("Job Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Job Quest Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} else {
-			message TF("Unknown (type=%d) Quest Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
+			message _formatExpMessage(T("Unknown (type=%d) Quest Exp gained: %d\n"), $args->{type}, $value), $domain, $verbosity;
 		}
 	} else {
 		if ($args->{type} == VAR_EXP) {
-			message TF("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"), $args->{flag}, $value, $args->{percent}), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
-			message TF("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"), $args->{flag}, $value, $args->{percent}), $domain, $verbosity;
 		} else {
-			message TF("Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n", @{$args}{qw(type flag val)}), 'exp2', 2;
+			message _formatExpMessage(T("Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n"), $args->{type}, $args->{flag}, $value), $domain, $verbosity;
 		}
+	}
+
+	if ($standalone) {
+		$monsterBaseExp = $value;
+		$monsterJobExp = 0;
+		Plugins::callHook('exp_gained');
+		$monsterBaseExp = 0;
 	}
 }
 
@@ -883,6 +913,8 @@ sub received_characters {
 		}
 
 		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
+		$character->{exp64BasePending} = exists $temporary_character->{exp_2};
+		$character->{exp64JobPending} = exists $temporary_character->{exp_job_2};
 		$character->{ID} = $accountID;
 
 		$character->{name} = bytesToString($character->{name});
@@ -1395,16 +1427,18 @@ our %stat_info_handlers = (
 		}
 =cut
 
-		if ($actor->{lastBaseLvl} eq $actor->{lv}) {
-			$monsterBaseExp = $actor->{exp} - $actor->{exp_last};
-		} else {
-			$monsterBaseExp = $actor->{exp_max_last2} - $actor->{exp_last} + $actor->{exp};
+		my $baseExp = Math::BigInt->new(defined $actor->{exp} ? "$actor->{exp}" : 0);
+		$baseExp->bsub(defined $actor->{exp_last} ? "$actor->{exp_last}" : 0);
+		if ($actor->{lastBaseLvl} ne $actor->{lv}) {
+			$baseExp->badd($actor->{exp_max_last2} || $actor->{exp_max} || 0) if $actor->{lv} > $actor->{lastBaseLvl};
 			$actor->{lastBaseLvl} = $actor->{lv};
 			$actor->{exp_max_last2} = $actor->{exp_max};
 		}
+		$monsterBaseExp = $baseExp->bstr();
+		$actor->{exp_last_delta} = $monsterBaseExp;
 
 		if ($monsterBaseExp > 0) {
-			$totalBaseExp += $monsterBaseExp;
+			$totalBaseExp = Math::BigInt->new($totalBaseExp || 0)->badd($monsterBaseExp)->bstr();
 		}
 
 		# no VAR_JOBEXP next - no message?
@@ -1435,16 +1469,18 @@ our %stat_info_handlers = (
 		}
 =cut
 
-		if ($actor->{lastJobLvl} eq $actor->{lv_job}) {
-			$monsterJobExp = $actor->{exp_job} - $actor->{exp_job_last};
-		} else {
-			$monsterJobExp = $actor->{exp_job_max_last2} - $actor->{exp_job_last} + $actor->{exp_job};
+		my $jobExp = Math::BigInt->new(defined $actor->{exp_job} ? "$actor->{exp_job}" : 0);
+		$jobExp->bsub(defined $actor->{exp_job_last} ? "$actor->{exp_job_last}" : 0);
+		if ($actor->{lastJobLvl} ne $actor->{lv_job}) {
+			$jobExp->badd($actor->{exp_job_max_last2} || $actor->{exp_job_max} || 0) if $actor->{lv_job} > $actor->{lastJobLvl};
 			$actor->{lastJobLvl} = $actor->{lv_job};
 			$actor->{exp_job_max_last2} = $actor->{exp_job_max};
 		}
+		$monsterJobExp = $jobExp->bstr();
+		$actor->{exp_job_last_delta} = $monsterJobExp;
 
 		if ($monsterJobExp > 0) {
-			$totalJobExp += $monsterJobExp;
+			$totalJobExp = Math::BigInt->new($totalJobExp || 0)->badd($monsterJobExp)->bstr();
 		}
 
 		my $basePercent = $char->{exp_max} ?
@@ -1453,7 +1489,7 @@ our %stat_info_handlers = (
 		my $jobPercent = $char->{exp_job_max} ?
 			($monsterJobExp / $char->{exp_job_max} * 100) :
 			0;
-		message TF("%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n", $char, $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		message _formatExpMessage(T("%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n"), $char, $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
 		Plugins::callHook('exp_gained');
 	},
 	#VAR_VIRTUE
@@ -1558,6 +1594,7 @@ our %stat_info_handlers = (
 		$_[0]{exp_max_last} = $_[0]{exp_max};
 		$_[0]{exp_max_last2} = $_[0]{exp_max} if !$_[0]{exp_max_last2};
 		$_[0]{exp_max} = $_[1];
+		$_[0]{exp_max_last2} = $_[1] if defined $_[0]{lastBaseLvl} && $_[0]{lastBaseLvl} eq $_[0]{lv};
 
 		if (!$net->clientAlive() && $initSync && $masterServer->{serverType} == 2) {
 			$messageSender->sendSync(1);
@@ -1568,6 +1605,7 @@ our %stat_info_handlers = (
 		$_[0]{exp_job_max_last} = $_[0]{exp_job_max};
 		$_[0]{exp_job_max_last2} = $_[0]{exp_job_max} if !$_[0]{exp_job_max_last2};
 		$_[0]{exp_job_max} = $_[1];
+		$_[0]{exp_job_max_last2} = $_[1] if defined $_[0]{lastJobLvl} && $_[0]{lastJobLvl} eq $_[0]{lv_job};
 		#message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
 	},
 	VAR_WEIGHT, sub { $_[0]{weight} = $_[1] / 10 },
@@ -1697,10 +1735,22 @@ sub stat_info {
 		return;
 	}
 
+	my $value = $args->{switch} eq '0ACB' ? _signedExp64($args->{val}, $args->{val2}) : $args->{val};
+
+	if ($actor->isa('Actor::You')) {
+		if ($args->{type} == VAR_EXP && delete $actor->{exp64BasePending} && $args->{switch} eq '0ACB') {
+			$actor->{exp} = _signedExp64($actor->{exp}, $actor->{exp_2});
+		} elsif ($args->{type} == VAR_JOBEXP && delete $actor->{exp64JobPending} && $args->{switch} eq '0ACB') {
+			$actor->{exp_job} = _signedExp64($actor->{exp_job}, $actor->{exp_job_2});
+		}
+		$self->{pendingBaseExp} = 1 if $args->{type} == VAR_EXP;
+		delete $self->{pendingBaseExp} if $args->{type} == VAR_JOBEXP;
+	}
+
 	if (exists $stat_info_handlers{$args->{type}}) {
 		# TODO: introduce Actor->something() to determine per-actor configurable verbosity level? (not only here)
 		debug "Stat: $args->{type} => $args->{val}\n", "parseMsg",  $_[0]->isa('Actor::You') ? 1 : 2;
-		$stat_info_handlers{$args->{type}}($actor, $args->{val});
+		$stat_info_handlers{$args->{type}}($actor, $value);
 	} else {
 		warning sprintf "Unknown stat (%d => %d) received for %s\n", @{$args}{qw(type val)}, $actor;
 	}
