@@ -3803,7 +3803,7 @@ sub inventory_item_added {
 			# TODO: We should move this to corelogic
 			if (pickupitems($item->{name}, $item->{nameID}) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{ID}, $amount);
-				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
+				message TF("Requesting auto-drop: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
 			}
 		}
 
