@@ -5497,9 +5497,10 @@ sub getEquippedItemSlot {
 }
 
 sub checkSelfCondition {
-	my $prefix = shift;
+	my ($prefix, $ai_state) = @_;
 	return 0 if (!$prefix);
 	return 0 if ($config{$prefix . "_disabled"});
+	$ai_state = AI::state() unless defined $ai_state;
 
 	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle());
 
@@ -5513,11 +5514,11 @@ sub checkSelfCondition {
 	# *_manualAI 1 = manual only
 	# *_manualAI 2 = auto or manual
 	if ($config{$prefix . "_manualAI"} == 0 || !(defined $config{$prefix . "_manualAI"})) {
-		return 0 unless AI::state() == AI::AUTO();
+		return 0 unless $ai_state == AI::AUTO();
 	} elsif ($config{$prefix . "_manualAI"} == 1){
-		return 0 unless AI::state() == AI::MANUAL();
+		return 0 unless $ai_state == AI::MANUAL();
 	} else {
-		return 0 if AI::state() == AI::OFF();
+		return 0 if $ai_state == AI::OFF();
 	}
 
 	if ($config{$prefix . "_hp"}) {
@@ -5683,7 +5684,9 @@ sub checkSelfCondition {
 							|| $config{$prefix."_equip_midHead"}
 							|| $config{$prefix."_equip_lowHead"}
 							);
-			return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
+			my $level = $config{$prefix . "_lvl"} || $char->getSkillLevel($skill);
+			$level = 1 if ($prefix =~ /^(?:useSelf_skill|partySkill)_\d+$/ && $config{useSelf_skill_smartHeal} && !$config{$prefix . "_noSmartHeal"} && $skill->getHandle eq 'AL_HEAL');
+			return 0 unless ($char->{sp} >= $skill->getSP($level));
 			
 		} elsif ($has_homunculus && $char->{homunculus}->checkSkillOwnership($skill)) {
 			return 0 unless ($char->{homunculus}->getSkillLevel($skill));
@@ -5808,8 +5811,7 @@ sub checkSelfCondition {
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $item = $char->inventory->getByName($itemName);
- 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+			return 0 if !inRange($char->inventory->sumByName($itemName), $count);
 		}
 	}
 
@@ -5818,8 +5820,7 @@ sub checkSelfCondition {
 		foreach my $input (split / *, */, $config{$prefix."_inInventoryID"}) {
 			my ($itemName, $count) = $input =~ /^(.*?)(?:\s*([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
-			my $item = $char->inventory->getByNameID($itemName);
- 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+			return 0 if !inRange($char->inventory->sumByNameID($itemName), $count);
 		}
 	}
 
@@ -6090,6 +6091,13 @@ sub checkPlayerCondition {
 				return 0 if (!inRange(percent_hp($char->{mercenary}), $1));
 			} else {
 				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix . "_hp"}));
+			}
+		} else {
+			return 0 unless defined $player->{hp};
+			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange(percent_hp($player), $1));
+			} else {
+				return 0 if (!inRange($player->{hp}, $config{$prefix . "_hp"}));
 			}
 		}
 	}

@@ -34,6 +34,30 @@ use Network::Send ();
 use AI;
 use Translation;
 
+use constant {
+	TYPE_USABLE_HEAL => 0,
+	TYPE_USABLE_STATUS => 1,
+	TYPE_USABLE_SPECIAL => 2,
+	TYPE_EVENT => 3,
+	TYPE_ARMOR => 4,
+	TYPE_WEAPON => 5,
+	TYPE_CARD => 6,
+	TYPE_QUEST => 7,
+	TYPE_PET_ARMOR => 8,
+	TYPE_TWO_HAND_WEAPON => 9,
+	TYPE_ARROW => 10,
+	TYPE_HELMET => 11,
+	TYPE_UNKNOWN_12 => 12,
+	TYPE_MASK => 13,
+	TYPE_HEADGEAR => 14,
+	TYPE_GUN => 15,
+	TYPE_AMMO => 16,
+	TYPE_SHURIKEN => 17,
+	TYPE_CASH_ITEM => 18,
+	TYPE_CANNONBALL => 19,
+	TYPE_COSTUME => 20,
+};
+
 use overload '""' => \&_toString;
 use overload '==' => \&_isis;
 use overload '!=' => \&_not_is;
@@ -88,8 +112,6 @@ our @slots = qw(
 sub new {
 	my $class = $_[0];
 	my $self = $class->SUPER::new(T('Item'));
-	$self->{name} = 'Uninitialized Item';
-	$self->{ID} = 0;
 	$self->{amount} = 0;
 	$self->{type} = 0;
 	$self->{equipped} = 0;
@@ -386,6 +408,8 @@ sub nameString {
 sub usable     	{ (1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0)[$_[0]{type}] }
 sub equippable	{ (0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1)[$_[0]{type}] }
 sub mergeable 	{ (0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)[$_[0]{type}] }
+
+sub isEnhanced { $_[0]{upgrade} || $_[0]{grade} || ($_[0]{cards} || '') =~ /[^\x00]/ || ($_[0]{options} || '') =~ /[^\x00]/ }
 
 ##
 # $ActorItem->equippedInSlot(slot)

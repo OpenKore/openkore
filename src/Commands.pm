@@ -43,7 +43,7 @@ use Task;
 use Task::ErrorReport;
 use Match;
 use Translation;
-use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
+use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK STATUS_POW STATUS_STA STATUS_WIS STATUS_SPL STATUS_CON STATUS_CRT);
 
 our (%commands, %completions);
 my $needsInit = 1;
@@ -660,7 +660,7 @@ sub initHandlers {
 		['stand', T("Stand up."), \&cmdStand],
 		['stat_add', [
 			T("Add status point."),
-			["str|agi|int|vit|dex|luk", T("add status points to a stat")]
+			["str|agi|int|vit|dex|luk|pow|sta|wis|spl|con|crt", T("add status points to a stat")]
 			], \&cmdStatAdd],
 		['switchconf', [
 			T("Switch configuration file."),
@@ -1331,9 +1331,10 @@ sub cmdAutoSell {
 		# Simulate list of items to sell
 		my @sellItems;
 		my $msg = center(T(" Items to sell (simulation) "), 50, '-') ."\n".
-				T("Amount  Item Name\n");
+				" " . T("Amount  Item Name\n");
 		for my $item (@{$char->inventory}) {
 			next if ($item->{unsellable});
+			next if ($config{sellAuto_keepEnhanced} && $item->isEnhanced);
 			my $control = items_control($item->{name},$item->{nameID});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 				my %obj;
@@ -1342,8 +1343,8 @@ sub cmdAutoSell {
 				my $item_name = $item->{name};
 				$item_name .= T(" (if unequipped)") if ($item->{equipped});
 				$msg .= swrite(
-						"@>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-						[$item->{amount}, $item_name]);
+						"@>>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+						[$obj{amount}, $item_name]);
 			}
 		}
 		$msg .= ('-'x50) . "\n";
@@ -1471,6 +1472,7 @@ sub cmdCard {
 				"Can't use command while not connected to server.\n");
 		} elsif ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
+			undef @cardMergeItemsID;
 			$messageSender->sendCardMerge(-1, -1);
 			message T("Cancelling card merge.\n");
 		} else {
@@ -1516,6 +1518,7 @@ sub cmdCard {
 	} elsif ($arg1 eq "use") {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->inventory->get($arg2)) {
+				undef @cardMergeItemsID;
 				$cardMergeIndex = $arg2;
 				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{ID});
 				message TF("Sending merge list request for %s...\n",
@@ -5505,15 +5508,20 @@ sub cmdStats {
 			return;
 		}
 
-		if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int" && $arg ne "dex" && $arg ne "luk") {
+		if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int" && $arg ne "dex" && $arg ne "luk" &&
+			$arg ne "pow" && $arg ne "sta" && $arg ne "wis" && $arg ne "spl" && $arg ne "con" && $arg ne "crt") {
 			error T("Syntax Error in function 'st add' (Add Status Point)\n" .
-				"Usage: st add <str | agi | vit | int | dex | luk>\n");
+				"Usage: st add <str | agi | vit | int | dex | luk | pow | sta | wis | spl | con | crt>\n");
 
 		} elsif ($char->{$arg} >= 99 && !$config{statsAdd_over_99}) {
 			error T("Error in function 'st add' (Add Status Point)\n" .
 				"You cannot add more stat points than 99\n");
 
-		} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
+		} elsif (
+			($arg =~ /^(pow|sta|wis|spl|con|crt)$/)
+				? (!$char->{"need_$arg"} || $char->{"need_$arg"} > $char->{'traitpoint'})
+				: ($char->{"points_$arg"} > $char->{'points_free'})
+		) {
 			error TF("Error in function 'st add' (Add Status Point)\n" .
 				"Not enough status points to increase %s\n", $arg);
 
@@ -5531,6 +5539,18 @@ sub cmdStats {
 				$ID = STATUS_DEX;
 			} elsif ($arg eq "luk") {
 				$ID = STATUS_LUK;
+			} elsif ($arg eq "pow") {
+				$ID = STATUS_POW;
+			} elsif ($arg eq "sta") {
+				$ID = STATUS_STA;
+			} elsif ($arg eq "wis") {
+				$ID = STATUS_WIS;
+			} elsif ($arg eq "spl") {
+				$ID = STATUS_SPL;
+			} elsif ($arg eq "con") {
+				$ID = STATUS_CON;
+			} elsif ($arg eq "crt") {
+				$ID = STATUS_CRT;
 			}
 
 			$messageSender->sendAddStatusPoint($ID);

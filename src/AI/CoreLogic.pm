@@ -2029,6 +2029,7 @@ sub processAutoSell {
 			@sellList = ();
 			for my $item (@{$char->inventory}) {
 				next if ($item->{equipped} || !$item->{sellable});
+				next if ($config{sellAuto_keepEnhanced} && $item->isEnhanced);
 
 				my $control = items_control($item->{name}, $item->{nameID});
 
@@ -2134,7 +2135,7 @@ sub processAutoBuy {
 
 			delete $args->{index};
 			for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-				next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
+				next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_${i}_npc"} || $config{"buyAuto_${i}_disabled"});
 				next if ($config{"buyAuto_${i}_maxBase"} =~ /^\d{1,}$/ && $char->{lv} > $config{"buyAuto_${i}_maxBase"});
 				next if ($config{"buyAuto_${i}_minBase"} =~ /^\d{1,}$/ && $char->{lv} < $config{"buyAuto_${i}_minBase"});
 				# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
@@ -3069,15 +3070,21 @@ sub processAutoItemUse {
 
 ##### AUTO-SKILL USE #####
 sub processAutoSkillUse {
+	my ($slave) = @_;
 	return if ($char->{muted});
-	my $routeIndex = AI::findAction("route");
-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && AI::args($routeIndex)->getSubtask->isa('Task::TalkNPC'));
-	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport) ) || (AI::action() eq "skill_use" && AI::args()->{tag} eq "attackSkill")) {
+	if (!$slave) {
+		my $routeIndex = AI::findAction("route");
+		return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && AI::args($routeIndex)->getSubtask->isa('Task::TalkNPC'));
+	}
+	if ($slave ? ($slave->isIdle() || $slave->is(qw(route move follow attack))) : (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack teleport)) || (AI::action() eq "skill_use" && AI::args()->{tag} eq "attackSkill"))) {
 		my %self_skill;
 		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
-			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
+			next unless $config{"useSelf_skill_$i"};
+			my $skill = Skill->new(auto => $config{"useSelf_skill_$i"});
+			next unless ($slave || $char)->checkSkillOwnership($skill);
+			if (checkSelfCondition("useSelf_skill_$i", $slave ? $slave->{slave_AI} : undef)) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$self_skill{skillObject} = Skill->new(auto => $config{"useSelf_skill_$i"});
+				$self_skill{skillObject} = $skill;
 				$self_skill{ID} = $self_skill{skillObject}->getHandle();
 				$self_skill{owner} = $self_skill{skillObject}->getOwner();
 				unless ($self_skill{ID}) {
@@ -3086,7 +3093,7 @@ sub processAutoSkillUse {
 					configModify("useSelf_skill_${i}_disabled", 1);
 					next;
 				}
-				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"} || $char->getSkillLevel($self_skill{skillObject});
+				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"} || ($slave || $char)->getSkillLevel($self_skill{skillObject});
 				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
 				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
 				$self_skill{prefix} = "useSelf_skill_$i";
@@ -3134,15 +3141,18 @@ sub processAutoSkillUse {
 
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
+	my ($slave) = @_;
 	return if ($char->{muted});
-	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
-		my $realMyPos = calcPosFromPathfinding($field, $char);
+	if ($slave ? ($slave->isIdle() || $slave->is(qw(route move follow attack))) : (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))) {
+		my $realMyPos = calcPosFromPathfinding($field, $slave || $char);
 		my %party_skill;
 		PARTYSKILL:
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
-			next unless checkSelfCondition("partySkill_$i");
-			$party_skill{skillObject} = Skill->new(auto => $config{"partySkill_$i"});
+			my $skill = Skill->new(auto => $config{"partySkill_$i"});
+			next unless ($slave || $char)->checkSkillOwnership($skill);
+			next unless checkSelfCondition("partySkill_$i", $slave ? $slave->{slave_AI} : undef);
+			$party_skill{skillObject} = $skill;
 			$party_skill{owner} = $party_skill{skillObject}->getOwner;
 
 			foreach my $ID ($accountID, @slavesID, @playersID) {
@@ -3172,11 +3182,25 @@ sub processPartySkillUse {
 				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $party_skill_dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
 				my $realActorPos = calcPosFromPathfinding($field, $player);
 				my $distance = blockDistance($realMyPos, $realActorPos);
-				next unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist));
+				unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist)) {
+					my (undef, $max, $inclusive) = getRange($party_skill_dist);
+					$max-- if defined($max) && !$inclusive;
+					if ($config{"partySkill_${i}_moveToTarget"} && !$config{"partySkill_${i}_isSelfSkill"}
+						&& $party_skill{owner}{ID} eq $char->{ID} && (AI::isIdle() || AI::is(qw(sitAuto follow)))
+						&& defined($max) && $max >= 0 && $distance > $max
+						&& timeOut($ai_v{"partySkill_${i}_move_time"}{$ID}, $timeout{ai_move_giveup}{timeout})
+						&& checkPlayerCondition("partySkill_${i}_target", $ID)) {
+						$ai_v{"partySkill_${i}_move_time"}{$ID} = time;
+						ai_route($field->baseName, $realActorPos->{x}, $realActorPos->{y}, noMapRoute => 1, noSitAuto => 1, distFromGoal => $max);
+						stand() if $char->{sitting};
+						return;
+					}
+					next;
+				}
 				next unless (checkPlayerCondition("partySkill_$i"."_target", $ID));
 
 				$party_skill{ID} = $party_skill{skillObject}->getHandle;
-				$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
+				$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || ($slave || $char)->getSkillLevel($party_skill{skillObject});
 				$party_skill{target} = $player->{name};
 				$party_skill{targetActor} = $player;
 				$party_skill{x} = $realActorPos->{x};
@@ -3247,9 +3271,9 @@ sub processPartySkillUse {
 sub processMonsterSkillUse {
 	return if ($char->{muted});
 	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
-		my $i = 0;
-		my $prefix = "monsterSkill_$i";
-		while ($config{$prefix}) {
+		for (my $i = 0; exists $config{"monsterSkill_$i"}; $i++) {
+			my $prefix = "monsterSkill_$i";
+			next unless $config{$prefix};
 			# monsterSkill can be used on any monster that we could
 			# attackAuto
 			for my $monster (@$monstersList) {
@@ -3272,8 +3296,6 @@ sub processMonsterSkillUse {
 					last;
 				}
 			}
-			$i++;
-			$prefix = "monsterSkill_$i";
 		}
 	}
 }

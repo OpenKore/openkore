@@ -5,7 +5,7 @@ use Plugins;
 use Utils;
 use Globals qw(%config $net $char $messageSender);
 use Log qw(message debug error);
-use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
+use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK STATUS_POW STATUS_STA STATUS_WIS STATUS_SPL STATUS_CON STATUS_CRT);
 use Settings qw(%sys);
 use Translation;
 
@@ -19,6 +19,8 @@ Plugins::register('raiseStat', $translator->translate('automatically raise chara
 my $base_hooks = Plugins::addHooks(
 	['start3',        \&checkConfig],
 	['postloadfiles', \&checkConfig],
+	['disconnected',  \&on_disconnect],
+	['serverDisconnect/success', \&on_disconnect],
     ['configModify',  \&on_configModify]
    );
 
@@ -27,6 +29,7 @@ my $waiting_hooks;
 my $adding_hook;
 my $next_stat;
 my $status;
+my $waiting_for_answer;
 my $timeout = { time => 0, timeout => 1 };
 
 use constant {
@@ -39,6 +42,10 @@ sub on_unload {
    Plugins::delHook($base_hooks);
    changeStatus(INACTIVE);
    message $translator->translate("[raiseStat] Plugin unloading or reloading\n"), 'success';
+}
+
+sub on_disconnect {
+	undef $waiting_for_answer;
 }
 
 ################################################################
@@ -56,9 +63,11 @@ sub on_unload {
 #  will try to raise stats if possible.
 sub changeStatus {
 	my $new_status = shift;
+	$new_status = AWAITING_CHANCE_OR_ANSWER if ($new_status == ADDING && $waiting_for_answer);
 	Plugins::delHook($waiting_hooks) if ($status == AWAITING_CHANCE_OR_ANSWER);
 	Plugins::delHook($adding_hook) if ($status == ADDING);
 	if ($new_status == INACTIVE) {
+		undef $waiting_for_answer;
 		undef $next_stat;
 		undef @stats_to_add;
 		debug $translator->translate("[raiseStat] Plugin stage changed to 'INACTIVE'\n");
@@ -66,7 +75,7 @@ sub changeStatus {
 		$waiting_hooks = Plugins::addHooks(
 			['packet/stats_added', \&on_possible_raise_chance_or_answer],
 			['packet/stats_info', \&on_possible_raise_chance_or_answer],
-			['packet/stat_info', \&on_possible_raise_chance_or_answer] # 9 is points_free
+			['packet/stat_info', \&on_possible_raise_chance_or_answer] # 9 is points_free, 231 is traitpoint
 		);
 		debug $translator->translate("[raiseStat] Plugin stage changed to 'AWAITING_CHANCE_OR_ANSWER'\n");
 	} elsif ($new_status == ADDING) {
@@ -86,7 +95,13 @@ sub changeStatus {
 sub on_possible_raise_chance_or_answer {
 	my $hookName = shift;
 	my $args = shift;
-	return if ($hookName eq 'packet/stat_info' && $args && $args->{type} != 9);
+	if ($hookName eq 'packet/stat_info') {
+		return if $waiting_for_answer;
+		return if ($args && $args->{type} != 9 && $args->{type} != 231 && ($args->{type} < 247 || $args->{type} > 252));
+	}
+	return if ($waiting_for_answer && $hookName eq 'packet/stats_info');
+	return if ($waiting_for_answer && $hookName eq 'packet/stats_added' && $args->{type} != $waiting_for_answer);
+	undef $waiting_for_answer;
 	debug $translator->translate("[raiseStat] Received a raise chance or answer\n");
 	changeStatus(ADDING);
 }
@@ -116,6 +131,11 @@ sub getNextStat {
 #  canRaise() is the function responsible for checking if
 #  we have enough free points to raise '$next_stat'.
 sub canRaise {
+	if ($next_stat =~ /^(pow|sta|wis|spl|con|crt)$/) {
+		return $char->{traitpoint} &&
+			$char->{"need_".$next_stat} &&
+			$char->{traitpoint} >= $char->{"need_".$next_stat};
+	}
     $char->{points_free} and
     $char->{"points_".$next_stat} and
     $char->{points_free} >= $char->{"points_".$next_stat};
@@ -145,14 +165,22 @@ sub on_ai_pre {
 #  prints it on console.
 sub raiseStat {
 	message $translator->translatef("[raiseStat] Auto-adding stat '%s' to '%d'\n", $next_stat, $char->{$next_stat}+1);
-	$messageSender->sendAddStatusPoint({
+	my $stat_id = {
 		str => STATUS_STR,
 		agi => STATUS_AGI,
 		vit => STATUS_VIT,
 		int => STATUS_INT,
 		dex => STATUS_DEX,
 		luk => STATUS_LUK,
-	}->{$next_stat});
+		pow => STATUS_POW,
+		sta => STATUS_STA,
+		wis => STATUS_WIS,
+		spl => STATUS_SPL,
+		con => STATUS_CON,
+		crt => STATUS_CRT,
+	}->{$next_stat};
+	$waiting_for_answer = $stat_id if ($stat_id >= STATUS_POW && $stat_id <= STATUS_CRT);
+	$messageSender->sendAddStatusPoint($stat_id);
 }
 
 ################################################################
@@ -184,7 +212,7 @@ sub validateSteps {
 	my @steps = split(/\s*,+\s*/, $list);
 	undef @stats_to_add;
 	foreach my $step (@steps) {
-		if ($step =~ /^(\d+)\s+(str|vit|dex|int|luk|agi)$/) {
+		if ($step =~ /^(\d+)\s+(str|vit|dex|int|luk|agi|pow|sta|wis|spl|con|crt)$/) {
 			my $value = $1;
 			my $stat = $2;
 			if ($value > 99 && !$config{statsAdd_over_99}) {
@@ -192,7 +220,7 @@ sub validateSteps {
 				return 0;
 			}
 			push(@stats_to_add, {'value' => $value, 'stat' => $stat});
-		} elsif ($step =~ /^(str|vit|dex|int|luk|agi)\s+(\d+)$/) {
+		} elsif ($step =~ /^(str|vit|dex|int|luk|agi|pow|sta|wis|spl|con|crt)\s+(\d+)$/) {
 			my $stat = $1;
 			my $value = $2;
 			if ($value > 99 && !$config{statsAdd_over_99}) {

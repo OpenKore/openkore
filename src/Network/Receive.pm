@@ -48,6 +48,7 @@ use Utils;
 use Utils::Exceptions;
 use Utils::Crypton;
 use Translation;
+use Actor::Item ();
 use Actor::Slave::Homunculus;
 use Actor::Slave::Mercenary;
 use Actor::Slave::Unknown;
@@ -1702,13 +1703,14 @@ sub stat_info {
 # TODO: merge with stat_info
 # Notifies the client, about the result of an status change request (ZC_STATUS_CHANGE_ACK).
 # 00BC <status id>.W <result>.B <value>.B
+# 0B25 <status id>.W <result>.B <value>.B (ZC_ADVANCED_STATUS_CHANGE_ACK)
 # result:
 #     0 = failure
 #     1 = success
 sub stats_added {
 	my ($self, $args) = @_;
 
-	if (defined $args->{result} ? !$args->{result} : $args->{val} == 207) {
+	if (defined $args->{result} ? $args->{result} != 1 : $args->{val} == 207) {
 		error T("Not enough stat points to add\n");
 	} else {
 		if ($args->{type} == VAR_STR) {
@@ -1851,6 +1853,10 @@ sub stat_info2 {
 		$char->{luk} = $val;
 		$char->{luk_bonus} = $val2;
 		debug "Luck: $val + $val2\n", "parseMsg";
+	} elsif ($type >= VAR_SP_POW && $type <= VAR_SP_CRT) {
+		my $stat = (qw(pow sta wis spl con crt))[$type - VAR_SP_POW];
+		$char->{$stat} = $val;
+		$char->{"${stat}_bonus"} = $val2;
 	}
 	$char->inventory->onStatInfo2() if (!$masterServer->{itemListType});
 
@@ -2080,7 +2086,7 @@ sub actor_display {
 			$actor->{appear_time} = time;
 			$mustAdd = 1;
 		}
-		
+
 		$actor->setName($jobs_lut{$args->{type}});
 	}
 
@@ -2957,8 +2963,8 @@ sub homunculus_property {
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	# or make function in Actor class
-	if ($config{homunculus_attackDistanceAuto} && exists $slave->{attack_range}) {
-		if($config{homunculus_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
+	if ($config{homunculus_attackDistanceAuto} && defined $slave->{attack_range} && $slave->{attack_range} > 0) {
+		if ($config{homunculus_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
 			configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
 			message TF("Autodetected attackDistance for homunculus = %s\n", $config{homunculus_attackDistance}), "success";
 		}
@@ -3115,7 +3121,7 @@ sub homunculus_info {
 # Minimap indicator.
 sub minimap_indicator {
 	my ($self, $args) = @_;
-	
+
 	my $marker_type = defined $args->{type}
 		? "type:$args->{type}"
 		: "effect:" . (defined $args->{effect} ? $args->{effect} : '-');
@@ -3752,6 +3758,7 @@ sub inventory_item_added {
 			$item->{identified} = $args->{identified};
 			$item->{broken} = $args->{broken};
 			$item->{upgrade} = $args->{upgrade};
+			$item->{grade} = $args->{grade};
 			$item->{cards} = ($args->{switch} eq '029A') ? $args->{cards} + $args->{cards_ext}: $args->{cards};
 			if ($args->{switch} eq '029A') {
 				$args->{cards} .= $args->{cards_ext};
@@ -4279,21 +4286,30 @@ sub login_pin_new_code_result {
 
 sub actor_status_active {
 	my ($self, $args) = @_;
+
 	return unless changeToInGameState();
+
 	my ($type, $ID, $tick, $unknown1, $unknown2, $unknown3, $unknown4) = @{$args}{qw(type ID tick unknown1 unknown2 unknown3 unknown4)};
 	my $flag = (exists $args->{flag}) ? $args->{flag} : 1;
 	my $status = defined $statusHandle{$type} ? $statusHandle{$type} : "UNKNOWN_STATUS_$type";
+
 	$char->cart->changeType($unknown1) if ($type == 673 && defined $unknown1 && ($ID eq $accountID)); # for Cart active
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 #	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1}); # need test for '08FF'
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
+
 	# Rolling Cutter counters.
-	if ( $type == 0x153 && $char->{spirits} != $unknown1 ) {
-		$char->{spirits} = $unknown1 || 0;
-		if ( $ID eq $accountID ) {
-			message TF( "You have %s %s(s) now\n", $char->{spirits}, 'counters' ), "parseMsg_statuslook", 1;
-		} else {
-			message TF( "%s has %s %s(s) now\n", $args->{actor}, $char->{spirits}, 'counters' ), "parseMsg_statuslook", 1;
+	if ($type == 0x153) {
+		my $spirits = $unknown1 || 0;
+
+		if ($ID eq $accountID) {
+			if (($char->{spirits} || 0) != $spirits) {
+				$char->{spirits} = $spirits;
+				message TF("You have %s %s(s) now\n", $char->{spirits}, 'counters'), "parseMsg_statuslook", 1;
+			}
+		} elsif (($args->{actor}{spirits} || 0) != $spirits) {
+			$args->{actor}{spirits} = $spirits;
+			message TF("%s has %s %s(s) now\n", $args->{actor}, $args->{actor}{spirits}, 'counters'), "parseMsg_statuslook", 1;
 		}
 	}
 }
@@ -5191,7 +5207,7 @@ sub npc_chat {
 	# like public_chat, but also has color
 
 	my $actor = $args->{actor};
-	my $message = $args->{message}; # needs bytesToString or not?
+	my $message = bytesToString($args->{message});
 	my $position = sprintf("[%s %d, %d]",
 		$field ? $field->baseName : T("Unknown field,"),
 		@{$char->{pos_to}}{qw(x y)});
@@ -5576,6 +5592,11 @@ sub item_list_nonstackable {
 		$arguments->{hook} = 'packet_inventory';
 		$arguments->{getter} = sub { $char->inventory->getByID($_[0]{ID}) };
 		$arguments->{adder} = sub { $char->inventory->add($_[0]) };
+		for my $item (@{$arguments->{items}}) {
+			my $existing = $char->inventory->getByID($item->{ID});
+			$item->{amount} = $existing->{amount} if $existing && $existing->{nameID} == $item->{nameID}
+				&& (grep { $item->{type} == $_ } (Actor::Item::TYPE_ARROW, Actor::Item::TYPE_AMMO, Actor::Item::TYPE_SHURIKEN, Actor::Item::TYPE_CANNONBALL));
+		}
 
 	} elsif ( $args->{type} == INVTYPE_CART ) {
 		$arguments->{hook} = 'packet_cart',
@@ -6113,12 +6134,12 @@ sub deal_begin {
 		error T("That person is too far from you to trade.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
 		undef %outgoingDeal;
-		
+
 	} elsif ($args->{type} == 2) {
 		error T("That person is in another deal.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
 		undef %outgoingDeal;
-		
+
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -6137,17 +6158,17 @@ sub deal_begin {
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 		Plugins::callHook('engaged_deal', {name => $currentDeal{name}});
-		
+
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
 		undef %outgoingDeal;
-		
+
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
 		undef %outgoingDeal;
-		
+
 	}
 }
 
@@ -6360,16 +6381,13 @@ sub errors {
 		$net->serverDisconnect();
 	}
 	if ($args->{type} == 0) {
-		# FIXME BAN_SERVER_SHUTDOWN is 0x1, 0x0 is BAN_UNFAIR
+		error T("Disconnected by server (code 0)\n"), "connection";
+	} elsif ($args->{type} == 1) {
 		if ($config{'dcOnServerShutDown'} == 1) {
 			error T("Auto disconnecting on ServerShutDown!\n");
 			chatLog("k", T("*** Server shutting down , auto disconnect! ***\n"));
 			$quit = 1;
-		} else {
-			error T("Server shutting down\n"), "connection";
-		}
-	} elsif ($args->{type} == 1) {
-		if ($config{'dcOnServerClose'} == 1) {
+		} elsif ($config{'dcOnServerClose'} == 1) {
 			error T("Auto disconnecting on ServerClose!\n");
 			chatLog("k", T("*** Server is closed , auto disconnect! ***\n"));
 			$quit = 1;
@@ -6525,8 +6543,8 @@ sub friend_response {
 	my $type = $args->{type};
 	my $name = bytesToString($args->{name});
 	if ($type == 0) {
-		my $ID = @friendsID;
-		binAdd(\@friendsID, $ID);
+		my $ID = binAdd(\@friendsID, scalar @friendsID);
+		$friendsID[$ID] = $ID;
 		$friends{$ID}{accountID} = substr($args->{RAW_MSG}, 4, 4);
 		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
 		$friends{$ID}{name} = $name;
@@ -7267,12 +7285,12 @@ sub item_used {
 
 				$hook_args{item} = $item;
 				$hook_args{binID} = $item->{binID};
-				$hook_args{name} => $item->{name};
+				$hook_args{name} = $item->{name};
 				$hook_args{amount} = $amount;
 
 			} else {
 				Misc::clearTeleportItemPendingUse($itemID);
-				message TF("You failed to use item: %s (%d)\n", $item ? $item->{name} : "#$itemID", $remaining), "useItem", 1;
+				message TF("You failed to use item: %s (%d)\n", $item ? $item->{name} : "#$itemID", $item->{binID}), "useItem", 1;
 			}
  		} else {
 			if ($success == 1) {
@@ -8149,7 +8167,7 @@ sub deal_add_you {
 	}
 
 	my $id = unpack('v',$args->{ID});
-	
+
 	if ($id == 0) {
 		message "You added Zeny to Deal (suposedly $currentDeal{'you_zeny'} z).\n";
 		return;
@@ -8352,15 +8370,15 @@ sub received_login_token {
             $master->{ip},
             $master->{port}
         );
-    
+
     } elsif ($login_type == 400 || $login_type == 1000) {
         die 'ERROR: otpSeed is not set in config.txt' unless $config{otpSeed};
 
         my $otp;
         Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
-    	unless (defined $otp && length $otp) { 
+    	unless (defined $otp && length $otp) {
 			error "No Plugin returned a OTP code for account $config{username}\n", 'connection';
-			$otp = $interface->query(T(', please enter your OTP: ')); 
+			$otp = $interface->query(T(', please enter your OTP: '));
 		}
         $messageSender->sendOtpToServer($otp);
 
@@ -8368,16 +8386,16 @@ sub received_login_token {
         error "OTP token malformed for account $config{username}\n", 'connection';
         my $otp = $interface->query(T('Please enter the OTP code: '));
         $messageSender->sendOtpToServer($otp);
-    
+
     } elsif ($login_type == 500) {
         error "Wrong OTP for account $config{username}\n", 'connection';
         my $otp = $interface->query(T('Please enter the OTP code: '));
         $messageSender->sendOtpToServer($otp);
-    
+
     } elsif ($login_type == 600) {
         error "Password Error for account $config{username}\n", 'connection';
         Misc::quit();
-    
+
     } elsif ($login_type == 900) {
 		error "You need to setup your OTP for account $config{username}\n", 'connection';
 		Misc::quit();
@@ -8513,7 +8531,7 @@ sub actor_movement_interrupted {
 	if ($actor->isa('Actor::You')) {
 		debug "Your movement was interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
 		AI::clear("move");
-	
+
 	} elsif ($actor) {
 		debug TF("[%s] Movement interrupted, coordinates: %s %s\n", $actor, $coords{x}, $coords{y}), "parseMsg_move";
 	}
@@ -10655,13 +10673,13 @@ sub attack_range {
 	return unless changeToInGameState();
 
 	$char->{attack_range} = $type;
-	if ($config{attackDistanceAuto}) {
-		if($config{attackDistance} > $type) { # decrease attack range if necessary
+	if ($config{attackDistanceAuto} && $type > 0) {
+		if ($config{attackDistance} > $type) { # decrease attack range if necessary
 			configModify('attackDistance', $type, 1);
 			message TF("Autodetected attackDistance = %s\n", $config{attackDistance}), "success";
 		}
 		if ($config{attackMaxDistance} != $type) { # set max distance using information coming from the server
-			configModify('attackMaxDistance', $type, 1) if ($config{attackMaxDistance} != $type);
+			configModify('attackMaxDistance', $type, 1);
 			message TF("Autodetected attackMaxDistance = %s\n", $config{attackMaxDistance}), "success";
 		}
 	}
@@ -10961,6 +10979,7 @@ sub card_merge_list {
 	my $msg = $args->{RAW_MSG};
 	my ($len) = unpack("x2 v", $msg);
 
+	undef @cardMergeItemsID;
 	my $index;
 	for (my $i = 4; $i < $len; $i += 2) {
 		$index = unpack("a2", substr($msg, $i, 2));
@@ -11044,7 +11063,7 @@ sub combo_delay {
 		my $window_seconds = $char->{combo_state}{delay} / 1000;
 		my $remaining_seconds = $char->{combo_state}{expires_at} - time;
 		$remaining_seconds = 0 if $remaining_seconds < 0;
-		
+
 		$args->{actor} = Actor::get($args->{ID});
 
 		debug sprintf(
@@ -11580,8 +11599,8 @@ sub mercenary_init {
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
-	if ($config{mercenary_attackDistanceAuto} && exists $slave->{attack_range}) {
-		if($config{mercenary_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
+	if ($config{mercenary_attackDistanceAuto} && defined $slave->{attack_range} && $slave->{attack_range} > 0) {
+		if ($config{mercenary_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
 			configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
 			message TF("Autodetected attackDistance for mercenary = %s\n", $config{mercenary_attackDistance}), "success";
 		}
@@ -11620,7 +11639,7 @@ sub monster_ranged_attack {
 		$monster->{movetoattack_pos} = {%coords1};
 		$monster->{movetoattack_time} = time;
 	}
-	
+
 	$char->{movetoattack_targetID} = $ID;
 
 	$char->{movetoattack_pos} = {%coords2};
