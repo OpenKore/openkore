@@ -12,7 +12,7 @@ use Modules 'register';
 use Skill;
 use Task::SitStand;
 use base 'Task::WithSubtask';
-use Globals qw($messageSender $net %timeout);
+use Globals qw($messageSender $net %timeout %config @ai_seq @ai_seq_args);
 use Log qw(debug warning);
 use Translation qw(T TF);
 use Utils qw(timeOut);
@@ -98,6 +98,8 @@ sub iterate {
 
 	} elsif (timeOut($self->{retry})) {
 		debug "Teleport $self->{actor} - (re)trying\n", "teleport";
+		delete $self->{pendingTeleportSkill};
+		delete $self->{pendingTeleportItemMenu};
 		my $item = $self->getInventoryItem;
 
 		if (my $chat_command = $self->chatCommand) { # 1 - try to use chat command
@@ -149,6 +151,7 @@ sub iterate {
 				if ($self->{teleportItemRule} && $self->{teleportItemRule}{itemID}) {
 					Misc::registerTeleportItemPendingUse($self->{teleportItemRule}{itemID});
 				}
+				$self->{pendingTeleportItemMenu} = $self->hookArgs->{level} unless $config{noAutoSkill};
 				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
 				Plugins::callHook('teleport_sent' => $self->hookArgs);
 				$timeout{ai_teleport}{time} = time;
@@ -162,6 +165,34 @@ sub iterate {
 
 		$self->{retry}{time} = time;
 	}
+}
+
+sub queueTeleportSkill {
+	my ($self, $level) = @_;
+	my $result;
+	main::ai_skillUse('AL_TELEPORT', $level, 0, 0, $self->{actor}{ID}, undef, undef, \$result);
+	if (AI::is('skill_use') && AI::args()->{ret} && AI::args()->{ret} == \$result) {
+		$self->{pendingTeleportSkill} = AI::args();
+	}
+	$timeout{ai_teleport}{time} = time;
+}
+
+sub consumeWarpMenu {
+	my ($self) = @_;
+	return if $self->{mapChanged};
+	my $skill = $self->{pendingTeleportSkill};
+	return delete $self->{pendingTeleportItemMenu} unless $skill;
+	return unless $skill->{skill_used} && !$skill->{mapChanged};
+	return if defined ${$skill->{ret}} && ${$skill->{ret}} ne 'ok';
+
+	delete $self->{pendingTeleportSkill};
+	for my $i (0 .. $#ai_seq) {
+		next unless AI::action($i) eq 'skill_use' && AI::args($i) == $skill;
+		splice(@ai_seq, $i, 1);
+		splice(@ai_seq_args, $i, 1);
+		last;
+	}
+	return $skill->{lv};
 }
 
 sub canEquipTeleportItem {
@@ -224,6 +255,7 @@ sub onItemUseAck {
 		Misc::setTeleportItemCooldownEntry($pending->{nameID}, time, $timeout);
 	} else {
 		debug "Teleport $self->{actor} - Teleport item use failed: $pending->{name}\n", "teleport";
+		delete $self->{pendingTeleportItemMenu};
 	}
 	delete $self->{pendingTeleportItemUse};
 }
@@ -245,6 +277,7 @@ sub onNpcChat {
 
 	Misc::setTeleportItemCooldownEntry($pending->{nameID}, time, $seconds);
 	delete $self->{pendingTeleportItemUse};
+	delete $self->{pendingTeleportItemMenu};
 }
 
 sub subtaskDone {
