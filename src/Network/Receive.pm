@@ -604,6 +604,18 @@ sub exp {
 	my $max = {VAR_EXP, $char->{exp_max}, VAR_JOBEXP, $char->{exp_job_max}}->{$args->{type}};
 	$args->{percent} = $max ? $value / $max * 100 : 0;
 
+	if ($args->{type} == VAR_JOBEXP && $value < 0) {
+		my $loss = Math::BigInt->new($value)->babs()->bstr();
+		if ($args->{flag} == EXP_FROM_BATTLE) {
+			message _formatExpMessage(T("Job Exp lost: %d (%.2f%%)\n"), $loss, -$args->{percent}), $domain, $verbosity;
+		} elsif ($args->{flag} == EXP_FROM_QUEST) {
+			message _formatExpMessage(T("Job Quest Exp lost: %d (%.2f%%)\n"), $loss, -$args->{percent}), $domain, $verbosity;
+		} else {
+			message _formatExpMessage(T("Job Unknown (flag=%d) Exp lost: %d (%.2f%%)\n"), $args->{flag}, $loss, -$args->{percent}), $domain, $verbosity;
+		}
+		return;
+	}
+
 	if ($args->{flag} == EXP_FROM_BATTLE) {
 		if ($args->{type} == VAR_EXP) {
 			message _formatExpMessage(T("Base Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
@@ -1469,6 +1481,7 @@ our %stat_info_handlers = (
 		}
 =cut
 
+		my $jobLevelIncreased = defined $actor->{lastJobLvl} && $actor->{lv_job} > $actor->{lastJobLvl};
 		my $jobExp = Math::BigInt->new(defined $actor->{exp_job} ? "$actor->{exp_job}" : 0);
 		$jobExp->bsub(defined $actor->{exp_job_last} ? "$actor->{exp_job_last}" : 0);
 		if ($actor->{lastJobLvl} ne $actor->{lv_job}) {
@@ -1489,7 +1502,11 @@ our %stat_info_handlers = (
 		my $jobPercent = $char->{exp_job_max} ?
 			($monsterJobExp / $char->{exp_job_max} * 100) :
 			0;
-		message _formatExpMessage(T("%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n"), $char, $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		if ($monsterJobExp < 0 && !$jobLevelIncreased) {
+			message _formatExpMessage(T("%s: Base Exp change %d (%.2f%%), Job Exp change %d (%.2f%%)\n"), $char, $monsterBaseExp, $basePercent, $monsterJobExp, $jobPercent), "exp";
+		} else {
+			message _formatExpMessage(T("%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n"), $char, $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		}
 		Plugins::callHook('exp_gained');
 	},
 	#VAR_VIRTUE
