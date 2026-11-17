@@ -3686,11 +3686,13 @@ sub warp_portal_list {
 	$msg .= ('-'x50) . "\n";
 	message $msg, "list";
 
-	if ($args->{type} == 26 && AI::inQueue('teleport')) {
-		# We have already successfully used the Teleport skill.
-		$messageSender->sendWarpTele(26, AI::args()->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
-		AI::dequeue();
-	}
+	return unless $args->{type} == 26;
+	my $index = AI::findAction('teleport');
+	return unless defined $index;
+	my $task = AI::args($index);
+	return unless Scalar::Util::blessed($task) && $task->isa('Task::Teleport');
+	my $level = $task->consumeWarpMenu();
+	$messageSender->sendWarpTele(26, $level == 2 ? "$config{saveMap}.gat" : 'Random') if $level;
 }
 
 # 0828,14
