@@ -132,6 +132,11 @@ sub handleNPCTalk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
 
+	if ($self->{stage} == AFTER_NPC_CLOSE && $hook_name ne 'npc_talk_done'
+		&& defined $args->{ID} && defined $talk{ID} && $args->{ID} eq $talk{ID}) {
+		$self->{stage} = TALKING_TO_NPC;
+	}
+
 	# TODO: maybe better create a new task
 	if ($self->{stage} == AFTER_NPC_CANCEL) {
 		debug "Npc has restarted conversation after talk cancel was sent.\n", "ai_npcTalk";
