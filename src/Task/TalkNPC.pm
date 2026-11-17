@@ -432,7 +432,8 @@ sub iterate {
 		}
 
 	# This is where things may bug in npcs which have no chat (private healers)
-	} elsif (!$ai_v{'npc_talk'}{'time'} && timeOut($self->{time}, $timeResponse)) {
+	} elsif (!$ai_v{'npc_talk'}{'time'} && timeOut($self->{time}, $timeResponse)
+		&& (!defined $self->{wait_after_close_until} || time >= $self->{wait_after_close_until})) {
 		# If NPC does not respond before timing out, then by default, it's
 		# a failure.
 		$messageSender->sendTalkCancel($self->{ID});
@@ -462,6 +463,11 @@ sub iterate {
 			$self->{time} = time;
 			$self->cancelTalk;
 			return;
+		}
+
+		if (defined $self->{wait_after_close_until}) {
+			return if time < $self->{wait_after_close_until};
+			delete $self->{wait_after_close_until};
 		}
 
 		#We must always wait for the last sent step to be answered, if it hasn't then cancel this task.
@@ -798,6 +804,11 @@ sub iterate {
 			return;
 		}
 
+		if (defined $self->{wait_after_close_until}) {
+			return if time < $self->{wait_after_close_until};
+			delete $self->{wait_after_close_until};
+		}
+
 		# No more steps to be sent
 		# Usual end of a conversation
 		if ($self->noMoreSteps && !%talk) {
@@ -810,6 +821,10 @@ sub iterate {
 				debug "$self->{target}: Reinitiating the talk\n", "ai_npcTalk";
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
+
+			} elsif ($self->{steps}[0] =~ /^w(\d+)/i) {
+				$self->{wait_after_close_until} = time + $1;
+				shift @{$self->{steps}};
 
 			# Too many steps
 			} else {
@@ -971,6 +986,7 @@ sub waitingForSteps {
 	my ($self) = @_;
 	return 0 unless ($self->{stage} == TALKING_TO_NPC);
 	return 0 unless ($self->noMoreSteps);
+	return 0 if defined $self->{wait_after_close_until} && time < $self->{wait_after_close_until};
 	return 0 if ($ai_v{'npc_talk'}{'talk'} eq 'next' && $config{autoTalkCont});
 	my $ai_npc_talk_wait_to_answer = $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} ? $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} : 1.5;
 	return 0 unless (timeOut($ai_v{'npc_talk'}{'time'}, $ai_npc_talk_wait_to_answer));
