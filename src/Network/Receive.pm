@@ -603,6 +603,8 @@ sub exp {
 	my ($domain, $verbosity) = $standalone ? ('exp', 1) : ('exp2', 2);
 	my $max = {VAR_EXP, $char->{exp_max}, VAR_JOBEXP, $char->{exp_job_max}}->{$args->{type}};
 	$args->{percent} = $max ? $value / $max * 100 : 0;
+	my $displayValue = $standalone && defined $char->{exp_last_delta} && $char->{exp_last_delta} >= 0 ? $char->{exp_last_delta} : $value;
+	my $displayPercent = $max ? $displayValue / $max * 100 : 0;
 
 	if ($args->{type} == VAR_JOBEXP && $value < 0) {
 		my $loss = Math::BigInt->new($value)->babs()->bstr();
@@ -618,7 +620,7 @@ sub exp {
 
 	if ($args->{flag} == EXP_FROM_BATTLE) {
 		if ($args->{type} == VAR_EXP) {
-			message _formatExpMessage(T("Base Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
+			message _formatExpMessage(T("Base Exp gained: %d (%.2f%%)\n"), $displayValue, $displayPercent), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
 			message _formatExpMessage(T("Job Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} else {
@@ -626,7 +628,7 @@ sub exp {
 		}
 	} elsif ($args->{flag} == EXP_FROM_QUEST) {
 		if ($args->{type} == VAR_EXP) {
-			message _formatExpMessage(T("Base Quest Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
+			message _formatExpMessage(T("Base Quest Exp gained: %d (%.2f%%)\n"), $displayValue, $displayPercent), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
 			message _formatExpMessage(T("Job Quest Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} else {
@@ -634,19 +636,12 @@ sub exp {
 		}
 	} else {
 		if ($args->{type} == VAR_EXP) {
-			message _formatExpMessage(T("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"), $args->{flag}, $value, $args->{percent}), $domain, $verbosity;
+			message _formatExpMessage(T("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"), $args->{flag}, $displayValue, $displayPercent), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
 			message _formatExpMessage(T("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"), $args->{flag}, $value, $args->{percent}), $domain, $verbosity;
 		} else {
 			message _formatExpMessage(T("Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n"), $args->{type}, $args->{flag}, $value), $domain, $verbosity;
 		}
-	}
-
-	if ($standalone) {
-		$monsterBaseExp = $value;
-		$monsterJobExp = 0;
-		Plugins::callHook('exp_gained');
-		$monsterBaseExp = 0;
 	}
 }
 
