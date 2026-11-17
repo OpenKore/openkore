@@ -9,11 +9,13 @@ username
 password
 loginPinCode
 char
+otpSeed
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
 poseidonServer 127.0.0.1
 poseidonPort 24390
+poseidonTimeout 5
 
 bindIp
 forceMapIP
@@ -26,12 +28,15 @@ XKore_dll NetRedirect.dll
 XKore_injectDLL 1
 XKore_autoAttachIfOneExe 1
 XKore_silent 1
+XKore_lookForProcess 1
 XKore_bypassBotDetection 0
 XKore_exeName ragexe.exe
 
 # XKore 2 / Proxy configuration
 XKore_listenIp 127.0.0.1
 XKore_listenPort 6901
+XKore_listenPort_map
+XKore_listenPort_char
 XKore_publicIp 127.0.0.1
 XKore_ID
 
@@ -63,15 +68,18 @@ allowedMaps
 allowedMaps_reaction 1
 
 attackAuto 2
+attackAuto_routeToLock 1
+attackAuto_outOfLock 1
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
-attackAuto_inLockOnly 1
 attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
 attackAuto_considerDamagedAggressive 0
+attackAuto_considerAggressiveIfCastOnCastSensor 0
+attackAllowStartStorageBuySell 1
 attackDistance 1
 attackDistanceAuto 1
 attackMaxDistance 1
@@ -188,6 +196,7 @@ followEmotion 1
 followEmotion_distance 4
 followFaceDirection 0
 followDistanceMax 6
+followAttackDistance 0
 followDistanceMin 3
 followLostStep 12
 followSitAuto 0
@@ -215,22 +224,42 @@ lockMap_randY
 route_escape_reachedNoPortal 1
 route_escape_randomWalk 1
 route_escape_shout
-route_avoidWalls 1
 route_randomWalk 1
+route_randomWalk_inLockOnly 0
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_maxNpcTries 5
+route_relogOnNpcFailure 0
 route_teleport 0
 route_teleport_minDistance 75
 route_teleport_maxTries 8
 route_teleport_notInMaps
+route_warpByItem 0
+route_warpByItem_chaining 0
+route_warpByItem_minDistance 150
+route_warpItem_minGain 0
+route_warpItem_routeCostHeuristic_max 10000
+route_warpItem_routeCostProbe_maxPerTick 6
+route_warpItem_routeCostCache_max 3000
 route_step 10
 route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
+route_avoidWalls 1
 route_randomFactor 0
+
+# Eden Group Headquarters exit portal.
+# Use only a map name, with or without quotes, like prontera or "payon"
+EdenPortalExit
+
+# Maximum walking path distance (client setting). Default: 17
+# This corresponds to max_walk_path in server configuration
+maxUnobstructedWalkPathDistance 17
+
+# If there are obstacles and the path is walkable the max dist acceptable is 14
+maxObstructedWalkPathDistance 14
 
 runFromTarget 0
 runFromTarget_inAdvance 0
@@ -244,7 +273,9 @@ runFromTarget_noAttackMethodFallback_minStep 8
 saveMap
 saveMap_x
 saveMap_y
+saveMap_warp 0
 saveMap_warpToBuyOrSell 1
+saveMap_warp_minDistance
 saveMap_warpChatCommand
 memo1
 memo2
@@ -267,6 +298,7 @@ sitAuto_over_50 0
 sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
+sitAuto_look_delay
 sitTensionRelax 0
 
 statsAddAuto 0
@@ -300,6 +332,7 @@ teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
 teleportAuto_lostTarget 0
 teleportAuto_dropTarget 0
+teleportAuto_dropTargetEngaged 1
 teleportAuto_dropTargetKS 0
 teleportAuto_dropTargetHidden 0
 teleportAuto_attackedWhenSitting 0
@@ -314,6 +347,7 @@ teleportAuto_item2
 
 dealAuto 1
 dealAuto_names
+dealMaxItems 10
 partyAuto 1
 partyAutoShare 0
 partyAutoShareItem 0
@@ -333,15 +367,22 @@ friendlyAID
 showTime
 showTimeDomains
 showTimeDomainsFormat
+# Wx map text and portal overlay thresholds
 wx_map_maxAutoSize 300
 wx_map_monsterSticking 1
 wx_map_npcSticking 1
 wx_map_playersSticking 1
 wx_map_portalSticking 5
 wx_map_route
+wx_map_namesDetail 8
+wx_map_playerNameZoom 8
+wx_map_partyNameZoom 1
+wx_map_portalDestinations 0
 wx_npcTalk
 wx_captcha
 showAllDamage 0
+githubURL
+githubIssueURL
 manualURL https://openkore.com/wiki/Manual
 forumURL https://forums.openkore.com
 
@@ -349,6 +390,7 @@ logChat 1
 logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
+logClanChat 0
 logSystemChat 1
 logLocalBroadcast 1
 logShop 1
@@ -375,12 +417,22 @@ noAutoSkill 0
 portalCompile 1
 portalRecord 2
 portalRecord_recompileAfter 1
+portalUpdatePosition 1
 missDamage 0
 
 tankersList
 
 repairAuto 0
 repairAuto_list
+repairAuto_npc
+repairAuto_standpoint
+repairAuto_distance 3
+repairAuto_maxDistance
+repairAuto_npc_steps c r0 c c r0 n
+repairAuto_useSkill 0
+repairAuto_equipAfter 1
+repairAuto_warp 0
+repairAuto_inTownOnly 0
 
 status_mapProperty 0
 status_mapType 0
@@ -390,13 +442,15 @@ monster_filter
 ######## Mercenary Support ########
 
 mercenary_attackAuto 2
+mercenary_attackAuto_routeToLock 1
+mercenary_attackAuto_outOfLock 1
 mercenary_attackAuto_party 1
 mercenary_attackAuto_notInTown 1
-mercenary_attackAuto_inLockOnly 1
 mercenary_attackAuto_notWhile_storageAuto 1
 mercenary_attackAuto_notWhile_buyAuto 1
 mercenary_attackAuto_notWhile_sellAuto 1
 mercenary_attackAuto_considerDamagedAggressive 0
+mercenary_attackAuto_considerAggressiveIfCastOnCastSensor 0
 mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
@@ -413,16 +467,15 @@ mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
 mercenary_attack_dance_ranged 0
 
-mercenary_attackBeyondMaxDistance_waitForAgressive 0
+mercenary_attackBeyondMaxDistance_waitForAgressive 1
 mercenary_attackBeyondMaxDistance_sendAttackWhileWaiting 0
 mercenary_attackSendAttackWithMove 0
 mercenary_attackWaitApproachFinish 1
 
-mercenary_lost_teleportToMaster_maxTries 6
 
-mercenary_route_randomWalk_rescueWhenLost 0
-mercenary_route_randomWalk_stopDuringAttack 0
-mercenary_route_randomWalk_waitMinDistance 0
+mercenary_route_rescueWhenLost 0
+mercenary_route_stopDuringAttack 0
+mercenary_route_waitMinDistance 10
 
 mercenary_runFromTarget 0
 mercenary_runFromTarget_inAdvance 0
@@ -434,8 +487,10 @@ mercenary_runFromTarget_noAttackMethodFallback_attackMaxDist 14
 mercenary_runFromTarget_noAttackMethodFallback_minStep 8
 
 mercenary_idleWalkType 1
+mercenary_followMode 1
 mercenary_followDistanceMin 3
-mercenary_followDistanceMax 12
+mercenary_followDistanceMax 10
+mercenary_followAttackDistance 0
 
 mercenary_moveNearWhenIdle 1
 mercenary_moveNearWhenIdle_minDistance 3
@@ -452,6 +507,7 @@ mercenary_teleportAuto_maxDmgInLock 0
 mercenary_teleportAuto_deadly 1
 mercenary_teleportAuto_unstuck 0
 mercenary_teleportAuto_dropTarget 0
+mercenary_teleportAuto_dropTargetEngaged 1
 mercenary_teleportAuto_dropTargetKS 0
 mercenary_teleportAuto_totalDmg 0
 mercenary_teleportAuto_totalDmgInLock 0
@@ -460,13 +516,15 @@ mercenary_teleportAuto_attackedWhenSitting 0
 ######## Homunculus Support ########
 
 homunculus_attackAuto 2
+homunculus_attackAuto_routeToLock 1
+homunculus_attackAuto_outOfLock 1
 homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
-homunculus_attackAuto_inLockOnly 1
 homunculus_attackAuto_notWhile_storageAuto 1
 homunculus_attackAuto_notWhile_buyAuto 1
 homunculus_attackAuto_notWhile_sellAuto 1
 homunculus_attackAuto_considerDamagedAggressive 0
+homunculus_attackAuto_considerAggressiveIfCastOnCastSensor 0
 homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackAuto_duringRandomWalk 0
 homunculus_attackAuto_duringItemsTake 0
@@ -482,16 +540,15 @@ homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0
 
-homunculus_attackBeyondMaxDistance_waitForAgressive 0
+homunculus_attackBeyondMaxDistance_waitForAgressive 1
 homunculus_attackBeyondMaxDistance_sendAttackWhileWaiting 0
 homunculus_attackSendAttackWithMove 0
 homunculus_attackWaitApproachFinish 1
 
-homunculus_lost_teleportToMaster_maxTries 6
 
-homunculus_route_randomWalk_rescueWhenLost 0
-homunculus_route_randomWalk_stopDuringAttack 0
-homunculus_route_randomWalk_waitMinDistance 0
+homunculus_route_rescueWhenLost 0
+homunculus_route_stopDuringAttack 0
+homunculus_route_waitMinDistance 0
 
 homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
@@ -502,8 +559,10 @@ homunculus_runFromTarget_noAttackMethodFallback_attackMaxDist 14
 homunculus_runFromTarget_noAttackMethodFallback_minStep 8
 
 homunculus_idleWalkType 1
+homunculus_followMode 1
 homunculus_followDistanceMin 3
-homunculus_followDistanceMax 12
+homunculus_followDistanceMax 10
+homunculus_followAttackDistance 0
 
 homunculus_moveNearWhenIdle 1
 homunculus_moveNearWhenIdle_minDistance 3
@@ -521,6 +580,7 @@ homunculus_teleportAuto_maxDmgInLock 0
 homunculus_teleportAuto_deadly 1
 homunculus_teleportAuto_unstuck 0
 homunculus_teleportAuto_dropTarget 0
+homunculus_teleportAuto_dropTargetEngaged 1
 homunculus_teleportAuto_dropTargetKS 0
 homunculus_teleportAuto_totalDmg 0
 homunculus_teleportAuto_totalDmgInLock 0
@@ -548,59 +608,16 @@ pet_return 20
 
 attackSkillSlot {
 	lvl
+	fromBehind 0
 	dist 1
 	maxDist 1
 	maxCastTime 0
 	minCastTime 0
-	hp
-	sp > 10
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
 	previousDamage
-	stopWhenHit 0
-	inLockOnly 0
-	notInTown 0
-	timeout 0
-	disabled 0
 	monsters
 	notMonsters
-	monstersCount
-	monstersCountDist
 	maxAttempts 0
 	maxUses 0
-	target_hp
-	target_whenStatusActive
-	target_whenStatusInactive
-	target_deltaHp
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
 	isSelfSkill 0
 	isStartSkill 0
 	equip_topHead
@@ -614,7 +631,8 @@ attackSkillSlot {
 	equip_armor
 	equip_shoes
 	equip_arrow
-	manualAI 0
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 attackComboSlot {
@@ -622,114 +640,29 @@ attackComboSlot {
 	waitBeforeUse
 	dist 1
 	maxDist 1
+	lvl
+	maxCastTime 0
+	minCastTime 0
+	maxUses 0
+	autoCombo 0
 	isSelfSkill 1
-	target_hp
-	target_deltaHp
 	monsters
 	notMonsters
-	monstersCount
-	monstersCountDist
-	whenPartyMembersNear
-	whenPartyMembersNearDist
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 doCommand {
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	inCart
-	inMap
-	manualAI 0
+	# [checkSelfCondition]
 }
 
 useSelf_skill {
 	lvl
 	maxCastTime 0
 	minCastTime 0
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	manualAI 0
+	smartEncore 0
+	noSmartHeal 0
+	# [checkSelfCondition]
 }
 
 useSelf_skill_smartHeal 1
@@ -740,74 +673,26 @@ partySkill {
 	lvl
 	dist 1
 	maxDist 8
+	moveToTarget 0
 	maxCastTime 0
 	minCastTime 0
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	manualAI 0
 	target
-	target_hp
-	target_isJob
-	target_isNotJob
-	target_whenStatusActive
-	target_whenStatusInactive
-	target_aggressives
-	target_monsters
-	target_timeout 0
-	target_deltaHp
-	target_dead 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
+	notPartyOnly 0
 	isSelfSkill 0
+	noSmartHeal 0
+	# [checkSelfCondition]
+	# [checkPlayerCondition]
 }
 
 monsterSkill {
 	target
 	maxUses
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	# Skill Use Conditions, including isSelfSkill
-	# Self Conditions
-	# Target Monster Conditions
+	lvl
+	maxCastTime 0
+	minCastTime 0
+	isSelfSkill 0
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 autoSwitch_default_rightHand
@@ -838,102 +723,21 @@ equipAuto {
 	armor
 	shoes
 	arrow
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
+	target
 	weight 0
 	whileSitting 0
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	manualAI 0
+	# [checkSelfCondition]
+	# [checkMonsterCondition]
 }
 
 useSelf_item {
-	hp
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	manualAI 0
+	dcOnEmpty 0
+	# [checkSelfCondition]
 }
 
 ######## Autostorage/autosell ########
+
+buyAuto_freeWeightOnOverweight 1
 
 buyAuto {
 	npc
@@ -946,12 +750,15 @@ buyAuto {
 	maxAmount 3
 	batchSize
 	onlyIdentified
-	disabled 0
-	maxBase
-	minBase
+	zeny
+	minDistance
+	maxDistance
+	dcOnEmpty 0
+	# [checkSelfCondition]
 }
 
 sellAuto 0
+sellAuto_keepEnhanced 0
 sellAuto_npc
 sellAuto_standpoint
 sellAuto_distance 3
@@ -959,6 +766,7 @@ sellAuto_maxDistance
 sellAuto_npc_steps s
 
 storageAuto 0
+storageAuto_onStart 0
 storageAuto_npc
 storageAuto_standpoint
 storageAuto_distance 3
@@ -967,6 +775,7 @@ storageAuto_npc_type 1
 storageAuto_type 0
 storageAuto_npc_steps
 storageAuto_password
+rodexMaxItems 5
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
 storageAuto_useItem 0
@@ -983,14 +792,17 @@ getAuto {
 	maxAmount
 	batchSize
 	passive
-	disabled 0
+	dcOnEmpty 0
+	# [checkSelfCondition]
 }
 
 ######## Debugging options; only useful for developers ########
 
 debug 0
+debugAssertOnNetwork 0
 debugPacket_unparsed 0
 debugPacket_received 0
+debugPacket_ro_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
 debugPacket_exclude
@@ -1002,3 +814,189 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
+
+# Plugins
+
+eventMacro_orphans terminate
+eventMacro_CheckOnAI auto
+eventMacro_notWhenInQueue storageAuto, buyAuto, sellAuto
+eventMacro_file eventMacros.txt
+
+avoidObstacles_enable_move 1
+avoidObstacles_enable_remove 1
+avoidObstacles_enable_avoid_portals 1
+avoidObstacles_adjust_route_step 1
+avoidObstacles_weight_limit 65000
+
+avoidObstaclesDefaultPortals {
+	enabled 1
+	penalty_dist 1000, 1000, 1000, 20
+	danger_dist 10, 10, 10, 1
+	prohibited_dist 2
+	drop_target_when_near_dist 3
+	drop_destination_when_near_dist 3
+}
+
+#checkSelfCondition {
+#	disabled 0
+#	whenIdle 0
+#	whenNotIdle 0
+#	manualAI 0
+#	timeout 0
+#	inQueue
+#	notInQueue
+#	onAction
+#	notOnAction
+#
+#	hp
+#	sp
+#	ap
+#	weight
+#	zeny
+#	spirit
+#	amuletType
+#	minBase
+#	maxBase
+#
+#	whenStatusActive
+#	whenStatusInactive
+#	whenGround
+#	whenNotGround
+#	whenPermitSkill
+#	whenNotPermitSkill
+#	whenFlag
+#	whenNotFlag
+#	onlyWhenSafe 0
+#	nearPortal 0
+#	inMap
+#	notInMap
+#	inLockOnly 0
+#	notWhileSitting 0
+#	notWhileCasting 0
+#	notWhileBeingCasted
+#	whileBeingCasted
+#	whenNoNearPartyMemberCasting
+#	whenNearPartyMemberCasting
+#	whileCasting 0
+#	notInTown 0
+#	inTown 0
+#	whenFollowing 0
+#	inParty 0
+#	notInParty 0
+#
+#	aggressives
+#	partyAggressives
+#	stopWhenHit 0
+#	monstersCount
+#	monstersCountDist
+#	monsters
+#	notMonsters
+#	defendMonsters
+#
+#	inInventory
+#	inInventoryID
+#	inCart
+#	whenEquipped
+#	whenNotEquipped
+#	whenEquip_Right_Hand_Empty 0
+#	whenEquip_Left_Hand_Empty 0
+#	whenEquip_Right_Hand_Type
+#	whenEquip_Left_Hand_Type
+#
+#	homunculus 0
+#	homunculus_hp
+#	homunculus_sp
+#	homunculus_onAction
+#	homunculus_notOnAction
+#	homunculus_whenIdle 0
+#	homunculus_whenNotIdle 0
+#	homunculus_dead 0
+#	homunculus_resting 0
+#	homunculus_noinfo_dead 0
+#	homunculus_noinfo_resting 0
+#
+#	mercenary 0
+#	mercenary_hp
+#	mercenary_sp
+#	mercenary_whenStatusActive
+#	mercenary_whenStatusInactive
+#	mercenary_onAction
+#	mercenary_notOnAction
+#	mercenary_whenIdle 0
+#	mercenary_whenNotIdle 0
+#
+#	skill
+#	whenWater 0
+#	devotees
+#	whenPartyMembersNear
+#	whenPartyMembersNearDist
+#}
+
+#checkPlayerCondition {
+#	target_timeout 0
+#	target_whenStatusActive
+#	target_whenStatusInactive
+#	target_notWhileSitting 0
+#	target_notWhileBeingCasted
+#	target_whileBeingCasted
+#	target_hp
+#	target_deltaHp
+#	target_isJob
+#	target_isNotJob
+#	target_aggressives
+#	target_defendMonsters
+#	target_monsters
+#	target_whenGround
+#	target_whenNotGround
+#	target_dead 0
+#	target_whenWeaponEquipped 0
+#	target_whenShieldEquipped 0
+#	target_isGuild
+#	target_isNotGuild
+#	target_dist
+#	target_isNotMyDevotee 0
+#	target_spirit
+#}
+
+#checkMonsterCondition {
+#	target_hp
+#	target_timeout 0
+#	target_misses
+#	target_totalMisses
+#	target_whenStatusActive
+#	target_whenStatusInactive
+#	target_notWhileBeingCasted
+#	target_whileBeingCasted
+#	target_whenGround
+#	target_whenNotGround
+#	target_dist
+#	target_deltaHp
+#	target_whenWeaponEquipped 0
+#	target_whenShieldEquipped 0
+#	target_is_aggressive 0
+#	target_is_aggressive_party 0
+#	# Added by eCast Plugin
+#	target_Element
+#	target_notElement
+#	target_Race
+#	target_notRace
+#	target_Size
+#	target_notSize
+#	target_hpLeft
+#	target_Level
+#	target_cellBehindFree 0
+#	target_isAIMode_Aggressive 0
+#	target_isAIMode_Looter 0
+#	target_isAIMode_Assist 0
+#	target_isAIMode_CanMove 0
+#	target_isAIMode_CastSensorIdle 0
+#	target_isAIMode_CastSensorChase 0
+#	target_isAIMode_MVP 0
+#	target_isAIMode_KnockbackImmune 0
+#	target_isAIMode_Detector 0
+#	target_isAIMode_TakesFixed_1_Damage_Melee 0
+#	target_isAIMode_TakesFixed_1_Damage_Ranged 0
+#	target_isAIMode_TakesFixed_1_Damage_Magic 0
+#	target_isAIMode_TakesFixed_1_Damage_None 0
+#}
+

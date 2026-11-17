@@ -13,16 +13,23 @@ print "Run tests on $^O\n";
 
 my @tests = qw(
     Utils::TextReaderTest
+	Utils::DataWaitingTest
 	CallbackListTest ObjectListTest ActorListTest WhirlpoolTest RijndaelTest
 	SetTest SkillTest InventoryListTest
 	ItemsTest
+	HandConditionsTest
+	CastConditionsTest
+	TeleportFallbackTest
 	ShopTest
 	TaskManagerTest TaskWithSubtaskTest TaskChainedTest
 	TaskTalkNPCTest
 	PluginsHookTest
 	FileParsersTest
+	DynamicPortalGroupsTest
 	NetworkTest
+	QuestReceiveTest
 	FieldTest
+	XConfTest
 );
 if ($^O eq 'MSWin32') {
 	push @tests, qw(HttpReaderTest);

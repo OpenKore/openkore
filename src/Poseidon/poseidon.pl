@@ -56,6 +56,8 @@ sub initialize {
 	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
 	print "Query Server Ready At : " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
 
+	print "Fake Server IP: " . $config{fake_ip} . "\n" if ($config{fake_ip});
+
 	print ">>> Poseidon $version initialized (Debug : ". (($config{debug}) ? "On" : "Off") . ") <<<\n\n";
 	print "Please read " . POSEIDON_SUPPORT_URL . " for further instructions.\n";
 }

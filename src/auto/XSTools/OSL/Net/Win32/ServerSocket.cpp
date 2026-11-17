@@ -55,14 +55,12 @@ public:
 		}
 
 		struct sockaddr_in addr;
-		char *c_address = NULL;
 
 		addr.sin_family = AF_INET;
 		if (address == NULL) {
 			addr.sin_addr.s_addr = htonl(INADDR_ANY);
 		} else {
-			c_address = strdup(address);
-			addr.sin_addr.s_addr = inet_addr(c_address);
+			addr.sin_addr.s_addr = inet_addr(address);
 		}
 		addr.sin_port = htons(port);
 		if (bind(fd, (struct sockaddr *) &addr, sizeof(addr)) == SOCKET_ERROR) {
@@ -73,10 +71,6 @@ public:
 				address, error);
 			closesocket(fd);
 			throw SocketException(message, error);
-		}
-
-		if (c_address != NULL) {
-			free(c_address);
 		}
 
 		if (port == 0) {

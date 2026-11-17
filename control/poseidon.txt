@@ -3,6 +3,7 @@
 # will keep waiting for your ragnarok online client to connect.
 ragnarokserver_ip=127.0.0.1
 ragnarokserver_port=6900
+fake_ip=
 
 # Query Server
 # Here you'll define the IP Address and the Port where Poseidon

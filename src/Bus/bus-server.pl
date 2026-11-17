@@ -32,6 +32,8 @@ use Utils::Exceptions;
 my $server;
 my %options;
 
+my $last_conn_log = 0;
+
 
 sub __start {
 	#### Parse arguments. ####
@@ -72,6 +74,12 @@ sub __start {
 	}
 	while (1) {
 		$server->iterate(-1);
+		# Log active connections periodically
+		if (time - $last_conn_log > 60) {
+			my $count = scalar @{$server->clients()};
+			printf "Active connections: $count\n";
+			$last_conn_log = time;
+		}
 	}
 }
 

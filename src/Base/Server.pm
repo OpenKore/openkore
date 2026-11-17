@@ -76,6 +76,7 @@ use IO::Socket::INET;
 use Base::Server::Client;
 use Utils::ObjectList;
 use Utils::Exceptions;
+use Log qw(debug message);
 
 
 ################################
@@ -160,6 +161,10 @@ sub getPort {
 # program's main loop.
 sub iterate {
 	my ($self, $timeout) = @_;
+	if ($self->isa('Bus::Server::MainServer')) {
+		$self->{loop_i} = 1 if (!exists $self->{loop_i} || $self->{loop_i} > 100);
+		debug("[Base::Server] Iterate ".($self->{loop_i}++)."\n", "bus");
+	}
 	my $serverFD = fileno($self->{BS_server});
 
 	# Generate the bit field for select();
@@ -176,13 +181,15 @@ sub iterate {
 		}
 	}
 
-
+	# FIX: Prevent indefinite blocking by ensuring we always have a timeout
 	if (@_ == 1) {
-		$timeout = 0;
-	} elsif ($timeout == -1) {
-		$timeout = undef;
+		$timeout = 0;  # Default to non-blocking
+	} elsif (!defined $timeout || $timeout < 0) {
+		$timeout = 1;  # Set 1-second timeout for negative/undefined cases
 	}
-	if (select($rbits, undef, undef, $timeout) > 0) {
+
+	my $nfound = select($rbits, undef, undef, $timeout);
+	if ($nfound > 0) {
 		# Checks whether new clients want to connect.
 		if (vec($rbits, $serverFD, 1)) {
 			$self->_newClient();
@@ -204,6 +211,9 @@ sub iterate {
 				}
 			}
 		}
+	} elsif ($nfound < 0) {
+		# Log select errors but don't die
+		message("[Base::Server] select() error: $!\n", "bus");
 	}
 }
 
@@ -267,10 +277,8 @@ sub _newClient {
 	my $fd = fileno($sock);
 	my $host = $sock->peerhost if ($sock->can('peerhost'));
 	my $client = new Base::Server::Client($sock, $host, $fd);
-	# The result of Add Function always Gives 0 Index ? So using $FD as Index for Now...
 	$self->{BS_clients}->add($client);
 	my $index = $fd;
-	#print(sprintf("New Index : %d\n",$index));
 	$client->setIndex($index);
 	$self->onClientNew($client, $index);
 }

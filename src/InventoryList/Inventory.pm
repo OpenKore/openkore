@@ -1,6 +1,7 @@
 package InventoryList::Inventory;
 
 use strict;
+use Scalar::Util qw(weaken);
 use Globals;
 use InventoryList;
 use base qw(InventoryList);
@@ -13,14 +14,24 @@ use constant {
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new;
+	my $weak_self = $self;
+	weaken($weak_self);
 	$self->{hooks} = Plugins::addHooks (
-		['packet/stat_info2',        sub { $self->onStatInfo2; }]
+		['packet/stat_info2', sub {
+			my $self = $weak_self or return;
+			$self->onStatInfo2;
+		}]
 	);
 
 	#Here we use packet/stat_info2 because it was the only safe hook I (henrybk) found for this function, both 'inventory_items_stackable' and 'inventory_items_nonstackable' are
 	#only sent by the server if we have at least 1 item of that category, while 'stat_info2' is always (at least in my tests) sent.
 	$self->{state} = MAP_LOADED_OR_NEW;
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	Plugins::delHooks(delete $self->{hooks}) if $self->{hooks};
 }
 
 sub isReady {

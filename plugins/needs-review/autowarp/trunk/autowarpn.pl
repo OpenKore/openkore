@@ -37,9 +37,9 @@ sub cHook {
      existsInList($config{autoWarp_from}, $field->baseName) &&
      $char->{skills}{AL_WARP} && $char->{skills}{AL_WARP}{lv} > 0) {
       AI::queue("autowarp");
-      AI::args->{timeout} = 5;
-      AI::args->{time} = time;
-      AI::args->{map} = $field->baseName;
+      AI::args()->{timeout} = 5;
+      AI::args()->{time} = time;
+      AI::args()->{map} = $field->baseName;
       message "Preparing to cast a warp portal to $config{autoWarp_to}\n";
    }
 }
@@ -47,18 +47,18 @@ sub cHook {
 sub AI_hook {
    my $hookName = shift;
 
-   if (AI::action eq "autowarp") {
-      if ($field->baseName ne AI::args->{map} || $field->name ne AI::args->{map}) {
-         AI::dequeue;
+   if (AI::action() eq "autowarp") {
+      if ($field->baseName ne AI::args()->{map} || $field->name ne AI::args()->{map}) {
+         AI::dequeue();
          return;
       }
-      if (timeOut(AI::args)) {
+      if (timeOut(AI::args())) {
          my $pos = getEmptyPos($char, 4);
          $messageSender->sendSkillUseLoc(27, 4, $pos->{x}, $pos->{y});
          stopAttack();
          message "Attempting to open warp portal at $pos->{x} $pos->{y}\n";
-         AI::args->{timeout} = 15;
-         AI::args->{time} = time;
+         AI::args()->{timeout} = 15;
+         AI::args()->{time} = time;
       }
    }
 }

@@ -105,6 +105,29 @@ sub new {
 	return $self;
 }
 
+sub TalkNPC_reset {
+	my ($hook_name, $args, $holder) = @_;
+	my $self = $holder->[0];
+
+	return if !defined $self;
+	return if $self->{stage} != TALKING_TO_NPC;
+
+	if (defined $args->{x} && defined $self->{x} && $args->{x} != $self->{x}) {
+		return;
+	}
+	if (defined $args->{y} && defined $self->{y} && $args->{y} != $self->{y}) {
+		return;
+	}
+
+	$self->{error_code} = WRONG_NPC_INSTRUCTIONS;
+	$self->{error_message} = defined $args->{message} ? $args->{message} : TF("TalkNPC_reset.");
+	$self->{trying_to_cancel} = 1;
+	$self->{sent_talk_response_cancel} = 0;
+	delete $self->{wait_for_answer};
+	delete $self->{sent_talk_resp_cancel_time};
+	warning TF("[TalkNPC] Resetting conversation with %s due to plugin request.\n", $self->{target} || 'NPC'), "ai_npcTalk";
+}
+
 sub handleNPCTalk {
 	my ($hook_name, $args, $holder) = @_;
 	my $self = $holder->[0];
@@ -126,15 +149,15 @@ sub handleNPCTalk {
 
 	if ($hook_name eq 'npc_talk_done') {
 		if ($self->{stage} == NOT_STARTED) {
-			debug "Npc which started autotalk has automatically sent a 'npc_talk_done'.\n", "ai_npcTalk";
+			debug "[TalkNPC] Npc which started autotalk has automatically sent a 'npc_talk_done'.\n", "ai_npcTalk";
 			return;
 
 		} elsif ($self->{stage} != TALKING_TO_NPC || !$self->{target}) {
-			debug "[handleNPCTalk] We received an strange 'npc_talk_done', ignoring it.\n", "ai_npcTalk";
+			debug "[TalkNPC] We received an strange 'npc_talk_done', ignoring it.\n", "ai_npcTalk";
 			return;
 		}
 		$self->{stage} = AFTER_NPC_CLOSE;
-		message TF("%s: Done talking\n", $self->{target}), "ai_npcTalk";
+		message TF("[TalkNPC] %s: Done talking (close)\n", $self->{target}), "ai_npcTalk";
 
 	} elsif ($self->noMoreSteps) {
 		if ($hook_name eq 'packet/npc_talk_continue') {
@@ -203,7 +226,8 @@ sub activate {
 		['packet/npc_sell_list',                     \&handleNPCTalk, \@holder],
 		['packet/cash_dealer',                       \&handleNPCTalk, \@holder],
 		['packet/npc_market_info',                   \&handleNPCTalk, \@holder],
-		['packet/npc_market_purchase_result',        \&handleNPCTalk, \@holder]
+		['packet/npc_market_purchase_result',        \&handleNPCTalk, \@holder],
+		['TalkNPC_reset',                            \&TalkNPC_reset, \@holder]
 	);
 
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
@@ -237,7 +261,7 @@ sub setTarget {
 	my ($self, $target) = @_;
 
 	if ($target) {
-		message "Talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID})."\n", "ai_npcTalk";
+		message "[TalkNPC] Set to start talking with $target at ($target->{pos}{x},$target->{pos}{y}), ID ".getHex($target->{ID}).", sequence '".($self->{sequence})."'\n", "ai_npcTalk";
 		$self->{target} = $target;
 		$self->{ID} = $target->{ID};
 	}
@@ -276,14 +300,14 @@ sub iterate {
 	my $ai_npc_talk_wait_to_answer = $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} ? $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} : 1.5;
 	my $ai_npc_talk_wait_after_close_to_cancel = $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} : 0.5;
 	my $ai_npc_talk_wait_after_cancel_to_destroy = $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} : 0.5;
-
+	my $ai_npc_talk_wait_before_continue = $timeout{'ai_npc_talk_wait_before_continue'}{'timeout'} ? $timeout{'ai_npc_talk_wait_before_continue'}{'timeout'} : 0.7;
 	if ($self->{map_change} || $self->{disconnected}) {
 
 		#A conversation started right after mapchange/disconnection (eg. payon guards)
 		if (%talk) {
-			debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", "ai_npcTalk";
+			debug "[TalkNPC] Done talking with $self->{target}, but another NPC initiated a talk instantly\n", "ai_npcTalk";
 			# TODO: maybe better create a new task and pass remaining steps to it
-			debug "Continuing the talk within the same task and remaining conversation steps\n", "ai_npcTalk";
+			debug "[TalkNPC] Continuing the talk within the same task and remaining conversation steps\n", "ai_npcTalk";
 			$self->{map_change} = 0;
 			$self->{disconnected} = 0;
 			$self->find_and_set_target;
@@ -292,7 +316,7 @@ sub iterate {
 
 		#If there's no conversation clear this task
 		} else {
-			debug "Ending Task::TalkNPC due to mapchange or disconnection, ", "ai_npcTalk";
+			debug "[TalkNPC] Ending Task::TalkNPC due to mapchange or disconnection, ", "ai_npcTalk";
 
 			if ($self->{stage} == TALKING_TO_NPC) {
 				debug "conversation interrupted and finished.\n";
@@ -329,7 +353,7 @@ sub iterate {
 			$self->{time} = time;
 			return;
 
-		} elsif (!timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
+		} elsif (!actorFinishedMovement($char, undef, 0.2, 1)) {
 			# Wait for us to stop moving before talking.
 			return;
 
@@ -417,6 +441,7 @@ sub iterate {
 
 		#In theory after the talk_response_cancel is sent we shouldn't receive anything, so just wait the timer and assume it's over
 		if ($self->{sent_talk_response_cancel}) {
+			return unless (timeOut($self->{sent_talk_resp_cancel_time}));
 			undef %talk;
 			if (defined $self->{error_code}) {
 				debug "Done talking with $self->{target}, but with conversation sequence errors\n", "ai_npcTalk";
@@ -448,6 +473,8 @@ sub iterate {
 			}
 			return;
 		}
+		
+		return unless (timeOut($ai_v{'npc_talk'}{'time'}, $ai_npc_talk_wait_before_continue));
 
 		# Wait x seconds.
 		if ($self->{steps}[0] =~ /^w(\d+)/i) {
@@ -528,7 +555,14 @@ sub iterate {
 
 		# Initiate NPC conversation.
 		} elsif ( $step =~ /^x/i ) {
-			debug "$self->{target}: Initiating the talk\n", "ai_npcTalk";
+			debug "[TalkNPC] $self->{target}: Initiating the talk (sendTalk)\n", "ai_npcTalk";
+			
+			my $target_pos = $self->{target} ? ($self->{target}{pos} || $self->{target}{pos_to}) : undef;
+			my $char_pos = $char->{pos} || $char->{pos_to};
+			if ($target_pos && $char_pos) {
+				lookAtPositionNaturally($char_pos, $target_pos, $char->{look}{body});
+			}
+
 			$self->{target}->sendTalk;
 
 		# Select an answer
@@ -746,7 +780,7 @@ sub iterate {
 		$self->{stage} = AFTER_NPC_CANCEL;
 
 		my $id = $ai_v{'npc_talk'}{'ID'};
-		debug "$self->{target}: Sending talk cancel [id '".(unpack ('V', $id))."'] after NPC has done talking\n", "ai_npcTalk";
+		debug "[TalkNPC] $self->{target}: Sending talk cancel [id '".(unpack ('V', $id))."'] after NPC has done talking\n", "ai_npcTalk";
 		$messageSender->sendTalkCancel($id);
 
 	# After a 'npc_talk_cancel' and a timeout we decide what to do next
@@ -824,7 +858,7 @@ sub conversation_end {
 	$self->delHooks;
 	$self->setDone();
 	debug "Task::TalkNPC::conversation_end called at ai npc_talk '".$ai_v{'npc_talk'}{'talk'}."'.\n", "ai_npcTalk";
-	message TF("Done talking with %s.\n", $self->{target}), "ai_npcTalk";
+	message TF("[TalkNPC] Done talking with %s (end)\n", $self->{target}), "ai_npcTalk";
 }
 
 ##
@@ -839,19 +873,21 @@ sub target {
 }
 
 #only for testing
-my $default_text = "eye lol";
+my $default_text = "eyelol";
 my $default_number = 1234;
 
 sub cancelTalk {
 	my ($self) = @_;
 
 	if (defined $self->{error_message}) {
-		debug "Trying to auto close the conversation due to error.\n", "ai_npcTalk";
+		debug "[TalkNPC] Trying to auto close the conversation due to error.\n", "ai_npcTalk";
 	}
 
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
-		$messageSender->sendTalkResponse($talk{ID}, $#{$talk{responses}});
+		$messageSender->sendTalkResponse($talk{ID}, 255);
 		$self->{sent_talk_response_cancel} = 1;
+		$self->{sent_talk_resp_cancel_time}{time} = time;
+		$self->{sent_talk_resp_cancel_time}{timeout} = 5;
 
 	} elsif ($ai_v{'npc_talk'}{'talk'} eq 'next') {
 		$messageSender->sendTalkContinue($talk{ID});
@@ -963,3 +999,4 @@ sub validateStep {
 }
 
 1;
+

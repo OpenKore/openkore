@@ -35,18 +35,41 @@ namespace OSL {
 	}
 
 	BufferedOutputStream::~BufferedOutputStream() {
-		close();
+		try {
+			close();
+		} catch (...) {
+		}
 	}
 
 	void
 	BufferedOutputStream::close() {
 		if (stream != NULL) {
-			flush();
-			stream->close();
-			stream->unref();
-			delete buffer;
+			OutputStream *oldStream = stream;
+			char *oldBuffer = buffer;
+
 			stream = NULL;
 			buffer = NULL;
+
+			try {
+				if (count > 0) {
+					unsigned int c = count;
+					count = 0;
+					oldStream->write(oldBuffer, c);
+					oldStream->flush();
+				}
+				oldStream->close();
+			} catch (const IOException &e) {
+				oldStream->unref();
+				delete[] oldBuffer;
+				throw IOException(e.getMessage(), e.getCode());
+			} catch (...) {
+				oldStream->unref();
+				delete[] oldBuffer;
+				throw;
+			}
+
+			oldStream->unref();
+			delete[] oldBuffer;
 		}
 	}
 

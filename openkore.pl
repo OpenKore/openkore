@@ -198,6 +198,10 @@ sub selfCheck {
 
 sub shutdown {
 	Plugins::unloadAll();
+	if ($bus) {
+		$bus->close();
+		undef $bus;
+	}
 	# Translation Comment: Kore's exit message
 	Log::message($Settings::versionText);
 

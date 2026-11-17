@@ -2,21 +2,24 @@ package AI::Slave;
 
 use strict;
 use Time::HiRes qw(time);
+use Carp::Assert;
 use base qw/Actor::Slave/;
 use Globals;
 use Log qw/message warning error debug/;
 use Utils;
 use Misc;
 use Translation;
+use Utils::Benchmark;
 
 use AI::SlaveAttack;
 
 use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
-# Slave's commands and skills can only be used
-# if the slave is within this range
-use constant MAX_DISTANCE => 17;
+use constant RATHENA_MASTER_RECALL_DELAY => 3.0;
+use constant RATHENA_MASTER_RECALL_LOST_GRACE => 1.0;
+use constant RATHENA_DEFAULT_AREA_SIZE => 14;
+use constant RATHENA_MERCENARY_MASTER_RECALL_DISTANCE => 15;
 
 sub checkSkillOwnership {}
 
@@ -153,7 +156,7 @@ sub isLost {
 
 sub mustRescue {
 	my $slave = shift;
-	return 1 if ($config{$slave->{configPrefix}.'route_randomWalk_rescueWhenLost'});
+	return 1 if ($config{$slave->{configPrefix}.'route_rescueWhenLost'});
 	return 0;
 }
 
@@ -164,13 +167,16 @@ sub iterate {
 	
 	return if $slave->processClientSuspend;
 	
-	return if ($slave->{slave_AI} == AI::OFF);
+	return if ($slave->{slave_AI} == AI::OFF());
 	
 	$slave->{master_dist} = $slave->blockDistance_master;
 
 	##### MANUAL AI STARTS HERE #####
-	
+
+	Benchmark::begin("ai_slave_manual") if DEBUG;
+	Benchmark::begin("ai_slave_attack") if DEBUG;
 	AI::SlaveAttack::process($slave);
+	Benchmark::end("ai_slave_attack") if DEBUG;
 	$slave->processSkillUse;
 	$slave->processTask('route', onError => sub {
 		my ($task, $error) = @_;
@@ -180,25 +186,64 @@ sub iterate {
 		}
 	});
 	$slave->processTask('move');
+	AI::CoreLogic::processAutoSkillUse($slave);
+	AI::CoreLogic::processPartySkillUse($slave);
+	Benchmark::end("ai_slave_manual") if DEBUG;
 
-	return unless ($slave->{slave_AI} == AI::AUTO);
+	return unless ($slave->{slave_AI} == AI::AUTO());
 
 	##### AUTOMATIC AI STARTS HERE #####
-	
+
+	Benchmark::begin("ai_slave_auto") if DEBUG;
 	$slave->processWasFound;
 	$slave->processTeleportToMaster;
 	$slave->processAutoAttack;
 	$slave->processFollow;
 	$slave->processIdleWalk;
+	Benchmark::end("ai_slave_auto") if DEBUG;
+}
+
+sub get_follow_standby_limit {
+	my $slave = shift;
+
+	my $client_sight = $config{clientSight};
+	$client_sight = 17 unless defined $client_sight && $client_sight > 0;
+
+	return $client_sight * 2;
+}
+
+sub get_master_recall_distance {
+	my $slave = shift;
+
+	return RATHENA_MERCENARY_MASTER_RECALL_DISTANCE if $slave->isa('AI::Slave::Mercenary');
+	return RATHENA_DEFAULT_AREA_SIZE;
+}
+
+sub clear_follow_actions {
+	my $slave = shift;
+
+	while (($slave->action eq 'move' || $slave->action eq 'route') && $slave->args->{isFollow}) {
+		$slave->dequeue;
+	}
+
+	undef $slave->{move_retry};
+}
+
+sub clear_master_recall_state {
+	my $slave = shift;
+	delete $slave->{masterRecallStartedAt};
 }
 
 sub processWasFound {
 	my $slave = shift;
-	if ($slave->{isLost} && $slave->{master_dist} < MAX_DISTANCE) {
-		$slave->{lost_teleportToMaster_maxTries} = 0;
+	my $client_sight = $config{clientSight} || 17;
+
+	if (($slave->{isLost} || $slave->{masterRecallStartedAt}) && $slave->{master_dist} < $client_sight) {
+		clear_master_recall_state($slave);
+		my $was_lost = $slave->{isLost};
 		$slave->{isLost} = 0;
-		warning TF("%s was rescued.\n", $slave), 'slave';
-		if (AI::is('route') && AI::args()->{isSlaveRescue}) {
+		warning TF("%s was rescued.\n", $slave), 'slave' if $was_lost;
+		if ($was_lost && AI::is('route') && AI::args()->{isSlaveRescue}) {
 			warning TF("Cleaning AI rescue sequence\n"), 'slave';
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isSlaveRescue});
 		}
@@ -207,61 +252,166 @@ sub processWasFound {
 
 sub processTeleportToMaster {
 	my $slave = shift;
-	if (
-		   !AI::args->{mapChanged}
-		&& $slave->{master_dist} >= MAX_DISTANCE
-		&& timeOut($timeout{$slave->{ai_standby_timeout}})
-		&& !$slave->{isLost}
-	) {
-		if (!$slave->{lost_teleportToMaster_maxTries} || $config{$slave->{configPrefix}.'lost_teleportToMaster_maxTries'} > $slave->{lost_teleportToMaster_maxTries}) {
-			$slave->clear('move', 'route');
-			$slave->sendStandBy;
-			$slave->{lost_teleportToMaster_maxTries}++;
-			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			warning TF("%s trying to teleport to master (distance: %d) (re)try: %d\n", $slave, $slave->{master_dist}, $slave->{lost_teleportToMaster_maxTries}), 'slave';
-		} else {
-			warning TF("%s is lost (distance: %d).\n", $slave, $slave->{master_dist}), 'slave';
-			$slave->{isLost} = 1;
-			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-		}
+	return if AI::args()->{mapChanged};
+
+	my $recall_distance = get_master_recall_distance($slave);
+	if ($slave->{master_dist} <= $recall_distance) {
+		clear_master_recall_state($slave);
+		return;
 	}
+
+	$slave->{masterRecallStartedAt} = time unless $slave->{masterRecallStartedAt};
+
+	return if $slave->{isLost};
+
+	my $elapsed = time - $slave->{masterRecallStartedAt};
+	my $recall_timeout = RATHENA_MASTER_RECALL_DELAY + RATHENA_MASTER_RECALL_LOST_GRACE;
+	return if $elapsed < $recall_timeout;
+
+	$slave->{isLost} = 1;
+	warning TF("%s is lost (distance: %d).\n", $slave, $slave->{master_dist}), 'slave';
+}
+
+sub follow_route_needs_reset {
+	my ($slave, $args) = @_;
+	return 0 unless $slave && $args && $args->{isFollow};
+	return 0 unless $args->{masterLastMoveTime} && $char->{pos_to};
+	return 0 if $args->{masterLastMoveTime} == $char->{time_move};
+
+	if ($args->{masterLastMovePosTo}) {
+		return 1
+			if $args->{masterLastMovePosTo}{x} != $char->{pos_to}{x}
+			|| $args->{masterLastMovePosTo}{y} != $char->{pos_to}{y};
+	}
+
+	$args->{masterLastMoveTime} = $char->{time_move};
+	$args->{masterLastMovePosTo} = { %{$char->{pos_to}} };
+	return 0;
+}
+
+sub start_follow {
+	my ($slave, $force_send_move) = @_;
+	return unless $slave && $char->{pos_to};
+
+	my $follow_mode = $config{$slave->{configPrefix}.'followMode'};
+	$follow_mode = 1 if !defined $follow_mode || ($follow_mode != 1 && $follow_mode != 2);
+
+	my $min_dist = $config{$slave->{configPrefix}.'followDistanceMin'};
+	$min_dist = 3 unless defined $min_dist;
+
+	my $must_route = $follow_mode == 2 || !$field->canMove($slave->{pos_to}, $char->{pos_to});
+
+	if ($must_route) {
+		$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 0, distFromGoal => $min_dist, isFollow => 1);
+		if ($slave->action eq 'route' && $slave->args->{isFollow}) {
+			$slave->args->{masterLastMoveTime} = $char->{time_move};
+			$slave->args->{masterLastMovePosTo} = { %{$char->{pos_to}} };
+		}
+		$slave->{lastFollowCommandTime} = time;
+		debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
+		return 1;
+	}
+
+	return 0 unless $force_send_move || timeOut($slave->{move_retry}, 0.5);
+
+	$slave->{move_retry} = time;
+	# The default LUA uses sendSlaveStandBy() for the follow AI
+	# however, the server-side routing is very inefficient
+	# (e.g. can't route properly around obstacles and corners)
+	# so we make use of the sendSlaveMove() to make up for a more efficient routing
+	$slave->move($char->{pos_to}{x}, $char->{pos_to}{y});
+	if ($slave->action eq 'move' && $slave->args) {
+		$slave->args->{isFollow} = 1;
+		$slave->args->{masterLastMoveTime} = $char->{time_move};
+		$slave->args->{masterLastMovePosTo} = { %{$char->{pos_to}} };
+	}
+	$slave->{lastFollowCommandTime} = time;
+	debug TF("%s follow move (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
+	return 1;
+}
+
+sub reset_follow {
+	my ($slave, $args) = @_;
+	return unless $slave && $args;
+
+	debug "$slave master $char has moved since we started the follow movement - Adjusting follow\n", 'slave';
+	$slave->dequeue while ($slave->is("move", "route"));
+
+	$args->{masterLastMoveTime} = $char->{time_move};
+	$args->{masterLastMovePosTo} = { %{$char->{pos_to}} } if $char->{pos_to};
+	undef $slave->{move_retry};
+	start_follow($slave, 1);
 }
 
 sub processFollow {
 	my $slave = shift;
-	if (
-		   (AI::action eq "move" || AI::action eq "route")
-		&& !$char->{sitting}
-		&& !AI::args->{mapChanged}
-		&& $slave->{master_dist} < MAX_DISTANCE
-		&& ($slave->isIdle || $slave->{master_dist} > $config{$slave->{configPrefix}.'followDistanceMax'} || blockDistance($char->{pos_to}, $slave->{pos_to}) > $config{$slave->{configPrefix}.'followDistanceMax'})
-		&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
-	) {
-		$slave->clear('move', 'route');
-		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
-			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, isFollow => 1);
-			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
+	return if (AI::args()->{mapChanged});
 
-		} elsif (timeOut($slave->{move_retry}, 0.5)) {
-			# No update yet, send move request again.
-			# We do this every 0.5 secs
-			$slave->{move_retry} = time;
-			# NOTE:
-			# The default LUA uses sendSlaveStandBy() for the follow AI
-			# however, the server-side routing is very inefficient
-			# (e.g. can't route properly around obstacles and corners)
-			# so we make use of the sendSlaveMove() to make up for a more efficient routing
-			$slave->move($char->{pos_to}{x}, $char->{pos_to}{y});
-			debug TF("%s follow move (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
+	my $max_dist = $config{$slave->{configPrefix}.'followDistanceMax'};
+	$max_dist = 10 unless defined $max_dist;
+	$max_dist = $config{$slave->{configPrefix}.'followAttackDistance'} || $max_dist if $slave->inQueue('attack');
+
+	my $dist1 = $slave->{master_dist};
+	my $dist2 = blockDistance($char->{pos_to}, $slave->{pos_to});
+
+	my $standby_limit = get_follow_standby_limit($slave);
+	my $should_standby = ($dist1 > $standby_limit && $dist2 > $standby_limit) ? 1 : 0;
+
+	my $follow_action;
+	my $follow_args;
+	if ($slave->action eq 'move' && $slave->args->{isFollow}) {
+		$follow_action = 'move';
+		$follow_args = $slave->args;
+	} elsif ($slave->action eq 'route' && $slave->args->{isFollow}) {
+		$follow_action = 'route';
+		$follow_args = $slave->args;
+	}
+	my $is_following = defined $follow_action ? 1 : 0;
+
+	if ($should_standby) {
+		if ($is_following) {
+			clear_follow_actions($slave);
 		}
+		return unless timeOut($timeout{$slave->{ai_standby_timeout}});
+		$timeout{$slave->{ai_standby_timeout}}{time} = time;
+		$slave->sendStandBy;
+		debug TF("%s standby (far from master: %d > %d)\n", $slave, $slave->{master_dist}, $standby_limit), 'slave';
+		return;
+	}
+
+	my $should_follow = ($dist1 > $max_dist || $dist2 > $max_dist) ? 1 : 0;
+
+	if (!$should_follow && $is_following) {
+		# Don't drop mid follow
+		$should_follow = 1;
+	}
+
+	if ($is_following && follow_route_needs_reset($slave, $follow_args)) {
+		reset_follow($slave, $follow_args);
+		return;
+	}
+
+	if ($should_follow && !$is_following) {
+		start_follow($slave, 0);
 	}
 }
 
 sub processIdleWalk {
 	my $slave = shift;
+	my $max_dist = $config{$slave->{configPrefix}.'followDistanceMax'};
+	$max_dist = 10 unless defined $max_dist;
+
+	# Do not send idle standby/random-walk while follow is still active/recent.
+	my $master_is_moving = ($char->{pos} && $char->{pos_to} && ($char->{pos}{x} != $char->{pos_to}{x} || $char->{pos}{y} != $char->{pos_to}{y})) ? 1 : 0;
+	return if $master_is_moving;
+	my $standby_timeout = $timeout{$slave->{ai_standby_timeout}}{timeout} || 2;
+	return if $slave->{lastFollowCommandTime} && (time - $slave->{lastFollowCommandTime}) < $standby_timeout;
+
 	if (
 		$slave->isIdle
-		&& $slave->{master_dist} <= MAX_DISTANCE
+		&& $slave->{master_dist} <= $config{clientSight}
+		&& $slave->{master_dist} <= $max_dist
+		&& blockDistance($char->{pos_to}, $slave->{pos_to}) <= $max_dist
 		&& $config{$slave->{configPrefix}.'idleWalkType'}
 	) {
 		# Standby
@@ -363,6 +513,7 @@ sub processClientSuspend {
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
 	my $slave = shift;
+	my $attackAuto = getAttackAutoMode($slave->{configPrefix});
 	
 	return if $slave->inQueue("attack");
 	
@@ -371,27 +522,27 @@ sub processAutoAttack {
 	# 2. Pick the "best" monster out of that list, and attack it.
 	
 	# Don't even think about attacking if attackAuto is -1.
-	return if ($config{$slave->{configPrefix}.'attackAuto'} && $config{$slave->{configPrefix}.'attackAuto'} eq -1);
+	return if defined $attackAuto && $attackAuto == -1;
 	
 	return if (!$field);
-	next unless ($slave->isIdle || $slave->is(qw/route/));
+	return unless ($slave->isIdle || $slave->is(qw/route/));
 
-	next unless (
-	    AI::isIdle ||
+	return unless (
+	    AI::isIdle() ||
 	    AI::is(qw(follow sitAuto attack skill_use)) ||
-		(AI::action eq "route" && AI::action(1) eq "attack") ||
-		(AI::action eq "move" && AI::action(2) eq "attack") ||
+		(AI::action() eq "route" && AI::action(1) eq "attack") ||
+		(AI::action() eq "move" && AI::action(2) eq "attack") ||
 		($config{$slave->{configPrefix}.'attackAuto_duringItemsTake'} && AI::is(qw(take items_gather items_take))) ||
 		($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk})
 	);
-	next unless (timeOut($timeout{$slave->{ai_attack_auto_timeout}}));
-	next unless ($slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'});
-	#next unless ((AI::action ne "move" && AI::action ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'});
-	next unless (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity);
-	next unless ($config{$slave->{configPrefix}.'attackAuto_inLockOnly'} <= 1 || $field->baseName eq $config{'lockMap'});
-	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"));
-	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_buyAuto'} || !AI::inQueue("buyAuto"));
-	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_sellAuto'} || !AI::inQueue("sellAuto"));
+	return unless (timeOut($timeout{$slave->{ai_attack_auto_timeout}}));
+	my $attack_follow_distance = $config{$slave->{configPrefix}.'followAttackDistance'} || $config{$slave->{configPrefix}.'followDistanceMax'};
+	return unless ($slave->{master_dist} <= $attack_follow_distance);
+	#next unless ((AI::action() ne "move" && AI::action() ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'});
+	return unless (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity);
+	return unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"));
+	return unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_buyAuto'} || !AI::inQueue("buyAuto"));
+	return unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_sellAuto'} || !AI::inQueue("sellAuto"));
 
 	# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 	my $foundTankee;
@@ -419,23 +570,20 @@ sub processAutoAttack {
 		$playerDist = 1 if ($playerDist < 1);
 	
 		my $routeIndex = $slave->findAction("route");
-		my $attackOnRoute;
-		if (defined $routeIndex) {
-			$attackOnRoute = $slave->args($routeIndex)->{attackOnRoute};
-		} else {
-			$attackOnRoute = 2;
-		}
+		my $routeArgs = defined $routeIndex ? $slave->args($routeIndex) : undef;
+		my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs, $slave->{configPrefix});
 
 		### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 		my @aggressives;
 		my @partyMonsters;
 		my @cleanMonsters;
 		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-		my $myPos = calcPosition($slave);
+		my $myPos = calcPosFromPathfinding($field, $slave);
 
 		# List aggressive monsters
-		my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
-		@aggressives = AI::ai_slave_getAggressives($slave, 1, $party) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
+		my $party = ($effectiveAttackMode >= 1 && $config{$slave->{configPrefix}.'attackAuto_party'}) ? 1 : 0;
+		my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+		@aggressives = AI::ai_slave_getAggressives($slave, $aggressiveType, $party) if $effectiveAttackMode >= 0;
 
 		# There are two types of non-aggressive monsters. We generate two lists:
 		foreach (@monstersID) {
@@ -449,15 +597,17 @@ sub processAutoAttack {
 			my $target_pos = calcPosition($monster);
 			my $master_pos = $char->position;
 
-			next if (blockDistance($master_pos, $target_pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+			next if (blockDistance($master_pos, $target_pos) > $attack_follow_distance);
 
 			# List monsters that master and other slaves are attacking
 			if (
 				   $config{$slave->{configPrefix}.'attackAuto_party'}
-				&& $attackOnRoute
+				&& $effectiveAttackMode >= 1
 				&& timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
 				&& (
-					   ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					   ($monster->{castOnByParty} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| $monster->{castOnToParty}
+					|| ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
 					|| ($monster->{dmgFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
 					|| ($monster->{castOnByYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
 					|| $monster->{dmgToYou}
@@ -494,9 +644,9 @@ sub processAutoAttack {
 			}
 			
 			my $control = mon_control($monster->{name}, $monster->{nameID});
-			if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
+			if ($effectiveAttackMode >= 2
 			 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
-			 && $attackOnRoute >= 2 && $safe
+			 && $safe
 			 && !positionNearPlayer($target_pos, $playerDist) && !positionNearPortal($target_pos, $portalDist)
 			 && !$monster->{dmgFromYou}
 			 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
@@ -510,9 +660,9 @@ sub processAutoAttack {
 		# We define whether we should attack only monsters in LOS or not
 		my $checkLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
 		my $canSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
-		$attackTarget = getBestTarget(\@aggressives,   $checkLOS, $canSnipe) ||
-		                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
-		                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
+		$attackTarget = getBestTarget(\@aggressives,   $checkLOS, $canSnipe, $slave, $slave->{configPrefix}) ||
+		                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe, $slave, $slave->{configPrefix}) ||
+		                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe, $slave, $slave->{configPrefix});
 	}
 
 	# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.

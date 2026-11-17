@@ -66,6 +66,7 @@ sub parseArguments {
 		'queryserver_port=s',		\$config{queryserver_port},
 		'server_type=s',			\$config{server_type},
 		'debug=s',					\$config{debug},
+		'fake_ip=s',				\$config{fake_ip},
 	);
 	
 	$config{file} = "poseidon.txt" if ($config{file} eq "");

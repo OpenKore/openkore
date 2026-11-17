@@ -168,7 +168,7 @@ sub serverConnect {
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
-	if ($self->serverAlive) {
+	if ($self->serverAlive && defined $self->serverPeerHost, $self->serverPeerPort) {
 		if (Plugins::hasHook('Network::serverSend/pre')) {
 			Plugins::callHook('Network::serverSend/pre', {msg => \$msg});
 		}
@@ -236,7 +236,7 @@ sub serverDisconnect {
 
 		$messageSender->sendQuit() if ($self->getState() == Network::IN_GAME);
 
-		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(),
+		message TF("Disconnecting (%s:%s)...\n", $self->{remote_socket}->peerhost(),
 			$self->{remote_socket}->peerport()), "connection";
 		close($self->{remote_socket});
 
@@ -352,8 +352,11 @@ sub checkConnection {
 			return;
 		}
 		$reconnectCount++;
-		$self->serverConnect($master->{ip}, $master->{port});
-
+		if (defined $master->{OTP_ip} && defined $master->{OTP_port}) {
+			$self->serverConnect($master->{OTP_ip}, $master->{OTP_port});
+		} else {
+			$self->serverConnect($master->{ip}, $master->{port});
+		}
 		# call plugin's hook to determine if we can continue the work
 		if ($self->serverAlive) {
 			Plugins::callHook('Network::serverConnect/master');
@@ -423,6 +426,7 @@ sub checkConnection {
 	} elsif ($self->getState() == 1.3) {
 		$conState = 1;
 		my $master = $masterServer = $masterServers{$config{'master'}};
+
 		if ($master->{secureLogin} >= 1) {
 			my $code;
 
@@ -473,6 +477,7 @@ sub checkConnection {
 				$quit = 1;
 				return;
 			}
+			Plugins::callHook('timeout_accountserver');
 			message TF("Timeout on Account Server, reconnecting. Wait %s seconds...\n", $timeout{'reconnect'}{'timeout'}), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -548,6 +553,7 @@ sub checkConnection {
 				return;
 			}
 		} elsif (timeOut($timeout{'gamelogin'}) && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
+			Plugins::callHook('timeout_characterserver');
 			error TF("Timeout on Character Server, reconnecting. Wait %s seconds...\n", $timeout{'reconnect'}{'timeout'}), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -566,11 +572,11 @@ sub checkConnection {
 				Plugins::callHook('Network::serverConnect/charselect');
 				return if ($conState == 1.5);
 			}
-
 			$messageSender->sendCharLogin($config{'char'});
 			$timeout{'charlogin'}{'time'} = time;
 
 		} elsif (timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
+			Plugins::callHook('timeout_characterselectserver');
 			error T("Timeout on Character Select Server, reconnecting...\n"), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -605,6 +611,7 @@ sub checkConnection {
 				return if ($conState == 1.5);
 			}
 
+			$messageSender->sendPing() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
 			$messageSender->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
@@ -612,6 +619,7 @@ sub checkConnection {
 
 		} elsif (timeOut($timeout{maplogin})) {
 			message T("Timeout on Map Server, connecting to Account Server...\n"), "connection";
+			Plugins::callHook('timeout_mapserver');
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$self->serverDisconnect;
 			$self->setState(Network::NOT_CONNECTED);

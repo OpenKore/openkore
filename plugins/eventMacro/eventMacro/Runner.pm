@@ -17,9 +17,9 @@ use eventMacro::Data;
 use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
-	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList get_pattern find_variable get_key_or_index getQuestStatus
-	find_hash_and_get_keys find_hash_and_get_values);
+        getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
+        getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList get_pattern find_variable get_key_or_index getQuestStatus
+        find_hash_and_get_keys find_hash_and_get_values getEquipCards getEquipCardAmount getEquipOptions getEquipOptionsAmount);
 use eventMacro::Automacro;
 
 # Creates the object
@@ -464,7 +464,7 @@ sub scanBlocks {
 	my $block_starts = [];
 
 	for (my $line = 0; $line < @{$script}; $line++) {
-		if ($script->[$line] =~ /^(if|switch|while|case)\s+\(.*\)\s+{$|^(else)\s+.*{/) {
+		if ($script->[$line] =~ /^(if|switch|while|case)\s*\(.*\)\s*{$|^(else)\s+.*{/) {
 			push @$block_starts, { type => $1 || $2, start => $line };
 		} elsif ($script->[$line] eq '}') {
 			my $block = pop @$block_starts;
@@ -596,7 +596,7 @@ sub define_next_valid_command {
 		# While statement: while (foo <= bar) {
 		######################################
 		if ($self->{current_line} =~ /^while\s*\(/) {
-			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s+{$/;
+			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s*{$/;
 
 			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3;
 
@@ -1418,7 +1418,7 @@ sub parse_and_check_condition_text {
 
 	#the last group in the array is always the full statement
 	#so post_if is what lies after end of main group
-	my $post_if = substr ($line_script, $groups[-1]{end}+1);
+	my $post_if = substr ($line_script, $groups[-1]{end});
 	$post_if    =~ s/^\s+|\s+$//g;
 	my $result  = $self->parse_condition_text_groups(\@groups);
 	return if defined $self->error;
@@ -1647,7 +1647,7 @@ sub parse_log {
 			return;
 		}
 	}
-	$self->timeout($self->macro_delay);
+	$self->timeout(0);
 	$self->next_line;
 }
 
@@ -2182,14 +2182,26 @@ sub parse_command {
 		} elsif ($keyword eq 'cartamount') {
 			$result = getCartAmount($parsed);
 
-		} elsif ($keyword eq 'shopamount') {
-			$result = getShopAmount($parsed);
+                } elsif ($keyword eq 'shopamount') {
+                        $result = getShopAmount($parsed);
 
-		} elsif ($keyword eq 'storamount') {
-			$result = getStorageAmount($parsed);
+                } elsif ($keyword eq 'storamount') {
+                        $result = getStorageAmount($parsed);
 
-		} elsif ($keyword eq 'config') {
-			$result = getConfig($parsed);
+                } elsif ($keyword eq 'itemCard') {
+                        $result = getEquipCards($parsed);
+
+                } elsif ($keyword eq 'itemCardAmount') {
+                        $result = getEquipCardAmount($parsed);
+
+                } elsif ($keyword eq 'itemOption') {
+                        $result = getEquipOptions($parsed);
+
+                } elsif ($keyword eq 'itemOptAmount') {
+                        $result = getEquipOptionsAmount($parsed);
+
+                } elsif ($keyword eq 'config') {
+                        $result = getConfig($parsed);
 
 		} elsif ($keyword eq 'arg') {
 			$result = getWord($parsed);

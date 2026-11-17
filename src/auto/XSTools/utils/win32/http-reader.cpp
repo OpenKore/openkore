@@ -320,6 +320,9 @@ public:
 		}
 		if (this->postData != NULL)
 			free(this->postData);
+		if (errorMustBeFreed && error != NULL)
+			free(error);
+		DeleteCriticalSection(&lock);
 	}
 
 	virtual HttpReaderStatus

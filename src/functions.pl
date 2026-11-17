@@ -57,51 +57,75 @@ sub mainLoop {
 	$state = STATE_LOAD_PLUGINS if (!defined $state);
 
 	# Parse command input
+	Benchmark::begin("mainLoop_input") if DEBUG;
 	my $input;
 	if (defined($input = $interface->getInput(0))) {
 		Misc::checkValidity("parseInput (pre)");
 		parseInput($input);
 		Misc::checkValidity("parseInput");
 	}
+	Benchmark::end("mainLoop_input") if DEBUG;
 
 
 	if ($state == STATE_INITIALIZED && $Settings::command) {
+		Benchmark::begin("mainLoop_command") if DEBUG;
 		Commands::run($Settings::command);
 		$Settings::command = undef;
+		Benchmark::end("mainLoop_command") if DEBUG;
 	}
 
 	if ($state == STATE_INITIALIZED) {
+		Benchmark::begin("mainLoop_hook_pre") if DEBUG;
 		Plugins::callHook('mainLoop_pre');
+		Benchmark::end("mainLoop_hook_pre") if DEBUG;
 		mainLoop_initialized();
+		Benchmark::begin("mainLoop_hook_post") if DEBUG;
 		Plugins::callHook('mainLoop_post');
+		Benchmark::end("mainLoop_hook_post") if DEBUG;
 
 	} elsif ($state == STATE_LOAD_PLUGINS) {
+		Benchmark::begin("mainLoop_init") if DEBUG;
 		Log::message("$Settings::versionText\n");
 		loadPlugins();
-		return if $quit;
+		if ($quit) {
+			Benchmark::end("mainLoop_init") if DEBUG;
+			Benchmark::end('mainLoop') if DEBUG;
+			return;
+		}
 		Log::message("\n");
 		Plugins::callHook('start');
 		$state = STATE_LOAD_DATA_FILES;
+		Benchmark::end("mainLoop_init") if DEBUG;
 
 	} elsif ($state == STATE_LOAD_DATA_FILES) {
+		Benchmark::begin("mainLoop_init") if DEBUG;
 		loadDataFiles();
 		$state = STATE_INIT_NETWORKING;
+		Benchmark::end("mainLoop_init") if DEBUG;
 
 	} elsif ($state == STATE_INIT_NETWORKING) {
+		Benchmark::begin("mainLoop_init") if DEBUG;
 		initNetworking();
 		$state = STATE_INIT_PORTALS_DATABASE;
+		Benchmark::end("mainLoop_init") if DEBUG;
 
 	} elsif ($state == STATE_INIT_PORTALS_DATABASE) {
+		Benchmark::begin("mainLoop_init") if DEBUG;
 		initPortalsDatabase();
 		$state = STATE_PROMPT;
+		Benchmark::end("mainLoop_init") if DEBUG;
 
 	} elsif ($state == STATE_PROMPT) {
+		Benchmark::begin("mainLoop_init") if DEBUG;
 		promptFirstTimeInformation();
 		$state = STATE_FINAL_INIT;
+		Benchmark::end("mainLoop_init") if DEBUG;
 
 	} elsif ($state == STATE_FINAL_INIT) {
+		Benchmark::begin("mainLoop_init") if DEBUG;
 		finalInitialization();
 		$state = STATE_INITIALIZED;
+		Benchmark::end("mainLoop_init") if DEBUG;
 
 	} else {
 		die "Unknown state $state.";
@@ -109,7 +133,9 @@ sub mainLoop {
 
 	Benchmark::end('mainLoop') if DEBUG;
 	# Reload any modules that requested to be reloaded
+	Benchmark::begin("mainLoop_reload") if DEBUG;
 	Modules::reloadAllInQueue();
+	Benchmark::end("mainLoop_reload") if DEBUG;
 }
 
 sub loadPlugins {
@@ -217,6 +243,10 @@ sub loadDataFiles {
 		internalName => 'recvpackets.txt',
  		loader => [\&parseRecvpackets, \%rpackets]);
 
+	Settings::addTableFile('teleport_items.txt',
+		internalName => 'teleport_items.txt',
+		loader => [\&parseTeleportItems, \%teleport_items]);
+
 	# Add 'Old' table pack, if user set
 	if ( $sys{locale_compat} == 1) {
 		# Holder for new path
@@ -270,6 +300,9 @@ sub loadDataFiles {
 	Settings::addTableFile('itemtypes.txt',
 		internalName => 'itemtypes.txt',
 		loader => [\&parseDataFile2, \%itemTypes_lut]);
+	Settings::addTableFile('item_hand_type.txt',
+		internalName => 'item_hand_type.txt',
+		loader => [\&parseItemHandTypeTable, \%itemHandType_lut], mustExist => 0);
 	Settings::addTableFile('resnametable.txt',
 		internalName => 'resnametable.txt',
 		loader => [\&parseROLUT, \%mapAlias_lut, 1, ".gat"]);
@@ -282,12 +315,20 @@ sub loadDataFiles {
 	Settings::addTableFile('npcs.txt',
 		internalName => 'npcs.txt',
 		loader => [\&parseNPCs, \%npcs_lut], createIfMissing => 1);
+	Settings::addTableFile('npc_shops.txt',
+		internalName => 'npc_shops.txt',
+		loader => [\&parseNPCShops, \%npc_shops], mustExist => 0,
+		onLoaded => \&compileItemIDtoShops);
+	Settings::addTableFile('no_teleport_maps.txt',
+		internalName => 'no_teleport_maps.txt',
+		loader => [\&parseNoTeleportMaps, \%no_teleport_maps], mustExist => 0);
 	Settings::addTableFile('packetdescriptions.txt',
 		internalName => 'packetdescriptions.txt',
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
 		internalName => 'portals.txt',
-		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
+		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed],
+		onLoaded => \&refreshDynamicPortalStates);
 	Settings::addTableFile('portals_commands.txt',
 		internalName => 'portals_commands.txt',
 		loader => [\&parsePortalsCommands, \%portals_commands], mustExist => 0);
@@ -381,6 +422,9 @@ sub loadDataFiles {
 	Settings::addTableFile('achievement_list.txt',
 		internalName => 'achievement_list.txt',
 		loader => [\&parseAchievementFile, \%achievements], mustExist => 0);
+	Settings::addTableFile('monsters_table.txt',
+		internalName => 'monsters_table.txt',
+		loader => [\&parseMonstersTableFile, \%monstersTable], mustExist => 0);
 
 	use utf8;
 
@@ -470,6 +514,68 @@ sub initNetworking {
 	Network::PaddedPackets::init();
 }
 
+sub _trashCorruptedPortalsLOS {
+	my $portals_los_file = Settings::getTableFilename("portalsLOS.txt");
+	return 0 unless defined $portals_los_file && -f $portals_los_file;
+
+	open my $fh, '<:raw', $portals_los_file or do {
+		warning TF("Unable to inspect '%s' for portal LOS corruption: %s\n", $portals_los_file, $!);
+		return 0;
+	};
+
+	my $line_number = 0;
+	my $corrupted_reason;
+	while (my $line = <$fh>) {
+		$line_number++;
+		$line =~ s/\x{FEFF}//g;
+		next if $line =~ /^#/;
+		$line =~ s/[\r\n]//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		next if $line eq '';
+
+		my @args = split /\s/, $line;
+		if (@args < 7) {
+			$corrupted_reason = "too few tokens";
+			last;
+		}
+		if ((@args - 3) % 4 != 0) {
+			$corrupted_reason = "destination tuple count is not divisible by 4";
+			last;
+		}
+		if ($args[1] !~ /^\d+$/ || $args[2] !~ /^\d+$/) {
+			$corrupted_reason = "source coordinates are not numeric";
+			last;
+		}
+
+		for (my $i = 3; $i < @args; $i += 4) {
+			if ($args[$i + 1] !~ /^\d+$/ || $args[$i + 2] !~ /^\d+$/) {
+				$corrupted_reason = "destination coordinates are not numeric";
+				last;
+			}
+			if ($args[$i + 3] !~ /^-?\d+$/) {
+				$corrupted_reason = "LOS distance is not numeric";
+				last;
+			}
+		}
+		last if $corrupted_reason;
+	}
+	close $fh;
+
+	return 0 unless $corrupted_reason;
+
+	warning TF("Detected corrupted entry in '%s' at line %s (%s). Removing the file so portals can be recompiled from scratch.\n",
+		$portals_los_file, $line_number, $corrupted_reason);
+
+	undef %portals_los;
+	if (!unlink $portals_los_file) {
+		warning TF("Unable to remove corrupted portal LOS file '%s': %s. A rebuild will still overwrite it.\n",
+			$portals_los_file, $!);
+	}
+
+	return 1;
+}
+
 sub initPortalsDatabase {
 	# $config{portalCompile}
 	# -1: skip compile
@@ -480,8 +586,10 @@ sub initPortalsDatabase {
 
 	return if $config{portalCompile} < 0;
 
+	my $discarded_corrupted_portals_los = _trashCorruptedPortalsLOS();
+
 	Log::message(T("Checking for new portals... "));
-	if (compilePortals_check()) {
+	if ($discarded_corrupted_portals_los || compilePortals_check()) {
 		Log::message(T("found new portals!\n"));
 		my $choice = $config{portalCompile} ? 0 : $interface->showMenu(
 			T("New portals have been added to the portals database. " .
@@ -576,6 +684,20 @@ sub processServerSettings {
 
 	# Process setting custom recvpackets option
 	Settings::setRecvPacketsName($masterServer->{recvpackets} && $masterServer->{recvpackets} ne '' ? $masterServer->{recvpackets} : Settings::getRecvPacketsFilename() );
+}
+
+sub compileItemIDtoShops {
+	my $filename = shift;
+
+	%itemIDtoShops = ();
+	for my $shop (@{$npc_shops{list} || []}) {
+		next unless $shop && $shop->{items};
+
+		for my $item (@{$shop->{items}}) {
+			next unless $item && defined $item->{itemID};
+			push @{$itemIDtoShops{$item->{itemID}}}, $shop;
+		}
+	}
 }
 
 sub finalInitialization {
@@ -796,7 +918,7 @@ sub initMapChangeVars {
 	$timeout{ai_buyAuto}{time} = time + 5;
 	$timeout{ai_shop}{time} = time;
 
-	AI::clear(qw(attack move teleport));
+	AI::clear(qw(attack move));
 	AI::SlaveManager::clear("attack", "route", "move");
 	ChatQueue::clear;
 
@@ -828,14 +950,17 @@ sub mainLoop_initialized {
 	Benchmark::begin("mainLoop_part1") if DEBUG;
 
 	# Handle connection states
+	Benchmark::begin("mainLoop_part1_net") if DEBUG;
 	$net->checkConnection();
 
 	if (defined $timeout{'char_login_pause'}{'time'} && timeOut($timeout{'char_login_pause'})) {
 		CharacterLogin();
 		undef $timeout{'char_login_pause'}{'time'};
 	}
+	Benchmark::end("mainLoop_part1_net") if DEBUG;
 
 	# Receive and handle data from the RO server
+	Benchmark::begin("mainLoop_part1_serverRecv") if DEBUG;
 	my $data = $net->serverRecv;
 	if (defined($data) && length($data) > 0) {
 		Benchmark::begin("parseMsg") if DEBUG;
@@ -847,8 +972,10 @@ sub mainLoop_initialized {
 		$net->clientFlush() if (UNIVERSAL::isa($net, 'Network::XKoreProxy'));
 		Benchmark::end("parseMsg") if DEBUG;
 	}
+	Benchmark::end("mainLoop_part1_serverRecv") if DEBUG;
 
 	# Receive and handle data from the RO client
+	Benchmark::begin("mainLoop_part1_clientRecv") if DEBUG;
 	$data = $net->clientRecv;
 	if (defined($data) && length($data) > 0) {
 		my $type;
@@ -858,16 +985,38 @@ sub mainLoop_initialized {
 			$outgoingClientMessages, $clientPacketHandler
 		);
 	}
+	Benchmark::end("mainLoop_part1_clientRecv") if DEBUG;
 
 	# GameGuard support
+	Benchmark::begin("mainLoop_part1_poseidon") if DEBUG;
 	if ($masterServer->{gameGuard} && ($net->version != 1 || ($net->version == 1 && $masterServer->{gameGuard} eq '2'))) {
-		my $result = Poseidon::Client::getInstance()->getResult();
-		if (defined($result)) {
-			debug "Received Poseidon result.\n", "poseidon";
-			#$messageSender->encryptMessageID(\$result, unpack("v", $result));
-			$messageSender->sendToServer($result);
+		my $instance = Poseidon::Client::getInstance();
+
+		if ($instance && $instance->isWaitingQuery()) {
+			if ($net->getState() == Network::IN_GAME) {
+				my $result = $instance->getResult();
+				if (defined($result)) {
+					debug "Received Poseidon result.\n", "poseidon";
+					#$messageSender->encryptMessageID(\$result, unpack("v", $result));
+
+					my %hookArgs;
+					$hookArgs{result} = $result;
+					$hookArgs{return} = 1;
+					Plugins::callHook('PoseidonReply', \%hookArgs);
+					if (!$hookArgs{return}) {
+						Benchmark::end("mainLoop_part1_poseidon") if DEBUG;
+						Benchmark::end("mainLoop_part1") if DEBUG;
+						return 0;
+					}
+
+					$messageSender->sendToServer($result);
+				}
+			} else {
+				$instance->reset();
+			}
 		}
 	}
+	Benchmark::end("mainLoop_part1_poseidon") if DEBUG;
 
 	Benchmark::end("mainLoop_part1") if DEBUG;
 	Benchmark::begin("mainLoop_part2") if DEBUG;
@@ -882,21 +1031,29 @@ sub mainLoop_initialized {
 		AI::SlaveManager::iterate();
 		Benchmark::end("ai_homunculus") if DEBUG;
 		Misc::checkValidity("AI");
-		return if $quit;
+		if ($quit) {
+			Benchmark::end("mainLoop_part2") if DEBUG;
+			return;
+		}
 	}
 	Misc::checkValidity("mainLoop_part2.1");
+	Benchmark::begin("mainLoop_part2_tasks") if DEBUG;
 	$taskManager->iterate();
+	Benchmark::end("mainLoop_part2_tasks") if DEBUG;
 
 	Benchmark::end("mainLoop_part2") if DEBUG;
 	Benchmark::begin("mainLoop_part3") if DEBUG;
 
 	# Process bus events.
+	Benchmark::begin("mainLoop_part3_bus") if DEBUG;
 	$bus->iterate() if ($bus);
+	Benchmark::end("mainLoop_part3_bus") if DEBUG;
 	Misc::checkValidity("mainLoop_part2.2");
 
 
 	###### Other stuff that's run in the main loop #####
 
+	Benchmark::begin("mainLoop_part3_autoRestart") if DEBUG;
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
 	 && $net->getState() == Network::IN_GAME && !AI::inQueue(qw/attack take items_take/)) {
 		message T("\nAuto-restarting!!\n"), "system";
@@ -920,11 +1077,13 @@ sub mainLoop_initialized {
 		undef $conState_tries;
 		initRandomRestart();
 	}
+	Benchmark::end("mainLoop_part3_autoRestart") if DEBUG;
 
 	Misc::checkValidity("mainLoop_part2.3");
 
 	# Automatically switch to a different config file
 	# based on certain conditions
+	Benchmark::begin("mainLoop_part3_autoConfChange") if DEBUG;
 	if ($net->getState() == Network::IN_GAME && timeOut($AI::Timeouts::autoConfChangeTime, 0.5)
 	 && !AI::inQueue(qw/attack take items_take/)) {
 		my $selected;
@@ -964,7 +1123,7 @@ sub mainLoop_initialized {
 			 || $oldMaster->{version} ne $master->{version}
 			 || $oldUsername ne $config{'username'}
 			 || $oldChar ne $config{'char'}) {
-				AI::clear;
+				AI::clear();
 				AI::SlaveManager::clear();
 				relog();
 			} else {
@@ -977,40 +1136,57 @@ sub mainLoop_initialized {
 
 		$AI::Timeouts::autoConfChangeTime = time;
 	}
+	Benchmark::end("mainLoop_part3_autoConfChange") if DEBUG;
 
 	#processStatisticsReporting() unless ($sys{sendAnonymousStatisticReport} eq "0");
 
 	Misc::checkValidity("mainLoop_part2.4");
 
-	# Set interface title
-	my $charName;
-	my $title;
-	$charName = "$char->{name}: " if ($char);
-	if ($net->getState() == Network::IN_GAME) {
-		my ($basePercent, $jobPercent, $weight, $pos);
+	Benchmark::begin("mainLoop_part3_setTitle") if DEBUG;
+	if (timeOut($timeout{setTitle})) {
+		$timeout{setTitle}{time} = time;
 
-		assert(defined $char);
-		$basePercent = sprintf("%.2f", $char->exp_base_percent);
-		$jobPercent = sprintf("%.2f",$char->exp_job_percent);
-		$weight = int($char->weight_percent) . "%";
-		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
-		my $aiSeq = join(",", @ai_seq);
-		# Translation Comment: Interface Title with character status
-		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
-			$charName, $char->{lv}, $basePercent . '%',
-			$char->{lv_job}, $jobPercent . '%',
-			$weight, $pos, $aiSeq, $Settings::NAME);
+		# Set interface title
+		my $charName;
+		my $title;
+		$charName = "$char->{name}: " if ($char);
+		if ($net->getState() == Network::IN_GAME) {
+			my ($basePercent, $jobPercent, $weight, $pos);
 
-	} elsif ($net->getState() == Network::NOT_CONNECTED) {
-		# Translation Comment: Interface Title
-		$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
-	} else {
-		# Translation Comment: Interface Title
-		$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
+			assert(defined $char);
+			$basePercent = sprintf("%.2f", $char->exp_base_percent);
+			$jobPercent = sprintf("%.2f",$char->exp_job_percent);
+			$weight = int($char->weight_percent) . "%";
+			$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
+			my $aiSeq = join(",", @ai_seq);
+			# Translation Comment: Interface Title with character status
+			$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
+				$charName, $char->{lv}, $basePercent . '%',
+				$char->{lv_job}, $jobPercent . '%',
+				$weight, $pos, $aiSeq, $Settings::NAME);
+
+		} elsif ($net->getState() == Network::NOT_CONNECTED) {
+			# Translation Comment: Interface Title
+			$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
+		} else {
+			# Translation Comment: Interface Title
+			$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
+		}
+
+		my %args = (return => $title);
+		Plugins::callHook('mainLoop::setTitle',\%args);
+
+		if (%ai_v && exists $ai_v{temp} && exists $ai_v{temp}{lastTitle} && defined $ai_v{temp}{lastTitle} && $ai_v{temp}{lastTitle} eq $args{return}) {
+			# Title is the same as last time, skip setting it again to avoid unnecessary overhead.
+			Benchmark::end("mainLoop_part3_setTitle") if DEBUG;
+			Benchmark::end("mainLoop_part3") if DEBUG;
+			return;
+		}
+		Benchmark::begin("mainLoop_part3_setTitle_interface") if DEBUG;
+		$interface->title($args{return});
+		Benchmark::end("mainLoop_part3_setTitle_interface") if DEBUG;
 	}
-	my %args = (return => $title);
-	Plugins::callHook('mainLoop::setTitle',\%args);
-	$interface->title($args{return});
+	Benchmark::end("mainLoop_part3_setTitle") if DEBUG;
 
 	Misc::checkValidity("mainLoop_part3");
 	Benchmark::end("mainLoop_part3") if DEBUG;

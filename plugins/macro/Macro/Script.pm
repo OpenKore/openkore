@@ -2,6 +2,7 @@
 package Macro::Script;
 
 use strict;
+use Time::HiRes qw(time);
 
 require Exporter;
 our @ISA = qw(Exporter);

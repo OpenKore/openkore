@@ -2,7 +2,7 @@ package eventMacro::Condition::AttackEnd;
 
 use strict;
 use Globals qw( %monsters_old $field $char );
-use Utils   qw( calcPosition distance );
+use Utils   qw( calcPosFromPathfinding blockDistance );
 
 use base 'eventMacro::Conditiontypes::ListConditionEvent';
 
@@ -29,7 +29,7 @@ sub get_new_variable_list {
 	
 	$new_variables->{".".$self->{name}."Last"."Name"} = $actor->{name};
 	$new_variables->{".".$self->{name}."Last"."Pos"} = sprintf("%d %d %s", $actor->{pos_to}{x}, $actor->{pos_to}{y}, $field->baseName);
-	$new_variables->{".".$self->{name}."Last"."Dist"} = sprintf("%.1f",distance(calcPosition($actor), calcPosition($char)));
+	$new_variables->{".".$self->{name}."Last"."Dist"} = sprintf("%.1f",blockDistance(calcPosFromPathfinding($field, $actor), calcPosFromPathfinding($field, $char)));
 	$new_variables->{".".$self->{name}."Last"."ID"} = $actor->{binID};
 	$new_variables->{".".$self->{name}."Last"."BinID"} = $actor->{binType};
 	

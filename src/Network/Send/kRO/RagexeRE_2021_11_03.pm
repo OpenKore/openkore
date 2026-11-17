@@ -26,6 +26,7 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	$self->{send_buy_bulk_market_pack} = 'V2';
 
 	return $self;
 }

@@ -1,5 +1,7 @@
 ![logo](https://upload.wikimedia.org/wikipedia/commons/b/b5/Kore_2g_logo.png)
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/OpenKore/openkore)
+
 ![Language](https://img.shields.io/badge/language-Perl-blue.svg)
 
 ![Stars](https://img.shields.io/github/stars/OpenKore/openkore)
@@ -68,6 +70,7 @@ git clone https://github.com/OpenKore/openkore.git
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | nProtect | Not working | N/A |
 | [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Not working | N/A |
 | [kRO Zero](http://roz.gnjoy.com/) | Korea RO | nProtect | Not working | N/A |
+| [laRO](https://rola.maxion.gg/) | Latam (Landverse America) | Custom | Not working | N/A |
 | [ROla](https://www.gnjoylatam.com/) | Latam RO | nProtect | Not working | N/A |
 | [ruRO Prime](https://ru.4game.com/roprime/) | Russia RO | Frost Security | Not Working | ya4ept |
 | [tRO Chaos/Thor](https://ro.gnjoy.in.th/) | Thailand RO (Online) | nProtect | Not Working | N/A |

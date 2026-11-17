@@ -30,7 +30,7 @@ use base qw(Exporter);
 use Config;
 use FastUtils;
 
-use Globals qw($masterServer);
+use Globals qw($masterServer $field);
 use Utils::DataStructures (':all', '!/^binFind$/');
 
 
@@ -38,7 +38,7 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
+	qw(getLimits get_client_solution get_client_easy_solution get_solution set_actor_solution actorFinishedMovement calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
 	calcPosFromTime calcTime calcPosition
 	checkMovementDirection
 	distance blockDistance specifiedBlockDistance adjustedBlockDistance getClientDist canAttack
@@ -69,6 +69,33 @@ use constant {
 ################################
 ################################
 
+
+sub getLimits {
+	my ($field, $pos, $pos_to) = @_;
+
+	return unless $field && $pos && $pos_to;
+	return unless defined $pos->{x} && defined $pos->{y};
+	return unless defined $pos_to->{x} && defined $pos_to->{y};
+
+	# Build a dynamic search box that always includes both start and dest.
+	my $dx = abs($pos->{x} - $pos_to->{x});
+	my $dy = abs($pos->{y} - $pos_to->{y});
+	my $margin = 8 + (($dx > $dy) ? $dx : $dy);
+
+	my $min_x = ($pos->{x} < $pos_to->{x} ? $pos->{x} : $pos_to->{x}) - $margin;
+	my $max_x = ($pos->{x} > $pos_to->{x} ? $pos->{x} : $pos_to->{x}) + $margin;
+	my $min_y = ($pos->{y} < $pos_to->{y} ? $pos->{y} : $pos_to->{y}) - $margin;
+	my $max_y = ($pos->{y} > $pos_to->{y} ? $pos->{y} : $pos_to->{y}) + $margin;
+
+	# Clamp to field bounds
+	$min_x = 0 if $min_x < 0;
+	$min_y = 0 if $min_y < 0;
+	$max_x = $field->width  - 1 if $max_x >= $field->width;
+	$max_y = $field->height - 1 if $max_y >= $field->height;
+
+	return ($min_x, $max_x, $min_y, $max_y);
+}
+
 ##
 # get_client_solution(field, pos, pos_to)
 #
@@ -79,30 +106,36 @@ sub get_client_solution {
 	my ($field, $pos, $pos_to) = @_;
 
 	my $solution = [];
+	return $solution unless $field && $pos && $pos_to;
+	return $solution unless defined $pos->{x} && defined $pos->{y};
+	return $solution unless defined $pos_to->{x} && defined $pos_to->{y};
+	return $solution if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y});
 
-	# Optimization so we don't need to call the Pathfinding just to get this cell
-	if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y}) {
-		push(@{$solution}, { x => $pos->{x}, y => $pos->{y} });
-		return $solution;
-	}
+	# Reject obviously invalid coordinates early
+	return $solution unless $field->isWalkable($pos->{x},    $pos->{y});
+	return $solution unless $field->isWalkable($pos_to->{x}, $pos_to->{y});
+
+	my ($min_x, $max_x, $min_y, $max_y) = getLimits($field, $pos, $pos_to);
 
 	# Game client uses the same A* Pathfinding as openkore but uses and inadmissible heuristic (Manhattan distance)
 	# To better simulate the client pathfinding we tell openkore's pathfinding to use the same Manhattan heuristic
 	# We also deactivate any custom pathfinding weights (randomFactor, avoidWalls, customWeights)
-	# TODO: This 35 probably should be something dynamic like (max(abs(pos_x-posto_x),abs(pos_y-posto_y)))
-	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = $field->getSquareEdgesFromCoord($pos, 35);
-	my $dist_path = new PathFinding(
-		field => $field,
-		start => $pos,
-		dest => $pos_to,
-		avoidWalls => 0,
+
+	my $pf = PathFinding->new(
+		field        => $field,
+		start        => $pos,
+		dest         => $pos_to,
+		avoidWalls   => 0,
 		randomFactor => 0,
 		useManhattan => 1,
-		min_x => $min_pathfinding_x,
-		max_x => $max_pathfinding_x,
-		min_y => $min_pathfinding_y,
-		max_y => $max_pathfinding_y
-	)->run($solution);
+		min_x        => $min_x,
+		max_x        => $max_x,
+		min_y        => $min_y,
+		max_y        => $max_y,
+	);
+
+	eval { $pf->run($solution); 1 } or return [];
+
 	return $solution;
 }
 
@@ -182,35 +215,300 @@ sub get_solution {
 	}
 }
 
-# Currently the go-to function to get the position of a given actor on critical ocasions (eg. Attack logic)
-sub calcPosFromPathfinding {
-	my ($field, $actor, $extra_time) = @_;
-	my $speed = ($actor->{walk_speed} || 0.12);
-	my $time = time - $actor->{time_move} + $extra_time;
+sub _move_step_time {
+	my ($from, $to, $speed) = @_;
+	return $speed * (MOVE_DIAGONAL_COST / MOVE_COST)
+		if ($from->{x} != $to->{x} && $from->{y} != $to->{y});
+	return $speed;
+}
 
-	# If Pos and PosTo are the same return Pos
-	if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y}) {
-		return $actor->{pos};
+sub _subcell_start_progress {
+	my ($from, $to, $start_sx, $start_sy) = @_;
+
+	my $dx = $to->{x} <=> $from->{x};
+	my $dy = $to->{y} <=> $from->{y};
+	return 0 if (!$dx && !$dy);
+
+	my $offset_x = ($start_sx / 16.0) - 0.5;
+	my $offset_y = ($start_sy / 16.0) - 0.5;
+	my @progress;
+
+	push @progress, ($offset_x / $dx) if $dx;
+	push @progress, ($offset_y / $dy) if $dy;
+
+	return 0 unless @progress;
+
+	my $sum = 0;
+	$sum += $_ foreach @progress;
+	my $start_progress = $sum / scalar(@progress);
+
+	# sx/sy are quantized in 1/16 increments; keep a sane bound in case
+	# packet quantization leaves x/y slightly mismatched.
+	$start_progress = -0.5 if $start_progress < -0.5;
+	$start_progress =  0.5 if $start_progress >  0.5;
+
+	return $start_progress;
+}
+
+sub _calcPosFromSolutionWithSubcell {
+	my ($solution, $speed, $time_elapsed, $start_sx, $start_sy) = @_;
+	return unless $solution && @{$solution};
+	return $solution->[0] if @{$solution} == 1;
+
+	for (my $i = 1; $i < @{$solution}; $i++) {
+		my $from = $solution->[$i - 1];
+		my $to = $solution->[$i];
+		next unless $from && $to;
+
+		my $time_needed = _move_step_time($from, $to, $speed);
+		my $start_progress = 0;
+
+		if ($i == 1) {
+			$start_progress = _subcell_start_progress($from, $to, $start_sx, $start_sy);
+		}
+
+		my $segment_time = $time_needed * (1 - $start_progress);
+		$segment_time = 0 if $segment_time < 0;
+
+		if ($time_elapsed >= $segment_time) {
+			$time_elapsed -= $segment_time;
+			next;
+		}
+
+		my $dx = $to->{x} <=> $from->{x};
+		my $dy = $to->{y} <=> $from->{y};
+		my $t = ($time_needed > 0) ? ($time_elapsed / $time_needed) : 0;
+		$t += $start_progress if ($i == 1);
+
+		my $world_x = $from->{x} + ($dx * $t);
+		my $world_y = $from->{y} + ($dy * $t);
+
+		return {
+			x => int($world_x >= 0 ? $world_x + 0.5 : $world_x - 0.5),
+			y => int($world_y >= 0 ? $world_y + 0.5 : $world_y - 0.5),
+		};
 	}
+
+	return $solution->[-1];
+}
+
+##
+# calcTimeFromSolutionWithSubcell(solution, speed, [start_sx, start_sy])
+# solution: path solution array reference (same format as get_solution()).
+# speed: actor walk speed.
+# start_sx/start_sy: optional subcell start values from movement packet.
+#
+# Returns: the time in seconds to finish this movement, accounting for
+# subcell start offsets on the first step.
+#
+# Notes:
+# - If sx/sy are not provided, it assumes center start (8,8).
+# - This mirrors the first-step timing shift used by rAthena's subcell logic,
+#   then falls back to normal per-cell timing for remaining steps.
+# - Intended to cache actor movement completion time together with solution.
+sub calcTimeFromSolutionWithSubcell {
+	my ($solution, $speed, $start_sx, $start_sy) = @_;
+	return 0 unless $solution && @{$solution};
+	return 0 if @{$solution} == 1;
+
+	$start_sx = 8 unless defined $start_sx;
+	$start_sy = 8 unless defined $start_sy;
+
+	my $summed_time = 0;
+
+	for (my $i = 1; $i < @{$solution}; $i++) {
+		my $from = $solution->[$i - 1];
+		my $to = $solution->[$i];
+		next unless $from && $to;
+
+		my $time_needed = _move_step_time($from, $to, $speed);
+		if ($i == 1) {
+			my $start_progress = _subcell_start_progress($from, $to, $start_sx, $start_sy);
+			my $segment_time = $time_needed * (1 - $start_progress);
+			$segment_time = 0 if $segment_time < 0;
+			$summed_time += $segment_time;
+		} else {
+			$summed_time += $time_needed;
+		}
+	}
+
+	return $summed_time;
+}
+
+##
+# set_actor_solution(actor, [field_override])
+# actor: actor object with pos/pos_to/time_move fields.
+# field_override: optional field to use instead of global $field.
+#
+# Ensures actor movement cache is up to date by setting:
+# - $actor->{solution}
+# - $actor->{time_move_calc}
+# - $actor->{solution_calc_time}
+#
+# Cache policy:
+# - Recalculates only when cache is missing/stale for current time_move.
+# - If movement start time is undefined, cache is reset to empty/0.
+#
+# Path source:
+# - Uses pathfinding solution when field is available.
+# - Falls back to easy straight-line client solution when field is missing.
+#
+# Returns: nothing; data is written into actor hash.
+sub set_actor_solution {
+	my ($actor, $field_override) = @_;
+	return unless $actor && $actor->{pos} && $actor->{pos_to};
+
+	unless (defined $actor->{time_move}) {
+		$actor->{solution} = [];
+		$actor->{time_move_calc} = 0;
+		$actor->{solution_calc_time} = time;
+		return;
+	}
+
+	my $solution_ready =
+		defined $actor->{solution_calc_time}
+		&& $actor->{solution_calc_time} >= $actor->{time_move}
+		&& $actor->{solution}
+		&& ref($actor->{solution}) eq 'ARRAY'
+		&& @{$actor->{solution}};
+
+	return if $solution_ready;
+
+	my $speed = ($actor->{walk_speed} || 0.12);
+	my $sx = defined $actor->{move_start_sx} ? $actor->{move_start_sx} : 8;
+	my $sy = defined $actor->{move_start_sy} ? $actor->{move_start_sy} : 8;
+	my $use_field = $field_override || $field;
 
 	my $solution;
-
-	# If the actor is the character then we should have already saved the time calc and solution at Receive.pm::character_moves
-	if (UNIVERSAL::isa($actor, "Actor::You")) {
-		if ($time >= $actor->{time_move_calc}) {
-			return $actor->{pos_to};
-		}
-		$solution = $actor->{solution};
-
-	} else {
-		$solution = get_solution($field, $actor->{pos}, $actor->{pos_to});
+	if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y}) {
+		$solution = [ { x => $actor->{pos}{x}, y => $actor->{pos}{y} } ];
+	} elsif ($use_field) {
+		$solution = get_solution($use_field, $actor->{pos}, $actor->{pos_to});
 	}
 
-	my $steps_walked = calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
+	$solution ||= get_client_easy_solution($actor->{pos}, $actor->{pos_to});
+	$solution ||= [];
 
-	my $pos = $solution->[$steps_walked];
+	$actor->{solution} = $solution;
+	$actor->{time_move_calc} = calcTimeFromSolutionWithSubcell($solution, $speed, $sx, $sy);
+	$actor->{solution_calc_time} = time;
+}
 
-	return $pos;
+##
+# actorFinishedMovement(actor, [field, extra_time, mode])
+# actor: actor object.
+# field: optional field override for lazy solution build.
+# extra_time: optional time offset in seconds.
+# mode:
+#   0 = lookahead mode  -> "at now + extra_time, is movement finished?"
+#   1 = wait mode       -> "is movement finished, and has extra_time passed
+#                          since the finish time?"
+#   undef defaults to 0.
+#
+# Returns: true/false according to selected mode.
+#
+# This function is the public movement-finished check and should be used
+# instead of directly reading actor->{time_move_calc} outside Utils.
+# It lazily prepares movement cache through set_actor_solution().
+sub actorFinishedMovement {
+	my ($actor, $field_override, $extra_time, $mode) = @_;
+	$extra_time ||= 0;
+	$mode = 0 unless defined $mode;
+	return 1 unless $actor && $actor->{pos} && $actor->{pos_to} && defined $actor->{time_move};
+	return 1 if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y});
+
+	set_actor_solution($actor, $field_override);
+	my $elapsed = time - $actor->{time_move};
+	my $time_needed = $actor->{time_move_calc} || 0;
+	if ($mode == 1) {
+		return ($elapsed >= ($time_needed + $extra_time));
+	}
+	return (($elapsed + $extra_time) >= $time_needed);
+}
+
+sub _normalize_calc_pos_to_walkable {
+	my ($field, $actor, $calc_pos) = @_;
+	return $calc_pos if !$field || !$actor || !$calc_pos;
+	return $calc_pos if $field->isWalkable($calc_pos->{x}, $calc_pos->{y});
+
+	my $fallback = $field->closestWalkableSpot($calc_pos, 1);
+	$fallback ||= $field->closestWalkableSpot($calc_pos, 10);
+	return $calc_pos if !$fallback;
+
+	my $bad_pos_key = join(':', $field->baseName, $calc_pos->{x}, $calc_pos->{y}, $fallback->{x}, $fallback->{y});
+	if (!defined $actor->{lastBadCalcPosFallback} || $actor->{lastBadCalcPosFallback} ne $bad_pos_key) {
+		Log::error(
+			sprintf("[calcPosFromPathfinding] [%s] Predicted position (%d,%d) is not walkable on local field '%s'. Falling back to closest walkable cell (%d,%d). Local field data may be out of sync with the server.\n",
+				$actor, $calc_pos->{x}, $calc_pos->{y}, $field->baseName, $fallback->{x}, $fallback->{y}),
+			"route"
+		);
+		$actor->{lastBadCalcPosFallback} = $bad_pos_key;
+	}
+
+	return { x => $fallback->{x}, y => $fallback->{y} };
+}
+
+##
+# calcPosFromPathfinding(field, actor, [extra_time, precise_mode])
+# field: current map field.
+# actor: actor to predict.
+# extra_time: optional future offset in seconds (default 0).
+# precise_mode:
+#   1 = precise/subcell-aware interpolation
+#   0 = faster full-cell simulation
+#   undef = auto mode (Actor::You => 1, others => 0)
+#
+# Returns: predicted actor position hash reference {x, y}.
+#
+# Overview:
+# The server movement packets provide start/end cells and timing context.
+# This function predicts the current (or future) cell while actor is walking.
+#
+# Modes:
+# - Precise mode uses subcell-aware interpolation on the current step, matching
+#   rAthena cell-border handoff behavior more closely.
+# - Non-precise mode uses fast step counting along cached solution.
+#
+# Caching:
+# Uses set_actor_solution() to lazily compute and refresh solution/timing cache.
+#
+# Edge handling:
+# - If actor is stationary, returns current position.
+# - If elapsed time is <= 0, returns actor->{pos}.
+# - If solution cannot be obtained, falls back to actor->{pos_to}.
+sub calcPosFromPathfinding {
+	my ($field, $actor, $extra_time, $precise_mode) = @_;
+	$extra_time ||= 0;
+	return unless $actor && $actor->{pos} && $actor->{pos_to};
+	$precise_mode = UNIVERSAL::isa($actor, 'Actor::You') ? 1 : 0 unless defined $precise_mode;
+
+	return _normalize_calc_pos_to_walkable($field, $actor, $actor->{pos})
+		if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y});
+
+	my $speed = ($actor->{walk_speed} || 0.12);
+	my $time_elapsed = time - $actor->{time_move} + $extra_time;
+
+	return _normalize_calc_pos_to_walkable($field, $actor, $actor->{pos}) if ($time_elapsed <= 0);
+
+	set_actor_solution($actor, $field);
+	my $solution = $actor->{solution};
+	return _normalize_calc_pos_to_walkable($field, $actor, $actor->{pos_to})
+		unless (defined $solution && ref($solution) eq 'ARRAY' && @{$solution});
+
+	if (!$precise_mode) {
+		my $steps_walked = calcStepsWalkedFromTimeAndSolution($solution, $speed, $time_elapsed);
+		if (defined $solution->[$steps_walked]) {
+			return _normalize_calc_pos_to_walkable($field, $actor, $solution->[$steps_walked]);
+		}
+		return _normalize_calc_pos_to_walkable($field, $actor, $solution->[-1]);
+	}
+
+	my $start_sx = defined $actor->{move_start_sx} ? $actor->{move_start_sx} : 8;
+	my $start_sy = defined $actor->{move_start_sy} ? $actor->{move_start_sy} : 8;
+
+	my $pos = _calcPosFromSolutionWithSubcell($solution, $speed, $time_elapsed, $start_sx, $start_sy);
+	return _normalize_calc_pos_to_walkable($field, $actor, $pos) if $pos;
+	return _normalize_calc_pos_to_walkable($field, $actor, $solution->[-1]);
 }
 
 # Wrapper for calcTimeFromSolution so you don't need to call get_client_solution and calcTimeFromSolution when you only need the time
@@ -300,6 +598,7 @@ sub blockDistance {
 # print "You are currently at: $solution->[$steps_walked]{x} $solution->[$steps_walked]{y}\n";
 sub calcStepsWalkedFromTimeAndSolution {
 	my ($solution, $speed, $time_elapsed) = @_;
+	return 0 unless (defined $solution && ref($solution) eq 'ARRAY' && @{$solution});
 
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $current_step = 0; # step
@@ -354,6 +653,7 @@ sub calcStepsWalkedFromTimeAndSolution {
 # Returns the amount of seconds to walk the given Solution with the given speed.
 sub calcTimeFromSolution {
 	my ($solution, $speed) = @_;
+	return 0 unless (defined $solution && ref($solution) eq 'ARRAY' && @{$solution} > 1);
 
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $current_step = 0; # step
@@ -462,10 +762,13 @@ sub calcTime {
 # $pos = calcPosition($players{$ID}, 2);
 sub calcPosition {
 	my ($object, $extra_time, $float) = @_;
-	my $time_needed = $object->{time_move_calc};
-	my $elasped = time - $object->{time_move} + $extra_time;
+	$extra_time ||= 0;
 
-	if ($elasped >= $time_needed || !$time_needed) {
+	my $speed = ($object->{walk_speed} || 0.12);
+	my $time_needed = calcTime($object->{pos}, $object->{pos_to}, $speed) || 0;
+	my $elapsed = time - $object->{time_move} + $extra_time;
+
+	if (!$time_needed || $elapsed > $time_needed) {
 		return $object->{pos_to};
 	} else {
 		my (%vec, %result, $dist);
@@ -473,7 +776,7 @@ sub calcPosition {
 		my $pos_to = $object->{pos_to};
 
 		getVector(\%vec, $pos_to, $pos);
-		$dist = (distance($pos, $pos_to) - 1) * ($elasped / $time_needed);
+		$dist = (distance($pos, $pos_to) - 1) * ($elapsed / $time_needed);
 		moveAlongVector(\%result, $pos, \%vec, $dist);
 		$result{x} = int sprintf("%.0f", $result{x}) if (!$float);
 		$result{y} = int sprintf("%.0f", $result{y}) if (!$float);
@@ -617,8 +920,9 @@ sub adjustedBlockDistance {
 
 	my $xDistance = abs($pos1->{x} - $pos2->{x});
 	my $yDistance = abs($pos1->{y} - $pos2->{y});
+	my $min = $xDistance > $yDistance ? $yDistance : $xDistance;
 
-	my $dist = $xDistance + $yDistance - ((2-sqrt(2)) * min($xDistance, $yDistance));
+	my $dist = $xDistance + $yDistance - ((3 * $min) / 5);
 
 	return $dist;
 }
@@ -952,14 +1256,19 @@ sub launchScript {
 # Checks whether the socket $r_handle has pending incoming data.
 # If there is, then you can read from $r_handle without being blocked.
 sub dataWaiting {
-	my $r_fh = shift;
+	my ($r_fh, $timeout) = @_;
 	return 0 if (!defined $r_fh || !defined $$r_fh);
+	$timeout = 0.01 unless (defined $timeout);
+
+	my $fd = eval { fileno($$r_fh) };
+	return 0 if (!defined $fd || $fd < 0);
 
 	my $bits = '';
-	vec($bits, fileno($$r_fh), 1) = 1;
-	# The timeout was 0.005
-	return (select($bits, undef, undef, 0) > 0);
-	#return select($bits, $bits, $bits, 0) > 1);
+	vec($bits, $fd, 1) = 1;
+
+	my $nfound = eval { select($bits, undef, undef, $timeout) };
+	return 0 if (!defined $nfound);
+	return ($nfound > 0);
 }
 
 ##
@@ -1255,9 +1564,9 @@ sub makeCoordsDir {
 #
 # TODO: Maybe aegis, athena, cronus, brathena or other emulators actually use this sx0/sy0 argument and we don't know
 sub makeCoordsFromTo {
-	my ($r_hashFrom, $r_hashTo, $rawCoords) = @_;
-	unShiftPack(\$rawCoords, undef, 4); # seems to be returning 8 (always?)
-	unShiftPack(\$rawCoords, undef, 4); # seems to be returning 8 (always?)
+	my ($r_hashFrom, $r_hashTo, $rawCoords, $sx0, $sy0) = @_;
+	unShiftPack(\$rawCoords, $sy0, 4);
+	unShiftPack(\$rawCoords, $sx0, 4);
 	makeCoordsXY($r_hashTo, \$rawCoords);
 	makeCoordsXY($r_hashFrom, \$rawCoords);
 }
@@ -1588,9 +1897,12 @@ sub parse_portal_conversation_args {
         # Check current position
         $i = pos($command);
 
-        # Handle quoted strings
-        if ($command =~ /\G(["'])(.*?)\1\s*/gc) {
-            push @args, $2;
+        # Handle key=value where value can be quoted string (remove quotes)
+        if ($command =~ /\G(\w+)=("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')\s*/gc) {
+			my ($key, $val) = ($1, $2);
+            # Remove the quotes around $val
+            $val =~ s/^["'](.*)["']$/$1/;
+            push @args, "$key=$val";
         }
         # Handle regex r~/.../flags
         elsif ($command =~ /\Gr~\/((?:\\\/|[^\/])+)\/([a-z]*)\s*/gc) {

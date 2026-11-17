@@ -1,5 +1,8 @@
+airpship "airplane_01",243,73,"Welcome to Izlude. Have a safe trip.","izlude",200,73;
+airpship "airplane_01",243,73,"Welcome to Rachel. Have a safe trip.","ra_fild12",292,204;
+airpship "airplane_01",243,73,"Welcome to Juno. Have a safe trip.","yuno",12,261;
 
-airpship "airplane_01",243,73,"(Welcome to Izlude)","izlude",200,73;
-airpship "airplane_01",243,73,"(Welcome to Rachel)","ra_fild12",292,204;
-airpship "airplane_01",243,73,"(Welcome to Juno)","yuno",12,261;
-
+airpship "airplane",243,73,"Welcome to Juno. Have a safe trip.","yuno",92,260;
+airpship "airplane",243,73,"Welcome to Einbroch. Have a safe trip.","einbroch",92,278;
+airpship "airplane",243,73,"Welcome to Lighthalzen. Have a safe trip.","lighthalzen",302,75;
+airpship "airplane",243,73,"Welcome to Hugel. Have a safe trip.","hugel",181,146;

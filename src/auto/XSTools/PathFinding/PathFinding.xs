@@ -41,7 +41,7 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 		SV * max_y
 
 	PREINIT:
-		char *weight_map_data = NULL;
+		signed char *weight_map_data = NULL;
 
 	CODE:
 
@@ -145,7 +145,7 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 		}
 
 		/* Get the weight_map data */
-		weight_map_data = (char *) SvPV_nolen (SvRV (weight_map));
+		weight_map_data = (signed char *) SvPV_nolen (SvRV (weight_map));
 		session->map_base_weight = weight_map_data;
 
 		session->width = (int) SvUV (width);
@@ -161,8 +161,14 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 		session->min_y = (int) SvUV (min_y);
 		session->max_y = (int) SvUV (max_y);
 
-		srand(time(0));
 		session->randomFactor = (unsigned int) SvUV (randomFactor);
+		if (session->randomFactor) {
+			static bool seeded = false;
+			if (!seeded) {
+				srand(time(0));
+				seeded = true;
+			}
+		}
 		session->useManhattan = (unsigned short) SvUV (useManhattan);
 
 		// Min and max check
@@ -211,8 +217,6 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 		session->avoidWalls = (unsigned short) SvUV (avoidWalls);
 		session->customWeights = (unsigned short) SvUV (customWeights);
 		session->time_max = (unsigned int) SvUV (time_max);
-
-		CalcPath_init(session);
 
 		if (session->customWeights) {
 			/* secondWeightMap should be a reference to an array */
@@ -343,17 +347,51 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 					printf("[pathfinding reset error] [secondWeightMap] member of array 'weight' key is not defined\n");
 					XSRETURN_NO;
 				}
-
-				unsigned int weight = SvIV(*ref_weight);
-
-				long current = (y * session->width) + x;
-
-				session->second_weight_map[current] = weight;
 			}
 		} else {
 			if (SvOK(secondWeightMap)) {
 				printf("[pathfinding reset error] secondWeightMap is defined while customWeights is 0\n");
 				XSRETURN_NO;
+			}
+		}
+
+		CalcPath_init(session);
+
+		if (session->customWeights) {
+			AV *deref_secondWeightMap;
+			I32 array_len;
+
+			deref_secondWeightMap = (AV *) SvRV (secondWeightMap);
+			array_len = av_len (deref_secondWeightMap);
+
+			SV **fetched;
+			HV *hash;
+
+			SV **ref_x;
+			SV **ref_y;
+			SV **ref_weight;
+
+			IV x;
+			IV y;
+
+			I32 index;
+
+			for (index = 0; index <= array_len; index++) {
+				fetched = av_fetch (deref_secondWeightMap, index, 0);
+				hash = (HV*) SvRV(*fetched);
+
+				ref_x = hv_fetch(hash, "x", 1, 0);
+				x = SvIV(*ref_x);
+
+				ref_y = hv_fetch(hash, "y", 1, 0);
+				y = SvIV(*ref_y);
+
+				ref_weight = hv_fetch(hash, "weight", 6, 0);
+				unsigned int weight = SvIV(*ref_weight);
+
+				long current = (y * session->width) + x;
+
+				session->second_weight_map[current] = weight;
 			}
 		}
 

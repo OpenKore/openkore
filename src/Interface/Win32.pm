@@ -16,6 +16,7 @@ use Plugins;
 use Globals;
 use Settings;
 use Misc;
+use Translation qw(T TF);
 
 use Win32::GUI;
 use Win32::GUI::Constants qw(WS_CHILD WS_VISIBLE WS_VSCROLL ES_LEFT ES_MULTILINE ES_READONLY ES_AUTOVSCROLL MB_OK MB_ICONERROR);
@@ -790,15 +791,15 @@ sub openMap {
 #
 #######
 sub menuAIAuto {
-	AI::state(AI::AUTO);
+	AI::state(AI::AUTO());
 }
 
 sub menuAIManual {
-	AI::state(AI::MANUAL);
+	AI::state(AI::MANUAL());
 }
 
 sub menuAIOff {
-	AI::state(AI::OFF);
+	AI::state(AI::OFF());
 }
 
 sub menuRespawn {
@@ -1008,7 +1009,7 @@ sub updateStatusBar {
 			$xyText = $field->baseName . " $char->{pos}{x}, $char->{pos}{y}";
 		}
 
-		if (AI::state) {
+		if (AI::state()) {
 			if (@ai_seq) {
 				my @seqs = @ai_seq;
 				foreach (@seqs) {
@@ -1141,3 +1142,4 @@ sub UpdateCharacter {
 
 
 1;
+

@@ -7,6 +7,7 @@ use FileParsers;
 use Globals;
 use Misc;
 use File::Copy;
+use File::Temp qw(tempfile);
 
 use constant NOT_CONFIGURED_ITEM => 'Random Item';
 
@@ -47,6 +48,55 @@ sub start {
 			done_testing();
 		} or skip 'failed to load tables', 1;
 
+		subtest 'monsters_table.txt' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				"ID\tName\tLevel\tHp\tAttackRange\tSkillRange\tAttackDelay\tAttackMotion\tSize\tRace\tElement\tElementLevel\tChaseRange\tAi\tisAIMode_Aggressive\tisAIMode_Looter\tisAIMode_Assist\tisAIMode_CanMove\tisAIMode_CastSensorIdle\tisAIMode_CastSensorChase\tisAIMode_MVP\tisAIMode_KnockbackImmune\tisAIMode_Detector\tisAIMode_TakesFixed_1_Damage_Melee\tisAIMode_TakesFixed_1_Damage_Ranged\tisAIMode_TakesFixed_1_Damage_Magic\tisAIMode_TakesFixed_1_Damage_None",
+				"1002\tPoring\t1\t55\t1\t10\t1872\t672\tMedium\tPlant\tWater\t1\t12\t02\t0\t1\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0",
+				"1038\tGolden Thief Bug\t78\t114480\t1\t10\t1736\t936\tLarge\tUndead\tHoly\t4\t14\t03\t0\t0\t1\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0",
+				"2000\tBroken Monster\t10\t100\t1\t10\t1000\t500\tSmall\tFormless\tNeutral\t1\t12\t99\t0\t2\t0\t1\t0\t0\t0\t0\t0\t0\t0\t0\t0",
+			) . "\n";
+			close $fh;
+
+			my %monsters;
+			parseMonstersTableFile($filename, \%monsters);
+
+			is($monsters{1002}{Ai}, '02', 'parses Ai from tab-separated format');
+			is($monsters{1002}{Name}, 'Poring', 'parses Name from column 2');
+			is($monsters{1002}{isAIMode_Looter}, 1, 'parses precomputed looter flag');
+			is($monsters{1002}{isAIMode_CanMove}, 1, 'parses precomputed can-move flag');
+			is($monsters{1038}{Name}, 'Golden Thief Bug', 'parses Name with spaces');
+			is($monsters{1038}{isAIMode_Assist}, 1, 'parses assist flag');
+			ok(!exists $monsters{2000}, 'drops invalid monster rows instead of partially parsing them');
+
+			unlink $filename;
+			done_testing();
+		};
+
+		subtest 'item_hand_type.txt' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				'# itemID AegisName type',
+				'1813 Kaiser_Knuckle Knuckle',
+				'2112 Novice_Guard Shield',
+				'broken line',
+				'badid Another_Item Dagger',
+			) . "\n";
+			close $fh;
+
+			my %hand_types;
+			parseItemHandTypeTable($filename, \%hand_types);
+
+			is($hand_types{1813}{itemID}, 1813, 'parses item ID');
+			is($hand_types{1813}{aegisName}, 'Kaiser_Knuckle', 'parses AegisName');
+			is($hand_types{1813}{type}, 'Knuckle', 'parses weapon type');
+			is($hand_types{2112}{type}, 'Shield', 'parses shield type');
+			ok(!exists $hand_types{badid}, 'drops invalid rows');
+
+			unlink $filename;
+			done_testing();
+		};
+
 		# 502 - unknown item
 		my %item_names = map {$_ => itemName({nameID => $_, cards => pack('v*', (0)x4)})} 502, keys %items_lut;
 		my @item_names_part = map {[map {$item_names{$_}} @$_]} List::MoreUtils::part {$_ == 1208} keys %item_names;
@@ -60,12 +110,131 @@ sub start {
 			done_testing();
 		};
 
+
+		subtest 'teleport_items.txt' => sub {
+			my %teleport_items;
+			parseTeleportItems('teleport_items.txt', \%teleport_items);
+			is_deeply([sort keys %teleport_items], ['list'], 'stores only list structure for teleport items');
+			is(scalar @{$teleport_items{list}}, 4, 'parses entries');
+			is($teleport_items{list}[0]{itemID}, 22508, 'itemID');
+			is($teleport_items{list}[0]{destMap}, 'moc_para01', 'destMap');
+			is($teleport_items{list}[0]{destX}, 171, 'destX');
+			is($teleport_items{list}[0]{destY}, 115, 'destY');
+			is($teleport_items{list}[0]{maxLevel}, 0, 'parses explicit maxLvl');
+			is($teleport_items{list}[0]{timeoutSec}, 1200, 'timeoutSec');
+			is($teleport_items{list}[0]{dynamicPortalGroupBlock}, 'EdenPortalExit', 'parses teleport item dynamic portal block');
+			is($teleport_items{list}[1]{mode}, 'random', 'supports comma syntax');
+			is($teleport_items{list}[1]{maxLevel}, 99, 'parses maxLvl syntax');
+			is($teleport_items{list}[2]{requiredEquipSlot}, 'midHead', 'preserves required equip slot case from table');
+			is($teleport_items{list}[2]{requiredEquipItemID}, 15385, 'parses required equip item id');
+			is($teleport_items{list}[3]{maxLevel}, 1200, 'single optional numeric is maxLvl by positional syntax');
+			is($teleport_items{list}[3]{timeoutSec}, 0, 'timeoutSec defaults to 0 when omitted');
+			done_testing();
+		};
+
+		subtest 'teleport_items_invalid.txt' => sub {
+			my %teleport_items;
+			parseTeleportItems('teleport_items_invalid.txt', \%teleport_items);
+			is_deeply([sort keys %teleport_items], ['list'], 'invalid file still keeps list-only structure');
+			is(scalar @{$teleport_items{list}}, 1, 'ignores malformed entries and keeps only valid ones');
+			is($teleport_items{list}[0]{itemID}, 602, 'valid control line itemID');
+			is($teleport_items{list}[0]{mode}, 'respawn', 'valid control line mode');
+			is($teleport_items{list}[0]{timeoutSec}, 120, 'valid control line timeoutSec');
+			done_testing();
+		};
+
+		subtest 'npc_shops.txt' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				'npcmap,npcx,npcy,item1id:item1price,item2id:item2price,etc',
+				'prontera,100,200,501:10,502:50,503:180',
+				'alberta_in,182,97,611:40',
+				'ignoreme,bad,x,501:10',
+			) . "\n";
+			close $fh;
+
+			my %npc_shops;
+			parseNPCShops($filename, \%npc_shops);
+
+			is_deeply([sort keys %npc_shops], ['list'], 'stores only list structure for npc shops');
+			is(scalar @{$npc_shops{list}}, 2, 'parses valid shop rows only');
+			is($npc_shops{list}[0]{map}, 'prontera', 'parses map');
+			is($npc_shops{list}[0]{x}, 100, 'parses x');
+			is($npc_shops{list}[0]{y}, 200, 'parses y');
+			is(scalar @{$npc_shops{list}[0]{items}}, 3, 'parses item list');
+			is($npc_shops{list}[0]{items}[1]{itemID}, 502, 'parses item ID');
+			is($npc_shops{list}[0]{items}[1]{price}, 50, 'parses item price');
+			is($npc_shops{list}[0]{itemsByID}{503}, 180, 'builds itemsByID lookup');
+			is($npc_shops{list}[1]{map}, 'alberta_in', 'keeps basename-normalized map names');
+
+			unlink $filename;
+			done_testing();
+		};
+
+		subtest 'npc_shops_instance_map_normalization' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} "0021\@cata,20,30,602:1000\n";
+			close $fh;
+
+			my %npc_shops;
+			parseNPCShops($filename, \%npc_shops);
+
+			is($npc_shops{list}[0]{map}, '1@cata', 'normalizes instance map names through Field::nameToBaseName');
+
+			unlink $filename;
+			done_testing();
+		};
+
+		subtest 'updateNPCShopFile' => sub {
+			my ($fh, $filename) = tempfile();
+			print {$fh} join("\n",
+				'npcmap,npcx,npcy,item1id:item1price,item2id:item2price,etc',
+				'prontera,100,200,501:10,502:50',
+				'alberta_in,182,97,611:40',
+			) . "\n";
+			close $fh;
+
+			updateNPCShopFile($filename, 'prontera', 100, 200, [
+				{itemID => 501, price => 12},
+				{itemID => 503, price => 180},
+			]);
+			updateNPCShopFile($filename, 'geffen', 50, 60, [
+				{itemID => 601, price => 99},
+			]);
+			updateNPCShopFile($filename, 'alberta_in', 182, 97, []);
+
+			my %npc_shops;
+			parseNPCShops($filename, \%npc_shops);
+
+			is(scalar @{$npc_shops{list}}, 2, 'updates existing shops, appends new shops, and removes emptied shops');
+			is($npc_shops{list}[0]{itemsByID}{501}, 12, 'replaces stale prices for existing shops');
+			is($npc_shops{list}[0]{itemsByID}{503}, 180, 'writes updated item lists for existing shops');
+			is($npc_shops{list}[1]{map}, 'geffen', 'adds new shop rows when missing');
+			is($npc_shops{list}[1]{items}[0]{price}, 99, 'stores new shop price');
+
+			unlink $filename;
+			done_testing();
+		};
+
 		subtest 'pickupitems.txt' => sub {
 			parseDataFile_lc('pickupitems.txt', \%pickupitems);
 
 			is(pickupitems(NOT_CONFIGURED_ITEM), 1, 'all');
 			is(pickupitems($_), 2, $_) for grep {!/Bowman Scroll 1/} @{$item_names_part[0]};
 			is(pickupitems($_), -1, $_) for @{$item_names_part[1]};
+			done_testing();
+		};
+
+		subtest 'priority.txt' => sub {
+			parsePriority('data/priority.txt', \%priority);
+
+			is($priority{hydra}, 4, 'stores named monsters');
+			is($priority{1096}, 3, 'stores monster IDs');
+			is($priority{all}, 2, 'stores all fallback in list order');
+			is(Misc::monsterPriority('Angeling', 1096), 3, 'prefers ID over name');
+			is(Misc::monsterPriority('Hydra', 1053), 4, 'falls back to name when ID is missing');
+			is(Misc::monsterPriority('Poring', 1002), 2, 'uses all for unlisted monsters');
+			is(Misc::monsterPriority('Eclipse', 1093), 1, 'entries after all stay below the fallback');
 			done_testing();
 		};
 

@@ -438,19 +438,19 @@ sub request {
 		my $type = $skill->getTargetType();
 		if ($char->getSkillLevel($skill)){
 			$act = '<td>' . $sp . '</td><td><div align="center">';
-			if ($type == Skill::TARGET_PASSIVE){
+			if ($type == Skill::TARGET_PASSIVE()){
 				$act .= '<a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
 			}
-			if ($type == Skill::TARGET_SELF){
+			if ($type == Skill::TARGET_SELF()){
 				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $IDN . '">' . T('Use on self') . '</a> ';
 			}
-			if ($type == Skill::TARGET_ENEMY){
+			if ($type == Skill::TARGET_ENEMY()){
 				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $IDN . '+0">' . T('Use on enemy') . '</a> ';
 			}
-			if ($type == Skill::TARGET_ACTORS){
+			if ($type == Skill::TARGET_ACTORS()){
 				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $IDN . '+0">' . T('Use on actor') . '</a> ';
 			} 
-			if ($type == Skill::TARGET_LOCATION){
+			if ($type == Skill::TARGET_LOCATION()){
 				$act .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $IDN . '+{characterLocationX}+{characterLocationY}">' . T('Use on location') . '</a> ';
 			}
 			$act .= '</div></td>';
@@ -485,19 +485,19 @@ sub request {
 			my $type = $homunculoSkill->getTargetType();
 			if ($char->getSkillLevel($homunculoSkill)){
 				$homunculoAct = '<td>' . $homunculoSp . '</td><td><div align="center">';
-				if ($type == Skill::TARGET_PASSIVE){
+				if ($type == Skill::TARGET_PASSIVE()){
 					$homunculoAct .= '<a class="btn btn-mini disabled">Passive</a></div></td>'; #Skill passive
 				}
-				if ($type == Skill::TARGET_SELF){
+				if ($type == Skill::TARGET_SELF()){
 					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=ss+' . $homunculoIDN . '">' . T('Use on self') . '</a> ';
 				}
-				if ($type == Skill::TARGET_ENEMY){
+				if ($type == Skill::TARGET_ENEMY()){
 					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sm+' . $homunculoIDN . '+0">' . T('Use on enemy') . '</a> ';
 				}
-				if ($type == Skill::TARGET_ACTORS){
+				if ($type == Skill::TARGET_ACTORS()){
 					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sp+' . $homunculoIDN . '+0">' . T('Use on actor') . '</a> ';
 				} 
-				if ($type == Skill::TARGET_LOCATION){
+				if ($type == Skill::TARGET_LOCATION()){
 					$homunculoAct .= '<a class="btn btn-mini" href="/handler?csrf=' . $csrf . '&command=sl+' . $homunculoIDN . '+{characterLocationX}+{characterLocationY}">' . T('Use on location') . '</a> ';
 				}
 				$homunculoAct .= '</div></td>';

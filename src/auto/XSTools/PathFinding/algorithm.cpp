@@ -11,6 +11,9 @@ extern "C" {
 #define NONE 0
 #define OPEN 1
 #define CLOSED 2
+#define MOVE_COST 10
+#define MOVE_DIAGONAL_COST 14
+#define INVALID_PREDECESSOR -1
 
 #ifdef WIN32
 	#include <windows.h>
@@ -66,8 +69,12 @@ CalcPath_init (CalcPath_session *session)
 	start->x = session->startX;
 	start->y = session->startY;
 	start->nodeAdress = startAdress;
+	start->predecessor = INVALID_PREDECESSOR;
+	start->g = 0;
 	start->h = heuristic_cost_estimate(start->x, start->y, goal->x, goal->y, session->useManhattan);
 	start->f = start->h;
+
+	goal->predecessor = INVALID_PREDECESSOR;
 
 	session->initialized = 1;
 }
@@ -105,9 +112,9 @@ CalcPath_pathStep (CalcPath_session *session)
 
 	short i;
 
-	// All possible directions the character can move (in order: north, south, east, west, northeast, southeast, southwest, northwest)
-	short i_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
-	short i_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
+	// Match rAthena's neighbor expansion order exactly: SE, E, NE, N, NW, W, SW, S.
+	short i_x[8] = {1, 1, 1, 0, -1, -1, -1, 0};
+	short i_y[8] = {-1, 0, 1, 1, 1, 0, -1, -1};
 
 	int neighbor_x;
 	int neighbor_y;
@@ -139,8 +146,8 @@ CalcPath_pathStep (CalcPath_session *session)
 		// Set currentNode to the top node in openList, and remove it from openList.
 		currentNode = openListGetLowest (session);
 
-		// If currentNode is the goal we have reached the destination, reconstruct and return the path.
-		if (goal->predecessor) {
+		// Match rAthena: finish only when the goal node is popped from the heap.
+		if (currentNode->nodeAdress == goal->nodeAdress) {
 			//return path
 			reconstruct_path(session, goal, start);
 			return 1;
@@ -165,22 +172,14 @@ CalcPath_pathStep (CalcPath_session *session)
 
 			neighborNode = &session->currentMap[neighbor_adress];
 
-			// If a neighbor is in closedList ignore it, it has already been expanded and has its lowest possible g_score
-			if (neighborNode->whichlist == CLOSED) {
-				continue;
-			}
-
-			// First 4 neighbors in the list are in a ortogonal path and the last 4 are in a diagonal path from currentNode.
-			if (i >= 4) {
-				// If neighborNode has a diagonal path from currentNode then we can only move to it if both ortogonal composite nodes are walkable. (example: To move to the northeast both north and east must be walkable)
-			   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
+			if (i_x[i] != 0 && i_y[i] != 0) {
+				// Diagonal movement is only allowed if both orthogonal component cells are walkable.
+				if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
 					continue;
 				}
-				// We use 14 as the diagonal movement weight
-				distanceFromCurrent = 14;
+				distanceFromCurrent = MOVE_DIAGONAL_COST;
 			} else {
-				// We use 10 for ortogonal movement weight
-				distanceFromCurrent = 10;
+				distanceFromCurrent = MOVE_COST;
 			}
 
 			// If avoidWalls is true we add weight to cells near walls to disencourage the algorithm to move to them.
@@ -211,15 +210,21 @@ CalcPath_pathStep (CalcPath_session *session)
 				neighborNode->f = neighborNode->g + neighborNode->h;
 				openListAdd (session, neighborNode);
 
-			// If neighborNode is in a list it has to be in openList, since we cannot access nodes in closedList. 
+			// Match rAthena: a better path can reopen a node that was already closed.
 			} else {
 				// Check if we have found a shorter path to neighborNode, if so update it to have currentNode as its predecessor.
 				if (g_score < neighborNode->g) {
 					neighborNode->predecessor = currentNode->nodeAdress;
 					neighborNode->g = g_score;
 					neighborNode->f = neighborNode->g + neighborNode->h;
-					// Here we could remove neighborNode from openList and add it again to get it to the right position, but reajusting it saves time.
-					reajustOpenListItem (session, neighborNode);
+					if (neighborNode->whichlist == CLOSED) {
+						//if (session->useManhattan) {
+							openListAdd(session, neighborNode);
+						//}
+					} else {
+						// Here we could remove neighborNode from openList and add it again to get it to the right position, but reajusting it saves time.
+						reajustOpenListItem(session, neighborNode);
+					}
 				}
 			}
 		}

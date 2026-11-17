@@ -46,7 +46,7 @@ use Compress::Zlib;
 use File::Spec;
 use Log qw(message);
 
-use Globals qw($masterServer %mapAlias_lut %maps_lut %cities_lut);
+use Globals qw($masterServer %mapAlias_lut %maps_lut %cities_lut %config);
 use Modules 'register';
 use Settings;
 use FastUtils;
@@ -63,6 +63,68 @@ use constant {
 	TILE_WATER  => 4,
 	TILE_CLIFF  => 8,
 };
+
+my %FIELD_FILE_RESOLUTION_CACHE;
+my %FIELD_FOLDER_CONTENTS_CACHE;
+
+sub _fieldFolderIndex {
+	my ($folder) = @_;
+	return {} if !defined $folder || $folder eq '' || !-d $folder;
+
+	return $FIELD_FOLDER_CONTENTS_CACHE{$folder}
+		if exists $FIELD_FOLDER_CONTENTS_CACHE{$folder};
+
+	my %entries;
+	if (opendir my $dh, $folder) {
+		while (my $entry = readdir $dh) {
+			next if $entry eq '.' || $entry eq '..';
+			next if $entry !~ /\.fld2(?:\.gz)?$/i;
+			$entries{$entry} = 1;
+		}
+		closedir $dh;
+	}
+
+	$FIELD_FOLDER_CONTENTS_CACHE{$folder} = \%entries;
+	return $FIELD_FOLDER_CONTENTS_CACHE{$folder};
+}
+
+sub _resolveFieldFileFromFolders {
+	my ($file, @fieldFolders) = @_;
+	my $cacheKey = join("\0", $file, @fieldFolders);
+
+	if (exists $FIELD_FILE_RESOLUTION_CACHE{$cacheKey}) {
+		return $FIELD_FILE_RESOLUTION_CACHE{$cacheKey} || undef;
+	}
+
+	my $resolvedFile;
+	for my $folder (@fieldFolders) {
+		my $index = _fieldFolderIndex($folder);
+		if ($index->{$file}) {
+			$resolvedFile = File::Spec->catfile($folder, $file);
+			last;
+		}
+
+		my $gzFile = "$file.gz";
+		if ($index->{$gzFile}) {
+			$resolvedFile = File::Spec->catfile($folder, $gzFile);
+			last;
+		}
+
+		# Fallback for race conditions or files created after cache was built.
+		my $candidate = File::Spec->catfile($folder, $file);
+		if (-f $candidate) {
+			$resolvedFile = $candidate;
+			last;
+		}
+		if (-f "$candidate.gz") {
+			$resolvedFile = "$candidate.gz";
+			last;
+		}
+	}
+
+	$FIELD_FILE_RESOLUTION_CACHE{$cacheKey} = $resolvedFile if $resolvedFile;
+	return $resolvedFile;
+}
 
 ##
 # Field->new(options...)
@@ -418,10 +480,10 @@ sub canMove {
 
 	my $dist = blockDistance($from, $to);
 
-	# This 17 is actually set at
+	# This value is actually set at
 	# hercules conf\map\battle\client.conf max_walk_path (which is by default 17, can be higher)
-	# TODO: Change this 17 to a config key with default value 17
-	if ($dist > 17) {
+	my $maxWalkPath = $config{maxUnobstructedWalkPathDistance} || 17;
+	if ($dist > $maxWalkPath) {
 		return 0;
 	}
 
@@ -431,11 +493,13 @@ sub canMove {
 		return 1;
 	}
 	
+	my $maxObsWalkPath = $config{maxObstructedWalkPathDistance} || 14;
 	# If there are obstacles and the path is walkable the max solution dist acceptable is 14 (double check to save time)
-	if ($dist > 14) {
+	if ($dist > $maxObsWalkPath) {
 		return 0;
 	}
 
+	# Rathena: // Official number of walkable cells is 14 if and only if there is an obstacle between.
 	# If there are obstacles and OFFICIAL_WALKPATH is defined (which is by default) then calculate a client pathfinding
 	my $solution = get_client_solution($self, $from, $to);
 	my $dist_path = scalar @{$solution};
@@ -444,6 +508,7 @@ sub canMove {
 		return 0;
 	}
 
+	# As stated above max walk path for obstructed paths is 14
 	# Pathfinding always returns the original cell in the solution, so remove 1 from it (or compare to 15 (14+1))
 	#$dist_path -= 1;
 	if ($dist_path > 15) {
@@ -707,6 +772,12 @@ sub loadDistanceMap {
 # Load a field file based on it's name. The actual field file to load is automatically
 # determined based on the field name, the field files folder, whether the field file
 # is compressed, etc.
+# Note: field data files (.fld2/.fld2.gz) are loaded from $Settings::fields_folder by default.
+# To override this per server, add `fields_folder <path>` (or `fieldsFolder`) in that
+# server block in tables/servers.txt, e.g. `fields_folder fields/ROla`.
+# Lookup order is: $Settings::fields_folder/custom (your own field files, ignored by git),
+# then the server-specific folder, then global $Settings::fields_folder.
+# $Settings::maps_folder is only used by image() for generated/loaded map images.
 #
 # This method is like calling the constructor with the 'name' argument,
 # but allows you to load a field inside this Field object.
@@ -724,15 +795,20 @@ sub loadByName {
 	$self->{baseName} = $baseName;
 	my $file = $self->sourceName . ".fld2";
 
-	if ($Settings::fields_folder) {
-		$file = File::Spec->catfile($Settings::fields_folder, $file);
+	my $fieldsFolder = $Settings::fields_folder;
+	if (defined $masterServer) {
+		$fieldsFolder = $masterServer->{fields_folder} if $masterServer->{fields_folder};
+		$fieldsFolder = $masterServer->{fieldsFolder} if $masterServer->{fieldsFolder};
 	}
-	if (! -f $file) {
-		$file .= ".gz";
-	}
+	
+	my @fieldFolders = grep { defined $_ && $_ ne '' } ($fieldsFolder);
+	push @fieldFolders, $Settings::fields_folder if !defined($fieldsFolder) || $fieldsFolder ne $Settings::fields_folder;
+	unshift @fieldFolders, File::Spec->catdir($Settings::fields_folder, 'custom');
 
-	if (-f $file) {
-		$self->loadFile($file, $loadWeightMap);
+	my $resolvedFile = _resolveFieldFileFromFolders($file, @fieldFolders);
+
+	if ($resolvedFile) {
+		$self->loadFile($resolvedFile, $loadWeightMap);
 		$self->{baseName} = $baseName;
 		$self->{name} = $name;
 	} else {

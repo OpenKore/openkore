@@ -274,7 +274,7 @@ sub castSkill {
 		$level = $char->getSkillLevel($skill);
 	}
 
-	if ($skill->getTargetType() == Skill::TARGET_SELF) {
+	if ($skill->getTargetType() == Skill::TARGET_SELF()) {
 		# A skill which is used on the character self.
 		if ($self->{isStartUseSkill}) {
 			$messageSender->sendStartSkillUse($skillID, $level, $self->{actor}{ID});
@@ -284,7 +284,7 @@ sub castSkill {
 
 	} elsif (UNIVERSAL::isa($self->{target}, 'Actor')) {
 		# The skill must be used on an actor.
-		if ($skill->getTargetType() == Skill::TARGET_LOCATION) {
+		if ($skill->getTargetType() == Skill::TARGET_LOCATION()) {
 			# This is a location skill.
 			$messageSender->sendSkillUseLoc($skillID, $level,
 				$self->{target}{pos_to}{x}, $self->{target}{pos_to}{y});

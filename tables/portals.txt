@@ -363,7 +363,6 @@ mid_camp 163 231 mid_campin 376 133
 #Dimensional Gap
 moc_fild22b 222 200 dali 119 56 c r0 n
 dali 122 48 moc_fild22b 227 200
-dali 115 94 moc_para01 31 14 c r0 c n
 mid_camp 210 292 dali 141 82 c r0 n
 dali 149 82 mid_camp 210 289
 bif_fild01 318 159 dali 43 92 c r0 n
@@ -578,8 +577,6 @@ bat_c01 148 54 bat_room 154 150 0 c
 izlude 125 257 iz_ac01 99 29
 izlude 130 257 iz_ac01 99 29
 iz_ac01 100 24 izlude 127 253
-# Eden Teleport Officer
-iz_ac01 106 36 moc_para01 31 14 0 c r0 c
 # Garden
 iz_ac01 45 80 new_1-3 95 171 0 c r0 c
 new_1-3 96 176 iz_ac01 49 73
@@ -1317,6 +1314,14 @@ in_sphinx3 210 57 in_sphinx2 276 272
 in_sphinx4 10 224 in_sphinx3 12 69
 in_sphinx4 120 113 in_sphinx5 100 96
 in_sphinx5 100 96 in_sphinx4 120 113
+in_sphinx5 11 16 in_sphinx5 189 181
+in_sphinx5 11 183 in_sphinx5 11 18
+in_sphinx5 189 16 in_sphinx5 11 181
+in_sphinx5 16 188 in_sphinx5 181 188
+in_sphinx5 16 10 in_sphinx5 181 10
+in_sphinx5 183 10 in_sphinx5 18 188
+in_sphinx5 183 188 in_sphinx5 18 10
+in_sphinx5 189 183 in_sphinx5 189 18
 iz_dun00 39 41 iz_dun01 41 32
 iz_dun00 168 173 izlu2dun 108 83
 iz_dun00 352 342 iz_dun01 253 258
@@ -3030,6 +3035,15 @@ y_airport 145 63 yuno 59 244 0 c r0
 # Lighthalzen airport
 lhz_airport 143 43 lhz_airport 148 51 1200 c r0 c r0
 lhz_airport 143 49 lhz_airport 142 40 0 c r0 c r0
+lhz_airport 142 60 lighthalzen 294 76
+lhz_airport 142 13 lighthalzen 262 75
+
+# Einbroch Airport
+airport 143 43 airport 148 51 1200 c r0 c r0
+airport 143 49 airport 142 40 0 c r0 c r0
+einbroch 92 281 airplane 224 64
+einbroch 64 234 airport 138 51
+einbroch 64 207 airport 143 17
 
 # Izlude airship
 izlude 206 55 airplane_01 244 58 1200 c r0 c r0
@@ -3078,8 +3092,6 @@ aldebaran 53 65 alde_alche 42 175
 alde_alche 42 171 aldebaran 56 68
 alde_alche 41 186 alde_alche 113 178
 alde_alche 114 183 alde_alche 42 182
-
-lhz_airport 142 13 lighthalzen 262 75
 
 # Lighthalzen Rekenber HQ - entrance
 lighthalzen 106 248 lhz_in01 116 126
@@ -3131,11 +3143,6 @@ lou_in01 28 19 louyang 136 245
 moc_ruins 141 125 job_thief1 133 333 0 c # random endpoint
 job_thief1 180 15 moc_ruins 145 117
 
-# Hugel - Lighthalzen Airship (needs additional configuration)
-#airplane 243 73 einbroch 92 278
-#airplane 243 73 hugel 181 146
-#airplane 243 73 lighthalzen 302 75
-#airplane 243 73 yuno 92 260
 new_zone01 148 112 new_zone02 100 9
 new_zone02 126 106 new_zone02 160 171
 new_zone02 73 106 new_zone02 41 172
@@ -3149,48 +3156,6 @@ lhz_in02 288 30 lighthalzen 194 35
 lighthalzen 197 36 lhz_in02 284 30
 lhz_in02 265 14 lhz_in02 269 82
 lhz_in02 282 79 lighthalzen 194 48
-
-# Eden HQ Entrace
-prontera 124 76 moc_para01 31 14 c c r0
-prontera 38 212 moc_para01 31 14 c c r0
-prontera 162 326 moc_para01 31 14 c c r0
-prontera 271 213 moc_para01 31 14 c c r0
-morocc 161 97 moc_para01 31 14 c c r0
-moc_ruins 68 164 moc_para01 31 14 c c r0
-moc_prydb1 53 126 moc_para01 31 14 c c r0
-amatsu 102 152 moc_para01 31 14 c c r0
-brasilis 194 221 moc_para01 31 14 c c r0
-geffen 132 66 moc_para01 31 14 c c r0
-geffen 196 147 moc_para01 31 14 c c r0
-payon 177 111 moc_para01 31 14 c c r0
-aldebaran 133 119 moc_para01 31 14 c c r0
-einbroch 244 200 moc_para01 31 14 c c r0
-moscovia 220 192 moc_para01 31 14 c c r0
-einbroch 55 202 moc_para01 31 14 c c r0
-yuno 144 189 moc_para01 31 14 c c r0
-lighthalzen 167 102 moc_para01 31 14 c c r0
-alberta 124 67 moc_para01 31 14 c c r0
-dewata 194 168 moc_para01 31 14 c c r0
-comodo 191 153 moc_para01 31 14 c c r0
-cmd_fild07 139 134 moc_para01 31 14 c c r0
-gonryun 162 122 moc_para01 31 14 c c r0
-umbala 96 160 moc_para01 31 14 c c r0
-ayothaya 209 169 moc_para01 31 14 c c r0
-hugel 99 167 moc_para01 31 14 c c r0
-rachel 125 144 moc_para01 31 14 c c r0
-veins 214 122 moc_para01 31 14 c c r0
-alberta_in 75 39 moc_para01 31 14 c c r0
-alberta 27 238 moc_para01 31 14 c c r0
-geffen_in 160 104 moc_para01 31 14 c c r0
-payon_in02 58 58 moc_para01 31 14 c c r0
-izlude 134 97 moc_para01 31 14 c c r0
-izlude_in 68 162 moc_para01 31 14 c c r0
-dicastes01 186 206 moc_para01 31 14 c r0 n
-mora 41 133 moc_para01 31 14 c r0 n
-mora 108 117 moc_para01 31 14 c r0 n
-eclage 116 40 moc_para01 31 14 c r0 n
-harboro1 90 221 moc_para01 31 14 c r0 n
-verus04 116 243 moc_para01 31 14 c r0 n
 
 # Eden HQ
 moc_para01 47 39 moc_para01 106 14 c r0
@@ -3225,7 +3190,6 @@ ma_in01 86 16 malaya 112 212
 ma_in01 9 24 malaya 299 167
 malaya 112 212 ma_in01 83 16
 malaya 178 211 ma_in01 24 80
-malaya 238 206 moc_para01 31 14 0 c r0
 malaya 261 240 ma_in01 126 20
 malaya 276 55 alberta 239 68 0 c r0 n
 malaya 299 167 ma_in01 12 24
@@ -3288,9 +3252,92 @@ mal_in02 137 53 mal_in02 139 33
 mal_in02 159 61 mal_in02 142 60
 mal_in02 142 60 mal_in02 162 61
 
-# following is a single warp, depends of entrance npc used
-# currently unsupported, do not enable that
-#moc_para01 30 10 prontera 116 72
+####################### EDEN ENTRANCES #######################
+
+geffen 132 66 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+izlude 131 148 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+morocc 161 97 moc_para01 31 14 c c r0 [^EdenPortalExit]
+payon 177 111 moc_para01 31 14 c c r0 [^EdenPortalExit]
+alberta 124 67 moc_para01 31 14 c c r0 [^EdenPortalExit]
+yuno 144 189 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+aldebaran 133 119 moc_para01 31 14 c c r0 [^EdenPortalExit]
+comodo 202 151 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+prontera 124 76 moc_para01 31 14 r0 r0 [^EdenPortalExit]
+umbala 105 158 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+moc_ruins 68 164 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+amatsu 100 145 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+ayothaya 221 191 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+brasilis 191 224 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+dewata 192 193 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+gonryun 162 122 moc_para01 31 14 c c r0 [^EdenPortalExit]
+
+louyang 224 107 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+malaya 225 218 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+moscovia 209 197 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+
+rachel 125 144 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+veins 220 109 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit
+
+verus04 116 243 moc_para01 31 14 c r0 n [^EdenPortalExit]
+dali 115 94 moc_para01 31 14 c r0 c n [^EdenPortalExit]
+harboro1 90 221 moc_para01 31 14 c r0 n [^EdenPortalExit]
+
+dicastes01 186 206 moc_para01 31 14 c r0 n [^EdenPortalExit]
+eclage 116 40 moc_para01 31 14 c r0 n [^EdenPortalExit]
+mora 41 133 moc_para01 31 14 c r0 n [^EdenPortalExit]
+mora 108 117 moc_para01 31 14 c r0 n [^EdenPortalExit]
+einbroch 55 202 moc_para01 31 14 c c r0 [^EdenPortalExit]
+einbroch 244 200 moc_para01 31 14 c c r0 [^EdenPortalExit]
+einbroch 250 211 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+hugel 93 153 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+hugel 99 167 moc_para01 31 14 c c r0 [^EdenPortalExit]
+lighthalzen 164 86 moc_para01 31 14 0 0 c c r0 [^EdenPortalExit]
+lighthalzen 167 102 moc_para01 31 14 c c r0 [^EdenPortalExit]
+
+iz_ac01 106 36 moc_para01 31 14 0 c r0 c [^EdenPortalExit]
+
+# Eden Group Headquarters exit portal.
+# Runtime selects a single destination through config.txt -> EdenPortalExit.
+moc_para01 30 10 prontera 116 72 [EdenPortalExit]
+moc_para01 30 10 moc_ruins 64 161 [EdenPortalExit]
+moc_para01 30 10 geffen 120 39 [EdenPortalExit]
+moc_para01 30 10 alberta 117 56 [EdenPortalExit]
+moc_para01 30 10 aldebaran 168 112 [EdenPortalExit]
+moc_para01 30 10 izlude_in 73 165 [EdenPortalExit]
+moc_para01 30 10 prt_church 99 78 [EdenPortalExit]
+moc_para01 30 10 geffen_in 162 99 [EdenPortalExit]
+moc_para01 30 10 moc_prydb1 51 118 [EdenPortalExit]
+moc_para01 30 10 alberta_in 73 43 [EdenPortalExit]
+moc_para01 30 10 payon_in02 64 60 [EdenPortalExit]
+moc_para01 30 10 payon 161 58 [EdenPortalExit]
+moc_para01 30 10 que_ng 33 63 [EdenPortalExit]
+moc_para01 30 10 que_ng 144 166 [EdenPortalExit]
+moc_para01 30 10 yuno 158 125 [EdenPortalExit]
+moc_para01 30 10 rachel 115 125 [EdenPortalExit]
+moc_para01 30 10 comodo 192 145 [EdenPortalExit]
+moc_para01 30 10 hugel 88 148 [EdenPortalExit]
+moc_para01 30 10 veins 216 104 [EdenPortalExit]
+moc_para01 30 10 einbroch 246 204 [EdenPortalExit]
+moc_para01 30 10 lighthalzen 159 95 [EdenPortalExit]
+moc_para01 30 10 amatsu 110 150 [EdenPortalExit]
+moc_para01 30 10 ayothaya 217 178 [EdenPortalExit]
+moc_para01 30 10 louyang 217 103 [EdenPortalExit]
+moc_para01 30 10 gonryun 155 120 [EdenPortalExit]
+moc_para01 30 10 moscovia 218 198 [EdenPortalExit]
+moc_para01 30 10 brasilis 190 220 [EdenPortalExit]
+moc_para01 30 10 dewata 192 182 [EdenPortalExit]
+moc_para01 30 10 morocc 161 97 [EdenPortalExit]
+moc_para01 30 10 izlude 134 118 [EdenPortalExit]
+moc_para01 30 10 umbala 94 154 [EdenPortalExit]
+moc_para01 30 10 malaya 234 199 [EdenPortalExit]
+moc_para01 30 10 verus04 115 243 [EdenPortalExit]
 
 #------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1

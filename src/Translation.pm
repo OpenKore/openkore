@@ -28,7 +28,6 @@ use Exporter;
 use base qw(Exporter);
 use FindBin qw($RealBin);
 use XSTools;
-use I18N;
 use utf8;
 
 XSTools::bootModule("Translation");

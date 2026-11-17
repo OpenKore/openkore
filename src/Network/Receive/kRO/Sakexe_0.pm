@@ -690,6 +690,7 @@ sub new {
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
+		'0AA7' => ['item_move_failed', 'v2', [qw(index amount)]], # ZC_MOVE_ITEM_FAILED, 6 bytes
 		'0AA8' => ['misc_config', 'C3', [qw(show_eq_flag call_flag pet_autofeed_flag)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0AB8' => ['move_interrupt'],
@@ -737,6 +738,7 @@ sub new {
 		'0B1B' => ['load_confirm'],
 		'0B1D' => ['ping'], #2
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
+		'0B25' => ['stats_added', 'v C C', [qw(type result val)]], # 6
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
 		'0B32' => ['skills_list'],
@@ -747,19 +749,23 @@ sub new {
 		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
 		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
+		'0B4E' => ['npc_market_purchase_result', 'v v a*', [qw(len result itemList)]],
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
+        '0B62' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], #-1
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'0B76' => ['homunculus_property', 'Z24 C v11 V6 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B77' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
+		'0B7A' => ['npc_market_info', 'v a*', [qw(len itemList)]],
 		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
 		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
 		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
 		'0B8D' => ['repute_info', 'v C a*', [qw(len sucess reputeInfo)]], # -1
 		'0BA4' => ['homunculus_property', 'Z24 C v11 V4 V4 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp2 exp_max exp_max2 points_skill attack_range)]],
+		'0BA5' => ['stat_info', 'v q<', [qw(type val)]],
 	};
 
 	# Item RECORD Struct's
@@ -1374,16 +1380,15 @@ sub skill_used_no_damage {
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
 		&& $skillsArea{$args->{skillHandle}} != 2); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
-			$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
+			$args->{sourceID} eq $accountID or $char->{slaves} && $char->{slaves}{$args->{sourceID}} or $args->{sourceID} eq $args->{targetID};
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 	if ($args->{sourceID} eq $accountID) {
 		my $pos = calcPosFromPathfinding($field, $char);
 		%{$char->{pos}} = %{$pos};
 		%{$char->{pos_to}} = %{$pos};
-		$char->{time_move} = 0;
+		$char->{time_move} = time;
 		$char->{time_move_calc} = 0;
 		$char->{solution} = [];
-		push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 	}
 
 	# Resolve source and target names
@@ -1417,7 +1422,7 @@ sub skill_used_no_damage {
 		$timeout{ai_teleport_delay}{time} = time;
 	}
 
-	if (AI::state == AI::AUTO && $config{'autoResponseOnHeal'}) {
+	if (AI::state() == AI::AUTO() && $config{'autoResponseOnHeal'}) {
 		# Handle auto-response on heal
 		my $player = $playersList->getByID($args->{sourceID});
 		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {
@@ -1521,3 +1526,5 @@ sub inventory_expansion_info {
 *changeToInGameState = *Network::Receive::changeToInGameState;
 
 1;
+
+

@@ -1,0 +1,5 @@
+# Mixed name, ID, and fallback entries for priority.txt tests.
+Hydra
+1096
+all
+Eclipse

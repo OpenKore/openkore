@@ -128,7 +128,7 @@ sub nameString {
 	return T('You');
 }
 
-sub checkSkillOwnership { $_[1]->getOwnerType == Skill::OWNER_CHAR }
+sub checkSkillOwnership { $_[1]->getOwnerType == Skill::OWNER_CHAR() }
 
 ##
 # int $char->getSkillLevel(Skill skill)
@@ -143,6 +143,27 @@ sub getSkillLevel {
 		return $self->{skills}{$handle}{lv};
 	} elsif ($self->{permitSkill} && $self->{permitSkill}->getHandle eq $handle) {
 		return $self->{permitSkill}->getLevel;
+	} else {
+		return 0;
+	}
+}
+
+###############################################################################################################
+# Sub: getSkillLevelByHandle
+#
+# Purpose:
+#   Returns the learned level for a skill handle, defaulting to zero when the skill is absent.
+#
+# Inputs / Outside State:
+# First arg = `skillhandle`.
+###############################################################################################################
+sub getSkillLevelByHandle {
+	my ($self, $skillhandle) = @_;
+	
+	return 0 unless (exists $self->{skills} && $self->{skills});
+	
+	if (exists $self->{skills}{$skillhandle} && $self->{skills}{$skillhandle}{lv}) {
+		return $self->{skills}{$skillhandle}{lv};
 	} else {
 		return 0;
 	}
@@ -459,14 +480,14 @@ sub attack {
 }
 
 sub sendSit {
-	if ($config{'sitTensionRelax'} > 0 && $char->{skills}{LK_TENSIONRELAX}{lv} > 0) {
+	if ($config{'sitTensionRelax'} > 0 && $char->{skills}{LK_TENSIONRELAX}{lv} > 0 && !$char->{muted}) {
 		my $skill = new Skill(handle => 'LK_TENSIONRELAX');
 		AI::ai_skillUse2($skill, $char->{skills}{LK_TENSIONRELAX}{lv}, 1, 0, $char, "LK_TENSIONRELAX");
 	} else {
-		$messageSender->sendAction(0, ACTION_SIT);
+		$messageSender->sendAction(0, Network::PacketParser::ACTION_SIT());
 	}
 }
-sub sendStand { $messageSender->sendAction(0, ACTION_STAND) }
+sub sendStand { $messageSender->sendAction(0, Network::PacketParser::ACTION_STAND()) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 sub sendStopSkillUse {
 	my ($self) = @_;

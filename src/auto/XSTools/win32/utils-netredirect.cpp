@@ -20,7 +20,7 @@ unpackPacket (const char *data, int len, int &next)
 	packet = (Packet *) calloc (sizeof (Packet), 1);
 	packet->ID = (unsigned char) data[0];
 	memcpy (&(packet->len), data + 1, 2);
-	if (len < packet->len) {
+	if (len < packet->len + 3) {
 		free (packet);
 		return NULL;
 	}

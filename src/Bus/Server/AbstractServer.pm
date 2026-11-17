@@ -123,10 +123,23 @@ sub onClientData {
 	my $parser = $client->{BAS_parser};
 	$parser->add($data);
 
-	my $ID;
-	while (my $args = $parser->readNext(\$ID)) {
-		$self->messageReceived($client, $ID, $args);
-	}
+	eval {
+		my $ID;
+		while (my $args = $parser->readNext(\$ID)) {
+			$self->messageReceived($client, $ID, $args);
+		}
+	};
+	
+    
+    # Handle connection errors
+    if ($@) {
+        if ($@ =~ /closed connection|Connection reset by peer|Broken pipe/) {
+            debug("Client connection error: $@\n", "bus");
+            $self->onClientExit($client);
+        } else {
+            error("Error processing client data: $@\n");
+        }
+    }
 }
 
 

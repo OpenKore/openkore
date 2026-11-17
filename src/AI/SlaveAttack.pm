@@ -62,11 +62,32 @@ sub process {
 			finishAttacking($slave, $ataqArgs, $ID);
 			return;
 		}
-		my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
-		my $target_is_aggressive = is_aggressive_slave($slave, $target, undef, 0, $party);
-		my @aggressives = ai_slave_getAggressives($slave, 0, $party);
+		my $routeIndex = $slave->findAction("route");
+		my $routeArgs = defined $routeIndex ? $slave->args($routeIndex) : undef;
+		my $effectiveAttackMode = getEffectiveAttackOnRoute($routeArgs, $slave->{configPrefix});
+		my $assistParty = ($effectiveAttackMode >= 1 && $config{$slave->{configPrefix}.'attackAuto_party'}) ? 1 : 0;
+		my $target_is_aggressive = is_aggressive_slave($slave, $target, undef, 0, $assistParty);
+		my $control = mon_control($target->{name}, $target->{nameID});
+
+		my %plugin_args;
+		$plugin_args{target} = $target;
+		$plugin_args{control} = $control;
+		$plugin_args{stage} = $stage;
+		$plugin_args{party} = $assistParty;
+		$plugin_args{target_is_aggressive} = $target_is_aggressive;
+		$plugin_args{actor} = $slave;
+		$plugin_args{configPrefix} = $slave->{configPrefix};
+		$plugin_args{return} = 0;
+		Plugins::callHook('shouldDropTarget' => \%plugin_args);
+		if ($plugin_args{return}) {
+			giveUp($slave, $ataqArgs, $ID, 2);
+			return;
+		}
+
+		my $aggressiveType = ($effectiveAttackMode >= 2) ? 2 : 0;
+		my @aggressives = $effectiveAttackMode >= 0 ? ai_slave_getAggressives($slave, $aggressiveType, $assistParty) : ();
 		if ($config{$slave->{configPrefix}.'attackChangeTarget'} && !$target_is_aggressive && @aggressives) {
-			my $attackTarget = getBestTarget(\@aggressives, $config{$slave->{configPrefix}.'attackCheckLOS'}, $config{$slave->{configPrefix}.'attackCanSnipe'});
+			my $attackTarget = getBestTarget(\@aggressives, $config{$slave->{configPrefix}.'attackCheckLOS'}, $config{$slave->{configPrefix}.'attackCanSnipe'}, $slave, $slave->{configPrefix});
 			if ($attackTarget) {
 				$slave->sendAttackStop;
 				$slave->dequeue while ($slave->inQueue("attack"));
@@ -92,7 +113,7 @@ sub process {
 			}
 			return;
 		}
-
+	
 		if ($stage == MOVING_TO_ATTACK) {
 			# Check for hidden monsters
 			if (($target->{statuses}->{EFFECTSTATE_BURROW} || $target->{statuses}->{EFFECTSTATE_HIDING}) && $config{avoidHiddenMonsters}) {
@@ -107,54 +128,11 @@ sub process {
 				}
 				return;
 			}
-
+			
 			# We're on route to the monster; check whether the monster has moved
-			if ($slave->args->{attackID} && timeOut($timeout{$slave->{ai_route_adjust_timeout}})) {
-				my $reset = 0;
-				if ($target->{type} ne 'Unknown') {
-					# Monster has moved; stop moving and let the attack AI readjust route
-					if (
-						$ataqArgs->{monsterLastMoveTime} &&
-						$ataqArgs->{monsterLastMoveTime} != $target->{time_move}
-					) {
-						if (
-							($slave->args->{monsterLastMovePosTo}{x} == $target->{pos_to}{x} && $slave->args->{monsterLastMovePosTo}{y} == $target->{pos_to}{y})
-						) {
-							$slave->args->{monsterLastMoveTime} = $target->{time_move};
-							$slave->args->{monsterLastMovePosTo}{x} = $target->{pos_to}{x};
-							$slave->args->{monsterLastMovePosTo}{y} = $target->{pos_to}{y};
-						} else {
-							debug "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
-							$reset = 1;
-						}
-
-					# Master has moved; stop moving and let the attack AI readjust route
-					} elsif (
-						$ataqArgs->{masterLastMoveTime} &&
-						$ataqArgs->{masterLastMoveTime} != $char->{time_move}
-					) {
-						if (
-							($slave->args->{masterLastMovePosTo}{x} == $char->{pos_to}{x} && $slave->args->{masterLastMovePosTo}{y} == $char->{pos_to}{y})
-						) {
-							$slave->args->{masterLastMoveTime} = $char->{time_move};
-							$slave->args->{masterLastMovePosTo}{x} = $char->{pos_to}{x};
-							$slave->args->{masterLastMovePosTo}{y} = $char->{pos_to}{y};
-						} else {
-							debug "$slave master $char has moved since we started routing to target $target - Adjusting route\n", 'slave_attack';
-							$reset = 1;
-						}
-					}
-					if ($reset) {
-						$slave->dequeue while ($slave->is("move", "route"));
-						$ataqArgs->{ai_attack_giveup}{time} = time;
-						$ataqArgs->{sentApproach} = 0;
-						undef $slave->args->{unstuck}{time};
-						undef $slave->args->{avoiding};
-						undef $slave->args->{move_start};
-					}
-				}
-
-				$timeout{$slave->{ai_route_adjust_timeout}}{time} = time;
+			if ($slave->args->{attackID} && approach_target_route_needs_reset($slave, $ataqArgs, $target)) {
+				reset_approach_for_moved_target($slave, $ataqArgs, $target);
+				return;
 			}
 		}
 
@@ -162,7 +140,7 @@ sub process {
 			if ($slave->args->{suspended}) {
 				$slave->args->{ai_attack_giveup}{time} += time - $slave->args->{suspended};
 				delete $slave->args->{suspended};
-
+			
 			# We've just finished moving to the monster.
 			# Don't count the time we spent on moving
 			} elsif ($slave->args->{move_start}) {
@@ -198,6 +176,55 @@ sub shouldGiveUp {
 	return !$config{$slave->{configPrefix}.'attackNoGiveup'} && (timeOut($args->{ai_attack_giveup}) || $args->{unstuck}{count} > 5)
 }
 
+sub approach_target_route_needs_reset {
+	my ($slave, $args, $target) = @_;
+	return 0 unless $slave && $args && $target;
+	return 0 if $target->{type} eq 'Unknown';
+	return 0 unless $args->{sentApproach};
+
+	if ($args->{monsterLastMoveTime} && $args->{monsterLastMoveTime} != $target->{time_move} && $target->{pos_to}) {
+		if ($args->{monsterLastMovePosTo}) {
+			return 1
+				if $args->{monsterLastMovePosTo}{x} != $target->{pos_to}{x}
+				|| $args->{monsterLastMovePosTo}{y} != $target->{pos_to}{y};
+		}
+
+		$args->{monsterLastMoveTime} = $target->{time_move};
+		$args->{monsterLastMovePosTo} = { %{$target->{pos_to}} };
+	}
+
+	if ($args->{masterLastMoveTime} && $args->{masterLastMoveTime} != $char->{time_move} && $char->{pos_to}) {
+		if ($args->{masterLastMovePosTo}) {
+			return 1
+				if $args->{masterLastMovePosTo}{x} != $char->{pos_to}{x}
+				|| $args->{masterLastMovePosTo}{y} != $char->{pos_to}{y};
+		}
+
+		$args->{masterLastMoveTime} = $char->{time_move};
+		$args->{masterLastMovePosTo} = { %{$char->{pos_to}} };
+	}
+
+	return 0;
+}
+
+sub reset_approach_for_moved_target {
+	my ($slave, $args, $target) = @_;
+	return unless $slave && $args && $target;
+
+	debug "$slave target $target or master $char has moved since we started routing to it - Adjusting route\n", 'slave_attack';
+	$slave->dequeue while ($slave->is("move", "route"));
+
+	$args->{ai_attack_giveup}{time} = time;
+	$args->{sentApproach} = 0;
+	$args->{monsterLastMoveTime} = $target->{time_move};
+	$args->{monsterLastMovePosTo} = { %{$target->{pos_to}} } if $target->{pos_to};
+	$args->{masterLastMoveTime} = $char->{time_move};
+	$args->{masterLastMovePosTo} = { %{$char->{pos_to}} } if $char->{pos_to};
+	undef $args->{unstuck}{time};
+	undef $args->{avoiding};
+	undef $args->{move_start};
+}
+
 sub giveUp {
 	my ($slave, $args, $ID, $LOS) = @_;
 	my $target = Actor::get($ID);
@@ -213,6 +240,9 @@ sub giveUp {
 	message TF("%s can't reach or damage target, dropping target\n", $slave), 'slave_attack';
 	if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 		message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
+		ai_useTeleport(1);
+	} elsif ($config{$slave->{configPrefix}.'teleportAuto_dropTargetEngaged'} && ($target->{sentAttack} || $target->{engaged})) {
+		message TF("Teleport due to dropping %s attack target already engaged\n", $slave), 'teleport';
 		ai_useTeleport(1);
 	}
 }
@@ -237,26 +267,7 @@ sub finishAttacking {
 
 		$slave->clientSuspend(0, $timeout{$slave->{ai_attack_waitAfterKill_timeout}}{'timeout'});
 
-		## kokal start
-		## mosters counting
-		my $i = 0;
-		my $found = 0;
-		while ($monsters_Killed[$i]) {
-			if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ID}{'nameID'}) {
-				$monsters_Killed[$i]{'count'}++;
-				monsterLog($monsters_Killed[$i]{'name'});
-				$found = 1;
-				last;
-			}
-			$i++;
-		}
-		if (!$found) {
-			$monsters_Killed[$i]{'nameID'} = $monsters_old{$ID}{'nameID'};
-			$monsters_Killed[$i]{'name'} = $monsters_old{$ID}{'name'};
-			$monsters_Killed[$i]{'count'} = 1;
-			monsterLog($monsters_Killed[$i]{'name'})
-		}
-		## kokal end
+		countMonsterKill($monsters_old{$ID});
 
 	} else {
 		message TF("%s target lost\n", $slave), 'slave_attack';
@@ -270,7 +281,7 @@ sub finishAttacking {
 
 sub find_kite_position {
 	my ($slave, $args, $inAdvance, $target, $realMyPos, $realMonsterPos, $noAttackMethodFallback_runFromTarget) = @_;
-
+	
 	my $maxDistance;
 	if (!$noAttackMethodFallback_runFromTarget && defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
 		$maxDistance = $args->{attackMethod}{maxDistance};
@@ -324,62 +335,79 @@ sub main {
 
 	my $ID = $args->{ID};
 	my $target = Actor::get($ID);
-	my $myPos = $slave->{pos_to};
+	my $myPosTo = $slave->{pos_to};
 	my $monsterPos = $target->{pos_to};
-	my $monsterDist = blockDistance($myPos, $monsterPos);
+	my $monsterDist = blockDistance($myPosTo, $monsterPos);
 
-	my $realMyPos = calcPosFromPathfinding($field, $slave);
-	my $realMonsterPos = calcPosFromPathfinding($field, $target);
+	my $extra_time = exists $timeout{'ai_route_position_prediction_delay'}{'timeout'} ? $timeout{'ai_route_position_prediction_delay'}{'timeout'} : 0.1;
+	$extra_time = 0 unless defined $extra_time;
 
+	my $realMyPos = calcPosFromPathfinding($field, $slave, $extra_time, 1);
+	my $realMonsterPos = calcPosFromPathfinding($field, $target, $extra_time, 1);
+	
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
-
+	
 	#my $realMasterPos = calcPosFromPathfinding($field, $char);
 	#my $realMasterDistToSlave = blockDistance($realMasterPos, $realMyPos);
 	#my $realMasterDistToTarget = blockDistance($realMasterPos, $realMonsterPos);
-
-	if (!exists $args->{first_run}) {
-		$args->{first_run} = 1;
-	} elsif ($args->{first_run} == 1) {
-		$args->{first_run} = 0;
+	
+	if (!exists $args->{firstLoop}) {
+		$args->{firstLoop} = 1;
+	} else {
+		$args->{firstLoop} = 0;
 	}
-
+	
 	#my $failed_to_attack_packet_recv = 0;
-
+	
 	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
 		$args->{temporary_extra_range} = 0;
 	}
-
+	
 	#if (exists $target->{movetoattack_pos} && exists $char->{movetoattack_pos}) {
 	#	$failed_to_attack_packet_recv = 1;
 	#	$args->{temporary_extra_range} = 0;
 	#}
 
+	my $dmgToSlave = $target->{dmgToPlayer}{$slave->{ID}} || 0;
+	my $missedToSlave = $target->{missedToPlayer}{$slave->{ID}} || 0;
+	my $castOnToSlave = $target->{castOnToPlayer}{$slave->{ID}} || 0;
+	my $dmgFromSlave = $target->{dmgFromPlayer}{$slave->{ID}} || 0;
+	my $missedFromSlave = $target->{missedFromPlayer}{$slave->{ID}} || 0;
+
+	my $hitYou = ((defined $args->{dmgToYou_last} && $args->{dmgToYou_last} != $dmgToSlave) || (defined $args->{missedYou_last} && $args->{missedYou_last} != $missedToSlave)) ? 1 : 0;
+	my $castOnYou = (defined $args->{castOnToYou_last} && $args->{castOnToYou_last} != $castOnToSlave) ? 1 : 0;
+	my $youHitTarget = ((defined $args->{dmgFromYou_last} && $args->{dmgFromYou_last} != $dmgFromSlave) || (defined $args->{missedFromYou_last} && $args->{missedFromYou_last} != $missedFromSlave)) ? 1 : 0;
+
+	# Hack - TODO: Fix me - If the homunculus dies trying to kill a monster and is resurrected still next to that monster it will think that it is still hitting the mob, this avoids that behaviour
+	if ($youHitTarget && $args->{firstLoop}) {
+		$youHitTarget = 0;
+	}
+
+	if ($hitYou || $castOnYou || $youHitTarget || ($args->{firstLoop} && ($dmgToSlave || $missedToSlave || $dmgFromSlave || $missedFromSlave || $castOnToSlave))) {
+		$target->{engaged} = 1 if (!exists $target->{engaged} || !$target->{engaged});
+	}
+
 	# If the damage numbers have changed, update the giveup time so we don't timeout
-	if ($args->{dmgToYou_last}   != $target->{dmgToPlayer}{$slave->{ID}}
-	 || $args->{missedYou_last}  != $target->{missedToPlayer}{$slave->{ID}}
-	 || $args->{dmgFromYou_last} != $target->{dmgFromPlayer}{$slave->{ID}}) {
+	if ($args->{dmgToYou_last}   != $dmgToSlave
+	 || $args->{missedYou_last}  != $missedToSlave
+	 || $args->{castOnToYou_last} != $castOnToSlave
+	 || $args->{dmgFromYou_last} != $dmgFromSlave
+	 || $args->{missedFromYou_last} != $missedFromSlave) {
 		$args->{ai_attack_giveup}{time} = time;
 		debug "Update slave attack giveup time\n", 'slave_attack', 2;
 	}
 
-	my $hitYou = ($args->{dmgToYou_last} != $target->{dmgToPlayer}{$slave->{ID}} || $args->{missedYou_last} != $target->{missedToPlayer}{$slave->{ID}});
-	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromPlayer}{$slave->{ID}});
-
-	# Hack - TODO: Fix me - If the homunculus dies trying to kill a monster and is resurrected still next to that monster it will think that it is still hitting the mob, this avoids that behaviour
-	if ($youHitTarget && $args->{first_run}) {
-		$youHitTarget = 0;
-	}
-
-	$args->{dmgToYou_last} = $target->{dmgToPlayer}{$slave->{ID}};
-	$args->{missedYou_last} = $target->{missedToPlayer}{$slave->{ID}};
-	$args->{dmgFromYou_last} = $target->{dmgFromPlayer}{$slave->{ID}};
-	$args->{missedFromYou_last} = $target->{missedFromPlayer}{$slave->{ID}};
-
+	$args->{dmgToYou_last} = $dmgToSlave;
+	$args->{missedYou_last} = $missedToSlave;
+	$args->{castOnToYou_last} = $castOnToSlave;
+	$args->{dmgFromYou_last} = $dmgFromSlave;
+	$args->{missedFromYou_last} = $missedFromSlave;
+	
 	delete $args->{attackMethod};
 	# $target->{dmgFromPlayer}{$slave->{ID}} - $target->{dmgTo}
 	# $target->{dmgFromPlayer}{$slave->{ID}} - $target->{dmgFromYou}
-
+	
 	### attackSkillSlot begin
 	my $i = 0;
 	while (exists $config{"attackSkillSlot_$i"}) {
@@ -406,7 +434,7 @@ sub main {
 		$i++;
 	}
 	### attackSkillSlot end
-
+	
 	if (!$args->{attackMethod}{type}) {
 		if ($config{$slave->{configPrefix}.'attackUseWeapon'}) {
 			$args->{attackMethod}{type} = "weapon";
@@ -418,7 +446,7 @@ sub main {
 			$args->{attackMethod}{maxDistance} = 1;
 		}
 	}
-
+	
 	if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
 		$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 	}
@@ -426,11 +454,11 @@ sub main {
 	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
 		debug "[Slave $slave] Deleting ai_attack_failed_give_up time.\n";
 		delete $args->{ai_attack_failed_give_up}{time};
-
+		
 	}
-
+	
 	#$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
-
+	
 	# -2: undefined attackMethod
 	# -1: No LOS
 	#  0: out of range
@@ -443,7 +471,16 @@ sub main {
 	}
 
 	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
+	my $future_wait_timeout = $timeout{'ai_attack_allowed_waitForTarget'}{'timeout'};
+	my $future_wait_max_time = $future_wait_timeout ? ($future_wait_timeout * 3) : 0;
 
+	if ($youHitTarget) {
+		delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
+		delete $args->{ai_attack_allowed_waitForTarget_disabled_until_hit};
+	} elsif ($canAttack != 0 && $canAttack != -1) {
+		delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
+	}
+	
 	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
 	# If it is close enough delete the ai_attack_failed_waitForAgressive_give_up keys and loop attack logic
 	if (
@@ -456,23 +493,29 @@ sub main {
 		debug "[Slave $slave] Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
 		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
 	}
-
+	
 	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config
 	# If so sets sentApproach to 0
-	if (
-		$config{$slave->{configPrefix}."attackWaitApproachFinish"} &&
-		($canAttack == 0 || $canAttack == -1) &&
-		$args->{sentApproach}
-	) {
-		if (!timeOut($slave->{time_move}, $slave->{time_move_calc})) {
-			debug TF("[Slave] [Out of Range - Still Approaching - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+	if ($args->{sentApproach}) {
+		if (approach_target_route_needs_reset($slave, $args, $target)) {
+			reset_approach_for_moved_target($slave, $args, $target);
 			return;
-		} else {
-			debug TF("[Slave] [Out of Range - Ended Approaching] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+		}
+
+		if ($realMyPos->{x} == $myPosTo->{x} && $realMyPos->{y} == $myPosTo->{y}) {
+			debug TF("[Slave] [Ended Approaching] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			$args->{sentApproach} = 0;
+
+		} elsif ($config{$slave->{configPrefix}."attackWaitApproachFinish"}) {
+			debug TF("[Slave] [attackWaitApproachFinish - Waiting] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			return;
+
+		} elsif ($canAttack == 2) {
+			debug TF("[Slave] [Approaching - Can now attack] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 			$args->{sentApproach} = 0;
 		}
 	}
-
+	
 	my $found_action = 0;
 	my $failed_runFromTarget = 0;
 	my $hitTarget_when_not_possible = 0;
@@ -491,7 +534,7 @@ sub main {
 			$failed_runFromTarget = 1;
 		}
 	}
-
+	
 	# Here, if runFromTarget is active, and we can't attack right now (eg. all skills in cooldown) we check if the target mob is closer to us than the minimun distance specified in runFromTarget_noAttackMethodFallback_minStep
 	# If so try to kite it using maxdistance of runFromTarget_noAttackMethodFallback_attackMaxDist
 	if (
@@ -518,10 +561,10 @@ sub main {
 			delete $args->{ai_attack_failed_give_up}{time};
 			warning T("[$slave] Unable to determine a attackMethod (check attackUseWeapon and Skills blocks), dropping target.\n"), "ai_attack";
 			$found_action = 1;
-			giveUp($args, $ID, 0);
+			giveUp($slave, $args, $ID, 0);
 		}
 	}
-
+	
 	if ($canAttack == 0 && $youHitTarget) {
 		debug TF("[%s] [%s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d)\n", $slave, $canAttack_fail_string, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
@@ -542,7 +585,7 @@ sub main {
 			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
 		}
 	}
-
+	
 	# Here we decide what to do when a mob we have already hit is no longer in range or we have no LOS to it
 	# We also check if we have waited too long for the monster which we are waiting to get closer to us to approach
 	# TODO: Maybe we should separate this into 2 sections, one for out of range and another for no LOS - low priority
@@ -566,6 +609,35 @@ sub main {
 		$found_action = 1;
 	}
 
+	if (
+		!$found_action &&
+		$future_wait_timeout &&
+		($canAttack == 0 || $canAttack == -1) &&
+		!$hitTarget_when_not_possible
+	) {
+		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $future_wait_timeout));
+		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+		if ($futurecanAttack == 1 && !$args->{ai_attack_allowed_waitForTarget_disabled_until_hit}) {
+			$args->{ai_attack_allowed_waitForTarget_give_up}{timeout} = $future_wait_max_time if !$args->{ai_attack_allowed_waitForTarget_give_up}{timeout};
+			$args->{ai_attack_allowed_waitForTarget_give_up}{time} = time if !$args->{ai_attack_allowed_waitForTarget_give_up}{time};
+
+			my $waited = time - $args->{ai_attack_allowed_waitForTarget_give_up}{time};
+			if (timeOut($args->{ai_attack_allowed_waitForTarget_give_up})) {
+				delete $args->{ai_attack_allowed_waitForTarget_give_up}{time};
+				$args->{ai_attack_allowed_waitForTarget_disabled_until_hit} = 1;
+				warning TF("[SlaveAttack] Predictive wait timed out after [%s/%s secs]; disabling predictive wait until %s hits this target again. currentState %s, attackMethod %s, %s (%d %d), target %s real(%d %d) [(%d %d) -> (%d %d)], future(%d %d), blockDist %d, clientDist %d, maxDistance %d.\n",
+					$waited, $future_wait_max_time, $slave, $canAttack_fail_string, $args->{attackMethod}{type}, $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $futureMonsterPos->{x}, $futureMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			} else {
+				my $remaining = $future_wait_max_time - $waited;
+				debug TF("[SlaveAttack] Predictive wait active: currentState %s, futureState OK in [%s secs], waited [%s/%s], remaining [%s], attackMethod %s, %s (%d %d), target %s real(%d %d) [(%d %d) -> (%d %d)], future(%d %d), blockDist %d, clientDist %d, maxDistance %d.\n",
+					$canAttack_fail_string, $future_wait_timeout, $waited, $future_wait_max_time, $remaining, $args->{attackMethod}{type}, $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $futureMonsterPos->{x}, $futureMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+				$found_action = 1;
+			}
+		} else {
+			delete $args->{ai_attack_allowed_waitForTarget_give_up}{time} if exists $args->{ai_attack_allowed_waitForTarget_give_up};
+		}
+	}
+
 	# Here we decide what to do with a mob which is out of range or we have no LOS to
 	if (
 		!$found_action &&
@@ -586,19 +658,16 @@ sub main {
 
 			$args->{move_start} = time;
 			$args->{monsterLastMoveTime} = $target->{time_move};
-			$args->{monsterLastMovePosTo}{x} = $target->{pos_to}{x};
-			$args->{monsterLastMovePosTo}{y} = $target->{pos_to}{y};
-
+			$args->{monsterLastMovePosTo} = { %{$target->{pos_to}} } if $target->{pos_to};
 			$args->{masterLastMoveTime} = $char->{time_move};
-			$args->{masterLastMovePosTo}{x} = $char->{pos_to}{x};
-			$args->{masterLastMovePosTo}{y} = $char->{pos_to}{y};
+			$args->{masterLastMovePosTo} = { %{$char->{pos_to}} } if $char->{pos_to};
 			$args->{sentApproach} = 1;
 
 			my $sendAttackWithMove = 0;
 			if ($config{$slave->{configPrefix}."attackSendAttackWithMove"} && $args->{attackMethod}{type} eq "weapon") {
 				$sendAttackWithMove = 1;
 			}
-
+			
 			$slave->route(
 				undef,
 				@{$pos}{qw(x y)},
@@ -626,6 +695,7 @@ sub main {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 		if (!$args->{firstAttack}) {
 			$args->{firstAttack} = 1;
+			$target->{sentAttack} = 1;
 			debug "[Slave $slave] Ready to attack target $target ($realMonsterPos->{x} $realMonsterPos->{y}) ($realMonsterDist blocks away); we're at ($realMyPos->{x} $realMyPos->{y})\n", "ai_attack";
 		}
 
@@ -636,7 +706,7 @@ sub main {
 			# Our recorded position might be out of sync, so try to unstuck
 			$args->{unstuck}{time} = time;
 			debug("$slave attack - trying to unstuck\n", 'slave_attack');
-			$slave->move($myPos->{x}, $myPos->{y});
+			$slave->move($myPosTo->{x}, $myPosTo->{y});
 			$args->{unstuck}{count}++;
 		}
 
@@ -650,7 +720,7 @@ sub main {
 					$slave->sendAttack ($ID);
 					$timeout{$slave->{ai_dance_attack_melee_timeout}}{time} = time;
 				}
-
+				
 			} elsif ($config{$slave->{configPrefix}.'attack_dance_ranged'}) {
 				if (timeOut($timeout{$slave->{ai_dance_attack_ranged_timeout}})) {
 					my $cell = get_dance_position($slave, $target);
@@ -659,7 +729,7 @@ sub main {
 					$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
 					$slave->sendAttack ($ID);
 					$timeout{$slave->{ai_dance_attack_ranged_timeout}}{time} = time;
-
+					
 					if ($config{$slave->{configPrefix}."runFromTarget"} && $config{$slave->{configPrefix}."runFromTarget_inAdvance"} && $realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_minStep'}) {
 						find_kite_position($slave, $args, 1, $target, $realMyPos, $realMonsterPos, 0);
 					}
@@ -669,7 +739,7 @@ sub main {
 				if (timeOut($timeout{$slave->{ai_attack_timeout}})) {
 					$slave->sendAttack ($ID);
 					$timeout{$slave->{ai_attack_timeout}}{time} = time;
-
+					
 					if ($config{$slave->{configPrefix}."runFromTarget"} && $config{$slave->{configPrefix}."runFromTarget_inAdvance"} && $realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_minStep'}) {
 						find_kite_position($slave, $args, 1, $target, $realMyPos, $realMonsterPos, 0);
 					}
@@ -677,16 +747,16 @@ sub main {
 			}
 			delete $args->{attackMethod};
 			$found_action = 1;
-
+		
 		# Attack with skill logic
 		} elsif ($args->{attackMethod}{type} eq "skill") {
 			my $slot = $args->{attackMethod}{skillSlot};
 			delete $args->{attackMethod};
 
 			$ai_v{"attackSkillSlot_${slot}_time"} = time;
-			$ai_v{temp}{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
-
-			$args->{attackSkillSlot_attempts}{$i}++;
+			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+			
+			$args->{attackSkillSlot_attempts}{$slot}++;
 
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
@@ -705,13 +775,13 @@ sub main {
 
 			debug "[Slave $slave] [attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
-
+			
 			$args->{monsterID} = $ID;
 			$found_action = 1;
 		}
 
 	}
-
+	
 	if ($config{$slave->{configPrefix}.'tankMode'}) {
 		if ($args->{'dmgTo_last'} != $target->{dmgFromPlayer}{$slave->{ID}}) {
 			$args->{'ai_attack_giveup'}{'time'} = time;

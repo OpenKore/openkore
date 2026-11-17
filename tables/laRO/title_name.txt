@@ -1,0 +1,178 @@
+1000 Junction of life
+1001 Specialist
+1002 Expert
+1003 Master
+1004 Grand Master
+1005 Novice Adventurer
+1006 Veteran Adventurer
+1007 Master Adventurer
+1008 of Dragon
+1009 of Madness
+1010 Steel Body
+1011 The Yellow Flash
+1012 Keen
+1013 Lucky
+1014 Incarnation of Love and Hatred
+1015 Maniac
+1016 Reborn
+1017 Bloody Red
+1018 Novice Teleporter
+1019 Mock me yoyo
+1020 Gambler
+1021 Battle Manual Master
+1022 Married Person
+1023 Persistent
+1024 Hard Worker
+1025 Poring Mania
+1026 Back Opener
+1027 Animal Lover
+1028 Devil Contractor
+1029 Monster Girls
+1030 Monster Boys
+1031 Visionary
+1032 Growing Bud
+1033 Family Maker
+1034 VIP
+1035 Orc Slayer
+1036 Orc Hero
+1037 Turtle Slayer
+1038 Dryad Slayer
+1039 Time Slayer
+1040 Raydric Slayer
+1041 Death Slayer
+1042 Undead Slayer
+1043 Strouf Slayer
+1044 Sting Slayer
+1045 Conqueror of Illusion
+1046 King Maker
+1047 Automated
+1048 Airborne
+1049 Glory
+1050 Protector of Midgard
+1051 Noblesse
+1052 Founder
+1053 Beta Tester
+1054 Beater
+1055 Safety Master
+1056 Assassin No.1
+1057 Hunter No.1
+1058 Knight No.1
+1059 Priest No.1
+1060 Blacksmith No.1
+1061 Wizard No.1
+1062 Land Owner I
+1063 Land Owner II
+1064 Land Owner III
+1065 Frostbite
+1066 Starter
+1067 Monk No.1
+1068 Rogue No.1
+1069 Alchemist No.1
+1070 Bard No.1
+1071 Sage No.1
+1072 Crusader No.1
+1073 Dancer No.1
+1074 Snowbuilder
+1075 Nose Artist
+1076 Chill Chaser
+1077 Woodland Sculptor
+1078 Topper Tailor
+1079 Path Traveler I
+1080 Path Traveler II
+1081 Path Traveler III
+1082 Grand Heart
+1083 The New journey
+1084 Divided
+1085 Splash Mania
+1086 Ninja No.1
+1087 Gunslinger No.1
+1088 Teakwondo Master No.1
+1089 Soul Linker No.1
+1090 Prontera Adventure
+1091 PRONTERA
+1092 Welcome to Midgard
+1093 MVP Hunter
+1094 King of Hunter
+1095 Ultimate Hunter
+1096 Heart Hunter
+1097 Old Glastheim Destroyer
+1098 The Beginner
+1099 The Protector
+1100 Guardian of Midgard
+1101 Uncrowned King
+1102 King of Midgard
+1103 Fire Emperor
+1105 Wind of Heaven
+1106 Ragnarok Festa
+1107 (*>_<)
+1108 (�?^_^�?)
+1109 ROLC 2024
+1110 The King ROLC 2024
+1111 Yggdrasil Rift
+1112 ROLC2024
+1113 ROLC2024 CHAMPION
+1114 Loy Krathong Day
+1115 Blood of Witch
+1116 Welcome New Player
+1117 Surprise New Player
+1121 ROLG CBT
+1124 Bug Hunter
+1136 Transcendent Path
+1137 The Elevation
+1138 Summitrax Rise
+1154 Echo of Yggdrasill
+1156 The Challenge
+1162 PGDX 2025 No.1
+1163 PGDX Top3
+1164 PGDX 2025
+1165 Mythseeker
+1166 Trailblazer
+1167 Windrunner
+1172 ROLG MAJOR 2025 No.1
+1173 ROLG MAJOR 2025 TOP3
+1174 ROLG MAJOR 2025
+1175 ROLG Elite Scroll
+1176 ROLG Trooper Scroll
+1178 Nova Journey
+1179 The High Priestess
+1180 The Magician
+1181 The Fool
+1189 The Traveller
+1190 The Explorer
+1191 The Pioneer
+1200 The Emperor
+1217 King of the Jungle
+1220 Deadman Walker
+1221 Major Yggdrasil Crown
+1222 Major Yggdrasil Pillar
+1223 Major Yggdrasil Root
+1224 Major Yggdrasil Seed
+1226 Parallel Adventure
+1241 Yaksha
+1244 Yggdrasil Fallen One
+1245 Major Yggdrasil Ruin
+1246 Major Yggdrasil Corrupted
+1247 Major Yggdrasil Curse
+1249 The Nova Collector
+1258 The Miner
+1259 The Nova Collector II
+1260 Major Guardian of Yggdrasil
+1261 Major Yggdrasil Ascendant
+1262 Major Yggdrasil Sentinel
+1263 Major Yggdrasil Herald
+1266 Odin's Eye
+1270 The Nova Collector III
+1271 RO Festa Silver 2026
+1272 RO Festa Golden 2026
+1273 RO Festa Prismatic 2026
+1274 ROLC Champion 2026
+9990 The Truth Is Somewhere 
+9991 2Spooky4U 
+9992 RO's Most Talented 2018 
+9993 Cosplay Royalty 
+9994 PoringCon Fan 
+9995 Class Clown 
+9996 Pub Crawler 
+9997 Dearest Possession 
+9998 Rated Arrrrrrrrrr 
+9999 RO's Most Talented

@@ -23,11 +23,13 @@ use strict;
 use warnings;
 no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
+use Scalar::Util qw(refaddr weaken);
 use utf8;
 
 use Modules 'register';
 use Globals;
 use Log qw(message debug error warning);
+use Field;
 use Misc;
 use Network;
 use Network::Send ();
@@ -41,10 +43,11 @@ use Task;
 use Task::ErrorReport;
 use Match;
 use Translation;
-use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
+use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK STATUS_POW STATUS_STA STATUS_WIS STATUS_SPL STATUS_CON STATUS_CRT);
 
 our (%commands, %completions);
 my $needsInit = 1;
+my $pendingPackage;
 
 undef %commands;
 undef %completions;
@@ -395,7 +398,9 @@ sub initHandlers {
 			], \&cmdUseItemOnPlayer],
 		['is', [
 			T("Use item on yourself."),
-			[T("<inventory item #>"), T("use item on yourself")]
+			[T("<inventory item #>"), T("use item on yourself")],
+			["choose <option>", T("claim a reward from the selected package")],
+			["cancel", T("cancel package selection")]
 			], \&cmdUseItemOnSelf],
 		['kill', [
 			T("Attack another player (PVP/GVG only)."),
@@ -492,6 +497,10 @@ sub initHandlers {
 			["use", T("use the Guillotine Cross Poisonous Weapon Skill")],
 			[T("<poison #>"), T("Apply poison using an item from the 'poison' list")],
 			], \&cmdPoison],
+		['privateairship', [
+			T("Use the Private Airship service."),
+			[T("<map name> [<item ID>]"), T("request teleport to <map name> using the specified item (default: Passport ID 25464)")],
+			], \&cmdPrivateAirship],
 		['portals', [
 			T("List portals that are on screen."),
 			["", T("list portals that are on screen")],
@@ -502,6 +511,8 @@ sub initHandlers {
 			T("Exit this program."),
 			["", T("exit this program")],
 			["2", T("send a special package 'quit_request' to the server, then exit this program")],
+			["3", T("display status, display exp report, disconnect from the server, then exit this program")],
+			["4", T("same as 3, but ignore dcPause for this shutdown")],
 			], \&cmdQuit],
 		['rc', [
 			T("Reload source code files."),
@@ -512,6 +523,7 @@ sub initHandlers {
 		['reload', [
 			T("Reload configuration files."),
 			["all", T("reload all control and table files")],
+			["field", T("load the field file of the current map again")],
 			[T("<names>"), T("reload control files in the list of <names>")],
 			[T("all except <names>"), T("reload all files except those in the list of <names>")]
 			], \&cmdReload],
@@ -548,6 +560,7 @@ sub initHandlers {
 			["read <mail_# | mail_id>", T("open the selected Rodex mail")],
 			["getitems", T("get items of current rodex mail")],
 			["getitems <mail_# | mail_id>", T("get items of rodex mail")],
+			["getall", T("get all attachments in the current rodex mailbox")],
 			["getzeny", T("get zeny of current rodex mail")],
 			["getzeny <mail_# | mail_id>", T("get zeny of rodex mail")],
 			["write", T("open a box to start write a rodex mail")],
@@ -647,7 +660,7 @@ sub initHandlers {
 		['stand', T("Stand up."), \&cmdStand],
 		['stat_add', [
 			T("Add status point."),
-			["str|agi|int|vit|dex|luk", T("add status points to a stat")]
+			["str|agi|int|vit|dex|luk|pow|sta|wis|spl|con|crt", T("add status points to a stat")]
 			], \&cmdStatAdd],
 		['switchconf', [
 			T("Switch configuration file."),
@@ -817,11 +830,16 @@ sub initHandlers {
 			["select <page #> <store #>", T("Selects a store")],
 			["buy [view|end|<item #> [<amount>]]", T("Buys from a store using Universal Catalog Gold")],
 			], \&cmdSearchStore],
+		['searchshop', [
+			T("Find the closest known NPC shop for an item"),
+			[T("<item name | item ID>"), T("shows the nearest known NPC shop that sells the item and its route")]
+			], \&cmdSearchShop],
 		['pause', [
 			T("Delay the next console commands."),
 			["", T("delay the next console commands for 1 second")],
 			[T("<seconds>"), T("delay the next console commands by a specified number of seconds")]
 			], undef],
+		['eden', "Use Eden Group Mark", \&cmdEden],
 	);
 
 	# Built-in aliases
@@ -869,7 +887,7 @@ sub run {
 		my $handler;
 		$handler = $commands{$switch}{callback} if (exists $commands{$switch} && $commands{$switch});
 
-		if (($switch eq 'pause') && (!$cmdQueue) && AI::state == AI::AUTO && ($net->getState() == Network::IN_GAME)) {
+		if (($switch eq 'pause') && (!$cmdQueue) && AI::state() == AI::AUTO() && ($net->getState() == Network::IN_GAME)) {
 			$cmdQueue = 1;
 			$cmdQueueStartTime = time;
 			if ($args > 0) {
@@ -880,7 +898,7 @@ sub run {
 			debug "Command queueing started\n", "ai";
 		} elsif (($switch eq 'pause') && ($cmdQueue > 0)) {
 			push(@cmdQueueList, $command);
-		} elsif (($switch eq 'pause') && (AI::state != AI::AUTO || ($net->getState() != Network::IN_GAME))) {
+		} elsif (($switch eq 'pause') && (AI::state() != AI::AUTO() || ($net->getState() != Network::IN_GAME))) {
 			error T("Cannot use pause command now.\n");
 		} elsif (($handler) && ($cmdQueue > 0) && (!defined binFind(\@cmdQueuePriority,$switch) && ($command ne 'cart') && ($command ne 'storage'))) {
 			push(@cmdQueueList, $command);
@@ -1085,39 +1103,39 @@ sub cmdAI {
 
 	} elsif ($args eq 'on' || $args eq 'auto') {
 		# Set AI to auto mode
-		if (AI::state == AI::AUTO) {
+		if (AI::state() == AI::AUTO()) {
 			message T("AI is already set to auto mode\n"), "success";
 		} else {
-			AI::state(AI::AUTO);
+			AI::state(AI::AUTO());
 			message T("AI set to auto mode\n"), "success";
 		}
 	} elsif ($args eq 'manual') {
 		# Set AI to manual mode
-		if (AI::state == AI::MANUAL) {
+		if (AI::state() == AI::MANUAL()) {
 			message T("AI is already set to manual mode\n"), "success";
 		} else {
-			AI::state(AI::MANUAL);
+			AI::state(AI::MANUAL());
 			message T("AI set to manual mode\n"), "success";
 		}
 	} elsif ($args eq 'off') {
 		# Turn AI off
-		if (AI::state == AI::OFF) {
+		if (AI::state() == AI::OFF()) {
 			message T("AI is already off\n"), "success";
 		} else {
-			AI::state(AI::OFF);
+			AI::state(AI::OFF());
 			message T("AI turned off\n"), "success";
 		}
 
 	} elsif ($args eq '') {
 		# Toggle AI
-		if (AI::state == AI::AUTO) {
-			AI::state(AI::OFF);
+		if (AI::state() == AI::AUTO()) {
+			AI::state(AI::OFF());
 			message T("AI turned off\n"), "success";
-		} elsif (AI::state == AI::OFF) {
-			AI::state(AI::MANUAL);
+		} elsif (AI::state() == AI::OFF()) {
+			AI::state(AI::MANUAL());
 			message T("AI set to manual mode\n"), "success";
-		} elsif (AI::state == AI::MANUAL) {
-			AI::state(AI::AUTO);
+		} elsif (AI::state() == AI::MANUAL()) {
+			AI::state(AI::AUTO());
 			message T("AI set to auto mode\n"), "success";
 		}
 
@@ -1130,14 +1148,14 @@ sub cmdAI {
 sub cmdAIv {
 	# Display current AI sequences
 	my $on;
-	if (AI::state == AI::OFF) {
+	if (AI::state() == AI::OFF()) {
 		message TF("ai_seq (off) = %s\n", "@ai_seq"), "list";
-	} elsif (AI::state == AI::MANUAL) {
+	} elsif (AI::state() == AI::MANUAL()) {
 		message TF("ai_seq (manual) = %s\n", "@ai_seq"), "list";
-	} elsif (AI::state == AI::AUTO) {
+	} elsif (AI::state() == AI::AUTO()) {
 		message TF("ai_seq (auto) = %s\n", "@ai_seq"), "list";
 	}
-	message T("solution\n"), "list" if (AI::args->{'solution'});
+	message T("solution\n"), "list" if (AI::args()->{'solution'});
 	message TF("Active tasks: %s\n", (defined $taskManager) ? $taskManager->activeTasksString() : ''), "info";
 	message TF("Inactive tasks: %s\n", (defined $taskManager) ? $taskManager->inactiveTasksString() : ''), "info";
 }
@@ -1313,9 +1331,10 @@ sub cmdAutoSell {
 		# Simulate list of items to sell
 		my @sellItems;
 		my $msg = center(T(" Items to sell (simulation) "), 50, '-') ."\n".
-				T("Amount  Item Name\n");
+				" " . T("Amount  Item Name\n");
 		for my $item (@{$char->inventory}) {
 			next if ($item->{unsellable});
+			next if ($config{sellAuto_keepEnhanced} && $item->isEnhanced);
 			my $control = items_control($item->{name},$item->{nameID});
 			if ($control->{'sell'} && $item->{'amount'} > $control->{keep}) {
 				my %obj;
@@ -1324,8 +1343,8 @@ sub cmdAutoSell {
 				my $item_name = $item->{name};
 				$item_name .= T(" (if unequipped)") if ($item->{equipped});
 				$msg .= swrite(
-						"@>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-						[$item->{amount}, $item_name]);
+						"@>>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+						[$obj{amount}, $item_name]);
 			}
 		}
 		$msg .= ('-'x50) . "\n";
@@ -1453,6 +1472,7 @@ sub cmdCard {
 				"Can't use command while not connected to server.\n");
 		} elsif ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
+			undef @cardMergeItemsID;
 			$messageSender->sendCardMerge(-1, -1);
 			message T("Cancelling card merge.\n");
 		} else {
@@ -1498,6 +1518,7 @@ sub cmdCard {
 	} elsif ($arg1 eq "use") {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->inventory->get($arg2)) {
+				undef @cardMergeItemsID;
 				$cardMergeIndex = $arg2;
 				$messageSender->sendCardMergeRequest($char->inventory->get($cardMergeIndex)->{ID});
 				message TF("Sending merge list request for %s...\n",
@@ -1627,6 +1648,7 @@ sub cmdCart_list {
 			my %eqp;
 			$eqp{index} = $item->{ID};
 			$eqp{binID} = $item->{binID};
+			$eqp{nameID} = $item->{nameID};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
@@ -1645,11 +1667,12 @@ sub cmdCart_list {
 		for (my $i = 0; $i < @useable; $i++) {
 			$index = $useable[$i];
 			my $item = $char->cart->get($index);
+			my $nameID = "[".$item->{nameID}."]";
 			$display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$index, $display]);
+				"@<<< @<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $nameID, $display]);
 		}
 	}
 
@@ -1657,7 +1680,7 @@ sub cmdCart_list {
 		$msg .= T("\n-- Equipment --\n");
 		foreach my $item (@equipment) {
 			## altered to allow for Arrows/Ammo which will are stackable equip.
-			$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+			$display = sprintf("%-3d [%-6d]  %s (%s)", $item->{binID}, $item->{nameID}, $item->{name}, $item->{type});
 			$display .= " x $item->{amount}" if $item->{amount} > 1;
 			$display .= $item->{identified};
 			$msg .= sprintf("%-57s\n", $display);
@@ -1669,11 +1692,12 @@ sub cmdCart_list {
 		for (my $i = 0; $i < @non_useable; $i++) {
 			$index = $non_useable[$i];
 			my $item = $char->cart->get($index);
+			my $nameID = "[".$item->{nameID}."]";
 			$display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$index, $display]);
+				"@<<< @<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $nameID, $display]);
 		}
 	}
 
@@ -2393,7 +2417,7 @@ sub cmdDebug {
 			"\$timeout{ai}: %.2f secs ago  (value should be >%s)\n" .
 			"Last AI() call: %.2f secs ago\n" .
 			('-'x56) . "\n",
-		$conState, $connected, AI::state, "@ai_seq", $time, $ai_timeout,
+		$conState, $connected, AI::state(), "@ai_seq", $time, $ai_timeout,
 		$timeout{'ai'}{'timeout'}, $ai_time), "list";
 	} else {
 		error "Syntax Error in function 'debug' (Toggle debug on/off)\n";
@@ -2916,6 +2940,7 @@ sub cmdSlave {
 	} else {
 		error T("Error: Unknown command in cmdSlave\n");
 	}
+	return unless $slave;
 	my $string = $cmd;
 
 	if ($slave->isa("AI::Slave::Homunculus") && $slave->{homunculus_info}{vaporized}) {
@@ -3048,19 +3073,19 @@ sub cmdSlave {
 
 		} elsif ($args[1] eq 'on' || $args[1] eq 'auto') {
 			# Set AI to auto mode
-			if ($slave->{slave_AI} == AI::AUTO) {
+			if ($slave->{slave_AI} == AI::AUTO()) {
 				message T("Slave AI is already set to auto mode\n"), "success";
 			} else {
-				$slave->{slave_AI} = AI::AUTO;
+				$slave->{slave_AI} = AI::AUTO();
 				undef $slave->{slave_AI_forcedOff};
 				message T("Slave AI set to auto mode\n"), "success";
 			}
 		} elsif ($args[1] eq 'manual') {
 			# Set AI to manual mode
-			if ($slave->{slave_AI} == AI::MANUAL) {
+			if ($slave->{slave_AI} == AI::MANUAL()) {
 				message T("Slave AI is already set to manual mode\n"), "success";
 			} else {
-				$slave->{slave_AI} = AI::MANUAL;
+				$slave->{slave_AI} = AI::MANUAL();
 				$slave->{slave_AI_forcedOff} = 1;
 				message T("Slave AI set to manual mode\n"), "success";
 			}
@@ -3076,16 +3101,16 @@ sub cmdSlave {
 
 		} elsif ($args[1] eq '') {
 			# Toggle AI
-			if ($slave->{slave_AI} == AI::AUTO) {
+			if ($slave->{slave_AI} == AI::AUTO()) {
 				undef $slave->{slave_AI};
 				$slave->{slave_AI_forcedOff} = 1;
 				message T("Slave AI turned off\n"), "success";
 			} elsif (!$slave->{slave_AI}) {
-				$slave->{slave_AI} = AI::MANUAL;
+				$slave->{slave_AI} = AI::MANUAL();
 				$slave->{slave_AI_forcedOff} = 1;
 				message T("Slave AI set to manual mode\n"), "success";
-			} elsif ($slave->{slave_AI} == AI::MANUAL) {
-				$slave->{slave_AI} = AI::AUTO;
+			} elsif ($slave->{slave_AI} == AI::MANUAL()) {
+				$slave->{slave_AI} = AI::AUTO();
 				undef $slave->{slave_AI_forcedOff};
 				message T("Slave AI set to auto mode\n"), "success";
 			}
@@ -3563,7 +3588,7 @@ sub cmdGuild {
 		my $player = Match::player($arg2);
 		if (!$player) {
 			error TF("Player %s does not exist.\n", $arg2);
-		} elsif (!$char->{name} eq $guild{master}) {
+		} elsif ($char->{name} ne $guild{master}) {
 			error T("You must be guildmaster to set an alliance\n");
 			return;
 		} else {
@@ -3823,6 +3848,7 @@ sub cmdInventory {
 				my %eqp;
 				$eqp{index} = $item->{ID};
 				$eqp{binID} = $item->{binID};
+				$eqp{nameID} = $item->{nameID};
 				$eqp{name} = $item->{name};
 				$eqp{amount} = $item->{amount};
 				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
@@ -3847,7 +3873,7 @@ sub cmdInventory {
 			$msg .= T("-- Equipment (Equipped) --\n");
 			foreach my $item (@equipment) {
 				$sell = defined(findIndex(\@sellList, "binID", $item->{binID})) ? T("Will be sold") : "";
-				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
+				$display = sprintf("%-3d [%-6d] %s -- %s", $item->{binID}, $item->{nameID}, $item->{name}, $item->{equipped});
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
 		}
@@ -3857,7 +3883,7 @@ sub cmdInventory {
 			$msg .= T("-- Equipment (Not Equipped) --\n");
 			foreach my $item (@uequipment) {
 				$sell = defined(findIndex(\@sellList, "binID", $item->{binID})) ? T("Will be sold") : "";
-				$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+				$display = sprintf("%-3d [%-6d]  %s (%s)", $item->{binID}, $item->{nameID}, $item->{name}, $item->{type});
 				$display .= " x $item->{amount}" if $item->{amount} > 1;
 				$display .= $item->{identified};
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
@@ -3870,13 +3896,14 @@ sub cmdInventory {
 			for ($i = 0; $i < @non_useable; $i++) {
 				$index = $non_useable[$i];
 				my $item = $char->inventory->get($index);
+				my $nameID = "[".$item->{nameID}."]";
 				$display = $item->{name};
 				$display .= " x $item->{amount}";
 				# Translation Comment: Tell if the item is marked to be sold
 				$sell = defined(findIndex(\@sellList, "binID", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
-					[$index, $display, $sell]);
+					"@<<< @<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
+					[$index, $nameID, $display, $sell]);
 			}
 		}
 
@@ -3886,12 +3913,13 @@ sub cmdInventory {
 			for ($i = 0; $i < @useable; $i++) {
 				$index = $useable[$i];
 				my $item = $char->inventory->get($index);
+				my $nameID = "[".$item->{nameID}."]";
 				$display = $item->{name};
 				$display .= " x $item->{amount}";
 				$sell = defined(findIndex(\@sellList, "binID", $index)) ? T("Will be sold") : "";
 				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
-					[$index, $display, $sell]);
+					"@<<< @<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
+					[$index, $nameID, $display, $sell]);
 			}
 		}
 
@@ -4148,7 +4176,13 @@ sub cmdMove {
 				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
 				$file .= ".gz" if (! -f $file); # compressed file
 				if ($maps_lut{"${map_or_portal}.rsw"} || -f $file) {
-					my $move_field = new Field(name => $map_or_portal);
+					my $move_field = eval { new Field(name => $map_or_portal) };
+					if (my $e = caught('FileNotFoundException', 'IOException')) {
+						error TF("Cannot load field %s: %s\n", $map_or_portal, $e);
+						return;
+					} elsif ($@) {
+						die $@;
+					}
 					if (defined $x && defined $y) {
 						if ($move_field->isOffMap($x, $y)) {
 							error TF("Coordinates %s %s are off the map %s\n",$x, $y, $map_or_portal);
@@ -4924,6 +4958,53 @@ sub cmdPortalList {
 	}
 }
 
+sub cmdPrivateAirship {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my (undef, $args) = @_;
+	my ($map, $item_id) = parseArgs($args, 2);
+
+	if (!defined $map || $map eq '') {
+		error T("Syntax Error in function 'privateairship' (Use Private Airship)\n" .
+			"Usage: privateairship <map name> [<item ID>]\n");
+		return;
+	}
+	$item_id = '25464' if (!defined $item_id || $item_id eq '');
+	if ($item_id !~ /^\d+$/) {
+		error T("Item ID must be numeric for 'privateairship'.\n");
+		return;
+	}
+	if ($item_id != '25464') {
+		my $requested_item = itemNameSimple($item_id);
+		my $required_item = itemNameSimple('25464');
+		error TF("%s cannot be used for Private Airship. Please use %s.\n", $requested_item, $required_item);
+		return;
+	}
+	my $map_name = $map;
+	$map_name .= '.gat' unless $map_name =~ /\.gat$/i;
+	my $field_name = $map_name;
+	$field_name =~ s/\.gat$//i;
+	unless (defined $maps_lut{"$field_name.rsw"}) {
+		error TF("Map '%s' does not exist for Private Airship.\n", $map_name);
+		return;
+	}
+	if (length($map_name) > 16) {
+		error TF("Map name '%s' is too long for Private Airship (maximum 16 characters including extension).\n", $map_name);
+		return;
+	}
+	my $item = $char->inventory->getByNameID($item_id);
+	unless ($item && $item->{amount}) {
+		error TF("You do not have %s required for Private Airship.\n", itemNameSimple($item_id));
+		return;
+	}
+	$char->{last_private_airship_item} = $item_id + 0;
+	$char->{last_private_airship_map} = $map_name;
+	$messageSender->sendPrivateAirshipRequest($map_name, $item_id + 0);
+	message TF("Requested Private Airship to %s using %s.\n", $map_name, itemNameSimple($item_id)), "info";
+}
+
 sub cmdPrivateMessage {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
@@ -4964,6 +5045,13 @@ sub cmdQuit {
 	my (undef, $args) = @_;
 	if ($args eq "2") {
 		$messageSender->sendQuit();
+	} elsif ($args eq "3" || $args eq "4") {
+		$config{dcPause} = 0 if $args eq "4";
+		run('s');
+		run('st');
+		run('skills');
+		run('exp report');
+		$messageSender->sendQuit();
 	}
 	quit();
 }
@@ -4973,6 +5061,21 @@ sub cmdReload {
 	if ($args eq '') {
 		error T("Syntax Error in function 'reload' (Reload Configuration Files)\n" .
 			"Usage: reload <name|\"all\">\n");
+	} elsif ($args eq 'field') {
+		my $map = $field ? $field->name : $missingFieldName;
+		if (!defined $map) {
+			error T("No map to load a field for.\n");
+			return;
+		}
+		my $newField = eval { new Field(name => $map) };
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map, $e);
+		} elsif ($@) {
+			die $@;
+		} else {
+			$field = $newField;
+			message TF("Field %s loaded\n", $field->baseName), "success";
+		}
 	} else {
 		parseReload($args);
 	}
@@ -5405,15 +5508,20 @@ sub cmdStats {
 			return;
 		}
 
-		if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int" && $arg ne "dex" && $arg ne "luk") {
+		if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int" && $arg ne "dex" && $arg ne "luk" &&
+			$arg ne "pow" && $arg ne "sta" && $arg ne "wis" && $arg ne "spl" && $arg ne "con" && $arg ne "crt") {
 			error T("Syntax Error in function 'st add' (Add Status Point)\n" .
-				"Usage: st add <str | agi | vit | int | dex | luk>\n");
+				"Usage: st add <str | agi | vit | int | dex | luk | pow | sta | wis | spl | con | crt>\n");
 
 		} elsif ($char->{$arg} >= 99 && !$config{statsAdd_over_99}) {
 			error T("Error in function 'st add' (Add Status Point)\n" .
 				"You cannot add more stat points than 99\n");
 
-		} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
+		} elsif (
+			($arg =~ /^(pow|sta|wis|spl|con|crt)$/)
+				? (!$char->{"need_$arg"} || $char->{"need_$arg"} > $char->{'traitpoint'})
+				: ($char->{"points_$arg"} > $char->{'points_free'})
+		) {
 			error TF("Error in function 'st add' (Add Status Point)\n" .
 				"Not enough status points to increase %s\n", $arg);
 
@@ -5431,9 +5539,20 @@ sub cmdStats {
 				$ID = STATUS_DEX;
 			} elsif ($arg eq "luk") {
 				$ID = STATUS_LUK;
+			} elsif ($arg eq "pow") {
+				$ID = STATUS_POW;
+			} elsif ($arg eq "sta") {
+				$ID = STATUS_STA;
+			} elsif ($arg eq "wis") {
+				$ID = STATUS_WIS;
+			} elsif ($arg eq "spl") {
+				$ID = STATUS_SPL;
+			} elsif ($arg eq "con") {
+				$ID = STATUS_CON;
+			} elsif ($arg eq "crt") {
+				$ID = STATUS_CRT;
 			}
 
-			$char->{$arg} += 1;
 			$messageSender->sendAddStatusPoint($ID);
 		}
 	} else {
@@ -5854,8 +5973,8 @@ sub cmdTalk {
 				return;
 
 			} else {
-				error T("Error in function 'talk resp' (Respond to NPC)\n" .
-					"Wrong talk resp sintax.\n");
+				error TF("Error in function 'talk resp' (Respond to NPC)\n" .
+					"Wrong talk resp sintax ('%s').\n", $arg);
 				return;
 			}
 
@@ -5916,7 +6035,42 @@ sub cmdTalk {
 
 sub cmdTalkNPC {
 	my (undef, $args) = @_;
+	
+	if ($args =~ /^ID_(\d+)\s+(.*)$/i) {
+		my $nameID = $1;
+		my $sequence = $2;
 
+		message TF("Talking to NPC with nameID %s using sequence: %s\n", $nameID, $sequence);
+
+		AI::queue("NPC", new Task::TalkNPC(
+			type     => 'talk',
+			nameID   => $nameID,
+			sequence => $sequence
+		));
+		return;
+	}
+
+	if ($args =~ /^"([^"]+)"\s+(.*)$/) {
+		my $npcName = $1;
+		my $sequence = $2;
+
+		my $npc = $npcsList->getByName($npcName);
+		unless ($npc) {
+			error TF("Error in function 'talknpc': NPC named '%s' not found on current map.\n", $npcName);
+			return;
+		}
+
+		message TF("Talking to NPC %s (nameID: %s, binID: %s) using sequence: %s\n",
+			$npc->name, $npc->{nameID}, $npc->{binID}, $sequence);
+
+		AI::queue("NPC", new Task::TalkNPC(
+			type     => 'talk',
+			nameID   => $npc->{nameID},
+			sequence => $sequence
+		));
+		return;
+	}
+	
 	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+)(?: (.+))?$/;
 	unless (defined $x) {
 		error T("Syntax Error in function 'talknpc' (Talk to an NPC)\n" .
@@ -6222,6 +6376,31 @@ sub cmdUseItemOnSelf {
 		return;
 	}
 	my (undef, $args) = @_;
+	my ($option) = $args =~ /\Achoose\s+([0-9]+)\z/;
+	if (($args eq 'cancel' || defined $option) && keys %{$messageSender->itemPackageCatalog}) {
+		if ($args eq 'cancel') {
+			undef $pendingPackage;
+			message T("Package selection cancelled.\n");
+			return;
+		}
+		my $selected = $pendingPackage && $pendingPackage->{item};
+		my $item = $selected && $char->inventory->getByID($selected->{ID});
+		my $options = $item && $messageSender->itemPackageOptions($item->{nameID});
+		if (!$item || refaddr($item) != refaddr($selected) || $item->{nameID} != $pendingPackage->{nameID}
+			|| !$options) {
+			undef $pendingPackage;
+			error T("The selected package is unavailable. Use 'is' to select a package.\n");
+			return;
+		}
+		$option = int($option);
+		unless (exists $options->{$option}) {
+			error TF("Option %d is unavailable for %s.\n", $option, $item->{name});
+			return;
+		}
+		undef $pendingPackage;
+		message TF("Opening %s with option %d.\n", $item->{name}, $option);
+		return $messageSender->sendUsePackageItem(unpack('v', $item->{ID}), $item->{nameID}, $option);
+	}
 	if ($args eq "") {
 		error T("Syntax Error in function 'is' (Use Item on Yourself)\n" .
 			"Usage: is <item>\n");
@@ -6233,7 +6412,24 @@ sub cmdUseItemOnSelf {
 			"Inventory Item %s does not exist.\n", $args);
 		return;
 	}
-	$item->use;
+	my $options = $messageSender->itemPackageOptions($item->{nameID});
+	unless ($options) {
+		return $item->use;
+	}
+	unless (keys %$options) {
+		undef $pendingPackage;
+		error TF("No valid reward options are listed for %s in itempackages.txt.\n", $item->{name});
+		return;
+	}
+	$pendingPackage = {item => $item, nameID => $item->{nameID}};
+	weaken($pendingPackage->{item});
+	my $menu = TF("Choose a reward for %s.\n", $item->{name});
+	for my $option (sort { $a <=> $b } keys %$options) {
+		my @rewards = map { $_->[1] . ' x ' . ($items_lut{$_->[0]} // "#$_->[0]") } @{$options->{$option}};
+		$menu .= "$option  " . join(', ', @rewards) . "\n";
+	}
+	$menu .= T("Use 'is choose <option>' to claim it or 'is cancel' to cancel.\n");
+	message $menu, 'list';
 }
 
 sub cmdUseSkill {
@@ -6993,9 +7189,20 @@ sub cmdQuest {
 		my $msg .= center(" " . T("Quest List") . " ", 79, '-') . "\n";
 		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
+			my $display_time = $quest->{time_expire};
+			if ((!exists $quest->{missions} || !keys %{$quest->{missions}})
+				&& $quest->{time_start}
+				&& $quest->{time_expire}
+				&& $quest->{time_start} < $quest->{time_expire}) {
+				# For "wait/return after" quests without hunt missions, start time
+				# carries the meaningful availability timestamp on some servers.
+				$display_time = $quest->{time_start};
+			}
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x5), ('<'x30), ('<'x10), ('<'x24)),
-				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time_expire} ? scalar localtime $quest->{time_expire} : '']);
-			foreach my $mobID (keys %{$quest->{missions}}) {
+				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $display_time ? scalar localtime $display_time : '']);
+			foreach my $mobID (sort {
+				($quest->{missions}{$a}{mission_index} // 9999) <=> ($quest->{missions}{$b}{mission_index} // 9999) || $a <=> $b
+			} keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
 				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
 					[" -", $mission->{mob_name}, sprintf(defined $mission->{mob_goal} ? '%d/%d' : '%d', @{$mission}{qw(mob_count mob_goal)})]);
@@ -7096,7 +7303,7 @@ sub cmdWeaponRefine {
 }
 
 sub cmdAnswerCaptcha {
-	if ($net->getState() == Network::IN_GAME()) {
+	if ($net->getState() == Network::IN_GAME) {
 		$messageSender->sendMacroDetectorAnswer($_[1]);
 	} else {
 		$messageSender->sendCaptchaAnswer($_[1]);
@@ -7128,6 +7335,7 @@ sub cmdStorage_list {
 			my %eqp;
 			$eqp{index} = $item->{ID};
 			$eqp{binID} = $item->{binID};
+			$eqp{nameID} = $item->{nameID};
 			$eqp{name} = $item->{name};
 			$eqp{amount} = $item->{amount};
 			$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
@@ -7145,11 +7353,12 @@ sub cmdStorage_list {
 		for (my $i = 0; $i < @useable; $i++) {
 			$index = $useable[$i];
 			my $item = $char->storage->get($index);
+			my $nameID = "[".$item->{nameID}."]";
 			$display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$index, $display]);
+				"@<<< @<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $nameID, $display]);
 		}
 	}
 
@@ -7157,7 +7366,7 @@ sub cmdStorage_list {
 		$msg .= T("\n-- Equipment --\n");
 		foreach my $item (@equipment) {
 			## altered to allow for Arrows/Ammo which will are stackable equip.
-			$display = sprintf("%-3d  %s (%s)", $item->{binID}, $item->{name}, $item->{type});
+			$display = sprintf("%-3d [%-6d]  %s (%s)", $item->{binID}, $item->{nameID}, $item->{name}, $item->{type});
 			$display .= " x $item->{amount}" if $item->{amount} > 1;
 			$display .= $item->{identified};
 			$msg .= sprintf("%-57s\n", $display);
@@ -7169,11 +7378,12 @@ sub cmdStorage_list {
 		for (my $i = 0; $i < @non_useable; $i++) {
 			$index = $non_useable[$i];
 			my $item = $char->storage->get($index);
+			my $nameID = "[".$item->{nameID}."]";
 			$display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$index, $display]);
+				"@<<< @<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $nameID, $display]);
 		}
 	}
 
@@ -7272,6 +7482,39 @@ sub cmdAchieve {
 		error T("Syntax Error in function 'achieve'\n" .
 				"see 'help achieve'\n");
 	}
+}
+
+sub rodexGetAll {
+	return unless $rodexList && $rodexList->{getall};
+
+	if (!exists $rodexList->{last_page}) {
+		unless (defined $rodexList->{current_page_last_mailID}) {
+			delete $rodexList->{getall};
+			error T("Cannot request the next rodex mail page.\n");
+			return;
+		}
+		$messageSender->rodex_next_maillist($rodexCurrentType, $rodexList->{current_page_last_mailID}, $rodexList->{current_page_last_mailID2} || 0);
+		return;
+	}
+
+	delete $rodexList->{getall};
+	my ($items, $zeny) = (0, 0);
+	for my $mail (values %{$rodexList->{mails}}) {
+		my $type = defined $mail->{openType} ? $mail->{openType} : $rodexCurrentType;
+		next if $type != $rodexCurrentType;
+		my $flags = $mail->{attachment_flags} || 0;
+		if (($flags & 4) && !$mail->{getall_pending_items}) {
+			$mail->{getall_pending_items} = 1;
+			$messageSender->rodex_request_items($mail->{mailID1}, $mail->{mailID2}, $type);
+			$items++;
+		}
+		if (($flags & 2) && !$mail->{getall_pending_zeny}) {
+			$mail->{getall_pending_zeny} = 1;
+			$messageSender->rodex_request_zeny($mail->{mailID1}, $mail->{mailID2}, $type);
+			$zeny++;
+		}
+	}
+	message TF("Rodex getall requested %d item and %d zeny attachments.\n", $items, $zeny);
 }
 
 sub cmdRodex {
@@ -7732,6 +7975,20 @@ sub cmdRodex {
 		message T("Sending rodex mail.\n");
 		$messageSender->rodex_send_mail();
 
+	} elsif ($arg1 eq 'getall') {
+		if (!defined $rodexList) {
+			error T("Your rodex mail box is closed.\n");
+			return;
+		} elsif (defined $rodexWrite) {
+			error T("You are writing a rodex mail.\n");
+			return;
+		} elsif ($rodexList->{getall}) {
+			error T("Rodex getall is already loading mail pages.\n");
+			return;
+		}
+		$rodexList->{getall} = 1;
+		rodexGetAll();
+
 	} elsif ($arg1 eq 'getitems') {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
@@ -7768,7 +8025,7 @@ sub cmdRodex {
 		if (!exists $rodexList->{mails}{$arg2}) {
 			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
 			return;
-		} elsif ($rodexList->{mails}{$arg2}{attach} ne 'i' and $rodexList->{mails}{$arg2}{attach} ne 'z+i') {
+		} elsif (!grep { $_ eq $rodexList->{mails}{$arg2}{attach} } qw(i z+i gift)) {
 			error TF("The rodex mail '%d' has no items.\n", $arg2);
 			return;
 		}
@@ -7871,7 +8128,7 @@ sub cmdRodex {
 
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|draft|send>]\n");
+			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getall|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|draft|send>]\n");
 	}
 }
 
@@ -8439,13 +8696,72 @@ sub cmdSearchStore {
 		return;
 	}
 
-	error T("Syntax error in 'searchstore' command (Universal catalog command)\n" .
+error T("Syntax error in 'searchstore' command (Universal catalog command)\n" .
 			"searchstore close : Closes search store catalog\n" .
 			"searchstore next : Requests catalog next page\n" .
 			"searchstore view <page #> : Shows catalog page # (0-indexed)\n" .
 			"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] [price <min_price>..<max_price>] [sell|buy] : Searches for an item\n" .
 			"searchstore select <page #> <store #> : Selects a store\n" .
 			"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using Universal Catalog Gold\n");
+}
+
+sub cmdSearchShop {
+	my ($cmd, $args) = @_;
+	my ($item_arg) = parseArgs($args, 1);
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
+		return;
+	}
+
+	if (!defined $item_arg || $item_arg eq '') {
+		error T("Syntax Error in function 'searchshop' (Closest NPC Shop)\n" .
+			"Usage: searchshop <item name | item ID>\n");
+		return;
+	}
+
+	my $item_id;
+	if ($item_arg =~ /^\d+$/) {
+		$item_id = $item_arg;
+	} else {
+		$item_id = itemNameToID($item_arg);
+		if (!defined $item_id) {
+			my @matches = containsItemNameToIDList($item_arg);
+			if (@matches == 1) {
+				$item_id = $matches[0];
+			} elsif (@matches > 1) {
+				my @names = map { itemNameSimple($_) } @matches[0 .. ($#matches < 4 ? $#matches : 4)];
+				error TF("Error in function 'searchshop' (Closest NPC Shop)\n" .
+					"Item name '%s' is ambiguous. Matches: %s\n", $item_arg, join(', ', @names));
+				return;
+			}
+		}
+	}
+
+	if (!defined $item_id) {
+		error TF("Error in function 'searchshop' (Closest NPC Shop)\n" .
+			"Item '%s' not found\n", $item_arg);
+		return;
+	}
+
+	my $shop = get_closest_npc_shop_for_item($item_id, 0);
+	if (!$shop) {
+		error TF("No known NPC shop sells %s (%s).\n", itemNameSimple($item_id), $item_id);
+		return;
+	}
+
+	my $price = defined $shop->{price} ? formatNumber($shop->{price}) . 'z' : T('unknown');
+	my $move_cost = defined $shop->{move_cost} ? formatNumber($shop->{move_cost}) . 'z' : T('unknown');
+	my $route = defined $shop->{route} && $shop->{route} ne '' ? $shop->{route} : T('unknown');
+	my $msg = center(T(" Closest NPC Shop "), 64, '-') . "\n" .
+		TF("Item: %s (%s)\n", itemNameSimple($item_id), $item_id) .
+		TF("Map : %s\n", $shop->{map}) .
+		TF("Pos : %s, %s\n", $shop->{x}, $shop->{y}) .
+		TF("Price: %s\n", $price) .
+		TF("Move Cost: %s\n", $move_cost) .
+		TF("Route: %s\n", $route) .
+		('-' x 64) . "\n";
+	message $msg, "info";
 }
 
 sub cmdRevive {
@@ -8669,6 +8985,20 @@ sub cmdNPCCreateRequest {
 	$args = 'GOLDPCCAFE' if (!defined $args);
 
 	$messageSender->sendNPCCreateRequest($args);
+}
+
+sub cmdEden {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my $item = Misc::getEdenGroupMark();
+	if ($item) {
+		$item->use;	
+	}
+	else {
+		error "Error in function 'eden' (Use Eden Group Mark)\nInventory Item Eden Group Mark does not exist.\n";
+	}
 }
 
 1;

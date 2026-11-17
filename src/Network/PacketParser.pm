@@ -38,6 +38,7 @@ use Misc;
 use Plugins;
 use Utils;
 use Utils::Exceptions;
+use Utils::Benchmark;
 use Utils::Crypton;
 use Translation;
 
@@ -47,6 +48,7 @@ our @EXPORT = qw(
 	ACTION_ATTACK_MULTIPLE ACTION_ATTACK_MULTIPLE_NOMOTION
 	ACTION_ATTACK_CRITICAL ACTION_ATTACK_LUCKY ACTION_TOUCHSKILL
 	STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK
+	STATUS_POW STATUS_STA STATUS_WIS STATUS_SPL STATUS_CON STATUS_CRT
 );
 
 ### CATEGORY: Ragnarok Online constants
@@ -71,6 +73,12 @@ use constant {
 	STATUS_INT => 0x10,
 	STATUS_DEX => 0x11,
 	STATUS_LUK => 0x12,
+	STATUS_POW => 0xdb,
+	STATUS_STA => 0xdc,
+	STATUS_WIS => 0xdd,
+	STATUS_SPL => 0xde,
+	STATUS_CON => 0xdf,
+	STATUS_CRT => 0xe0,
 };
 
 ### CATEGORY: Hash members
@@ -400,6 +408,10 @@ sub process {
 	while (my $message = $tokenizer->readNext(\$type)) {
 		$handleContainer->{bytesProcessed} += length($message);
 		$handleContainer->{lastPacketTime} = time;
+		if ($net && $net->version == 1 && $net->getState == Network::IN_GAME_BUT_UNINITIALIZED && $net->{uninitializedCharacter}) {
+			push @result, $message;
+			next;
+		}
 
 		my $args;
 
@@ -407,13 +419,20 @@ sub process {
 			my $switch = Network::MessageTokenizer::getMessageID($message);
 
 			# FIXME?
+			Benchmark::begin("packet_hook_pre") if DEBUG;
 			$self->parse_pre($handleContainer->{hook_prefix}, $switch, $message, \$message);
+			Benchmark::end("packet_hook_pre") if DEBUG;
 
 			my $willMangle = $handleContainer->can('willMangle') && $handleContainer->willMangle($switch);
 
-			if ($args = $self->parse($message, $handleContainer, @handleArguments)) {
+			Benchmark::begin("packet_parse") if DEBUG;
+			my $parsed = $self->parse($message, $handleContainer, @handleArguments);
+			Benchmark::end("packet_parse") if DEBUG;
+			if ($args = $parsed) {
 				if ($willMangle) {
+					Benchmark::begin("packet_mangle") if DEBUG;
 					$args->{mangle} = $handleContainer->mangle($args);
+					Benchmark::end("packet_mangle") if DEBUG;
 				}
 			} else {
 				$args = {
@@ -446,7 +465,9 @@ sub process {
 			#$result .= $args->{RAW_MSG};
 		} elsif ($args->{mangle} == 1) {
 			# Packet was mangled
+			Benchmark::begin("packet_reconstruct") if DEBUG;
 			push @result, $self->reconstruct($args);
+			Benchmark::end("packet_reconstruct") if DEBUG;
 			#$result .= $self->reconstruct($args);
 		} else {
 			# Packet was suppressed

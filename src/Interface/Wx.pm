@@ -37,6 +37,7 @@ use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
 		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN EVT_KEY_DOWN
 		EVT_BUTTON);
 use Time::HiRes qw(time sleep);
+use Carp::Assert;
 use File::Spec;
 use FindBin qw($RealBin);
 
@@ -64,6 +65,7 @@ use Commands;
 use Utils;
 use Translation qw/T TF/;
 use FileParsers;
+use Utils::Benchmark;
 
 our $CVS;
 our ($iterationTime, $updateUITime, $updateUITime2);
@@ -202,12 +204,14 @@ sub realMainLoop {
 sub iterate {
 	my $self = shift;
 
+	Benchmark::begin("mainLoop_interfaceIterate") if DEBUG;
 	if ($self->{iterating} == 0) {
 		$self->{console}->Refresh;
 		$self->{console}->Update;
 	}
 	$self->Yield();
 	$iterationTime = time;
+	Benchmark::end("mainLoop_interfaceIterate") if DEBUG;
 }
 
 sub getInput {
@@ -878,7 +882,7 @@ sub updateStatusBar {
 	if ($conState == 5) {
 		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
 
-		if (AI::state) {
+		if (AI::state()) {
 			if (@ai_seq) {
 				my @seqs = @ai_seq;
 				foreach (@seqs) {
@@ -1065,9 +1069,9 @@ sub onInputEnter {
 
 sub onMenuOpen {
 	my $self = shift;
-	$self->{mPause}->Enable(AI::state != AI::OFF);
-	$self->{mManual}->Enable(AI::state != AI::MANUAL);
-	$self->{mResume}->Enable(AI::state != AI::AUTO);
+	$self->{mPause}->Enable(AI::state() != AI::OFF());
+	$self->{mManual}->Enable(AI::state() != AI::MANUAL());
+	$self->{mResume}->Enable(AI::state() != AI::AUTO());
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage(T('Chat Log')) ? 1 : 0);
 
@@ -1098,15 +1102,15 @@ sub onLoadFiles {
 }
 
 sub onEnableAI {
-	AI::state(AI::AUTO);
+	AI::state(AI::AUTO());
 }
 
 sub onManualAI {
-	AI::state(AI::MANUAL);
+	AI::state(AI::MANUAL());
 }
 
 sub onDisableAI {
-	AI::state(AI::OFF);
+	AI::state(AI::OFF());
 }
 
 sub onCopyLastOutput {
@@ -1120,6 +1124,7 @@ sub onMinimizeToTray {
 	my $title = ($char) ? "$char->{name} - $Settings::NAME" : "$Settings::NAME";
 	$tray->SetIcon($self->{frame}->GetIcon, $title);
 	EVT_TASKBAR_LEFT_DOWN($tray, sub {
+		return unless $tray;
 		$tray->RemoveIcon;
 		undef $tray;
 		$self->{frame}->Show(1);
@@ -1187,7 +1192,7 @@ sub onAdvancedConfig {
 	$cfg->addCategory('server', 'Grid', ['master', 'server', 'username', 'password', 'char']);
 	$cfg->addCategory('X-Kore', 'Grid', ['XKore', 'XKore_silent', 'XKore_bypassBotDetection', 'XKore_exeName', 'XKore_listenIp', 'XKore_listenPort', 'XKore_publicIp', 'secureAdminPassword', 'adminPassword', 'callSign', 'commandPrefix']);
 	$cfg->addCategory('lockMap', 'Grid', ['lockMap', 'lockMap_x', 'lockMap_y', 'lockMap_randX', 'lockMap_randY']);
-	$cfg->addCategory('attack', 'Grid', ['attackAuto', 'attackAuto_party', 'attackAuto_onlyWhenSafe', 'attackAuto_followTarget', 'attackAuto_inLockOnly', 'attackDistance', 'attackDistanceAuto', 'attackMaxDistance', 'attackRouteMaxPathDistance', 'attackMaxRouteTime', 'attackMinPlayerDistance', 'attackMinPortalDistance', 'attackUseWeapon', 'attackNoGiveup', 'attackCanSnipe', 'attackCheckLOS', 'attackLooters', 'attackChangeTarget', 'aggressiveAntiKS']);
+	$cfg->addCategory('attack', 'Grid', ['attackAuto', 'attackAuto_routeToLock', 'attackAuto_outOfLock', 'attackAuto_party', 'attackAuto_onlyWhenSafe', 'attackAuto_followTarget', 'attackAuto_inLockOnly', 'attackDistance', 'attackDistanceAuto', 'attackMaxDistance', 'attackRouteMaxPathDistance', 'attackMaxRouteTime', 'attackMinPlayerDistance', 'attackMinPortalDistance', 'attackUseWeapon', 'attackNoGiveup', 'attackCanSnipe', 'attackCheckLOS', 'attackLooters', 'attackChangeTarget', 'aggressiveAntiKS']);
 	$cfg->addCategory('route', 'Grid', ['route_escape_reachedNoPortal', 'route_escape_randomWalk', 'route_escape_shout', 'route_randomWalk', 'route_randomWalk_inTown', 'route_randomWalk_maxRouteTime', 'route_maxWarpFee', 'route_maxNpcTries', 'route_teleport', 'route_teleport_minDistance', 'route_teleport_maxTries', 'route_teleport_notInMaps', 'route_step']);
 	$cfg->addCategory('teleport', 'Grid', ['teleportAuto_hp', 'teleportAuto_sp', 'teleportAuto_idle', 'teleportAuto_portal', 'teleportAuto_search', 'teleportAuto_minAggressives', 'teleportAuto_minAggressivesInLock', 'teleportAuto_onlyWhenSafe', 'teleportAuto_maxDmg', 'teleportAuto_maxDmgInLock', 'teleportAuto_deadly', 'teleportAuto_useSkill', 'teleportAuto_useChatCommand', 'teleportAuto_allPlayers', 'teleportAuto_atkCount', 'teleportAuto_atkMiss', 'teleportAuto_unstuck', 'teleportAuto_dropTarget', 'teleportAuto_dropTargetKS', 'teleportAuto_attackedWhenSitting', 'teleportAuto_totalDmg', 'teleportAuto_totalDmgInLock', 'teleportAuto_equip_leftAccessory', 'teleportAuto_equip_rightAccessory', 'teleportAuto_lostHomunculus']);
 	$cfg->addCategory('follow', 'Grid', ['follow', 'followTarget', 'followEmotion', 'followEmotion_distance', 'followFaceDirection', 'followDistanceMax', 'followDistanceMin', 'followLostStep', 'followSitAuto', 'followBot']);
@@ -1706,3 +1711,4 @@ sub onNpcClose {
 }
 
 1;
+

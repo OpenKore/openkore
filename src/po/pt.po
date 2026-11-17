@@ -4557,6 +4557,10 @@ msgstr "Por favor, aguarde 10 segundos antes de tentar desconectar-se.\n"
 msgid "Logged out from the server succesfully.\n"
 msgstr "Desconectou-se do servidor com sucesso.\n"
 
+#: ../Commands.pm:454
+msgid "Use the Private Airship service."
+msgstr "Use o serviço do Private Airship."
+
 #: ../Network/Receive.pm:9112
 msgid "Use Private Airship success.\n"
 msgstr "Sucesso ao usar o Private Airship.\n"
@@ -4577,9 +4581,61 @@ msgstr "Mapa destino inválido.\n"
 msgid "Source map is invalid.\n"
 msgstr "Mapa de origem é inválido.\n"
 
+#: ../Commands.pm:456
+msgid "request teleport to <map name> using the specified item (default: Passport ID 25464)"
+msgstr "solicita teleporte para <nome do mapa> usando o item especificado (padrão: Passaporte ID 25464)"
+
+#: ../Commands.pm:497
+#, perl-format
+msgid "Syntax Error in function 'privateairship' (Use Private Airship)\nUsage: privateairship <map name> [<item ID>]\n"
+msgstr "Erro de sintaxe na função 'privateairship' (Usar Private Airship)\nUso: privateairship <nome do mapa> [<ID do item>]\n"
+
+#: ../Commands.pm:502
+msgid "Item ID must be numeric for 'privateairship'.\n"
+msgstr "O ID do item deve ser numérico para 'privateairship'.\n"
+
+#: ../Commands.pm:507 ../Network/Receive.pm:9732
+#, perl-format
+msgid "%s cannot be used for Private Airship. Please use %s.\n"
+msgstr "%s não pode ser usado no Private Airship. Por favor, use %s.\n"
+
 #: ../Network/Receive.pm:9122
 msgid "Item unavailable for use PivateAirship.\n"
 msgstr "Item para usar o Private Airship indisponível.\n"
+
+#: ../Commands.pm:513
+#, perl-format
+msgid "Map '%s' does not exist for Private Airship.\n"
+msgstr "O mapa '%s' não existe para o Private Airship.\n"
+
+#: ../Commands.pm:517
+#, perl-format
+msgid "Map name '%s' is too long for Private Airship (maximum 16 characters including extension).\n"
+msgstr "O nome do mapa '%s' é muito longo para o Private Airship (máximo de 16 caracteres incluindo a extensão).\n"
+
+#: ../Commands.pm:524
+#, perl-format
+msgid "You do not have %s required for Private Airship.\n"
+msgstr "Você não tem %s necessário para o Private Airship.\n"
+
+#: ../Commands.pm:529
+#, perl-format
+msgid "Requested Private Airship to %s using %s.\n"
+msgstr "Private Airship solicitado para %s usando %s.\n"
+
+#: ../Network/Receive.pm:9713
+msgid "Received Private Airship response without a result code.\n"
+msgstr "Resposta do Private Airship recebida sem código de resultado.\n"
+
+#: ../Network/Receive.pm:9725
+#, perl-format
+msgid "You do not have enough %s to use Private Airship.\n"
+msgstr "Você não tem %s suficiente para usar o Private Airship.\n"
+
+#: ../Network/Receive.pm:9734
+#, perl-format
+msgid "Unknown Private Airship response %d.\n"
+msgstr "Resposta desconhecida do Private Airship %d.\n"
 
 #: ../Network/Receive.pm:9130
 msgid "Sell failed.\n"

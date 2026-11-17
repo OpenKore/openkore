@@ -30,6 +30,7 @@ use Bus::Messages qw(serialize);
 use Bus::MessageParser;
 use Utils qw(dataWaiting);
 use Utils::Exceptions;
+use Log qw(debug message error);
 
 
 ##
@@ -51,7 +52,10 @@ sub new {
 			Timeout => 4
 		);
 	if (!$self{sock}) {
+		error (scalar(localtime) . " Unable to connect to Bus Server ($host $port)\n");
 		SocketException->throw("$!");
+	} else {
+		message (scalar(localtime) . " Connected to Bus Server ($host $port)\n", "success");
 	}
 
 	$self{sock}->autoflush(0);
@@ -62,7 +66,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	$self->{sock}->close if ($self->{sock});
+	$self->close();
 }
 
 ##
@@ -97,15 +101,20 @@ sub readNext {
 		my $data;
 		eval {
 			$self->{sock}->recv($data, 1024 * 32, 0);
-		};
-		if ($@) {
-			IOException->throw($@);
-		} elsif (!defined $data || length($data) == 0) {
+	};
+	if ($@) {
+		IOException->throw($@);
+	} elsif (!defined $data || length($data) == 0) {
 			IOException->throw("Bus server closed connection.");
 		}
 		$self->{parser}->add($data);
 	}
 	return $self->{parser}->readNext($ID);
+}
+
+sub close {
+	eval { $_[0]->{sock}->shutdown(2); };  # Graceful shutdown
+	$_[0]->{sock}->close;
 }
 
 1;

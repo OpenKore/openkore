@@ -4,7 +4,7 @@
 # Openkore: http://openkore.com/											
 # Openkore Brazil: http://openkore.com.br/	
 #
-# 15:13 sexta-feira, 16 de março de 2012
+# 15:13 sexta-feira, 16 de marï¿½o de 2012
 #	- added support to loading .txt files from control folder, this way you can have different or specific lists
 #	- supressed messages shown while blocking players (from this plugin and kore's default message too)
 #	- added openkore rev check to avoid unnecessary posts :P
@@ -231,14 +231,14 @@ sub ingame {
 
 sub AI_hook {
 	if (AI_MODE) {
-		if (AI::action eq "leavemealone") {
-			return 0 unless (defined AI::args->{name});
+		if (AI::action() eq "leavemealone") {
+			return 0 unless (defined AI::args()->{name});
 			if (Time::HiRes::time >= ($lastblocktime + BLOCKDELAY)) {
 				$lastblocktime = Time::HiRes::time;
-				msg("[".PLUGINNAME."] Player ".AI::args->{name}." has been blocked.\n") if (SHOW_BLOCK_STEPS);
-				#Commands::run("ignore 1 ".AI::args->{name});
-				$messageSender->sendIgnore(AI::args->{name}, 0);
-				AI::dequeue;
+				msg("[".PLUGINNAME."] Player ".AI::args()->{name}." has been blocked.\n") if (SHOW_BLOCK_STEPS);
+				#Commands::run("ignore 1 ".AI::args()->{name});
+				$messageSender->sendIgnore(AI::args()->{name}, 0);
+				AI::dequeue();
 			}
 		}
 	} else {

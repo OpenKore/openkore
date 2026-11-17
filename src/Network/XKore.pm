@@ -18,20 +18,30 @@ use strict;
 use base qw(Exporter);
 use Exporter;
 use IO::Socket::INET;
+use Socket qw(inet_aton);
 use Time::HiRes qw(time usleep);
-use Win32;
 use Exception::Class ('Network::XKore::CannotStart');
 
 use Modules 'register';
 use Globals;
 use Log qw(message error debug);
-use Utils::Win32;
 use Network;
 use Network::Send ();
 use Utils qw(dataWaiting timeOut);
 use Translation;
 use Misc qw(chatLog);
 use Network::MessageTokenizer;
+
+use constant IS_WINDOWS => ($^O eq 'MSWin32');
+
+BEGIN {
+    if (IS_WINDOWS) {
+        require Win32;
+        Win32->import();
+        require Utils::Win32;
+        Utils::Win32->import();
+    }
+}
 
 my $currentClientKey = 0;
 
@@ -42,12 +52,13 @@ my $currentClientKey = 0;
 sub new {
 	my $class = shift;
 	my $port = $config{XKore_port} || 2350;
+	my $addr = $config{XKore_listenIp} || 'localhost';
 	my $self = bless {}, $class;
 
 	undef $@;
 	$self->{server} = new IO::Socket::INET->new(
 		Listen		=> 5,
-		LocalAddr	=> 'localhost',
+		LocalAddr	=> $addr,
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self->{server}) {
@@ -55,6 +66,7 @@ sub new {
 			"Make sure no other servers are running on port %s.\n", $port));
 	}
 
+	message TF("Listening on %s:%s\n", $addr, $port), "startup";
 	$self->{incomingPackets} = "";
 	$self->{serverPackets} = "";
 	$self->{clientPackets} = "";
@@ -135,6 +147,7 @@ sub getState {
 
 sub setState {
 	my ($self, $state) = @_;
+	delete $self->{uninitializedCharacter} if $state != Network::IN_GAME_BUT_UNINITIALIZED;
 	if ($conState != $state) {
 		$conState = $state;
 		Plugins::callHook('Network::stateChanged');
@@ -203,7 +216,7 @@ sub clientSend {
 	my $msg = shift;
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	if ($switch eq "02AE") { #initialize_message_id_encryption
+	if ($switch eq "02AE" && !($self->getState() == Network::IN_GAME_BUT_UNINITIALIZED && $self->{uninitializedCharacter})) { #initialize_message_id_encryption
 		$msg = "";
 	}
 
@@ -257,12 +270,12 @@ sub checkConnection {
 	my $pid;
 	# Wait until the RO client has started
 
-	my $loop = 1;
+	my $loop = $config{XKore_lookForProcess} ? 1 : 0;
 	my @list;
 
 	message TF("Please start the Ragnarok Online client (%s)\n", $config{XKore_exeName}), "startup";
 	Plugins::callHook('XKore_start');
-	while ($loop) {
+	while ($loop && IS_WINDOWS) {
 		undef @list;
 		my @z = Utils::Win32::listProcesses();
 
@@ -380,9 +393,26 @@ sub waitForClient {
 
 	message T("Waiting for the Ragnarok Online client to connect to X-Kore..."), "startup";
 	$self->{client} = $self->{server}->accept;
+	$self->{incomingPackets} = '';
+	$self->{serverPackets} = '';
+	$self->{clientPackets} = '';
+	delete $self->{connectionContext};
+	$self->resetPacketState;
 	# Translation Comment: Waiting for the Ragnarok Online client to connect to X-Kore...
 	message " " . T("ready\n"), "startup";
 	return $self->{client};
+}
+
+sub resetPacketState {
+	my ($self) = @_;
+	if ($incomingMessages) {
+		$incomingMessages->clear;
+		delete $incomingMessages->{nextMessageMightBeAccountID};
+	}
+	$outgoingClientMessages->clear if $outgoingClientMessages;
+	$self->{tokenizer}->clear;
+	$currentClientKey = 0;
+	$messageSender->{encryption}->{crypt_key} = 0 if $messageSender && $messageSender->{encryption};
 }
 
 ##
@@ -409,18 +439,23 @@ sub recv {
 	$self->{incomingPackets} .= $msg;
 
 	while ($self->{incomingPackets} ne "") {
-		last if (!length($self->{incomingPackets}));
+		# TCP can split both the three-byte header and its payload.
+		last if (length($self->{incomingPackets}) < 3);
 
 		my $type = substr($self->{incomingPackets}, 0, 1);
 		my $len = unpack("v",substr($self->{incomingPackets}, 1, 2));
 
-		last if ($len > length($self->{incomingPackets}));
+		last if (length($self->{incomingPackets}) < $len + 3);
 
 		$msg = substr($self->{incomingPackets}, 3, $len);
 		$self->{incomingPackets} = (length($self->{incomingPackets}) - $len - 3)?
 			substr($self->{incomingPackets}, $len + 3, length($self->{incomingPackets}) - $len - 3)
 			: "";
 		if ($type eq "R") {
+			if ($self->getState() == Network::IN_GAME_BUT_UNINITIALIZED && $self->{uninitializedCharacter}) {
+				$self->clientSend($msg);
+				next;
+			}
 			# Client-bound (or "from server") packets
 			my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 			if (($switch eq "0071" || $switch eq "0092") && $currentClientKey && $messageSender->{encryption}->{crypt_key}) {
@@ -430,11 +465,25 @@ sub recv {
 			$self->{serverPackets} .= $msg;
 		} elsif ($type eq "S") {
 			# Server-bound (or "to server") packets
+			if ($self->getState() == Network::IN_GAME_BUT_UNINITIALIZED && $self->{uninitializedCharacter}) {
+				$self->serverSend($msg);
+				$bytesSent += length($msg);
+				next;
+			}
 			if($self->getState() eq Network::IN_GAME || $self->getState() eq Network::CONNECTED_TO_CHAR_SERVER) {
 				$self->onClientData($msg);
 				return undef;
 			}
 			$self->{clientPackets} .= $msg;
+		} elsif ($type eq "C" && $len == 7 && ord(substr($msg, 0, 1)) == 1) {
+			my ($address, $port) = unpack('x a4 n', $msg);
+			my $changed = defined($self->{connectionContext}) && $self->{connectionContext} ne $msg;
+			$self->{connectionContext} = $msg;
+			if ($changed && $self->{uninitializedCharacter} && $masterServer && $port == $masterServer->{port} && $address eq inet_aton($masterServer->{ip})
+				&& !(defined($map_ip) && defined($map_port) && $map_port == $port && inet_aton($map_ip) eq $address)) {
+				$self->resetPacketState;
+				$self->setState(Network::NOT_CONNECTED);
+			}
 		} elsif ($type eq "K") {
 			# Keep-alive... useless.
 		}
@@ -577,6 +626,16 @@ sub hackClient {
 #}
 sub onClientData {
 	my ($self, $msg) = @_;
+	# A relay over TCP frames the client's bytes at read boundaries, so one packet
+	# can span two S frames. Opt-in: holding bytes across frames trusts the packet
+	# lengths in recvpackets, which per-frame handling does not depend on.
+	if ($config{XKore_clientStream} && !$currentClientKey && !$messageSender->{encryption}->{crypt_key_3}) {
+		$self->{tokenizer}->add($msg);
+		$messageSender->sendToServer($_) for $messageSender->process(
+			$self->{tokenizer}, $clientPacketHandler
+		);
+		return;
+	}
 	my $additional_data;
 	my $type;
 

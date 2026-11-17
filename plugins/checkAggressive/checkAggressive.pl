@@ -1,0 +1,328 @@
+#
+# checkAggressive
+# Author: Henrybk
+#
+# What this plugin does:
+# This plugin extends aggressive monster detection for both the main character
+# and slaves. It checks monster AI data from monsters_table.txt and marks a
+# monster as aggressive only when it is both clean and moving toward the
+# character or one of the character's slaves.
+#
+# How it works:
+# - The plugin reads monster data from %monstersTable.
+# - It uses the monster Ai value to determine whether the monster is aggressive.
+# - It then checks whether the monster is still clean.
+# - It also checks whether the monster is moving toward the character or a
+#   slave before returning true.
+#
+# Hooks handled by this plugin:
+# - ai_check_Aggressiveness
+# - ai_slave_check_Aggressiveness
+#
+# How to configure it:
+# This plugin does not require custom config.txt entries.
+# Just enable it and make sure monsters_table.txt is loaded and includes the Ai
+# column.
+#
+# Examples:
+# 1. Use this plugin to improve how OpenKore recognizes aggressive monsters
+#    before they have attacked you.
+#
+# 2. Keep it enabled when using slaves so aggressive monsters moving toward a
+#    homunculus, mercenary, or other slave are also detected correctly.
+#
+# Notes:
+# - This plugin depends on monsters_table.txt, not on a separate JSON database.
+# - A monster must be aggressive by AI, clean, and moving toward you or a
+#   slave before it is treated as aggressive by this plugin.
+#
+package checkAggressive;
+
+use strict;
+use Plugins;
+use Globals;
+use Log qw(message error debug warning);
+use Utils qw(calcPosition calcPosFromPathfinding blockDistance getVector vectorToDegree);
+
+Plugins::register('checkAggressive', 'checkAggressive', \&Unload, \&Unload);
+
+my $hooks = Plugins::addHooks(
+	['ai_check_Aggressiveness',				\&on_ai_check_Aggressiveness, undef],
+	['ai_slave_check_Aggressiveness',		\&on_ai_slave_check_Aggressiveness, undef],
+);
+
+use constant {
+	PLUGIN_NAME => 'checkAggressive',
+};
+
+sub Unload {
+	Plugins::delHooks($hooks);
+	message "[".PLUGIN_NAME."] Plugin unloading or reloading.\n", 'success';
+}
+
+sub is_monster_engaged_with_us {
+	my ($monster) = @_;
+
+	return ($monster->{sentAttack} || $monster->{engaged}) ? 1 : 0;
+}
+
+sub is_looking_at_actor {
+	my ($monster, $actor) = @_;
+
+	return unless ($monster && $actor);
+	return unless defined $monster->{look}{body};
+
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	return unless ($monster_pos && $actor_pos);
+
+	return 1 if ($monster_pos->{x} == $actor_pos->{x} && $monster_pos->{y} == $actor_pos->{y});
+
+	my %vec;
+	getVector(\%vec, $actor_pos, $monster_pos);
+	my $degree = vectorToDegree(\%vec);
+	return unless defined $degree;
+
+	my $target_body = int(sprintf("%.0f", (360 - $degree) / 45)) % 8;
+	return $monster->{look}{body} == $target_body ? 1 : 0;
+}
+
+sub get_attackable_actors {
+	my @actors;
+
+	push @actors, @{ $playersList ? $playersList->getItems : [] };
+	push @actors, @{ $slavesList ? $slavesList->getItems : [] };
+	push @actors, @{ $elementalsList ? $elementalsList->getItems : [] };
+
+	return @actors;
+}
+
+sub get_line_points_between {
+	my ($from_pos, $to_pos) = @_;
+	return [] unless ($from_pos && $to_pos);
+
+	my ($x1, $y1) = ($from_pos->{x}, $from_pos->{y});
+	my ($x2, $y2) = ($to_pos->{x}, $to_pos->{y});
+
+	my @points;
+	my $dx = abs($x2 - $x1);
+	my $dy = abs($y2 - $y1);
+	my $sx = $x1 < $x2 ? 1 : -1;
+	my $sy = $y1 < $y2 ? 1 : -1;
+	my $err = $dx - $dy;
+
+	while (!($x1 == $x2 && $y1 == $y2)) {
+		my $e2 = 2 * $err;
+		if ($e2 > -$dy) {
+			$err -= $dy;
+			$x1 += $sx;
+		}
+		if ($e2 < $dx) {
+			$err += $dx;
+			$y1 += $sy;
+		}
+
+		last if ($x1 == $x2 && $y1 == $y2);
+		push @points, {x => $x1, y => $y1};
+	}
+
+	return \@points;
+}
+
+sub has_attackable_actor_between {
+	my ($actor, $monster) = @_;
+	return unless ($actor && $monster);
+
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	return unless ($actor_pos && $monster_pos);
+
+	my $line_points = get_line_points_between($actor_pos, $monster_pos);
+	return 0 unless (@{$line_points});
+
+	my %line_lookup = map { $_->{x} . ',' . $_->{y} => 1 } @{$line_points};
+
+	foreach my $other_actor (get_attackable_actors()) {
+		next unless $other_actor;
+		next if ($actor->{ID} && $other_actor->{ID} && $actor->{ID} eq $other_actor->{ID});
+		next if $other_actor->{dead};
+
+		my $other_pos = calcPosFromPathfinding($field, $other_actor);
+		next unless $other_pos;
+
+		return 1 if $line_lookup{$other_pos->{x} . ',' . $other_pos->{y}};
+	}
+
+	return 0;
+}
+
+sub is_aggressive_towards_actor {
+	my ($monster, $actor, $is_clean) = @_;
+	return unless ($monster && $actor);
+
+	return 1 if is_monster_engaged_with_us($monster);
+
+	return unless $is_clean;
+	return unless exists $monstersTable{$monster->{nameID}};
+	return unless $monstersTable{$monster->{nameID}}{isAIMode_Aggressive};
+
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	return unless ($monster_pos && $actor_pos);
+	return unless (blockDistance($actor_pos, $monster_pos) < 10);
+	return unless (Misc::objectIsMovingTowards($monster, $actor) || is_looking_at_actor($monster, $actor));
+	return if has_attackable_actor_between($actor, $monster);
+
+	return 1;
+}
+
+sub is_monster_engaged_with_us {
+	my ($monster) = @_;
+
+	return ($monster->{sentAttack} || $monster->{engaged}) ? 1 : 0;
+}
+
+sub is_looking_at_actor {
+	my ($monster, $actor) = @_;
+
+	return unless ($monster && $actor);
+	return unless defined $monster->{look}{body};
+
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	return unless ($monster_pos && $actor_pos);
+
+	return 1 if ($monster_pos->{x} == $actor_pos->{x} && $monster_pos->{y} == $actor_pos->{y});
+
+	my %vec;
+	getVector(\%vec, $actor_pos, $monster_pos);
+	my $degree = vectorToDegree(\%vec);
+	return unless defined $degree;
+
+	my $target_body = int(sprintf("%.0f", (360 - $degree) / 45)) % 8;
+	return $monster->{look}{body} == $target_body ? 1 : 0;
+}
+
+sub get_attackable_actors {
+	my @actors;
+
+	push @actors, @{ $playersList ? $playersList->getItems : [] };
+	push @actors, @{ $slavesList ? $slavesList->getItems : [] };
+	push @actors, @{ $elementalsList ? $elementalsList->getItems : [] };
+
+	return @actors;
+}
+
+sub get_line_points_between {
+	my ($from_pos, $to_pos) = @_;
+	return [] unless ($from_pos && $to_pos);
+
+	my ($x1, $y1) = ($from_pos->{x}, $from_pos->{y});
+	my ($x2, $y2) = ($to_pos->{x}, $to_pos->{y});
+
+	my @points;
+	my $dx = abs($x2 - $x1);
+	my $dy = abs($y2 - $y1);
+	my $sx = $x1 < $x2 ? 1 : -1;
+	my $sy = $y1 < $y2 ? 1 : -1;
+	my $err = $dx - $dy;
+
+	while (!($x1 == $x2 && $y1 == $y2)) {
+		my $e2 = 2 * $err;
+		if ($e2 > -$dy) {
+			$err -= $dy;
+			$x1 += $sx;
+		}
+		if ($e2 < $dx) {
+			$err += $dx;
+			$y1 += $sy;
+		}
+
+		last if ($x1 == $x2 && $y1 == $y2);
+		push @points, {x => $x1, y => $y1};
+	}
+
+	return \@points;
+}
+
+sub has_attackable_actor_between {
+	my ($actor, $monster) = @_;
+	return unless ($actor && $monster);
+
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	return unless ($actor_pos && $monster_pos);
+
+	my $line_points = get_line_points_between($actor_pos, $monster_pos);
+	return 0 unless (@{$line_points});
+
+	my %line_lookup = map { $_->{x} . ',' . $_->{y} => 1 } @{$line_points};
+
+	foreach my $other_actor (get_attackable_actors()) {
+		next unless $other_actor;
+		next if ($actor->{ID} && $other_actor->{ID} && $actor->{ID} eq $other_actor->{ID});
+		next if $other_actor->{dead};
+
+		my $other_pos = calcPosFromPathfinding($field, $other_actor);
+		next unless $other_pos;
+
+		return 1 if $line_lookup{$other_pos->{x} . ',' . $other_pos->{y}};
+	}
+
+	return 0;
+}
+
+sub is_aggressive_towards_actor {
+	my ($monster, $actor, $is_clean) = @_;
+	return unless ($monster && $actor);
+
+	return 1 if is_monster_engaged_with_us($monster);
+
+	return unless $is_clean;
+	return unless exists $monstersTable{$monster->{nameID}};
+	return unless is_monster_ai_aggressive($monstersTable{$monster->{nameID}}{Ai});
+
+	my $monster_pos = calcPosFromPathfinding($field, $monster);
+	my $actor_pos = calcPosFromPathfinding($field, $actor);
+	return unless ($monster_pos && $actor_pos);
+	return unless (blockDistance($actor_pos, $monster_pos) < 10);
+	return unless (Misc::objectIsMovingTowards($monster, $actor) || is_looking_at_actor($monster, $actor));
+	return if has_attackable_actor_between($actor, $monster);
+
+	return 1;
+}
+
+sub on_ai_check_Aggressiveness {
+	my ($self, $args) = @_;
+	
+	my $monster = $args->{monster};
+	my $ID = $monster->{ID};
+
+	return unless is_aggressive_towards_actor($monster, $char, Misc::checkMonsterCleanness($ID));
+
+	debug "[".PLUGIN_NAME."] Monster $monster at ($monster->{pos}{x} $monster->{pos}{y}) | Lvl "
+		. ($monstersTable{$monster->{nameID}}{Level} // 'unknown')
+		. " | matches aggressive plugin rules for the character\n";
+	
+	$args->{return} = 1;
+	return;
+}
+
+sub on_ai_slave_check_Aggressiveness {
+	my ($self, $args) = @_;
+	
+	my $monster = $args->{monster};
+	my $ID = $monster->{ID};
+	my $slave = $args->{slave};
+
+	return unless is_aggressive_towards_actor($monster, $slave, Misc::slave_checkMonsterCleanness($slave, $ID));
+
+	debug "[".PLUGIN_NAME."] Monster $monster at ($monster->{pos}{x} $monster->{pos}{y}) | Lvl "
+		. ($monstersTable{$monster->{nameID}}{Level} // 'unknown')
+		. " | matches aggressive plugin rules for the slave\n";
+	
+	$args->{return} = 1;
+	return;
+}
+
+1;

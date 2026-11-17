@@ -30,6 +30,7 @@ my $hooks = Plugins::addHooks(
 	['configModify', \&onConfigModify, undef],
 	['start3',       \&onstart3, undef],
 	['pos_load_config.txt',       \&checkConfig, undef],
+	['check_triggered_automacros',       \&manage_check_triggered_automacros, undef],
 );
 
 my $chooks = Commands::register(
@@ -54,10 +55,38 @@ sub Unload {
 	Commands::unregister($chooks);
 }
 
+sub manage_check_triggered_automacros {
+	my ($hook, $args) = @_;
+	
+	if (!defined $eventMacro) {
+		$args->{return} = 0;
+		return;
+	} elsif ($eventMacro->{number_of_triggered_automacros} == 0) {
+		$args->{return} = 0;
+		return;
+	}
+
+	foreach my $cycle_stage ($eventMacro->get_cycle_stages) {
+		foreach my $array_member (@{$eventMacro->{triggered_prioritized_automacros_index_list}{$cycle_stage}}) {
+
+			my $automacro = $eventMacro->{Automacro_List}->get($array_member->{index});
+
+			next unless $automacro->is_timed_out;
+
+			$args->{return} = 1;
+			return;
+		}
+	}
+	
+	$args->{return} = 0;
+	return;
+}
+
 sub checkConfig {
 	$timeout{eventMacro_delay}{timeout} = 1 unless defined $timeout{eventMacro_delay};
 	$config{eventMacro_orphans} = 'terminate' unless defined $config{eventMacro_orphans};
 	$config{eventMacro_CheckOnAI} = 'auto' unless defined $config{eventMacro_CheckOnAI};
+	$config{eventMacro_notWhenInQueue} = '' unless defined $config{eventMacro_notWhenInQueue};
 	$file = (defined $config{eventMacro_file}) ? $config{eventMacro_file} : "eventMacros.txt";
 	return 1;
 }
@@ -312,7 +341,7 @@ sub commandHandler {
 		my $macro = $eventMacro->{Macro_Runner};
 		if ( $macro ) {
 			message "Stopping macro '".$eventMacro->{Macro_Runner}->last_subcall_name."'.\n";
-			$eventMacro->clear_queue();
+			$eventMacro->clear_queue(1);
 		} else {
 			message "There's no macro currently running.\n";
 		}
@@ -602,6 +631,7 @@ sub commandHandler {
 		);
 
 		if ( defined $eventMacro->{Macro_Runner} ) {
+			$eventMacro->{Macro_Runner_Cycle_Stage} = 'AI_start';
 			$eventMacro->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $eventMacro->iterate_macro }, undef );
 		} else {
 			error "[eventMacro] unable to create macro queue.\n";

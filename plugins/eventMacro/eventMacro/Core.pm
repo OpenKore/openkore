@@ -1,6 +1,7 @@
 package eventMacro::Core;
 
 use strict;
+use Scalar::Util qw(weaken);
 use Globals;
 use Log qw(message error warning debug);
 use Utils;
@@ -16,6 +17,26 @@ use eventMacro::Runner;
 use eventMacro::Condition;
 use eventMacro::Utilities qw(find_variable get_key_or_index);
 
+sub get_cycle_stages {
+	return qw(AI_start AI_pre AI_middle AI_post);
+}
+
+sub is_valid_cycle_stage {
+	my ($self, $cycle_stage) = @_;
+	return scalar grep { $_ eq $cycle_stage } $self->get_cycle_stages;
+}
+
+sub _weak_self_sub {
+	my ($self, $callback) = @_;
+	my $weak_self = $self;
+	weaken($weak_self);
+
+	return sub {
+		my $self = $weak_self or return;
+		$callback->($self, @_);
+	};
+}
+
 sub new {
 	my ($class, $file) = @_;
 	my $self = bless {}, $class;
@@ -27,8 +48,9 @@ sub new {
 	$self->{Condition_Modules_Loaded} = {};
 	$self->{automacros_index_to_AI_check_state} = {};
 
-	$self->{Event_Related_Hooks} = {};
-	$self->{Hook_Handles} = {};
+        $self->{Event_Related_Hooks} = {};
+        $self->{Hook_Handles} = {};
+        $self->{Log_Hook_Handles} = {};
 
 	$self->{Event_Related_Static_Variables} = {};
 
@@ -41,9 +63,13 @@ sub new {
 	$self->{Hash_Variable_List_Hash} = {};
 
 	#must add a sorting algorithm here later
-	$self->{triggered_prioritized_automacros_index_list} = [];
+	$self->{triggered_prioritized_automacros_index_list} = {};
 
 	$self->{automacro_index_to_queue_index} = {};
+	foreach my $cycle_stage ($self->get_cycle_stages) {
+		$self->{triggered_prioritized_automacros_index_list}{$cycle_stage} = [];
+		$self->{automacro_index_to_queue_index}{$cycle_stage} = {};
+	}
 
 	my $parse_result = parseMacroFile($file, 0);
 	if ( !$parse_result ) {
@@ -59,14 +85,23 @@ sub new {
 
 	$self->define_automacro_check_state;
 
-	$self->{AI_state_change_Hook_Handle} = Plugins::addHook( 'AI_state_change',  sub { my $state = $_[1]->{new}; $self->adapt_to_AI_state($state); }, undef );
+	$self->{AI_state_change_Hook_Handle} = Plugins::addHook(
+		'AI_state_change',
+		_weak_self_sub($self, sub {
+			my ($self, undef, $args) = @_;
+			my $state = $args->{new};
+			$self->adapt_to_AI_state($state);
+		}),
+		undef
+	);
 
 	$self->{Currently_AI_state_Adapted_Automacros} = undef;
 
-	$self->adapt_to_AI_state(AI::state);
+	$self->adapt_to_AI_state(AI::state());
 
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
-	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
+	$self->{AI_cycle_stage_Automacros_Check_Hook_Handles} = {};
+	$self->{Macro_Runner_Cycle_Stage} = undef;
 	$self->set_automacro_checking_status();
 
 	$self->create_callbacks();
@@ -79,6 +114,37 @@ sub new {
 	$self->set_hashes_size_to_zero();
 
 	return $self;
+}
+
+sub get_log_hook_sub {
+        my ($self) = @_;
+
+        return $self->{Log_Event_Sub} if (exists $self->{Log_Event_Sub});
+
+        $self->{Log_Event_Sub} = _weak_self_sub($self, sub {
+                my ($self, $type, $domain, $level, $currentVerbosity, $message, $user_data, $near, $far) = @_;
+                return if (defined $domain && $domain eq 'eventMacro');
+                return if (defined $level && defined $currentVerbosity && $level > $currentVerbosity);
+                return if $self->{processing_log};
+                local $self->{processing_log} = 1;
+                $message =~ s/[\r\n]+$//;
+
+                my $args = {
+                        type => $type,
+                        domain => $domain,
+                        level => $level,
+                        currentVerbosity => $currentVerbosity,
+                        message => $message,
+                        user_data => $user_data,
+                        near => $near,
+                        far => $far,
+                };
+
+                my $check_list_hash = $self->{Event_Related_Hooks}{log};
+                $self->manage_event_callbacks('hook', 'log', $args, $check_list_hash);
+        });
+
+        return $self->{Log_Event_Sub};
 }
 
 sub adapt_to_AI_state {
@@ -106,15 +172,20 @@ sub adapt_to_AI_state {
 
 sub unload {
 	my ($self) = @_;
-	$self->clear_queue();
+	$self->clear_queue(1);
 	$self->clean_hooks();
-	Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}) if ($self->{AI_start_Automacros_Check_Hook_Handle});
+	$self->sync_automacro_check_hooks(1);
 	Plugins::delHook($self->{AI_state_change_Hook_Handle}) if ($self->{AI_state_change_Hook_Handle});
+	delete $self->{AI_state_change_Hook_Handle};
+	delete $self->{Log_Event_Sub};
 }
 
 sub clean_hooks {
-	my ($self) = @_;
-	foreach (values %{$self->{Hook_Handles}}) {Plugins::delHook($_)}
+        my ($self) = @_;
+        foreach (values %{$self->{Hook_Handles}}) {Plugins::delHook($_)}
+        foreach (values %{$self->{Log_Hook_Handles}}) {Log::delHook($_)}
+        $self->{Hook_Handles} = {};
+        $self->{Log_Hook_Handles} = {};
 }
 
 sub set_automacro_checking_status {
@@ -123,35 +194,42 @@ sub set_automacro_checking_status {
 	if (!defined $self->{Automacros_Checking_Status}) {
 		debug "[eventMacro] Initializing automacro checking by default.\n", "eventMacro", 2;
 		$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
-		$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start', sub { my $state = $_[1]->{state}; $self->AI_start_checker($state); }, undef );
+		$self->sync_automacro_check_hooks();
 		return;
 	} elsif ($self->{Automacros_Checking_Status} == $status) {
 		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
 	} else {
 		debug "[eventMacro] Changing automacro checking status from '".$self->{Automacros_Checking_Status}."' to '".$status."'.\n", "eventMacro", 2;
-		if (
-		  ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS || $self->{Automacros_Checking_Status} == CHECKING_FORCED_BY_USER) &&
-		  ($status == PAUSED_BY_EXCLUSIVE_MACRO || $status == PAUSE_FORCED_BY_USER)
-		) {
-			if (defined $self->{AI_start_Automacros_Check_Hook_Handle}) {
-				debug "[eventMacro] Deleting AI_start hook.\n", "eventMacro", 2;
-				Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle});
-				$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
-			} else {
-				error "[eventMacro] Tried to delete AI_start hook and for some reason it is already undefined.\n";
-			}
-		} elsif (
-		  ($self->{Automacros_Checking_Status} == PAUSED_BY_EXCLUSIVE_MACRO || $self->{Automacros_Checking_Status} == PAUSE_FORCED_BY_USER) &&
-		  ($status == CHECKING_AUTOMACROS || $status == CHECKING_FORCED_BY_USER)
-		) {
-			if (defined $self->{AI_start_Automacros_Check_Hook_Handle}) {
-				error "[eventMacro] Tried to add AI_start hook and for some reason it is already defined.\n";
-			} else {
-				debug "[eventMacro] Adding AI_start hook.\n", "eventMacro", 2;
-				$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start',  sub { my $state = $_[1]->{state}; $self->AI_start_checker($state); }, undef );
-			}
-		}
 		$self->{Automacros_Checking_Status} = $status;
+		$self->sync_automacro_check_hooks();
+	}
+}
+
+sub sync_automacro_check_hooks {
+	my ($self, $force_disable) = @_;
+	my $should_have_hooks = !$force_disable
+		&& defined $self->{Automacros_Checking_Status}
+		&& ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS || $self->{Automacros_Checking_Status} == CHECKING_FORCED_BY_USER);
+
+	foreach my $cycle_stage ($self->get_cycle_stages) {
+		if ($should_have_hooks) {
+			if (!defined $self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage}) {
+				debug "[eventMacro] Adding $cycle_stage hook for automacro checking.\n", "eventMacro", 2;
+				$self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage} = Plugins::addHook(
+					$cycle_stage,
+					_weak_self_sub($self, sub {
+						my ($self, undef, $args) = @_;
+						my $state = $args->{state};
+						$self->AI_cycle_stage_checker($cycle_stage, $state);
+					}),
+					undef
+				);
+			}
+		} elsif (defined $self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage}) {
+			debug "[eventMacro] Deleting $cycle_stage hook for automacro checking.\n", "eventMacro", 2;
+			Plugins::delHook($self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage});
+			delete $self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage};
+		}
 	}
 }
 
@@ -256,6 +334,11 @@ sub create_automacro_list {
 				error "[eventMacro] Ignoring automacro '$name' (CheckOnAI parameter should be a list containing only the values 'auto', 'manual' and 'off')\n";
 				next AUTOMACRO;
 
+			###Parameter: CheckOnCycleStage
+			} elsif ($parameter->{'key'} eq "CheckOnCycleStage" && $parameter->{'value'} !~ /^(AI_start|AI_pre|AI_middle|AI_post)$/) {
+				error "[eventMacro] Ignoring automacro '$name' (CheckOnCycleStage parameter should be 'AI_start', 'AI_pre', 'AI_middle' or 'AI_post')\n";
+				next AUTOMACRO;
+
 			###Parameter: disabled
 			} elsif ($parameter->{'key'} eq "disabled" && $parameter->{'value'} !~ /^[01]$/) {
 				error "[eventMacro] Ignoring automacro '$name' (disabled parameter should be '0' or '1')\n";
@@ -264,6 +347,11 @@ sub create_automacro_list {
 			###Parameter: overrideAI
 			} elsif ($parameter->{'key'} eq "overrideAI" && $parameter->{'value'} !~ /^[01]$/) {
 				error "[eventMacro] Ignoring automacro '$name' (overrideAI parameter should be '0' or '1')\n";
+				next AUTOMACRO;
+
+			###Parameter: overrideNotWhenInQueue
+			} elsif ($parameter->{'key'} eq "overrideNotWhenInQueue" && $parameter->{'value'} !~ /^[01]$/) {
+				error "[eventMacro] Ignoring automacro '$name' (overrideNotWhenInQueue parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 
 			###Parameter: exclusive
@@ -509,16 +597,18 @@ sub create_callbacks {
 		}
 
 	}
-
-	my $event_sub = sub {
-		my $name = shift;
-		my $args = shift;
-		my $check_list_hash = $self->{Event_Related_Hooks}{$name};
-		$self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
-	};
-	foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
-		$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
-	}
+        my $event_sub = _weak_self_sub($self, sub {
+                my ($self, $name, $args) = @_;
+                my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+                $self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
+        });
+        foreach my $hook_name (keys %{$self->{Event_Related_Hooks}}) {
+                if ($hook_name eq 'log') {
+                        $self->{Log_Hook_Handles}{$hook_name} = Log::addHook( $self->get_log_hook_sub );
+                } else {
+                        $self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
+                }
+        }
 }
 
 sub manage_nested_automacro_var {
@@ -837,7 +927,7 @@ sub get_scalar_var {
 
 		# Character-related variables.
 		elsif ( $variable_name eq '.job' )          { return $char && $jobs_lut{ $char->{jobID} } || ''; }
-		elsif ( $variable_name eq '.pos' )          { return $char ? sprintf( '%d %d', @{ calcPosition( $char ) }{ 'x', 'y' } ) : ''; }
+		elsif ( $variable_name eq '.pos' )          { return ($char && $field) ? sprintf( '%d %d', @{ calcPosFromPathfinding( $field, $char ) }{ 'x', 'y' } ) : ''; }
 		elsif ( $variable_name eq '.name' )         { return $char && $char->{name}       || 0; }
 		elsif ( $variable_name eq '.hp' )           { return $char && $char->{hp}         || 0; }
 		elsif ( $variable_name eq '.sp' )           { return $char && $char->{sp}         || 0; }
@@ -1245,10 +1335,11 @@ sub add_to_triggered_prioritized_automacros_index_list {
 	my ($self, $automacro) = @_;
 	my $priority = $automacro->get_parameter('priority');
 	my $index = $automacro->get_index;
+	my $cycle_stage = $self->get_cycle_stage_for_automacro($automacro);
 
-	my $list = $self->{triggered_prioritized_automacros_index_list} ||= [];
+	my $list = $self->{triggered_prioritized_automacros_index_list}{$cycle_stage} ||= [];
 
-	my $index_hash = $self->{automacro_index_to_queue_index};
+	my $index_hash = $self->{automacro_index_to_queue_index}{$cycle_stage} ||= {};
 
 	# Find where we should insert this item.
 	my $new_index;
@@ -1265,7 +1356,7 @@ sub add_to_triggered_prioritized_automacros_index_list {
 	$self->{number_of_triggered_automacros}++;
 	$automacro->running_status(1);
 
-	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in position '".$new_index."'.\n", "eventMacro";
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in stage '".$cycle_stage."' and position '".$new_index."'.\n", "eventMacro";
 
 	# Return the insertion index.
 	return $new_index;
@@ -1273,12 +1364,12 @@ sub add_to_triggered_prioritized_automacros_index_list {
 
 sub remove_from_triggered_prioritized_automacros_index_list {
 	my ($self, $automacro) = @_;
-	my $priority = $automacro->get_parameter('priority');
 	my $index = $automacro->get_index;
+	my $cycle_stage = $self->get_cycle_stage_for_automacro($automacro);
 
-	my $list = $self->{triggered_prioritized_automacros_index_list};
+	my $list = $self->{triggered_prioritized_automacros_index_list}{$cycle_stage};
 
-	my $index_hash = $self->{automacro_index_to_queue_index};
+	my $index_hash = $self->{automacro_index_to_queue_index}{$cycle_stage};
 
 	# Find from where we should delete this item.
 	my $queue_index = delete $index_hash->{$index};
@@ -1294,7 +1385,7 @@ sub remove_from_triggered_prioritized_automacros_index_list {
 	$self->{number_of_triggered_automacros}--;
 	$automacro->running_status(0);
 
-	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue from position '".$queue_index."'.\n", "eventMacro";
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue at stage '".$cycle_stage."' and position '".$queue_index."'.\n", "eventMacro";
 
 	# Return the removal index.
 	return $queue_index;
@@ -1336,14 +1427,14 @@ sub manage_event_callbacks {
 		$debug_message .= ", variable value: '".$callback_args."'";
 	}
 
-	debug $debug_message."\n", "eventMacro", 2;
+	debug $debug_message."\n", "eventMacro", 3;
 
 	my ($event_type_automacro_call_index, $event_type_automacro_call_priority);
 
 	foreach my $automacro_index (keys %{$check_list_hash}) {
 		my ($automacro, $conditions_indexes_hash, $check_event_type) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
 
-		debug "[eventMacro] Conditions of state type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Conditions of state type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 
 		my @conditions_indexes_array = keys %{ $conditions_indexes_hash };
 
@@ -1382,6 +1473,9 @@ sub manage_event_callbacks {
 
 				if ($automacro->check_event_type_condition($callback_type, $callback_name, $callback_args)) {
 					debug "[eventMacro] Condition of event type was fulfilled.\n", "eventMacro", 3;
+					if ($self->should_skip_automacro_for_not_when_in_queue($automacro)) {
+						next;
+					}
 
 					if (!defined $event_type_automacro_call_priority) {
 						debug "[eventMacro] Automacro '".$automacro->get_name."' of priority '".$automacro->get_parameter('priority')."' was added to the top of queue.\n", "eventMacro", 3;
@@ -1411,14 +1505,14 @@ sub manage_event_callbacks {
 	}
 
 	if (defined $event_type_automacro_call_index) {
-		
-		my %hookArgs;
-		Plugins::callHook("eventMacro_before_call_check", \%hookArgs);
-		return if ($hookArgs{return});
-
 		my $automacro = $self->{Automacro_List}->get($event_type_automacro_call_index);
+		return if $self->run_before_call_checks($automacro, {
+			callback_type => $callback_type,
+			callback_name => $callback_name,
+			callback_args => $callback_args,
+		});
 
-		message "[eventMacro] Event of type '".$callback_type."', and of name '".$callback_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
+    	message "[eventMacro] Event of type '".$callback_type."', and of name '".$callback_name."' activated automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
 
 		$self->call_macro($automacro);
 	}
@@ -1426,55 +1520,119 @@ sub manage_event_callbacks {
 
 # For '$add_or_delete' value '0' is for delete and '1' is for add.
 sub manage_dynamic_hook_add_and_delete {
-	my ($self, $hook_name, $automacro_index, $condition_index, $add_or_delete) = @_;
+        my ($self, $hook_name, $automacro_index, $condition_index, $add_or_delete) = @_;
 
-	my $automacro = $self->{Automacro_List}->get($automacro_index);
+        my $automacro = $self->{Automacro_List}->get($automacro_index);
 
-	my $condition = $automacro->{conditionList}->get($condition_index);
+        my $condition = $automacro->{conditionList}->get($condition_index);
 
-	if ($add_or_delete == 1) {
-		if (exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
-			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to add hook '".$hook_name."' to callbacks but it already is in it.\n";
-			return;
-		}
+        if ($add_or_delete == 1) {
+                if (exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
+                        error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to add hook '".$hook_name."' to callbacks but it already is in it.\n";
+                        return;
+                }
 
-		debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' added hook '".$hook_name."' to callbacks.\n", "eventMacro", 3;
-		$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
+                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' added hook '".$hook_name."' to callbacks.\n", "eventMacro", 3;
+                $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
 
-		unless (exists $self->{Hook_Handles}{$hook_name}) {
-			my $event_sub = sub {
-				my $name = shift;
-				my $args = shift;
-				my $check_list_hash = $self->{Event_Related_Hooks}{$name};
-				$self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
-			};
-			$self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
-		}
+                unless (exists $self->{Hook_Handles}{$hook_name} || exists $self->{Log_Hook_Handles}{$hook_name}) {
+                        if ($hook_name eq 'log') {
+                                $self->{Log_Hook_Handles}{$hook_name} = Log::addHook( $self->get_log_hook_sub );
+                        } else {
+                                my $event_sub = _weak_self_sub($self, sub {
+                                        my ($self, $name, $args) = @_;
+                                        my $check_list_hash = $self->{Event_Related_Hooks}{$name};
+                                        $self->manage_event_callbacks('hook', $name, $args, $check_list_hash);
+                                });
+                                $self->{Hook_Handles}{$hook_name} = Plugins::addHook( $hook_name, $event_sub, undef );
+                        }
+                }
 
-	} else {
-		if (!exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
-			error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delete hook '".$hook_name."' from callbacks but it isn't in it.\n";
-			return;
-		}
+        } else {
+                if (!exists $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index}) {
+                        error "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' tried to delete hook '".$hook_name."' from callbacks but it isn't in it.\n";
+                        return;
+                }
 
-		debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' deleted hook '".$hook_name."' from callbacks.\n", "eventMacro", 3;
-		delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index};
+                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' deleted hook '".$hook_name."' from callbacks.\n", "eventMacro", 3;
+                delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index};
 
-		unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}}) {
-			delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index};
-			unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}}) {
-				delete $self->{Event_Related_Hooks}{$hook_name};
-				Plugins::delHook($self->{Hook_Handles}{$hook_name});
-				delete $self->{Hook_Handles}{$hook_name};
-			}
-		}
-	}
+                unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}}) {
+                        delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index};
+                        unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}}) {
+                                delete $self->{Event_Related_Hooks}{$hook_name};
+                                if ($hook_name eq 'log') {
+                                        Log::delHook($self->{Log_Hook_Handles}{$hook_name});
+                                        delete $self->{Log_Hook_Handles}{$hook_name};
+                                } else {
+                                        Plugins::delHook($self->{Hook_Handles}{$hook_name});
+                                        delete $self->{Hook_Handles}{$hook_name};
+                                }
+                        }
+                }
+        }
 }
 
-sub AI_start_checker {
-	my ($self, $state) = @_;
+sub get_not_when_in_queue_states {
+	my ($self) = @_;
 
-	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}}) {
+	return unless defined $config{eventMacro_notWhenInQueue};
+	return if $config{eventMacro_notWhenInQueue} =~ /^\s*$/;
+
+	my @states = grep { $_ ne '' } split(/\s*,\s*/, $config{eventMacro_notWhenInQueue});
+	return @states;
+}
+
+sub should_skip_automacro_for_not_when_in_queue {
+	my ($self, $automacro) = @_;
+
+	return 0 unless defined $automacro;
+	return 0 if $automacro->get_parameter('overrideNotWhenInQueue');
+
+	my @blocked_states = $self->get_not_when_in_queue_states;
+	return 0 unless @blocked_states;
+
+	if (AI::inQueue(@blocked_states)) {
+		debug "[eventMacro] Automacro '".$automacro->get_name()."' will not run because eventMacro_notWhenInQueue matched one of these AI queue states: '".join("', '", @blocked_states)."'.\n", "eventMacro", 3;
+		return 1;
+	}
+
+	return 0;
+}
+
+sub get_cycle_stage_for_automacro {
+	my ($self, $automacro) = @_;
+
+	return 'AI_start' unless defined $automacro;
+
+	my $cycle_stage = $automacro->get_parameter('CheckOnCycleStage');
+	return $cycle_stage if defined $cycle_stage && $self->is_valid_cycle_stage($cycle_stage);
+
+	return 'AI_start';
+}
+
+sub run_before_call_checks {
+	my ($self, $automacro, $extra_args) = @_;
+
+	return 1 if $self->should_skip_automacro_for_not_when_in_queue($automacro);
+
+	my %hookArgs = (
+		automacro => $automacro,
+		cycle_stage => $self->get_cycle_stage_for_automacro($automacro),
+	);
+
+	if (defined $extra_args && ref $extra_args eq 'HASH') {
+		@hookArgs{keys %{$extra_args}} = values %{$extra_args};
+	}
+
+	Plugins::callHook("eventMacro_before_call_check", \%hookArgs);
+	return $hookArgs{return} ? 1 : 0;
+}
+
+sub AI_cycle_stage_checker {
+	my ($self, $cycle_stage, $state) = @_;
+
+	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}{$cycle_stage}}) {
 
 		my $automacro = $self->{Automacro_List}->get($array_member->{index});
 
@@ -1484,16 +1642,29 @@ sub AI_start_checker {
 			next;
 		}
 		
-		my %hookArgs;
-		Plugins::callHook("eventMacro_before_call_check", \%hookArgs);
-		return if ($hookArgs{return});
+		next if $self->should_skip_automacro_for_not_when_in_queue($automacro);
+		return if $self->run_before_call_checks($automacro);
 
-		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
+		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."' during $cycle_stage, calling macro '".$automacro->get_parameter('call')."'\n", "system";
 	
 		$self->call_macro($automacro);
 
 		return;
 	}
+}
+
+sub handoff_to_pending_automacros {
+	my ($self, $cycle_stage) = @_;
+	$cycle_stage = 'AI_start' unless defined $cycle_stage && $self->is_valid_cycle_stage($cycle_stage);
+
+	return if defined $self->{Macro_Runner};
+	return if !@{$self->{triggered_prioritized_automacros_index_list}{$cycle_stage}};
+
+	my $checking_status = $self->get_automacro_checking_status();
+	return if $checking_status != CHECKING_AUTOMACROS && $checking_status != CHECKING_FORCED_BY_USER;
+
+	debug "[eventMacro] Macro queue cleared. Checking triggered automacros for stage '".$cycle_stage."' before returning control to core AI.\n", "eventMacro", 2;
+	$self->AI_cycle_stage_checker($cycle_stage, AI::state());
 }
 
 sub disable_all_automacros {
@@ -1529,7 +1700,7 @@ sub enable_automacro {
 sub call_macro {
 	my ($self, $automacro) = @_;
 	if (defined $self->{Macro_Runner}) {
-		$self->clear_queue();
+		$self->clear_queue(1);
 	}
 
 	if ($automacro->get_parameter('call') =~ /\s+/) {
@@ -1571,7 +1742,11 @@ sub call_macro {
 	);
 
 	if (defined $self->{Macro_Runner}) {
-		my $iterate_macro_sub = sub { $self->iterate_macro(); };
+		$self->{Macro_Runner_Cycle_Stage} = $self->get_cycle_stage_for_automacro($automacro);
+		my $iterate_macro_sub = _weak_self_sub($self, sub {
+			my ($self) = @_;
+			$self->iterate_macro();
+		});
 		$self->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
 	} else {
 		error "[eventMacro] unable to create macro queue.\n"
@@ -1654,7 +1829,7 @@ sub enforce_orphan {
 
 	# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
 	} elsif ($method eq 'reregister_safe') {
-		if (AI::isIdle || AI::is('deal')) {
+		if (AI::isIdle() || AI::is('deal')) {
 			my $macro = $self->{Macro_Runner};
 			while (defined $macro->{subcall}) {
 				$macro = $macro->{subcall};
@@ -1710,15 +1885,27 @@ sub processCmd {
 }
 
 sub clear_queue {
-	my ($self) = @_;
+	my ($self, $skip_automacro_handoff) = @_;
+	my $macro_runner_cycle_stage = defined $self->{Macro_Runner_Cycle_Stage} ? $self->{Macro_Runner_Cycle_Stage} : 'AI_start';
+	if ( defined $self->{Macro_Runner} ) {
+		message "[eventMacro] Macro '".$self->{Macro_Runner}->last_subcall_name."' ended.\n", "system";
+	} else {
+		message "[eventMacro] Undefined macro ended.\n", "system";
+	}
+	
 	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
 	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
 		debug "[eventMacro] Uninterruptible macro '".$self->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
 		$self->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 	$self->{Macro_Runner} = undef;
+	$self->{Macro_Runner_Cycle_Stage} = undef;
 	Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle}) if (defined $self->{AI_start_Macros_Running_Hook_Handle});
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
+
+	return if $skip_automacro_handoff;
+
+	$self->handoff_to_pending_automacros($macro_runner_cycle_stage);
 }
 
 sub include {

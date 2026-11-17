@@ -46,6 +46,7 @@ use Bus::DialogMaster;
 use Bus::DialogSlave;
 use Utils::Exceptions;
 use Utils::CallbackList;
+use Log qw(debug message error);
 
 
 # State constants.
@@ -91,6 +92,27 @@ sub new {
 	}
 
 	return $self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	$self->close();
+}
+
+sub close {
+	my ($self) = @_;
+	message (scalar(localtime) . " Closing Bus client connection\n");
+	$self->closeClient();
+}
+
+sub closeClient {
+	my ($self) = @_;
+	eval {
+		if (defined $self->{client}) {
+			$self->{client}->close();
+			undef $self->{client};
+		}
+	};
 }
 
 sub iterate {
@@ -201,7 +223,11 @@ sub ID {
 sub reconnect {
 	my ($self) = @_;
 	eval {
+		# Close existing connection if any
+        $self->closeClient();
+
 		#print "(Re)connecting\n";
+		message (scalar(localtime) . " Atempting connection to bus server\n");
 		$self->{client} = new Bus::SimpleClient($self->{host}, $self->{port});
 		$self->{state} = HANDSHAKING;
 	};
@@ -210,8 +236,10 @@ sub reconnect {
 		$self->{state} = NOT_CONNECTED;
 		$self->{connectTime} = time;
 	} elsif ($@) {
-		die $@;
-	}
+        error("Connection error: $@\n");
+        $self->{state} = NOT_CONNECTED;
+        $self->{connectTime} = time;
+    }
 }
 
 # Handle an I/O exception by reconnecting to the bus or restarting the

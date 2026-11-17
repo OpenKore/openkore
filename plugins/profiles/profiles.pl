@@ -18,10 +18,12 @@ use Plugins;
 use Globals qw($interface $quit);
 use Log qw(debug message warning error);
 use Getopt::Long;
+use FileParsers qw(parseConfigFile);
 use Settings qw( %sys );
 
 our $profile_folder = "profiles";
 our $profile;
+our %profile_extra_plugins;
 
 return unless
 Plugins::register('profiles', 'Profiles Selector', \&on_unload);
@@ -98,6 +100,54 @@ sub onStart {
 	}
 
 	unshift @Settings::controlFolders, File::Spec->catdir( $profile_folder, $profile ) if $profile;
+	
+	my %requested_plugins = map { $_ => 1 } getProfileRequestedPlugins($profile);
+	my @loaded_plugins = loadMissingProfilePlugins($profile, \%requested_plugins);
+	%profile_extra_plugins = map { $_ => 1 } @loaded_plugins;
+}
+
+sub getProfileRequestedPlugins {
+	my ($profile_name) = @_;
+	return unless $profile_name;
+
+	my $profile_sys = File::Spec->catfile($profile_folder, $profile_name, 'sys.txt');
+	return unless -f $profile_sys;
+
+	my %profile_sys_config;
+	parseConfigFile($profile_sys, \%profile_sys_config);
+
+	my @requested_plugins = split /\s*,\s*/, ($profile_sys_config{'loadPlugins_list'} || '');
+	return grep { $_ } @requested_plugins;
+}
+
+sub loadMissingProfilePlugins {
+	my ($profile_name, $requested_plugins_ref) = @_;
+	return unless $profile_name;
+
+	my %requested_plugins = $requested_plugins_ref ? %{$requested_plugins_ref} : map { $_ => 1 } getProfileRequestedPlugins($profile_name);
+	return unless keys %requested_plugins;
+
+	my $profile_sys = File::Spec->catfile($profile_folder, $profile_name, 'sys.txt');
+	my %loaded_plugins = map { ($_ && $_->{name}) ? ($_->{name} => 1) : () } @Plugins::plugins;
+	my %plugins_by_name = map { $_->{name} => "$$_{dir}/$$_{name}$$_{ext}" } Plugins::getPluginsFiles();
+
+	my (@plugins_to_load, @loaded_plugin_names);
+	foreach my $plugin_name (keys %requested_plugins) {
+		next if $loaded_plugins{$plugin_name};
+		if (exists $plugins_by_name{$plugin_name}) {
+			push @plugins_to_load, $plugins_by_name{$plugin_name};
+			push @loaded_plugin_names, $plugin_name;
+		} else {
+			warning "[profiles] Plugin '$plugin_name' from '$profile_sys' was not found in plugins folders\n";
+		}
+	}
+
+	if (@plugins_to_load) {
+		message "[profiles] Loading additional profile plugins from '$profile_sys'\n", 'system';
+		Plugins::loadPlugins(\@plugins_to_load);
+	}
+
+	return @loaded_plugin_names;
 }
 
 sub commandHandler {
@@ -152,6 +202,14 @@ sub commandHandler {
 			error "[profiles] Provided profile not found in profiles folder\n";
 			return;
 		}
+	}
+	
+	my %new_requested_plugins = map { $_ => 1 } getProfileRequestedPlugins($new_profile);
+	foreach my $plugin_name (keys %profile_extra_plugins) {
+		next if $new_requested_plugins{$plugin_name};
+		next unless grep { $_ && $_->{name} && $_->{name} eq $plugin_name } @Plugins::plugins;
+		message "[profiles] Unloading extra plugin '$plugin_name' from old profile '$profile'\n", 'system';
+		Plugins::unload($plugin_name);
 	}
 	
 	my $new_profile_folder = File::Spec->catdir($profile_folder, $new_profile);
@@ -212,6 +270,10 @@ sub commandHandler {
 	}
 	
 	Settings::loadFiles(\@files, $progressHandler);
+	
+	my @loaded_plugins = loadMissingProfilePlugins($new_profile, \%new_requested_plugins);
+	my %kept_plugins = map { $_ => 1 } grep { $new_requested_plugins{$_} } keys %profile_extra_plugins;
+	%profile_extra_plugins = (%kept_plugins, map { $_ => 1 } @loaded_plugins);
 	
 	message "[profiles] Loading finished, profile '".$new_profile."' loaded\n", "system";
 	$profile = $new_profile;

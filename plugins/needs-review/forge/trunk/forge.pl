@@ -54,10 +54,10 @@ sub loadfile {
 sub AutoForge {
 	if (timeOut($timeout{forge}{time},0.5)) {
 		$timeout{forge}{time} = time;
-		if (AI::action eq "Forge" && AI::args->{done}) {
-				AI::dequeue;
-		} elsif (AI::action eq "Forge") {
-			my $args = AI::args;
+		if (AI::action() eq "Forge" && AI::args()->{done}) {
+				AI::dequeue();
+		} elsif (AI::action() eq "Forge") {
+			my $args = AI::args();
 			$timeout{forge}{time} = time;	
 			if (CanForge($allof)) {
 				Forge($allof);

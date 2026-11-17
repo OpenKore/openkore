@@ -37,8 +37,11 @@ use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
+use FileParsers ();
 use Misc;
-use Log qw(debug);
+use Log qw(debug error);
+use Settings ();
+use Translation qw(T);
 
 sub new {
 	my ( $class ) = @_;
@@ -319,9 +322,9 @@ sub parse_master_login {
 sub reconstruct_master_login {
 	my ($self, $args) = @_;
 
-	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
+	$args->{ip} = sprintf("192.168.%02d.%02d", (map { int(rand(255)) } 1..2)) unless exists $args->{ip};
 	unless (exists $args->{mac}) {
-	    $args->{mac} = $config{macAddress} || '111111111111'; # gibberish
+	    $args->{mac} = $config{macAddress} || sprintf("E0311E%02X%02X%02X", (map { int(rand(256)) } 1..3));
 	    $args->{mac} = uc($args->{mac});
 	    $args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
 	}
@@ -414,7 +417,7 @@ sub reconstruct_game_login {
 	if (exists $args->{mac}) {
 		my $key = pack('C16', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
 		my $chain = pack('C16', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
-		my $mac = $config{macAddress} || "F2ADCC03771E";
+		my $mac = $config{macAddress} || sprintf("E0311E%02X%02X%02X", (map { int(rand(256)) } 1..3));
 		$mac = uc($mac);
 		my $in = pack('a16', $mac);
 
@@ -533,8 +536,12 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 	$args{monID} = $monID;
 	$args{flag} = $flag;
 	# eventually we'll trow this hooking out so...
-	Plugins::callHook('packet_pre/sendAttack', \%args) if $flag == ACTION_ATTACK || $flag == ACTION_ATTACK_REPEAT;
-	Plugins::callHook('packet_pre/sendSit', \%args) if $flag == ACTION_SIT || $flag == ACTION_STAND;
+	Plugins::callHook('packet_pre/sendAttack', \%args)
+		if $flag == Network::PacketParser::ACTION_ATTACK()
+		|| $flag == Network::PacketParser::ACTION_ATTACK_REPEAT();
+	Plugins::callHook('packet_pre/sendSit', \%args)
+		if $flag == Network::PacketParser::ACTION_SIT()
+		|| $flag == Network::PacketParser::ACTION_STAND();
 	if ($args{return}) {
 		$self->sendToServer($args{msg});
 		return;
@@ -663,6 +670,14 @@ sub sendDrop {
 
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
+	my $packages = $self->itemPackageCatalog;
+	if (keys %$packages && $char) {
+		my $item = $char->inventory->getByID($ID);
+		if ($item && exists $packages->{$item->{nameID}}) {
+			error T("This package requires a reward choice. Use 'is' to see its options.\n");
+			return;
+		}
+	}
 	$self->sendToServer($self->reconstruct({switch => 'item_use', ID => $ID, targetID => $targetID}));
 	debug sprintf("Item Use: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
@@ -1399,7 +1414,7 @@ sub sendRefineUIClose {
 }
 
 sub sendTokenToServer {
-	my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
+	my ($self, $username, $password, $master_version, $version, $token, $length, $ip, $port) = @_;
 	my $len =  $length + 92;
 
 	my $password_rijndael = $self->encrypt_password($password);
@@ -1408,7 +1423,7 @@ sub sendTokenToServer {
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
 	$net->serverDisconnect();
-	$net->serverConnect($otp_ip, $otp_port);# OTP - One Time Password
+	$net->serverConnect($ip, $port);# OTP - One Time Password
 
 	my $msg = $self->reconstruct({
 		switch => 'token_login',
@@ -1426,6 +1441,22 @@ sub sendTokenToServer {
 	$self->sendToServer($msg);
 
 	debug "Sent sendTokenLogin\n", "sendPacket", 2;
+}
+
+# Send OTP code for authentication (packet 0C23)
+# 0C23 <otp>.a6 <padding>.C
+# otp: 6-digit One-Time Password (TOTP)
+# padding: 0x00 (always 0)
+sub sendOtpToServer {
+    my ($self, $otp) = @_;
+
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_otp_login',
+        otp    => $otp,
+        padding => 0x00,
+    }));
+
+    debug "Sent OTP login packet: $otp\n", "sendPacket", 2;
 }
 
 # encrypt password kRO/cRO version 2017-2018
@@ -1637,11 +1668,14 @@ sub sendUnequip {
 }
 
 sub sendAddStatusPoint {
-    my ($self, $ID,$Amount) = @_;
+    my ($self, $ID, $Amount) = @_;
+    my $switch = ($ID >= STATUS_POW && $ID <= STATUS_CRT)
+        ? 'send_add_trait_status_point'
+        : 'send_add_status_point';
     $self->sendToServer($self->reconstruct({
-        switch => 'send_add_status_point',
+        switch => $switch,
         statusID => $ID,
-        Amount => '1',
+        Amount => $Amount || 1,
     }));
 }
 
@@ -3544,6 +3578,57 @@ sub sendNPCCreateRequest {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'dynamicnpc_create_request', ID => $name}));
 	debug "Sent request to create NPC by name: $name\n", "sendPacket", 2;
+}
+
+# 0841 CH_SELECT_ACCESSIBLE_MAPNAME     
+sub sendSelectAccessibleMapname {
+    my ($self, $map_slot) = @_;
+
+    $self->sendToServer($self->reconstruct({
+        switch 		=> 'select_accessible_mapname',
+        char_slot	=> $config{char},
+        map_slot	=> $map_slot,
+    }));
+}
+
+sub itemPackageCatalog {
+	my ($self) = @_;
+	unless (exists $self->{itemPackages}) {
+		my %packages;
+		my $table = Settings::addTableFile('itempackages.txt',
+			loader => [\&FileParsers::parseDataFile2, \%packages], mustExist => 0);
+		Settings::loadByHandle($table);
+		Settings::removeFile($table);
+		$self->{itemPackages} = \%packages;
+	}
+	return $self->{itemPackages};
+}
+
+sub itemPackageOptions {
+	my ($self, $nameID) = @_;
+	my $catalog = $self->itemPackageCatalog;
+	return unless exists $catalog->{$nameID};
+	my %options;
+	for my $entry (split ' ', $catalog->{$nameID} // '') {
+		return {} unless $entry =~ /\A(0|[1-9][0-9]*)=([0-9]+:[0-9]+(?:,[0-9]+:[0-9]+)*)\z/;
+		my ($option, $rewards) = ($1, $2);
+		return {} if $option > 0xFFFFFFFF || exists $options{$option};
+		$options{$option} = [map { [split /:/, $_, 2] } split /,/, $rewards];
+	}
+	return \%options;
+}
+
+# 0BAF CZ_USE_PACKAGEITEM
+sub sendUsePackageItem {
+    my ($self, $index, $itemID, $boxIndex) = @_;
+
+    $self->sendToServer($self->reconstruct({
+        switch   	=> 'use_packageitem',
+        index    	=> $index,
+        accountID	=> $accountID,
+        itemID   	=> $itemID,
+        boxIndex 	=> $boxIndex,
+    }));
 }
 
 1;

@@ -178,12 +178,12 @@ sub onUnload {
 }
 
 sub choose {
-    if (AI::action eq 'enhancedCasting') {
-        my $args = AI::args;
+    if (AI::action() eq 'enhancedCasting') {
+        my $args = AI::args();
         if ($args->{'stage'} eq 'end') {
-            AI::dequeue;
+            AI::dequeue();
         } elsif (!$currentTarget) {
-            AI::dequeue;
+            AI::dequeue();
         } elsif ($args->{'stage'} eq 'stepBack') {
             Actor::move($args->{'stepBack'}{'x'}, $args->{'stepBack'}{'y'});
             my $charpos = main::calcPosition($char);
@@ -205,13 +205,13 @@ sub choose {
             Actor::move($args->{'adjust'}{'x'}, $args->{'adjust'}{'y'});
             $args->{'stage'} = 'reCast';
         } elsif ($args->{'stage'} eq 'reCast') {
-            AI::dequeue;
+            AI::dequeue();
             castBetween() if ($currentTarget);
         } elsif (!$currentTarget) {
             $args->{'stage'} = 'end';
         }
     }
-    if ($currentTarget && AI::action eq "attack") {
+    if ($currentTarget && AI::action() eq "attack") {
         selectSkill();
     }
 }

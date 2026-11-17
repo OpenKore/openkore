@@ -1,45 +1,448 @@
-// Other
-evt_coke.gnd#evt_coke.gnd#
-evt_coke.gat#evt_coke.gat#
-evt_coke.rsw#evt_coke.rsw#
-유저인터페이스\map\evt_coke.bmp#유저인터페이스\map\evt_coke.bmp#
+// ==========================================================================
+// resnametable.txt 본서버 최종수정: 2025-10-13 - 프론 훈련장 리뉴얼
+// ==========================================================================
+// 프론테라 훈련장 리뉴얼
+tra_fild01.gnd#tra_fild02.gnd#
+tra_fild01.gat#tra_fild02.gat#
+tra_fild01.rsw#tra_fild02.rsw#
+유저인터페이스\map\tra_fild01.bmp#유저인터페이스\map\tra_fild02.bmp#
+tra_fild03.gnd#tra_fild02.gnd#
+tra_fild03.gat#tra_fild02.gat#
+tra_fild03.rsw#tra_fild02.rsw#
+유저인터페이스\map\tra_fild03.bmp#유저인터페이스\map\tra_fild02.bmp#
 
-//201810124 오딘
-1@odin.gnd#1@odin.gnd#
-1@odin.gat#1@odin.gat#
-1@odin.rsw#1@odin.rsw#
+// 환상총서 필드화
+vr_cas.gnd#1@vrcas.gnd#
+vr_cas.gat#1@vrcas.gat#
+vr_cas.rsw#1@vrcas.rsw#
+유저인터페이스\map\vr_cas.bmp#유저인터페이스\map\1@vrcas.bmp#
+vr_gen.gnd#1@vrgen.gnd#
+vr_gen.gat#1@vrgen.gat#
+vr_gen.rsw#1@vrgen.rsw#
+유저인터페이스\map\vr_gen.bmp#유저인터페이스\map\1@vrgen.bmp#
+vr_clo1.gnd#1@vrclo.gnd#
+vr_clo1.gat#1@vrclo.gat#
+vr_clo1.rsw#1@vrclo.rsw#
+유저인터페이스\map\vr_clo1.bmp#유저인터페이스\map\1@vrclo.bmp#
+vr_clo2.gnd#2@vrclo.gnd#
+vr_clo2.gat#2@vrclo.gat#
+vr_clo2.rsw#2@vrclo.rsw#
+유저인터페이스\map\vr_clo2.bmp#유저인터페이스\map\2@vrclo.bmp#
+vr_po.gnd#1@vrpo.gnd#
+vr_po.gat#1@vrpo.gat#
+vr_po.rsw#1@vrpo.rsw#
+유저인터페이스\map\vr_po.bmp#유저인터페이스\map\1@vrpo.bmp#
+vr_pop1.gnd#1@vrpop.gnd#
+vr_pop1.gat#1@vrpop.gat#
+vr_pop1.rsw#1@vrpop.rsw#
+유저인터페이스\map\vr_pop1.bmp#유저인터페이스\map\1@vrpop.bmp#
+vr_pop2.gnd#2@vrpop.gnd#
+vr_pop2.gat#2@vrpop.gat#
+vr_pop2.rsw#2@vrpop.rsw#
+유저인터페이스\map\vr_pop2.bmp#유저인터페이스\map\2@vrpop.bmp#
+vr_pop3.gnd#3@vrpop.gnd#
+vr_pop3.gat#3@vrpop.gat#
+vr_pop3.rsw#3@vrpop.rsw#
+유저인터페이스\map\vr_pop3.bmp#유저인터페이스\map\3@vrpop.bmp#
 
-// 모모타로 체험전
-1@momo.gnd#1@momo.gnd#
-1@momo.gat#1@momo.gat#
-1@momo.rsw#1@momo.rsw#
-유저인터페이스\map\1@momo.bmp#유저인터페이스\map\1@momo.bmp#
+// 드래곤 길들이기 콜라보
+httyd_01.gnd#hu_fild05.gnd#
+httyd_01.gat#hu_fild05.gat#
+httyd_01.rsw#hu_fild05.rsw#
+유저인터페이스\map\httyd_01.bmp#유저인터페이스\map\hu_fild05.bmp#
+httyd_02.gnd#abyss_01.gnd#
+httyd_02.gat#abyss_01.gat#
+httyd_02.rsw#abyss_01.rsw#
+유저인터페이스\map\httyd_02.bmp#유저인터페이스\map\abyss_01.bmp#
 
-//99랩침몰선
-1@tre02.gnd#1@tre02.gnd#
-1@tre02.gat#1@tre02.gat#
-1@tre02.rsw#1@tre02.rsw#
-유저인터페이스\map\1@tre02.bmp#유저인터페이스\map\1@tre02.bmp#
+// 챕터1 세계수의 노래 프렐류드
+1@ch1a.gnd#1@ch1a.gnd#
+1@ch1a.gat#1@ch1a.gat#
+1@ch1a.rsw#1@ch1a.rsw#
+유저인터페이스\map\1@ch1a.bmp#유저인터페이스\map\1@ch1a.bmp#
+ch1_dw.gnd#1@ch1a.gnd#
+ch1_dw.gat#1@ch1a.gat#
+ch1_dw.rsw#1@ch1a.rsw#
+유저인터페이스\map\ch1_dw.bmp#유저인터페이스\map\1@ch1a.bmp#
+1@ch1b.gnd#1@ch1a.gnd#
+1@ch1b.gat#1@ch1a.gat#
+1@ch1b.rsw#1@ch1a.rsw#
+유저인터페이스\map\1@ch1b.bmp#유저인터페이스\map\1@ch1a.bmp#
+ch1_vrgef1.gnd#ch1_gef_in.gnd#
+ch1_vrgef1.gat#ch1_gef_in.gat#
+ch1_vrgef1.rsw#ch1_gef_in.rsw#
+유저인터페이스\map\ch1_vrgef1.bmp#유저인터페이스\map\ch1_gef_in.bmp#
+ch1_vrgef2.gnd#ch1_geffen.gnd#
+ch1_vrgef2.gat#ch1_geffen.gat#
+ch1_vrgef2.rsw#ch1_geffen.rsw#
+유저인터페이스\map\ch1_vrgef2.bmp#유저인터페이스\map\ch1_geffen.bmp#
+ch1_que01.gnd#gef_dun03.gnd#
+ch1_que01.gat#gef_dun03.gat#
+ch1_que01.rsw#gef_dun03.rsw#
+유저인터페이스\map\ch1_que01.bmp#유저인터페이스\map\gef_dun03.bmp#
 
-//개미지옥
-1@ant01.gnd#1@ant01.gnd#
-1@ant01.gat#1@ant01.gat#
-1@ant01.rsw#1@ant01.rsw#
-유저인터페이스\map\1@ant01.bmp#유저인터페이스\map\1@ant01.bmp#
+// izlude 초보자 수련장 관련 복사맵
+prt_fild08a.gnd#prt_fild08.gnd#
+prt_fild08a.gat#prt_fild08.gat#
+prt_fild08a.rsw#prt_fild08.rsw#
+유저인터페이스\map\prt_fild08a.bmp#유저인터페이스\map\prt_fild08.bmp#
+prt_fild08b.gnd#prt_fild08.gnd#
+prt_fild08b.gat#prt_fild08.gat#
+prt_fild08b.rsw#prt_fild08.rsw#
+유저인터페이스\map\prt_fild08b.bmp#유저인터페이스\map\prt_fild08.bmp#
+prt_fild08c.gnd#prt_fild08.gnd#
+prt_fild08c.gat#prt_fild08.gat#
+prt_fild08c.rsw#prt_fild08.rsw#
+유저인터페이스\map\prt_fild08c.bmp#유저인터페이스\map\prt_fild08.bmp#
+prt_fild08d.gnd#prt_fild08.gnd#
+prt_fild08d.gat#prt_fild08.gat#
+prt_fild08d.rsw#prt_fild08.rsw#
+유저인터페이스\map\prt_fild08d.bmp#유저인터페이스\map\prt_fild08.bmp#
 
-//이즈루드
-1@izd02.gnd#1@izd02.gnd#
-1@izd02.gat#1@izd02.gat#
-1@izd02.rsw#1@izd02.rsw#
-유저인터페이스\map\1@izd02.bmp#유저인터페이스\map\1@izd02.bmp#
+iz_ac01_a.gnd#iz_ac01.gnd#
+iz_ac01_a.gat#iz_ac01.gat#
+iz_ac01_a.rsw#iz_ac01.rsw#
+유저인터페이스\map\iz_ac01_a.bmp#유저인터페이스\map\iz_ac01.bmp#
+iz_ac01_b.gnd#iz_ac01.gnd#
+iz_ac01_b.gat#iz_ac01.gat#
+iz_ac01_b.rsw#iz_ac01.rsw#
+유저인터페이스\map\iz_ac01_b.bmp#유저인터페이스\map\iz_ac01.bmp#
+iz_ac01_c.gnd#iz_ac01.gnd#
+iz_ac01_c.gat#iz_ac01.gat#
+iz_ac01_c.rsw#iz_ac01.rsw#
+유저인터페이스\map\iz_ac01_c.bmp#유저인터페이스\map\iz_ac01.bmp#
+iz_ac01_d.gnd#iz_ac01.gnd#
+iz_ac01_d.gat#iz_ac01.gat#
+iz_ac01_d.rsw#iz_ac01.rsw#
+유저인터페이스\map\iz_ac01_d.bmp#유저인터페이스\map\iz_ac01.bmp#
 
-//2017 프론테라 지하수로 MD
-1@sewb2.gnd#1@sewb2.gnd#
-1@sewb2.gat#1@sewb2.gat#
-1@sewb2.rsw#1@sewb2.rsw#
-유저인터페이스\map\1@sewb2.bmp#유저인터페이스\map\1@sewb2.bmp#
+iz_ac02_a.gnd#iz_ac02.gnd#
+iz_ac02_a.gat#iz_ac02.gat#
+iz_ac02_a.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_a.bmp#유저인터페이스\map\iz_ac02.bmp#
+iz_ac02_b.gnd#iz_ac02.gnd#
+iz_ac02_b.gat#iz_ac02.gat#
+iz_ac02_b.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_b.bmp#유저인터페이스\map\iz_ac02.bmp#
+iz_ac02_c.gnd#iz_ac02.gnd#
+iz_ac02_c.gat#iz_ac02.gat#
+iz_ac02_c.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_c.bmp#유저인터페이스\map\iz_ac02.bmp#
+iz_ac02_d.gnd#iz_ac02.gnd#
+iz_ac02_d.gat#iz_ac02.gat#
+iz_ac02_d.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_d.bmp#유저인터페이스\map\iz_ac02.bmp#
 
-// - kRO Files
+izlude_a.gnd#izlude.gnd#
+izlude_a.gat#izlude.gat#
+izlude_a.rsw#izlude.rsw#
+유저인터페이스\map\izlude_a.bmp#유저인터페이스\map\izlude.bmp#
+izlude_b.gnd#izlude.gnd#
+izlude_b.gat#izlude.gat#
+izlude_b.rsw#izlude.rsw#
+유저인터페이스\map\izlude_b.bmp#유저인터페이스\map\izlude.bmp#
+izlude_c.gnd#izlude.gnd#
+izlude_c.gat#izlude.gat#
+izlude_c.rsw#izlude.rsw#
+유저인터페이스\map\izlude_c.bmp#유저인터페이스\map\izlude.bmp#
+izlude_d.gnd#izlude.gnd#
+izlude_d.gat#izlude.gat#
+izlude_d.rsw#izlude.rsw#
+유저인터페이스\map\izlude_d.bmp#유저인터페이스\map\izlude.bmp#
+
+iz_in_a.gnd#izlude_in.gnd#
+iz_in_a.gat#izlude_in.gat#
+iz_in_a.rsw#izlude_in.rsw#
+유저인터페이스\map\iz_in_a.bmp#유저인터페이스\map\prt_in.bmp#
+iz_in_b.gnd#izlude_in.gnd#
+iz_in_b.gat#izlude_in.gat#
+iz_in_b.rsw#izlude_in.rsw#
+유저인터페이스\map\iz_in_b.bmp#유저인터페이스\map\prt_in.bmp#
+iz_in_c.gnd#izlude_in.gnd#
+iz_in_c.gat#izlude_in.gat#
+iz_in_c.rsw#izlude_in.rsw#
+유저인터페이스\map\iz_in_c.bmp#유저인터페이스\map\prt_in.bmp#
+iz_in_d.gnd#izlude_in.gnd#
+iz_in_d.gat#izlude_in.gat#
+iz_in_d.rsw#izlude_in.rsw#
+유저인터페이스\map\iz_in_d.bmp#유저인터페이스\map\prt_in.bmp#
+
+// Episode 21 영웅의 시대 - 정체불명의 유령선
+1@wtgs.gnd#1@wtgs.gnd#
+1@wtgs.gat#1@wtgs.gat#
+1@wtgs.rsw#1@wtgs.rsw#
+유저인터페이스\map\1@wtgs.bmp#유저인터페이스\map\1@wtgs.bmp#
+// Episode 21 영웅의 시대 - 고요한 성소
+1@twbs2.gnd#1@twbs2.gnd#
+1@twbs2.gat#1@twbs2.gat#
+1@twbs2.rsw#1@twbs2.rsw#
+유저인터페이스\map\1@twbs2.bmp#유저인터페이스\map\1@twbs2.bmp#
+// Episode 21 영웅의 시대 - 기믈레 잠입
+1@mdtem.gnd#1@mdtem.gnd#
+1@mdtem.gat#1@mdtem.gat#
+1@mdtem.rsw#1@mdtem.rsw#
+유저인터페이스\map\1@mdtem.bmp#유저인터페이스\map\1@mdtem.bmp#
+2@mdtem.gnd#2@mdtem.gnd#
+2@mdtem.gat#2@mdtem.gat#
+2@mdtem.rsw#2@mdtem.rsw#
+유저인터페이스\map\2@mdtem.bmp#유저인터페이스\map\2@mdtem.bmp#
+// Episode 21 영웅의 시대 - 비밀 제단
+1@ep21a.gnd#1@ep21a.gnd#
+1@ep21a.gat#1@ep21a.gat#
+1@ep21a.rsw#1@ep21a.rsw#
+유저인터페이스\map\1@ep21a.bmp#유저인터페이스\map\1@ep21a.bmp#
+// Episode 21 영웅의 시대 - 최후의 전투(시나리오/일반))
+1@ep21b.gnd#1@ep21b.gnd#
+1@ep21b.gat#1@ep21b.gat#
+1@ep21b.rsw#1@ep21b.rsw#
+유저인터페이스\map\1@ep21b.bmp#유저인터페이스\map\1@ep21b.bmp#
+// Episode 21 영웅의 시대 - 최후의 전투(시나리오/일반))분리 2025-02-05
+1@ep21c.gnd#1@ep21c.gnd#
+1@ep21c.gat#1@ep21c.gat#
+1@ep21c.rsw#1@ep21c.rsw#
+유저인터페이스\map\1@ep21b.bmp#유저인터페이스\map\1@ep21b.bmp#
+
+// 환상총서 소닉콜라보 - Dr. 에그맨의 비밀 기지
+1@vrsn.gnd#1@vrsn.gnd#
+1@vrsn.gat#1@vrsn.gat#
+1@vrsn.rsw#1@vrsn.rsw#
+유저인터페이스\map\1@vrsn.bmp#유저인터페이스\map\1@vrsn.bmp#
+
+// 환상총서 4차 - 무지개 끝 너머 대모험 - 무지개 길
+1@vrpop.gnd#1@vrpop.gnd#
+1@vrpop.gat#1@vrpop.gat#
+1@vrpop.rsw#1@vrpop.rsw#
+유저인터페이스\map\1@vrpop.bmp#유저인터페이스\map\1@vrpop.bmp#
+// 환상총서 4차 - 무지개 끝 너머 대모험 - 무지개 길
+2@vrpop.gnd#2@vrpop.gnd#
+2@vrpop.gat#2@vrpop.gat#
+2@vrpop.rsw#2@vrpop.rsw#
+유저인터페이스\map\2@vrpop.bmp#유저인터페이스\map\2@vrpop.bmp#
+// 환상총서 4차 - 무지개 끝 너머 대모험 - 무지개 호수
+3@vrpop.gnd#3@vrpop.gnd#
+3@vrpop.gat#3@vrpop.gat#
+3@vrpop.rsw#3@vrpop.rsw#
+유저인터페이스\map\3@vrpop.bmp#유저인터페이스\map\3@vrpop.bmp#
+
+// 시간의 정원 - 생명의 전당
+1@ba_go.gnd#1@ba_go.gnd#
+1@ba_go.gat#1@ba_go.gat#
+1@ba_go.rsw#1@ba_go.rsw#
+유저인터페이스\map\1@ba_go.bmp#유저인터페이스\map\1@ba_go.bmp#
+// 시간의 정원 - 불의 호수
+1@f_lake.gnd#1@f_lake.gnd#
+1@f_lake.gat#1@f_lake.gat#
+1@f_lake.rsw#1@f_lake.rsw#
+유저인터페이스\map\1@f_lake.bmp#유저인터페이스\map\1@f_lake.bmp#
+
+// Episode 20 죽지 않는 자 - 끈적이는 바다
+1@slug.gnd#1@slug.gnd#
+1@slug.gat#1@slug.gat#
+1@slug.rsw#1@slug.rsw#
+유저인터페이스\map\1@slug.bmp#유저인터페이스\map\1@slug.bmp#
+// Episode 20 죽지 않는 자 - 유빙 지대
+1@twsd.gnd#1@twsd.gnd#
+1@twsd.gat#1@twsd.gat#
+1@twsd.rsw#1@twsd.rsw#
+유저인터페이스\map\1@twsd.bmp#유저인터페이스\map\1@twsd.bmp#
+// Episode 20 죽지 않는 자 - 죽지 않는 자 / 죽지 않는 자(상급)
+1@twbs.gnd#1@twbs.gnd#
+1@twbs.gat#1@twbs.gat#
+1@twbs.rsw#1@twbs.rsw#
+유저인터페이스\map\1@twbs.bmp#유저인터페이스\map\1@ch_t.bmp#
+// Episode 20 죽지 않는 자 - 분리된 성소
+1@twas.gnd#1@twas.gnd#
+1@twas.gat#1@twas.gat#
+1@twas.rsw#1@twas.rsw#
+유저인터페이스\map\1@twas.bmp#유저인터페이스\map\1@ch_t.bmp#
+// Episode 20 죽지 않는 자 - 협곡 탐사
+1@20cn1.gnd#1@20cn1.gnd#
+1@20cn1.gat#1@20cn1.gat#
+1@20cn1.rsw#1@20cn1.rsw#
+유저인터페이스\map\1@20cn1.bmp#유저인터페이스\map\1@20cn1.bmp#
+1@20cn2.gnd#1@20cn2.gnd#
+1@20cn2.gat#1@20cn2.gat#
+1@20cn2.rsw#1@20cn2.rsw#
+유저인터페이스\map\1@20cn2.bmp#유저인터페이스\map\1@20cn2.bmp#
+// Episode 20 죽지 않는 자 - 작은 가지의 둥지
+1@twig.gnd#1@twig.gnd#
+1@twig.gat#1@twig.gat#
+1@twig.rsw#1@twig.rsw#
+유저인터페이스\map\1@twig.bmp#유저인터페이스\map\1@twig.bmp#
+
+// 환상총서 X차 - 라바콜라보 축축한 하수도
+1@lvcb.gnd#1@lvcb.gnd#
+1@lvcb.gat#1@lvcb.gat#
+1@lvcb.rsw#1@lvcb.rsw#
+유저인터페이스\map\1@lvcb.bmp#유저인터페이스\map\1@lvcb.bmp#
+
+// 환상총서 3차 - 거울 수도원
+1@vrclo.gnd#1@vrclo.gnd#
+1@vrclo.gat#1@vrclo.gat#
+1@vrclo.rsw#1@vrclo.rsw#
+유저인터페이스\map\1@vrclo.bmp#유저인터페이스\map\1@vrclo.bmp#
+2@vrclo.gnd#2@vrclo.gnd#
+2@vrclo.gat#2@vrclo.gat#
+2@vrclo.rsw#2@vrclo.rsw#
+유저인터페이스\map\2@vrclo.bmp#유저인터페이스\map\2@vrclo.bmp#
+// 환상총서 3차 - 나 혼자 순혈인간&순혈인간-금서판
+1@vrhha.gnd#1@vrhha.gnd#
+1@vrhha.gat#1@vrhha.gat#
+1@vrhha.rsw#1@vrhha.rsw#
+유저인터페이스\map\1@vrhha.bmp#유저인터페이스\map\1@vrhha.bmp#
+// 환상총서 3차 - 크리투라 업무편람
+1@vrac1.gnd#1@vrac1.gnd#
+1@vrac1.gat#1@vrac1.gat#
+1@vrac1.rsw#1@vrac1.rsw#
+유저인터페이스\map\1@vrac1.bmp#유저인터페이스\map\1@vrac1.bmp#
+1@vrac2.gnd#1@vrac2.gnd#
+1@vrac2.gat#1@vrac2.gat#
+1@vrac2.rsw#1@vrac2.rsw#
+유저인터페이스\map\1@vrac2.bmp#유저인터페이스\map\1@vrac2.bmp#
+
+// 환상총서 2차 - 엔젤링 키우기 ~꿈꾸는 포링~
+1@vrpo.gnd#1@vrpo.gnd#
+1@vrpo.gat#1@vrpo.gat#
+1@vrpo.rsw#1@vrpo.rsw#
+유저인터페이스\map\1@vrpo.bmp#유저인터페이스\map\1@vrpo.bmp#
+
+// 20주년 - 차원의 벽 너머
+1@dime.gnd#1@dime.gnd#
+1@dime.gat#1@dime.gat#
+1@dime.rsw#1@dime.rsw#
+유저인터페이스\map\1@dime.bmp#유저인터페이스\map\1@dime.bmp#
+
+// 환상총서 1차 - 금수저 영애님
+1@vrcas.gnd#1@vrcas.gnd#
+1@vrcas.gat#1@vrcas.gat#
+1@vrcas.rsw#1@vrcas.rsw#
+유저인터페이스\map\1@vrcas.bmp#유저인터페이스\map\1@vrcas.bmp#
+// 환상총서 1차 - 엘레나 볼코바, 그 위대한 불꽃
+1@vrev.gnd#1@vrev.gnd#
+1@vrev.gat#1@vrev.gat#
+1@vrev.rsw#1@vrev.rsw#
+유저인터페이스\map\1@vrev.bmp#유저인터페이스\map\1@vrev.bmp#
+// 환상총서 1차 - 식물 실무
+1@vrgen.gnd#1@vrgen.gnd#
+1@vrgen.gat#1@vrgen.gat#
+1@vrgen.rsw#1@vrgen.rsw#
+유저인터페이스\map\1@vrgen.bmp#유저인터페이스\map\1@vrgen.bmp#
+
+// 에피소드 19 설화의 땅 이스가르드
+1@iwp.gnd#1@iwp.gnd#
+1@iwp.gat#1@iwp.gat#
+1@iwp.rsw#1@iwp.rsw#
+유저인터페이스\map\1@iwp.bmp#유저인터페이스\map\1@iwp.bmp#
+1@jorchs.gnd#1@jorchs.gnd#
+1@jorchs.gat#1@jorchs.gat#
+1@jorchs.rsw#1@jorchs.rsw#
+유저인터페이스\map\1@jorchs.bmp#유저인터페이스\map\jor_nest.bmp#
+1@jorlab.gnd#1@jorlab.gnd#
+1@jorlab.gat#1@jorlab.gat#
+1@jorlab.rsw#1@jorlab.rsw#
+유저인터페이스\map\1@jorlab.bmp#유저인터페이스\map\1@jorlab.bmp#
+1@whl.gnd#1@whl.gnd#
+1@whl.gat#1@whl.gat#
+1@whl.rsw#1@whl.rsw#
+유저인터페이스\map\1@whl.bmp#유저인터페이스\map\1@whl.bmp#
+
+// 나이트워치
+1@exnw.gnd#1@exnw.gnd#
+1@exnw.gat#1@exnw.gat#
+1@exnw.rsw#1@exnw.rsw#
+유저인터페이스\map\1@exnw.bmp#유저인터페이스\map\1@exnw.bmp#
+// 신키로_시라누이
+1@exsr.gnd#1@exsr.gnd#
+1@exsr.gat#1@exsr.gat#
+1@exsr.rsw#1@exsr.rsw#
+유저인터페이스\map\1@exsr.bmp#유저인터페이스\map\1@exsr.bmp#
+// 영도사
+1@exds.gnd#1@exds.gnd#
+1@exds.gat#1@exds.gat#
+1@exds.rsw#1@exds.rsw#
+유저인터페이스\map\1@exds.bmp#유저인터페이스\map\1@exds.bmp#
+2@exds.gnd#2@exds.gnd#
+2@exds.gat#2@exds.gat#
+2@exds.rsw#2@exds.rsw#
+유저인터페이스\map\2@exds.bmp#유저인터페이스\map\2@exds.bmp#
+// 천제
+1@exse.gnd#1@exse.gnd#
+1@exse.gat#1@exse.gat#
+1@exse.rsw#1@exse.rsw#
+유저인터페이스\map\1@exse.bmp#유저인터페이스\map\1@exse.bmp#
+// 하이퍼노비스
+1@exhn.gnd#1@exhn.gnd#
+1@exhn.gat#1@exhn.gat#
+1@exhn.rsw#1@exhn.rsw#
+유저인터페이스\map\1@exhn.bmp#유저인터페이스\map\1@exhn.bmp#
+// 혼령사
+1@exsh.gnd#1@exsh.gnd#
+1@exsh.gat#1@exsh.gat#
+1@exsh.rsw#1@exsh.rsw#
+유저인터페이스\map\1@exsh.bmp#유저인터페이스\map\1@exsh.bmp#
+
+// 가라앉은 탑
+1@ch_u.gnd#1@ch_u.gnd#
+1@ch_u.gat#1@ch_u.gat#
+1@ch_u.rsw#1@ch_u.rsw#
+유저인터페이스\map\1@ch_u.bmp#유저인터페이스\map\1@ch_u.bmp#
+
+// 에피소드 18 기도의 방향
+1@nyr.gnd#1@nyr.gnd#
+1@nyr.gat#1@nyr.gat#
+1@nyr.rsw#1@nyr.rsw#
+유저인터페이스\map\1@nyr.bmp#유저인터페이스\map\1@nyr.bmp#
+2@nyr.gnd#2@nyr.gnd#
+2@nyr.gat#2@nyr.gat#
+2@nyr.rsw#2@nyr.rsw#
+유저인터페이스\map\2@nyr.bmp#유저인터페이스\map\2@nyr.bmp#
+1@advs.gnd#1@advs.gnd#
+1@advs.gat#1@advs.gat#
+1@advs.rsw#1@advs.rsw#
+유저인터페이스\map\1@advs.bmp#유저인터페이스\map\1@advs.bmp#
+1@adv.gnd#1@adv.gnd#
+1@adv.gat#1@adv.gat#
+1@adv.rsw#1@adv.rsw#
+유저인터페이스\map\1@adv.bmp#유저인터페이스\map\1@adv.bmp#
+1@oz.gnd#1@oz.gnd#
+1@oz.gat#1@oz.gat#
+1@oz.rsw#1@oz.rsw#
+유저인터페이스\map\1@oz.bmp#유저인터페이스\map\1@oz.bmp#
+1@tcamp.gnd#1@tcamp.gnd#
+1@tcamp.gat#1@tcamp.gat#
+1@tcamp.rsw#1@tcamp.rsw#
+유저인터페이스\map\1@tcamp.bmp#유저인터페이스\map\1@tcamp.bmp#
+
+//성좌의 탑 
+1@ch_t.gnd#1@ch_t.gnd#
+1@ch_t.gat#1@ch_t.gat#
+1@ch_t.rsw#1@ch_t.rsw#
+유저인터페이스\map\1@ch_t.bmp#유저인터페이스\map\1@ch_t.bmp#
+2@ch_t.gnd#2@ch_t.gnd#
+2@ch_t.gat#2@ch_t.gat#
+2@ch_t.rsw#2@ch_t.rsw#
+유저인터페이스\map\2@ch_t.bmp#유저인터페이스\map\2@ch_t.bmp#
+3@ch_t.gnd#3@ch_t.gnd#
+3@ch_t.gat#3@ch_t.gat#
+3@ch_t.rsw#3@ch_t.rsw#
+유저인터페이스\map\3@ch_t.bmp#유저인터페이스\map\3@ch_t.bmp#
+
+// 영웅의 흔적 외전 회한의 무덤
+1@spa2.gnd#1@spa2.gnd#
+1@spa2.gat#1@spa2.gat#
+1@spa2.rsw#1@spa2.rsw#
+유저인터페이스\map\1@spa2.bmp#유저인터페이스\map\1@spa2.bmp#
+
+// 영웅의 흔적 외전 비공정추락지
+1@mjo1.gnd#1@mjo1.gnd#
+1@mjo1.gat#1@mjo1.gat#
+1@mjo1.rsw#1@mjo1.rsw#
+유저인터페이스\map\1@mjo1.bmp#유저인터페이스\map\1@mjo1.bmp#
+1@mjo2.gnd#1@mjo2.gnd#
+1@mjo2.gat#1@mjo2.gat#
+1@mjo2.rsw#1@mjo2.rsw#
+유저인터페이스\map\1@mjo2.bmp#유저인터페이스\map\1@mjo2.bmp#
+
 // 게펜 야간 투기장
 1@ge_sn.gnd#1@ge_sn.gnd#
 1@ge_sn.gat#1@ge_sn.gat#
@@ -331,6 +734,29 @@ int_land04.gat#int_land.gat#
 int_land04.rsw#int_land.rsw#
 유저인터페이스\map\int_land04.bmp#유저인터페이스\map\int_land.bmp#
 
+
+iz_ac02_a.gnd#iz_ac02.gnd#
+iz_ac02_a.gat#iz_ac02.gat#
+iz_ac02_a.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_a.bmp#유저인터페이스\map\iz_ac02.bmp#
+
+iz_ac02_b.gnd#iz_ac02.gnd#
+iz_ac02_b.gat#iz_ac02.gat#
+iz_ac02_b.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_b.bmp#유저인터페이스\map\iz_ac02.bmp#
+
+iz_ac02_c.gnd#iz_ac02.gnd#
+iz_ac02_c.gat#iz_ac02.gat#
+iz_ac02_c.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_c.bmp#유저인터페이스\map\iz_ac02.bmp#
+
+iz_ac02_d.gnd#iz_ac02.gnd#
+iz_ac02_d.gat#iz_ac02.gat#
+iz_ac02_d.rsw#iz_ac02.rsw#
+유저인터페이스\map\iz_ac02_d.bmp#유저인터페이스\map\iz_ac02.bmp#
+
+
+
 //2015 교황
 1@pop3.gnd#1@pop3.gnd#
 1@pop3.gat#1@pop3.gat#
@@ -383,6 +809,7 @@ int_land04.rsw#int_land.rsw#
 2@mir.rsw#2@mir.rsw#
 유저인터페이스\map\2@mir.bmp#유저인터페이스\map\2@mir.bmp#
 
+
 //2014 클랜퀘스트 
 1@ffp.gnd#1@ffp.gnd#
 1@ffp.gat#1@ffp.gat#
@@ -395,6 +822,7 @@ int_land04.rsw#int_land.rsw#
 1@infi.gat#1@infi.gat#
 1@infi.rsw#1@infi.rsw#
 유저인터페이스\map\1@infi.bmp#유저인터페이스\map\1@infi.bmp#
+
 
 //2014 rwc
 roc_arena01.gnd#rwc_arena03.gnd#
@@ -457,7 +885,10 @@ pvp.rsw#rwc_arena03.rsw#
 1@lab.rsw#1@lab.rsw#
 유저인터페이스\map\1@lab.bmp#유저인터페이스\map\1@lab.bmp#
 
+
+
 //영웅의흔적3 20130923
+
 
 1@glast.gnd#1@glast.gnd#
 1@glast.gat#1@glast.gat#
@@ -473,6 +904,8 @@ pvp.rsw#rwc_arena03.rsw#
 1@air1.gat#1@air1.gat#
 1@air1.rsw#1@air1.rsw#
 유저인터페이스\map\1@air1.bmp#유저인터페이스\map\1@air1.bmp#
+
+
 
 //2013 RWC 
 
@@ -509,6 +942,7 @@ rwc_arena01.gnd#rwc_arena01.gnd#
 rwc_arena01.gat#rwc_arena01.gat#
 rwc_arena01.rsw#rwc_arena01.rsw#
 
+
 guild_vs04.gnd#guild_vs04.gnd#
 guild_vs04.gat#guild_vs04.gat#
 guild_vs04.rsw#guild_vs04.rsw#
@@ -543,6 +977,8 @@ guild_vs01.rsw#guild_vs01.rsw#
 2@gl_kh.gat#2@gl_k.gat#
 2@gl_kh.rsw#2@gl_k.rsw#
 유저인터페이스\map\2@gl_kh.bmp#유저인터페이스\map\2@gl_k.bmp#
+
+
 
 //북미요청 복사맵 
 prt_evt.gnd#prontera.gnd#
@@ -600,22 +1036,14 @@ airplane_evt.gat#airplane.gat#
 airplane_evt.rsw#airplane.rsw#
 유저인터페이스\map\airplane_evt.bmp#유저인터페이스\map\airplane.bmp#
 
+
 //이벤트맵(휴겔복사)
 e_hugel.gnd#hugel.gnd#
 e_hugel.gat#hugel.gat#
 e_hugel.rsw#hugel.rsw#
 유저인터페이스\map\e_hugel.bmp#유저인터페이스\map\hugel.bmp#
 
-e_niflheim.gnd#niflheim.gnd#
-e_niflheim.gat#niflheim.gat#
-e_niflheim.rsw#niflheim.rsw#
-유저인터페이스\map\e_niflheim.bmp#유저인터페이스\map\niflheim.bmp#
 
-//이벤트맵(휴겔복사)
-hugel_us.gnd#hugel.gnd#
-hugel_us.gat#hugel.gat#
-hugel_us.rsw#hugel.rsw#
-유저인터페이스\map\hugel_us.bmp#유저인터페이스\map\hugel.bmp#
 
 //14.3 2차
 1@eom.gnd#1@eom.gnd#
@@ -627,6 +1055,8 @@ hugel_us.rsw#hugel.rsw#
 1@jtb.gat#1@jtb.gat#
 1@jtb.rsw#1@jtb.rsw#
 유저인터페이스\map\1@jtb.bmp#유저인터페이스\map\1@jtb.bmp#
+
+
 
 //설날이벤트
 
@@ -715,6 +1145,8 @@ dali02.rsw#dali.rsw#
 1@spa.rsw#1@spa.rsw#
 유저인터페이스\map\1@spa.bmp#유저인터페이스\map\1@spa.bmp#
 
+
+
 //몬스터웨이브
 1@def03.gnd#1@def03.gnd#
 1@def03.gat#1@def03.gat#
@@ -730,6 +1162,7 @@ dali02.rsw#dali.rsw#
 1@def01.gat#1@def01.gat#
 1@def01.rsw#1@def01.rsw#
 유저인터페이스\map\1@def01.bmp#유저인터페이스\map\1@def01.bmp#
+
 
 //고성메모리얼
 
@@ -753,12 +1186,12 @@ gl_chyard_.gat#gl_chyard_.gat#
 gl_chyard_.rsw#gl_chyard_.rsw#
 유저인터페이스\map\gl_chyard_.bmp#유저인터페이스\map\gl_chyard_.bmp#
 
-//공성전 TE 복사맵
 
-te_prt_gld.gnd#prt_gld.gnd#
-te_prt_gld.gat#prt_gld.gat#
-te_prt_gld.rsw#prt_gld.rsw#
-유저인터페이스\map\te_prt_gld.bmp#유저인터페이스\map\prt_gld.bmp#
+//공성전 TE 복사맵
+te_prt_gld.gnd#te_prt_gld.gnd#
+te_prt_gld.gat#te_prt_gld.gat#
+te_prt_gld.rsw#te_prt_gld.rsw#
+유저인터페이스\map\te_prt_gld.bmp#유저인터페이스\map\te_prt_gld.bmp#
 
 te_prtcas01.gnd#prtg_cas01.gnd#
 te_prtcas01.gat#prtg_cas01.gat#
@@ -825,89 +1258,9 @@ teg_dun02.gat#gld_dun02.gat#
 teg_dun02.rsw#gld_dun02.rsw#
 유저인터페이스\map\teg_dun02.bmp#유저인터페이스\map\gld_dun02.bmp#
 
-//izlude복사맵
 
-prt_fild08d.gnd#prt_fild08.gnd#
-prt_fild08d.gat#prt_fild08.gat#
-prt_fild08d.rsw#prt_fild08.rsw#
-유저인터페이스\map\prt_fild08d.bmp#유저인터페이스\map\prt_fild08.bmp#
+//초보자수련장
 
-prt_fild08c.gnd#prt_fild08.gnd#
-prt_fild08c.gat#prt_fild08.gat#
-prt_fild08c.rsw#prt_fild08.rsw#
-유저인터페이스\map\prt_fild08c.bmp#유저인터페이스\map\prt_fild08.bmp#
-
-prt_fild08b.gnd#prt_fild08.gnd#
-prt_fild08b.gat#prt_fild08.gat#
-prt_fild08b.rsw#prt_fild08.rsw#
-유저인터페이스\map\prt_fild08b.bmp#유저인터페이스\map\prt_fild08.bmp#
-
-prt_fild08a.gnd#prt_fild08.gnd#
-prt_fild08a.gat#prt_fild08.gat#
-prt_fild08a.rsw#prt_fild08.rsw#
-유저인터페이스\map\prt_fild08a.bmp#유저인터페이스\map\prt_fild08.bmp#
-
-iz_ac02_d.gnd#iz_ac02.gnd#
-iz_ac02_d.gat#iz_ac02.gat#
-iz_ac02_d.rsw#iz_ac02.rsw#
-유저인터페이스\map\iz_ac02_d.bmp#유저인터페이스\map\iz_ac02.bmp#
-
-iz_ac02_c.gnd#iz_ac02.gnd#
-iz_ac02_c.gat#iz_ac02.gat#
-iz_ac02_c.rsw#iz_ac02.rsw#
-유저인터페이스\map\iz_ac02_c.bmp#유저인터페이스\map\iz_ac02.bmp#
-
-iz_ac02_b.gnd#iz_ac02.gnd#
-iz_ac02_b.gat#iz_ac02.gat#
-iz_ac02_b.rsw#iz_ac02.rsw#
-유저인터페이스\map\iz_ac02_b.bmp#유저인터페이스\map\iz_ac02.bmp#
-
-iz_ac02_a.gnd#iz_ac02.gnd#
-iz_ac02_a.gat#iz_ac02.gat#
-iz_ac02_a.rsw#iz_ac02.rsw#
-유저인터페이스\map\iz_ac02_a.bmp#유저인터페이스\map\iz_ac02.bmp#
-
-iz_ac01_d.gnd#iz_ac01.gnd#
-iz_ac01_d.gat#iz_ac01.gat#
-iz_ac01_d.rsw#iz_ac01.rsw#
-유저인터페이스\map\iz_ac01_d.bmp#유저인터페이스\map\iz_ac01.bmp#
-
-iz_ac01_c.gnd#iz_ac01.gnd#
-iz_ac01_c.gat#iz_ac01.gat#
-iz_ac01_c.rsw#iz_ac01.rsw#
-유저인터페이스\map\iz_ac01_c.bmp#유저인터페이스\map\iz_ac01.bmp#
-
-iz_ac01_b.gnd#iz_ac01.gnd#
-iz_ac01_b.gat#iz_ac01.gat#
-iz_ac01_b.rsw#iz_ac01.rsw#
-유저인터페이스\map\iz_ac01_b.bmp#유저인터페이스\map\iz_ac01.bmp#
-
-iz_ac01_a.gnd#iz_ac01.gnd#
-iz_ac01_a.gat#iz_ac01.gat#
-iz_ac01_a.rsw#iz_ac01.rsw#
-유저인터페이스\map\iz_ac01_a.bmp#유저인터페이스\map\iz_ac01.bmp#
-
-izlude_d.gnd#izlude.gnd#
-izlude_d.gat#izlude.gat#
-izlude_d.rsw#izlude.rsw#
-유저인터페이스\map\izlude_d.bmp#유저인터페이스\map\izlude.bmp#
-
-izlude_c.gnd#izlude.gnd#
-izlude_c.gat#izlude.gat#
-izlude_c.rsw#izlude.rsw#
-유저인터페이스\map\izlude_c.bmp#유저인터페이스\map\izlude.bmp#
-
-izlude_b.gnd#izlude.gnd#
-izlude_b.gat#izlude.gat#
-izlude_b.rsw#izlude.rsw#
-유저인터페이스\map\izlude_b.bmp#유저인터페이스\map\izlude.bmp#
-
-izlude_a.gnd#izlude.gnd#
-izlude_a.gat#izlude.gat#
-izlude_a.rsw#izlude.rsw#
-유저인터페이스\map\izlude_a.bmp#유저인터페이스\map\izlude.bmp#
-
-// 초보자수련장
 treasure_n1.gnd#treasure01.gnd#
 treasure_n1.gat#treasure01.gat#
 treasure_n1.rsw#treasure01.rsw#
@@ -942,6 +1295,7 @@ iz_int04.gnd#iz_int.gnd#
 iz_int04.gat#iz_int.gat#
 iz_int04.rsw#iz_int.rsw#
 유저인터페이스\map\iz_int04.bmp#유저인터페이스\map\iz_int.bmp#
+
 
 evt_swar_b.gnd#moc_ruins.gnd#
 evt_swar_b.gat#moc_ruins.gat#
@@ -1018,33 +1372,41 @@ ma_zif02.gnd#ma_zif01.gnd#
 ma_zif02.gat#ma_zif01.gat#
 ma_zif02.rsw#ma_zif01.rsw#
 
+
 ma_zif03.gnd#ma_zif01.gnd#
 ma_zif03.gat#ma_zif01.gat#
 ma_zif03.rsw#ma_zif01.rsw#
+
 
 ma_zif04.gnd#ma_zif01.gnd#
 ma_zif04.gat#ma_zif01.gat#
 ma_zif04.rsw#ma_zif01.rsw#
 
+
 ma_zif05.gnd#ma_zif01.gnd#
 ma_zif05.gat#ma_zif01.gat#
 ma_zif05.rsw#ma_zif01.rsw#
+
 
 ma_zif06.gnd#ma_zif01.gnd#
 ma_zif06.gat#ma_zif01.gat#
 ma_zif06.rsw#ma_zif01.rsw#
 
+
 ma_zif07.gnd#ma_zif01.gnd#
 ma_zif07.gat#ma_zif01.gat#
 ma_zif07.rsw#ma_zif01.rsw#
+
 
 ma_zif08.gnd#ma_zif01.gnd#
 ma_zif08.gat#ma_zif01.gat#
 ma_zif08.rsw#ma_zif01.rsw#
 
+
 ma_zif09.gnd#ma_zif01.gnd#
 ma_zif09.gat#ma_zif01.gat#
 ma_zif09.rsw#ma_zif01.rsw#
+
 
 1@ma_b.gnd#1@ma_b.gnd#
 1@ma_b.gat#1@ma_b.gat#
@@ -1056,10 +1418,13 @@ ma_zif09.rsw#ma_zif01.rsw#
 1@ma_c.rsw#1@ma_c.rsw#
 유저인터페이스\map\1@ma_c.bmp#유저인터페이스\map\1@ma_c.bmp#
 
+
 1@ma_h.gnd#1@ma_h.gnd#
 1@ma_h.gat#1@ma_h.gat#
 1@ma_h.rsw#1@ma_h.rsw#
 유저인터페이스\map\1@ma_h.bmp#유저인터페이스\map\1@ma_h.bmp#
+
+
 
 gld_dun01_2.gnd#gld_dun01.gnd#
 gld_dun01_2.gat#gld_dun01.gat#
@@ -1077,6 +1442,8 @@ gld_dun04_2.gnd#gld_dun04.gnd#
 gld_dun04_2.gat#gld_dun04.gat#
 gld_dun04_2.rsw#gld_dun04.rsw#
 유저인터페이스\map\gld_dun04_2.bmp#유저인터페이스\map\gld_dun04.bmp#
+
+
 
 1@lhz.gnd#1@lhz.gnd#
 1@lhz.gat#1@lhz.gat#
@@ -1262,6 +1629,7 @@ que_moon.rsw#job_star.rsw#
 유저인터페이스\map\que_moon.bmp#유저인터페이스\map\job_star.bmp#
 
 //---------------------------------2007년 6월 30일 이전의 데이터---------------------------
+
 new_1-1.gnd#new_zone01.gnd#
 new_2-1.gnd#new_zone01.gnd#
 new_3-1.gnd#new_zone01.gnd#
@@ -1684,6 +2052,7 @@ pvp_c_room.gnd#pvp_room.gnd#
 pvp_c_room.gat#pvp_room.gat#
 pvp_c_room.rsw#pvp_room.rsw#
 
+
 guild_room.gnd#quiz_01.gnd#
 guild_room.gat#quiz_01.gat#
 guild_room.rsw#quiz_01.rsw#
@@ -2045,320 +2414,3 @@ bossnia_04.gnd#gef_dun03.gnd#
 bossnia_04.gat#gef_dun03.gat#
 bossnia_04.rsw#gef_dun03.rsw#
 유저인터페이스\map\bossnia_04.bmp#유저인터페이스\map\gef_dun03.bmp#
-//kRO END
-
-//turnins
-epay_dun00l.gnd#pay_dun00.gnd#
-epay_dun00l.gat#pay_dun00.gat#
-epay_dun00l.rsw#pay_dun00.rsw#
-유저인터페이스\map\epay_dun00l.bmp#유저인터페이스\map\pay_dun00.bmp#
-
-epay_dun00m.gnd#pay_dun00.gnd#
-epay_dun00m.gat#pay_dun00.gat#
-epay_dun00m.rsw#pay_dun00.rsw#
-유저인터페이스\map\epay_dun00m.bmp#유저인터페이스\map\pay_dun00.bmp#
-
-epay_dun00h.gnd#pay_dun00.gnd#
-epay_dun00h.gat#pay_dun00.gat#
-epay_dun00h.rsw#pay_dun00.rsw#
-유저인터페이스\map\epay_dun00h.bmp#유저인터페이스\map\pay_dun00.bmp#
-
-eabyss_01l.gnd#abyss_01.gnd#
-eabyss_01l.gat#abyss_01.gat#
-eabyss_01l.rsw#abyss_01.rsw#
-유저인터페이스\map\eabyss_01l.bmp#유저인터페이스\map\abyss_01.bmp#
-
-eabyss_03l.gnd#abyss_03.gnd#
-eabyss_03l.gat#abyss_03.gat#
-eabyss_03l.rsw#abyss_03.rsw#
-유저인터페이스\map\eabyss_03l.bmp#유저인터페이스\map\abyss_03.bmp#
-
-ebeach_dunl.gnd#beach_dun.gnd#
-ebeach_dunl.gat#beach_dun.gat#
-ebeach_dunl.rsw#beach_dun.rsw#
-유저인터페이스\map\ebeach_dunl.bmp#유저인터페이스\map\beach_dun.bmp#
-
-ebif_fld01l.gnd#bif_fild01.gnd#
-ebif_fld01l.gat#bif_fild01.gat#
-ebif_fld01l.rsw#bif_fild01.rsw#
-유저인터페이스\map\ebif_fld01l.bmp#유저인터페이스\map\bif_fild01.bmp#
-
-edic_dun01l.gnd#dic_dun01.gnd#
-edic_dun01l.gat#dic_dun01.gat#
-edic_dun01l.rsw#dic_dun01.rsw#
-유저인터페이스\map\edic_dun01l.bmp#유저인터페이스\map\dic_dun01.bmp#
-
-edic_dun02l.gnd#dic_dun02.gnd#
-edic_dun02l.gat#dic_dun02.gat#
-edic_dun02l.rsw#dic_dun02.rsw#
-유저인터페이스\map\edic_dun02l.bmp#유저인터페이스\map\dic_dun02.bmp#
-
-edic_fld01l.gnd#dic_fild01.gnd#
-edic_fld01l.gat#dic_fild01.gat#
-edic_fld01l.rsw#dic_fild01.rsw#
-유저인터페이스\map\edic_fld01l.bmp#유저인터페이스\map\dic_fild01.bmp#
-
-egef_dun03l.gnd#gef_dun03.gnd#
-egef_dun03l.gat#gef_dun03.gat#
-egef_dun03l.rsw#gef_dun03.rsw#
-유저인터페이스\map\egef_dun03l.bmp#유저인터페이스\map\gef_dun03.bmp#
-
-egl_chyardl.gnd#gl_chyard.gnd#
-egl_chyardl.gat#gl_chyard.gat#
-egl_chyardl.rsw#gl_chyard.rsw#
-유저인터페이스\map\egl_chyardl.bmp#유저인터페이스\map\gl_chyard.bmp#
-
-ethor_v02l.gnd#thor_v02.gnd#
-ethor_v02l.gat#thor_v02.gat#
-ethor_v02l.rsw#thor_v02.rsw#
-유저인터페이스\map\ethor_v02l.bmp#유저인터페이스\map\thor_v02.bmp#
-
-ehu_fild01l.gnd#hu_fild01.gnd#
-ehu_fild01l.gat#hu_fild01.gat#
-ehu_fild01l.rsw#hu_fild01.rsw#
-유저인터페이스\map\ehu_fild01l.bmp#유저인터페이스\map\hu_fild01.bmp#
-
-emag_dun02l.gnd#mag_dun02.gnd#
-emag_dun02l.gat#mag_dun02.gat#
-emag_dun02l.rsw#mag_dun02.rsw#
-유저인터페이스\map\emag_dun02l.bmp#유저인터페이스\map\mag_dun02.bmp#
-
-emag_dun02h.gnd#mag_dun02.gnd#
-emag_dun02h.gat#mag_dun02.gat#
-emag_dun02h.rsw#mag_dun02.rsw#
-유저인터페이스\map\emag_dun02h.bmp#유저인터페이스\map\mag_dun02.bmp#
-
-emag_dun02m.gnd#mag_dun02.gnd#
-emag_dun02m.gat#mag_dun02.gat#
-emag_dun02m.rsw#mag_dun02.rsw#
-유저인터페이스\map\emag_dun02m.bmp#유저인터페이스\map\mag_dun02.bmp#
-
-era_fild12l.gnd#ra_fild12.gnd#
-era_fild12l.gat#ra_fild12.gat#
-era_fild12l.rsw#ra_fild12.rsw#
-유저인터페이스\map\era_fild12l.bmp#유저인터페이스\map\ra_fild12.bmp#
-
-era_san04l.gnd#ra_san04.gnd#
-era_san04l.gat#ra_san04.gat#
-era_san04l.rsw#ra_san04.rsw#
-유저인터페이스\map\era_san04l.bmp#유저인터페이스\map\ra_san04.bmp#
-
-etha_t04l.gnd#tha_t04.gnd#
-etha_t04l.gat#tha_t04.gat#
-etha_t04l.rsw#tha_t04.rsw#
-유저인터페이스\map\etha_t04l.bmp#유저인터페이스\map\tha_t04.bmp#
-
-etur_dun03l.gnd#tur_dun03.gnd#
-etur_dun03l.gat#tur_dun03.gat#
-etur_dun03l.rsw#tur_dun03.rsw#
-유저인터페이스\map\etur_dun03l.bmp#유저인터페이스\map\tur_dun03.bmp#
-
-eyno_fld07l.gnd#yuno_fild07.gnd#
-eyno_fld07l.gat#yuno_fild07.gat#
-eyno_fld07l.rsw#yuno_fild07.rsw#
-유저인터페이스\map\eyno_fld07l.bmp#유저인터페이스\map\yuno_fild07.bmp#
-
-elhz_fld01l.gnd#lhz_fild01.gnd#
-elhz_fld01l.gat#lhz_fild01.gat#
-elhz_fld01l.rsw#lhz_fild01.rsw#
-유저인터페이스\map\elhz_fld01l.bmp#유저인터페이스\map\lhz_fild01.bmp#
-
-elhz_fld01h.gnd#lhz_fild01.gnd#
-elhz_fld01h.gat#lhz_fild01.gat#
-elhz_fld01h.rsw#lhz_fild01.rsw#
-유저인터페이스\map\elhz_fld01h.bmp#유저인터페이스\map\lhz_fild01.bmp#
-
-elhz_fld01m.gnd#lhz_fild01.gnd#
-elhz_fld01m.gat#lhz_fild01.gat#
-elhz_fld01m.rsw#lhz_fild01.rsw#
-유저인터페이스\map\elhz_fld01m.bmp#유저인터페이스\map\lhz_fild01.bmp#
-
-eman_fld03h.gnd#man_fild03.gnd#
-eman_fld03h.gat#man_fild03.gat#
-eman_fld03h.rsw#man_fild03.rsw#
-유저인터페이스\map\eman_fld03h.bmp#유저인터페이스\map\man_fild03.bmp#
-
-eman_fld03l.gnd#man_fild03.gnd#
-eman_fld03l.gat#man_fild03.gat#
-eman_fld03l.rsw#man_fild03.rsw#
-유저인터페이스\map\eman_fld03l.bmp#유저인터페이스\map\man_fild03.bmp#
-
-eman_fld03m.gnd#man_fild03.gnd#
-eman_fld03m.gat#man_fild03.gat#
-eman_fld03m.rsw#man_fild03.rsw#
-유저인터페이스\map\eman_fld03m.bmp#유저인터페이스\map\man_fild03.bmp#
-
-emos_dun02l.gnd#mosk_dun02.gnd#
-emos_dun02l.gat#mosk_dun02.gat#
-emos_dun02l.rsw#mosk_dun02.rsw#
-유저인터페이스\map\emos_dun02l.bmp#유저인터페이스\map\mosk_dun02.bmp#
-
-emos_dun02m.gnd#mosk_dun02.gnd#
-emos_dun02m.gat#mosk_dun02.gat#
-emos_dun02m.rsw#mosk_dun02.rsw#
-유저인터페이스\map\emos_dun02m.bmp#유저인터페이스\map\mosk_dun02.bmp#
-
-emos_dun02h.gnd#mosk_dun02.gnd#
-emos_dun02h.gat#mosk_dun02.gat#
-emos_dun02h.rsw#mosk_dun02.rsw#
-유저인터페이스\map\emos_dun02h.bmp#유저인터페이스\map\mosk_dun02.bmp#
-
-eabyss_01m.gnd#abyss_01.gnd#
-eabyss_01m.gat#abyss_01.gat#
-eabyss_01m.rsw#abyss_01.rsw#
-유저인터페이스\map\eabyss_01m.bmp#유저인터페이스\map\abyss_01.bmp#
-
-eabyss_03m.gnd#abyss_03.gnd#
-eabyss_03m.gat#abyss_03.gat#
-eabyss_03m.rsw#abyss_03.rsw#
-유저인터페이스\map\eabyss_03m.bmp#유저인터페이스\map\abyss_03.bmp#
-
-ebeach_dunm.gnd#beach_dun.gnd#
-ebeach_dunm.gat#beach_dun.gat#
-ebeach_dunm.rsw#beach_dun.rsw#
-유저인터페이스\map\ebeach_dunm.bmp#유저인터페이스\map\beach_dun.bmp#
-
-ebif_fld01m.gnd#bif_fild01.gnd#
-ebif_fld01m.gat#bif_fild01.gat#
-ebif_fld01m.rsw#bif_fild01.rsw#
-유저인터페이스\map\ebif_fld01m.bmp#유저인터페이스\map\bif_fild01.bmp#
-
-edic_dun01m.gnd#dic_dun01.gnd#
-edic_dun01m.gat#dic_dun01.gat#
-edic_dun01m.rsw#dic_dun01.rsw#
-유저인터페이스\map\edic_dun01m.bmp#유저인터페이스\map\dic_dun01.bmp#
-
-edic_dun02m.gnd#dic_dun02.gnd#
-edic_dun02m.gat#dic_dun02.gat#
-edic_dun02m.rsw#dic_dun02.rsw#
-유저인터페이스\map\edic_dun02m.bmp#유저인터페이스\map\dic_dun02.bmp#
-
-edic_fld01m.gnd#dic_fild01.gnd#
-edic_fld01m.gat#dic_fild01.gat#
-edic_fld01m.rsw#dic_fild01.rsw#
-유저인터페이스\map\edic_fld01m.bmp#유저인터페이스\map\dic_fild01.bmp#
-
-egef_dun03m.gnd#gef_dun03.gnd#
-egef_dun03m.gat#gef_dun03.gat#
-egef_dun03m.rsw#gef_dun03.rsw#
-유저인터페이스\map\egef_dun03m.bmp#유저인터페이스\map\gef_dun03.bmp#
-
-egl_chyardm.gnd#gl_chyard.gnd#
-egl_chyardm.gat#gl_chyard.gat#
-egl_chyardm.rsw#gl_chyard.rsw#
-유저인터페이스\map\egl_chyardm.bmp#유저인터페이스\map\gl_chyard.bmp#
-
-ethor_v02m.gnd#thor_v02.gnd#
-ethor_v02m.gat#thor_v02.gat#
-ethor_v02m.rsw#thor_v02.rsw#
-유저인터페이스\map\ethor_v02m.bmp#유저인터페이스\map\thor_v02.bmp#
-
-ehu_fild01m.gnd#hu_fild01.gnd#
-ehu_fild01m.gat#hu_fild01.gat#
-ehu_fild01m.rsw#hu_fild01.rsw#
-유저인터페이스\map\ehu_fild01m.bmp#유저인터페이스\map\hu_fild01.bmp#
-
-era_fild12m.gnd#ra_fild12.gnd#
-era_fild12m.gat#ra_fild12.gat#
-era_fild12m.rsw#ra_fild12.rsw#
-유저인터페이스\map\era_fild12m.bmp#유저인터페이스\map\ra_fild12.bmp#
-
-era_san04m.gnd#ra_san04.gnd#
-era_san04m.gat#ra_san04.gat#
-era_san04m.rsw#ra_san04.rsw#
-유저인터페이스\map\era_san04m.bmp#유저인터페이스\map\ra_san04.bmp#
-
-etha_t04m.gnd#tha_t04.gnd#
-etha_t04m.gat#tha_t04.gat#
-etha_t04m.rsw#tha_t04.rsw#
-유저인터페이스\map\etha_t04m.bmp#유저인터페이스\map\tha_t04.bmp#
-
-etur_dun03m.gnd#tur_dun03.gnd#
-etur_dun03m.gat#tur_dun03.gat#
-etur_dun03m.rsw#tur_dun03.rsw#
-유저인터페이스\map\etur_dun03m.bmp#유저인터페이스\map\tur_dun03.bmp#
-
-eyno_fld07m.gnd#yuno_fild07.gnd#
-eyno_fld07m.gat#yuno_fild07.gat#
-eyno_fld07m.rsw#yuno_fild07.rsw#
-유저인터페이스\map\eyno_fld07m.bmp#유저인터페이스\map\yuno_fild07.bmp#
-
-eabyss_01h.gnd#abyss_01.gnd#
-eabyss_01h.gat#abyss_01.gat#
-eabyss_01h.rsw#abyss_01.rsw#
-유저인터페이스\map\eabyss_01h.bmp#유저인터페이스\map\abyss_01.bmp#
-
-eabyss_03h.gnd#abyss_03.gnd#
-eabyss_03h.gat#abyss_03.gat#
-eabyss_03h.rsw#abyss_03.rsw#
-유저인터페이스\map\eabyss_03h.bmp#유저인터페이스\map\abyss_03.bmp#
-
-ebeach_dunh.gnd#beach_dun.gnd#
-ebeach_dunh.gat#beach_dun.gat#
-ebeach_dunh.rsw#beach_dun.rsw#
-유저인터페이스\map\ebeach_dunh.bmp#유저인터페이스\map\beach_dun.bmp#
-
-ebif_fld01h.gnd#bif_fild01.gnd#
-ebif_fld01h.gat#bif_fild01.gat#
-ebif_fld01h.rsw#bif_fild01.rsw#
-유저인터페이스\map\ebif_fld01h.bmp#유저인터페이스\map\bif_fild01.bmp#
-
-edic_dun01h.gnd#dic_dun01.gnd#
-edic_dun01h.gat#dic_dun01.gat#
-edic_dun01h.rsw#dic_dun01.rsw#
-유저인터페이스\map\edic_dun01h.bmp#유저인터페이스\map\dic_dun01.bmp#
-
-edic_dun02h.gnd#dic_dun02.gnd#
-edic_dun02h.gat#dic_dun02.gat#
-edic_dun02h.rsw#dic_dun02.rsw#
-유저인터페이스\map\edic_dun02h.bmp#유저인터페이스\map\dic_dun02.bmp#
-
-edic_fld01h.gnd#dic_fild01.gnd#
-edic_fld01h.gat#dic_fild01.gat#
-edic_fld01h.rsw#dic_fild01.rsw#
-유저인터페이스\map\edic_fld01h.bmp#유저인터페이스\map\dic_fild01.bmp#
-
-egef_dun03h.gnd#gef_dun03.gnd#
-egef_dun03h.gat#gef_dun03.gat#
-egef_dun03h.rsw#gef_dun03.rsw#
-유저인터페이스\map\egef_dun03h.bmp#유저인터페이스\map\gef_dun03.bmp#
-
-egl_chyardh.gnd#gl_chyard.gnd#
-egl_chyardh.gat#gl_chyard.gat#
-egl_chyardh.rsw#gl_chyard.rsw#
-유저인터페이스\map\egl_chyardh.bmp#유저인터페이스\map\gl_chyard.bmp#
-
-ethor_v02h.gnd#thor_v02.gnd#
-ethor_v02h.gat#thor_v02.gat#
-ethor_v02h.rsw#thor_v02.rsw#
-유저인터페이스\map\ethor_v02h.bmp#유저인터페이스\map\thor_v02.bmp#
-
-ehu_fild01h.gnd#hu_fild01.gnd#
-ehu_fild01h.gat#hu_fild01.gat#
-ehu_fild01h.rsw#hu_fild01.rsw#
-유저인터페이스\map\ehu_fild01h.bmp#유저인터페이스\map\hu_fild01.bmp#
-
-era_fild12h.gnd#ra_fild12.gnd#
-era_fild12h.gat#ra_fild12.gat#
-era_fild12h.rsw#ra_fild12.rsw#
-유저인터페이스\map\era_fild12h.bmp#유저인터페이스\map\ra_fild12.bmp#
-
-era_san04h.gnd#ra_san04.gnd#
-era_san04h.gat#ra_san04.gat#
-era_san04h.rsw#ra_san04.rsw#
-유저인터페이스\map\era_san04h.bmp#유저인터페이스\map\ra_san04.bmp#
-
-etha_t04h.gnd#tha_t04.gnd#
-etha_t04h.gat#tha_t04.gat#
-etha_t04h.rsw#tha_t04.rsw#
-유저인터페이스\map\etha_t04h.bmp#유저인터페이스\map\tha_t04.bmp#
-
-etur_dun03h.gnd#tur_dun03.gnd#
-etur_dun03h.gat#tur_dun03.gat#
-etur_dun03h.rsw#tur_dun03.rsw#
-유저인터페이스\map\etur_dun03h.bmp#유저인터페이스\map\tur_dun03.bmp#
-
-eyno_fld07h.gnd#yuno_fild07.gnd#
-eyno_fld07h.gat#yuno_fild07.gat#
-eyno_fld07h.rsw#yuno_fild07.rsw#
-유저인터페이스\map\eyno_fld07h.bmp#유저인터페이스\map\yuno_fild07.bmp#

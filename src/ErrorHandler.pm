@@ -28,6 +28,10 @@ use Translation;
 
 sub showError {
 	$net->serverDisconnect() if ($net);
+	if ($bus) {
+		$bus->close();
+		undef $bus;
+	}
 
 	if (!$Globals::interface || UNIVERSAL::isa($Globals::interface, "Interface::Startup") || UNIVERSAL::isa($Globals::interface, "Interface::Socket")) {
 		print TF("%s\nPress ENTER to exit this program.\n", $_[0]);
