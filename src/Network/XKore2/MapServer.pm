@@ -16,6 +16,7 @@ package Network::XKore2::MapServer;
 
 use strict;
 use Scalar::Util qw(weaken);
+use Math::BigInt;
 use Globals qw(
 	$char $field %statusHandle @skillsID @itemsID %items
 	$portalsList $npcsList $monstersList $playersList $petsList
@@ -552,8 +553,8 @@ sub send_player_info {
 	# Send spirit sphere information
 	$data  = pack('C2 a4 v', 0xD0, 0x01, $char->{ID}, $char->{spirits}) if ($char->{spirits});
 	# Send exp-required-to-level-up info
-	$data .= pack('C2 v V', 0xB1, 0x00, 22, $char->{exp_max});
-	$data .= pack('C2 v V', 0xB1, 0x00, 23, $char->{exp_job_max});
+	$data .= pack('C2 v V', 0xB1, 0x00, 22, Math::BigInt->new($char->{exp_max} || 0)->bmod('4294967296')->bstr());
+	$data .= pack('C2 v V', 0xB1, 0x00, 23, Math::BigInt->new($char->{exp_job_max} || 0)->bmod('4294967296')->bstr());
 	$client->send($data);
 
 	# Send skill information
