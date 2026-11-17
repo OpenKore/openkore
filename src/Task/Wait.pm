@@ -26,6 +26,7 @@ package Task::Wait;
 
 use strict;
 use Time::HiRes qw(time);
+use Scalar::Util qw(weaken);
 
 use Modules 'register';
 use Task;
@@ -55,6 +56,10 @@ sub new {
 
 	$self->{wait}{timeout} = $args{seconds};
 	$self->{inGame} = defined($args{inGame}) ? $args{inGame} : 1;
+	if ($args{_timeoutWeak} && $args{weak} && $args{object}) {
+		$self->{weakObject} = $args{object};
+		weaken($self->{weakObject});
+	}
 
 	return $self;
 }
@@ -74,6 +79,10 @@ sub resume {
 sub iterate {
 	my ($self) = @_;
 	$self->SUPER::iterate();
+	if (exists $self->{weakObject} && !defined $self->{weakObject}) {
+		$self->setDone();
+		return;
+	}
 	return unless (!$self->{inGame} || $net->getState() == Network::IN_GAME);
 
 	$self->{wait}{time} = time if (!defined $self->{wait}{time});

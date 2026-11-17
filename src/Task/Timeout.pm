@@ -39,7 +39,7 @@ sub new {
 	};
 	
 	my $self = $class->SUPER::new(tasks => [
-		Task::Wait->new(%args),
+		Task::Wait->new(%args, _timeoutWeak => 1),
 		Task::Function->new(%args),
 	], %args);
 	
