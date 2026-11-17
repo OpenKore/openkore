@@ -185,7 +185,11 @@ if not win32 and not darwin:
 if win32:
 	sources = [
 		'win32/netredirect.cpp',
-		'win32/utils-netredirect.cpp'
+		'win32/utils-netredirect.cpp',
+		'thirdlib/minhook/src/buffer.c',
+		'thirdlib/minhook/src/hook.c',
+		'thirdlib/minhook/src/trampoline.c',
+		'thirdlib/minhook/src/hde/hde32.c'
 	]
 	libenv.NativeDLL('NetRedirect', sources,
 		CC = 'g++',
