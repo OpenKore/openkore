@@ -109,6 +109,12 @@ sub initHandlers {
 			["deposit", T("Deposit Zeny in Banking")],
 			["withdraw", T("Withdraw Zeny from Banking")],
 			], \&cmdBank],
+		['barter', [
+			T("Trade with the current NPC barter shop."),
+			["", T("list offers and their required items")],
+			["buy <offer #> [<amount>]", T("trade for the specified offer")],
+			["close", T("close the barter shop")],
+			], \&cmdBarter],
 		['bg', [
 			T("Send a message in the battlegrounds chat."),
 			[T("<message>"), T("send <message> in the battlegrounds chat")]
@@ -1426,6 +1432,69 @@ sub cmdBank {
 	} else {
 		error T("Syntax Error in function 'bank' (Banking)\n" .
 				"bank <open|deposit|withdraw>\n");
+	}
+}
+
+sub cmdBarter {
+	my ($cmd, $args) = @_;
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
+		return;
+	}
+
+	my $shop = $char && $char->{barterShop};
+	unless ($shop) {
+		error T("No NPC barter shop is open.\n");
+		return;
+	}
+
+	if (!defined $args || $args eq '') {
+		my $list = T("NPC barter offers (stock at opening):\n");
+		foreach my $index (sort { $a <=> $b } keys %{$shop->{offers}}) {
+			my $offer = $shop->{offers}{$index};
+			my $name = itemNameSimple($offer->{nameID});
+			$name = "+$offer->{refine} $name" if $offer->{refine};
+			my @cost = map {
+				my $name = itemNameSimple($_->{nameID});
+				$name = "+$_->{refine} $name" if $_->{refine};
+				"$_->{amount} x $name";
+			} @{$offer->{cost}};
+			push @cost, TF("%s zeny", formatNumber($offer->{zeny})) if $offer->{zeny};
+			my $stock = $offer->{stock} == 0xFFFFFFFF ? T("unlimited") : $offer->{stock};
+			$list .= TF("%s: %s (stock: %s) - %s\n", $index, $name, $stock, @cost ? join(' + ', @cost) : T("free"));
+		}
+		message $list, 'list';
+
+	} elsif ($args eq 'close') {
+		$messageSender->sendBarterClose($shop->{expanded});
+
+	} elsif ($args =~ /\Abuy\s+([0-9]+)(?:\s+([0-9]+))?\z/ && $1 <= 0xFFFFFFFF
+		&& (!defined $2 || ($2 > 0 && $2 <= 0x7FFFFFFF))) {
+		my ($index, $amount) = (0 + $1, $2 || 1);
+		if ($char->{dead}) {
+			error T("You cannot barter while dead.\n");
+			return;
+		}
+		my $offer = $shop->{offers}{$index};
+		unless ($offer) {
+			error TF("Barter offer %s does not exist.\n", $index);
+			return;
+		}
+
+		my $currencyIndex;
+		unless ($shop->{expanded}) {
+			my $id = $offer->{cost}[0]{nameID};
+			my $currency = $char->inventory->getByNameID($id);
+			unless ($currency) {
+				error TF("Barter requires %s in your inventory.\n", itemNameSimple($id));
+				return;
+			}
+			$currencyIndex = unpack('v', $currency->{ID});
+		}
+		$messageSender->sendBarterBuy($shop->{expanded}, $index, $offer->{nameID}, $amount, $currencyIndex);
+
+	} else {
+		error T("Usage: barter [buy <offer #> [<amount>] | close]\n");
 	}
 }
 

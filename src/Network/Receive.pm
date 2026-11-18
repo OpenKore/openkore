@@ -7973,6 +7973,7 @@ sub npc_talk_text {
 # 00C4 <shop id>.L
 sub npc_store_begin {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 	my $sellAutoIndex = AI::findAction("sellAuto");
 	$args->{mangle} = 2 if defined $sellAutoIndex && AI::args($sellAutoIndex)->{sentNpcTalk};
 	undef %talk;
@@ -7991,6 +7992,7 @@ sub npc_store_begin {
 # 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType file if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 	my $msg = $args->{RAW_MSG};
 	my $pack;
 	my $keys;
@@ -8111,12 +8113,83 @@ sub buy_result {
 	} else {
 		error TF("Buy failed (failure code %s).\n", $args->{fail});
 	}
-	if (AI::is("buyAuto")) {
+	if (AI::is("buyAuto") && !($char && $char->{barterShop})) {
 		AI::args()->{recv_buy_packet} = 1;
 		AI::args()->{recv_buy_packet_overweight} = 1 if $args->{fail} == 2;
 		delete AI::args()->{weight_recovery} if $args->{fail} == 0;
 	}
 	Plugins::callHook('buy_result', {fail => $args->{fail}});
+}
+
+sub parseBarterOffers {
+	my ($msg, $switch, $extraRefine) = @_;
+	my $size = length $msg;
+	return if $size < 4 || unpack('x2 v', $msg) != $size;
+
+	my $expanded = $switch eq '0B56' || $switch eq '0B79';
+	my $cursor = $expanded ? 8 : 4;
+	return if $size < $cursor;
+
+	my $format = {
+		'0B0E' => 'V C V5',
+		'0B78' => 'V C V5 v V',
+		'0B56' => 'V v V5',
+		'0B79' => 'V v V4 v V2' . ($extraRefine ? ' V' : ''),
+	}->{$switch};
+	my $recordSize = length pack $format;
+	my $count = $expanded ? unpack('x4 V', $msg) : ($size - $cursor) / $recordSize;
+	return if $count != int($count) || $count > ($size - $cursor) / $recordSize;
+
+	my %offers;
+	for (1 .. $count) {
+		return if $cursor + $recordSize > $size;
+		my ($nameID, undef, $stock, @details) = unpack($format, substr($msg, $cursor, $recordSize));
+		$cursor += $recordSize;
+		my ($index, $zeny, $refine, @cost);
+		if ($expanded) {
+			($index, $zeny) = @details[1, 2];
+			my $costCount = $switch eq '0B56' ? $details[3] : $details[5];
+			$refine = $details[6] if $extraRefine && $details[6] != 0xFFFFFFFF;
+			return if $costCount > ($size - $cursor) / 12;
+			for (1 .. $costCount) {
+				my ($id, $level, $amount) = unpack('V v V v', substr($msg, $cursor, 12));
+				return unless $id && $amount;
+				push @cost, {nameID => $id, amount => $amount, refine => $level == 0xFFFF ? undef : $level};
+				$cursor += 12;
+			}
+		} else {
+			my ($id, $amount, undef, $shopIndex) = @details;
+			return unless $id && $amount;
+			$index = $shopIndex;
+			$zeny = 0;
+			push @cost, {nameID => $id, amount => $amount};
+		}
+		return if !$nameID || exists $offers{$index};
+		$offers{$index} = {nameID => $nameID, stock => $stock, zeny => $zeny, refine => $refine, cost => \@cost};
+	}
+	return $cursor == $size ? \%offers : undef;
+}
+
+sub npc_barter_info {
+	my ($self, $args) = @_;
+	return unless $char;
+	delete $char->{barterShop};
+
+	my $switch = $args->{switch};
+	my $offers = parseBarterOffers($args->{RAW_MSG}, $switch);
+	$offers ||= parseBarterOffers($args->{RAW_MSG}, $switch, 1) if $switch eq '0B79';
+	unless ($offers) {
+		warning TF("Could not read barter shop list (%s).\n", $switch), 'parseMsg';
+		return;
+	}
+
+	$char->{barterShop} = {expanded => $switch eq '0B56' || $switch eq '0B79', offers => $offers};
+	$storeList->clear;
+	undef $in_market;
+	undef %talk;
+	$ai_v{npc_talk}{talk} = 'barter';
+	$ai_v{npc_talk}{time} = time;
+	Commands::run('barter');
 }
 
 # Presents list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).
@@ -8125,6 +8198,7 @@ sub buy_result {
 # 2 versions of same packet. $self->{npc_market_info_pack} (PACKET_ZC_NPC_MARKET_OPEN_sub) should be changed in own serverType file if needed
 sub npc_market_info {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 	my $pack = $args->{switch} eq '0B7A' ? 'V C V2 v V' : $self->{npc_market_info_pack} || 'v C V2 v';
 	my $len = length pack $pack;
 
@@ -10539,6 +10613,7 @@ sub vender_buy_fail {
 # ['cash_dealer', 'v V2 a*', [qw(len cash_points kafra_points item_list)]]
 sub cash_dealer {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 
 	undef %talk;
 	$ai_v{'npc_talk'}{talk} = 'cash';

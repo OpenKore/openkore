@@ -766,6 +766,10 @@ sub new {
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'0B76' => ['homunculus_property', 'Z24 C v11 V6 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B77' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
+		'0B0E' => ['npc_barter_info'],
+		'0B56' => ['npc_barter_info'],
+		'0B78' => ['npc_barter_info'],
+		'0B79' => ['npc_barter_info'],
 		'0B7A' => ['npc_market_info', 'v a*', [qw(len itemList)]],
 		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
 		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
