@@ -323,7 +323,7 @@ sub new {
 		'0A99' => ['equip_switch_remove', 'a2', [qw(ID)]], # remove item in equipswitch
 		'0A9C' => ['equip_switch_run'], # switch Item !
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
-		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+		'0AA3' => ['refineui_refine', 'a2 a*', [qw(index options)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
 		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox

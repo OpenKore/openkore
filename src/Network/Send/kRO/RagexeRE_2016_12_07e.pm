@@ -43,7 +43,7 @@ sub new {
 		'095D' => ['storage_password'],
 		'035F' => ['sync', 'V', [qw(time)]],
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
-		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+		'0AA3' => ['refineui_refine', 'a2 a*', [qw(index options)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0835' => ['search_store_request_next_page'],

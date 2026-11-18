@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop);
+use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop $refineUI);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -247,6 +247,17 @@ sub sendToServer {
 		);
 		Plugins::callHook($hookName, \%args);
 		return if ($args{return});
+	}
+
+	if ($refineUI && $refineUI->{open}) {
+		if ($messageID eq '0AA1' && length($msg) == 4) {
+			$refineUI = {open => 1, selectedID => substr($msg, 2, 2)};
+		} elsif ($messageID eq '0AA3' && (length($msg) == 7 || length($msg) == 9)
+			&& defined $refineUI->{selectedID} && $refineUI->{selectedID} eq substr($msg, 2, 2)) {
+			$refineUI->{pending} = 1;
+		} elsif ($messageID eq '0AA4' && length($msg) == 2) {
+			undef $refineUI;
+		}
 	}
 
 	# Packet Prefix Encryption Support
@@ -1387,8 +1398,19 @@ sub sendRefineUISelect {
 	debug "Checking item for RefineUI\n", "sendPacket";
 }
 
+sub reconstruct_refineui_refine {
+	my ($self, $args) = @_;
+	$args->{options} = pack($self->refineUIItemIDFormat . ' C', $args->{catalyst}, $args->{bless});
+}
+
+sub parse_refineui_refine {
+	my ($self, $args) = @_;
+	my $length = length $args->{options};
+	return unless $length == 3 || $length == 5;
+	@$args{qw(catalyst bless)} = unpack($length == 5 ? 'V C' : 'v C', $args->{options});
+}
+
 # Continue to refine equip
-# '0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 # @param itemIndex OpenKore's Inventory Item Index
 # @param materialNameIDMaterial's NameID
 # @param useCatalyst Catalyst (Blacksmith Blessing) toggle. 0 = Not using, 1 = Use catalyst
