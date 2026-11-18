@@ -55,6 +55,7 @@ sub start {
 		is ($check->( '5 <= 4' ), 0);
 		is ($check->( '6 != 5' ), 1);
 		is ($check->( '6 != 6' ), 0);
+		done_testing();
 	};
 	
 	subtest 'math range' => sub {
@@ -67,6 +68,7 @@ sub start {
 		is ($check->( '15..20 == 9' ), 0);
 		is ($check->( '5..7 != 3' ), 1);
 		is ($check->( '10..20 != 15' ), 0);
+		done_testing();
 	};
 	
 	subtest 'text' => sub {
@@ -74,11 +76,13 @@ sub start {
 		is ($check->( 'Poring == Drops' ), 0);
 		is ($check->( 'Poring != Drops' ), 1);
 		is ($check->( 'Poring != Poring' ), 0);
+		done_testing();
 	};
 	
 	subtest 'list' => sub {
 		is ($check->( 'Poring ~ Drops, Poring, Poporing, Magmaring' ), 1);
 		is ($check->( 'Weapon ~ Shield, Hat, Shoe, Mantle' ), 0);
+		done_testing();
 	};
 	
 	subtest 'regex' => sub {
@@ -87,6 +91,7 @@ sub start {
 		is ($check->( 'Poring =~ /por/'), 0);
 		is ($check->( 'Poring =~ /por/i'), 1);
 		is ($check->( 'Marin =~ /oring/i'), 0);
+		done_testing();
 	};
 
 	subtest 'statement API and compound conditions' => sub {
@@ -96,6 +101,7 @@ sub start {
 		is($check->('(1 == 1) && (2 == 2)'), 1, 'nested AND');
 		is($check->('(1 == 2) || (2 == 2)'), 1, 'nested OR');
 		is($check->('(1 == 2) && (2 == 2)'), 0, 'false nested AND');
+		done_testing();
 	};
 }
 
