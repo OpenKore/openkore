@@ -476,6 +476,8 @@ use constant {
 use constant {
 	GROUPMEMBER_DELETE_LEAVE => 0x0,
 	GROUPMEMBER_DELETE_EXPEL => 0x1,
+	GROUPMEMBER_DELETE_CANT_LEAVE => 0x2,
+	GROUPMEMBER_DELETE_CANT_EXPEL => 0x3,
 };
 
 # item list type
@@ -8907,6 +8909,14 @@ sub party_invite_result {
 
 sub party_leave {
 	my ($self, $args) = @_;
+
+	if ($args->{result} == GROUPMEMBER_DELETE_CANT_LEAVE) {
+		error T("Cannot leave the party.\n");
+		return;
+	} elsif ($args->{result} == GROUPMEMBER_DELETE_CANT_EXPEL) {
+		error T("Cannot kick the party member.\n");
+		return;
+	}
 
 	my $ID = $args->{ID};
 	my $actor = $char->{party}{users}{$ID}; # bytesToString($args->{name})
