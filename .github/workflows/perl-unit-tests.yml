@@ -1,0 +1,29 @@
+name: Perl unit tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  perl-unit-tests:
+    name: ${{ matrix.suite }} (Linux)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: [core, eventMacro]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Perl XS dependencies
+        run: python3 src/scons-local-3.1.2/scons.py
+
+      - name: Core Perl unit tests
+        if: matrix.suite == 'core'
+        run: perl src/test/unittests.pl
+
+      - name: eventMacro Perl unit tests
+        if: matrix.suite == 'eventMacro'
+        run: perl plugins/eventMacro/test/unit_tests.pl
