@@ -11911,6 +11911,7 @@ sub resurrection {
 		undef $char->{'dead'};
 		undef $char->{'dead_time'};
 		$char->{'resurrected'} = 1;
+		$char->setStatus('Dead', 0);
 		Plugins::callHook('self_resurrected');
 
 	} else {
