@@ -2,7 +2,7 @@ package Interface::Wx::NpcTalk;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw/EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK EVT_TEXT EVT_TEXT_ENTER/;
+use Wx::Event qw/EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK EVT_TEXT EVT_TEXT_ENTER EVT_LEFT_DOWN EVT_LEFT_UP EVT_MOTION/;
 use base 'Wx::Panel';
 
 use Globals;
@@ -38,6 +38,39 @@ sub new {
 	$self->{chatLog} = new Interface::Wx::LogView ($self);
 	$self->{chatLog}->SetMinSize ([0, $self->{chatLog}->GetCharHeight * 2 + 4]);
 	$self->{chatLog}->setDefaultColor;
+	if ($^O eq 'MSWin32' && Wx::wxVERSION() == 3.003) {
+		my ($trackDrag, $dragAnchor);
+		EVT_LEFT_DOWN ($self->{chatLog}, sub {
+			my (undef, $event) = @_;
+			$dragAnchor = undef;
+			$trackDrag = !$event->ShiftDown && !$event->ControlDown && !$event->AltDown;
+			$event->Skip;
+		});
+		EVT_MOTION ($self->{chatLog}, sub {
+			my (undef, $event) = @_;
+			$event->Skip;
+			return unless $trackDrag && $event->Dragging && $event->LeftIsDown;
+			$trackDrag = 0;
+			my ($from, $to) = $event->GetEventObject->GetSelection;
+			$dragAnchor = $from if $from == $to;
+		});
+		EVT_LEFT_UP ($self->{chatLog}, sub {
+			my (undef, $event) = @_;
+			my $anchor = $dragAnchor;
+			$trackDrag = 0;
+			$dragAnchor = undef;
+			$event->Skip;
+			return unless defined $anchor && !$event->ShiftDown && !$event->ControlDown && !$event->AltDown;
+			my $log = $event->GetEventObject;
+			my ($from, $to) = $log->GetSelection;
+			return unless $from > 0 && $from < $to;
+			return unless $to == $anchor || ($anchor == $log->GetLastPosition && $to == $anchor + 1);
+			my ($where, $column, $line) = $log->HitTest($event->GetPosition);
+			return unless $where == wxTE_HT_ON_TEXT;
+			my $end = $log->XYToPosition($column, $line);
+			$log->SetSelection($end, $to) if $end >= 0 && $end < $to && $end != $from;
+		});
+	}
 	$vsizer->Add ($self->{chatLog}, 1, wxGROW | wxALL, 4);
 	
 	$self->{hintLabel} = new Wx::StaticText ($self, wxID_ANY, '');
