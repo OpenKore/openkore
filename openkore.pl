@@ -18,7 +18,9 @@ use lib "$RealBin/src/deps";
 
 use Time::HiRes qw(time usleep);
 use Carp::Assert;
+use IO::Handle;
 
+our $argumentExitCode;
 
 sub __start {
 	use ErrorHandler;
@@ -97,6 +99,7 @@ sub __start {
 	$interface->mainLoop();
 	Benchmark::end("Real time") if DEBUG;
 
+	exit $argumentExitCode if defined $argumentExitCode;
 	main::shutdown();
 }
 
@@ -122,8 +125,15 @@ sub parseArguments {
 
 # Make sure there aren't any unhandled arguments left.
 sub checkEmptyArguments {
+	my $deferExit = $Globals::interface && $Globals::interface->isa('Interface::Wx');
 	if ( $Settings::options{help} ) {
+		STDOUT->autoflush(1) if $deferExit;
 		print Settings::getUsageText();
+		if ($deferExit) {
+			$argumentExitCode = 0;
+			$Globals::quit = 1;
+			return;
+		}
 		exit 0;
 	}
 	eval {
@@ -134,11 +144,17 @@ sub checkEmptyArguments {
 		GetOptions();
 	};
 	if ( my $e = caught( 'IOException', 'ArgumentException' ) ) {
+		STDOUT->autoflush(1) if $deferExit;
 		print "Error: $e\n";
 		if ( $e->isa( 'ArgumentException' ) ) {
 			print Settings::getUsageText();
 		}
-		exit 1;
+		if ($deferExit) {
+			$argumentExitCode = 1;
+			$Globals::quit = 1;
+		} else {
+			exit 1;
+		}
 	} elsif ( $@ ) {
 		die $@;
 	}
