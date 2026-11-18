@@ -45,6 +45,17 @@ sub new {
 	
 	$self->{listResponses} = new Wx::ListBox ($self, wxID_ANY,
 		wxDefaultPosition, wxDefaultSize, [], wxLB_HSCROLL);
+	if ($^O eq 'MSWin32' && Wx::wxVERSION() == 3.003 && Wx::SystemSettings->can('GetAppearance')
+		&& Wx::SystemSettings::GetAppearance()->IsUsingDarkBackground) {
+		local $@;
+		eval {
+			require Win32;
+			require Win32::API;
+			my $setTheme = Win32::API->new('uxtheme', 'SetWindowTheme', 'NPN', 'I');
+			$setTheme->Call($self->{listResponses}->GetHandle, pack('v*', unpack('C*', "DarkMode_DarkTheme\0")), 0)
+				if $setTheme && (Win32::GetOSVersion())[3] >= 26200;
+		};
+	}
 	$self->{listResponses}->SetMinSize ([0, $self->{listResponses}->GetCharHeight * 2 + 4]);
 	$self->{listResponses}->Show (0);
 	EVT_LISTBOX ($self, $self->{listResponses}->GetId, sub { $self->{value} = $self->{listResponses}->GetSelection; });
