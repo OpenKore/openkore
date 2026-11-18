@@ -160,7 +160,8 @@ sub create {
 ### CATEGORY: Methods
 
 sub refineUIItemIDFormat {
-	return ($rpackets{'0AA3'}{length} || 0) == 9 ? 'V' : 'v';
+	my $packet = $rpackets{'0AA3'};
+	return $packet && ($packet->{length} || 0) == 9 ? 'V' : 'v';
 }
 
 ##
