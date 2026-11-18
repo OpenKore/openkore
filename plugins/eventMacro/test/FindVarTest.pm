@@ -19,6 +19,13 @@ sub start {
 		is_deeply($var, {display_name => '$foo', type => 'scalar', real_name => 'foo'});
 	};
 	
+	subtest 'underscores are supported in identifiers' => sub {
+		is_deeply(find_variable('$var_name'),
+			{display_name => '$var_name', type => 'scalar', real_name => 'var_name'});
+		is_deeply(find_variable('$hash_name{key_name}'),
+			{display_name => '$hash_name{key_name}', type => 'accessed_hash', real_name => 'hash_name', complement => 'key_name'});
+	};
+
 	subtest 'array' => sub {
 		my $var = find_variable('@bar');
 		ok (defined $var);
@@ -91,7 +98,9 @@ sub start {
 		ok (!defined find_variable('$array[key]'));
 		ok (!defined find_variable('$hash{}'));
 		ok (!defined find_variable('$array[]'));
-		ok (!defined find_variable('$var_name'));
+		ok (!defined find_variable('$var-name'));
+		ok (!defined find_variable('$array[10]suffix'));
+		ok (!defined find_variable('$hash{key}suffix'));
 		ok (!defined find_variable('$array[$array[hi]]'));
 	};
 }
