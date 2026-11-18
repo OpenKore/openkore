@@ -230,6 +230,7 @@ sub activate {
 		['packet/npc_store_info',                    \&handleNPCTalk, \@holder],
 		['packet/npc_sell_list',                     \&handleNPCTalk, \@holder],
 		['packet/cash_dealer',                       \&handleNPCTalk, \@holder],
+		['packet/npc_barter_info',                   \&handleNPCTalk, \@holder],
 		['packet/npc_market_info',                   \&handleNPCTalk, \@holder],
 		['packet/npc_market_purchase_result',        \&handleNPCTalk, \@holder],
 		['TalkNPC_reset',                            \&TalkNPC_reset, \@holder]
@@ -529,7 +530,7 @@ sub iterate {
 
 		if ($self->noMoreSteps) {
 			# We arrived at a buy or sell selection, but there are no more steps regarding this, so end the conversation
-			if ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell|cash)$/) {
+			if ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell|cash|barter)$/) {
 				$self->conversation_end;
 			}
 			#Wait for more commands

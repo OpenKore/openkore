@@ -249,6 +249,11 @@ sub sendToServer {
 		return if ($args{return});
 	}
 
+	if ($char && $char->{barterShop} && length($msg) == 2
+		&& $messageID eq ($char->{barterShop}{expanded} ? '0B58' : '0B12')) {
+		delete $char->{barterShop};
+	}
+
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);
 
@@ -580,6 +585,7 @@ sub sendGetCharacterName {
 
 sub sendTalk {
 	my ($self, $ID) = @_;
+	$self->sendBarterClose($char->{barterShop}{expanded}) if $char && $char->{barterShop};
 	delete $talk{msg};
 	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk', ID => $ID, type => 1}));
@@ -3476,6 +3482,19 @@ sub sendSellBuyComplete {
 
 # Buy item from Market
 # 09D6
+sub sendBarterBuy {
+	my ($self, $expanded, $index, $nameID, $amount, $currencyIndex) = @_;
+	my $msg = $expanded
+		? pack('v v V3', 0x0B57, 16, $nameID, $index, $amount)
+		: pack('v v V V v V', 0x0B0F, 18, $nameID, $amount, $currencyIndex, $index);
+	$self->sendToServer($msg);
+}
+
+sub sendBarterClose {
+	my ($self, $expanded) = @_;
+	$self->sendToServer(pack('v', $expanded ? 0x0B58 : 0x0B12));
+}
+
 sub sendBuyBulkMarket {
 	my ($self, $r_array) = @_;
 
