@@ -3331,7 +3331,9 @@ sub meetingPosition {
 	my $targetSpeed = ($target->{walk_speed} || 0.12);
 	my $timeSinceTargetMoved = time - $target->{time_move} + $extra_time;
 
-	my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
+	my $target_solution = $target->{pos}{x} == $target->{pos_to}{x} && $target->{pos}{y} == $target->{pos_to}{y}
+		? [$target->{pos_to}]
+		: get_solution($field, $target->{pos}, $target->{pos_to});
 
 	# Calculate the time target will need to finish moving from pos to pos_to
 	my $timeTargetFinishMove = calcTimeFromSolution($target_solution, $targetSpeed);

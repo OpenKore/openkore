@@ -533,9 +533,15 @@ sub calcTimeFromPathfinding {
 #
 # Reference: hercules src\map\battle.c battle_check_range
 sub canAttack {
-	my ($field, $pos1, $pos2, $attackCanSnipe, $range, $clientSight) = @_;
+	my ($field, $pos1, $pos2, $attackCanSnipe, $range, $clientSight, $target) = @_;
 
-	my $distance = blockDistance($pos1, $pos2);
+	my $range_pos = $pos2;
+	if ($target && $target->{pos} && $target->{pos_to}
+		&& $target->{pos}{x} == $target->{pos_to}{x} && $target->{pos}{y} == $target->{pos_to}{y}
+		&& !$field->isOffMap($target->{pos}{x}, $target->{pos}{y})) {
+		$range_pos = $target->{pos};
+	}
+	my $distance = blockDistance($pos1, $range_pos);
 	return 1 if ($distance < 2);
 
 	# hercules conf\map\battle\client.conf area_size
@@ -543,7 +549,7 @@ sub canAttack {
 	# Openkore clientSight should be area_size+1 (by default 15)
 	return 0 if ($distance >= $clientSight);
 
-	my $client_distance = getClientDist($pos1, $pos2);
+	my $client_distance = getClientDist($pos1, $range_pos);
 	return 0 unless ($client_distance <= $range);
 
 	return -1 unless ($field->checkLOS($pos1, $pos2, $attackCanSnipe));
