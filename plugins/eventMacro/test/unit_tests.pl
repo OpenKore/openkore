@@ -63,4 +63,4 @@ foreach my $module ( @tests ) {
 
 print "Finished !\n";
 
-system("pause");
+system("pause") if $^O eq 'MSWin32' && -t STDIN;

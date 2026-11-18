@@ -38,6 +38,7 @@ sub start {
 		ok $v->validate( 'Poporing' );
 		ok !$v->validate( 'Marin' );
 		ok !$v->validate( 'Magmaring' );
+		done_testing();
 	};
 	
 	subtest 'regex code' => sub {
@@ -69,6 +70,7 @@ sub start {
 		ok $v->validate( 'Marin' );
 		ok $v->validate( 'Magmaring' );
 		ok $v->validate( 'marin' );
+		done_testing();
 	};
 	
 	subtest 'simple variable with text' => sub {
@@ -101,6 +103,7 @@ sub start {
 		ok $v->validate( 'Poporing' );
 		ok !$v->validate( 'Marin' );
 		ok !$v->validate( 'Magmaring' );
+		done_testing();
 	};
 	
 	subtest 'simple variable with regex code' => sub {
@@ -135,6 +138,7 @@ sub start {
 		ok $v->validate( 'Marin' );
 		ok $v->validate( 'Magmaring' );
 		ok $v->validate( 'marin' );
+		done_testing();
 	};
 	
 	subtest 'multiple variable with text' => sub {
@@ -194,6 +198,7 @@ sub start {
 		ok !$v->validate( 'hey there you bot' );
 		ok $v->validate( 'hello you bot' );
 		ok !$v->validate( 'I will kill you bot' );
+		done_testing();
 	};
 	
 	subtest 'repeated var' => sub {
@@ -238,6 +243,7 @@ sub start {
 		ok !$v->validate( '5 is 5, also 5 is big' );
 		ok !$v->validate( '6 is 6, also 6 is big' );
 		ok $v->validate( 'he is he, also he is big' );
+		done_testing();
 	};
 	
 	subtest 'multiple variable with regex code' => sub {
@@ -298,6 +304,7 @@ sub start {
 		ok $v->validate( 'poporing' );
 		ok $v->validate( 'drops' );
 		ok !$v->validate( 'marin' );
+		done_testing();
 	};
 	
 	subtest 'simple nested variable with text' => sub {
@@ -330,6 +337,7 @@ sub start {
 		ok $v->validate( 'Poporing' );
 		ok !$v->validate( 'Marin' );
 		ok !$v->validate( 'Magmaring' );
+		done_testing();
 	};
 	
 	subtest 'repeated nested var' => sub {
@@ -374,6 +382,7 @@ sub start {
 		ok !$v->validate( '5 is 5, also 5 is big' );
 		ok !$v->validate( '6 is 6, also 6 is big' );
 		ok $v->validate( 'he is he, also he is big' );
+		done_testing();
 	};
 	
 	subtest 'multiple nested variable with regex code' => sub {
@@ -434,6 +443,7 @@ sub start {
 		ok $v->validate( 'poporing' );
 		ok $v->validate( 'drops' );
 		ok !$v->validate( 'marin' );
+		done_testing();
 	};
 }
 
