@@ -39,7 +39,11 @@ sub new {
 	my $self = $class->SUPER::new($parent, wxID_ANY, wxDefaultPosition,
 		wxDefaultSize, wxFULL_REPAINT_ON_RESIZE);
 
-	$self->SetBackgroundColour(new Wx::Colour(98, 165, 241));
+	$self->{darkBackground} = Wx::SystemSettings->can('GetAppearance')
+		&& Wx::SystemSettings::GetAppearance()->IsUsingDarkBackground;
+	$self->SetBackgroundColour($self->{darkBackground}
+		? Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE)
+		: new Wx::Colour(98, 165, 241));
 	EVT_PAINT($self, \&onPaint);
 
 	if (!$font) {
@@ -94,7 +98,7 @@ sub new {
 
 	$self->{title} = $title;
 
-	createBrushes() if (!@brushes);
+	createBrushes() if !@brushes && !$self->{darkBackground};
 	if (!$dark) {
 		$dark = new Wx::Pen(new Wx::Colour(164, 164, 164), 1, wxSOLID);
 		$light = new Wx::Pen(new Wx::Colour(241, 241, 241), 1, wxSOLID);
@@ -169,40 +173,46 @@ sub onPaint {
 	# Something about "the invocant is not a reference".
 	# This'll do for now, I just hope it doesn't corrupt memory...
 
-	my $x = 0;
-	my $block = $width / 255;
 	my $height = $self->GetSize->GetHeight;
-	$dc->SetPen(wxTRANSPARENT_PEN);
-	for (my $i = 0; $i < 255; $i++) {
-		my $x = $block * $i;
-		$dc->SetBrush($brushes[$i]);
-		$dc->DrawRectangle($x, 0, $block + 1, $height);
-	}
-
-	$dc->SetBrush(wxTRANSPARENT_BRUSH);
-	if ($^O eq 'MSWin32') {
-		$dc->SetPen($dark);
-		$dc->DrawLine(0, 0, $width, 0);
-		$dc->DrawLine(0, 0, 0, $height);
-		#$dc->DrawLine(1, $height - 2, $width - 2, $height - 2);
-		#$dc->DrawLine($width - 2, 2, $width - 2, $height - 1);
-
-		$dc->SetPen($light);
-		$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
-		$dc->DrawLine($width - 1, 1, $width - 1, $height);
-		#$dc->DrawLine(1, 1, $width - 1, 1);
-		#$dc->DrawLine(1, 2, 1, $height - 2);
+	if ($self->{darkBackground}) {
+		$dc->SetBackground(new Wx::Brush($self->GetBackgroundColour, wxSOLID));
+		$dc->Clear;
 	} else {
-		$dc->SetPen($light);
-		$dc->DrawLine(0, 0, $width, 0);
-		$dc->DrawLine(0, 0, 0, $height);
-		$dc->SetPen($dark);
-		$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
-		$dc->DrawLine($width - 1, 0, $width - 1, $height - 1);
+		my $x = 0;
+		my $block = $width / 255;
+		$dc->SetPen(wxTRANSPARENT_PEN);
+		for (my $i = 0; $i < 255; $i++) {
+			my $x = $block * $i;
+			$dc->SetBrush($brushes[$i]);
+			$dc->DrawRectangle($x, 0, $block + 1, $height);
+		}
+
+		$dc->SetBrush(wxTRANSPARENT_BRUSH);
+		if ($^O eq 'MSWin32') {
+			$dc->SetPen($dark);
+			$dc->DrawLine(0, 0, $width, 0);
+			$dc->DrawLine(0, 0, 0, $height);
+			#$dc->DrawLine(1, $height - 2, $width - 2, $height - 2);
+			#$dc->DrawLine($width - 2, 2, $width - 2, $height - 1);
+
+			$dc->SetPen($light);
+			$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
+			$dc->DrawLine($width - 1, 1, $width - 1, $height);
+			#$dc->DrawLine(1, 1, $width - 1, 1);
+			#$dc->DrawLine(1, 2, 1, $height - 2);
+		} else {
+			$dc->SetPen($light);
+			$dc->DrawLine(0, 0, $width, 0);
+			$dc->DrawLine(0, 0, 0, $height);
+			$dc->SetPen($dark);
+			$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
+			$dc->DrawLine($width - 1, 0, $width - 1, $height - 1);
+		}
 	}
 
 	$dc->SetFont($font);
-	$dc->SetTextForeground(wxWHITE);
+	$dc->SetTextForeground($self->{darkBackground}
+		? Wx::SystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT) : wxWHITE);
 	my (undef, $textHeight) = $dc->GetTextExtent($self->{title}, $font);
 	$dc->DrawText($self->{title}, 6, $height / 2 - $textHeight / 2);
 

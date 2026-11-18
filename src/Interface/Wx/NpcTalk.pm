@@ -8,6 +8,7 @@ use base 'Wx::Panel';
 use Globals;
 use Misc qw/configModify/;
 use Translation qw/T TF/;
+use Interface::Wx::Utils qw(wxFilePath);
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -35,16 +36,20 @@ sub new {
 	$hsizer2->Add ($vsizer, 1, wxGROW);
 	
 	$self->{chatLog} = new Interface::Wx::LogView ($self);
+	$self->{chatLog}->SetMinSize ([0, $self->{chatLog}->GetCharHeight * 2 + 4]);
+	$self->{chatLog}->setDefaultColor;
 	$vsizer->Add ($self->{chatLog}, 1, wxGROW | wxALL, 4);
 	
 	$self->{hintLabel} = new Wx::StaticText ($self, wxID_ANY, '');
 	$vsizer->Add ($self->{hintLabel}, 0, wxGROW | wxALL, 4);
 	
-	$self->{listResponses} = new Wx::ListBox ($self, wxID_ANY);
+	$self->{listResponses} = new Wx::ListBox ($self, wxID_ANY,
+		wxDefaultPosition, wxDefaultSize, [], wxLB_HSCROLL);
+	$self->{listResponses}->SetMinSize ([0, $self->{listResponses}->GetCharHeight * 2 + 4]);
 	$self->{listResponses}->Show (0);
 	EVT_LISTBOX ($self, $self->{listResponses}->GetId, sub { $self->{value} = $self->{listResponses}->GetSelection; });
 	EVT_LISTBOX_DCLICK ($self, $self->{listResponses}->GetId, sub { $self->_onOk; });
-	$vsizer->Add ($self->{listResponses}, 0, wxGROW | wxALL, 4);
+	$vsizer->Add ($self->{listResponses}, 1, wxGROW | wxALL, 4);
 	
 	$self->{inputBox} = new Wx::TextCtrl ($self, wxID_ANY, '', wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	$self->{inputBox}->Show (0);
@@ -52,18 +57,21 @@ sub new {
 	EVT_TEXT_ENTER ($self, $self->{inputBox}->GetId, sub { $self->_onOk; });
 	$vsizer->Add ($self->{inputBox}, 0, wxGROW | wxALL, 4);
 	
+	my $imagePane = $self->{imagePane} = new Wx::ScrolledWindow ($self, wxID_ANY);
+	$imagePane->SetScrollRate (8, 8);
+	$imagePane->SetMinSize ([0, 0]);
+	$imagePane->Show (0);
+	$hsizer2->Add ($imagePane, 1, wxGROW);
 	my $vsizer2 = new Wx::BoxSizer (wxVERTICAL);
-	$hsizer2->Add ($vsizer2, 0, wxGROW);
-	
-	$self->{imageLabel} = new Wx::StaticText ($self, wxID_ANY, '');
+	$imagePane->SetSizer ($vsizer2);
+
+	$self->{imageLabel} = new Wx::StaticText ($imagePane, wxID_ANY, '');
 	$self->{imageLabel}->Show (0);
 	$vsizer2->Add ($self->{imageLabel}, 0, wxGROW | wxALL, 4);
 	
-	$self->{imageView} = new Wx::StaticBitmap ($self, wxID_ANY, new Wx::Bitmap (0, 0, -1));
+	$self->{imageView} = new Wx::StaticBitmap ($imagePane, wxID_ANY, new Wx::Bitmap (0, 0, -1));
 	$self->{imageView}->Show (0);
-	$vsizer2->Add ($self->{imageView}, 0, wxGROW | wxALL, 4);
-	
-	$vsizer2->AddStretchSpacer;
+	$vsizer2->Add ($self->{imageView}, 0, wxALL, 4);
 	
 	my $hsizer = new Wx::BoxSizer (wxHORIZONTAL);
 	$sizer->Add ($hsizer, 0, wxGROW | wxALL, 4);
@@ -141,8 +149,7 @@ sub _onAction {
 		$self->{value} = 0;
 	}
 	
-	$self->GetSizer->Layout;
-	$self->{chatLog}->AppendText ('');
+	$self->Layout;
 	$self->Thaw;
 }
 
@@ -157,7 +164,7 @@ sub _updateImage {
 		
 		my $imageFile = $self->{illustDir} . $self->{image} . '.png';
 		if (-f $imageFile) {
-			$self->{imageView}->SetBitmap (new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_ANY)));
+			$self->{imageView}->SetBitmap (new Wx::Bitmap (new Wx::Image (wxFilePath($imageFile), wxBITMAP_TYPE_ANY)));
 			$self->{imageView}->Show (1);
 		} else {
 			$self->{imageView}->Show (0);
@@ -167,8 +174,10 @@ sub _updateImage {
 		$self->{imageView}->Show (0);
 	}
 	
-	$self->GetSizer->Layout;
-	$self->{chatLog}->AppendText ('');
+	$self->{imagePane}->Show (defined $self->{image});
+	$self->Layout;
+	$self->{imagePane}->FitInside;
+	$self->{imagePane}->Scroll (0, 0);
 	$self->Thaw;
 }
 
@@ -227,13 +236,40 @@ sub npcTalk {
 	my $style;
 	for (@items) {
 		if (s/^\^([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})//) {
-			$style = "$1$2$3";
-			$self->{chatLog}->addColor ($style, (hex $1), (hex $2), (hex $3)) unless $self->{chatLog}{styles}{$style};
+			my ($rgb, @color) = ("$1$2$3", hex($1), hex($2), hex($3));
+			$style = $rgb eq '000000' ? undef : $rgb;
+			if (defined $style && !$self->{chatLog}{styles}{$style}) {
+				$self->{chatLog}->addColor ($style, $self->_readableTextColor(@color));
+			}
 		}
 		$self->{chatLog}->add ($_, $style);
 	}
 	
 	$self->{chatLog}->add ("\n");
+}
+
+sub _luminance {
+	my @components = map {
+		my $channel = $_ / 255;
+		$channel <= 0.04045 ? $channel / 12.92 : (($channel + 0.055) / 1.055) ** 2.4;
+	} @_;
+	return 0.2126 * $components[0] + 0.7152 * $components[1] + 0.0722 * $components[2];
+}
+
+sub _readableTextColor {
+	my ($self, @color) = @_;
+	my $background = $self->{chatLog}->GetBackgroundColour;
+	my $text = Wx::SystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+	my $backgroundLuminance = _luminance($background->Red, $background->Green, $background->Blue);
+	my @foreground = ($text->Red, $text->Green, $text->Blue);
+	return @color if $backgroundLuminance >= _luminance(@foreground);
+
+	my @result = @color;
+	for my $step (1..4) {
+		last if (_luminance(@result) + 0.05) / ($backgroundLuminance + 0.05) >= 4.5;
+		@result = map { int(($color[$_] * (4 - $step) + $foreground[$_] * $step) / 4) } 0..2;
+	}
+	return @result;
 }
 
 sub npcContinue {
