@@ -301,7 +301,7 @@ sub new {
 		'0A99' => ['equip_switch_remove', 'a2', [qw(ID)]], # remove item in equipswitch
 		'0A9C' => ['equip_switch_run'], # switch Item !
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
-		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
+		'0AA3' => ['refineui_refine', 'a2 a*', [qw(index options)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AE8' => ['change_dress'],
 		'0AF4' => ['skill_use_location', 'v4 C', [qw(lv skillID x y unknown)]], #11

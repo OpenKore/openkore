@@ -819,7 +819,13 @@ sub initHandlers {
 		['southeast', T("Move 5 steps southeast."), \&cmdManualMove],
 		['southwest', T("Move 5 steps southwest."), \&cmdManualMove],
 		['captcha', T("Answer captcha"), \&cmdAnswerCaptcha],
-		['refineui', undef, \&cmdRefineUI],
+		['refineui', [
+			T("Refine equipment in the NPC refining window."),
+			["info", T("show materials, success chances, and costs for the selected item")],
+			["select <inventory #>", T("request a list of materials for an item")],
+			["refine <inventory #> <material ID> [yes|no]", T("attempt one refinement, optionally using Blacksmith Blessing")],
+			["close", T("close the refining window")],
+			], \&cmdRefineUI],
 		['clan', undef, \&cmdClan],
 		['merge', undef, \&cmdMergeItem],
 
@@ -8347,104 +8353,120 @@ sub cmdExchangeItem {
 # @author [Cydh]
 ##
 sub cmdRefineUI {
+	my ($cmd, $input) = @_;
 	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		error TF("You must be logged in the game to use this command '%s'\n", $cmd);
 		return;
 	}
-	my ($cmd, $args_string) = @_;
-	if (!defined $refineUI) {
+	if (!$refineUI || !$refineUI->{open}) {
 		error T("Cannot use RefineUI yet.\n");
 		return;
 	}
-	my @args = parseArgs($args_string, 4);
 
-	# refineui close
-	# End Refine UI state
-	if ($args[0] eq "cancel" || $args[0] eq "end" || $args[0] eq "no") {
-		message T("Closing Refine UI.\n"), "info";
-		undef $refineUI;
-		$messageSender->sendRefineUIClose();
-		return;
-
-	# refineui select [item_index]
-	# Do refine
-	} elsif ($args[0] eq "select") {
-		#my ($invIndex) = $args =~ /^(\d+)/;
-		my $invIndex = $args[1];
-
-		# Check item
+	my ($action, @args) = parseArgs($input || 'info');
+	if (($action eq 'select' && @args == 1 && $args[0] =~ /\A[0-9]+\z/)
+		|| ($action eq 'refine' && (@args == 2 || @args == 3) && $args[0] =~ /\A[0-9]+\z/
+			&& $args[1] =~ /\A[0-9]+\z/ && (!defined $args[2] || $args[2] =~ /\A(?:yes|no|0|1)\z/))) {
+		my ($invIndex, $matNameID, $catalyst) = @args;
 		my $item = $char->inventory->get($invIndex);
-		if (!defined $item) {
+		if (!$item) {
 			warning TF("Item in index '%d' is not exists.\n", $invIndex);
 			return;
-		} elsif ($item->{equipped} != 0) {
+		} elsif ($item->{equipped}) {
 			warning TF("Cannot select equipped %s (%d) item!\n", $item->{name}, $invIndex);
 			return;
-		}
-		$refineUI->{invIndex} = $invIndex;
-		message TF("Request info for selected item to refine: %s (%d)\n", $item->{name}, $invIndex);
-		$messageSender->sendRefineUISelect( $item->{ID});
-		return;
-
-	# refineui refine [item_index] [material_id] [catalyst_toggle]
-	# Do refine
-	} elsif ($args[0] eq "refine") {
-		#my ($invIndex, $matInvIndex, $catalyst) = $args =~ /^(\d+) (\d+) (\d+|yes|no)/;
-		my $invIndex = $args[1];
-		my $matNameID = $args[2];
-		my $catalyst = $args[3];
-
-		# Check item
-		my $item = $char->inventory->get($invIndex);
-		if (!defined $item) {
-			warning TF("Item in index '%d' is not exists.\n", $invIndex);
-			return;
-		} elsif ($item->{equipped} != 0) {
-			warning TF("Cannot select equipped %s (%d) item!\n", $item->{name}, $invIndex);
+		} elsif (!$item->{identified} || $item->{broken}) {
+			warning TF("Cannot refine unidentified or broken equipment %s (%d).\n", $item->{name}, $invIndex);
 			return;
 		}
 
-		# Check material
-		my $material = $char->inventory->getByNameID($matNameID);
-		if (!defined $material) {
-			warning TF("You don't have enough '%s' (%d) as refine material.\n", itemNameSimple($matNameID), $matNameID);
+		if ($action eq 'select') {
+			message TF("Request info for selected item to refine: %s (%d)\n", $item->{name}, $invIndex);
+			$messageSender->sendRefineUISelect($item->{ID});
 			return;
 		}
-		# Check if the selected item is valid material
-		my $valid = 0;
-		foreach my $mat (@{$refineUI->{materials}}) {
-			if ($mat->{nameid} == $matNameID) {
-				$valid = 1;
-			}
+
+		if (!$refineUI->{item} || refaddr($refineUI->{item}) != refaddr($item)) {
+			error T("Select this item and wait for its refining materials first.\n");
+			return;
+		} elsif ($refineUI->{pending}) {
+			error T("A refinement is already pending. Wait for its result or select the item again.\n");
+			return;
 		}
-		if ($valid != 1) {
+
+		my ($cost) = grep {$_->{nameid} == $matNameID} @{$refineUI->{materials}};
+		if (!$cost) {
 			warning TF("'%s' (%d) is not valid refine material for '%s'.\n", itemNameSimple($matNameID), $matNameID, $item->{name});
 			return;
 		}
+		my $material = $char->inventory->getByNameID($matNameID);
+		if (!$material) {
+			warning TF("You don't have enough '%s' (%d) as refine material.\n", itemNameSimple($matNameID), $matNameID);
+			return;
+		} elsif ($char->{zeny} < $cost->{zeny}) {
+			warning TF("You do not have enough zeny to refine. Needed: %d.\n", $cost->{zeny});
+			return;
+		}
 
-		# Check catalyst toggle
-		my $useCatalyst = 0;
-		#my $Blacksmith_Blessing = 6635; # 6635,Blacksmith_Blessing,Blacksmith Blessing
-		my $blessName = itemNameSimple($Blacksmith_Blessing);
-		if ($refineUI->{bless} > 0 && ($catalyst == 1 || $catalyst eq "yes")) {
-			my $catalystItem = $char->inventory->getByNameID($Blacksmith_Blessing);
-			if (!$catalystItem || $catalystItem->{amount} < $refineUI->{bless}) {
+		my $useCatalyst = defined $catalyst && ($catalyst eq '1' || $catalyst eq 'yes') ? 1 : 0;
+		my $matStr = $material->{name};
+		if ($useCatalyst) {
+			my $blessName = $items_lut{$Blacksmith_Blessing} || T("Blacksmith Blessing");
+			my $bless = $char->inventory->getByNameID($Blacksmith_Blessing);
+			if (!$refineUI->{bless}) {
+				warning TF("%s is unavailable for this refinement.\n", $blessName);
+				return;
+			} elsif (!$bless || $bless->{amount} < $refineUI->{bless}) {
 				warning TF("You don't have %s for RefineUI. Needed: %d!\n", $blessName, $refineUI->{bless});
 				return;
 			}
-			$useCatalyst = 1;
-		}
-
-		my $matStr = $material->{name};
-		if ($useCatalyst) {
 			$matStr .= " and ".$refineUI->{bless}."x ".$blessName;
 		}
 		message TF("Refining item: %s with material %s.\n", $item->{name}, $matStr);
 		$messageSender->sendRefineUIRefine($item->{ID}, $matNameID, $useCatalyst);
-		return;
+
+	} elsif ($action eq 'info' && !@args) {
+		my $item = $refineUI->{item};
+		if (!$item || $refineUI->{pending}) {
+			error T("Select an item and wait for its refining materials first.\n");
+			return;
+		}
+		my $current = $char->inventory->getByID($item->{ID});
+		if (!$current || refaddr($current) != refaddr($item)) {
+			error T("Select an item and wait for its refining materials first.\n");
+			return;
+		}
+
+		my $bless = $char->inventory->getByNameID($Blacksmith_Blessing);
+		message T("========= RefineUI Info =========\n"), "info";
+		message TF("Target Equip:\n".
+				"- Index: %d\n".
+				"- Name: %s\n", $item->{binID}, $item->{name}), "info";
+
+		message TF("%s:\n".
+				"- Needed: %d\n".
+				"- Owned: %d\n", $items_lut{$Blacksmith_Blessing} || T("Blacksmith Blessing"),
+				$refineUI->{bless}, $bless ? $bless->{amount} : 0), "info";
+
+		my $list = center(T(" Possible Materials "), 53, '-') ."\n" .
+				T("Mat_ID      %           Zeny        Material                        \n");
+		foreach my $mat (@{$refineUI->{materials}}) {
+			my $owned = $char->inventory->getByNameID($mat->{nameid});
+			my $count = sprintf("%d ea %s", $owned ? $owned->{amount} : 0, itemNameSimple($mat->{nameid}));
+			$list .= swrite(
+				"@>>>>>>>> @>>>>> @>>>>>>>>>>>>   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$mat->{nameid}, $mat->{chance}, $mat->{zeny}, $count]);
+		}
+		$list .= ('-'x53) . "\n";
+		message $list, "info";
+		message TF("Continue: refineui refine %d [Mat_ID] [catalyst_toggle] to continue.\n", $item->{binID}), "info";
+		message TF("Refine UI ready for inventory item %d: %s\n", $item->{binID}, $item->{name}), "info";
+
+	} elsif ($action =~ /\A(?:close|cancel|end|no)\z/ && !@args) {
+		message T("Closing Refine UI.\n"), "info";
+		$messageSender->sendRefineUIClose();
 	} else {
-		error T("Invalid usage!\n");
-		return;
+		error T("Usage: refineui [info | select <inventory #> | refine <inventory #> <material ID> [yes|no] | close]\n");
 	}
 }
 

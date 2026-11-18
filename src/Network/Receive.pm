@@ -7515,9 +7515,27 @@ sub item_upgrade {
 	my ($type, $index, $upgrade) = @{$args}{qw(type ID upgrade)};
 
 	my $item = $char->inventory->getByID($index);
+	if ($refineUI && defined $refineUI->{selectedID} && $refineUI->{selectedID} eq $index) {
+		my $pending = $refineUI->{pending};
+		if ($pending || ($item && ($item->{upgrade} || 0) != $upgrade)) {
+			delete @$refineUI{qw(pending itemIndex invIndex item bless materials)};
+		}
+		if ($pending) {
+			my $result = (qw(success broken downgraded failed))[$type];
+			if (defined $result) {
+				$args->{refineui_result} = $result;
+				if ($item) {
+					$args->{refineui_invIndex} = $item->{binID};
+					message TF("Refine UI result for inventory item %d: %s (+%d).\n", $item->{binID}, $result, $upgrade), "info";
+				}
+			}
+			return unless $type == 0 || $type == 2;
+		}
+	}
 	if ($item) {
 		$item->{upgrade} = $upgrade;
-		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
+		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade"
+			unless $args->{refineui_result} && $type == 2;
 		$item->setName(itemName($item));
 	}
 }
@@ -8364,7 +8382,10 @@ sub skill_exchange_item {
 sub refineui_opened {
 	my ($self, $args) = @_;
 	message TF("RefineUI is opened. Type 'i' to check equipment and its index. To continue: refineui select [ItemIdx]\n"), "info";
-	$refineUI->{open} = 1;
+	$refineUI = {open => 1};
+	undef %talk;
+	$ai_v{npc_talk}{talk} = 'refineui';
+	$ai_v{npc_talk}{time} = time;
 }
 
 # Received refine info for selected item
@@ -8373,45 +8394,32 @@ sub refineui_opened {
 # @author [Cydh]
 sub refineui_info {
 	my ($self, $args) = @_;
+	return unless $char && $refineUI && $refineUI->{open} && defined $args->{index};
 
-	if ($args->{len} > 7) {
-		$refineUI->{itemIndex} = $args->{index};
-		$refineUI->{bless} = $args->{bless};
+	my $ID = pack('v', $args->{index});
+	return if defined $refineUI->{selectedID} && $refineUI->{selectedID} ne $ID;
 
-		my $item = $char->inventory->[$refineUI->{invIndex}];
-		my $bless = $char->inventory->getByNameID($Blacksmith_Blessing);
+	delete @$refineUI{qw(itemIndex invIndex item bless materials)};
+	my $item = $char->inventory->getByID($ID);
+	return unless $item;
 
-		message T("========= RefineUI Info =========\n"), "info";
-		message TF("Target Equip:\n".
-				"- Index: %d\n".
-				"- Name: %s\n",
-				$refineUI->{invIndex}, $item ? itemName($item) : "Unknown."),
-				"info";
-
-		message TF("%s:\n".
-				"- Needed: %d\n".
-				"- Owned: %d\n",
-				#itemNameSimple($Blacksmith_Blessing)
-				"Blacksmith Blessing", $refineUI->{bless}, $bless ? $bless->{amount} : 0),
-				"info";
-
-		@{$refineUI->{materials}} = map { my %r; @r{qw(nameid chance zeny)} = unpack 'v C V', $_; \%r} unpack '(a7)*', $args->{materials};
-
-		my $msg = center(T(" Possible Materials "), 53, '-') ."\n" .
-				T("Mat_ID      %           Zeny        Material                        \n");
-		foreach my $mat (@{$refineUI->{materials}}) {
-			my $myMat = $char->inventory->getByNameID($mat->{nameid});
-			my $myMatCount = sprintf("%d ea %s", $myMat ? $myMat->{amount} : 0, itemNameSimple($mat->{nameid}));
-			$msg .= swrite(
-				"@>>>>>>>> @>>>>> @>>>>>>>>>>>>   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$mat->{nameid}, $mat->{chance}, $mat->{zeny}, $myMatCount]);
-		}
-		$msg .= ('-'x53) . "\n";
-		message $msg, "info";
-		message TF("Continue: refineui refine %d [Mat_ID] [catalyst_toggle] to continue.\n", $refineUI->{invIndex}), "info";
-	} else {
+	my $format = $self->refineUIItemIDFormat . ' C V';
+	my $size = length pack $format;
+	my $data = $args->{materials};
+	if (!defined $data || !length($data) || $args->{len} != 7 + length($data) || length($data) % $size) {
 		error T("Equip cannot be refined, try different equipment. Type 'i' to check equipment and its index.\n");
+		return;
 	}
+
+	my @materials;
+	for (my $offset = 0; $offset < length $data; $offset += $size) {
+		my ($nameID, $chance, $zeny) = unpack($format, substr($data, $offset, $size));
+		push @materials, {nameid => $nameID, chance => $chance, zeny => $zeny};
+	}
+
+	@$refineUI{qw(selectedID itemIndex invIndex item bless materials)} =
+		($ID, $args->{index}, $item->{binID}, $item, $args->{bless}, \@materials);
+	Commands::cmdRefineUI('refineui', 'info');
 }
 
 sub refine_status {
