@@ -17,6 +17,7 @@ sub start {
 		ok (!exists $var->{complement});
 		ok ($var->{type} eq 'scalar');
 		is_deeply($var, {display_name => '$foo', type => 'scalar', real_name => 'foo'});
+		done_testing();
 	};
 	
 	subtest 'underscores are supported in identifiers' => sub {
@@ -24,6 +25,7 @@ sub start {
 			{display_name => '$var_name', type => 'scalar', real_name => 'var_name'});
 		is_deeply(find_variable('$hash_name{key_name}'),
 			{display_name => '$hash_name{key_name}', type => 'accessed_hash', real_name => 'hash_name', complement => 'key_name'});
+		done_testing();
 	};
 
 	subtest 'array' => sub {
@@ -35,6 +37,7 @@ sub start {
 		ok (!exists $var->{complement});
 		ok ($var->{type} eq 'array');
 		is_deeply($var, {display_name => '@bar', type => 'array', real_name => 'bar'});
+		done_testing();
 	};
 	
 	subtest 'accessed array' => sub {
@@ -46,6 +49,7 @@ sub start {
 		ok (exists $var->{complement});
 		ok ($var->{type} eq 'accessed_array');
 		is_deeply($var, {display_name => '$foobar[10]', type => 'accessed_array', real_name => 'foobar', complement => 10});
+		done_testing();
 	};
 	
 	subtest 'hash' => sub {
@@ -57,6 +61,7 @@ sub start {
 		ok (!exists $var->{complement});
 		ok ($var->{type} eq 'hash');
 		is_deeply($var, {display_name => '%barfoo', type => 'hash', real_name => 'barfoo'});
+		done_testing();
 	};
 	
 	subtest 'accessed hash' => sub {
@@ -68,6 +73,7 @@ sub start {
 		ok (exists $var->{complement});
 		ok ($var->{type} eq 'accessed_hash');
 		is_deeply($var, {display_name => '$baz{qux}', type => 'accessed_hash', real_name => 'baz', complement => 'qux'});
+		done_testing();
 	};
 	
 	subtest 'nested vars' => sub {
@@ -88,6 +94,7 @@ sub start {
 		ok (exists $var->{complement});
 		ok ($var->{type} eq 'accessed_array');
 		is_deeply($var, {display_name => '$array[$hash2{$array2[$scalar2]}]', type => 'accessed_array', real_name => 'array', complement => '$hash2{$array2[$scalar2]}'});
+		done_testing();
 	};
 	
 	subtest 'false vars' => sub {
@@ -102,6 +109,7 @@ sub start {
 		ok (!defined find_variable('$array[10]suffix'));
 		ok (!defined find_variable('$hash{key}suffix'));
 		ok (!defined find_variable('$array[$array[hi]]'));
+		done_testing();
 	};
 }
 
