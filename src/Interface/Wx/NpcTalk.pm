@@ -51,8 +51,9 @@ sub new {
 		eval {
 			require Win32;
 			require Win32::API;
-			my $setTheme = Win32::API->new('uxtheme', 'SetWindowTheme', 'NPN', 'I');
-			$setTheme->Call($self->{listResponses}->GetHandle, pack('v*', unpack('C*', "DarkMode_DarkTheme\0")), 0)
+			my $setTheme = Win32::API->new('uxtheme', 'SetWindowTheme', 'NPP', 'I');
+			$setTheme->Call($self->{listResponses}->GetHandle,
+				map { pack('v*', unpack('C*', "$_\0")) } 'Explorer', 'ScrollBar')
 				if $setTheme && (Win32::GetOSVersion())[3] >= 26200;
 		};
 	}
