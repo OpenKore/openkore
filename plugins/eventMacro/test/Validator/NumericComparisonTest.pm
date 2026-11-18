@@ -45,6 +45,7 @@ sub start {
 		$v = eventMacro::Validator::NumericComparison->new( '>= 10' );
 		ok $v->parsed;
 		is ($v->{op}, '>=');
+		done_testing();
 	};
 	
 	subtest 'no max value number' => sub {
@@ -55,6 +56,7 @@ sub start {
 		is ($v->{min}, $v->{max});
 		is ($v->{min_is_var}, $v->{max_is_var});
 		is ($v->{min_is_pct}, $v->{max_is_pct});
+		done_testing();
 	};
 
 	subtest 'simple number' => sub {
@@ -99,6 +101,7 @@ sub start {
 		ok $v->validate( 9 );
 		ok !$v->validate( 10 );
 		ok !$v->validate( 11 );
+		done_testing();
 	};
 	
 	subtest 'max value number' => sub {
@@ -109,6 +112,7 @@ sub start {
 		ok (!$v->{max_is_var});
 		ok (!$v->{max_is_pct});
 		isnt ($v->{min}, $v->{max});
+		done_testing();
 	};
 
 	subtest 'range' => sub {
@@ -153,6 +157,7 @@ sub start {
 		ok !$v->validate( 10 );
 		ok !$v->validate( 20 );
 		ok $v->validate( 21 );
+		done_testing();
 	};
 	
 	subtest 'no max value number percent' => sub {
@@ -163,6 +168,7 @@ sub start {
 		is ($v->{min}, $v->{max});
 		is ($v->{min_is_var}, $v->{max_is_var});
 		is ($v->{min_is_pct}, $v->{max_is_pct});
+		done_testing();
 	};
 	
 	subtest 'max value number percent' => sub {
@@ -173,6 +179,7 @@ sub start {
 		ok (!$v->{max_is_var});
 		ok ($v->{max_is_pct});
 		isnt ($v->{min}, $v->{max});
+		done_testing();
 	};
 	
 	subtest 'max value number percent and no percent mix' => sub {
@@ -191,6 +198,7 @@ sub start {
 		ok (!$v->{max_is_var});
 		ok (!$v->{max_is_pct});
 		isnt ($v->{min}, $v->{max});
+		done_testing();
 	};
 
 	subtest 'percent' => sub {
@@ -244,6 +252,7 @@ sub start {
 		ok !$v->validate( 9999, 50000 );
 		ok $v->validate( 10000, 50000 );
 		ok !$v->validate( 10001, 50000 );
+		done_testing();
 	};
 	
 	subtest 'no max value scalar var' => sub {
@@ -256,6 +265,7 @@ sub start {
 		is ($v->{var_name_min}, $v->{var_name_max});
 		is ($v->{min_is_var}, $v->{max_is_var});
 		is ($v->{min_is_pct}, $v->{max_is_pct});
+		done_testing();
 	};
 	
 	subtest 'no max value array var' => sub {
@@ -268,6 +278,7 @@ sub start {
 		is ($v->{var_name_min}, $v->{var_name_max});
 		is ($v->{min_is_var}, $v->{max_is_var});
 		is ($v->{min_is_pct}, $v->{max_is_pct});
+		done_testing();
 	};
 	
 	subtest 'no max value acessed array var' => sub {
@@ -280,6 +291,7 @@ sub start {
 		is ($v->{var_name_min}, $v->{var_name_max});
 		is ($v->{min_is_var}, $v->{max_is_var});
 		is ($v->{min_is_pct}, $v->{max_is_pct});
+		done_testing();
 	};
 	
 	subtest 'no max value hash var' => sub {
@@ -292,6 +304,7 @@ sub start {
 		is ($v->{var_name_min}, $v->{var_name_max});
 		is ($v->{min_is_var}, $v->{max_is_var});
 		is ($v->{min_is_pct}, $v->{max_is_pct});
+		done_testing();
 	};
 	
 	subtest 'no max value accessed hash var' => sub {
@@ -304,6 +317,7 @@ sub start {
 		is ($v->{var_name_min}, $v->{var_name_max});
 		is ($v->{min_is_var}, $v->{max_is_var});
 		is ($v->{min_is_pct}, $v->{max_is_pct});
+		done_testing();
 	};
 	
 	subtest 'max value var' => sub {
@@ -316,6 +330,7 @@ sub start {
 		ok (!defined $v->{min});
 		ok (!defined $v->{max});
 		isnt ($v->{var_name_min}, $v->{var_name_max});
+		done_testing();
 	};
 	
 	subtest 'max value number and var mix' => sub {
@@ -337,6 +352,7 @@ sub start {
 		ok (!$v->{max_is_pct});
 		ok (!defined $v->{min});
 		ok (defined $v->{max});
+		done_testing();
 	};
 
 	subtest 'variable_simple' => sub {
@@ -435,6 +451,7 @@ sub start {
 		ok $v->validate( 19 );
 		ok $v->validate( 20 );
 		ok !$v->validate( 21 );
+		done_testing();
 	};
 	
 	subtest 'max value var percent and var no percent mix' => sub {
@@ -480,6 +497,7 @@ sub start {
 		ok $v->validate( 10000, 50000 );
 		ok !$v->validate( 10001, 50000 );
 		
+		done_testing();
 	};
 	
 	subtest 'variable_percent' => sub {
@@ -520,6 +538,7 @@ sub start {
 		ok $v->validate( 20, 200 );
 		ok $v->validate( 40, 200 );
 		ok !$v->validate( 40.1, 200 );
+		done_testing();
 	};
 	
 	subtest 'nested vars' => sub {
@@ -592,6 +611,7 @@ sub start {
 		ok $v->validate( 99 );
 		ok $v->validate( 100 );
 		ok !$v->validate( 101 );
+		done_testing();
 	};
 }
 
