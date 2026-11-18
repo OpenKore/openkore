@@ -159,6 +159,11 @@ sub create {
 
 ### CATEGORY: Methods
 
+sub refineUIItemIDFormat {
+	my $packet = $rpackets{'0AA3'};
+	return $packet && ($packet->{length} || 0) == 9 ? 'V' : 'v';
+}
+
 ##
 # Bytes $packetParser->reconstruct(Hash* args)
 #
