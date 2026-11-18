@@ -43,6 +43,7 @@ sub start {
 		is ($eventMacro->{Macro_Runner}->parse_command( '$scalar3' ), '');
 		is ($eventMacro->{Macro_Runner}->parse_command( '$scalar3 + $scalar2' ), ' + 25');
 		is ($eventMacro->{Macro_Runner}->parse_command( '$scalar3 * $scalar2' ), ' * 25');
+		done_testing();
 	};
 	
 	subtest 'array' => sub {
@@ -69,6 +70,7 @@ sub start {
 		is ($eventMacro->{Macro_Runner}->parse_command( '@array2' ), '3');
 		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'shift(@array2)' ), 'Poring');
 		is ($eventMacro->{Macro_Runner}->parse_command( '@array2' ), '2');
+		done_testing();
 	};
 	
 	subtest 'hash' => sub {
@@ -94,6 +96,7 @@ sub start {
 		
 		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'delete($hash1{Magmaring})' ), '100');
 		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'delete($hash2{Staff})' ), '2000');
+		done_testing();
 	};
 	
 	subtest 'complex vars' => sub {
@@ -126,6 +129,7 @@ sub start {
 		
 		is ($eventMacro->{Macro_Runner}->parse_command( 'olha que legal esse [{{$hash3{$hash3{$scalar4}}}}]' ), 'olha que legal esse [{{Magmaring}}]');
 		
+		done_testing();
 	};
 	
 	subtest 'defined' => sub {
@@ -186,7 +190,8 @@ sub start {
 		
 		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($hash1{key1})' ), 1);
 		is ($eventMacro->{Macro_Runner}->parse_command( $macro_keywords_character.'defined($hash1{key2})' ), 0);
-	}
+		done_testing();
+	};
 }
 
 1;
