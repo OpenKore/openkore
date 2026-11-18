@@ -277,6 +277,9 @@ jobs:
         cd src\test
         perl unittests.pl
 
+    - name: Running eventMacro tests
+      run: perl plugins/eventMacro/test/unit_tests.pl
+
     ###################
     # OpenKore launch #
     ###################
@@ -463,6 +466,9 @@ jobs:
     - name: Running tests
       run: |
         make test
+
+    - name: Running eventMacro tests
+      run: perl plugins/eventMacro/test/unit_tests.pl
 
     ###################
     # OpenKore launch #

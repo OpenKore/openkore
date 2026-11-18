@@ -717,7 +717,7 @@ my %open_to_close_bracket_pair = ('[' => ']', '{' => '}');
 
 sub find_accessed_variable {
 	my ($text) = @_;
-	if ($text =~ /^\$($valid_var_characters)(\[|\{)(.+)(\]|\})/) {
+	if ($text =~ /^\$($valid_var_characters)(\[|\{)(.+)(\]|\})$/) {
 		my $name = $1;
 		my $open_bracket = $2;
 		my $complement = $3;

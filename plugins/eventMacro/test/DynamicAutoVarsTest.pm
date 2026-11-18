@@ -253,6 +253,7 @@ sub start {
 		
 		#NestArray1 event has the correct auto indexes
 		is_deeply	($eventMacro->{Event_Related_Dynamic_Variables}{accessed_array}{NestArray1}{7}{'$NestedScalar1'}, $eventMacro->{Dynamic_Variable_Complements}{accessed_array}{NestArray1}{'$NestedScalar1'}{auto_indexes});
+		done_testing();
 	};
 	
 	subtest 'double condition - single nest' => sub {
@@ -341,6 +342,7 @@ sub start {
 		ok (!exists $eventMacro->{Event_Related_Dynamic_Variables}{scalar}{NestedScalar1});
 		ok (!exists $eventMacro->{Event_Related_Dynamic_Variables}{accessed_array}{NestArray1});
 		ok (!exists $eventMacro->{Event_Related_Dynamic_Variables}{accessed_array}{NestArray2});
+		done_testing();
 	};
 	
 	subtest 'single condition - multiple nest' => sub {
@@ -498,6 +500,7 @@ sub start {
 		ok (!exists $eventMacro->{Event_Related_Dynamic_Variables}{accessed_array}{NestArray1});
 		ok (!exists $eventMacro->{Event_Related_Dynamic_Variables}{accessed_hash}{NestHash1});
 		ok (!exists $eventMacro->{Event_Related_Dynamic_Variables}{accessed_hash}{NestHash2});
+		done_testing();
 	};
 }
 

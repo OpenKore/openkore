@@ -29,6 +29,7 @@ sub start {
 		ok !$v->validate( 'geffen' );
 		ok $v->validate( 'prt_fild10' );
 		ok !$v->validate( '' );
+		done_testing();
 	};
 	
 	subtest 'multiple members' => sub {
@@ -49,6 +50,7 @@ sub start {
 		ok !$v->validate( 'prt_fild12' );
 		ok $v->validate( 'gef_fild10' );
 		ok !$v->validate( 'gef_fild12' );
+		done_testing();
 	};
 	
 	subtest 'single variable member' => sub {
@@ -81,6 +83,7 @@ sub start {
 		
 		ok !$v->validate( 'geffen' );
 		ok $v->validate( 'prt_fild10' );
+		done_testing();
 	};
 	
 	subtest 'multiple variable members' => sub {
@@ -118,6 +121,7 @@ sub start {
 		ok $v->validate( 'Drops' );
 		ok $v->validate( 'poring' );
 		ok !$v->validate( 'Marin' );
+		done_testing();
 	};
 	
 	subtest 'multiple nested variable members' => sub {
@@ -155,6 +159,7 @@ sub start {
 		ok $v->validate( 'Drops' );
 		ok $v->validate( 'poring' );
 		ok !$v->validate( 'Marin' );
+		done_testing();
 	};
 }
 

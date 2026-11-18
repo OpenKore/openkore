@@ -81,6 +81,7 @@ sub start {
 		is ($eventMacro->get_scalar_var('scalar2'), 5);
 		
 		is_deeply($eventMacro->{Scalar_Variable_List_Hash}, {'scalar2' => 5});
+		done_testing();
 	};
 	
 	subtest 'array' => sub {
@@ -268,6 +269,7 @@ sub start {
 		is ($eventMacro->get_array_size('array1'), 3);
 		is ($eventMacro->get_array_size('array2'), 3);
 		ok (!defined $removed);
+		done_testing();
 	};
 	
 	subtest 'hash' => sub {
@@ -433,6 +435,7 @@ sub start {
 		ok (!defined $eventMacro->get_hash_var('hash1', 'Quest2'));
 		
 		is_deeply($eventMacro->{Hash_Variable_List_Hash}, {'hash1' => {}});
+		done_testing();
 	};
 }
 
