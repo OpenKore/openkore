@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop);
+use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop $refineUI);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -247,6 +247,22 @@ sub sendToServer {
 		);
 		Plugins::callHook($hookName, \%args);
 		return if ($args{return});
+	}
+
+	if ($char && $char->{barterShop} && length($msg) == 2
+		&& $messageID eq ($char->{barterShop}{expanded} ? '0B58' : '0B12')) {
+		delete $char->{barterShop};
+	}
+
+	if ($refineUI && $refineUI->{open}) {
+		if ($messageID eq '0AA1' && length($msg) == 4) {
+			$refineUI = {open => 1, selectedID => substr($msg, 2, 2)};
+		} elsif ($messageID eq '0AA3' && (length($msg) == 7 || length($msg) == 9)
+			&& defined $refineUI->{selectedID} && $refineUI->{selectedID} eq substr($msg, 2, 2)) {
+			$refineUI->{pending} = 1;
+		} elsif ($messageID eq '0AA4' && length($msg) == 2) {
+			undef $refineUI;
+		}
 	}
 
 	# Packet Prefix Encryption Support
@@ -580,6 +596,7 @@ sub sendGetCharacterName {
 
 sub sendTalk {
 	my ($self, $ID) = @_;
+	$self->sendBarterClose($char->{barterShop}{expanded}) if $char && $char->{barterShop};
 	delete $talk{msg};
 	delete $talk{image};
 	$self->sendToServer($self->reconstruct({switch => 'npc_talk', ID => $ID, type => 1}));
@@ -1387,8 +1404,19 @@ sub sendRefineUISelect {
 	debug "Checking item for RefineUI\n", "sendPacket";
 }
 
+sub reconstruct_refineui_refine {
+	my ($self, $args) = @_;
+	$args->{options} = pack($self->refineUIItemIDFormat . ' C', $args->{catalyst}, $args->{bless});
+}
+
+sub parse_refineui_refine {
+	my ($self, $args) = @_;
+	my $length = length $args->{options};
+	return unless $length == 3 || $length == 5;
+	@$args{qw(catalyst bless)} = unpack($length == 5 ? 'V C' : 'v C', $args->{options});
+}
+
 # Continue to refine equip
-# '0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 # @param itemIndex OpenKore's Inventory Item Index
 # @param materialNameIDMaterial's NameID
 # @param useCatalyst Catalyst (Blacksmith Blessing) toggle. 0 = Not using, 1 = Use catalyst
@@ -3476,6 +3504,19 @@ sub sendSellBuyComplete {
 
 # Buy item from Market
 # 09D6
+sub sendBarterBuy {
+	my ($self, $expanded, $index, $nameID, $amount, $currencyIndex) = @_;
+	my $msg = $expanded
+		? pack('v v V3', 0x0B57, 16, $nameID, $index, $amount)
+		: pack('v v V V v V', 0x0B0F, 18, $nameID, $amount, $currencyIndex, $index);
+	$self->sendToServer($msg);
+}
+
+sub sendBarterClose {
+	my ($self, $expanded) = @_;
+	$self->sendToServer(pack('v', $expanded ? 0x0B58 : 0x0B12));
+}
+
 sub sendBuyBulkMarket {
 	my ($self, $r_array) = @_;
 

@@ -15,6 +15,7 @@ sub start {
 		ok !($var =~ /^$accessed_array_variable_qr$/);
 		ok !($var =~ /^$hash_variable_qr$/);
 		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		done_testing();
 	};
 	
 	subtest 'array' => sub {
@@ -25,6 +26,7 @@ sub start {
 		ok !($var =~ /^$accessed_array_variable_qr$/);
 		ok !($var =~ /^$hash_variable_qr$/);
 		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		done_testing();
 	};
 	
 	subtest 'accessed array' => sub {
@@ -35,6 +37,7 @@ sub start {
 		ok ($var =~ /^$accessed_array_variable_qr$/);
 		ok !($var =~ /^$hash_variable_qr$/);
 		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		done_testing();
 	};
 	
 	subtest 'hash' => sub {
@@ -45,6 +48,7 @@ sub start {
 		ok !($var =~ /^$accessed_array_variable_qr$/);
 		ok ($var =~ /^$hash_variable_qr$/);
 		ok !($var =~ /^$accessed_hash_variable_qr$/);
+		done_testing();
 	};
 	
 	subtest 'accessed hash' => sub {
@@ -55,6 +59,7 @@ sub start {
 		ok !($var =~ /^$accessed_array_variable_qr$/);
 		ok !($var =~ /^$hash_variable_qr$/);
 		ok ($var =~ /^$accessed_hash_variable_qr$/);
+		done_testing();
 	};
 	
 	subtest 'bug test' => sub {
@@ -98,6 +103,7 @@ sub start {
 		ok !($var =~ /^$hash_variable_qr$/);
 		ok !($var =~ /^$accessed_hash_variable_qr$/);
 		
+		done_testing();
 	};
 }
 

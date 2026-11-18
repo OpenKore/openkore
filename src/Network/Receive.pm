@@ -30,6 +30,7 @@ use Utils::Assert;
 use Scalar::Util;
 use Socket qw(inet_aton inet_ntoa);
 use Compress::Zlib;
+use Math::BigInt;
 
 use AI;
 use Globals;
@@ -475,6 +476,8 @@ use constant {
 use constant {
 	GROUPMEMBER_DELETE_LEAVE => 0x0,
 	GROUPMEMBER_DELETE_EXPEL => 0x1,
+	GROUPMEMBER_DELETE_CANT_LEAVE => 0x2,
+	GROUPMEMBER_DELETE_CANT_EXPEL => 0x3,
 };
 
 # item list type
@@ -575,35 +578,71 @@ use constant {
 #     0 = normal exp gained/lost
 #     1 = quest exp gained/lost
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
+sub _signedExp64 {
+	my ($low, $high) = @_;
+	my $value = Math::BigInt->new("$high")->blsft(32)->badd("$low");
+	$value->bsub('18446744073709551616') if $high >= 2147483648;
+	return $value->bstr();
+}
+
+sub _formatExpMessage {
+	my $format = shift;
+	$format =~ s/%d/%s/g;
+	return sprintf($format, @_);
+}
+
 sub exp {
 	my ($self, $args) = @_;
 
+	my $value = $args->{val};
+	if (($args->{switch} || '') eq '0ACC') {
+		$value = _signedExp64($value, $args->{val2});
+	} elsif (($args->{switch} || '') eq '07F6' && $value >= 2147483648) {
+		$value -= 4294967296;
+	}
+
+	my $standalone = $args->{type} == VAR_EXP && delete $self->{pendingBaseExp} && $value > 0;
+	my ($domain, $verbosity) = $standalone ? ('exp', 1) : ('exp2', 2);
 	my $max = {VAR_EXP, $char->{exp_max}, VAR_JOBEXP, $char->{exp_job_max}}->{$args->{type}};
-	$args->{percent} = $max ? $args->{val} / $max * 100 : 0;
+	$args->{percent} = $max ? $value / $max * 100 : 0;
+	my $displayValue = $standalone && defined $char->{exp_last_delta} && $char->{exp_last_delta} >= 0 ? $char->{exp_last_delta} : $value;
+	my $displayPercent = $max ? $displayValue / $max * 100 : 0;
+
+	if ($args->{type} == VAR_JOBEXP && $value < 0) {
+		my $loss = Math::BigInt->new($value)->babs()->bstr();
+		if ($args->{flag} == EXP_FROM_BATTLE) {
+			message _formatExpMessage(T("Job Exp lost: %d (%.2f%%)\n"), $loss, -$args->{percent}), $domain, $verbosity;
+		} elsif ($args->{flag} == EXP_FROM_QUEST) {
+			message _formatExpMessage(T("Job Quest Exp lost: %d (%.2f%%)\n"), $loss, -$args->{percent}), $domain, $verbosity;
+		} else {
+			message _formatExpMessage(T("Job Unknown (flag=%d) Exp lost: %d (%.2f%%)\n"), $args->{flag}, $loss, -$args->{percent}), $domain, $verbosity;
+		}
+		return;
+	}
 
 	if ($args->{flag} == EXP_FROM_BATTLE) {
 		if ($args->{type} == VAR_EXP) {
-			message TF("Base Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Base Exp gained: %d (%.2f%%)\n"), $displayValue, $displayPercent), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
-			message TF("Job Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Job Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} else {
-			message TF("Unknown (type=%d) Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
+			message _formatExpMessage(T("Unknown (type=%d) Exp gained: %d\n"), $args->{type}, $value), $domain, $verbosity;
 		}
 	} elsif ($args->{flag} == EXP_FROM_QUEST) {
 		if ($args->{type} == VAR_EXP) {
-			message TF("Base Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Base Quest Exp gained: %d (%.2f%%)\n"), $displayValue, $displayPercent), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
-			message TF("Job Quest Exp gained: %d (%.2f%%)\n", @{$args}{qw(val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Job Quest Exp gained: %d (%.2f%%)\n"), $value, $args->{percent}), $domain, $verbosity;
 		} else {
-			message TF("Unknown (type=%d) Quest Exp gained: %d\n", @{$args}{qw(type val)}), 'exp2', 2;
+			message _formatExpMessage(T("Unknown (type=%d) Quest Exp gained: %d\n"), $args->{type}, $value), $domain, $verbosity;
 		}
 	} else {
 		if ($args->{type} == VAR_EXP) {
-			message TF("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Base Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"), $args->{flag}, $displayValue, $displayPercent), $domain, $verbosity;
 		} elsif ($args->{type} == VAR_JOBEXP) {
-			message TF("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n", @{$args}{qw(flag val percent)}), 'exp2', 2;
+			message _formatExpMessage(T("Job Unknown (flag=%d) Exp gained: %d (%.2f%%)\n"), $args->{flag}, $value, $args->{percent}), $domain, $verbosity;
 		} else {
-			message TF("Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n", @{$args}{qw(type flag val)}), 'exp2', 2;
+			message _formatExpMessage(T("Unknown (type=%d) Unknown (flag=%d) Exp gained: %d\n"), $args->{type}, $args->{flag}, $value), $domain, $verbosity;
 		}
 	}
 }
@@ -883,6 +922,8 @@ sub received_characters {
 		}
 
 		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
+		$character->{exp64BasePending} = exists $temporary_character->{exp_2};
+		$character->{exp64JobPending} = exists $temporary_character->{exp_job_2};
 		$character->{ID} = $accountID;
 
 		$character->{name} = bytesToString($character->{name});
@@ -1259,6 +1300,16 @@ sub connection_refused {
 # 0A18 <start time>.L <position>.3B <x size>.B <y size>.B <font>.W <sex>.B (ZC_ACCEPT_ENTER3)
 sub map_loaded {
 	my ($self, $args) = @_;
+	if ($net->version == 1 && !UNIVERSAL::isa($chars[$config{char}], 'Actor::You')) {
+		$net->{uninitializedCharacter} = 1;
+		$net->setState(Network::IN_GAME_BUT_UNINITIALIZED);
+		undef $conState_tries;
+		if ($config{verbose}) {
+			my $prompt = $net->{connectionContext} && $masterServer && $map_port != $masterServer->{port} ? TF("Please relogin to enable X-%s.\n", $Settings::NAME) : TF("Please restart the Ragnarok Online client to enable X-%s.\n", $Settings::NAME);
+			message $prompt, 'connection';
+		}
+		return;
+	}
 	$net->setState(Network::IN_GAME);
 	undef $conState_tries;
 	$char = $chars[$config{char}];
@@ -1385,16 +1436,18 @@ our %stat_info_handlers = (
 		}
 =cut
 
-		if ($actor->{lastBaseLvl} eq $actor->{lv}) {
-			$monsterBaseExp = $actor->{exp} - $actor->{exp_last};
-		} else {
-			$monsterBaseExp = $actor->{exp_max_last2} - $actor->{exp_last} + $actor->{exp};
+		my $baseExp = Math::BigInt->new(defined $actor->{exp} ? "$actor->{exp}" : 0);
+		$baseExp->bsub(defined $actor->{exp_last} ? "$actor->{exp_last}" : 0);
+		if ($actor->{lastBaseLvl} ne $actor->{lv}) {
+			$baseExp->badd($actor->{exp_max_last2} || $actor->{exp_max} || 0) if $actor->{lv} > $actor->{lastBaseLvl};
 			$actor->{lastBaseLvl} = $actor->{lv};
 			$actor->{exp_max_last2} = $actor->{exp_max};
 		}
+		$monsterBaseExp = $baseExp->bstr();
+		$actor->{exp_last_delta} = $monsterBaseExp;
 
 		if ($monsterBaseExp > 0) {
-			$totalBaseExp += $monsterBaseExp;
+			$totalBaseExp = Math::BigInt->new($totalBaseExp || 0)->badd($monsterBaseExp)->bstr();
 		}
 
 		# no VAR_JOBEXP next - no message?
@@ -1425,16 +1478,19 @@ our %stat_info_handlers = (
 		}
 =cut
 
-		if ($actor->{lastJobLvl} eq $actor->{lv_job}) {
-			$monsterJobExp = $actor->{exp_job} - $actor->{exp_job_last};
-		} else {
-			$monsterJobExp = $actor->{exp_job_max_last2} - $actor->{exp_job_last} + $actor->{exp_job};
+		my $jobLevelIncreased = defined $actor->{lastJobLvl} && $actor->{lv_job} > $actor->{lastJobLvl};
+		my $jobExp = Math::BigInt->new(defined $actor->{exp_job} ? "$actor->{exp_job}" : 0);
+		$jobExp->bsub(defined $actor->{exp_job_last} ? "$actor->{exp_job_last}" : 0);
+		if ($actor->{lastJobLvl} ne $actor->{lv_job}) {
+			$jobExp->badd($actor->{exp_job_max_last2} || $actor->{exp_job_max} || 0) if $actor->{lv_job} > $actor->{lastJobLvl};
 			$actor->{lastJobLvl} = $actor->{lv_job};
 			$actor->{exp_job_max_last2} = $actor->{exp_job_max};
 		}
+		$monsterJobExp = $jobExp->bstr();
+		$actor->{exp_job_last_delta} = $monsterJobExp;
 
 		if ($monsterJobExp > 0) {
-			$totalJobExp += $monsterJobExp;
+			$totalJobExp = Math::BigInt->new($totalJobExp || 0)->badd($monsterJobExp)->bstr();
 		}
 
 		my $basePercent = $char->{exp_max} ?
@@ -1443,7 +1499,11 @@ our %stat_info_handlers = (
 		my $jobPercent = $char->{exp_job_max} ?
 			($monsterJobExp / $char->{exp_job_max} * 100) :
 			0;
-		message TF("%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n", $char, $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		if ($monsterJobExp < 0 && !$jobLevelIncreased) {
+			message _formatExpMessage(T("%s: Base Exp change %d (%.2f%%), Job Exp change %d (%.2f%%)\n"), $char, $monsterBaseExp, $basePercent, $monsterJobExp, $jobPercent), "exp";
+		} else {
+			message _formatExpMessage(T("%s have gained %d/%d (%.2f%%/%.2f%%) Exp\n"), $char, $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+		}
 		Plugins::callHook('exp_gained');
 	},
 	#VAR_VIRTUE
@@ -1548,6 +1608,7 @@ our %stat_info_handlers = (
 		$_[0]{exp_max_last} = $_[0]{exp_max};
 		$_[0]{exp_max_last2} = $_[0]{exp_max} if !$_[0]{exp_max_last2};
 		$_[0]{exp_max} = $_[1];
+		$_[0]{exp_max_last2} = $_[1] if defined $_[0]{lastBaseLvl} && $_[0]{lastBaseLvl} eq $_[0]{lv};
 
 		if (!$net->clientAlive() && $initSync && $masterServer->{serverType} == 2) {
 			$messageSender->sendSync(1);
@@ -1558,6 +1619,7 @@ our %stat_info_handlers = (
 		$_[0]{exp_job_max_last} = $_[0]{exp_job_max};
 		$_[0]{exp_job_max_last2} = $_[0]{exp_job_max} if !$_[0]{exp_job_max_last2};
 		$_[0]{exp_job_max} = $_[1];
+		$_[0]{exp_job_max_last2} = $_[1] if defined $_[0]{lastJobLvl} && $_[0]{lastJobLvl} eq $_[0]{lv_job};
 		#message TF("BaseExp: %s | JobExp: %s\n", $monsterBaseExp, $monsterJobExp), "info", 2 if ($monsterBaseExp);
 	},
 	VAR_WEIGHT, sub { $_[0]{weight} = $_[1] / 10 },
@@ -1687,10 +1749,22 @@ sub stat_info {
 		return;
 	}
 
+	my $value = $args->{switch} eq '0ACB' ? _signedExp64($args->{val}, $args->{val2}) : $args->{val};
+
+	if ($actor->isa('Actor::You')) {
+		if ($args->{type} == VAR_EXP && delete $actor->{exp64BasePending} && $args->{switch} eq '0ACB') {
+			$actor->{exp} = _signedExp64($actor->{exp}, $actor->{exp_2});
+		} elsif ($args->{type} == VAR_JOBEXP && delete $actor->{exp64JobPending} && $args->{switch} eq '0ACB') {
+			$actor->{exp_job} = _signedExp64($actor->{exp_job}, $actor->{exp_job_2});
+		}
+		$self->{pendingBaseExp} = 1 if $args->{type} == VAR_EXP;
+		delete $self->{pendingBaseExp} if $args->{type} == VAR_JOBEXP;
+	}
+
 	if (exists $stat_info_handlers{$args->{type}}) {
 		# TODO: introduce Actor->something() to determine per-actor configurable verbosity level? (not only here)
 		debug "Stat: $args->{type} => $args->{val}\n", "parseMsg",  $_[0]->isa('Actor::You') ? 1 : 2;
-		$stat_info_handlers{$args->{type}}($actor, $args->{val});
+		$stat_info_handlers{$args->{type}}($actor, $value);
 	} else {
 		warning sprintf "Unknown stat (%d => %d) received for %s\n", @{$args}{qw(type val)}, $actor;
 	}
@@ -3614,11 +3688,13 @@ sub warp_portal_list {
 	$msg .= ('-'x50) . "\n";
 	message $msg, "list";
 
-	if ($args->{type} == 26 && AI::inQueue('teleport')) {
-		# We have already successfully used the Teleport skill.
-		$messageSender->sendWarpTele(26, AI::args()->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
-		AI::dequeue();
-	}
+	return unless $args->{type} == 26;
+	my $index = AI::findAction('teleport');
+	return unless defined $index;
+	my $task = AI::args($index);
+	return unless Scalar::Util::blessed($task) && $task->isa('Task::Teleport');
+	my $level = $task->consumeWarpMenu();
+	$messageSender->sendWarpTele(26, $level == 2 ? "$config{saveMap}.gat" : 'Random') if $level;
 }
 
 # 0828,14
@@ -3793,7 +3869,7 @@ sub inventory_item_added {
 			# TODO: We should move this to corelogic
 			if (pickupitems($item->{name}, $item->{nameID}) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				$messageSender->sendDrop($item->{ID}, $amount);
-				message TF("Auto-dropping item: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
+				message TF("Requesting auto-drop: %s (%d) x %d\n", $item->{name}, $item->{binID}, $amount), "drop";
 			}
 		}
 
@@ -6160,6 +6236,12 @@ sub deal_begin {
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 		Plugins::callHook('engaged_deal', {name => $currentDeal{name}});
 
+	} elsif ($args->{type} == 4) {
+		error T("Deal request cancelled.\n"), "deal";
+		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %incomingDeal;
+		undef %outgoingDeal;
+
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
@@ -7441,9 +7523,27 @@ sub item_upgrade {
 	my ($type, $index, $upgrade) = @{$args}{qw(type ID upgrade)};
 
 	my $item = $char->inventory->getByID($index);
+	if ($refineUI && defined $refineUI->{selectedID} && $refineUI->{selectedID} eq $index) {
+		my $pending = $refineUI->{pending};
+		if ($pending || ($item && ($item->{upgrade} || 0) != $upgrade)) {
+			delete @$refineUI{qw(pending itemIndex invIndex item bless materials)};
+		}
+		if ($pending) {
+			my $result = (qw(success broken downgraded failed))[$type];
+			if (defined $result) {
+				$args->{refineui_result} = $result;
+				if ($item) {
+					$args->{refineui_invIndex} = $item->{binID};
+					message TF("Refine UI result for inventory item %d: %s (+%d).\n", $item->{binID}, $result, $upgrade), "info";
+				}
+			}
+			return unless $type == 0 || $type == 2;
+		}
+	}
 	if ($item) {
 		$item->{upgrade} = $upgrade;
-		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
+		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade"
+			unless $args->{refineui_result} && $type == 2;
 		$item->setName(itemName($item));
 	}
 }
@@ -7881,6 +7981,7 @@ sub npc_talk_text {
 # 00C4 <shop id>.L
 sub npc_store_begin {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 	my $sellAutoIndex = AI::findAction("sellAuto");
 	$args->{mangle} = 2 if defined $sellAutoIndex && AI::args($sellAutoIndex)->{sentNpcTalk};
 	undef %talk;
@@ -7899,6 +8000,7 @@ sub npc_store_begin {
 # 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType file if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 	my $msg = $args->{RAW_MSG};
 	my $pack;
 	my $keys;
@@ -8019,12 +8121,83 @@ sub buy_result {
 	} else {
 		error TF("Buy failed (failure code %s).\n", $args->{fail});
 	}
-	if (AI::is("buyAuto")) {
+	if (AI::is("buyAuto") && !($char && $char->{barterShop})) {
 		AI::args()->{recv_buy_packet} = 1;
 		AI::args()->{recv_buy_packet_overweight} = 1 if $args->{fail} == 2;
 		delete AI::args()->{weight_recovery} if $args->{fail} == 0;
 	}
 	Plugins::callHook('buy_result', {fail => $args->{fail}});
+}
+
+sub parseBarterOffers {
+	my ($msg, $switch, $extraRefine) = @_;
+	my $size = length $msg;
+	return if $size < 4 || unpack('x2 v', $msg) != $size;
+
+	my $expanded = $switch eq '0B56' || $switch eq '0B79';
+	my $cursor = $expanded ? 8 : 4;
+	return if $size < $cursor;
+
+	my $format = {
+		'0B0E' => 'V C V5',
+		'0B78' => 'V C V5 v V',
+		'0B56' => 'V v V5',
+		'0B79' => 'V v V4 v V2' . ($extraRefine ? ' V' : ''),
+	}->{$switch};
+	my $recordSize = length pack $format;
+	my $count = $expanded ? unpack('x4 V', $msg) : ($size - $cursor) / $recordSize;
+	return if $count != int($count) || $count > ($size - $cursor) / $recordSize;
+
+	my %offers;
+	for (1 .. $count) {
+		return if $cursor + $recordSize > $size;
+		my ($nameID, undef, $stock, @details) = unpack($format, substr($msg, $cursor, $recordSize));
+		$cursor += $recordSize;
+		my ($index, $zeny, $refine, @cost);
+		if ($expanded) {
+			($index, $zeny) = @details[1, 2];
+			my $costCount = $switch eq '0B56' ? $details[3] : $details[5];
+			$refine = $details[6] if $extraRefine && $details[6] != 0xFFFFFFFF;
+			return if $costCount > ($size - $cursor) / 12;
+			for (1 .. $costCount) {
+				my ($id, $level, $amount) = unpack('V v V v', substr($msg, $cursor, 12));
+				return unless $id && $amount;
+				push @cost, {nameID => $id, amount => $amount, refine => $level == 0xFFFF ? undef : $level};
+				$cursor += 12;
+			}
+		} else {
+			my ($id, $amount, undef, $shopIndex) = @details;
+			return unless $id && $amount;
+			$index = $shopIndex;
+			$zeny = 0;
+			push @cost, {nameID => $id, amount => $amount};
+		}
+		return if !$nameID || exists $offers{$index};
+		$offers{$index} = {nameID => $nameID, stock => $stock, zeny => $zeny, refine => $refine, cost => \@cost};
+	}
+	return $cursor == $size ? \%offers : undef;
+}
+
+sub npc_barter_info {
+	my ($self, $args) = @_;
+	return unless $char;
+	delete $char->{barterShop};
+
+	my $switch = $args->{switch};
+	my $offers = parseBarterOffers($args->{RAW_MSG}, $switch);
+	$offers ||= parseBarterOffers($args->{RAW_MSG}, $switch, 1) if $switch eq '0B79';
+	unless ($offers) {
+		warning TF("Could not read barter shop list (%s).\n", $switch), 'parseMsg';
+		return;
+	}
+
+	$char->{barterShop} = {expanded => $switch eq '0B56' || $switch eq '0B79', offers => $offers};
+	$storeList->clear;
+	undef $in_market;
+	undef %talk;
+	$ai_v{npc_talk}{talk} = 'barter';
+	$ai_v{npc_talk}{time} = time;
+	Commands::run('barter');
 }
 
 # Presents list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).
@@ -8033,6 +8206,7 @@ sub buy_result {
 # 2 versions of same packet. $self->{npc_market_info_pack} (PACKET_ZC_NPC_MARKET_OPEN_sub) should be changed in own serverType file if needed
 sub npc_market_info {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 	my $pack = $args->{switch} eq '0B7A' ? 'V C V2 v V' : $self->{npc_market_info_pack} || 'v C V2 v';
 	my $len = length pack $pack;
 
@@ -8216,7 +8390,10 @@ sub skill_exchange_item {
 sub refineui_opened {
 	my ($self, $args) = @_;
 	message TF("RefineUI is opened. Type 'i' to check equipment and its index. To continue: refineui select [ItemIdx]\n"), "info";
-	$refineUI->{open} = 1;
+	$refineUI = {open => 1};
+	undef %talk;
+	$ai_v{npc_talk}{talk} = 'refineui';
+	$ai_v{npc_talk}{time} = time;
 }
 
 # Received refine info for selected item
@@ -8225,45 +8402,32 @@ sub refineui_opened {
 # @author [Cydh]
 sub refineui_info {
 	my ($self, $args) = @_;
+	return unless $char && $refineUI && $refineUI->{open} && defined $args->{index};
 
-	if ($args->{len} > 7) {
-		$refineUI->{itemIndex} = $args->{index};
-		$refineUI->{bless} = $args->{bless};
+	my $ID = pack('v', $args->{index});
+	return if defined $refineUI->{selectedID} && $refineUI->{selectedID} ne $ID;
 
-		my $item = $char->inventory->[$refineUI->{invIndex}];
-		my $bless = $char->inventory->getByNameID($Blacksmith_Blessing);
+	delete @$refineUI{qw(itemIndex invIndex item bless materials)};
+	my $item = $char->inventory->getByID($ID);
+	return unless $item;
 
-		message T("========= RefineUI Info =========\n"), "info";
-		message TF("Target Equip:\n".
-				"- Index: %d\n".
-				"- Name: %s\n",
-				$refineUI->{invIndex}, $item ? itemName($item) : "Unknown."),
-				"info";
-
-		message TF("%s:\n".
-				"- Needed: %d\n".
-				"- Owned: %d\n",
-				#itemNameSimple($Blacksmith_Blessing)
-				"Blacksmith Blessing", $refineUI->{bless}, $bless ? $bless->{amount} : 0),
-				"info";
-
-		@{$refineUI->{materials}} = map { my %r; @r{qw(nameid chance zeny)} = unpack 'v C V', $_; \%r} unpack '(a7)*', $args->{materials};
-
-		my $msg = center(T(" Possible Materials "), 53, '-') ."\n" .
-				T("Mat_ID      %           Zeny        Material                        \n");
-		foreach my $mat (@{$refineUI->{materials}}) {
-			my $myMat = $char->inventory->getByNameID($mat->{nameid});
-			my $myMatCount = sprintf("%d ea %s", $myMat ? $myMat->{amount} : 0, itemNameSimple($mat->{nameid}));
-			$msg .= swrite(
-				"@>>>>>>>> @>>>>> @>>>>>>>>>>>>   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$mat->{nameid}, $mat->{chance}, $mat->{zeny}, $myMatCount]);
-		}
-		$msg .= ('-'x53) . "\n";
-		message $msg, "info";
-		message TF("Continue: refineui refine %d [Mat_ID] [catalyst_toggle] to continue.\n", $refineUI->{invIndex}), "info";
-	} else {
+	my $format = $self->refineUIItemIDFormat . ' C V';
+	my $size = length pack $format;
+	my $data = $args->{materials};
+	if (!defined $data || !length($data) || $args->{len} != 7 + length($data) || length($data) % $size) {
 		error T("Equip cannot be refined, try different equipment. Type 'i' to check equipment and its index.\n");
+		return;
 	}
+
+	my @materials;
+	for (my $offset = 0; $offset < length $data; $offset += $size) {
+		my ($nameID, $chance, $zeny) = unpack($format, substr($data, $offset, $size));
+		push @materials, {nameid => $nameID, chance => $chance, zeny => $zeny};
+	}
+
+	@$refineUI{qw(selectedID itemIndex invIndex item bless materials)} =
+		($ID, $args->{index}, $item->{binID}, $item, $args->{bless}, \@materials);
+	Commands::cmdRefineUI('refineui', 'info');
 }
 
 sub refine_status {
@@ -8745,6 +8909,14 @@ sub party_invite_result {
 
 sub party_leave {
 	my ($self, $args) = @_;
+
+	if ($args->{result} == GROUPMEMBER_DELETE_CANT_LEAVE) {
+		error T("Cannot leave the party.\n");
+		return;
+	} elsif ($args->{result} == GROUPMEMBER_DELETE_CANT_EXPEL) {
+		error T("Cannot kick the party member.\n");
+		return;
+	}
 
 	my $ID = $args->{ID};
 	my $actor = $char->{party}{users}{$ID}; # bytesToString($args->{name})
@@ -10457,6 +10629,7 @@ sub vender_buy_fail {
 # ['cash_dealer', 'v V2 a*', [qw(len cash_points kafra_points item_list)]]
 sub cash_dealer {
 	my ($self, $args) = @_;
+	delete $char->{barterShop} if $char;
 
 	undef %talk;
 	$ai_v{'npc_talk'}{talk} = 'cash';
@@ -10560,7 +10733,6 @@ sub memo_success {
 
 sub change_to_constate25 {
 	$net->setState(2.5);
-	undef $accountID;
 }
 
 # TODO do something with sourceID, targetID? -> tech: maybe your spouses adopt_request will also display this message for you.
@@ -11838,6 +12010,7 @@ sub resurrection {
 		undef $char->{'dead'};
 		undef $char->{'dead_time'};
 		$char->{'resurrected'} = 1;
+		$char->setStatus('Dead', 0);
 		Plugins::callHook('self_resurrected');
 
 	} else {

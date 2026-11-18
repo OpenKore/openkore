@@ -63,12 +63,8 @@ sub isEquipNeededToTeleport {
 
 sub useSkill {
 	my ($self) =  @_;
-	# We have the teleport skill, and should use it
-	my $skill = new Skill(handle => 'AL_TELEPORT');
-
 	debug "Teleport $self->{actor} - Sending Teleport using Level 2\n", "teleport";
-	main::ai_skillUse($skill->getHandle(), 2, 0, 0, $self->{actor}->{ID});
-	$timeout{ai_teleport}{time} = time;
+	$self->queueTeleportSkill(2);
 }
 
 sub useEquip {

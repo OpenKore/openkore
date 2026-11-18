@@ -2855,14 +2855,8 @@ sub itemName {
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
 
-    my $total_options = 0;
-
-	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
-	foreach ( @options ) {
-		if ( $_->{type} ) {
-			$total_options++;
-		}
-	}
+	my @options = _parseItemOptions($item->{options});
+	my $total_options = scalar @options;
 
 	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
 
@@ -2873,9 +2867,29 @@ sub itemName {
 	$display .= $name;
 	$display .= " [$suffix]" if $suffix;
 	$display .= " [$numSlots]" if $numSlots;
-	$display .= " [$total_options Option]" if $total_options;
+	if ($total_options) {
+		if ($config{showFullItemOptions}) {
+			$display .= " [" . join(", ", map { _formatItemOption($_) } @options) . "]";
+		} else {
+			$display .= " [$total_options Option]";
+		}
+	}
 
 	return $display;
+}
+
+sub _parseItemOptions {
+	my ($rawOptions) = @_;
+	return grep { $_->{type} }
+		map { my @c = unpack 'vvC', $_; { type => $c[0], value => $c[1], param => $c[2] } }
+		unpack '(a5)*', $rawOptions || '';
+}
+
+sub _formatItemOption {
+	my ($opt) = @_;
+	my $option = ($itemOptionHandle{$opt->{type}} && $itemOption_lut{$itemOptionHandle{$opt->{type}}}) || $itemOption_lut{$opt->{type}};
+	return sprintf($option, $opt->{value}) if $option;
+	return TF("Option (%d, %d, %d)", $opt->{type}, $opt->{value}, $opt->{param});
 }
 
 sub itemNameToID {
@@ -3317,7 +3331,9 @@ sub meetingPosition {
 	my $targetSpeed = ($target->{walk_speed} || 0.12);
 	my $timeSinceTargetMoved = time - $target->{time_move} + $extra_time;
 
-	my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
+	my $target_solution = $target->{pos}{x} == $target->{pos_to}{x} && $target->{pos}{y} == $target->{pos_to}{y}
+		? [$target->{pos_to}]
+		: get_solution($field, $target->{pos}, $target->{pos_to});
 
 	# Calculate the time target will need to finish moving from pos to pos_to
 	my $timeTargetFinishMove = calcTimeFromSolution($target_solution, $targetSpeed);
@@ -3734,15 +3750,10 @@ sub printItemDesc {
 	my $description = $itemsDesc_lut{$item->{nameID}} || T("Error: No description available.\n");
 	my $msg =  center(T(" Item Description "), 79, '-') ."\n";
 	$msg .= TF("Item: %s, ID: %s, Amount: %s\n\n", $item->{name}, $item->{nameID}, $item->{amount}), "info";
-	my @options = grep { $_->{type} } map { my @c = unpack 'vvC', $_;{ type => $c[0], value => $c[1], param => $c[2] } } unpack '(a5)*', $item->{options} || '';
+	my @options = _parseItemOptions($item->{options});
 	my $option_index = 1;
 	foreach ( @options ) {
-		my $option = ($itemOptionHandle{$_->{type}} && $itemOption_lut{$itemOptionHandle{$_->{type}}}) || $itemOption_lut{$_->{type}};
-		if ( $option ) {
-			$msg .= TF("OPTION %s: ", $option_index) . sprintf($option, $_->{value}) . "\n";
-		} else {
-			$msg .= TF("OPTION %s: Option (%d, %d, %d)\n", $option_index, $_->{type}, $_->{value},$_->{param});
-		}
+		$msg .= TF("OPTION %s: ", $option_index) . _formatItemOption($_) . "\n";
 		$option_index++;
 	}
 	$msg .=  $description;

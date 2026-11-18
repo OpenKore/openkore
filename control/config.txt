@@ -316,6 +316,7 @@ teleportAuto_hp 10
 teleportAuto_sp 0
 teleportAuto_idle 0
 teleportAuto_portal 0
+teleportAuto_portalDistance 0
 teleportAuto_search 0
 teleportAuto_minAggressives 0
 teleportAuto_minAggressivesInLock 0
@@ -403,6 +404,7 @@ playerLog 0
 logDead 1
 
 questDisplayStyle 2
+showFullItemOptions 1
 
 chatTitleOversize 0
 shopTitleOversize 0

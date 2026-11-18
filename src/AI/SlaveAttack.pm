@@ -465,7 +465,7 @@ sub main {
 	#  1: sucess
 	my $canAttack = -2;
 	if (defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
-		$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+		$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance}, $config{clientSight}, $target);
 	} else {
 		$canAttack = -2;
 	}
@@ -571,7 +571,7 @@ sub main {
 			debug TF("[$canAttack_fail_string] Probably extra range provided by the server due to chasing, increasing range by 1.\n"), 'ai_attack';
 			$args->{temporary_extra_range} = 1;
 			$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
-			$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{$slave->{configPrefix}."attackCanSnipe"}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+			$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{$slave->{configPrefix}."attackCanSnipe"}, $args->{attackMethod}{maxDistance}, $config{clientSight}, $target);
 		} else {
 			debug TF("[%s] [%s] Reason unknown, allowing once.\n", $slave, $canAttack_fail_string), 'ai_attack';
 			$hitTarget_when_not_possible = 1;
@@ -616,7 +616,7 @@ sub main {
 		!$hitTarget_when_not_possible
 	) {
 		my $futureMonsterPos = calcPosFromPathfinding($field, $target, ($extra_time + $future_wait_timeout));
-		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance}, $config{clientSight});
+		my $futurecanAttack = canAttack($field, $realMyPos, $futureMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance}, $config{clientSight}, $target);
 		if ($futurecanAttack == 1 && !$args->{ai_attack_allowed_waitForTarget_disabled_until_hit}) {
 			$args->{ai_attack_allowed_waitForTarget_give_up}{timeout} = $future_wait_max_time if !$args->{ai_attack_allowed_waitForTarget_give_up}{timeout};
 			$args->{ai_attack_allowed_waitForTarget_give_up}{time} = time if !$args->{ai_attack_allowed_waitForTarget_give_up}{time};

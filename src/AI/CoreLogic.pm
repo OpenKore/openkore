@@ -1228,10 +1228,10 @@ sub processDead {
 			}
 		}
 
-	} elsif (AI::action() ne "dead" && !$char->{dead} && $char->statusActive('Dead')) {
+	} elsif (AI::action() ne "dead" && !$char->{dead} && ($char->{resurrected} || $char->statusActive('Dead'))) {
 		my $current_action = AI::action();
 		$current_action = defined $current_action && $current_action ne '' ? $current_action : 'none';
-		debug "[processDead] Cleared stale Dead status after respawn while current AI action was '$current_action'; the dead queue was displaced before normal cleanup ran.\n";
+		debug "[processDead] Cleared stale death state while current AI action was '$current_action'.\n";
 		AI::clear('dead');
 		$char->setStatus('Dead', 0);
 		$char->{resurrected} = 0 if $char->{resurrected};
@@ -3807,7 +3807,9 @@ sub processAutoTeleport {
 	  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field->baseName)
 	  && timeOut($timeout{ai_teleport_portal})
 	  && !AI::inQueue("storageAuto", "buyAuto", "sellAuto")) {
-		if (scalar(@portalsID)) {
+		my $portalDistance = $config{teleportAuto_portalDistance} || 0;
+		my $position = @portalsID && $portalDistance > 0 ? $char->position : undef;
+		if (@portalsID && ($portalDistance <= 0 || ($position && positionNearPortal($position, $portalDistance)))) {
 			message T("Teleporting to avoid portal\n"), "teleport";
 			$ai_v{temp}{clear_aiQueue} = 1;
 			ai_useTeleport(1);

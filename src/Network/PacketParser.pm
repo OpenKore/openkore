@@ -159,6 +159,11 @@ sub create {
 
 ### CATEGORY: Methods
 
+sub refineUIItemIDFormat {
+	my $packet = $rpackets{'0AA3'};
+	return $packet && ($packet->{length} || 0) == 9 ? 'V' : 'v';
+}
+
 ##
 # Bytes $packetParser->reconstruct(Hash* args)
 #
@@ -408,6 +413,10 @@ sub process {
 	while (my $message = $tokenizer->readNext(\$type)) {
 		$handleContainer->{bytesProcessed} += length($message);
 		$handleContainer->{lastPacketTime} = time;
+		if ($net && $net->version == 1 && $net->getState == Network::IN_GAME_BUT_UNINITIALIZED && $net->{uninitializedCharacter}) {
+			push @result, $message;
+			next;
+		}
 
 		my $args;
 

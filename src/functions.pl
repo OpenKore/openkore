@@ -831,6 +831,7 @@ sub initMapChangeVars {
 		delete $char->{sitting};
 		delete $char->{dead};
 		delete $char->{warp};
+		delete $char->{barterShop};
 		delete $char->{casting};
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
 		$char->inventory->onMapChange();
