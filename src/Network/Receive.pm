@@ -6234,6 +6234,12 @@ sub deal_begin {
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 		Plugins::callHook('engaged_deal', {name => $currentDeal{name}});
 
+	} elsif ($args->{type} == 4) {
+		error T("Deal request cancelled.\n"), "deal";
+		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %incomingDeal;
+		undef %outgoingDeal;
+
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
