@@ -18,6 +18,8 @@ use base qw(Network::Send::kRO::RagexeRE_2020_04_01b);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	$self->{packet_list}{'0B66'} = ['repair_item', 'v V a16 C2', [qw(index nameID cards upgrade grade)]];
+	$self->{packet_lut}{repair_item} = '0B66';
 
 	return $self;
 }

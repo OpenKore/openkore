@@ -1935,9 +1935,10 @@ sub sendRepairItem {
 	$self->sendToServer($self->reconstruct({
 		switch => 'repair_item',
 		index => $args->{index},
-		nameID => $args->{nameID},
-		upgrade => $args->{upgrade},
-		cards => $args->{cards},
+		nameID => $args->{nameID} // 0,
+		upgrade => $args->{upgrade} // 0,
+		cards => $args->{cards} // '',
+		grade => $args->{grade} // 0,
 	}));
 	debug ("Sent repair item index: ".$args->{index}."\n", "sendPacket", 2);
 }

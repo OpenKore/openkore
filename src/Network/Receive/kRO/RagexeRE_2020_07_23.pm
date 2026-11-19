@@ -18,6 +18,7 @@ use base qw(Network::Receive::kRO::RagexeRE_2020_04_01b);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+	$self->{packet_list}{'0B65'} = ['repair_list'];
 
 	return $self;
 }
