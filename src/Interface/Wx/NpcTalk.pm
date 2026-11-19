@@ -95,13 +95,8 @@ sub new {
 	}
 	$self->{listResponses}->SetMinSize ([0, $self->{listResponses}->GetCharHeight * 2 + 4]);
 	$self->{listResponses}->Show (0);
-	my $checkPageCompositing = $^O eq 'MSWin32' && Wx::wxVERSION() == 3.003;
 	EVT_LISTBOX ($self, $self->{listResponses}->GetId, sub {
 		$self->{value} = $self->{listResponses}->GetSelection;
-		if ($checkPageCompositing) {
-			$checkPageCompositing = 0;
-			disablePageCompositing($self->GetParent, $self->{listResponses});
-		}
 	});
 	EVT_LISTBOX_DCLICK ($self, $self->{listResponses}->GetId, sub { $self->_onOk; });
 	$vsizer->Add ($self->{listResponses}, 1, wxGROW | wxALL, 4);
@@ -151,6 +146,8 @@ sub new {
 	EVT_BUTTON ($self, $self->{cancelButton}->GetId, sub { $self->_onCancel; });
 	$hsizer->Add ($self->{cancelButton}, 0);
 	
+	disablePageCompositing($parent, $self) if $^O eq 'MSWin32' && Wx::wxVERSION() == 3.003;
+
 	return $self;
 }
 
