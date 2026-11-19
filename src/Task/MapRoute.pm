@@ -681,7 +681,7 @@ sub iterate {
 			$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 			$self->setSubtask($task);
 
-		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= 1 && actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1) ) {
+		} elsif ( blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= 1 && actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1) ) {
 				if (!exists $timeout{ai_portal_give_up}{time}) {
 					$timeout{ai_portal_give_up}{time} = time;
 					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
@@ -689,6 +689,14 @@ sub iterate {
 				}
 				return unless (timeOut($timeout{ai_portal_give_up}));
 				delete $timeout{ai_portal_give_up}{time};
+
+				# An interrupted approach may finish at the portal without triggering a warp.
+				# Retry once before declaring the route's source portal missing.
+				unless ($self->{mapSolution}[0]{portal_move_retry}) {
+					$self->{mapSolution}[0]{portal_move_retry} = 1;
+					$self->_retryPortalEntryMove();
+					return;
+				}
 
 				my %plugin_args;
 				$plugin_args{object} = $self;
@@ -699,7 +707,11 @@ sub iterate {
 
 				error TF("Failed to teleport using portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
 
-				$self->{missing_portal} = 1;
+				if ($config{route_removeMissingPortals}) {
+					$self->{missing_portal} = 1;
+				} else {
+					$self->_retryPortalEntryMove();
+				}
 
 		} elsif ( blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) < 2 ) {
 
@@ -807,6 +819,15 @@ sub iterate {
 			}
 		}
 	}
+}
+
+sub _retryPortalEntryMove {
+	my ($self) = @_;
+	warning TF("Retrying portal entry at %s (%s,%s).\n", $field->baseName,
+		$self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+	$self->{actor}->sendMove(map int, @{$self->{mapSolution}[0]{pos}}{qw(x y)});
+	$timeout{ai_portal_wait}{time} = time;
+	$timeout{ai_portal_give_up}{time} = time;
 }
 
 sub _isSameMapPortalStep {
