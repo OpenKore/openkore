@@ -3254,7 +3254,7 @@ sub processPartySkillUse {
 			$party_skill{lvl} = $smartHeal_lv;
 		}
 		if (defined $party_skill{targetID}) {
-			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill";
+			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill" if Log::debugEnabled("skill");
 			ai_skillUse2(
 				$party_skill{skillObject},
 				$party_skill{lvl},

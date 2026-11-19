@@ -180,7 +180,7 @@ sub routeRepath {
 	my $self = $holder->[0];
 	return unless $self;
 
-	debug "[routeRepath] Repathing after hook routeRepath.\n", "route";
+	debug "[routeRepath] Repathing after hook routeRepath.\n", "route" if Log::debugEnabled('route', 1);
 	$self->resetRoute;
 }
 
@@ -225,20 +225,20 @@ sub iterate {
 
 	if ( $self->{maxTime} && timeOut($self->{time_start}, $self->{maxTime})) {
 		# We spent too much time
-		debug "Route $self->{actor} - we spent too much time; bailing out.\n", "route";
+		debug "Route $self->{actor} - we spent too much time; bailing out.\n", "route" if Log::debugEnabled('route', 1);
 		$self->setError(TOO_MUCH_TIME, "Too much time spent on walking.");
 
 	} elsif ($field->baseName ne $self->{dest}{map}->baseName) {
-		debug "Map changed: ".$self->{dest}{map}->baseName." -> ".$field->baseName."\n", "route";
+		debug "Map changed: ".$self->{dest}{map}->baseName." -> ".$field->baseName."\n", "route" if Log::debugEnabled('route', 1);
 		$self->setDone();
 		
 	} elsif ($self->{mapChanged}) {
 		if ($self->{stopWhenMapChanged}) {
-			debug "Route $self->{actor}: Map changed within same map; finishing current segment.\n", "route";
+			debug "Route $self->{actor}: Map changed within same map; finishing current segment.\n", "route" if Log::debugEnabled('route', 1);
 			undef $self->{mapChanged};
 			$self->setDone();
 		} else {
-			debug "Route $self->{actor}: Map changed within same map; recalculating route.\n", "route";
+			debug "Route $self->{actor}: Map changed within same map; recalculating route.\n", "route" if Log::debugEnabled('route', 1);
 			undef $self->{sentTeleport};
 			undef $self->{mapChanged};
 			$self->resetRoute();
@@ -255,12 +255,12 @@ sub iterate {
 
 		my $calc_pos = calcPosFromPathfinding($field, $self->{actor}, $extra_time);
 		
-		debug "Route $self->{actor}: Calculating. Your pos ($pos->{x} $pos->{y}). Your pos_to ($pos_to->{x} $pos_to->{y}). calcPosFromPathfinding ($calc_pos->{x} $calc_pos->{y})\n", "route";
+		debug "Route $self->{actor}: Calculating. Your pos ($pos->{x} $pos->{y}). Your pos_to ($pos_to->{x} $pos_to->{y}). calcPosFromPathfinding ($calc_pos->{x} $calc_pos->{y})\n", "route" if Log::debugEnabled('route', 1);
 		
 		my $begin = time;
 
 		if ($pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
-			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
+			debug "Route $self->{actor}: Current position and destination are the same.\n", "route" if Log::debugEnabled('route', 1);
 			$self->setDone();
 		
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $calc_pos, $self->{dest}{pos}, $self->{avoidWalls}, $self->{randomFactor}, $self->{useManhattan}, 1, 0)) {
@@ -268,7 +268,7 @@ sub iterate {
 
 			my $max = 10;
 			$max = $#{$self->{solution}} if ($#{$self->{solution}} < $max);
-			debug "[calc getroute] Solution  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$self->{solution}}[0..$max]) ."\n", 'route', 2;
+			debug "[calc getroute] Solution  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$self->{solution}}[0..$max]) ."\n", 'route', 2 if Log::debugEnabled('route', 2);
 
 			@{$self->{last_pos}}{qw(x y)} = @{$calc_pos}{qw(x y)};
 			@{$self->{last_pos_to}}{qw(x y)} = @{$pos_to}{qw(x y)};
@@ -306,12 +306,12 @@ sub iterate {
 				$self->{anyDistFromGoal} = 0;
 			}
 
-			debug "Route $self->{actor} Solution Ready! Found path on ".$self->{dest}{map}->baseName." from ".$calc_pos->{x}." ".$calc_pos->{y}." to ".$self->{dest}{pos}{x}." ".$self->{dest}{pos}{y}.". Size: ".@{$self->{solution}}." steps.\n", "route";
+			debug "Route $self->{actor} Solution Ready! Found path on ".$self->{dest}{map}->baseName." from ".$calc_pos->{x}." ".$calc_pos->{y}." to ".$self->{dest}{pos}{x}." ".$self->{dest}{pos}{y}.". Size: ".@{$self->{solution}}." steps.\n", "route" if Log::debugEnabled('route', 1);
 
 			$self->iterate();
 
 		} else {
-			debug "Something's wrong; there is no path from " . $self->{dest}{map}->baseName . "($calc_pos->{x},$calc_pos->{y}) to " . $self->{dest}{map}->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "route";
+			debug "Something's wrong; there is no path from " . $self->{dest}{map}->baseName . "($calc_pos->{x},$calc_pos->{y}) to " . $self->{dest}{map}->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "route" if Log::debugEnabled('route', 1);
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
@@ -341,7 +341,7 @@ sub iterate {
 		$self->{stage} = WALK_ROUTE_SOLUTION;
 
 		if (@{$self->{solution}} == 0) {
-			debug "Route $self->{actor}: DistFromGoal|pyDistFromGoal trimmed all solution steps.\n", "route";
+			debug "Route $self->{actor}: DistFromGoal|pyDistFromGoal trimmed all solution steps.\n", "route" if Log::debugEnabled('route', 1);
 			$self->setDone();
 		} else {
 			$self->iterate();
@@ -383,12 +383,12 @@ sub iterate {
 
 		} elsif ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
 			if ($self->{distFromGoal} && blockDistance($self->{dest}{pos}, $current_calc_pos) <= $self->{distFromGoal}) {
-				debug "[Route] [distFromGoal] Target cell is already close enough, ending movement.\n", "route";
+				debug "[Route] [distFromGoal] Target cell is already close enough, ending movement.\n", "route" if Log::debugEnabled('route', 1);
 					$self->setDone();
 					return;
 					
 			} elsif ($self->{pyDistFromGoal} && distance($self->{dest}{pos}, $current_calc_pos) <= $self->{pyDistFromGoal}) {
-				debug "[Route] [pyDistFromGoal] Target cell is already close enough, ending movement.\n", "route";
+				debug "[Route] [pyDistFromGoal] Target cell is already close enough, ending movement.\n", "route" if Log::debugEnabled('route', 1);
 				$self->setDone();
 				return;
 			}
@@ -397,11 +397,11 @@ sub iterate {
 		if (@{$solution}) {
 			my ($anchor_index, $anchor_dist) = $self->bestSolutionAnchorIndex($solution, $#{$solution}, $current_calc_pos);
 			if ($self->{start}) {
-				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because we have not moved yet.\n", "route", 2;
+				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because we have not moved yet.\n", "route", 2 if Log::debugEnabled('route', 2);
 			} elsif ($anchor_index == 0) {
-				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because calc anchor is 0 (dist $anchor_dist).\n", "route", 2;
+				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because calc anchor is 0 (dist $anchor_dist).\n", "route", 2 if Log::debugEnabled('route', 2);
 			} else {
-				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by $anchor_index calc-anchor steps\n", "route";
+				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by $anchor_index calc-anchor steps\n", "route" if Log::debugEnabled('route', 1);
 				splice(@{$solution}, 0, $anchor_index);
 			}
 		}
@@ -428,7 +428,7 @@ sub iterate {
 			|| $self->{last_pos_to}{y} != $current_pos_to->{y}
 		);
 		if ($actual_pos_moved && $self->{trimm_dev_block}) {
-			debug "Route $self->{actor} - clearing trimm_dev_block after actual movement to ($current_calc_pos->{x} $current_calc_pos->{y})\n", "route";
+			debug "Route $self->{actor} - clearing trimm_dev_block after actual movement to ($current_calc_pos->{x} $current_calc_pos->{y})\n", "route" if Log::debugEnabled('route', 1);
 			delete $self->{trimm_dev_block};
 		}
 		
@@ -436,7 +436,7 @@ sub iterate {
 
 		if (isCellOccupied($solution->[-1], $self->{actor}) && blockDistance($current_pos_to, $self->{dest}{pos}) <= 1) {
 			# 2 more steps to cover (current position and the destination)
-			debug "Stoping 1 cell away from destination because there is an obstacle in it.\n", "route";
+			debug "Stoping 1 cell away from destination because there is an obstacle in it.\n", "route" if Log::debugEnabled('route', 1);
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "route";
 			} else {
@@ -486,7 +486,7 @@ sub iterate {
 		} elsif (timeOut($self->{route_out_time}, 3)) {
 			# Because of attack monster, get item or something else we are out of our route for a long time
 			# recalculate again
-			debug "We are out of our route for a long time, recalculating...\n", "route";
+			debug "We are out of our route for a long time, recalculating...\n", "route" if Log::debugEnabled('route', 1);
 			$self->{route_out_time} = time;
 			$self->resetRoute();
 			$self->iterate();
@@ -498,7 +498,7 @@ sub iterate {
 			$self->{decreasing_step_index}++;
 			$self->{step_index}--;
 			if ($self->{step_index} > 0) {
-				debug "Route $self->{actor} - not moving, decreasing step size to $self->{step_index}\n", "route";
+				debug "Route $self->{actor} - not moving, decreasing step size to $self->{step_index}\n", "route" if Log::debugEnabled('route', 1);
 				if ($stepsleft) {
 					# If we still have more points to cover, walk to next point
 					if ($self->{step_index} >= $stepsleft) {
@@ -542,11 +542,11 @@ sub iterate {
 
 				if (!$self->{sentTeleport}) {
 					my $dist = $stepsleft;
-					debug "[Route] [Teleport] Distance to destination ($self->{dest}{pos}{x},$self->{dest}{pos}{y}) is $dist\n", "route";
+					debug "[Route] [Teleport] Distance to destination ($self->{dest}{pos}{x},$self->{dest}{pos}{y}) is $dist\n", "route" if Log::debugEnabled('route', 1);
 
 					if ($dist > $minDist) {
 						if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
-							debug "[Route] [Teleport] Teleported $config{route_teleport_maxTries} times on same-map route. Falling back to walking.\n", "route";
+							debug "[Route] [Teleport] Teleported $config{route_teleport_maxTries} times on same-map route. Falling back to walking.\n", "route" if Log::debugEnabled('route', 1);
 						} else {
 							message TF("[Route] [Teleport] Attempting to teleport near destination (dist %s > max %s), try #%s\n", $dist, $minDist, ($self->{teleportTries} + 1)), "route";
 							if (!canUseTeleport(1)) {
@@ -561,7 +561,7 @@ sub iterate {
 						}
 					}
 				} elsif (timeOut($self->{teleportTime}, 4)) {
-					debug "[Route] [Teleport] Unable to teleport; falling back to walking.\n", "route";
+					debug "[Route] [Teleport] Unable to teleport; falling back to walking.\n", "route" if Log::debugEnabled('route', 1);
 					$self->{disableOnMapTeleport} = 1;
 				} else {
 					$walk = 0;
@@ -576,11 +576,11 @@ sub iterate {
 
 			if ($self->{decreasing_step_index}) {
 				if ($pos_changed) {
-					debug "Route $self->{actor} - started moving again, increasing step size by $self->{decreasing_step_index} (from ".($self->{step_index})." to ".($self->{step_index}+$self->{decreasing_step_index}).")\n", "route";
+					debug "Route $self->{actor} - started moving again, increasing step size by $self->{decreasing_step_index} (from ".($self->{step_index})." to ".($self->{step_index}+$self->{decreasing_step_index}).")\n", "route" if Log::debugEnabled('route', 1);
 					$self->{step_index} += $self->{decreasing_step_index};
 					$self->{decreasing_step_index} = 0;
 				} else {
-					debug "Route $self->{actor} - won't increase step size because pos did not change ($current_pos->{x} $current_pos->{y})\n", "route";
+					debug "Route $self->{actor} - won't increase step size because pos did not change ($current_pos->{x} $current_pos->{y})\n", "route" if Log::debugEnabled('route', 1);
 				}
 			}
 
@@ -609,7 +609,7 @@ sub iterate {
 
 			$move_step_index = 0 if $move_step_index < 0;
 
-			debug "[Route] [$self->{loop}] step_index $self->{step_index} | move_step_index $move_step_index | lastStep $self->{lastStep} | self->{start} $self->{start}\n", 'route', 2;
+			debug "[Route] [$self->{loop}] step_index $self->{step_index} | move_step_index $move_step_index | lastStep $self->{lastStep} | self->{start} $self->{start}\n", 'route', 2 if Log::debugEnabled('route', 2);
 
 
 			my $requested_move_step_index = $move_step_index;
@@ -637,7 +637,7 @@ sub iterate {
 				#debug "[move_step_index $move_step_index] Route estimated deviation: $max_deviation\n", "route";
 
 				if ($self->{trimm_dev_block}) {
-					debug "Route $self->{actor} - skipping deviation trim check because trimm_dev_block is active.\n", "route", 2;
+					debug "Route $self->{actor} - skipping deviation trim check because trimm_dev_block is active.\n", "route", 2 if Log::debugEnabled('route', 2);
 				} elsif ($max_deviation > ROUTE_CLIENT_PATH_MAX_DEVIATION) {
 					return if _trimMoveStepOrReset($self, $requested_move_step_index, \$move_step_index,
 						"because simulated client path would drift too far from trusted route (max deviation $max_deviation)");
@@ -669,7 +669,7 @@ sub iterate {
 			}
 
 			if (defined $routeStepHookArgs{route_step} && $routeStepHookArgs{route_step} != $move_step_index) {
-				debug "[Route] $self->{actor} - routeStepHookArgs changed step index ('$move_step_index' > '$routeStepHookArgs{route_step}') \n", "route", 2;
+				debug "[Route] $self->{actor} - routeStepHookArgs changed step index ('$move_step_index' > '$routeStepHookArgs{route_step}') \n", "route", 2 if Log::debugEnabled('route', 2);
 				if ($routeStepHookArgs{route_step} > $move_step_index) {
 					Log::error "[Route] routeStepHookArgs{route_step} > move_step_index. This should never happen\n";
 				}
@@ -707,7 +707,7 @@ sub iterate {
 						}
 					}
 					if ($found) {
-						debug "[Route] [targetNpcPos] Target npc is already on screen, ending movement.\n", "route";
+						debug "[Route] [targetNpcPos] Target npc is already on screen, ending movement.\n", "route" if Log::debugEnabled('route', 1);
 						$self->setDone();
 						return;
 					}
@@ -721,9 +721,9 @@ sub iterate {
 				return if ($hookArgs{return});
 				
 				if (!$self->{start} && $current_pos_to->{x} == $self->{next_pos}{x} && $current_pos_to->{y} == $self->{next_pos}{y}) {
-					debug "[Route] Not sending next step ($self->{next_pos}{x}, $self->{next_pos}{y}) because our pos_to is the same as it.\n", "route", 2;
+					debug "[Route] Not sending next step ($self->{next_pos}{x}, $self->{next_pos}{y}) because our pos_to is the same as it.\n", "route", 2 if Log::debugEnabled('route', 2);
 					if ($self->{lastStep} == 1 && !$self->{sendAttackWithMove} && $self->{meetingSubRoute}) {
-						debug "[Route] Also ending task now ang giving back control to AI::Attack.\n", "route";
+						debug "[Route] Also ending task now ang giving back control to AI::Attack.\n", "route" if Log::debugEnabled('route', 1);
 						Plugins::callHook('route', {status => 'success'});
 						$self->setDone();
 					}
@@ -733,7 +733,7 @@ sub iterate {
                 if ($self->{actor}->isa('Actor::You') && $self->{actor}{slaves}) {
 					my $slave = AI::SlaveManager::mustWaitMinDistance();
 					if (defined $slave) {
-						debug TF("Waiting for slave %s before next step.\n", $slave), 'route', 2;
+						debug TF("Waiting for slave %s before next step.\n", $slave), 'route', 2 if Log::debugEnabled('route', 2);
 						return;
 					}
 				}
@@ -748,7 +748,7 @@ sub iterate {
 				@{$self->{last_pos_to}}{qw(x y)} = @{$current_pos_to}{qw(x y)};
 				@{$self->{last_current_calc_pos}}{qw(x y)} = @{$current_calc_pos}{qw(x y)};
 
-				debug "Route $self->{actor} at ($current_calc_pos->{x} $current_calc_pos->{y}) - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $move_step_index, $stepsleft steps left\n", "route";
+				debug "Route $self->{actor} at ($current_calc_pos->{x} $current_calc_pos->{y}) - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $move_step_index, $stepsleft steps left\n", "route" if Log::debugEnabled('route', 1);
 				
 				my %routeSetMoveHookArgs = (
 					task => $self,
@@ -766,7 +766,7 @@ sub iterate {
 		$self->{route_out_time} = time;
 	} else {
 		# This statement should never be reached.
-		debug "Unexpected route stage [".$self->{stage}."] occured.\n", "route";
+		debug "Unexpected route stage [".$self->{stage}."] occured.\n", "route" if Log::debugEnabled('route', 1);
 		$self->setError(UNEXPECTED_STATE, "Unexpected route stage [".$self->{stage}."] occured.\n");
 	}
 }
@@ -817,7 +817,7 @@ sub bestSolutionAnchorIndex {
 	#debug "[Route trimm] Solution[0] is ($solution->[0]{x}, $solution->[0]{y}) >> dist $displacedist\n", "route";
 	#debug "[Route trimm] Solution[i] is ($solution->[$best_index]{x}, $solution->[$best_index]{y}) >> dist $best_dist\n", "route";
 
-	debug "[Route] [loop $self->{loop}] [start $self->{start}] Current drift is [$best_dist] Sol [$solution->[$best_index]{x} $solution->[$best_index]{y}] x [$pos->{x} $pos->{y}] Pos\n", "route";
+	debug "[Route] [loop $self->{loop}] [start $self->{start}] Current drift is [$best_dist] Sol [$solution->[$best_index]{x} $solution->[$best_index]{y}] x [$pos->{x} $pos->{y}] Pos\n", "route" if Log::debugEnabled('route', 1);
 
 	return ($best_index, $best_dist || 0);
 }
@@ -846,7 +846,7 @@ sub _maxPathDeviation {
 
 sub _resetRouteForMoveSelection {
 	my ($self, $reason) = @_;
-	debug "Route $self->{actor} - movement interrupted: reset route ($reason)\n", "route";
+	debug "Route $self->{actor} - movement interrupted: reset route ($reason)\n", "route" if Log::debugEnabled('route', 1);
 	$self->resetRoute();
 	$self->iterate();
 	return 1;
@@ -855,7 +855,7 @@ sub _resetRouteForMoveSelection {
 sub _trimMoveStepOrReset {
 	my ($self, $requested_move_step_index, $move_step_index_ref, $reason) = @_;
 
-	debug "Route $self->{actor} - trimming down move_step_index from $$move_step_index_ref to (".($$move_step_index_ref - 1).") $reason\n", "route", 2;
+	debug "Route $self->{actor} - trimming down move_step_index from $$move_step_index_ref to (".($$move_step_index_ref - 1).") $reason\n", "route", 2 if Log::debugEnabled('route', 2);
 	$$move_step_index_ref--;
 
 	if (($requested_move_step_index - $$move_step_index_ref) >= ROUTE_CLIENT_PATH_RESET_TRIM_STEPS) {
