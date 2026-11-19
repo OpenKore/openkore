@@ -2,7 +2,7 @@ package Interface::Wx::NpcTalk;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw/EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK EVT_TEXT EVT_TEXT_ENTER EVT_LEFT_DOWN EVT_LEFT_UP EVT_MOTION/;
+use Wx::Event qw/EVT_BUTTON EVT_LISTBOX EVT_LISTBOX_DCLICK EVT_TEXT EVT_TEXT_ENTER EVT_LEFT_DOWN EVT_LEFT_DCLICK EVT_LEFT_UP EVT_MOTION/;
 use base 'Wx::Panel';
 
 use Globals;
@@ -40,19 +40,22 @@ sub new {
 	$self->{chatLog}->setDefaultColor;
 	if ($^O eq 'MSWin32' && Wx::wxVERSION() == 3.003) {
 		my ($trackDrag, $dragAnchor);
-		EVT_LEFT_DOWN ($self->{chatLog}, sub {
+		my $startDrag = sub {
 			my (undef, $event) = @_;
 			$dragAnchor = undef;
 			$trackDrag = !$event->ShiftDown && !$event->ControlDown && !$event->AltDown;
 			$event->Skip;
-		});
+		};
+		EVT_LEFT_DOWN ($self->{chatLog}, $startDrag);
+		EVT_LEFT_DCLICK ($self->{chatLog}, $startDrag);
 		EVT_MOTION ($self->{chatLog}, sub {
 			my (undef, $event) = @_;
 			$event->Skip;
 			return unless $trackDrag && $event->Dragging && $event->LeftIsDown;
 			$trackDrag = 0;
-			my ($from, $to) = $event->GetEventObject->GetSelection;
-			$dragAnchor = $from if $from == $to;
+			my $log = $event->GetEventObject;
+			my ($from, $to) = $log->GetSelection;
+			$dragAnchor = $from if $from == $to || ($from == $log->GetLastPosition && $to == $from + 1);
 		});
 		EVT_LEFT_UP ($self->{chatLog}, sub {
 			my (undef, $event) = @_;
@@ -92,7 +95,14 @@ sub new {
 	}
 	$self->{listResponses}->SetMinSize ([0, $self->{listResponses}->GetCharHeight * 2 + 4]);
 	$self->{listResponses}->Show (0);
-	EVT_LISTBOX ($self, $self->{listResponses}->GetId, sub { $self->{value} = $self->{listResponses}->GetSelection; });
+	my $checkPageCompositing = $^O eq 'MSWin32' && Wx::wxVERSION() == 3.003;
+	EVT_LISTBOX ($self, $self->{listResponses}->GetId, sub {
+		$self->{value} = $self->{listResponses}->GetSelection;
+		if ($checkPageCompositing) {
+			$checkPageCompositing = 0;
+			_disablePageCompositing($self->GetParent, $self->{listResponses});
+		}
+	});
 	EVT_LISTBOX_DCLICK ($self, $self->{listResponses}->GetId, sub { $self->_onOk; });
 	$vsizer->Add ($self->{listResponses}, 1, wxGROW | wxALL, 4);
 	
@@ -142,6 +152,35 @@ sub new {
 	$hsizer->Add ($self->{cancelButton}, 0);
 	
 	return $self;
+}
+
+sub _disablePageCompositing {
+	my ($page, $list) = @_;
+	local $@;
+	eval {
+		require Config;
+		require Win32::API;
+		my $handle = $Config::Config{ptrsize} == 8 ? 'q' : 'N';
+		my $getDpiContext = Win32::API->new('user32', 'GetWindowDpiAwarenessContext', $handle, $handle);
+		my $sameDpiContext = Win32::API->new('user32', 'AreDpiAwarenessContextsEqual', $handle x 2, 'I');
+		my $hwnd = $page->GetHandle;
+		my $gdiScaled = -5;
+		return unless $getDpiContext && $sameDpiContext && $sameDpiContext->Call($getDpiContext->Call($hwnd), $gdiScaled);
+
+		my $getStyle = Win32::API->new('user32', 'GetWindowLongW', "${handle}I", 'N');
+		my $setStyle = Win32::API->new('user32', 'SetWindowLongW', "${handle}IN", 'N');
+		my $setPosition = Win32::API->new('user32', 'SetWindowPos', ($handle x 2) . 'IIIIN', 'I');
+		return unless $getStyle && $setStyle && $setPosition;
+		my $extendedStyle = -20;
+		my $composited = 0x02000000;
+		my $style = $getStyle->Call($hwnd, $extendedStyle);
+		if (($style & $composited) && $setStyle->Call($hwnd, $extendedStyle, $style & ~$composited)) {
+			my $frameChanged = 0x37;
+			$setPosition->Call($hwnd, 0, 0, 0, 0, 0, $frameChanged);
+			$list->Refresh;
+			$list->Update;
+		}
+	};
 }
 
 sub _onOk {
