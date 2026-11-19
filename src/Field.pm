@@ -368,6 +368,20 @@ sub getBlockDist {
 # Returns: walkable position in a reference to a position hash (which contains 'x' and 'y' keys) on success or undef on failure.
 sub closestWalkableSpot {
 	my ($self, $pos, $max_distance) = @_;
+	return $self->_closestWalkableSpotPerl($pos, $max_distance) if ref($self) ne __PACKAGE__;
+	return undef unless $pos && defined $pos->{x} && defined $pos->{y};
+	my $result = PathFinding::closestWalkableSpot($pos->{x}, $pos->{y}, $max_distance,
+		$self->{width}, $self->{height}, \$self->{rawMap});
+	# Unsupported numeric forms retain Perl coercion and subclass semantics.
+	return $result if !defined($result) || ref($result);
+	return if $result == -2; # Preserve the original empty-list return for a zero radius.
+	return $self->_closestWalkableSpotPerl($pos, $max_distance);
+}
+
+sub _closestWalkableSpotPerl {
+	my ($self, $pos, $max_distance) = @_;
+	return undef unless $pos && defined $pos->{x} && defined $pos->{y};
+	return undef if $self->isOffMap($pos->{x}, $pos->{y});
 	
 	my %center = ( x => $pos->{x}, y => $pos->{y} );
 	

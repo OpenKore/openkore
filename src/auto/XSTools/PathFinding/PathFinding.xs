@@ -1,11 +1,59 @@
 #include <stdlib.h>
 #include <time.h>
+#include <limits.h>
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
 
 #include "algorithm.h"
 typedef CalcPath_session * PathFinding;
+
+// These helpers do not retain Perl objects or map buffers between calls.
+static bool geometry_integer(SV *value, int *out) {
+	if (!value) return false;
+	// Leave tied/magical values to Perl; never invoke callbacks while a borrowed
+	// map buffer is in use by a native geometry operation.
+	if (SvMAGICAL(value) || !SvOK(value) || SvROK(value)) return false;
+	// Position and dimension scalars are normally already integers. Avoid
+	// string-number classification and IV -> NV -> IV conversion on that path.
+	if (SvIOK(value)) {
+		if (SvIsUV(value)) {
+			UV number = SvUV(value);
+			if (number > INT_MAX) return false;
+			*out = (int)number;
+		} else {
+			IV number = SvIV(value);
+			if (number < INT_MIN || number > INT_MAX) return false;
+			*out = (int)number;
+		}
+		return true;
+	}
+	if (!SvNOK(value) && !looks_like_number(value)) return false;
+	NV number = SvNV(value);
+	if (!(number >= INT_MIN && number <= INT_MAX)) return false;
+	*out = (int)number;
+	return number == (NV)*out;
+}
+
+static char *geometry_map(SV *map, SV *width_value, SV *height_value, int *width, int *height) {
+	if (!geometry_integer(width_value, width) || !geometry_integer(height_value, height)
+		|| *width <= 0 || *height <= 0 || *width > INT_MAX / *height
+		|| !map || !SvROK(map) || SvTYPE(SvRV(map)) >= SVt_PVAV
+		|| SvMAGICAL(SvRV(map)) || SvROK(SvRV(map))) return NULL;
+	STRLEN length;
+	char *bytes = SvPVbyte(SvRV(map), length);
+	if ((size_t)*width > length / (size_t)*height) return NULL;
+	return bytes;
+}
+
+static SV *geometry_point(int x, int y) {
+	HV *point = newHV();
+	hv_store(point, "x", 1, newSViv(x), 0);
+	hv_store(point, "y", 1, newSViv(y), 0);
+	return newRV_noinc((SV *)point);
+}
+
+
 
 MODULE = PathFinding		PACKAGE = PathFinding		PREFIX = PathFinding_
 PROTOTYPES: ENABLE
@@ -831,3 +879,59 @@ PathFinding_get_client_easy_solution(istart_x, istart_y, iend_x, iend_y, solutio
 
 	OUTPUT:
 		RETVAL
+
+
+void
+PathFinding_closestWalkableSpot(x_value, y_value, radius_value, width_value, height_value, map)
+        SV *x_value
+        SV *y_value
+        SV *radius_value
+        SV *width_value
+        SV *height_value
+        SV *map
+    PPCODE:
+        int cx, cy, width, height, radius;
+        if (!geometry_integer(x_value, &cx) || !geometry_integer(y_value, &cy)) XSRETURN_IV(-1);
+        char *raw = geometry_map(map, width_value, height_value, &width, &height);
+        if (!raw || cx < 0 || cy < 0 || cx >= width || cy >= height) XSRETURN_UNDEF;
+        if (raw[(size_t)cy * width + cx] & 1) {
+            HV *point = newHV();
+            hv_store(point, "x", 1, newSVsv(x_value), 0);
+            hv_store(point, "y", 1, newSVsv(y_value), 0);
+            XPUSHs(sv_2mortal(newRV_noinc((SV *)point)));
+            XSRETURN(1);
+        }
+        if (SvMAGICAL(radius_value) || SvROK(radius_value)) XSRETURN_IV(-1);
+        if (!SvOK(radius_value) || !SvTRUE(radius_value)) XSRETURN_IV(-2);
+        int limit = width > height ? width : height;
+        // A larger numeric radius cannot expose new cells after the rectangle
+        // spans the map. Clamp before conversion to avoid integer overflow.
+        if (looks_like_number(radius_value) && SvNV(radius_value) >= limit) radius = limit;
+        else if (!geometry_integer(radius_value, &radius)) XSRETURN_IV(-1);
+        if (radius <= 0) XSRETURN_UNDEF;
+        for (int r = 1; r <= radius; ++r) {
+            int min_x = r > cx ? 0 : cx - r;
+            int min_y = r > cy ? 0 : cy - r;
+            int max_x = r >= width - 1 - cx ? width - 1 : cx + r;
+            int max_y = r >= height - 1 - cy ? height - 1 : cy + r;
+            int x = min_x, y = min_y;
+            while (x < max_x) {
+                if (raw[(size_t)y * width + x] & 1) { XPUSHs(sv_2mortal(geometry_point(x,y))); XSRETURN(1); }
+                ++x;
+            }
+            while (y < max_y) {
+                if (raw[(size_t)y * width + x] & 1) { XPUSHs(sv_2mortal(geometry_point(x,y))); XSRETURN(1); }
+                ++y;
+            }
+            while (x > min_x) {
+                if (raw[(size_t)y * width + x] & 1) { XPUSHs(sv_2mortal(geometry_point(x,y))); XSRETURN(1); }
+                --x;
+            }
+            while (y > min_y) {
+                if (raw[(size_t)y * width + x] & 1) { XPUSHs(sv_2mortal(geometry_point(x,y))); XSRETURN(1); }
+                --y;
+            }
+            // Once the clipped rectangle spans the map, larger radii repeat it.
+            if (!min_x && !min_y && max_x == width-1 && max_y == height-1) break;
+        }
+        XSRETURN_UNDEF;
