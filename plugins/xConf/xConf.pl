@@ -375,7 +375,7 @@ sub _bulk_write_control_entries {
     return unless %new_values;
     my $controlfile = Settings::getControlFilename($file);
     my $cached = $write_cache{$file};
-    debug "[xConf] bulk write file: $controlfile\n" if Log::debugEnabled();
+    debug "[xConf] bulk write file: $controlfile\n";
     open(my $fh, '+<:raw', $controlfile) or do {
         warning "[xConf] Unable to open $controlfile for reading: $!\n";
         return;
@@ -432,7 +432,7 @@ sub _bulk_write_control_entries {
                 $identifier = lc $identifier if defined $identifier;
             }
             if (defined $identifier && exists $updates{$identifier}) {
-                debug "[xConf] Removing line '$line' for '$identifier'\n" if Log::debugEnabled();
+                debug "[xConf] Removing line '$line' for '$identifier'\n";
             } else {
                 push @kept, $line;
                 my $parsed_key = defined $identifier && $line =~ /^\d+\s/
@@ -451,7 +451,7 @@ sub _bulk_write_control_entries {
             push @kept, $new_values{$key};
             push @{$positions{lc $key}}, [$offset, length($new_values{$key}) + 1];
             $offset += length($new_values{$key}) + 1;
-            debug "[xConf] Adding line $new_values{$key}\n" if Log::debugEnabled();
+            debug "[xConf] Adding line $new_values{$key}\n";
         }
         $output = join("\n", @kept) . "\n";
     }

@@ -88,17 +88,11 @@ END_MONS
 				push @reloads, $_[0];
 			};
 
-			# Capture hook failures inside eval, avoiding an unrelated test network
-			# mock masking the original error through the global error handler.
-			my $hook_ok = eval {
-				Plugins::callHook('bulk_iconf', {
-					changes => {
-						1208 => '22 0 0 0 0',
-					}
-				});
-				1;
-			};
-			ok($hook_ok, 'bulk_iconf hook executes without error') or diag $@;
+			Plugins::callHook('bulk_iconf', {
+				changes => {
+					1208 => '22 0 0 0 0',
+				}
+			});
 		}
 
 		is_deeply(\@reloads, ['items_control.txt'], 'bulk_iconf reloads items_control.txt');
