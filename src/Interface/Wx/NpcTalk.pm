@@ -8,7 +8,7 @@ use base 'Wx::Panel';
 use Globals;
 use Misc qw/configModify/;
 use Translation qw/T TF/;
-use Interface::Wx::Utils qw(wxFilePath);
+use Interface::Wx::Utils qw(wxFilePath disablePageCompositing);
 
 sub new {
 	my ($class, $parent, $id) = @_;
@@ -100,7 +100,7 @@ sub new {
 		$self->{value} = $self->{listResponses}->GetSelection;
 		if ($checkPageCompositing) {
 			$checkPageCompositing = 0;
-			_disablePageCompositing($self->GetParent, $self->{listResponses});
+			disablePageCompositing($self->GetParent, $self->{listResponses});
 		}
 	});
 	EVT_LISTBOX_DCLICK ($self, $self->{listResponses}->GetId, sub { $self->_onOk; });
@@ -152,35 +152,6 @@ sub new {
 	$hsizer->Add ($self->{cancelButton}, 0);
 	
 	return $self;
-}
-
-sub _disablePageCompositing {
-	my ($page, $list) = @_;
-	local $@;
-	eval {
-		require Config;
-		require Win32::API;
-		my $handle = $Config::Config{ptrsize} == 8 ? 'q' : 'N';
-		my $getDpiContext = Win32::API->new('user32', 'GetWindowDpiAwarenessContext', $handle, $handle);
-		my $sameDpiContext = Win32::API->new('user32', 'AreDpiAwarenessContextsEqual', $handle x 2, 'I');
-		my $hwnd = $page->GetHandle;
-		my $gdiScaled = -5;
-		return unless $getDpiContext && $sameDpiContext && $sameDpiContext->Call($getDpiContext->Call($hwnd), $gdiScaled);
-
-		my $getStyle = Win32::API->new('user32', 'GetWindowLongW', "${handle}I", 'N');
-		my $setStyle = Win32::API->new('user32', 'SetWindowLongW', "${handle}IN", 'N');
-		my $setPosition = Win32::API->new('user32', 'SetWindowPos', ($handle x 2) . 'IIIIN', 'I');
-		return unless $getStyle && $setStyle && $setPosition;
-		my $extendedStyle = -20;
-		my $composited = 0x02000000;
-		my $style = $getStyle->Call($hwnd, $extendedStyle);
-		if (($style & $composited) && $setStyle->Call($hwnd, $extendedStyle, $style & ~$composited)) {
-			my $frameChanged = 0x37;
-			$setPosition->Call($hwnd, 0, 0, 0, 0, 0, $frameChanged);
-			$list->Refresh;
-			$list->Update;
-		}
-	};
 }
 
 sub _onOk {
