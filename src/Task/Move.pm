@@ -134,32 +134,32 @@ sub iterate {
 
 	# If we're sitting, wait until we've stood up.
 	if ($self->{actor}{sitting}) {
-		debug "Move $self->{actor} (to $self->{x} $self->{y}) - trying to stand\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - trying to stand\n", "move" if Log::debugEnabled("move", undef);
 		my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand');
 		$self->setSubtask($task);
 
 	# Stop if the map changed.
 	} elsif ($self->{mapChanged}) {
-		debug "Move $self->{actor} (to $self->{x} $self->{y}) - map change detected\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - map change detected\n", "move" if Log::debugEnabled("move", undef);
 		$self->setDone();
 
 	# Stop if we've moved.
 	} elsif ($self->{actor}{time_move} > $self->{start_time} && $self->{actor}{pos_to}{x} == $self->{x} && $self->{actor}{pos_to}{y} == $self->{y}) {
-		debug "Move $self->{actor} (to $self->{x} $self->{y}) - done\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - done\n", "move" if Log::debugEnabled("move", undef);
 		$self->setDone();
 
 	# Stop if we've timed out.
 	} elsif (timeOut($self->{giveup})) {
-		debug "Move $self->{actor} (to $self->{x} $self->{y}) - timeout\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - timeout\n", "move" if Log::debugEnabled("move", undef);
 		$self->setError(TOO_LONG, TF("%s tried too long to move", $self->{actor}));
 
 	} elsif (timeOut($self->{retry})) {
 		$self->{actor}->sendStopSkillUse() if $self->{actor}->{last_skill_used_is_continuous}; # avoid walk while using continuos skill (GC_ROLLINGCUTTER)
 		$self->{retry}{count}++;
-		debug "Move $self->{actor} (to $self->{x} $self->{y}) - trying ($self->{retry}{count})\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - trying ($self->{retry}{count})\n", "move" if Log::debugEnabled("move", undef);
 		$self->{actor}->sendMove(@{$self}{qw(x y)});
 		if ($self->{sendAttack}) {
-			debug "[Test Move Attack Buffer] Sending attack with move.\n", "move";
+			debug "[Test Move Attack Buffer] Sending attack with move.\n", "move" if Log::debugEnabled("move", undef);
 			$self->{actor}->sendAttack($self->{attackID});
 		}
 		$self->{retry}{time} = time;
