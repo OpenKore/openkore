@@ -54,6 +54,8 @@ undef %completions;
 
 sub initHandlers {
 	register(
+		['consoleopen', T("Open the Windows console window."), \&cmdConsoleWindow],
+		['consoleclose', T("Close the Windows console window and suppress rendering."), \&cmdConsoleWindow],
 		['a', [
 			T("Attack a monster."),
 			[ T("<monster #>"), T("attack the specified monster") ],
@@ -3523,6 +3525,17 @@ sub cmdGmremove {
 	}
 
 	$messageSender->sendGMRemove($args);
+}
+
+sub cmdConsoleWindow {
+	my ($command) = @_;
+	my $method = $command eq 'consoleopen' ? 'openConsole' : 'closeConsole';
+	if (!$interface->can($method)) {
+		error T("Console window commands require the Windows Console interface.\n");
+		return;
+	}
+	$interface->$method();
+	message($command eq 'consoleopen' ? T("Console opened.\n") : T("Console closed.\n"));
 }
 
 sub cmdGuild {

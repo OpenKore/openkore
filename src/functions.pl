@@ -59,7 +59,7 @@ sub mainLoop {
 	# Parse command input
 	Benchmark::begin("mainLoop_input") if DEBUG;
 	my $input;
-	if (defined($input = $interface->getInput(0))) {
+	if (!$interface->{headless} && defined($input = $interface->getInput(0))) {
 		Misc::checkValidity("parseInput (pre)");
 		parseInput($input);
 		Misc::checkValidity("parseInput");
@@ -947,6 +947,41 @@ sub initStatVars {
 
 # This function is called every time in the main loop, when OpenKore has been
 # fully initialized.
+sub buildInterfaceTitle {
+	# Compose the current character and AI status for the console.
+	my $charName;
+	my $title;
+	$charName = "$char->{name}: " if ($char);
+	if ($net && $net->getState() == Network::IN_GAME) {
+		my ($basePercent, $jobPercent, $weight, $pos);
+
+		assert(defined $char);
+		$basePercent = sprintf("%.2f", $char->exp_base_percent);
+		$jobPercent = sprintf("%.2f",$char->exp_job_percent);
+		$weight = int($char->weight_percent) . "%";
+		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
+		my $aiSeq = join(",", @ai_seq);
+		# Translation Comment: Interface Title with character status
+		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
+			$charName, $char->{lv}, $basePercent . '%',
+			$char->{lv_job}, $jobPercent . '%',
+			$weight, $pos, $aiSeq, $Settings::NAME);
+
+	} elsif (!$net || $net->getState() == Network::NOT_CONNECTED) {
+		# Translation Comment: Interface Title
+		$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
+	} else {
+		# Translation Comment: Interface Title
+		$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
+	}
+
+	my %args = (return => $title);
+	Plugins::callHook('mainLoop::setTitle',\%args);
+
+	return $args{return};
+}
+
+
 sub mainLoop_initialized {
 	Benchmark::begin("mainLoop_part1") if DEBUG;
 
@@ -1144,47 +1179,19 @@ sub mainLoop_initialized {
 	Misc::checkValidity("mainLoop_part2.4");
 
 	Benchmark::begin("mainLoop_part3_setTitle") if DEBUG;
-	if (timeOut($timeout{setTitle})) {
+	if (!$interface->{headless} && timeOut($timeout{setTitle})) {
 		$timeout{setTitle}{time} = time;
 
-		# Set interface title
-		my $charName;
-		my $title;
-		$charName = "$char->{name}: " if ($char);
-		if ($net->getState() == Network::IN_GAME) {
-			my ($basePercent, $jobPercent, $weight, $pos);
+		my $title = buildInterfaceTitle();
 
-			assert(defined $char);
-			$basePercent = sprintf("%.2f", $char->exp_base_percent);
-			$jobPercent = sprintf("%.2f",$char->exp_job_percent);
-			$weight = int($char->weight_percent) . "%";
-			$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
-			my $aiSeq = join(",", @ai_seq);
-			# Translation Comment: Interface Title with character status
-			$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
-				$charName, $char->{lv}, $basePercent . '%',
-				$char->{lv_job}, $jobPercent . '%',
-				$weight, $pos, $aiSeq, $Settings::NAME);
-
-		} elsif ($net->getState() == Network::NOT_CONNECTED) {
-			# Translation Comment: Interface Title
-			$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
-		} else {
-			# Translation Comment: Interface Title
-			$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
-		}
-
-		my %args = (return => $title);
-		Plugins::callHook('mainLoop::setTitle',\%args);
-
-		if (%ai_v && exists $ai_v{temp} && exists $ai_v{temp}{lastTitle} && defined $ai_v{temp}{lastTitle} && $ai_v{temp}{lastTitle} eq $args{return}) {
+		if (%ai_v && exists $ai_v{temp} && exists $ai_v{temp}{lastTitle} && defined $ai_v{temp}{lastTitle} && $ai_v{temp}{lastTitle} eq $title) {
 			# Title is the same as last time, skip setting it again to avoid unnecessary overhead.
 			Benchmark::end("mainLoop_part3_setTitle") if DEBUG;
 			Benchmark::end("mainLoop_part3") if DEBUG;
 			return;
 		}
 		Benchmark::begin("mainLoop_part3_setTitle_interface") if DEBUG;
-		$interface->title($args{return});
+		$interface->title($title);
 		Benchmark::end("mainLoop_part3_setTitle_interface") if DEBUG;
 	}
 	Benchmark::end("mainLoop_part3_setTitle") if DEBUG;

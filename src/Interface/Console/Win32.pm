@@ -40,6 +40,7 @@ use utf8;
 use Encode;
 use I18N qw(stringToBytes);
 use Translation qw(T);
+use Interface::Console::WindowControl;
 
 
 use Globals;
@@ -59,9 +60,21 @@ sub new {
 		input_part => '',
 	};
 	bless $self, $class;
-	$self->{out_con} = new Interface::Console::Win32::Handle(STD_OUTPUT_HANDLE())
+	$self->{window_control} = Interface::Console::WindowControl->new(
+		$Settings::logs_folder, join(', ', Settings::getControlFolders()));
+	if ($Settings::options{headless}) {
+		$self->closeConsole();
+	} else {
+		$self->initConsole();
+	}
+	return $self;
+}
+
+sub initConsole {
+	my $self = shift;
+	$self->{out_con} = Interface::Console::Win32::Handle->new(STD_OUTPUT_HANDLE())
 			or die "Could not init output Console: $!\n";
-	$self->{in_con} = new Interface::Console::Win32::Handle(STD_INPUT_HANDLE())
+	$self->{in_con} = Interface::Console::Win32::Handle->new(STD_INPUT_HANDLE())
 			or die "Could not init input Console: $!\n";
 	$self->setWinDim();
 	
@@ -73,7 +86,81 @@ sub new {
 sub DESTROY {
 	my $self = shift;
 
-	$self->color('reset');
+	$self->color('reset') if $self->{out_con};
+}
+
+sub closeConsole {
+	my $self = shift;
+	return if $self->{headless};
+	# Destroy the old handle wrappers before Free/Alloc can reuse their handles.
+	delete $self->{out_con};
+	delete $self->{in_con};
+	Win32::Console->Free(); # Also succeeds logically if started with CREATE_NO_WINDOW.
+	close STDIN;
+	close STDOUT;
+	close STDERR;
+	open(STDIN, '<', 'NUL') or die "Cannot redirect stdin: $!";
+	open(STDOUT, '>', 'NUL') or die "Cannot redirect stdout: $!";
+	open(STDERR, '>', 'NUL') or die "Cannot redirect stderr: $!";
+	$self->{headless} = 1;
+	$self->{input_lines} = [];
+	$self->{input_part} = '';
+	$self->{input_offset} = 0;
+}
+
+sub openConsole {
+	my $self = shift;
+	return unless $self->{headless};
+	Win32::Console->Alloc() or die "Cannot allocate console: $^E";
+	# Perl's CRT stream reopen can replace the Win32 standard handles with
+	# the previous NUL handles. Preserve the handles supplied by AllocConsole.
+	my @types = (STD_INPUT_HANDLE(), STD_OUTPUT_HANDLE(), STD_ERROR_HANDLE());
+	my @handles = map { Win32::Console::_GetStdHandle($_) } @types;
+	open(STDIN, '<', 'CONIN$') or die "Cannot open console input: $!";
+	open(STDOUT, '>', 'CONOUT$') or die "Cannot open console output: $!";
+	open(STDERR, '>', 'CONOUT$') or die "Cannot open console errors: $!";
+	for my $i (0..$#types) {
+		Win32::Console::_SetStdHandle($types[$i], $handles[$i]);
+	}
+	$self->initConsole();
+	$self->{last_line_end} = 1;
+	$self->{headless} = 0;
+	# Startup prompts can open a console before functions.pl is loaded.
+	my $title = defined(&main::buildInterfaceTitle)
+		? main::buildInterfaceTitle()
+		: $Settings::NAME;
+	# A freshly allocated console must receive its title even when its
+	# cached title string is unchanged from the prior console window.
+	Utils::Win32::setConsoleTitle($title);
+	$self->{currentTitle} = $title;
+	# Avoid an immediate second refresh when the next AI tick runs.
+	$timeout{setTitle}{time} = time if defined(&main::buildInterfaceTitle);
+}
+
+sub iterate {
+	my $self = shift;
+	my $command = $self->{window_control}->poll();
+	return unless $command;
+	$self->openConsole() if $command eq 'open';
+	$self->closeConsole() if $command eq 'close';
+}
+
+sub query {
+	my $self = shift;
+	$self->openConsole();
+	return $self->SUPER::query(@_);
+}
+
+sub errorDialog {
+	my $self = shift;
+	$self->openConsole();
+	return $self->SUPER::errorDialog(@_);
+}
+
+sub beep {
+	return if $_[0]->{headless};
+	print STDOUT "\a";
+	STDOUT->flush;
 }
 
 {
@@ -102,6 +189,11 @@ sub getInput {
 #	return undef unless ($enabled);
 	my $self = shift;
 	my $timeout = shift;
+	$self->openConsole() if $timeout < 0;
+	if ($self->{headless}) {
+		sleep $timeout if $timeout > 0;
+		return undef;
+	}
 	$self->readEvents();
 	my $msg;
 	if ($timeout < 0) {
@@ -143,6 +235,7 @@ sub getInput {
 # over write your input line)
 sub readEvents {
 	my $self = shift;
+	return if $self->{headless};
 #	local($|) = 1;
 	while ($self->{in_con}->GetEvents()) {
 		my @event = $self->{in_con}->Input();
@@ -302,6 +395,7 @@ sub readEvents {
 
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
+	return if $self->{headless};
 
 	#wrap the text
 	local($Text::Wrap::columns) = $self->{right} - $self->{left} + 1;
@@ -365,10 +459,11 @@ sub title {
 
 	if (defined $title) {
 		if (!defined $self->{currentTitle} || $self->{currentTitle} ne $title) {
-			Utils::Win32::setConsoleTitle($title);
+			Utils::Win32::setConsoleTitle($title) unless $self->{headless};
 			$self->{currentTitle} = $title;
 		}
 	} else {
+		return $self->{currentTitle} if $self->{headless};
 		return $self->{out_con}->Title();
 	}
 }
