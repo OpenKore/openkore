@@ -3708,7 +3708,11 @@ sub processItemsGather {
 
 ##### AUTO-TELEPORT #####
 sub processAutoTeleport {
-	return if (AI::inQueue("teleport", "NPC"));
+	return if (AI::inQueue("NPC"));
+	if (defined(my $index = AI::findAction('teleport'))) {
+		my $task = AI::args($index);
+		return unless UNIVERSAL::isa($task, 'Task::Teleport::Random') && !$task->{flee};
+	}
 
 	my $safe = 0;
 
@@ -3773,7 +3777,7 @@ sub processAutoTeleport {
 	) {
 		message T("Teleporting due to insufficient HP/SP or too many aggressives\n"), "teleport";
 		$ai_v{temp}{clear_aiQueue} = 1;
-		ai_useTeleport(1);
+		ai_useTeleport(1, flee => 1);
 		$timeout{ai_teleport_hp}{time} = time;
 		return;
 	}
@@ -3788,7 +3792,7 @@ sub processAutoTeleport {
 			if ($teleAuto == 1 && !$char->{dead}) {
 				message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
 				$ai_v{temp}{clear_aiQueue} = 1;
-				ai_useTeleport(1);
+				ai_useTeleport(1, flee => 1);
 				$timeout{ai_teleport_away}{time} = time;
 				return;
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
@@ -3799,7 +3803,7 @@ sub processAutoTeleport {
 					if ($field->canMove($realMyPos, $pos)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1;
-						ai_useTeleport(1);
+						ai_useTeleport(1, flee => 1);
 						$timeout{ai_teleport_away}{time} = time;
 						return;
 					}

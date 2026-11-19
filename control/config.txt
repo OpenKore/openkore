@@ -325,6 +325,7 @@ teleportAuto_maxDmg 500
 teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
 teleportAuto_useSkill 1
+teleportAuto_whenDanger_useSkill 0
 teleportAuto_useChatCommand
 teleportAuto_allPlayers 0
 teleportAuto_notPlayers
