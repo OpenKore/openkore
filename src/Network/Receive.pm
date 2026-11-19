@@ -11930,7 +11930,10 @@ sub repair_list {
 		: ('v2 C a8', qw(index nameID upgrade cards));
 	my $size = length pack $format;
 	my $payload = substr($args->{RAW_MSG}, 4);
-	return if length($payload) % $size;
+	if (length($payload) % $size) {
+		warning TF("Ignoring repair list packet (%s): %d bytes is not a multiple of %d\n", $args->{switch}, length($payload), $size);
+		return;
+	}
 
 	my (@items, @inventory);
 	my $myself = 1;
