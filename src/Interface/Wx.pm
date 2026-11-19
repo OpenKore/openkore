@@ -33,6 +33,12 @@ BEGIN {
 
 use strict;
 use Wx ':everything';
+BEGIN {
+	if ($^O eq 'MSWin32' && defined $ENV{INTERPRETER} && !$ENV{PAR_PROGNAME}) {
+		require Win32;
+		Win32::LoadLibrary('Wx.dll');
+	}
+}
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
 		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN EVT_KEY_DOWN
 		EVT_BUTTON);
