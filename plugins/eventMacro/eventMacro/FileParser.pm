@@ -265,7 +265,7 @@ sub sub_execute {
 	# the risk yourself.
 	Commands::run( $run );
 
-	debug "[eventMacro] registering sub '" . $name . "'.\n", "menu", 3;
+	debug "[eventMacro] registering sub '" . $name . "'.\n", "menu", 3 if Log::debugEnabled('menu', 3);
 }
 
 # check if on the line there commands that open new command blocks

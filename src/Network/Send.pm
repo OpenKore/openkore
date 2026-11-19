@@ -682,7 +682,7 @@ sub sendTake {
 sub sendDrop {
 	my ($self, $ID, $amount) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'item_drop', ID => $ID, amount => $amount}));
-	debug sprintf("Sent drop: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Sent drop: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 sub sendItemUse {
@@ -696,7 +696,7 @@ sub sendItemUse {
 		}
 	}
 	$self->sendToServer($self->reconstruct({switch => 'item_use', ID => $ID, targetID => $targetID}));
-	debug sprintf("Item Use: %s\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Item Use: %s\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 # for old plugin compatibility, use sendRestart instead!
@@ -720,7 +720,7 @@ sub sendStorageAdd {
 	} else {
 		$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
 	}
-	debug sprintf("Sent Storage Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Sent Storage Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 sub sendStorageGet {
@@ -730,7 +730,7 @@ sub sendStorageGet {
 	} else {
 		$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
 	}
-	debug sprintf("Sent Storage Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Sent Storage Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 sub sendStoragePassword {
@@ -1068,7 +1068,7 @@ sub sendSlaveMove {
 		y => $y,
 	}));
 
-	debug sprintf("Sent %s move to: %d, %d\n", Actor::get($ID), $x, $y), "sendPacket", 2;
+	debug sprintf("Sent %s move to: %d, %d\n", Actor::get($ID), $x, $y), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 sub sendFriendListReply {
@@ -1124,7 +1124,7 @@ sub sendSkillSelect {
 		skillID => $skillID,
 		why => $why,
 	}));
-	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2;
+	debug sprintf("Sent Skill Select (skillID: %d, why: %d)", $skillID, $why), 'sendPacket', 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 sub sendReplySyncRequestEx {
@@ -1239,7 +1239,7 @@ sub sendMiscConfigSet {
 		)
 	);
 
-	debug sprintf("Sent Misc Config Type: %s Flag: %s.\n", $type, $flag), "sendPacket", 2;
+	debug sprintf("Sent Misc Config Type: %s Flag: %s.\n", $type, $flag), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 sub sendSlaveAttack {
@@ -1296,7 +1296,7 @@ sub sendEquipSwitchAdd {
 		position => $position,
 	}));
 
-	debug sprintf("Sent Equip Switch Add Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Sent Equip Switch Add Item: %s\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 # Request to remove an equip from the equip switch window
@@ -1311,7 +1311,7 @@ sub sendEquipSwitchRemove {
 		position =>  $position,
 	}));
 
-	debug sprintf("Sent Equip Switch Remove Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Sent Equip Switch Remove Item: %s\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 # Request to do a full equip switch
@@ -1336,7 +1336,7 @@ sub sendEquipSwitchSingle {
 		ID => $ID
 	}));
 
-	debug sprintf("Sent Equip Switch Single Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Sent Equip Switch Single Item: %s\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 sub sendProgress {
@@ -1354,7 +1354,7 @@ sub sendDealAddItem {
 		ID => $ID,
 		amount => $amount
 	}));
-	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2;
+	debug sprintf("Sent Deal Add Item: %s, $amount\n", unpack('v', $ID)), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 }
 
 ##
@@ -1935,9 +1935,10 @@ sub sendRepairItem {
 	$self->sendToServer($self->reconstruct({
 		switch => 'repair_item',
 		index => $args->{index},
-		nameID => $args->{nameID},
-		upgrade => $args->{upgrade},
-		cards => $args->{cards},
+		nameID => $args->{nameID} // 0,
+		upgrade => $args->{upgrade} // 0,
+		cards => $args->{cards} // '',
+		grade => $args->{grade} // 0,
 	}));
 	debug ("Sent repair item index: ".$args->{index}."\n", "sendPacket", 2);
 }
@@ -3273,7 +3274,7 @@ sub sendCashShopBuy {
 	my ($self, $points, $items) = @_;
 
 	if (scalar @{$items}) {
-		debug sprintf("Sent buying request from cashshop for %d items.\n", scalar @{$items}), "sendPacket", 2;
+		debug sprintf("Sent buying request from cashshop for %d items.\n", scalar @{$items}), "sendPacket", 2 if Log::debugEnabled('sendPacket', 2);
 		foreach my $item (@{$items}) {
 			$self->sendToServer($self->reconstruct({
 				switch => 'cash_dealer_buy',

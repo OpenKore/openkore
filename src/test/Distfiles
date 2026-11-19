@@ -41,3 +41,4 @@ unittests.pl
 WhirlpoolTest.pm
 
 NativeClosestWalkableTest.pm
+LogDebugEnabledTest.pm

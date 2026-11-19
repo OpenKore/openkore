@@ -3071,6 +3071,13 @@ sub processAutoItemUse {
 ##### AUTO-SKILL USE #####
 sub processAutoSkillUse {
 	my ($slave) = @_;
+	# Slave and player checks use independent clocks; zero means no throttling.
+	if (($timeout{ai_selfSkill_check}{timeout} // 0) > 0) {
+		my $check = $slave ? ($slave->{ai_selfSkill_check} ||= {}) : $timeout{ai_selfSkill_check};
+		$check->{timeout} = $timeout{ai_selfSkill_check}{timeout} if $slave;
+		return unless timeOut($check);
+		$check->{time} = time;
+	}
 	return if ($char->{muted});
 	if (!$slave) {
 		my $routeIndex = AI::findAction("route");
@@ -3142,6 +3149,13 @@ sub processAutoSkillUse {
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
 	my ($slave) = @_;
+	# Slave and player checks use independent clocks; zero means no throttling.
+	if (($timeout{ai_partySkill_check}{timeout} // 0) > 0) {
+		my $check = $slave ? ($slave->{ai_partySkill_check} ||= {}) : $timeout{ai_partySkill_check};
+		$check->{timeout} = $timeout{ai_partySkill_check}{timeout} if $slave;
+		return unless timeOut($check);
+		$check->{time} = time;
+	}
 	return if ($char->{muted});
 	if ($slave ? ($slave->isIdle() || $slave->is(qw(route move follow attack))) : (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))) {
 		my $realMyPos = calcPosFromPathfinding($field, $slave || $char);
@@ -3254,7 +3268,7 @@ sub processPartySkillUse {
 			$party_skill{lvl} = $smartHeal_lv;
 		}
 		if (defined $party_skill{targetID}) {
-			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill";
+			debug qq~Party Skill used ($party_skill{target}) Skills Used: $config{$party_skill{prefix}} (lvl $party_skill{lvl})\n~, "skill" if Log::debugEnabled("skill");
 			ai_skillUse2(
 				$party_skill{skillObject},
 				$party_skill{lvl},
@@ -3269,6 +3283,11 @@ sub processPartySkillUse {
 
 ##### MONSTER SKILL USE #####
 sub processMonsterSkillUse {
+	# Zero disables this optional scan interval and preserves stock scheduling.
+	if (($timeout{ai_monsterSkill_check}{timeout} // 0) > 0) {
+		return unless timeOut($timeout{ai_monsterSkill_check});
+		$timeout{ai_monsterSkill_check}{time} = time;
+	}
 	return if ($char->{muted});
 	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
 		for (my $i = 0; exists $config{"monsterSkill_$i"}; $i++) {
@@ -3689,7 +3708,11 @@ sub processItemsGather {
 
 ##### AUTO-TELEPORT #####
 sub processAutoTeleport {
-	return if (AI::inQueue("teleport", "NPC"));
+	return if (AI::inQueue("NPC"));
+	if (defined(my $index = AI::findAction('teleport'))) {
+		my $task = AI::args($index);
+		return unless UNIVERSAL::isa($task, 'Task::Teleport::Random') && !$task->{flee};
+	}
 
 	my $safe = 0;
 
@@ -3754,7 +3777,7 @@ sub processAutoTeleport {
 	) {
 		message T("Teleporting due to insufficient HP/SP or too many aggressives\n"), "teleport";
 		$ai_v{temp}{clear_aiQueue} = 1;
-		ai_useTeleport(1);
+		ai_useTeleport(1, flee => 1);
 		$timeout{ai_teleport_hp}{time} = time;
 		return;
 	}
@@ -3769,7 +3792,7 @@ sub processAutoTeleport {
 			if ($teleAuto == 1 && !$char->{dead}) {
 				message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
 				$ai_v{temp}{clear_aiQueue} = 1;
-				ai_useTeleport(1);
+				ai_useTeleport(1, flee => 1);
 				$timeout{ai_teleport_away}{time} = time;
 				return;
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
@@ -3780,7 +3803,7 @@ sub processAutoTeleport {
 					if ($field->canMove($realMyPos, $pos)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1;
-						ai_useTeleport(1);
+						ai_useTeleport(1, flee => 1);
 						$timeout{ai_teleport_away}{time} = time;
 						return;
 					}
@@ -4174,6 +4197,11 @@ sub processRepairAuto {
             $name = itemNameSimple($repairListItem->{nameID});
             if (existsInList($config{'repairAuto_list'}, $name) || !$config{'repairAuto_list'}) {
                 $messageSender->sendRepairItem($repairListItem);
+                if (defined(my $repairIndex = AI::findAction("repairAuto"))) {
+                    my $args = AI::args($repairIndex);
+                    $args->{waitingForList} = 0;
+                    $args->{repairing} = 1;
+                }
                 $timeout{ai_repair}{time} = time;
                 return;
             }

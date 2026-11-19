@@ -353,6 +353,17 @@ sub debug {
 		\%debugFiles);
 }
 
+sub debugEnabled {
+	my ($domain, $level) = @_;
+	$domain ||= 'console';
+	return 1 if @hooks;
+	return 1 if $debugFiles{$domain} && @{$debugFiles{$domain}};
+	return 1 if $config{beepDomains} && existsInList($config{beepDomains}, $domain);
+	my $verbosity = defined $config{debug} ? $config{debug} : 0;
+	$verbosity = 1 if $verbosity eq '';
+	return setLevel($domain, $level) <= $verbosity;
+}
+
 sub setLevel {
 	my ($domain, $level) = @_;
 	if (existsInList($config{squelchDomains}, $domain)) {

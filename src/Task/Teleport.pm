@@ -13,7 +13,7 @@ use Skill;
 use Task::SitStand;
 use base 'Task::WithSubtask';
 use Globals qw($messageSender $net %timeout %config @ai_seq @ai_seq_args);
-use Log qw(debug warning);
+use Log qw(debug warning message);
 use Translation qw(T TF);
 use Utils qw(timeOut);
 
@@ -39,6 +39,7 @@ sub new {
 	}
 
 	$self->{actor} = $args{actor};
+	$self->{flee} = $args{flee} ? 1 : 0;
 	$self->{retry}{timeout} = $args{retryTime} || $timeout{ai_teleport_retry}{timeout} || 0.5;
 	$self->{giveup}{timeout} = $args{giveupTime} || 3;
 
@@ -89,6 +90,7 @@ sub iterate {
 	if ($self->{mapChanged}) {
 		# TODO respawn task may be not done, if a regular mapchange was occurred
 		debug "Teleport $self->{actor} - Map change occurred, marking teleport as done\n", "teleport";
+		message T("Danger/flee teleport completed\n"), "teleport" if $self->{flee};
 		Plugins::callHook('taskTeleport_mapChanged', { task => $self });
 		$self->setDone;
 
@@ -101,47 +103,43 @@ sub iterate {
 		delete $self->{pendingTeleportSkill};
 		delete $self->{pendingTeleportItemMenu};
 		my $item = $self->getInventoryItem;
+		my $method;
 
 		if (my $chat_command = $self->chatCommand) { # 1 - try to use chat command
 			debug "Teleport $self->{actor} - Using chat command to teleport : $chat_command\n", "teleport";
 			Misc::sendMessage($messageSender, "c", $chat_command);
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
-		} elsif($self->isEquipNeededToTeleport) { # 2 - check if equip is needed to use teleport
+		} elsif (($method = $self->selectTeleportMethod($item)) && $method eq 'equip_skill') {
 			# No skill try to equip a Tele clip or something,
 			# if teleportAuto_equip_* is set
 			debug "Teleport $self->{actor} - Equipping item to teleport\n", "teleport";
 			$self->useEquip;
 
-		} elsif ($item && !$self->isTeleportItemEquipRequirementSatisfied($item)) { # 3 - check whether item-specific equip requirement is met
-			if ($self->canEquipTeleportItem($item)) {
-				debug "Teleport $self->{actor} - Equipping teleport item before use: $item->{name}\n", "teleport";
-				$self->equipTeleportItem($item);
-			} else {
-				debug "Teleport $self->{actor} - Teleport item cannot be equipped right now: $item->{name}\n", "teleport";
-			}
+		} elsif (defined($method) && $method eq 'equip_item') {
+			debug "Teleport $self->{actor} - Equipping teleport item before use: $item->{name}\n", "teleport";
+			$self->equipTeleportItem($item);
+
+		} elsif (defined($method) && $method eq 'wait_item') {
+			debug "Teleport $self->{actor} - Teleport item still on cooldown: $item->{name}\n", "teleport";
 
 		} elsif($self->{actor}->{sitting}) { # 4 check if actor is sitting
 			my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
 			$self->setSubtask($task);
 
-		} elsif($self->canUseSkill) { # 5 - try to use teleport skill
+		} elsif (defined($method) && $method eq 'skill') {
 			debug "Teleport $self->{actor} - Using skill to teleport\n", "teleport";
+			$self->reportFleeMethod('skill', T("Teleport skill"));
 			$self->useSkill;
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
-		} elsif($item) { # 6 - try to use item
+		} elsif (defined($method) && $method eq 'item') {
 			debug "Using item to teleport : $item->{name}\n", "teleport";
-			
-			if ($self->isTeleportItemOnCooldown($item)) {
-				debug "Teleport $self->{actor} - Teleport item still on cooldown: $item->{name}\n", "teleport";
-				$self->{retry}{time} = time;
-				return;
-			}
 			
 			# We have Fly Wing/Butterfly Wing.
 			# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 			if (timeOut($timeout{ai_teleport})) {
+				$self->reportFleeMethod('item:'.$item->{nameID}, $item->{name});
 				$self->{pendingTeleportItemUse} = {
 					index => $item->{ID},
 					nameID => $item->{nameID},
@@ -165,6 +163,43 @@ sub iterate {
 
 		$self->{retry}{time} = time;
 	}
+}
+
+# Both settings order usable methods; neither removes skill capability.
+# Respawn's separate teleportAuto_useItemForRespawn restriction stays in its
+# capability checks. Random teleports override this preference for danger.
+sub prefersSkill {
+	return !defined($config{teleportAuto_useSkill}) || $config{teleportAuto_useSkill} != 0;
+}
+
+sub selectTeleportMethod {
+	my ($self, $item) = @_;
+	my $skill = $self->canUseSkill;
+	my $equipSkill = !$skill && $self->isEquipNeededToTeleport;
+	my $cooldown = $item && $self->isTeleportItemOnCooldown($item);
+	my $readyItem = $item && !$cooldown && $self->isTeleportItemEquipRequirementSatisfied($item);
+	my $equipItem = $item && !$cooldown && !$readyItem && $self->canEquipTeleportItem($item);
+	# A rejected item gets a skill fallback on the next attempt. If no skill is
+	# usable, keep the existing bounded item retries for transient server states.
+	my $rejected = $item && $self->{rejectedTeleportItems}{$item->{nameID}};
+	my @order = $self->prefersSkill || $rejected
+		? qw(skill equip_skill item equip_item) : qw(item equip_item skill equip_skill);
+	my %usable = (skill => $skill, equip_skill => $equipSkill, item => $readyItem, equip_item => $equipItem);
+	for my $method (@order) {
+		return $method if $usable{$method};
+	}
+	return 'wait_item' if $cooldown;
+	return;
+}
+
+# Keep normal console output explicit about flee intent and the chosen method.
+# Retries using the same method do not repeat this acknowledgement.
+sub reportFleeMethod {
+	my ($self, $method, $description) = @_;
+	return unless $self->{flee};
+	return if ($self->{lastReportedFleeMethod} || '') eq $method;
+	$self->{lastReportedFleeMethod} = $method;
+	message TF("Teleporting to flee danger using %s\n", $description), "teleport";
 }
 
 sub queueTeleportSkill {
@@ -251,9 +286,11 @@ sub onItemUseAck {
 	return if ($args->{serverIndex} ne $pending->{index});
 
 	if ($args->{success}) {
+		delete $self->{rejectedTeleportItems}{$pending->{nameID}};
 		my $timeout = Misc::getTeleportItemCooldownTimeoutSec($pending->{nameID});
 		Misc::setTeleportItemCooldownEntry($pending->{nameID}, time, $timeout);
 	} else {
+		$self->{rejectedTeleportItems}{$pending->{nameID}} = 1;
 		debug "Teleport $self->{actor} - Teleport item use failed: $pending->{name}\n", "teleport";
 		delete $self->{pendingTeleportItemMenu};
 	}

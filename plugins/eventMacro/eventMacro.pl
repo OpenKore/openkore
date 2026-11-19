@@ -92,7 +92,7 @@ sub checkConfig {
 }
 
 sub onstart3 {
-	debug "[eventMacro] Loading start\n", "eventMacro", 2;
+	debug "[eventMacro] Loading start\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	$file_handle = Settings::addControlFile($file,loader => [\&parseAndHook], mustExist => 0);
 	$parseAndHook_called = 0;
 	Settings::loadByHandle($file_handle);
@@ -114,19 +114,19 @@ sub onConfigModify {
 sub parseAndHook {
 	my $file = shift;
 	$parseAndHook_called++;
-	debug "[eventMacro] Starting to parse file '$file'\n", "eventMacro", 2;
+	debug "[eventMacro] Starting to parse file '$file'\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	if (defined $eventMacro) {
-		debug "[eventMacro] Plugin global variable '\$eventMacro' is already defined, this must be a file reload. Unloading all current config.\n", "eventMacro", 2;
+		debug "[eventMacro] Plugin global variable '\$eventMacro' is already defined, this must be a file reload. Unloading all current config.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$eventMacro->unload();
 		undef $eventMacro;
-		debug "[eventMacro] Plugin global variable '\$eventMacro' was set to undefined.\n", "eventMacro", 2;
+		debug "[eventMacro] Plugin global variable '\$eventMacro' was set to undefined.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	}
 	$eventMacro = new eventMacro::Core($file);
 	if ($eventMacro->{parse_failed}) {
-		debug "[eventMacro] Loading error\n", "eventMacro", 2;
+		debug "[eventMacro] Loading error\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		return;
 	} else {
-		debug "[eventMacro] Loading success\n", "eventMacro", 2;
+		debug "[eventMacro] Loading success\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	}
 	
 	if ($char && $net && $net->getState() == Network::IN_GAME) {
@@ -288,8 +288,8 @@ sub commandHandler {
 			return;
 		}
 		my $status = $eventMacro->get_automacro_checking_status();
-		debug "[eventMacro] Command 'check' used with parameter '".$params[0]."'.\n", "eventMacro", 2;
-		debug "[eventMacro] Previous checking status '".$status."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Command 'check' used with parameter '".$params[0]."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
+		debug "[eventMacro] Previous checking status '".$status."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		if ($params[0] eq 'force_stop') {
 			if ($status == CHECKING_AUTOMACROS) {
 				message "[eventMacro] Automacros checking forcely stopped.\n";
