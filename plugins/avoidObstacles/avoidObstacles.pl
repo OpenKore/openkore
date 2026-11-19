@@ -1154,7 +1154,7 @@ sub choose_best_route_step {
 		debug "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Route Sol  == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$solution}[0..$best_step]) ."\n", 'route', 3;
 
 		if ($expected_route_danger || $route_start_lag) {
-			debug "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Best  Sol == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n", 'route', 3;
+			debug "[choose_best_route_step] [$current_pos->{x} $current_pos->{y}] [$best_pos->{x} $best_pos->{y}] Best  Sol == ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n", 'route', 3 if Log::debugEnabled('route', 3);
 		}
 
 		if ($route_start_lag) {
@@ -1167,7 +1167,7 @@ sub choose_best_route_step {
 			
 
 			if ($route_start_lag > 0 && $best_score > $expected_route_danger) {
-				debug "[" . PLUGIN_NAME . "] route_step reset requested: current_calc_pos lags $route_start_lag cells behind planned route start and local danger $best_score exceeds expected route danger $expected_route_danger.\n", 'route', 1;
+				debug "[" . PLUGIN_NAME . "] route_step reset requested: current_calc_pos lags $route_start_lag cells behind planned route start and local danger $best_score exceeds expected route danger $expected_route_danger.\n", 'route', 1 if Log::debugEnabled('route', 1);
 				return;
 			}
 		}
@@ -1344,7 +1344,7 @@ sub on_route_step {
 	my ($best_step, $best_score) = choose_best_route_step($args->{current_calc_pos}, $args->{solution}, $max_route_step, $prohibited_cells, $danger_cells);
 	if (!defined $best_step) {
 		if (scalar keys %{$route_portal_positions}) {
-			debug "[" . PLUGIN_NAME . "] No safe local route_step found, but the planned route uses a portal; keeping the current step selection.\n", 'route', 2;
+			debug "[" . PLUGIN_NAME . "] No safe local route_step found, but the planned route uses a portal; keeping the current step selection.\n", 'route', 2 if Log::debugEnabled('route', 2);
 			return;
 		}
 		warning "[" . PLUGIN_NAME . "] No safe local route_step found; local client path would cross a prohibited cell. Requesting repath.\n";
@@ -1353,7 +1353,7 @@ sub on_route_step {
 	}
 
 	if ($best_step != $args->{route_step}) {
-		debug "[" . PLUGIN_NAME . "] route_step adjusted from $args->{route_step} to $best_step (danger score $best_score).\n", 'route', 2;
+		debug "[" . PLUGIN_NAME . "] route_step adjusted from $args->{route_step} to $best_step (danger score $best_score).\n", 'route', 2 if Log::debugEnabled('route', 2);
 		$args->{route_step} = $best_step;
 	}
 }
@@ -1372,13 +1372,13 @@ sub add_obstacle {
 	return unless $pos;
 
 	if (exists $removed_obstacle_still_in_list{$actor->{ID}}) {
-		debug "[" . PLUGIN_NAME . "] Re-adding obstacle $actor after it returned to view.\n", 'route', 2;
+		debug "[" . PLUGIN_NAME . "] Re-adding obstacle $actor after it returned to view.\n", 'route', 2 if Log::debugEnabled('route', 2);
 		remove_obstacle_contributions($actor->{ID}) if exists $obstaclesList{$actor->{ID}};
 		delete $obstaclesList{$actor->{ID}};
 		delete $removed_obstacle_still_in_list{$actor->{ID}};
 	}
 
-	debug "[" . PLUGIN_NAME . "] Adding obstacle $actor on location $pos->{x} $pos->{y}.\n", 'route', 2;
+	debug "[" . PLUGIN_NAME . "] Adding obstacle $actor on location $pos->{x} $pos->{y}.\n", 'route', 2 if Log::debugEnabled('route', 2);
 
 	remove_obstacle_contributions($actor->{ID}) if exists $obstaclesList{$actor->{ID}};
 
@@ -1450,7 +1450,7 @@ sub move_obstacle {
 	my $pos = get_actor_position($actor);
 	return unless $pos;
 
-	debug "[" . PLUGIN_NAME . "] Moving obstacle $actor to $pos->{x} $pos->{y}.\n", 'route', 2;
+	debug "[" . PLUGIN_NAME . "] Moving obstacle $actor to $pos->{x} $pos->{y}.\n", 'route', 2 if Log::debugEnabled('route', 2);
 
 	remove_obstacle_contributions($actor->{ID});
 
@@ -1478,9 +1478,9 @@ sub remove_obstacle {
 
 	if (($type eq 'monster' || $type eq 'player') && defined $reason && $reason eq 'disappeared') {
 		$removed_obstacle_still_in_list{$actor->{ID}} = 1;
-		debug "[" . PLUGIN_NAME . "] Keeping obstacle $actor cached after it moved out of sight.\n", 'route', 2;
+		debug "[" . PLUGIN_NAME . "] Keeping obstacle $actor cached after it moved out of sight.\n", 'route', 2 if Log::debugEnabled('route', 2);
 	} else {
-		debug "[" . PLUGIN_NAME . "] Removing obstacle $actor from " . ($pos ? "$pos->{x} $pos->{y}" : 'unknown position') . ".\n", 'route', 2;
+		debug "[" . PLUGIN_NAME . "] Removing obstacle $actor from " . ($pos ? "$pos->{x} $pos->{y}" : 'unknown position') . ".\n", 'route', 2 if Log::debugEnabled('route', 2);
 		remove_obstacle_contributions($actor->{ID});
 		delete $obstaclesList{$actor->{ID}};
 		delete $removed_obstacle_still_in_list{$actor->{ID}};
@@ -1531,7 +1531,7 @@ sub on_AI_pre_manual_drop_route_dest_near_Obstacle {
 		my $obstacle = is_there_an_obstacle_near_pos($task->{dest}{pos}, 2);
 		next unless $obstacle;
 		if ($obstacle->{type} && $obstacle->{type} eq 'portal' && is_route_destination_portal($task)) {
-			debug "[" . PLUGIN_NAME . "] Keeping route because destination $task->{dest}{pos}{x} $task->{dest}{pos}{y} is a known portal cell.\n", 'route', 2;
+			debug "[" . PLUGIN_NAME . "] Keeping route because destination $task->{dest}{pos}{x} $task->{dest}{pos}{y} is a known portal cell.\n", 'route', 2 if Log::debugEnabled('route', 2);
 			next;
 		}
 		if ($obstacle->{type} && $obstacle->{type} eq 'portal' && $obstacle->{pos_to}) {
@@ -1569,7 +1569,7 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 		my $target = Actor::get($obstacle_ID);
 		next OBSTACLE if $target;
 
-		debug "[" . PLUGIN_NAME . "] Removing cached obstacle $obstacle->{name} ($obstacle->{type}) from $obstacle->{pos_to}{x} $obstacle->{pos_to}{y}.\n", 'route', 2;
+		debug "[" . PLUGIN_NAME . "] Removing cached obstacle $obstacle->{name} ($obstacle->{type}) from $obstacle->{pos_to}{x} $obstacle->{pos_to}{y}.\n", 'route', 2 if Log::debugEnabled('route', 2);
 		remove_obstacle_contributions($obstacle_ID);
 		delete $obstaclesList{$obstacle_ID};
 		delete $removed_obstacle_still_in_list{$obstacle_ID};
@@ -1584,7 +1584,7 @@ sub on_AI_pre_manual_removed_obstacle_still_in_list {
 ## once per AI tick so repaths stay centralized and cheap.
 sub on_AI_pre_manual_repath {
 	return unless $mustRePath;
-	debug "[" . PLUGIN_NAME . "] Requesting route repath if routing.\n";
+	debug "[" . PLUGIN_NAME . "] Requesting route repath if routing.\n" if Log::debugEnabled('console', undef);
 	Plugins::callHook('routeRepath', { source => PLUGIN_NAME });
 	$mustRePath = 0;
 }
@@ -2402,7 +2402,7 @@ sub on_actor_avoid_removal {
 		return;
 	}
 
-	debug "[" . PLUGIN_NAME . "] [on_actor_avoid_removal] $actor\n", 'route';
+	debug "[" . PLUGIN_NAME . "] [on_actor_avoid_removal] $actor\n", 'route' if Log::debugEnabled('route', undef);
 	remove_obstacle($actor, $type, 'disappeared');
 }
 

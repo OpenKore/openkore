@@ -52,7 +52,7 @@ sub new {
 	$self->{last_subcall_interruptible} = undef;
 	$self->{last_subcall_orphan} = undef;
 
-	debug "[eventMacro] Macro object '".$self->{name}."' created.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro object '".$self->{name}."' created.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 
 	if ($is_submacro) {
 		$self->{submacro} = 1;
@@ -150,14 +150,14 @@ sub interruptible {
 	if (defined $interruptible) {
 
 		if (defined $self->{interruptible} && $self->{interruptible} == $interruptible) {
-			debug "[eventMacro] Macro '".$self->{name}."' interruptible state is already '".$interruptible."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro '".$self->{name}."' interruptible state is already '".$interruptible."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		} else {
-			debug "[eventMacro] Now macro '".$self->{name}."' interruptible state is '".$interruptible."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Now macro '".$self->{name}."' interruptible state is '".$interruptible."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			$self->{interruptible} = $interruptible;
 		}
 
 		if (!defined $self->{subcall}) {
-			debug "[eventMacro] Since this macro is the last in the macro tree we will validate automacro checking to interruptible.\n", "eventMacro", 2;
+			debug "[eventMacro] Since this macro is the last in the macro tree we will validate automacro checking to interruptible.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			$self->validate_automacro_checking_to_interruptible($interruptible);
 		}
 
@@ -172,9 +172,9 @@ sub self_interruptible {
 	if (defined $self_interruptible) {
 
 		if (defined $self->{self_interruptible} && $self->{self_interruptible} == $self_interruptible) {
-			debug "[eventMacro] Macro '".$self->{name}."' self_interruptible state is already '".$self_interruptible."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro '".$self->{name}."' self_interruptible state is already '".$self_interruptible."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		} else {
-			debug "[eventMacro] Now macro '".$self->{name}."' self_interruptible state is '".$self_interruptible."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Now macro '".$self->{name}."' self_interruptible state is '".$self_interruptible."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			$self->{self_interruptible} = $self_interruptible;
 		}
 
@@ -195,21 +195,21 @@ sub validate_automacro_checking_to_interruptible {
 	}
 
 	if (($checking_status == CHECKING_AUTOMACROS && $interruptible == 1) || ($checking_status == PAUSED_BY_EXCLUSIVE_MACRO && $interruptible == 0)) {
-		debug "[eventMacro] No need to change automacro checking status because it already is compatible with this macro.\n", "eventMacro", 2;
+		debug "[eventMacro] No need to change automacro checking status because it already is compatible with this macro.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		return;
 	}
 
 	if ($checking_status != CHECKING_AUTOMACROS && $checking_status != PAUSED_BY_EXCLUSIVE_MACRO) {
-		debug "[eventMacro] Macro '".$self->{name}."' cannot change automacro checking state because the user forced it into another state.\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' cannot change automacro checking state because the user forced it into another state.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		return;
 	}
 
 	if ($interruptible == 0) {
-		debug "[eventMacro] Macro '".$self->{name}."' is now stopping automacro checking..\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' is now stopping automacro checking..\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
 
 	} elsif ($interruptible == 1) {
-		debug "[eventMacro] Macro '".$self->{name}."' is now starting automacro checking..\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' is now starting automacro checking..\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 }
@@ -221,14 +221,14 @@ sub overrideAI {
 	if (defined $overrideAI) {
 
 		if (defined $self->{overrideAI} && $self->{overrideAI} == $overrideAI) {
-			debug "[eventMacro] Macro '".$self->{name}."' overrideAI state is already '".$overrideAI."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro '".$self->{name}."' overrideAI state is already '".$overrideAI."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		} else {
-			debug "[eventMacro] Now macro '".$self->{name}."' overrideAI state is '".$overrideAI."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Now macro '".$self->{name}."' overrideAI state is '".$overrideAI."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			$self->{overrideAI} = $overrideAI;
 		}
 
 		if (!defined $self->{subcall}) {
-			debug "[eventMacro] Since this macro is the last in the macro tree we will validate AI queue to overrideAI.\n", "eventMacro", 2;
+			debug "[eventMacro] Since this macro is the last in the macro tree we will validate AI queue to overrideAI.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			$self->validate_AI_queue_to_overrideAI($overrideAI);
 		}
 
@@ -249,7 +249,7 @@ sub validate_AI_queue_to_overrideAI {
 	}
 
 	if (($is_in_AI_queue && $overrideAI == 0) || (!$is_in_AI_queue && $overrideAI == 1)) {
-		debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
+		debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		return;
 	}
 
@@ -264,7 +264,7 @@ sub validate_AI_queue_to_overrideAI {
 # Registers to AI queue
 sub register {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now registering itself to AI queue.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	if (AI::is("NPC")) {
 		splice(@AI::ai_seq, 1, 0, 'eventMacro');
 		splice(@AI::ai_seq_args, 1, 0, {});
@@ -277,7 +277,7 @@ sub register {
 # Unregisters from AI queue
 sub unregister {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' is now deleting itself from AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now deleting itself from AI queue.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	AI::clear('eventMacro');
 	$self->{registered} = 0;
 }
@@ -289,9 +289,9 @@ sub orphan {
 	if (defined $orphan) {
 
 		if (defined $self->{orphan} && $self->{orphan} eq $orphan) {
-			debug "[eventMacro] Macro '".$self->{name}."' orphan method is already '".$orphan."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro '".$self->{name}."' orphan method is already '".$orphan."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		} else {
-			debug "[eventMacro] Now macro '".$self->{name}."' orphan method is '".$orphan."'.\n", "eventMacro", 2;
+			debug "[eventMacro] Now macro '".$self->{name}."' orphan method is '".$orphan."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			$self->{orphan} = $orphan;
 		}
 
@@ -334,7 +334,7 @@ sub registered {
 sub repeat {
 	my ($self, $repeat) = @_;
 	if (defined $repeat) {
-		debug "[eventMacro] Now macro '".$self->{name}."' will repeat itself '".$repeat."' times.\n", "eventMacro", 2;
+		debug "[eventMacro] Now macro '".$self->{name}."' will repeat itself '".$repeat."' times.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$self->{repeat} = $repeat;
 	}
 	return $self->{repeat};
@@ -373,19 +373,19 @@ sub get_caller_name {
 # Deletes the subcall object
 sub clear_subcall {
 	my ($self) = @_;
-	debug "[eventMacro] Clearing submacro '".$self->{subcall}->{name}."' from macro '".$self->{name}."'.\n", "eventMacro", 2;
+	debug "[eventMacro] Clearing submacro '".$self->{subcall}->{name}."' from macro '".$self->{name}."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	$self->validate_automacro_checking_to_interruptible($self->interruptible);
 	$self->validate_AI_queue_to_overrideAI($self->overrideAI);
 	#since we do not need a validate_orphan function we do it here
 	if ($self->{subcall}->orphan ne $self->orphan) {
-		debug "[eventMacro] Returning orphan method from '".$self->{subcall}->orphan."' to '".$self->orphan."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Returning orphan method from '".$self->{subcall}->orphan."' to '".$self->orphan."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		if (!$self->{submacro}) {
 			$self->last_subcall_orphan($self->orphan);
 		} else {
 			$eventMacro->{Macro_Runner}->last_subcall_orphan($self->orphan);
 		}
 	} else {
-		debug "[eventMacro] No need to change orphan method because it already is compatible with this macro.\n", "eventMacro", 2;
+		debug "[eventMacro] No need to change orphan method because it already is compatible with this macro.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	}
 	if ($self->{submacro}) {
 		$eventMacro->{Macro_Runner}->last_subcall_name($self->get_name);
@@ -398,7 +398,7 @@ sub clear_subcall {
 # Creates a subcall object
 sub create_subcall {
 	my ($self, $name, $repeat) = @_;
-	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{name}."'.\n", "eventMacro", 2;
+	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{name}."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	$self->{subcall} = new eventMacro::Runner($name, $self->get_caller_name, $repeat, $self->interruptible, $self->self_interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 }
 
@@ -479,14 +479,14 @@ sub scanBlocks {
 # Decides what to do when we get to the end of a macro script
 sub manage_script_end {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' got to the end of its script.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' got to the end of its script.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	if ($self->{repeat} > 1) {
 		$self->{repeat}--;
 		$self->{line_index} = 0;
-		debug "[eventMacro] Repeating macro '".$self->{name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Repeating macro '".$self->{name}."'. Remaining repeats: '".$self->{repeat}."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	} else {
 		$self->{finished} = 1;
-		debug "[eventMacro] Macro '".$self->{name}."' finished.\n", "eventMacro", 2;
+		debug "[eventMacro] Macro '".$self->{name}."' finished.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	}
 }
 
@@ -598,7 +598,7 @@ sub define_next_valid_command {
 		if ($self->{current_line} =~ /^while\s*\(/) {
 			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s*{$/;
 
-			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 			my ($result) = $self->parse_and_check_condition_text($condition_text);
 			return if (defined $self->error);
@@ -619,17 +619,17 @@ sub define_next_valid_command {
 		} elsif ($self->{current_line} =~ /.+\s+if\s*\(.*\)$/) {
 			my ($condition_text) = $self->{current_line} =~ /.+\s+if\s*(\(.*\))$/;
 
-			debug "[eventMacro] Script is a command with a postfixed 'if'.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is a command with a postfixed 'if'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 			my ($result) = $self->parse_and_check_condition_text($condition_text);
 			return if (defined $self->error);
 			if ($result) {
-				debug "[eventMacro] Condition of 'if' is true, cleaning 'if' and rechecking line.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of 'if' is true, cleaning 'if' and rechecking line.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$self->{current_line} =~ s/\s+if\s*\(.*\)$//;
 				$check_need = 0;
 				next DEFINE_COMMAND;
 			} else {
-				debug "[eventMacro] Condition of 'if' is false, ignoring command.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of 'if' is false, ignoring command.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$self->next_line;
 			}
 
@@ -638,25 +638,25 @@ sub define_next_valid_command {
 		######################################
 		} elsif ($self->{current_line} =~ /^if\s*\(/) {
 
-			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 			my ($result, $post_if) = $self->parse_and_check_condition_text($self->{current_line});
 			return if (defined $self->error);
 			if ($result == 1) {
-				debug "[eventMacro] Condition of 'if' is true.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of 'if' is true.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				if ($post_if ne "{") {
-					debug "[eventMacro] Code after the 'if' is a command, cleaning 'if' and rechecking line.\n", "eventMacro", 3;
+					debug "[eventMacro] Code after the 'if' is a command, cleaning 'if' and rechecking line.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 					$self->{current_line} = $post_if;
 					$check_need = 0;
 					next DEFINE_COMMAND;
 				} else {
-					debug "[eventMacro] Entering true 'if' block.\n", "eventMacro", 3;
+					debug "[eventMacro] Entering true 'if' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				}
 
 			} else {
-				debug "[eventMacro] Condition of 'if' is false.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of 'if' is false.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				if ($post_if eq "{") {
-					debug "[eventMacro] There's a block after it to be cleaned.\n", "eventMacro", 3;
+					debug "[eventMacro] There's a block after it to be cleaned.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 					my $block_count = 1;
 					CHECK_IF: while ($block_count > 0) {
@@ -676,7 +676,7 @@ sub define_next_valid_command {
 
 						#End of an if block or start of else block
 						} elsif ($self->{current_line} =~ /^}\s*else\s*{$/ && $block_count == 1) {
-							debug "[eventMacro] Entering true 'else' block after false 'if' block.\n", "eventMacro", 3;
+							debug "[eventMacro] Entering true 'else' block after false 'if' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 							last CHECK_IF;
 
 						#End of an if block or start of else block
@@ -691,19 +691,19 @@ sub define_next_valid_command {
 							debug "[eventMacro] Script of 'elsif' block: '".$self->{current_line}."'.\n", "eventMacro", 3;
 
 							if ($result) {
-								debug "[eventMacro] Condition of 'elsif' is true, entering 'elsif' block.\n", "eventMacro", 3;
+								debug "[eventMacro] Condition of 'elsif' is true, entering 'elsif' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 								last CHECK_IF;
 							} else {
-								debug "[eventMacro] Condition of 'elsif' is false, cleaning 'elsif' block.\n", "eventMacro", 3;
+								debug "[eventMacro] Condition of 'elsif' is false, cleaning 'elsif' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 								next;
 							}
 						}
 
-						debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3;
+						debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 					}
 				} else {
-					debug "[eventMacro] Code after 'if' is a command, ignoring it and moving to next line\n", "eventMacro", 3;
+					debug "[eventMacro] Code after 'if' is a command, ignoring it and moving to next line\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				}
 			}
 			$self->next_line;
@@ -718,7 +718,7 @@ sub define_next_valid_command {
 			# the reason is because the closing parenthesis will come from $second_part on case block :D
 			my ($first_part) = $self->{current_line} =~ /^switch\s*(\(.*)\)\s*{$/;
 
-			debug "[eventMacro] Script is a 'switch' block, searching all 'case' and 'else' blocks.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is a 'switch' block, searching all 'case' and 'else' blocks.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 			SWITCH: while () {
 				$self->next_line;
@@ -730,20 +730,20 @@ sub define_next_valid_command {
 					return;
 				}
 
-				debug "[eventMacro] Script inside 'switch' block is '".$self->{current_line}."'.\n", "eventMacro", 3;
+				debug "[eventMacro] Script inside 'switch' block is '".$self->{current_line}."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 				#Else on switch
 				if ($self->{current_line} =~ /^else/) {
 					my ($after_else) = $self->{current_line} =~ /^else\s*(.*)/;
-					debug "[eventMacro] Found valid 'else' inside 'switch' block.\n", "eventMacro", 3;
+					debug "[eventMacro] Found valid 'else' inside 'switch' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 					if ($after_else ne "{") {
-						debug "[eventMacro] Code after the 'else' is a command, cleaning 'else' and rechecking line.\n", "eventMacro", 3;
+						debug "[eventMacro] Code after the 'else' is a command, cleaning 'else' and rechecking line.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 						$self->{current_line} =~ s/^else\s*//;
 						$check_need = 0;
 						next DEFINE_COMMAND;
 					} else {
-						debug "[eventMacro] Entering true 'else' block inside 'switch' block.\n", "eventMacro", 3;
+						debug "[eventMacro] Entering true 'else' block inside 'switch' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 						$self->next_line;
 						last SWITCH;
 					}
@@ -751,7 +751,7 @@ sub define_next_valid_command {
 				#Case on switch
 				} elsif ($self->{current_line} =~ /^case/) {
 
-					debug "[eventMacro] Found a 'case' block inside a 'switch' block.\n", "eventMacro", 3;
+					debug "[eventMacro] Found a 'case' block inside a 'switch' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 					# and on this part i am not getting the opening parenthsis, just the closing one
 					# example: "case (= nipodemos) {" the regex will get only "= nipodemos) {"
@@ -765,7 +765,7 @@ sub define_next_valid_command {
 					}
 
 					my $complete_condition = $first_part . $second_part ;
-					debug "[eventMacro] complete condition is: '".$complete_condition."'.\n", "eventMacro", 3;
+					debug "[eventMacro] complete condition is: '".$complete_condition."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 					my ($result, $after_case) = $self->parse_and_check_condition_text($complete_condition);
 					return if (defined $self->error);
 					unless ($after_case) {
@@ -775,22 +775,22 @@ sub define_next_valid_command {
 
 					#True case check
 					if ($result == 1) {
-						debug "[eventMacro] Condition of 'case' is true.\n", "eventMacro", 3;
+						debug "[eventMacro] Condition of 'case' is true.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 						if ($after_case ne "{") {
-							debug "[eventMacro] Code after the 'case' is a command, cleaning 'case' and rechecking line.\n", "eventMacro", 3;
+							debug "[eventMacro] Code after the 'case' is a command, cleaning 'case' and rechecking line.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 							$self->{current_line} =~ s/^case\s*\(.*\)\s*//;
 							$check_need = 0;
 							next DEFINE_COMMAND;
 						} else {
-							debug "[eventMacro] Entering true 'case' block.\n", "eventMacro", 3;
+							debug "[eventMacro] Entering true 'case' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 							$self->next_line;
 							last SWITCH;
 						}
 
 					} else {
-						debug "[eventMacro] Condition of 'case' is false.\n", "eventMacro", 3;
+						debug "[eventMacro] Condition of 'case' is false.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 						if ($after_case eq "{") {
-							debug "[eventMacro] There's a 'case' block to be cleaned.\n", "eventMacro", 3;
+							debug "[eventMacro] There's a 'case' block to be cleaned.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 							my $block_count = 1;
 							while ($block_count > 0) {
 								$self->next_line;
@@ -802,7 +802,7 @@ sub define_next_valid_command {
 									return;
 								}
 
-								debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3;
+								debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 								if (isNewCommandBlock($self->{current_line})) {
 									$block_count++;
@@ -812,12 +812,12 @@ sub define_next_valid_command {
 							}
 
 						} else {
-							debug "[eventMacro] There is a command after case, ignoring it\n", "eventMacro", 3;
+							debug "[eventMacro] There is a command after case, ignoring it\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 						}
 
 						#if after clean case block exist a '}', that means end of switch block
 						if ($self->line_script(($self->line_index + 1)) eq '}') {
-							debug "[eventMacro] End of 'switch' block\n", "eventMacro", 3;
+							debug "[eventMacro] End of 'switch' block\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 							last SWITCH;
 						}
 					}
@@ -832,7 +832,7 @@ sub define_next_valid_command {
 		######################################
 		} elsif ($self->{current_line} =~ /^}\s*else\s*{/ || $self->{current_line} =~ /^}\s*elsif.*{$/) {
 
-			debug "[eventMacro] Script is a not important condition block ('else' or 'elsif') after an 'if' block, cleaning it.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is a not important condition block ('else' or 'elsif') after an 'if' block, cleaning it.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 			my $open_blocks = 1;
 			while ($open_blocks > 0) {
@@ -846,7 +846,7 @@ sub define_next_valid_command {
 					return;
 				}
 
-				debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3;
+				debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 				if (isNewCommandBlock($self->{current_line})) {
 					$open_blocks++;
@@ -862,10 +862,10 @@ sub define_next_valid_command {
 		} elsif ($self->{current_line} =~ /^case/ || $self->{current_line} =~ /^else/) {
 			my (undef, $after_case) = $self->{current_line} =~ /^(case\s*\(.*\)|else)\s*(.*)/;
 
-			debug "[eventMacro] Script is a not important condition block ('else' or 'case') after an 'switch' block, cleaning it.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is a not important condition block ('else' or 'case') after an 'switch' block, cleaning it.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 			if ($after_case eq "{") {
-				debug "[eventMacro] There's a 'case' or 'else' block to be cleaned.\n", "eventMacro", 3;
+				debug "[eventMacro] There's a 'case' or 'else' block to be cleaned.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				my $block_count = 1;
 				while ($block_count > 0) {
 					$self->next_line;
@@ -877,7 +877,7 @@ sub define_next_valid_command {
 						return;
 					}
 
-					debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3;
+					debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 					if (isNewCommandBlock($self->{current_line})) {
 						$block_count++;
@@ -886,7 +886,7 @@ sub define_next_valid_command {
 					}
 				}
 			} else {
-				debug "[eventMacro] After 'case' or 'else' there is a command, ignoring it.\n", "eventMacro", 3;
+				debug "[eventMacro] After 'case' or 'else' there is a command, ignoring it.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 			}
 			$self->next_line;
 
@@ -894,7 +894,7 @@ sub define_next_valid_command {
 		# Macro block: begin
 		######################################
 		} elsif ($self->{current_line} eq '[') {
-			debug "[eventMacro] Script is the start of a macro block.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is the start of a macro block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 			$self->{macro_block} = 1;
 			$self->next_line;
 
@@ -902,7 +902,7 @@ sub define_next_valid_command {
 		# Macro block: end
 		######################################
 		} elsif ($self->{current_line} eq ']') {
-			debug "[eventMacro] Script is the end of a macro block.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is the end of a macro block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 			$self->{macro_block} = 0;
 			$self->next_line;
 
@@ -911,10 +911,10 @@ sub define_next_valid_command {
 		######################################
 		} elsif ($self->{current_line} eq '}') {
 			if ($self->{block}{end_to_start}{$self->line_index}{type} eq 'while') {
-				debug "[eventMacro] Script is the end of a while 'block', moving to its start.\n", "eventMacro", 3;
+				debug "[eventMacro] Script is the end of a while 'block', moving to its start.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$self->line_index($self->{block}{end_to_start}{$self->line_index}{start});
 			} else {
-				debug "[eventMacro] Script is the end of a not important block (if or switch).\n", "eventMacro", 3;
+				debug "[eventMacro] Script is the end of a not important block (if or switch).\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$self->next_line;
 			}
 
@@ -922,7 +922,7 @@ sub define_next_valid_command {
 		# Label statement
 		######################################
 		} elsif ($self->{current_line} =~ /^:/) {
-			debug "[eventMacro] Script is a label definition.\n", "eventMacro", 3;
+			debug "[eventMacro] Script is a label definition.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 			$self->next_line;
 
 		######################################
@@ -931,7 +931,7 @@ sub define_next_valid_command {
 		} elsif ($self->{current_line} =~ /^goto\s/) {
 			my ($label) = $self->{current_line} =~ /^goto\s+([a-zA-Z][a-zA-Z\d_]*)/;
 			if (exists $self->{label}->{$label}) {
-				debug "[eventMacro] Script is a goto flow command.\n", "eventMacro", 3;
+				debug "[eventMacro] Script is a goto flow command.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$self->line_index($self->{label}->{$label});
 			} else {
 				$self->error("Cannot find label '$label'");
@@ -942,7 +942,7 @@ sub define_next_valid_command {
 		# End (Should be a command)
 		######################################
 		} else {
-			debug "[eventMacro] Next valid macro command found: '".$self->{current_line}."'.\n", "eventMacro", 3;
+			debug "[eventMacro] Next valid macro command found: '".$self->{current_line}."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 			last DEFINE_COMMAND;
 		}
 	}
@@ -1707,7 +1707,7 @@ sub parse_set {
 
 sub stop_command {
 	my ($self) = @_;
-	debug "[eventMacro] Stopping macro '".$self->{name}."' because of stop command in macro script.\n", "eventMacro", 2;
+	debug "[eventMacro] Stopping macro '".$self->{name}."' because of stop command in macro script.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	$self->{finished} = 1;
 }
 

@@ -192,14 +192,14 @@ sub set_automacro_checking_status {
 	my ($self, $status) = @_;
 
 	if (!defined $self->{Automacros_Checking_Status}) {
-		debug "[eventMacro] Initializing automacro checking by default.\n", "eventMacro", 2;
+		debug "[eventMacro] Initializing automacro checking by default.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
 		$self->sync_automacro_check_hooks();
 		return;
 	} elsif ($self->{Automacros_Checking_Status} == $status) {
-		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
+		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	} else {
-		debug "[eventMacro] Changing automacro checking status from '".$self->{Automacros_Checking_Status}."' to '".$status."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Changing automacro checking status from '".$self->{Automacros_Checking_Status}."' to '".$status."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$self->{Automacros_Checking_Status} = $status;
 		$self->sync_automacro_check_hooks();
 	}
@@ -214,7 +214,7 @@ sub sync_automacro_check_hooks {
 	foreach my $cycle_stage ($self->get_cycle_stages) {
 		if ($should_have_hooks) {
 			if (!defined $self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage}) {
-				debug "[eventMacro] Adding $cycle_stage hook for automacro checking.\n", "eventMacro", 2;
+				debug "[eventMacro] Adding $cycle_stage hook for automacro checking.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 				$self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage} = Plugins::addHook(
 					$cycle_stage,
 					_weak_self_sub($self, sub {
@@ -226,7 +226,7 @@ sub sync_automacro_check_hooks {
 				);
 			}
 		} elsif (defined $self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage}) {
-			debug "[eventMacro] Deleting $cycle_stage hook for automacro checking.\n", "eventMacro", 2;
+			debug "[eventMacro] Deleting $cycle_stage hook for automacro checking.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			Plugins::delHook($self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage});
 			delete $self->{AI_cycle_stage_Automacros_Check_Hook_Handles}{$cycle_stage};
 		}
@@ -452,7 +452,7 @@ sub create_automacro_list {
 sub load_condition_module {
 	my ($self, $condition_module) = @_;
 	undef $@;
-	debug "[eventMacro] Loading module '".$condition_module."'\n", "eventMacro", 2;
+	debug "[eventMacro] Loading module '".$condition_module."'\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	eval "use $condition_module";
 	if ($@ =~ /^Can't locate /s) {
 		FileNotFoundException->throw("Cannot locate automacro module ".$condition_module.".");
@@ -477,11 +477,11 @@ sub define_automacro_check_state {
 sub create_callbacks {
 	my ($self) = @_;
 
-	debug "[eventMacro] create_callback called\n", "eventMacro", 2;
+	debug "[eventMacro] create_callback called\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 
 	AUTO: foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
 
-		debug "[eventMacro] Creating callback for automacro '".$automacro->get_name()."'\n", "eventMacro", 2;
+		debug "[eventMacro] Creating callback for automacro '".$automacro->get_name()."'\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 
 		my $automacro_index = $automacro->get_index;
 
@@ -824,14 +824,14 @@ sub set_hashes_size_to_zero {
 
 sub check_all_conditions {
 	my ($self) = @_;
-	debug "[eventMacro] Starting to check all state type conditions\n", "eventMacro", 2;
+	debug "[eventMacro] Starting to check all state type conditions\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	my @automacros = @{ $self->{Automacro_List}->getItems() };
 	foreach my $automacro (@automacros) {
-		debug "[eventMacro] Checking all state type conditions in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
+		debug "[eventMacro] Checking all state type conditions in automacro '".$automacro->get_name."'\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		my @conditions = @{ $automacro->{conditionList}->getItems() };
 		foreach my $condition (@conditions) {
 			next if ($condition->condition_type == EVENT_TYPE);
-			debug "[eventMacro] Checking condition of index '".$condition->get_index."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
+			debug "[eventMacro] Checking condition of index '".$condition->get_index."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			$automacro->check_state_type_condition($condition->get_index, 'recheck')
 		}
 		if (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro->get_index} && $automacro->can_be_added_to_queue) {
@@ -998,7 +998,7 @@ sub set_full_array {
 	my $old_last_index = $#old_array;
 	my $new_last_index = $#{$list};
 
-	debug "[eventMacro] Setting array '@".$variable_name."'\n", "eventMacro";
+	debug "[eventMacro] Setting array '@".$variable_name."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 	foreach my $member_index (0..$new_last_index) {
 		my $member_value = $list->[$member_index];
 		if ($member_value eq 'undef') {
@@ -1023,7 +1023,7 @@ sub set_full_array {
 sub clear_array {
 	my ($self, $variable_name) = @_;
 	if (exists $self->{Array_Variable_List_Hash}{$variable_name}) {
-		debug "[eventMacro] Clearing array '@".$variable_name."'\n", "eventMacro";
+		debug "[eventMacro] Clearing array '@".$variable_name."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 		my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 		delete $self->{Array_Variable_List_Hash}{$variable_name};
 		if ((exists $self->{Event_Related_Static_Variables}{accessed_array} && exists $self->{Event_Related_Static_Variables}{accessed_array}{$variable_name}) || (exists $self->{Event_Related_Dynamic_Variables}{accessed_array} && exists $self->{Event_Related_Dynamic_Variables}{accessed_array}{$variable_name})) {
@@ -1046,7 +1046,7 @@ sub push_array {
 	push(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 
-	debug "[eventMacro] 'push' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '".$index."'\n", "eventMacro";
+	debug "[eventMacro] 'push' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '".$index."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 	$self->manage_variables_callbacks('accessed_array', $variable_name, undef, $new_member, $index);
 	$self->array_size_change($variable_name, ($index - 1));
@@ -1065,7 +1065,7 @@ sub unshift_array {
 	unshift(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 
-	debug "[eventMacro] 'unshift' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '0'\n", "eventMacro";
+	debug "[eventMacro] 'unshift' was used in array '@".$variable_name."' to add list member '".$new_member."' into position '0'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 	foreach my $member_index (0..$index) {
 		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
@@ -1086,7 +1086,7 @@ sub pop_array {
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 	my $poped = pop(@{$self->{Array_Variable_List_Hash}{$variable_name}});
 
-	debug "[eventMacro] 'pop' was used in array '@".$variable_name."' to remove member '".$poped."' from position '".$index."'\n", "eventMacro";
+	debug "[eventMacro] 'pop' was used in array '@".$variable_name."' to remove member '".$poped."' from position '".$index."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 
 	$self->manage_variables_callbacks('accessed_array', $variable_name, $poped, undef, $index);
@@ -1105,7 +1105,7 @@ sub shift_array {
 	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
 	my $shifted = shift(@{$self->{Array_Variable_List_Hash}{$variable_name}});
 
-	debug "[eventMacro] 'shift' was used in array '@".$variable_name."' to remove member '".$shifted."' from position '0'\n", "eventMacro";
+	debug "[eventMacro] 'shift' was used in array '@".$variable_name."' to remove member '".$shifted."' from position '0'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 	foreach my $member_index (0..$#{$self->{Array_Variable_List_Hash}{$variable_name}}) {
 		my $member = ${$self->{Array_Variable_List_Hash}{$variable_name}}[$member_index];
@@ -1195,7 +1195,7 @@ sub set_full_hash {
 sub clear_hash {
 	my ($self, $variable_name) = @_;
 	if (exists $self->{Hash_Variable_List_Hash}{$variable_name}) {
-		debug "[eventMacro] Clearing hash '%".$variable_name."'\n", "eventMacro";
+		debug "[eventMacro] Clearing hash '%".$variable_name."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 		my %old_hash = %{$self->{Hash_Variable_List_Hash}{$variable_name}};
 		delete $self->{Hash_Variable_List_Hash}{$variable_name};
 		if ((exists $self->{Event_Related_Static_Variables}{accessed_hash} && exists $self->{Event_Related_Static_Variables}{accessed_hash}{$variable_name}) || (exists $self->{Event_Related_Dynamic_Variables}{accessed_hash} && exists $self->{Event_Related_Dynamic_Variables}{accessed_hash}{$variable_name})) {
@@ -1356,7 +1356,7 @@ sub add_to_triggered_prioritized_automacros_index_list {
 	$self->{number_of_triggered_automacros}++;
 	$automacro->running_status(1);
 
-	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in stage '".$cycle_stage."' and position '".$new_index."'.\n", "eventMacro";
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in stage '".$cycle_stage."' and position '".$new_index."'.\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 	# Return the insertion index.
 	return $new_index;
@@ -1385,7 +1385,7 @@ sub remove_from_triggered_prioritized_automacros_index_list {
 	$self->{number_of_triggered_automacros}--;
 	$automacro->running_status(0);
 
-	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue at stage '".$cycle_stage."' and position '".$queue_index."'.\n", "eventMacro";
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue at stage '".$cycle_stage."' and position '".$queue_index."'.\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 	# Return the removal index.
 	return $queue_index;
@@ -1434,7 +1434,7 @@ sub manage_event_callbacks {
 	foreach my $automacro_index (keys %{$check_list_hash}) {
 		my ($automacro, $conditions_indexes_hash, $check_event_type) = ($self->{Automacro_List}->get($automacro_index), $check_list_hash->{$automacro_index}, 0);
 
-		debug "[eventMacro] Conditions of state type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
+		debug "[eventMacro] Conditions of state type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 		my @conditions_indexes_array = keys %{ $conditions_indexes_hash };
 
@@ -1442,7 +1442,7 @@ sub manage_event_callbacks {
 			my $condition = $automacro->{conditionList}->get($condition_index);
 
 			if ($condition->condition_type == EVENT_TYPE) {
-				debug "[eventMacro] Skipping condition '".$condition->get_name."' of index '".$condition->get_index."' because it is of the event type.\n", "eventMacro", 3;
+				debug "[eventMacro] Skipping condition '".$condition->get_name."' of index '".$condition->get_index."' because it is of the event type.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$check_event_type = 1;
 				next;
 			} else {
@@ -1465,7 +1465,7 @@ sub manage_event_callbacks {
 		if ($check_event_type) {
 
 			if ($callback_type eq 'variable') {
-				debug "[eventMacro] Variable value will be updated in condition of event type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
+				debug "[eventMacro] Variable value will be updated in condition of event type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$automacro->check_event_type_condition($callback_type, $callback_name, $callback_args);
 
 			} elsif (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event) {
@@ -1493,12 +1493,12 @@ sub manage_event_callbacks {
 					}
 
 				} else {
-					debug "[eventMacro] Condition of event type was not fulfilled.\n", "eventMacro", 3;
+					debug "[eventMacro] Condition of event type was not fulfilled.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 				}
 
 			} else {
-				debug "[eventMacro] Condition of event type will not be checked in automacro '".$automacro->get_name()."' because it is not necessary.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of event type will not be checked in automacro '".$automacro->get_name()."' because it is not necessary.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 			}
 		}
@@ -1532,7 +1532,7 @@ sub manage_dynamic_hook_add_and_delete {
                         return;
                 }
 
-                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' added hook '".$hook_name."' to callbacks.\n", "eventMacro", 3;
+                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' added hook '".$hook_name."' to callbacks.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
                 $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index} = undef;
 
                 unless (exists $self->{Hook_Handles}{$hook_name} || exists $self->{Log_Hook_Handles}{$hook_name}) {
@@ -1554,7 +1554,7 @@ sub manage_dynamic_hook_add_and_delete {
                         return;
                 }
 
-                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' deleted hook '".$hook_name."' from callbacks.\n", "eventMacro", 3;
+                debug "[eventMacro] Condition '".$condition->get_name()."', of index '".$condition_index."' on automacro '".$automacro->get_name()."' deleted hook '".$hook_name."' from callbacks.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
                 delete $self->{Event_Related_Hooks}{$hook_name}{$automacro_index}{$condition_index};
 
                 unless (scalar keys %{$self->{Event_Related_Hooks}{$hook_name}{$automacro_index}}) {
@@ -1593,7 +1593,7 @@ sub should_skip_automacro_for_not_when_in_queue {
 	return 0 unless @blocked_states;
 
 	if (AI::inQueue(@blocked_states)) {
-		debug "[eventMacro] Automacro '".$automacro->get_name()."' will not run because eventMacro_notWhenInQueue matched one of these AI queue states: '".join("', '", @blocked_states)."'.\n", "eventMacro", 3;
+		debug "[eventMacro] Automacro '".$automacro->get_name()."' will not run because eventMacro_notWhenInQueue matched one of these AI queue states: '".join("', '", @blocked_states)."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 		return 1;
 	}
 
@@ -1663,7 +1663,7 @@ sub handoff_to_pending_automacros {
 	my $checking_status = $self->get_automacro_checking_status();
 	return if $checking_status != CHECKING_AUTOMACROS && $checking_status != CHECKING_FORCED_BY_USER;
 
-	debug "[eventMacro] Macro queue cleared. Checking triggered automacros for stage '".$cycle_stage."' before returning control to core AI.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro queue cleared. Checking triggered automacros for stage '".$cycle_stage."' before returning control to core AI.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	$self->AI_cycle_stage_checker($cycle_stage, AI::state());
 }
 
@@ -1759,11 +1759,11 @@ sub iterate_macro {
 
 	# These two cheks are actually not necessary, but they can prevent future code bugs.
 	if ( !defined $self->{Macro_Runner} ) {
-		debug "[eventMacro] For some reason the running macro object got undefined, clearing queue to prevent errors.\n", "eventMacro", 2;
+		debug "[eventMacro] For some reason the running macro object got undefined, clearing queue to prevent errors.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$self->clear_queue();
 		return;
 	} elsif ($self->{Macro_Runner}->finished) {
-		debug "[eventMacro] For some reason macro '".$self->{Macro_Runner}->get_name()."' finished but 'processCmd' did not clear it, clearing queue to prevent errors.\n", "eventMacro", 2;
+		debug "[eventMacro] For some reason macro '".$self->{Macro_Runner}->get_name()."' finished but 'processCmd' did not clear it, clearing queue to prevent errors.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$self->clear_queue();
 		return;
 	}
@@ -1863,7 +1863,7 @@ sub processCmd {
 			$self->clear_queue();
 
 		} elsif (!defined $self->{Macro_Runner}) {
-			debug "[eventMacro] Macro runner object got undefined during a command.\n", "eventMacro", 2;
+			debug "[eventMacro] Macro runner object got undefined during a command.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 			return;
 
 		} else {
@@ -1893,9 +1893,9 @@ sub clear_queue {
 		message "[eventMacro] Undefined macro ended.\n", "system";
 	}
 	
-	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
+	debug "[eventMacro] Clearing queue\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
-		debug "[eventMacro] Uninterruptible macro '".$self->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
+		debug "[eventMacro] Uninterruptible macro '".$self->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		$self->set_automacro_checking_status(CHECKING_AUTOMACROS);
 	}
 	$self->{Macro_Runner} = undef;
