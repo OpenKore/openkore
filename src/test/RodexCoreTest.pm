@@ -19,8 +19,8 @@ sub start {
 sub test_daily_status {
     my $receiver = Network::Receive->create(undef, '0');
     my $id = pack('V', 12345);
-    local $Globals::accountID = $id;
-    local $Globals::char = bless {ID => $id}, 'Actor::You';
+    local $Network::Receive::accountID = $id;
+    local $Network::Receive::char = bless {ID => $id}, 'Actor::You';
     no warnings 'redefine';
     local *Network::Receive::changeToInGameState = sub { 1 };
     local *Network::Receive::error = sub {};
@@ -38,28 +38,28 @@ sub test_daily_status {
         my ($switch, $raw, $count) = @$case;
         my $args = $receiver->parse($raw, $receiver);
         is($args->{unknown2}, $count, "$switch extracts second status value");
-        is($Globals::char->{rodex}{dailySentCount}, $count,
+        is($Network::Receive::char->{rodex}{dailySentCount}, $count,
             "$switch stores daily sent count on character");
-        ok($Globals::char->{rodex}{dailyCountObservedAt}, "$switch stores observation time");
+        ok($Network::Receive::char->{rodex}{dailyCountObservedAt}, "$switch stores observation time");
     }
 
     $receiver->rodex_write_result({fail => 2});
-    ok($Globals::char->{rodex}{dailyQuotaExceeded}, 'quota rejection recorded in core');
-    ok($Globals::char->{rodex}{dailyQuotaRejectedAt}, 'quota rejection timestamp recorded');
+    ok($Network::Receive::char->{rodex}{dailyQuotaExceeded}, 'quota rejection recorded in core');
+    ok($Network::Receive::char->{rodex}{dailyQuotaRejectedAt}, 'quota rejection timestamp recorded');
     $receiver->actor_status_active({type => 824, ID => $id, flag => 1, unknown2 => 3});
-    is($Globals::char->{rodex}{dailySentCount}, 3, 'new server counter accepted');
-    ok(!$Globals::char->{rodex}{dailyQuotaExceeded}, 'lower counter clears quota rejection');
+    is($Network::Receive::char->{rodex}{dailySentCount}, 3, 'new server counter accepted');
+    ok(!$Network::Receive::char->{rodex}{dailyQuotaExceeded}, 'lower counter clears quota rejection');
 
     $receiver->actor_status_active({type => 824, ID => pack('V', 54321), flag => 1, unknown2 => 99});
-    is($Globals::char->{rodex}{dailySentCount}, 3, 'other actors do not modify character quota');
+    is($Network::Receive::char->{rodex}{dailySentCount}, 3, 'other actors do not modify character quota');
     $receiver->actor_status_active({type => 824, ID => $id, flag => 1});
-    is($Globals::char->{rodex}{dailySentCount}, 3, 'status variants with no counter do not overwrite it');
+    is($Network::Receive::char->{rodex}{dailySentCount}, 3, 'status variants with no counter do not overwrite it');
     $receiver->actor_status_active({type => 824, ID => $id, flag => 0});
-    ok(!exists $Globals::char->{rodex}{dailySentCount}, 'status removal invalidates counter');
+    ok(!exists $Network::Receive::char->{rodex}{dailySentCount}, 'status removal invalidates counter');
 
     $receiver->rodex_write_result({fail => 2});
     $receiver->rodex_write_result({fail => 0});
-    ok(!$Globals::char->{rodex}{dailyQuotaExceeded}, 'successful send clears quota rejection');
+    ok(!$Network::Receive::char->{rodex}{dailyQuotaExceeded}, 'successful send clears quota rejection');
 }
 
 sub test_modern_rodex_packets {
@@ -82,7 +82,7 @@ sub test_modern_rodex_packets {
 
         my $read = $receiver->{packet_list}{'0B63'};
         is($read->[0], 'rodex_read_mail', "$type modern read ACK registered");
-        local $Globals::rodexList = {mails => {17 => {sender => 'banker', title => 'supply'}}};
+        local $Network::Receive::rodexList = {mails => {17 => {sender => 'banker', title => 'supply'}}};
         my $body = "supplies\0";
         my $item = pack('v V C2 a16 V C v2 a25 C2',
             6, 70000, 1, 0, 'c' x 16, 256, 3, 42, 2, 'o' x 25, 7, 2);
@@ -92,7 +92,7 @@ sub test_modern_rodex_packets {
         my %read_args = (switch => '0B63', RAW_MSG => $raw, RAW_MSG_SIZE => length($raw));
         @read_args{@{$read->[2]}} = unpack('x2 ' . $read->[1], $raw);
         $receiver->rodex_read_mail(\%read_args);
-        is_deeply([@{$Globals::rodexList->{mails}{17}{items}[0]}{qw(amount nameID upgrade grade)}],
+        is_deeply([@{$Network::Receive::rodexList->{mails}{17}{items}[0]}{qw(amount nameID upgrade grade)}],
             [6, 70000, 7, 2], "$type parses modern mail attachment");
 
         my $sender = Network::Send->create(undef, $type);
