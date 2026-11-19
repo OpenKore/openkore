@@ -131,7 +131,7 @@ sub create {
 	my ($mode, $type, $param) = Settings::parseServerType ($serverType);
 	my $class = join '::', $base, $type, (($param) || ()); #param like Thor in bRO_Thor
 
-	debug "[$base] $class ". " (mode: " . ($mode ? "new" : "old") .")\n";
+	debug "[$base] $class ". " (mode: " . ($mode ? "new" : "old") .")\n" if Log::debugEnabled('console', undef);
 
 	undef $@;
 	eval("use $class;");
@@ -260,7 +260,7 @@ sub parse {
 	# 	}
 	# }
 
-	debug "Received packet: $lastSwitch Handler: $handler->[0]\n", "packetParser", 2;
+	debug "Received packet: $lastSwitch Handler: $handler->[0]\n", "packetParser", 2 if Log::debugEnabled("packetParser", 2);
 
 	# RAW_MSG is the entire message, including packet switch
 	my %args = (
@@ -501,12 +501,12 @@ sub parse_pre {
 		#my $label = $packetDescriptions{$desc_key}{$switch} ? " - $packetDescriptions{$desc_key}{$switch}" : '';
 		my $label = $rpackets{$switch}{function}?" - ".$rpackets{$switch}{function}:($packetDescriptions{$desc_key}{$switch} ? " - $packetDescriptions{$desc_key}{$switch}" : '');
 		if ($config{'debugPacket_'.$config_suffix} == 1) {
-			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0;
+			debug sprintf("%-24s %-4s%s [%2d bytes]%s\n", $title, $switch, $label, length($msg)), 'parseMsg', 0 if Log::debugEnabled('parseMsg', 0);
 		} elsif ($config{'debugPacket_'.$config_suffix} == 2) {
 			Misc::visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
 		}
 		if ($config{debugPacket_include_dumpMethod} == 1) {
-			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0;
+			debug sprintf("%-24s %-4s%s\n", $title, $switch, $label), "parseMsg", 0 if Log::debugEnabled("parseMsg", 0);
 		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
 			Misc::visualDump($msg, sprintf('%-24s %-4s%s', $title, $switch, $label));
 		} elsif ($config{debugPacket_include_dumpMethod} == 3) {

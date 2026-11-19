@@ -512,11 +512,11 @@ sub find_kite_position {
 	my $pos = meetingPosition($char, 1, $target, $maxDistance, ($noAttackMethodFallback_runFromTarget ? 2 : 1));
 	if ($pos) {
 		if ($inAdvance) {
-			debug TF("[runFromTarget_inAdvance] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget_inAdvance] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		} elsif ($noAttackMethodFallback_runFromTarget) {
-			debug TF("[runFromTarget_noAttackMethodFallback] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget_noAttackMethodFallback] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		} else {
-			debug TF("[runFromTarget] (attackmaxDistance %s) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $maxDistance, $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget] (attackmaxDistance %s) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $maxDistance, $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		}
 		$args->{avoiding} = 1;
 		$char->route(
@@ -532,11 +532,11 @@ sub find_kite_position {
 
 	} else {
 		if ($inAdvance) {
-			debug TF("[runFromTarget_inAdvance] %s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget_inAdvance] %s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		} elsif ($noAttackMethodFallback_runFromTarget) {
-			debug TF("[runFromTarget_noAttackMethodFallback] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget_noAttackMethodFallback] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		} else {
-			debug TF("[runFromTarget] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		}
 		return 0;
 	}
@@ -702,7 +702,7 @@ sub main {
 
 	my $combo_state = $char->{combo_state};
 	if ($combo_state && (!defined $combo_state->{expires_at} || time >= $combo_state->{expires_at})) {
-		debug TF("[Attack] [Combo] %s, target %s, combo %d expired at pass 1 (%s).\n", $char, , $target, $char->{combo_state}{source_skill}, $combo_state->{expires_at}), 'ai_attack';
+		debug TF("[Attack] [Combo] %s, target %s, combo %d expired at pass 1 (%s).\n", $char, , $target, $char->{combo_state}{source_skill}, $combo_state->{expires_at}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		delete $char->{combo_state};
 		$combo_state = undef;
 	}
@@ -729,7 +729,7 @@ sub main {
 		next unless (checkMonsterCondition("attackComboSlot_${i}_target", $target));
 
 		$args->{attackComboSlot_uses}{$i}++;
-		debug TF("[Attack] [Combo] %s, target %s, last_skill_used %s expired at combo check (%s).\n", $char, , $target, $char->{last_skill_used}, $config{"attackComboSlot_$i"}), 'ai_attack';
+		debug TF("[Attack] [Combo] %s, target %s, last_skill_used %s expired at combo check (%s).\n", $char, , $target, $char->{last_skill_used}, $config{"attackComboSlot_$i"}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		delete $char->{last_skill_used};
 		if ($config{"attackComboSlot_${i}_autoCombo"}) {
 			my $remaining_combo_delay = defined $combo_state->{expires_at}
@@ -741,7 +741,7 @@ sub main {
 			# the packet arrived instead of re-waiting the full delay later.
 			$combo_wait_before_use = $remaining_combo_delay > 0 ? $remaining_combo_delay : 0;
 		}
-		debug TF("[Attack] [Combo] %s, target %s, combo %d expired at pass 2 (%s) in combo check.\n", $char, , $target, $char->{combo_state}{source_skill}, $config{"attackComboSlot_$i"}), 'ai_attack';
+		debug TF("[Attack] [Combo] %s, target %s, combo %d expired at pass 2 (%s) in combo check.\n", $char, , $target, $char->{combo_state}{source_skill}, $config{"attackComboSlot_$i"}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		delete $char->{combo_state};
 		$args->{attackMethod}{type} = "combo";
 		$args->{attackMethod}{comboSlot} = $i;
@@ -884,18 +884,18 @@ sub main {
 		}
 
 		if ($realMyPos->{x} == $myPosTo->{x} && $realMyPos->{y} == $myPosTo->{y}) {
-			debug TF("[Ended Approaching] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			debug TF("[Ended Approaching] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 			$args->{sentApproach} = 0;
 			clear_approach_failure($args);
 
 		} elsif ($config{"attackWaitApproachFinish"}) {
-			debug TF("[attackWaitApproachFinish - Waiting] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			debug TF("[attackWaitApproachFinish - Waiting] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 			Benchmark::end("ai_attack (part 2.1)") if DEBUG;
 			Benchmark::end("ai_attack (part 2)") if DEBUG;
 			return;
 
 		} elsif ($canAttack == 2) {
-			debug TF("[Approaching - Can now attack] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			debug TF("[Approaching - Can now attack] %s (%d %d), target %s (%d %d), blockDist %d, clientDist %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $clientDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 			$args->{sentApproach} = 0;
 			clear_approach_failure($args);
 		}
@@ -953,14 +953,14 @@ sub main {
 	}
 	
 	if (!$args->{firstLoop} && $canAttack == 0 && $youHitTarget) {
-		debug TF("[%s] We were able to hit target even though it is out of range, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+		debug TF("[%s] We were able to hit target even though it is out of range, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
-			debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $canAttack_fail_string), 'ai_attack';
+			debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $canAttack_fail_string), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 			$args->{temporary_extra_range} = 1;
 			$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
 			$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight}, $target);
 		} else {
-			debug TF("[%s] Reason unknown, allowing once.\n", $canAttack_fail_string), 'ai_attack';
+			debug TF("[%s] Reason unknown, allowing once.\n", $canAttack_fail_string), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 			$hitTarget_when_not_possible = 1;
 		}
 		if (
@@ -990,7 +990,7 @@ sub main {
 			giveUp($args, $ID, 0);
 		} else {
 			$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7) if ($config{"attackBeyondMaxDistance_sendAttackWhileWaiting"});
-			debug TF("[%s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			debug TF("[%s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack' if Log::debugEnabled('ai_attack', 1);
 		}
 		$found_action = 1;
 	}

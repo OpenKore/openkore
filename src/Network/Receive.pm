@@ -1789,51 +1789,51 @@ sub stats_added {
 	} else {
 		if ($args->{type} == VAR_STR) {
 			$char->{str} = $args->{val};
-			debug "Strength: $args->{val}\n", "parseMsg";
+			debug "Strength: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_AGI) {
 			$char->{agi} = $args->{val};
-			debug "Agility: $args->{val}\n", "parseMsg";
+			debug "Agility: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_VIT) {
 			$char->{vit} = $args->{val};
-			debug "Vitality: $args->{val}\n", "parseMsg";
+			debug "Vitality: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_INT) {
 			$char->{int} = $args->{val};
-			debug "Intelligence: $args->{val}\n", "parseMsg";
+			debug "Intelligence: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_DEX) {
 			$char->{dex} = $args->{val};
-			debug "Dexterity: $args->{val}\n", "parseMsg";
+			debug "Dexterity: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_LUK) {
 			$char->{luk} = $args->{val};
-			debug "Luck: $args->{val}\n", "parseMsg";
+			debug "Luck: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_SP_POW) {
 			$char->{pow} = $args->{val};
-			debug "Power: $args->{val}\n", "parseMsg";
+			debug "Power: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_SP_STA) {
 			$char->{sta} = $args->{val};
-			debug "Stamina: $args->{val}\n", "parseMsg";
+			debug "Stamina: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_SP_WIS) {
 			$char->{wis} = $args->{val};
-			debug "Wisdom: $args->{val}\n", "parseMsg";
+			debug "Wisdom: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_SP_SPL) {
 			$char->{spl} = $args->{val};
-			debug "Spell: $args->{val}\n", "parseMsg";
+			debug "Spell: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_SP_CON) {
 			$char->{con} = $args->{val};
-			debug "Concentration: $args->{val}\n", "parseMsg";
+			debug "Concentration: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} elsif ($args->{type} == VAR_SP_CRT) {
 			$char->{crt} = $args->{val};
-			debug "Creative: $args->{val}\n", "parseMsg";
+			debug "Creative: $args->{val}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 
 		} else {
 			error "$args->{type}: $args->{val}\n", "parseMsg";
@@ -1906,27 +1906,27 @@ sub stat_info2 {
 	if ($type == VAR_STR) {
 		$char->{str} = $val;
 		$char->{str_bonus} = $val2;
-		debug "Strength: $val + $val2\n", "parseMsg";
+		debug "Strength: $val + $val2\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	} elsif ($type == VAR_AGI) {
 		$char->{agi} = $val;
 		$char->{agi_bonus} = $val2;
-		debug "Agility: $val + $val2\n", "parseMsg";
+		debug "Agility: $val + $val2\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	} elsif ($type == VAR_VIT) {
 		$char->{vit} = $val;
 		$char->{vit_bonus} = $val2;
-		debug "Vitality: $val + $val2\n", "parseMsg";
+		debug "Vitality: $val + $val2\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	} elsif ($type == VAR_INT) {
 		$char->{int} = $val;
 		$char->{int_bonus} = $val2;
-		debug "Intelligence: $val + $val2\n", "parseMsg";
+		debug "Intelligence: $val + $val2\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	} elsif ($type == VAR_DEX) {
 		$char->{dex} = $val;
 		$char->{dex_bonus} = $val2;
-		debug "Dexterity: $val + $val2\n", "parseMsg";
+		debug "Dexterity: $val + $val2\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	} elsif ($type == VAR_LUK) {
 		$char->{luk} = $val;
 		$char->{luk_bonus} = $val2;
-		debug "Luck: $val + $val2\n", "parseMsg";
+		debug "Luck: $val + $val2\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	} elsif ($type >= VAR_SP_POW && $type <= VAR_SP_CRT) {
 		my $stat = (qw(pow sta wis spl con crt))[$type - VAR_SP_POW];
 		$char->{$stat} = $val;
@@ -2373,23 +2373,23 @@ typedef enum <unnamed-tag> {
 			Plugins::callHook('portal_exist', {portal => $actor});
 
 		} elsif ($actor->isa('Actor::Monster')) {
-			debug sprintf("Monster Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Monster Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1 if Log::debugEnabled("parseMsg_presence", 1);
 			Plugins::callHook('monster_exist', {monster => $actor});
 
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug sprintf("Pet Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Pet Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1 if Log::debugEnabled("parseMsg_presence", 1);
 			Plugins::callHook('pet_exist', {pet => $actor});
 
 		} elsif ($actor->isa('Actor::Slave')) {
-			debug sprintf("Slave Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Slave Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1 if Log::debugEnabled("parseMsg_presence", 1);
 			Plugins::callHook('slave_exist', {slave => $actor});
 
 		} elsif ($actor->isa('Actor::Elemental')) {
-			debug sprintf("Elemental Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Elemental Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1 if Log::debugEnabled("parseMsg_presence", 1);
 			Plugins::callHook('elemental_exist', {elemental => $actor});
 
 		} else {
-			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1 if Log::debugEnabled("parseMsg_presence", 1);
 			Plugins::callHook('unknown_exist', {unknown => $actor});
 		}
 
@@ -2415,7 +2415,7 @@ typedef enum <unnamed-tag> {
 
 			Plugins::callHook('player_connected', {player => $actor});
 		} else {
-			debug "Unknown Connected: $args->{type} - \n", "parseMsg";
+			debug "Unknown Connected: $args->{type} - \n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('unknown_connected', {unknown => $actor});
 		}
 
@@ -2441,59 +2441,59 @@ typedef enum <unnamed-tag> {
 		$actor->{look}{head} = 0;
 
 		if ($actor->isa('Actor::Player')) {
-			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('player_moved', $actor);
 		} elsif ($actor->isa('Actor::Monster')) {
-			debug "Monster Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Monster Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('monster_moved', $actor);
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug "Pet Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Pet Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('pet_moved', $actor);
 		} elsif ($actor->isa('Actor::Slave')) {
-			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('slave_moved', $actor);
 		} elsif ($actor->isa('Actor::Portal')) {
 			# This can never happen of course.
-			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('portal_moved', $actor);
 		} elsif ($actor->isa('Actor::NPC')) {
 			# Neither can this.
-			debug "NPC Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "NPC Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('npc_moved', $actor);
 		} elsif ($actor->isa('Actor::Elemental')) {
-			debug "Elemental Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Elemental Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('pet_moved', $actor);
 		} else {
-			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('unknown_moved', $actor);
 		}
 
 	} elsif ($args->{switch} eq "007C") {
 		# Actor Spawned
 		if ($actor->isa('Actor::Player')) {
-			debug "Player Spawned: " . $actor->nameIdx . " $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+			debug "Player Spawned: " . $actor->nameIdx . " $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('player_spawned', {player => $actor});
 		} elsif ($actor->isa('Actor::Monster')) {
-			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('monster_spawned', {monster => $actor});
 		} elsif ($actor->isa('Actor::Pet')) {
-			debug "Pet Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "Pet Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('pet_spawned', {pet => $actor});
 		} elsif ($actor->isa('Actor::Slave')) {
-			debug "Slave Spawned: " . $actor->nameIdx . " $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+			debug "Slave Spawned: " . $actor->nameIdx . " $jobs_lut{$actor->{jobID}}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('slave_spawned', {slave => $actor});
 		} elsif ($actor->isa('Actor::Portal')) {
 			# Can this happen?
-			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('portal_spawned', {portal => $actor});
 		} elsif ($actor->isa('Actor::Elemental')) {
-			debug "Elemental Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "Elemental Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('elemental_spawned', {elemental => $actor});
 		} elsif ($actor->isa('NPC')) {
-			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('npc_spawned', {npc => $actor});
 		} else {
-			debug "Unknown Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			debug "Unknown Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 			Plugins::callHook('unknown_spawned', {unknown => $actor});
 		}
 	}
@@ -2531,11 +2531,11 @@ sub actor_died_or_disappeared {
 	} elsif (defined $monstersList->getByID($ID)) {
 		my $monster = $monstersList->getByID($ID);
 		if ($args->{type} == 0) {
-			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$monster->{disappeared} = 1;
 
 		} elsif ($args->{type} == 1) {
-			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage";
+			debug "Monster Died: " . $monster->name . " ($monster->{binID})\n", "parseMsg_damage" if Log::debugEnabled("parseMsg_damage", undef);
 			$monster->{dead} = 1;
 			countMonsterKill($monster) if $monster->{lastDamageFromSelfOrSlave};
 			$self->{_last_killed_monster_nameID} = $monster->{nameID};
@@ -2551,11 +2551,11 @@ sub actor_died_or_disappeared {
 			}
 
 		} elsif ($args->{type} == 2) { # What's this?
-			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$monster->{disappeared} = 1;
 
 		} elsif ($args->{type} == 3) {
-			debug "Monster Teleported: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Teleported: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$monster->{teleported} = 1;
 		}
 
@@ -2572,16 +2572,16 @@ sub actor_died_or_disappeared {
 			$player->{dead_time} = time;
 		} else {
 			if ($args->{type} == 0) {
-				debug "Player Disappeared: " . $player->name . " ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Player Disappeared: " . $player->name . " ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$player->{disappeared} = 1;
 			} elsif ($args->{type} == 2) {
-				debug "Player Disconnected: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Player Disconnected: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$player->{disconnected} = 1;
 			} elsif ($args->{type} == 3) {
-				debug "Player Teleported: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Player Teleported: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}} ($player->{pos_to}{x}, $player->{pos_to}{y})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$player->{teleported} = 1;
 			} else {
-				debug "Player Disappeared in an unknown way: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence";
+				debug "Player Disappeared in an unknown way: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$player->{disappeared} = 1;
 			}
 
@@ -2604,16 +2604,16 @@ sub actor_died_or_disappeared {
 
 	} elsif ($players_old{$ID}) {
 		if ($args->{type} == 2) {
-			debug "Player Disconnected: " . $players_old{$ID}->name . "\n", "parseMsg_presence";
+			debug "Player Disconnected: " . $players_old{$ID}->name . "\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$players_old{$ID}{disconnected} = 1;
 		} elsif ($args->{type} == 3) {
-			debug "Player Teleported: " . $players_old{$ID}->name . "\n", "parseMsg_presence";
+			debug "Player Teleported: " . $players_old{$ID}->name . "\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$players_old{$ID}{teleported} = 1;
 		}
 
 	} elsif (defined $portalsList->getByID($ID)) {
 		my $portal = $portalsList->getByID($ID);
-		debug "Portal Disappeared: " . $portal->name . " ($portal->{binID})\n", "parseMsg";
+		debug "Portal Disappeared: " . $portal->name . " ($portal->{binID})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 		$portal->{disappeared} = 1;
 		$portal->{gone_time} = time;
 		$portals_old{$ID} = $portal->deepCopy();
@@ -2622,7 +2622,7 @@ sub actor_died_or_disappeared {
 
 	} elsif (defined $npcsList->getByID($ID)) {
 		my $npc = $npcsList->getByID($ID);
-		debug "NPC Disappeared: " . $npc->name . " ($npc->{nameID})\n", "parseMsg";
+		debug "NPC Disappeared: " . $npc->name . " ($npc->{nameID})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 		$npc->{disappeared} = 1;
 		$npc->{gone_time} = time;
 		$npcs_old{$ID} = $npc->deepCopy();
@@ -2631,7 +2631,7 @@ sub actor_died_or_disappeared {
 
 	} elsif (defined $petsList->getByID($ID)) {
 		my $pet = $petsList->getByID($ID);
-		debug "Pet Disappeared: " . $pet->name . " ($pet->{binID})\n", "parseMsg";
+		debug "Pet Disappeared: " . $pet->name . " ($pet->{binID})\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 		$pet->{disappeared} = 1;
 		$pet->{gone_time} = time;
 		Plugins::callHook('pet_disappeared', {pet => $pet});
@@ -2652,16 +2652,16 @@ sub actor_died_or_disappeared {
 			}
 		} else {
 			if ($args->{type} == 0) {
-				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$slave->{disappeared} = 1;
 			} elsif ($args->{type} == 2) {
-				debug "Slave Disconnected: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Slave Disconnected: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$slave->{disconnected} = 1;
 			} elsif ($args->{type} == 3) {
-				debug "Slave Teleported: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
+				debug "Slave Teleported: ".$slave->name." ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$slave->{teleported} = 1;
 			} else {
-				debug "Slave Disappeared in an unknown way: ".$slave->name." ($slave->{binID}) $slave->{actorType}\n", "parseMsg_presence";
+				debug "Slave Disappeared in an unknown way: ".$slave->name." ($slave->{binID}) $slave->{actorType}\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 				$slave->{disappeared} = 1;
 			}
 
@@ -2677,7 +2677,7 @@ sub actor_died_or_disappeared {
 			message "Elemental Disappeared: " .$elemental->{name}. " ($elemental->{binID}) $elemental->{actorType} ($elemental->{pos_to}{x}, $elemental->{pos_to}{y})\n", "parseMsg_presence";
 			$elemental->{disappeared} = 1;
 		} else {
-			debug "Elemental Disappeared in an unknown way: ".$elemental->{name}." ($elemental->{binID}) $elemental->{actorType}\n", "parseMsg_presence";
+			debug "Elemental Disappeared in an unknown way: ".$elemental->{name}." ($elemental->{binID}) $elemental->{actorType}\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$elemental->{disappeared} = 1;
 		}
 
@@ -2691,7 +2691,7 @@ sub actor_died_or_disappeared {
 		$elementalsList->remove($elemental);
 
 	} else {
-		debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg";
+		debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	}
 }
 
@@ -2705,7 +2705,7 @@ sub actor_action {
 		my $source = Actor::get($args->{sourceID});
 		my $verb = $source->verb('pick up', 'picks up');
 		my $target = getActorName($args->{targetID});
-		debug "$source $verb $target\n", 'parseMsg_presence';
+		debug "$source $verb $target\n", 'parseMsg_presence' if Log::debugEnabled('parseMsg_presence', undef);
 
 		my $item = $itemsList->getByID($args->{targetID});
 		$item->{takenBy} = $args->{sourceID} if ($item);
@@ -2828,7 +2828,7 @@ sub actor_action {
 			message("$status $msg");
 
 		} else {
-			debug("$msg", 'parseMsg_damage');
+			debug("$msg", 'parseMsg_damage') if Log::debugEnabled('parseMsg_damage', undef);
 		}
 
 		Misc::checkValidity("actor_action (attack 6)");
@@ -2840,7 +2840,7 @@ sub actor_info {
 	return unless changeToInGameState();
 	my $name = bytesToString($args->{name});
 	$name =~ s/^\s+|\s+$//g;
-	debug "Received object info: $name\n", "parseMsg_presence/name", 2;
+	debug "Received object info: $name\n", "parseMsg_presence/name", 2 if Log::debugEnabled("parseMsg_presence/name", 2);
 	my $player = $playersList->getByID($args->{ID});
 	if ($player) {
 		# 0095: This packet tells us the names of players who aren't in a guild.
@@ -2863,7 +2863,7 @@ sub actor_info {
 
 	my $monster = $monstersList->getByID($args->{ID});
 	if ($monster) {
-		debug "Monster Info: $name ($monster->{binID})\n", "parseMsg", 2;
+		debug "Monster Info: $name ($monster->{binID})\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 		$monster->{name_given} = $name;
 		$monster->{info} = 1;
 		if ($monsters_lut{$monster->{nameID}} eq "") {
@@ -2880,7 +2880,7 @@ sub actor_info {
 		$npc->{info} = 1;
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@npcsID, $args->{ID});
-			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
+			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 		}
 
 		my $location = $field ? $field->baseName . " $npc->{pos}{x} $npc->{pos}{y}" : '';
@@ -2898,7 +2898,7 @@ sub actor_info {
 		$pet->{info} = 1;
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@petsID, $args->{ID});
-			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
+			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 		}
 		Plugins::callHook('petNameUpdate', {pet => $pet});
 	}
@@ -2909,7 +2909,7 @@ sub actor_info {
 		$slave->setName($name);
 		$slave->{info} = 1;
 		my $binID = binFind(\@slavesID, $args->{ID});
-		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2;
+		debug "Slave Info: $name ($binID)\n", "parseMsg_presence", 2 if Log::debugEnabled("parseMsg_presence", 2);
 		updatePlayerNameCache($slave);
 		Plugins::callHook('slaveNameUpdate', {slave => $slave});
 	}
@@ -2921,7 +2921,7 @@ sub actor_info {
 		$elemental->{info} = 1;
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@elementalsID, $args->{ID});
-			debug "elemental Info: $elemental->{name_given} ($binID)\n", "parseMsg", 2;
+			debug "elemental Info: $elemental->{name_given} ($binID)\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 		}
 		Plugins::callHook('elementalNameUpdate', {elemental => $elemental});
 	}
@@ -3260,7 +3260,7 @@ sub npc_image {
 	if ($args->{type} == 2) {
 		message TF("NPC image: %s\n", $args->{npc_image}), 'npc';
 	} elsif ($args->{type} == 255) {
-		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg";
+		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	} else {
 		message TF("NPC image: %s (unknown type %s)\n", $args->{npc_image}, $args->{type}), 'npc';
 	}
@@ -3518,7 +3518,7 @@ sub show_script {
 	my $message = bytesToString($args->{message});
 	if (defined $npcsList->getByID($ID)) {
 		my $npc = $npcsList->getByID($ID);
-		debug $npc->name . " ($npc->{nameID}): $message\n", 'parseMsg';
+		debug $npc->name . " ($npc->{nameID}): $message\n", 'parseMsg' if Log::debugEnabled('parseMsg', undef);
 		Plugins::callHook('show_script', {
 			ID => $ID,
 			message => $message
@@ -4221,7 +4221,7 @@ sub monster_hp_info {
 		$monster->{hp_percent} = $monster->{hp} * 100 / $monster->{hp_max};
 		$monster->{hp_lastUpdateTime} = time;
 
-		debug TF("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage";
+		debug TF("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage" if Log::debugEnabled("parseMsg_damage", undef);
 	}
 }
 
@@ -4233,7 +4233,7 @@ sub monster_hp_info_tiny {
 	if ($monster) {
 		$monster->{hp_percent} = $args->{hp} * 5;
 
-		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
+		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage" if Log::debugEnabled("parseMsg_damage", undef);
 	}
 }
 
@@ -5544,7 +5544,7 @@ sub cart_item_removed {
 sub cart_info {
 	my ($self, $args) = @_;
 	$char->cart->info($args);
-	debug "[cart_info] received.\n", "parseMsg";
+	debug "[cart_info] received.\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 }
 
 sub cart_add_failed {
@@ -5861,7 +5861,7 @@ sub character_moves {
 	return unless changeToInGameState();
 	makeCoordsFromTo($char->{pos}, $char->{pos_to}, $args->{coords});
 	my $dist = blockDistance($char->{pos}, $char->{pos_to});
-	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
+	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move" if Log::debugEnabled("parseMsg_move", undef);
 
 	$char->{time_move} = time;
 	$char->{time_move_calc} = 0;
@@ -5934,7 +5934,7 @@ sub whisper_list {
 
 	my @whisperList = unpack 'x4' . (' Z24' x (($args->{RAW_MSG_SIZE}-4)/24)), $args->{RAW_MSG};
 
-	debug "whisper_list: @whisperList\n", "parseMsg";
+	debug "whisper_list: @whisperList\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 }
 
 # Inform client whether chatroom creation was successful or not (ZC_ACK_CREATE_CHATROOM).
@@ -7509,7 +7509,7 @@ sub item_disappeared {
 			}
 		}
 
-		debug "Item Disappeared: $item->{name} ($item->{binID})\n", "parseMsg_presence";
+		debug "Item Disappeared: $item->{name} ($item->{binID})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 		my $ID = $args->{ID};
 		$items_old{$ID}              = $item->deepCopy();
 		$items_old{$ID}{disappeared} = 1;
@@ -8040,7 +8040,7 @@ sub npc_store_info {
 			price  => int($item->{price}),
 		};
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	}
 
 	update_npc_shop_cache($npc_id, \@shop_items);
@@ -8089,7 +8089,7 @@ sub npc_sell_list {
 sub npc_clear_dialog {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
-	debug "The dialogue with the NPC " .getHex($ID) ." was closed.\n", "parseMsg";
+	debug "The dialogue with the NPC " .getHex($ID) ." was closed.\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 }
 
 # Notification about the result of a purchase attempt from an NPC shop (ZC_PC_PURCHASE_RESULT).
@@ -8232,7 +8232,7 @@ sub npc_market_info {
 
 		$storeList->add($item);
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	}
 
 	return if !$storeList->size;
@@ -8261,7 +8261,7 @@ sub npc_market_info {
 sub npc_market_purchase_result {
 	my ($self, $args) = @_;
 
-	debug "Npc market purchase result: " .$args->{result}. "\n", "parseMsg", 2;
+	debug "Npc market purchase result: " .$args->{result}. "\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	if ( $args->{result} == MARKET_BUY_RESULT_ERROR) {
 		error T("Error while trying to buy in a Market Store.\n"), "info";
 	} elsif ( $args->{result} == MARKET_BUY_RESULT_SUCCESS) {
@@ -8309,7 +8309,7 @@ sub npc_market_purchase_result {
 
 		$storeList->add($item);
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	}
 
 	return if !$storeList->size;
@@ -8657,7 +8657,7 @@ sub received_character_ID_and_Map {
 
 sub received_sync {
 	return unless changeToInGameState();
-	debug "Received Sync\n", 'parseMsg', 2;
+	debug "Received Sync\n", 'parseMsg', 2 if Log::debugEnabled('parseMsg', 2);
 	$timeout{'play'}{'time'} = time;
 }
 
@@ -8668,7 +8668,7 @@ sub actor_look_at {
 	my $actor = Actor::get($args->{ID});
 	$actor->{look}{head} = $args->{head};
 	$actor->{look}{body} = $args->{body};
-	debug $actor->nameString . " looks at $args->{body}, $args->{head}\n", "parseMsg";
+	debug $actor->nameString . " looks at $args->{body}, $args->{head}\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 }
 
 # Visually moves(slides) a character to x,y. If the target cell
@@ -8694,11 +8694,11 @@ sub actor_movement_interrupted {
 	}
 
 	if ($actor->isa('Actor::You')) {
-		debug "Your movement was interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
+		debug "Your movement was interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move" if Log::debugEnabled("parseMsg_move", undef);
 		AI::clear("move");
 
 	} elsif ($actor) {
-		debug TF("[%s] Movement interrupted, coordinates: %s %s\n", $actor, $coords{x}, $coords{y}), "parseMsg_move";
+		debug TF("[%s] Movement interrupted, coordinates: %s %s\n", $actor, $coords{x}, $coords{y}), "parseMsg_move" if Log::debugEnabled("parseMsg_move", undef);
 	}
 }
 
@@ -8950,13 +8950,13 @@ sub party_location {
 		if ($args->{x} >= 65535 || $args->{y} >= 65535) {
 			delete $char->{party}{users}{$ID}{pos}{x};
 			delete $char->{party}{users}{$ID}{pos}{y};
-			debug "Party member location unavailable: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg", 2;
+			debug "Party member location unavailable: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 			return;
 		}
 
 		$char->{party}{users}{$ID}{pos}{x} = $args->{x};
 		$char->{party}{users}{$ID}{pos}{y} = $args->{y};
-		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg", 2;
+		debug "Party member location: $char->{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	}
 }
 sub party_organize_result {
@@ -9031,7 +9031,7 @@ sub party_users_info {
 		$char->{party}{itemPickup} = $item_pickup;
 		$char->{party}{itemDivision} = $item_share;
 	} elsif ($tail_len != 0) {
-		debug "Unexpected trailing data in party_users_info: $tail_len bytes\n", "parseMsg";
+		debug "Unexpected trailing data in party_users_info: $tail_len bytes\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 	}
 
 	for (my $i = 0; $i < $members_len; $i += $player_info_len) {
@@ -10025,7 +10025,7 @@ sub skill_update {
 		level2 => $args->{lv2},
 	});
 
-	debug "Skill $name: $lv\n", "parseMsg";
+	debug "Skill $name: $lv\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
 }
 
 #TODO !
@@ -10653,7 +10653,7 @@ sub cash_dealer {
 		$item->{name} = itemName($item);
 		$cashList->add($item);
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 		message(swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
 			[$item->{ID}, $item->{name}, $itemTypes_lut{$item->{type}}, $curr_item->{price_discount}]),
@@ -11817,7 +11817,7 @@ sub monster_ranged_attack {
 
 	$char->{movetoattack_pos} = {%coords2};
 	$char->{movetoattack_time} = time;
-	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move";
+	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move" if Log::debugEnabled("parseMsg_move", undef);
 
 	Plugins::callHook('monster_ranged_attack', {ID => $ID});
 }

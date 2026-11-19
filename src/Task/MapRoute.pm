@@ -187,12 +187,12 @@ sub iterate {
 
 	} elsif (@{$self->{mapSolution}} == 0) {
 		$self->setDone();
-		debug "Map Router has finished traversing the map solution\n", "map_route";
+		debug "Map Router has finished traversing the map solution\n", "map_route" if Log::debugEnabled('map_route', 1);
 
 	} elsif ( $field->baseName ne $self->{mapSolution}[0]{map}
 	     || ( $self->{mapChanged} && (!$self->{teleport} || $self->_hasReachedSameMapPortalDestination($self->{mapSolution}[0])) ) ) {
 		# Solution Map does not match current map
-		debug "Current map " . $field->baseName . " does not match solution [ $self->{mapSolution}[0]{portal} ].\n", "map_route";
+		debug "Current map " . $field->baseName . " does not match solution [ $self->{mapSolution}[0]{portal} ].\n", "map_route" if Log::debugEnabled('map_route', 1);
 		delete $self->{substage};
 		delete $self->{timeout};
 		delete $timeout{'ai_portal_give_up'}{'time'};
@@ -215,7 +215,7 @@ sub iterate {
 			if ($self->{mapSolution}[0]{retry} < 5) {
 				$self->{mapSolution}[0]{retry}++;
 				my $go_cmd = $self->{mapSolution}[0]{command};
-				debug "MapRoute - Using go command: $go_cmd (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+				debug "MapRoute - Using go command: $go_cmd (".$self->{mapSolution}[0]{retry}."th time)\n", "route" if Log::debugEnabled('route', 1);
 				$self->{substage} = 'Waiting for Warp';
 				$messageSender->sendChat($go_cmd);
 			} else {
@@ -246,7 +246,7 @@ sub iterate {
 		$item = undef unless Misc::canTeleportItemEquipRequirementBeSatisfied($equipEntry);
 
 		if (!$item) {
-			debug "MapRoute - Cannot use teleport item warp now, recalculating\n", "route";
+			debug "MapRoute - Cannot use teleport item warp now, recalculating\n", "route" if Log::debugEnabled('route', 1);
 			delete $self->{substage};
 			delete $self->{timeout};
 			delete $timeout{'ai_portal_give_up'}{'time'};
@@ -265,14 +265,14 @@ sub iterate {
 				if (Misc::tryEquipTeleportItemRequirement($equipEntry)) {
 					# already equipped
 				} else {
-					debug "MapRoute - Equipping required item before teleport item use\n", "route";
+					debug "MapRoute - Equipping required item before teleport item use\n", "route" if Log::debugEnabled('route', 1);
 					return;
 				}
 			}
 
 				if ($self->{mapSolution}[0]{retry} < 5) {
 					$self->{mapSolution}[0]{retry}++;
-					debug "MapRoute - Using teleport item $itemID (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+					debug "MapRoute - Using teleport item $itemID (".$self->{mapSolution}[0]{retry}."th time)\n", "route" if Log::debugEnabled('route', 1);
 					$self->{substage} = 'Waiting for Warp';
 					Misc::registerTeleportItemPendingUse($itemID);
 					$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
@@ -286,7 +286,7 @@ sub iterate {
 	} elsif ( $self->{mapSolution}[0]{is_teleportToSaveMap} ) {
 
 		if (!canUseTeleport(2)) {
-			debug "MapRoute - Cannot use teleportToSaveMap now, recalculating\n", "route";
+			debug "MapRoute - Cannot use teleportToSaveMap now, recalculating\n", "route" if Log::debugEnabled('route', 1);
 			$self->{noTeleSpawn} = 1;
 			$self->initMapCalculator();	# redo MAP router
 			
@@ -294,7 +294,7 @@ sub iterate {
 
 			if ($self->{mapSolution}[0]{retry} < 5) {
 				$self->{mapSolution}[0]{retry}++;
-				debug "MapRoute - Using go teleportToSaveMap (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+				debug "MapRoute - Using go teleportToSaveMap (".$self->{mapSolution}[0]{retry}."th time)\n", "route" if Log::debugEnabled('route', 1);
 				$self->{substage} = 'Waiting for Warp';
 				ai_useTeleport(2);
 			} else {
@@ -321,14 +321,14 @@ sub iterate {
 
 				if ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
 					# We spent too long a time.
-					debug "MapRoute - We spent too much time; bailing out.\n", "map_route";
+					debug "MapRoute - We spent too much time; bailing out.\n", "map_route" if Log::debugEnabled('map_route', 1);
 					$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
 
 				} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
 					# NPC is reachable from current position
 					# >> Then "route" to it
 
-					debug "Walking towards the Airship NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route";
+					debug "Walking towards the Airship NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route" if Log::debugEnabled('map_route', 1);
 					my $task = new Task::Route(
 						actor => $self->{actor},
 						x => $self->{mapSolution}[0]{pos}{x},
@@ -345,7 +345,7 @@ sub iterate {
 
 				} else {
 					# Error, NPC is not reachable from current pos
-					debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "map_route";
+					debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "map_route" if Log::debugEnabled('map_route', 1);
 					error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->baseName, @{$self->{actor}{pos}}{qw(x y)}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
 					shift @{$self->{mapSolution}};
 				}
@@ -354,11 +354,11 @@ sub iterate {
 			}
 
 			if (!defined $self->{localBroadcast}) {
-				debug "MapRoute - Wainting for broadcast with message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+				debug "MapRoute - Wainting for broadcast with message '".($self->{mapSolution}[0]{airship_message})."'\n", "route" if Log::debugEnabled('route', 1);
 			} elsif ($self->{localBroadcast} !~ /$self->{mapSolution}[0]{airship_message}/) {
-				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' does not match expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' does not match expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route" if Log::debugEnabled('route', 1);
 			} else {
-				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' matches expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' matches expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route" if Log::debugEnabled('route', 1);
 				
 				if ( $self->{mapSolution}[0]{steps}) {
 
@@ -410,7 +410,7 @@ sub iterate {
 
 						} else {
 							my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
-							debug TF("[mapRoute] Calling setNpcTalk to teleport using airship NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route";
+							debug TF("[mapRoute] Calling setNpcTalk to teleport using airship NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route" if Log::debugEnabled('route', 1);
 							# We have enough money for this service.
 							$self->setNpcTalk();
 						}
@@ -542,7 +542,7 @@ sub iterate {
 			my $portalCost = hashSafeGetValue(\%portals_lut, $from, 'dest', $to, 'cost') || 0;
 			my $allowTicket = hashSafeGetValue(\%portals_lut, $from, 'dest', $to, 'allow_ticket') || 0;
 			if (($self->{actor}{zeny} >= $portalCost) || ($char->inventory->getByNameID(7060) && $allowTicket)) {
-				debug TF("[mapRoute] Calling setNpcTalk to teleport using NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route";
+				debug TF("[mapRoute] Calling setNpcTalk to teleport using NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route" if Log::debugEnabled('route', 1);
 				# We have enough money for this service.
 				$self->setNpcTalk();
 
@@ -558,14 +558,14 @@ sub iterate {
 
 		} elsif ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
 			# We spent too long a time.
-			debug "MapRoute - We spent too much time; bailing out.\n", "map_route";
+			debug "MapRoute - We spent too much time; bailing out.\n", "map_route" if Log::debugEnabled('map_route', 1);
 			$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
 
 		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
 			# NPC is reachable from current position
 			# >> Then "route" to it
 
-			debug "Walking towards the NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route";
+			debug "Walking towards the NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route" if Log::debugEnabled('map_route', 1);
 			my $task = new Task::Route(
 				actor => $self->{actor},
 				x => $self->{mapSolution}[0]{pos}{x},
@@ -581,7 +581,7 @@ sub iterate {
 
 		} else {
 			# Error, NPC is not reachable from current pos
-			debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "map_route";
+			debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "map_route" if Log::debugEnabled('map_route', 1);
 			error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->baseName, @{$self->{actor}{pos}}{qw(x y)}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
 			shift @{$self->{mapSolution}};
 		}
@@ -597,7 +597,7 @@ sub iterate {
 
 		} elsif ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
 			# We spent too long a time.
-			debug "We spent too much time; bailing out.\n", "map_route";
+			debug "We spent too much time; bailing out.\n", "map_route" if Log::debugEnabled('map_route', 1);
 			$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
 
 		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
@@ -650,7 +650,7 @@ sub iterate {
 			my $closest_portal_dist;
 
 			for my $portal (@$portalsList) {
-				debug TF("Possible exist portal at %s (%s,%s).\n", $field->baseName, $portal->{pos}{x}, $portal->{pos}{y}), "map_route";
+				debug TF("Possible exist portal at %s (%s,%s).\n", $field->baseName, $portal->{pos}{x}, $portal->{pos}{y}), "map_route" if Log::debugEnabled('map_route', 1);
 				next unless ( Task::Route->getRoute( \@solution, $field, $portal->{pos}, $self->{actor}{pos} ) );
 				
 				my $distance_portals = blockDistance($portal->{pos}, $self->{mapSolution}[0]{pos});
@@ -743,7 +743,7 @@ sub iterate {
 							my $dist = scalar @solution;
 
 							if ($dist > $minDist) {
-								debug "[MapRoute] [Teleport] Distance to portal ($portal->{portal}) is $dist\n", "map_route";
+								debug "[MapRoute] [Teleport] Distance to portal ($portal->{portal}) is $dist\n", "map_route" if Log::debugEnabled('map_route', 1);
 								if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
 									message "[MapRoute] [Teleport] Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "map_route";
 								} else {
@@ -761,7 +761,7 @@ sub iterate {
 							}
 
 						} elsif (timeOut($self->{teleportTime}, 4)) {
-							debug TF("[MapRoute] [Teleport] Unable to teleport on map %s; falling back to walking on this map.\n", $field->baseName), "map_route";
+							debug TF("[MapRoute] [Teleport] Unable to teleport on map %s; falling back to walking on this map.\n", $field->baseName), "map_route" if Log::debugEnabled('map_route', 1);
 							$self->{noRouteTeleportMaps}{$field->baseName} = time;
 							$self->{teleport} = 0;
 							delete $self->{sentTeleport};
@@ -774,7 +774,7 @@ sub iterate {
 					return if ($walk == 0);
 
 					# >> Then "route" to it
-					debug "Portal route within same map.\n", "map_route";
+					debug "Portal route within same map.\n", "map_route" if Log::debugEnabled('map_route', 1);
 					my %plugin_args;
 					$plugin_args{object} = $self;
 					$plugin_args{solution} = \@solution;
@@ -1039,7 +1039,7 @@ sub subtaskDone {
 				&& @{$self->{mapSolution}}
 				&& $field->baseName eq $self->{mapSolution}[0]{map}
 				&& _isSameMapPortalStep($self->{mapSolution}[0])) {
-				debug "MapRoute - Route subtask became stale after same-map warp; advancing to the next portal step.\n", "map_route";
+				debug "MapRoute - Route subtask became stale after same-map warp; advancing to the next portal step.\n", "map_route" if Log::debugEnabled('map_route', 1);
 				shift @{$self->{mapSolution}};
 				delete $self->{mapChanged};
 				delete $self->{teleport};
@@ -1102,7 +1102,7 @@ sub mapChanged {
 		&& $self->{mapSolution}
 		&& @{$self->{mapSolution}}
 		&& _isSameMapPortalStep($self->{mapSolution}[0])) {
-		debug "MapRoute - Same-map portal warp detected; waiting Route subtask to finish segment on its own mapChanged handling.\n", "map_route";
+		debug "MapRoute - Same-map portal warp detected; waiting Route subtask to finish segment on its own mapChanged handling.\n", "map_route" if Log::debugEnabled('map_route', 1);
 	}
 
 	delete $timeout{'ai_portal_give_up'}{'time'};
@@ -1117,7 +1117,7 @@ sub localBroadcast {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
 	my $message = $args->{Msg};
-	debug "[MapRoute] Received localBroadcast '".($message)."'.\n";
+	debug "[MapRoute] Received localBroadcast '".($message)."'.\n" if Log::debugEnabled('console', undef);
 	$self->{localBroadcast} = $message;
 }
 

@@ -72,13 +72,13 @@ sub set_timeout_time {
 sub disable {
 	my ($self) = @_;
 	$self->{parameters}{disabled} = 1;
-	debug "[eventMacro] Disabling ".$self->get_name()."\n", "eventMacro", 2;
+	debug "[eventMacro] Disabling ".$self->get_name()."\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 }
 
 sub enable {
 	my ($self) = @_;
 	$self->{parameters}{disabled} = 0;
-	debug "[eventMacro] Enabling ".$self->get_name()."\n", "eventMacro", 2;
+	debug "[eventMacro] Enabling ".$self->get_name()."\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 }
 
 sub get_parameter {
@@ -243,7 +243,7 @@ sub check_state_type_condition {
 	
 	my $pos_check_status = $condition->validate_condition($callback_type, $callback_name, $args);
 	
-	debug "[eventMacro] Checking condition '".$condition->get_name()."' of index '".$condition->get_index."' in automacro '".$self->{name}."', fulfilled value before: '".$pre_check_status."', fulfilled value after: '".$pos_check_status."'.\n", "eventMacro", 3;
+	debug "[eventMacro] Checking condition '".$condition->get_name()."' of index '".$condition->get_index."' in automacro '".$self->{name}."', fulfilled value before: '".$pre_check_status."', fulfilled value after: '".$pos_check_status."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 	
 	if ($pre_check_status == 1 && $condition->is_fulfilled == 0) {
 		$self->{number_of_false_conditions}++;
@@ -260,7 +260,7 @@ sub check_event_type_condition {
 	
 	my $return = $condition->validate_condition($callback_type, $callback_name, $args);
 	
-	debug "[eventMacro] Checking event type condition '".$condition->get_name()."' of index '".$condition->get_index."' in automacro '".$self->{name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3;
+	debug "[eventMacro] Checking event type condition '".$condition->get_name()."' of index '".$condition->get_index."' in automacro '".$self->{name}."', fulfilled value: '".$return."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 	return $return;
 }

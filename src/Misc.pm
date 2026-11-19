@@ -385,9 +385,9 @@ sub applyDynamicPortalStates {
 				my $enabled = _dynamicPortalSelectionMatches($selection, $destID) ? 1 : 0;
 				$portals_lut{$source}{dest}{$destID}{enabled} = $enabled;
 				if ($enabled) {
-					debug "Dynamic portal enabled for group $group->{config_key}: $source -> $destID\n", "route", 1;
+					debug "Dynamic portal enabled for group $group->{config_key}: $source -> $destID\n", "route", 1 if Log::debugEnabled('route', 1);
 				} elsif (!$enabled) {
-					debug "Dynamic portal disabled for group $group->{config_key}: $source -> $destID\n", "route", 2;
+					debug "Dynamic portal disabled for group $group->{config_key}: $source -> $destID\n", "route", 2 if Log::debugEnabled('route', 2);
 				}
 				$matched ||= $enabled;
 			}
@@ -3600,7 +3600,7 @@ sub meetingPosition {
 
 	if (defined $best_spot) {
 		debug "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n", "ai_attack", 1;
-		debug "[meetingPosition] Solution: ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n", "ai_attack", 3;
+		debug "[meetingPosition] Solution: ". join(' >> ', map { "$_->{x} $_->{y}" } @{$best_solution}) ."\n", "ai_attack", 3 if Log::debugEnabled('ai_attack', 3);
 		return $best_spot;
 	}
 
