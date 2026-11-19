@@ -500,8 +500,8 @@ sub iterate {
 			delete $_->{field} foreach @{ $self->{targets} };
 			$self->setDone();
 				if ($self->shouldLogDebug()) {
-					debug "Map Solution Ready for traversal.\n", "calc_map_route";
-					debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
+					debug "Map Solution Ready for traversal.\n", "calc_map_route" if Log::debugEnabled('calc_map_route', 1);
+					debug sprintf("%s\n", $self->getRouteString()), "calc_map_route" if Log::debugEnabled('calc_map_route', 1);
 				}
 
 		} elsif ($self->{done}) {
@@ -509,7 +509,7 @@ sub iterate {
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s%s",
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{targets}[0]->{map} || T("unknown"), $destpos));
-				debug "CalcMapRoute failed.\n", "calc_map_route" if $self->shouldLogDebug();
+				debug "CalcMapRoute failed.\n", "calc_map_route" if ($self->shouldLogDebug() && Log::debugEnabled('calc_map_route', 1));
 			Plugins::callHook('fail_calc_map_route', { 
 				map_from	=> $self->{source}{field}->baseName,
 				map_from_x	=> $self->{source}{x},
@@ -602,7 +602,7 @@ sub searchStep {
 	}
 	$self->{searchStepCount}++;
 
-	debug "[CalcMapRoute] [searchStep $self->{searchStepCount}] [size ".(scalar keys %{$self->{openlist}})."] $parent (cost $openlist->{$parent}{walk})\n", "calc_map_route" if $self->shouldLogDebug();
+	debug "[CalcMapRoute] [searchStep $self->{searchStepCount}] [size ".(scalar keys %{$self->{openlist}})."] $parent (cost $openlist->{$parent}{walk})\n", "calc_map_route" if ($self->shouldLogDebug() && Log::debugEnabled('calc_map_route', 1));
 	
 	my ($portalString) = $self->parseRouteStateKey($parent);
 	my ($portal, $dest) = split /=/, $portalString, 2;
@@ -913,7 +913,7 @@ sub populateOpenListWithWarpToSaveMap {
 
 	my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
 
-	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route" if $self->shouldLogDebug();
+	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route" if ($self->shouldLogDebug() && Log::debugEnabled('calc_map_route', 1));
 
 	return if ($dest eq $from_node);
 	my $key = $self->buildRouteStateKey("$from_node=$dest", $baseCost->{blockedPortalGroups});
@@ -1066,7 +1066,7 @@ sub add_key_to_openList {
 	$value->{blockedPortalGroups} = $self->cloneBlockedPortalGroups($value);
 
 	if ($self->shouldLogDebug() && $config{'debug'} >= 2) {
-		debug "[CalcMapRoute] [Add] Added key [$value->{type}] [$key] [cost $value->{walk}] [blocked ".$self->formatBlockedPortalGroups($value->{blockedPortalGroups})."] (current size ".((scalar keys %{$self->{openlist}}) + 1).")\n", "calc_map_route", 2;
+		debug "[CalcMapRoute] [Add] Added key [$value->{type}] [$key] [cost $value->{walk}] [blocked ".$self->formatBlockedPortalGroups($value->{blockedPortalGroups})."] (current size ".((scalar keys %{$self->{openlist}}) + 1).")\n", "calc_map_route", 2 if Log::debugEnabled("calc_map_route", 2);
 	}
 
 	$self->{openlist}{$key} = $value;

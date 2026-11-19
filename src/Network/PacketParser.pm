@@ -260,7 +260,7 @@ sub parse {
 	# 	}
 	# }
 
-	debug "Received packet: $lastSwitch Handler: $handler->[0]\n", "packetParser", 2;
+	debug "Received packet: $lastSwitch Handler: $handler->[0]\n", "packetParser", 2 if Log::debugEnabled("packetParser", 2);
 
 	# RAW_MSG is the entire message, including packet switch
 	my %args = (

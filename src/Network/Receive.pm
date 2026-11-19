@@ -2531,7 +2531,7 @@ sub actor_died_or_disappeared {
 	} elsif (defined $monstersList->getByID($ID)) {
 		my $monster = $monstersList->getByID($ID);
 		if ($args->{type} == 0) {
-			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$monster->{disappeared} = 1;
 
 		} elsif ($args->{type} == 1) {
@@ -2551,7 +2551,7 @@ sub actor_died_or_disappeared {
 			}
 
 		} elsif ($args->{type} == 2) { # What's this?
-			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence";
+			debug "Monster Disappeared: " . $monster->name . " ($monster->{binID})\n", "parseMsg_presence" if Log::debugEnabled("parseMsg_presence", undef);
 			$monster->{disappeared} = 1;
 
 		} elsif ($args->{type} == 3) {
@@ -8040,7 +8040,7 @@ sub npc_store_info {
 			price  => int($item->{price}),
 		};
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	}
 
 	update_npc_shop_cache($npc_id, \@shop_items);
@@ -8232,7 +8232,7 @@ sub npc_market_info {
 
 		$storeList->add($item);
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	}
 
 	return if !$storeList->size;
@@ -8309,7 +8309,7 @@ sub npc_market_purchase_result {
 
 		$storeList->add($item);
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 	}
 
 	return if !$storeList->size;
@@ -10653,7 +10653,7 @@ sub cash_dealer {
 		$item->{name} = itemName($item);
 		$cashList->add($item);
 
-		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2 if Log::debugEnabled("parseMsg", 2);
 		message(swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>p",
 			[$item->{ID}, $item->{name}, $itemTypes_lut{$item->{type}}, $curr_item->{price_discount}]),

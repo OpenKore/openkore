@@ -374,7 +374,7 @@ sub iterate {
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "route";
 			} else {
-				debug "$self->{actor} reached the destination.\n", "route";
+				debug "$self->{actor} reached the destination.\n", "route" if Log::debugEnabled('route', 1);
 			}
 
 			Plugins::callHook('route', {status => 'success'});
@@ -412,7 +412,7 @@ sub iterate {
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "route";
 			} else {
-				debug "$self->{actor} reached the destination.\n", "route";
+				debug "$self->{actor} reached the destination.\n", "route" if Log::debugEnabled('route', 1);
 			}
 
 			Plugins::callHook('route', {status => 'success'});
@@ -440,7 +440,7 @@ sub iterate {
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "route";
 			} else {
-				debug "$self->{actor} reached the destination.\n", "route";
+				debug "$self->{actor} reached the destination.\n", "route" if Log::debugEnabled('route', 1);
 			}
 
 			Plugins::callHook('route', {status => 'success'});
