@@ -4319,7 +4319,7 @@ sub updateDamageTables {
 					$player->sendAttackStop;
 					$player->dequeue;
 				}
-				ai_useTeleport(1) if ($teleport);
+				ai_useTeleport(1, flee => 1) if ($teleport);
 			}
 		}
 
