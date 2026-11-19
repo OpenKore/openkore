@@ -39,3 +39,5 @@ TaskTalkNPCTest.pm
 TaskWithSubtaskTest.pm
 unittests.pl
 WhirlpoolTest.pm
+
+LogDebugEnabledTest.pm
