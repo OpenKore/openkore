@@ -4174,6 +4174,11 @@ sub processRepairAuto {
             $name = itemNameSimple($repairListItem->{nameID});
             if (existsInList($config{'repairAuto_list'}, $name) || !$config{'repairAuto_list'}) {
                 $messageSender->sendRepairItem($repairListItem);
+                if (defined(my $repairIndex = AI::findAction("repairAuto"))) {
+                    my $args = AI::args($repairIndex);
+                    $args->{waitingForList} = 0;
+                    $args->{repairing} = 1;
+                }
                 $timeout{ai_repair}{time} = time;
                 return;
             }
