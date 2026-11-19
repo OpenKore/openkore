@@ -264,3 +264,11 @@ ai_attack_allowed_waitForTarget 0.3
 # Default command spacing for the macro and eventMacro plugins.
 macro_delay 1
 eventMacro_delay 1
+
+# Optional AI scan intervals. Zero preserves default behavior.
+ai_selfSkill_check 0
+ai_partySkill_check 0
+ai_monsterSkill_check 0
+ai_storageAuto_check 0
+ai_buyAuto_check 0
+ai_sellAuto_check 0

@@ -3071,6 +3071,13 @@ sub processAutoItemUse {
 ##### AUTO-SKILL USE #####
 sub processAutoSkillUse {
 	my ($slave) = @_;
+	# Slave and player checks use independent clocks; zero means no throttling.
+	if (($timeout{ai_selfSkill_check}{timeout} // 0) > 0) {
+		my $check = $slave ? ($slave->{ai_selfSkill_check} ||= {}) : $timeout{ai_selfSkill_check};
+		$check->{timeout} = $timeout{ai_selfSkill_check}{timeout} if $slave;
+		return unless timeOut($check);
+		$check->{time} = time;
+	}
 	return if ($char->{muted});
 	if (!$slave) {
 		my $routeIndex = AI::findAction("route");
@@ -3142,6 +3149,13 @@ sub processAutoSkillUse {
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
 	my ($slave) = @_;
+	# Slave and player checks use independent clocks; zero means no throttling.
+	if (($timeout{ai_partySkill_check}{timeout} // 0) > 0) {
+		my $check = $slave ? ($slave->{ai_partySkill_check} ||= {}) : $timeout{ai_partySkill_check};
+		$check->{timeout} = $timeout{ai_partySkill_check}{timeout} if $slave;
+		return unless timeOut($check);
+		$check->{time} = time;
+	}
 	return if ($char->{muted});
 	if ($slave ? ($slave->isIdle() || $slave->is(qw(route move follow attack))) : (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))) {
 		my $realMyPos = calcPosFromPathfinding($field, $slave || $char);
@@ -3269,6 +3283,11 @@ sub processPartySkillUse {
 
 ##### MONSTER SKILL USE #####
 sub processMonsterSkillUse {
+	# Zero disables this optional scan interval and preserves stock scheduling.
+	if (($timeout{ai_monsterSkill_check}{timeout} // 0) > 0) {
+		return unless timeOut($timeout{ai_monsterSkill_check});
+		$timeout{ai_monsterSkill_check}{time} = time;
+	}
 	return if ($char->{muted});
 	if (AI::isIdle() || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
 		for (my $i = 0; exists $config{"monsterSkill_$i"}; $i++) {

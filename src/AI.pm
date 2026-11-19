@@ -657,6 +657,11 @@ sub StorageSellBuy_aiClear {
 }
 
 sub shouldStartAutoStorage {
+	# Optional startup scan throttling; zero retains the original per-tick behavior.
+	if (($timeout{ai_storageAuto_check}{timeout} // 0) > 0) {
+		return unless timeOut($timeout{ai_storageAuto_check});
+		$timeout{ai_storageAuto_check}{time} = time;
+	}
 	return unless (ai_canOpenStorage());
 	return unless ($config{storageAuto});
 	return unless ($config{'storageAuto_npc'} ne "" || $config{'storageAuto_useChatCommand'} || $config{'storageAuto_useItem'});
@@ -772,6 +777,11 @@ sub shouldStartAutoStorage {
 }
 
 sub shouldStartAutoSell {
+	# Optional startup scan throttling; zero retains the original per-tick behavior.
+	if (($timeout{ai_sellAuto_check}{timeout} // 0) > 0) {
+		return unless timeOut($timeout{ai_sellAuto_check});
+		$timeout{ai_sellAuto_check}{time} = time;
+	}
 	return unless ($config{'sellAuto'});
 	return unless ($config{'sellAuto_npc'} ne "");
 	
@@ -799,6 +809,11 @@ sub shouldStartAutoSell {
 }
 
 sub shouldStartAutoBuy {
+	# Optional startup scan throttling; zero retains the original per-tick behavior.
+	if (($timeout{ai_buyAuto_check}{timeout} // 0) > 0) {
+		return unless timeOut($timeout{ai_buyAuto_check});
+		$timeout{ai_buyAuto_check}{time} = time;
+	}
 	my %plugin_args = ( return => 0 );
 	Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
 	return $plugin_args{return_result} if ($plugin_args{return});
