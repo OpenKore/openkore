@@ -92,13 +92,8 @@ sub new {
 	}
 
 	$self->{font} = $font;
-	$self->{defaultStyle} = new Wx::TextAttr(
-		Wx::SystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT),
-		Wx::SystemSettings::GetColour(wxSYS_COLOUR_WINDOW),
-		$font);
-	$self->SetDefaultStyle($self->{defaultStyle});
-
 	$self->{styles} = {};
+	$self->setDefaultColor;
 	return $self;
 }
 
