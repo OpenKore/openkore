@@ -16,6 +16,7 @@ sub hookArgs {
 
 sub chatCommand {
 	my ($self) =  @_;
+	return undef if $self->{flee};
 	return undef if ($self->{actor}->{muted});
 	return undef if Misc::isRandomTeleportBlockedOnMap($field->baseName);
 	return ($config{teleportAuto_useChatCommand}) ? $config{teleportAuto_useChatCommand} . " " . $field->baseName : undef;
@@ -40,13 +41,20 @@ sub getInventoryItem {
 	return $item;
 }
 
+# An omitted danger override preserves the routine skill preference.
+sub prefersSkill {
+	my ($self) = @_;
+	my $key = $self->{flee} && defined $config{teleportAuto_whenDanger_useSkill}
+		? 'teleportAuto_whenDanger_useSkill' : 'teleportAuto_useSkill';
+	return !defined($config{$key}) || $config{$key} != 0;
+}
+
 # return 0 if actor is muted or dont have skill teleport at lv
 # return 1 if actor has teleport skill lvl
 sub canUseSkill {
 	my ($self) =  @_;
 	return 0 if $self->isTeleportSkillSuppressedByStatus;
 	return 0 if Misc::isTeleportSkillBlockedOnMap($field->baseName);
-	return 0 if defined $config{'teleportAuto_useSkill'} && $config{'teleportAuto_useSkill'} == 0;
 	return 0 unless $self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT'));
 	return $self->hasEnoughSPForTeleportSkill(1);
 }
@@ -55,7 +63,9 @@ sub canUseSkill {
 sub isEquipNeededToTeleport {
 	my ($self) =  @_;
 	return 0 unless ($self->{actor}->inventory->isReady());
+	return 0 if $self->isTeleportSkillSuppressedByStatus;
 	return 0 if Misc::isTeleportSkillBlockedOnMap($field->baseName);
+	return 0 unless $self->hasEnoughSPForTeleportSkill(1);
 	return Actor::Item::scanConfigAndCheck('teleportAuto_equip');
 }
 
@@ -87,6 +97,10 @@ sub useEquip {
 
 sub error {
 	my ($self) = @_;
+	if ($self->{flee}) {
+		$self->setError(Task::Teleport::NO_ITEM_OR_SKILL, TF("%s cannot flee: no usable Teleport skill or teleport item", $self->{actor}));
+		return;
+	}
 	$self->setError(Task::Teleport::NO_ITEM_OR_SKILL, TF("%s don't have the Teleport skill or a Fly Wing", $self->{actor}));
 }
 

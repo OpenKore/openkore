@@ -873,16 +873,33 @@ sub route {
 #
 # Instruct AI to use Teleport.
 sub useTeleport {
-	my ($self, $level) = @_;
+	my ($self, $level, %options) = @_;
+
+	# A danger escape can arrive while a search/route teleport is already queued.
+	if ($level == 1 && $options{flee} && !AI::inQueue('NPC')) {
+		my $index = AI::findAction('teleport');
+		if (defined $index) {
+			my $task = AI::args($index);
+			if (UNIVERSAL::isa($task, 'Task::Teleport::Random')) {
+				message T("Upgrading queued teleport to danger/flee mode\n"), "teleport" unless $task->{flee};
+				$task->{flee} = 1;
+				return;
+			}
+		}
+	}
 
 	if(!AI::inQueue("teleport","NPC")) {
 		require Task::Teleport::Random;
 		require Task::Teleport::Respawn;
 
 		my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
-		my $task = $tasks{$level}->new(actor => $self);
+		my $task = $tasks{$level}->new(actor => $self, flee => ($level == 1 && $options{flee}));
 
-		message T("Queueing teleport task level $level\n");
+		if ($task->{flee}) {
+			message TF("Queueing danger/flee teleport task level %s\n", $level), "teleport";
+		} else {
+			message T("Queueing teleport task level $level\n");
+		}
 		$self->queue('teleport', $task);
 	} else {
 		error T("NPC or Teleport in queue, finish and try again\n");
