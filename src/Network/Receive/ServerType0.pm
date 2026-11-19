@@ -753,12 +753,14 @@ sub new {
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
 		'0B39' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B3D' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
+		'0B3F' => ['rodex_add_item', 'C a2 v V C3 a16 a25 v C V C2', [qw(fail ID amount nameID type identified broken cards options weight favorite type_equip upgrade grade)]], # 64: modern attachment ACK
 		'0B41' => ['inventory_item_added', 'a2 v V C2 a16 V C2 a4 v a25 C v C2', [qw(ID amount nameID identified broken cards type_equip type fail expire unknown options favorite viewID upgrade grade)]],
 		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
 		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
 		'0B4E' => ['npc_market_purchase_result', 'v v a*', [qw(len result itemList)]],
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
+		'0B63' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]], # -1: modern read ACK
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
         '0B62' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], #-1
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],

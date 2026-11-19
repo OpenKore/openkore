@@ -19,6 +19,11 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	# Modern Rodex mailbox requests (PACKETVER >= 20170419) carry three
+	# 64-bit mail IDs and no legacy one-byte mailbox type.
+	$self->{packet_lut}{rodex_open_mailbox} = '0AC0';
+	$self->{packet_lut}{rodex_refresh_maillist} = '0AC1';
+
 	return $self;
 }
 
