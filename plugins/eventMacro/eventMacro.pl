@@ -288,8 +288,8 @@ sub commandHandler {
 			return;
 		}
 		my $status = $eventMacro->get_automacro_checking_status();
-		debug "[eventMacro] Command 'check' used with parameter '".$params[0]."'.\n", "eventMacro", 2;
-		debug "[eventMacro] Previous checking status '".$status."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Command 'check' used with parameter '".$params[0]."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
+		debug "[eventMacro] Previous checking status '".$status."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 		if ($params[0] eq 'force_stop') {
 			if ($status == CHECKING_AUTOMACROS) {
 				message "[eventMacro] Automacros checking forcely stopped.\n";

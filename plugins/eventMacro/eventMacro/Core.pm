@@ -1145,7 +1145,7 @@ sub set_array_var {
 sub array_size_change {
 	my ($self, $variable_name, $before_size) = @_;
 	my $size = ((exists $self->{Array_Variable_List_Hash}{$variable_name}) ? (scalar @{$self->{Array_Variable_List_Hash}{$variable_name}}) : 0);
-	debug "[eventMacro] Size of array '@".$variable_name."' change from '".$before_size."' to '".$size."'\n", "eventMacro";
+	debug "[eventMacro] Size of array '@".$variable_name."' change from '".$before_size."' to '".$size."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 	$self->manage_variables_callbacks('array', $variable_name, $before_size, $size);
 }
@@ -1170,7 +1170,7 @@ sub set_full_hash {
 
 	my %old_hash = (exists $self->{Hash_Variable_List_Hash}{$variable_name} ? (%{$self->{Hash_Variable_List_Hash}{$variable_name}}) : ({}));
 
-	debug "[eventMacro] Setting hash '%".$variable_name."'\n", "eventMacro";
+	debug "[eventMacro] Setting hash '%".$variable_name."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 	foreach my $member_key (keys %{$hash}) {
 		my $member_value = $hash->{$member_key};
 		if ($member_value eq 'undef') {
@@ -1265,7 +1265,7 @@ sub set_hash_var {
 sub hash_size_change {
 	my ($self, $variable_name, $old_size) = @_;
 	my $size = ((exists $self->{Hash_Variable_List_Hash}{$variable_name}) ? (scalar keys %{$self->{Hash_Variable_List_Hash}{$variable_name}}) : 0);
-	debug "[eventMacro] Size of hash '%".$variable_name."' change from '".$old_size."' to '".$size."'\n", "eventMacro";
+	debug "[eventMacro] Size of hash '%".$variable_name."' change from '".$old_size."' to '".$size."'\n", "eventMacro" if Log::debugEnabled('eventMacro', 1);
 
 	$self->manage_variables_callbacks('hash', $variable_name, $old_size, $size);
 }
@@ -1446,7 +1446,7 @@ sub manage_event_callbacks {
 				$check_event_type = 1;
 				next;
 			} else {
-				debug "[eventMacro] Variable value will be updated in condition of state type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3 if ($callback_type eq 'variable');
+				debug "[eventMacro] Variable value will be updated in condition of state type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3 if (($callback_type eq 'variable') && Log::debugEnabled('eventMacro', 3));
 
 				my $result = $automacro->check_state_type_condition($condition_index, $callback_type, $callback_name, $callback_args);
 
@@ -1469,10 +1469,10 @@ sub manage_event_callbacks {
 				$automacro->check_event_type_condition($callback_type, $callback_name, $callback_args);
 
 			} elsif (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event) {
-				debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 				if ($automacro->check_event_type_condition($callback_type, $callback_name, $callback_args)) {
-					debug "[eventMacro] Condition of event type was fulfilled.\n", "eventMacro", 3;
+					debug "[eventMacro] Condition of event type was fulfilled.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 					if ($self->should_skip_automacro_for_not_when_in_queue($automacro)) {
 						next;
 					}

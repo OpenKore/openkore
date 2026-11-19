@@ -584,11 +584,11 @@ sub define_next_valid_command {
 		if ($check_need) {
 			$self->define_current_line;
 			return "" if ($self->{finished});
-			debug "[eventMacro] Checking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command.\n", "eventMacro", 3;
-			debug "[eventMacro] Script '".$self->{current_line}."'.\n", "eventMacro", 3;
+			debug "[eventMacro] Checking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
+			debug "[eventMacro] Script '".$self->{current_line}."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 		} else {
-			debug "[eventMacro] Rechecking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command after it was cleaned.\n", "eventMacro", 3;
-			debug "[eventMacro] New cleaned script '".$self->{current_line}."'.\n", "eventMacro", 3;
+			debug "[eventMacro] Rechecking macro '".$self->{name}."', line index '".$self->line_index."' for a macro command after it was cleaned.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
+			debug "[eventMacro] New cleaned script '".$self->{current_line}."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 			$check_need = 1;
 		}
 
@@ -604,11 +604,11 @@ sub define_next_valid_command {
 			return if (defined $self->error);
 
 			if ($result == 1) {
-				debug "[eventMacro] Condition of 'while' is true.\n", "eventMacro", 3;
-				debug "[eventMacro] Entering true 'while' 'block'.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of 'while' is true.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
+				debug "[eventMacro] Entering true 'while' 'block'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 			} else {
-				debug "[eventMacro] Condition of 'while' is false.\n", "eventMacro", 3;
-				debug "[eventMacro] Moving to the end of 'while' loop.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of 'while' is false.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
+				debug "[eventMacro] Moving to the end of 'while' loop.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 				$self->line_index($self->{block}{start_to_end}{$self->line_index}{end});
 			}
 			$self->next_line;
@@ -687,8 +687,8 @@ sub define_next_valid_command {
 						} elsif ( $self->{current_line} =~ /^}\s*elsif\s*(\(.*\)).*{$/ && $block_count == 1 ) {
 							($result) = $self->parse_and_check_condition_text($1);
 							return if (defined $self->error);
-							debug "[eventMacro] Found an 'elsif' block inside an 'if' block.\n", "eventMacro", 3;
-							debug "[eventMacro] Script of 'elsif' block: '".$self->{current_line}."'.\n", "eventMacro", 3;
+							debug "[eventMacro] Found an 'elsif' block inside an 'if' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
+							debug "[eventMacro] Script of 'elsif' block: '".$self->{current_line}."'.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
 
 							if ($result) {
 								debug "[eventMacro] Condition of 'elsif' is true, entering 'elsif' block.\n", "eventMacro", 3 if Log::debugEnabled('eventMacro', 3);
@@ -963,8 +963,8 @@ sub next {
 	return "" if ($self->{finished});
 
 	#Some debug messages
-	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index.".\n", "eventMacro", 2;
-	debug "[eventMacro] Line script '".$self->{current_line}."'.\n", "eventMacro", 2;
+	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index.".\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
+	debug "[eventMacro] Line script '".$self->{current_line}."'.\n", "eventMacro", 2 if Log::debugEnabled('eventMacro', 2);
 
 	##########################################
 	# set variable: variable = value
