@@ -535,6 +535,7 @@ use constant {
 	CONFIG_CALL => 1,
 	CONFIG_PET_AUTOFEED => 2,
 	CONFIG_HOMUNCULUS_AUTOFEED => 3,
+	CONFIG_DISABLE_SHOWCOSTUMES => 5,
 };
 
 #expand_inventory_result
@@ -3496,6 +3497,12 @@ sub misc_config_reply {
 			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
 		} else {
 			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
+		}
+	} elsif ( $args->{type} == CONFIG_DISABLE_SHOWCOSTUMES ) {
+		if ($args->{flag}) {
+			message T("Costumes are now hidden.\n");
+		} else {
+			message T("Costumes are now shown.\n");
 		}
 	} else {
 		message TF("Unknown Config Type: %s, Flag: %s\n", $args->{type}, $args->{flag});
