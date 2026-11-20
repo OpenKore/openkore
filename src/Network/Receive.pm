@@ -45,6 +45,7 @@ use Network::MessageTokenizer;
 use Misc;
 use Plugins;
 use Skill;
+use WarpPortal qw(beginCharacterSession updateServerMemos memoAcknowledged clearPendingTraversal confirmPortalArrival);
 use Utils;
 use Utils::Exceptions;
 use Utils::Crypton;
@@ -1317,6 +1318,7 @@ sub map_loaded {
 	# assertClass($char, 'Actor::You');
 	$syncMapSync = pack('V1',$args->{syncMapSync}); # unused, should we keep this for legacy compatibility?
 	main::initMapChangeVars();
+	beginCharacterSession();
 	%minimap_indicator_seen = ();
 
 	if ($net->version == 1) {
@@ -2485,6 +2487,7 @@ typedef enum <unnamed-tag> {
 		} elsif ($actor->isa('Actor::Portal')) {
 			# Can this happen?
 			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
+			markWarpPortalPendingPortal($actor);
 			Plugins::callHook('portal_spawned', {portal => $actor});
 		} elsif ($actor->isa('Actor::Elemental')) {
 			debug "Elemental Spawned: " . $actor->nameIdx . "\n", "parseMsg" if Log::debugEnabled("parseMsg", undef);
@@ -3658,17 +3661,18 @@ sub system_chat {
 sub warp_portal_list {
 	my ($self, $args) = @_;
 
-	# strip gat extension
-	($args->{memo1}) = $args->{memo1} =~ /^(.*)\.gat/;
-	($args->{memo2}) = $args->{memo2} =~ /^(.*)\.gat/;
-	($args->{memo3}) = $args->{memo3} =~ /^(.*)\.gat/;
-	($args->{memo4}) = $args->{memo4} =~ /^(.*)\.gat/;
-	# Auto-detect saveMap
+	# The server compacts empty memo points. Keep the received order, but do not
+	# treat configuration positions as stable server slot identifiers.
+	for my $slot (1 .. 4) {
+		$args->{"memo$slot"} = '' unless defined $args->{"memo$slot"};
+		$args->{"memo$slot"} =~ s/\.gat\z//i;
+	}
+	# AL_WARP sends save point first, followed by memorized destinations.
+	# AL_TELEPORT's list is a separate feature and is never memo evidence.
 	if ($args->{type} == 26) {
 		configModify('saveMap', $args->{memo2}) if ($args->{memo2} && $config{'saveMap'} ne $args->{memo2});
 	} elsif ($args->{type} == 27) {
-		configModify('saveMap', $args->{memo1}) if ($args->{memo1} && $config{'saveMap'} ne $args->{memo1});
-		configModify( "memo$_", $args->{"memo$_"} ) foreach grep { $args->{"memo$_"} ne $config{"memo$_"} } 1 .. 4;
+		updateServerMemos($args);
 	}
 
 	$char->{warp}{type} = $args->{type};
@@ -3687,6 +3691,7 @@ sub warp_portal_list {
 	}
 	$msg .= ('-'x50) . "\n";
 	message $msg, "list";
+	Plugins::callHook('warp_portal_list', $args) if $args->{type} == 27;
 
 	return unless $args->{type} == 26;
 	my $index = AI::findAction('teleport');
@@ -3695,6 +3700,57 @@ sub warp_portal_list {
 	return unless Scalar::Util::blessed($task) && $task->isa('Task::Teleport');
 	my $level = $task->consumeWarpMenu();
 	$messageSender->sendWarpTele(26, $level == 2 ? "$config{saveMap}.gat" : 'Random') if $level;
+}
+
+sub markWarpPortalPendingPortal {
+	my ($portal) = @_;
+	return unless $char && $field && $portal;
+	my $pending = $char->{warpPortalPendingTraversal};
+	return unless $pending && defined $pending->{selected_at};
+	if (time - $pending->{selected_at} > 120) {
+		clearPendingTraversal($pending->{attempt_id});
+		return;
+	}
+	return unless $pending->{source_map} eq $field->baseName;
+	return unless blockDistance($portal->{pos_to}, {x => $pending->{x}, y => $pending->{y}}) <= 1;
+	$pending->{portal_seen_at} = time;
+	$pending->{portal_pos} = {%{$portal->{pos_to}}};
+}
+
+sub markWarpPortalPendingAreaSpell {
+	my ($spell) = @_;
+	return unless $char && $field && $spell && ($spell->{type} || 0) == 0x81;
+	my $pending = $char->{warpPortalPendingTraversal};
+	return unless $pending && defined $pending->{selected_at};
+	if (time - $pending->{selected_at} > 120) {
+		clearPendingTraversal($pending->{attempt_id});
+		return;
+	}
+	return unless defined $char->{ID} && defined $spell->{sourceID}
+		&& $spell->{sourceID} eq $char->{ID}
+		&& $pending->{source_map} eq $field->baseName
+		&& blockDistance({x => $spell->{x}, y => $spell->{y}}, {x => $pending->{x}, y => $pending->{y}}) <= 1;
+	$pending->{portal_seen_at} = time;
+	$pending->{portal_pos} = {x => $spell->{x}, y => $spell->{y}};
+}
+
+sub recordWarpPortalPendingArrival {
+	my ($oldMap) = @_;
+	return unless $char && $field;
+	my $pending = $char->{warpPortalPendingTraversal};
+	return unless $pending;
+	if (time - $pending->{selected_at} > 120) {
+		clearPendingTraversal($pending->{attempt_id});
+		return;
+	}
+	unless ($pending->{portal_seen_at}) {
+		clearPendingTraversal($pending->{attempt_id});
+		return;
+	}
+	return unless defined $oldMap && $oldMap eq $pending->{source_map};
+	return unless $pending->{map} eq $field->baseName;
+	return unless defined $char->{pos}{x} && defined $char->{pos}{y};
+	confirmPortalArrival($oldMap, $field->baseName, $char->{pos}{x}, $char->{pos}{y}, $char->{old_pos_to});
 }
 
 # 0828,14
@@ -4455,14 +4511,12 @@ sub area_spell {
 		message TF("%s has scribbled: %s on (%d, %d)\n", getActorName($sourceID), $args->{scribbleMsg}, $x, $y);
 	}
 
-	Plugins::callHook('packet_areaSpell', {
-		ID => $ID,
-		sourceID => $sourceID,
-		x => $x,
-		y => $y,
-		type => $type,
-		isVisible => $isVisible
-	});
+	my $spell = {
+		ID => $ID, sourceID => $sourceID, x => $x, y => $y,
+		type => $type, isVisible => $isVisible
+	};
+	markWarpPortalPendingAreaSpell($spell);
+	Plugins::callHook('packet_areaSpell', $spell);
 }
 
 #099F
@@ -4502,15 +4556,12 @@ sub area_spell_multiple2 {
 		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), isVisible = $isVisible, range = $range\n", "skill", 2;
 	}
 
-	Plugins::callHook('packet_areaSpell', {
-		ID => $ID,
-		sourceID => $sourceID,
-		x => $x,
-		y => $y,
-		type => $type,
-		isVisible => $isVisible,
-		range => $range
-	});
+	my $spell = {
+		ID => $ID, sourceID => $sourceID, x => $x, y => $y,
+		type => $type, isVisible => $isVisible, range => $range
+	};
+	markWarpPortalPendingAreaSpell($spell);
+	Plugins::callHook('packet_areaSpell', $spell);
 }
 
 #09CA
@@ -4551,16 +4602,12 @@ sub area_spell_multiple3 {
 		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), isVisible = $isVisible, range = $range, lvl = $lvl\n", "skill", 2;
 	}
 
-	Plugins::callHook('packet_areaSpell', {
-		ID => $ID,
-		sourceID => $sourceID,
-		x => $x,
-		y => $y,
-		type => $type,
-		isVisible => $isVisible,
-		range => $range,
-		lvl => $lvl
-	});
+	my $spell = {
+		ID => $ID, sourceID => $sourceID, x => $x, y => $y,
+		type => $type, isVisible => $isVisible, range => $range, lvl => $lvl
+	};
+	markWarpPortalPendingAreaSpell($spell);
+	Plugins::callHook('packet_areaSpell', $spell);
 }
 
 sub sync_request_ex {
@@ -7659,6 +7706,7 @@ sub map_change {
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
+	recordWarpPortalPendingArrival($oldMap);
 	$timeout{ai}{time} = time;
 }
 
@@ -7779,6 +7827,7 @@ sub map_changed {
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
+	recordWarpPortalPendingArrival($oldMap);
 	$timeout{ai}{time} = time;
 }
 
@@ -10722,6 +10771,7 @@ sub parse_merge_item_result {
 
 sub memo_success {
 	my ($self, $args) = @_;
+	memoAcknowledged($args->{fail});
 	if ($args->{fail}) {
 		warning T("Memo Failed\n");
 		Plugins::callHook('memo_fail', {field => $field ? $field->baseName : undef});

@@ -270,6 +270,9 @@ runFromTarget_noAttackMethodFallback 0
 runFromTarget_noAttackMethodFallback_attackMaxDist 14
 runFromTarget_noAttackMethodFallback_minStep 8
 
+# Warp Portal entries accept legacy "map" or "map x y" values.
+# memo1 is the save point; memo2-memo4 are the three memorized destinations.
+# Coordinates are optional and may be learned from /memo or confirmed arrival.
 saveMap
 saveMap_x
 saveMap_y
@@ -281,6 +284,10 @@ memo1
 memo2
 memo3
 memo4
+# Enable AL_WARP as a native map-route alternative (disabled by default).
+route_warpPortal 0
+# Synchronize memo1-memo4 from normal AL_WARP server responses (disabled by default).
+warpPortal_autoUpdateMemo 0
 
 shopAuto_open 0
 shop_random 0

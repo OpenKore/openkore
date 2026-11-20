@@ -11,11 +11,12 @@ use strict;
 use Modules 'register';
 use Time::HiRes qw(time);
 
-use Globals qw($packetParser $incomingMessages %config $char %ai_v %timeout $shopstarted $firstLoginMap $sentWelcomeMessage @lastpm %lastpm);
+use Globals qw($packetParser $incomingMessages %config $char $field %ai_v %timeout $shopstarted $firstLoginMap $sentWelcomeMessage @lastpm %lastpm);
 use Misc qw(configModify visualDump);
 use Log qw(message debug warning);
 use Translation;
 use Utils qw(existsInList);
+use WarpPortal qw(noteMemoRequest noteWarpCast);
 
 use base qw(Network::PacketParser);
 
@@ -76,6 +77,19 @@ sub map_loaded {
 	message T("Map loaded\n"), 'connection';
 	
 	Plugins::callHook('map_loaded');
+}
+
+# These are outgoing client packets parsed by ClientReceive in XKore mode.
+# Capture only the observed request facts; the server acknowledgement remains
+# the authority for whether /memo actually succeeded.
+sub memo_request {
+	return unless $char && $field && $char->{pos};
+	noteMemoRequest($field->baseName, $char->{pos}{x}, $char->{pos}{y});
+}
+
+sub skill_use_location {
+	my ($self, $args) = @_;
+	noteWarpCast($args->{skillID}, $args->{lv});
 }
 
 sub actor_action {
