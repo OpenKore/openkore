@@ -11355,7 +11355,9 @@ sub equip_switch_log {
 	for (my $i = 0; $i < length($args->{log}); $i+= 6) {
 		my ($index, $position) = unpack('a2 V', substr($args->{log}, $i, 6));
 		my $item = $char->inventory->getByID($index);
-		$char->{eqswitch}{$equipSlot_lut{$position}} = $item;
+		foreach my $slot (grep { $_ & $position } keys %equipSlot_lut) {
+			$char->{eqswitch}{$equipSlot_lut{$slot}} = $item;
+		}
 	}
 }
 
