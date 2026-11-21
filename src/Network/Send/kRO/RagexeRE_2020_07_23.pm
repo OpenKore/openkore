@@ -21,6 +21,11 @@ sub new {
 	$self->{packet_list}{'0B66'} = ['repair_item', 'v V a16 C2', [qw(index nameID cards upgrade grade)]];
 	$self->{packet_lut}{repair_item} = '0B66';
 
+	# Modern Rodex mailbox requests (PACKETVER >= 20170419) carry three
+	# 64-bit mail IDs and no legacy one-byte mailbox type.
+	$self->{packet_lut}{rodex_open_mailbox} = '0AC0';
+	$self->{packet_lut}{rodex_refresh_maillist} = '0AC1';
+
 	return $self;
 }
 
