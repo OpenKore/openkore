@@ -25,6 +25,8 @@ use Task;
 use base qw(Task);
 use Task::Route;
 use Field;
+use Skill;
+use WarpPortal qw(parseMemoEntry memoCoordinateForMap warpMapIndex availableWarpMaps warpMapStatus);
 use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships %teleport_items);
 use Translation qw(T TF);
 use Log qw(debug warning error);
@@ -112,6 +114,7 @@ sub new {
 	$self->{noTeleSpawnMaps} = $args{noTeleSpawnMaps} || {};
 	$self->{noWarpItemMaps} = $args{noWarpItemMaps} || {};
 	$self->{noWarpItemIDs} = $args{noWarpItemIDs} || {};
+	$self->{noWarpPortalMaps} = $args{noWarpPortalMaps} || {};
 
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
 
@@ -132,6 +135,7 @@ sub new {
 		NPC           => defined $routeWeights{NPC} ? $routeWeights{NPC} : 200,
 		COMMAND       => defined $routeWeights{COMMAND} ? $routeWeights{COMMAND} : 20,
 		WARPTOSAVEMAP => defined $routeWeights{WARPTOSAVEMAP} ? $routeWeights{WARPTOSAVEMAP} : 200,
+		WARPPORTAL    => defined $routeWeights{WARPPORTAL} ? $routeWeights{WARPPORTAL} : 200,
 		AIRSHIP       => defined $routeWeights{AIRSHIP} ? $routeWeights{AIRSHIP} : 200,
 		WARPITEM      => defined $routeWeights{WARPITEM} ? $routeWeights{WARPITEM} : 80,
 		ZENY          => defined $routeWeights{ZENY} ? $routeWeights{ZENY} : 0.1,
@@ -306,12 +310,12 @@ sub isWarpItemCandidatesCacheExpired {
 }
 
 sub buildReachedTargetState {
-	my ($self, $parentKey, $parentValue, $targetPortalString) = @_;
+	my ($self, $parentKey, $parentValue, $targetPortalString, $estimatedWalk) = @_;
 	my $blockedPortalGroups = $self->cloneBlockedPortalGroups($parentValue);
 	my $key = $self->buildRouteStateKey($targetPortalString, $blockedPortalGroups);
 	my $value = {
 		%{$parentValue},
-		walk => scalar(@{$self->{solution}}) + $parentValue->{walk},
+		walk => scalar(@{$self->{solution}}) + $parentValue->{walk} + ($estimatedWalk || 0),
 		parent => $parentKey,
 		portal_string => $targetPortalString,
 		blockedPortalGroups => $blockedPortalGroups,
@@ -325,6 +329,8 @@ sub buildReachedTargetState {
 		teleportItemRequiredEquipItemID => undef,
 		is_airship => 0,
 		airship_message => undef,
+		is_warpPortal => 0,
+		warpPortalMemoSlot => undef,
 	};
 	return ($key, $value);
 }
@@ -357,6 +363,8 @@ sub buildMapSolutionStep {
 		teleportItemRequiredEquipItemID => $value->{teleportItemRequiredEquipItemID},
 		is_airship => $value->{is_airship} || 0,
 		airship_message => $value->{airship_message},
+		is_warpPortal => $value->{is_warpPortal} || 0,
+		warpPortalMemoSlot => $value->{warpPortalMemoSlot},
 	};
 }
 
@@ -454,6 +462,7 @@ sub iterate {
 		if (!$self->{noWarpItem}) {
 			$self->populateOpenListWithWarpByItems($sourceNode, $initialBaseCost, undef);
 		}
+		$self->populateOpenListWithWarpPortal($sourceNode, $initialBaseCost, undef);
 
 		# Initializes the openlist with airships walkable from the starting point.
 		unless ($self->{noAirship}) {
@@ -637,6 +646,20 @@ sub searchStep {
 				$parent,
 				$closelist->{$parent},
 				$targetPortalString,
+			);
+			$self->{found} = $walk;
+			$closelist->{$walk} = $value;
+		} elsif (!$map_destination_has_coords
+			&& $closelist->{$parent}{is_warpPortal}
+			&& $map_name eq $target->{map}) {
+			# We cannot validate a walk from an unknown landing coordinate. Keep
+			# Warp Portal as a conservative option only for an objective on the
+			# destination map, price it at the map's tile-count upper bound, and
+			# let MapRoute recalculate from the server-confirmed landing position.
+			my $estimate = $target->{field}->width() * $target->{field}->height();
+			my $targetPortalString = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
+			my ($walk, $value) = $self->buildReachedTargetState(
+				$parent, $closelist->{$parent}, $targetPortalString, $estimate,
 			);
 			$self->{found} = $walk;
 			$closelist->{$walk} = $value;
@@ -847,6 +870,7 @@ sub resolveRouteDestinationEntry {
 		hashSafeGetValue(\%portals_commands, $destID, 'dest', $destID),
 		hashSafeGetValue($self->{SyntheticPortals}, 'tempPortalsSaveMap', $destID, 'dest', $destID),
 		hashSafeGetValue($self->{SyntheticPortals}, 'tempPortalsWarpItems', $destID, 'dest', $destID),
+		hashSafeGetValue($self->{SyntheticPortals}, 'tempWarpPortal', $destID, 'dest', $destID),
 		hashSafeGetValue(\%portals_airships, $portal, 'dest', $destID),
 	);
 
@@ -937,6 +961,77 @@ sub populateOpenListWithWarpToSaveMap {
 		$dest,
 		{ map => $dest_map, x => $dest_x, y => $dest_y },
 	);
+}
+
+# Warp Portal is a one-use route alternative from the character's current map.
+# Exact arrival coordinates come only from configuration or a confirmed prior traversal.
+sub populateOpenListWithWarpPortal {
+	my ($self, $from_node, $baseCost, $parent) = @_;
+	return unless !$parent && $config{route_warpPortal} && $char;
+	my $skill = Skill->new(handle => 'AL_WARP');
+	my $level = $char->getSkillLevel($skill) || 0;
+	return if $level < 1;
+	return if Misc::isTeleportSkillBlockedOnMap($self->{source}{map})
+		|| Misc::_isTeleportSkillSuppressedByStatus();
+	my $inventory = eval { $char->inventory };
+	my $blueGemstone = $inventory && $inventory->getByNameID(717);
+	return unless $blueGemstone && $blueGemstone->{amount} > 0;
+	my $spCost = $skill->getSP($level);
+	return if defined $spCost && ($char->{sp} || 0) < $spCost;
+
+	return if $self->{noWarpPortalMaps}{$self->{source}{map}};
+	my $serverMaps = availableWarpMaps();
+	my @configured = map { parseMemoEntry($config{"memo$_"}) } 1 .. 4;
+	my %configured_count;
+	$configured_count{$_->{map}}++ for grep { $_->{valid} && $_->{map} } @configured;
+	for my $config_slot (1 .. 4) {
+		my $entry = $configured[$config_slot - 1];
+		next unless $entry->{valid} && $entry->{map};
+		my $map = $entry->{map};
+		# Config is a speculative hint until the current character has received
+		# an AL_WARP list. After a list arrives, only its unique map names are
+		# eligible. Never use the configuration slot as the server selection.
+		next if $configured_count{$map} != 1;
+		my $server_index = warpMapIndex($map);
+		my $status = warpMapStatus($map, $config_slot);
+		next if $status eq 'absent' || $status eq 'invalid';
+		my $minimum_level = defined($server_index) ? $server_index + 1 : $config_slot;
+		next if $level < $minimum_level;
+		my ($x, $y) = memoCoordinateForMap($map);
+		my $routeSlot = defined($server_index) ? $server_index : $config_slot - 1;
+		my $dest = defined $x && defined $y ? "$map $x $y" : $map;
+		next if $dest eq $from_node;
+		my $destField = eval { Field->new(name => $map) };
+		next unless $destField;
+		if (defined $x && defined $y) {
+			next unless $x >= 0 && $y >= 0 && $x < $destField->width()
+				&& $y < $destField->height() && $destField->isWalkable($x, $y);
+		}
+
+		my $sourceMap = $self->{source}{map};
+		my $unknownCoordinateEstimate = 0;
+		if (!defined $x || !defined $y) {
+			my $hasCoordinateTarget = grep { $_->{map} eq $map && hasMapCoords($_) } @{$self->{targets}};
+			$unknownCoordinateEstimate = $destField->width() * $destField->height()
+				unless $hasCoordinateTarget;
+		}
+		my $penalty = $self->getMapRouteWeight($sourceMap) + $self->getRouteWeight('WARPPORTAL') + 2;
+		my $key = $self->buildRouteStateKey("$from_node=$dest", $baseCost->{blockedPortalGroups});
+		my $routeCost = ($baseCost->{walk} || 0) + $penalty + $unknownCoordinateEstimate;
+		next unless $self->canAddOpenListEntry($key, $routeCost);
+		my $value = $self->buildRouteValue(
+			type => 'warp_portal', parent => undef, baseCost => $baseCost,
+			extraWalk => $penalty + $unknownCoordinateEstimate,
+			blockedPortalGroups => $self->cloneBlockedPortalGroups($baseCost),
+		);
+		$value->{is_warpPortal} = 1;
+		$value->{warpPortalMemoSlot} = $routeSlot;
+		$value->{warpPortalSpeculative} = $serverMaps ? 0 : 1;
+		$self->registerSyntheticPortalDestination(
+			'tempWarpPortal', $dest, {map => $map, x => $x, y => $y},
+		);
+		$self->add_key_to_openList($key, $value);
+	}
 }
 
 

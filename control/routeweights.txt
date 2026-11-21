@@ -36,6 +36,9 @@ COMMAND 20
 # by using a teleport lv 2 or butterfly wing. Only change this, if you exactly know what you're doing!
 WARPTOSAVEMAP 200
 
+# Warp Portal skill route weight. Higher values discourage consuming a Blue Gemstone.
+WARPPORTAL 200
+
 # Use airship
 AIRSHIP 200
 

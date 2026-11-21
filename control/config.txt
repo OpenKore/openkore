@@ -239,6 +239,7 @@ route_warpByItem 0
 route_warpByItem_chaining 0
 route_warpByItem_minDistance 150
 route_warpItem_minGain 0
+route_warpPortal 0
 route_warpItem_routeCostHeuristic_max 10000
 route_warpItem_routeCostProbe_maxPerTick 6
 route_warpItem_routeCostCache_max 3000
@@ -281,6 +282,7 @@ memo1
 memo2
 memo3
 memo4
+warpPortal_autoUpdateMemo 0
 
 shopAuto_open 0
 shop_random 0

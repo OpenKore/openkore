@@ -30,6 +30,7 @@ my @tests = qw(
 	QuestReceiveTest
 	FieldTest
 	NativeClosestWalkableTest
+	WarpPortalTest
 	XConfTest
 );
 if ($^O eq 'MSWin32') {

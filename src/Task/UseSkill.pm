@@ -33,6 +33,7 @@ use Globals qw($net $char $messageSender $accountID %timeout);
 use Network;
 use Plugins;
 use Skill;
+use WarpPortal qw(noteWarpCast);
 use Log qw(debug);
 use Translation qw(T TF);
 use Utils qw(timeOut);
@@ -273,6 +274,7 @@ sub castSkill {
 	if (!defined $level) {
 		$level = $char->getSkillLevel($skill);
 	}
+	noteWarpCast($skillID, $level) if $skillID == 27;
 
 	if ($skill->getTargetType() == Skill::TARGET_SELF()) {
 		# A skill which is used on the character self.
