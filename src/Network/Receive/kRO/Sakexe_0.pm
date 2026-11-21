@@ -220,8 +220,8 @@ sub new {
 		'0145' => ['npc_image', 'Z16 C', [qw(npc_image type)]],
 		'0147' => ['item_skill', 'v V v3 Z24 C', [qw(skillID targetType skillLv sp range skillName upgradable)]], # 39
 		'0148' => ['resurrection', 'a4 v', [qw(targetID type)]], # 8
-		'014A' => ['manner_message', 'V', [qw(type)]], # 6
-		'014B' => ['GM_silence', 'C Z24', [qw(type name)]], # 27
+		'014A' => ['manner_message', 'V', [qw(flag)]], # 6
+		'014B' => ['GM_silence', 'C Z24', [qw(flag name)]], # 27
 		'014C' => ['guild_allies_enemy_list'], # -1
 		'014E' => ['guild_master_member', 'V', [qw(type)]], # 6
 		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],
