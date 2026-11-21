@@ -19,6 +19,73 @@ on:
 
 jobs:
 
+####################
+## macOS Actions ##
+####################
+# GitHub-hosted coverage uses macOS 15; older macOS releases are not validated here.
+
+  build_XSTools_macOS:
+
+    name: XSTools macOS (${{ matrix.architecture }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - os: macos-15
+          architecture: arm64
+        - os: macos-15-intel
+          architecture: x86_64
+
+    steps:
+    - name: GIT checkout
+      uses: actions/checkout@v7
+
+    - name: Setup Python 3.11
+      uses: actions/setup-python@v7
+      with:
+        python-version: '3.11'
+
+    - name: Install Perl and XSTools dependencies
+      run: |
+        brew install perl readline curl
+        echo "$(brew --prefix perl)/bin" >> "$GITHUB_PATH"
+
+    - name: Select and report toolchain
+      shell: bash
+      run: |
+        echo "XSTOOLS_PERL=$(command -v perl)" >> "$GITHUB_ENV"
+        echo "SCONS_PYTHON=python3" >> "$GITHUB_ENV"
+        perl -V:version -V:archname -V:ccflags -V:cppflags -V:cccdlflags -V:lddlflags -V:archlibexp
+        python3 --version
+        test "$(uname -m)" = "${{ matrix.architecture }}"
+
+    - name: Check Python discovery and build failure propagation
+      run: sh src/test/test_makefile_python.sh
+
+    - name: Clean build and compile XSTools
+      run: |
+        make SCONS_PYTHON=python3 clean
+        make SCONS_PYTHON=python3 all
+
+    - name: Verify architecture and load XS modules
+      run: |
+        file src/auto/XSTools/XSTools.bundle
+        test "$(lipo -archs src/auto/XSTools/XSTools.bundle)" = "${{ matrix.architecture }}"
+        perl -I src/deps -I src -e 'use XSTools; XSTools::bootModule("Utils::Whirlpool"); XSTools::bootModule("Utils::Rijndael"); XSTools::bootModule("PathFinding"); XSTools::bootModule("Translation"); print "XSTools and representative XS modules loaded\n";'
+
+    - name: Verify automatic rebuild of an incompatible bundle
+      run: |
+        printf '%s\n' 'deliberately invalid XSTools binary' > src/auto/XSTools/XSTools.bundle
+        perl -I src/deps -I src -e 'use XSTools; XSTools::bootModule("Utils::Whirlpool"); print "Automatic XSTools rebuild succeeded\n";'
+        test "$(lipo -archs src/auto/XSTools/XSTools.bundle)" = "${{ matrix.architecture }}"
+
+    - name: Run OpenKore tests and startup check
+      run: |
+        make test
+        perl plugins/eventMacro/test/unit_tests.pl
+        perl ./openkore.pl --version
+
 #####################
 ## Windows Actions ##
 #####################
