@@ -1,6 +1,9 @@
 autoload.pl
 compile.bat
 compile-wx.bat
+prepare-wx-packer.ps1
+wxstart-par.pl
+wxperl-compat.pl
 Do_Not_Compile_OpenKore.txt
 dos2unix.pl
 openkore.ico

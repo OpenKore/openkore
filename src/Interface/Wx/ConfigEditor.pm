@@ -131,12 +131,13 @@ package Interface::Wx::ConfigEditor::Grid;
 
 use Wx ':everything';
 use Wx::Grid;
-use Wx::Event qw(EVT_GRID_CELL_CHANGE EVT_GRID_CELL_LEFT_CLICK EVT_TIMER EVT_BUTTON);
+use Wx::Event qw(EVT_GRID_CELL_CHANGE EVT_GRID_CELL_LEFT_CLICK EVT_GRID_EDITOR_CREATED EVT_TEXT EVT_TIMER EVT_BUTTON);
 use Wx::Html;
 use base qw(Wx::Panel);
 
 use Translation qw/T TF/;
 use Utils::HttpReader;
+use Interface::Wx::Utils qw(disablePageCompositing);
 
 our $manual;
 
@@ -165,6 +166,22 @@ sub new {
 	$grid->EnableDragRowSize(0);
 	EVT_GRID_CELL_LEFT_CLICK($grid, sub { $self->_onClick(@_, $parent); }); # the $parent is added for downloadManual
 	EVT_GRID_CELL_CHANGE($grid, sub { $self->_changed(@_); });
+	if ($^O eq 'MSWin32' && Wx::wxVERSION() == 3.003) {
+		EVT_GRID_EDITOR_CREATED($grid, sub {
+			my (undef, $event) = @_;
+			my $input = $event->GetControl;
+			EVT_TEXT($input, $input->GetId, sub {
+				my (undef, $textEvent) = @_;
+				$textEvent->Skip;
+				my $focused = Wx::Window::FindFocus();
+				return unless $focused && $focused->GetHandle == $input->GetHandle && $input->IsShownOnScreen;
+				my $page = $input->GetParent;
+				$page = $page->GetParent while $page && !$page->isa('Interface::Wx::DockNotebook::Page');
+				disablePageCompositing($page, $input) if $page && $page->IsDoubleBuffered;
+			}) if $input->isa('Wx::TextCtrl');
+			$event->Skip;
+		});
+	}
 
 	my $html = $self->{html} = new Wx::HtmlWindow($splitter, wxID_ANY);
 	if ($^O ne 'MSWin32') {

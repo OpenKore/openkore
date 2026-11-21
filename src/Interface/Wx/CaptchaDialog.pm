@@ -11,6 +11,8 @@
 package Interface::Wx::CaptchaDialog;
 
 use strict;
+use List::Util qw(min);
+use Interface::Wx::Utils qw(wxFilePath);
 use Wx ':everything';
 use Wx::Event qw(EVT_TEXT_ENTER EVT_BUTTON);
 use base qw(Wx::Dialog);
@@ -20,7 +22,8 @@ use constant DEFAULT_WIDTH => 250;
 
 sub new {
 	my ($class, $parent, $imageFile) = @_;
-	my $self = $class->SUPER::new($parent, wxID_ANY, 'Captcha');
+	my $self = $class->SUPER::new($parent, wxID_ANY, 'Captcha', wxDefaultPosition,
+		wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 	$self->_buildGUI ($imageFile);
 	return $self;
 }
@@ -36,13 +39,22 @@ sub GetValue {
 
 sub _buildGUI {
 	my ($self, $imageFile) = @_;
-	my ($sizer, $image, $text, $buttonSizer, $ok, $cancel);
+	my ($sizer, $text, $buttonSizer, $ok, $cancel);
 
 	$sizer = new Wx::BoxSizer(wxVERTICAL);
 	
-	$image = new Wx::StaticBitmap ($self, wxID_ANY, new Wx::Bitmap (new Wx::Image ($imageFile, wxBITMAP_TYPE_ANY)));
-	
-	$sizer->Add ($image, 1, wxALL, 8);
+	my $bitmap = new Wx::Bitmap (new Wx::Image (wxFilePath($imageFile), wxBITMAP_TYPE_ANY));
+	my $viewport = new Wx::ScrolledWindow ($self, wxID_ANY);
+	$viewport->SetScrollRate (8, 8);
+	my $imageSizer = new Wx::BoxSizer (wxVERTICAL);
+	$imageSizer->Add (new Wx::StaticBitmap ($viewport, wxID_ANY, $bitmap), 0);
+	$viewport->SetSizer ($imageSizer);
+
+	my $displayIndex = $self->GetParent ? Wx::Display::GetFromWindow($self->GetParent) : 0;
+	my $area = Wx::Display->new($displayIndex == wxNOT_FOUND ? 0 : $displayIndex)->GetClientArea;
+	$viewport->SetMinSize ([min($bitmap->GetWidth, int($area->GetWidth * 0.75)),
+		min($bitmap->GetHeight, int($area->GetHeight * 0.75))]);
+	$sizer->Add ($viewport, 1, wxALL | wxGROW, 8);
 	
 	$text = new Wx::TextCtrl($self, wxID_ANY, '', wxDefaultPosition,
 		[DEFAULT_WIDTH, -1], wxTE_PROCESS_ENTER);
@@ -64,7 +76,9 @@ sub _buildGUI {
 	EVT_BUTTON($self, $cancel->GetId, \&_onCancel);
 
 	$self->SetSizerAndFit($sizer);
+	$viewport->FitInside;
 	$self->{text} = $text;
+	$text->SetFocus;
 }
 
 sub _onTextEnter {

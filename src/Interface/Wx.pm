@@ -28,7 +28,7 @@ package Interface::Wx;
 # Note: some wx constants are defined by Wx::Event only if corresponding events are imported
 
 BEGIN {
-	require Wx::Perl::Packager if ($^O eq 'MSWin32');
+	require Wx::Perl::Packager if ($^O eq 'MSWin32' && defined $ENV{INTERPRETER} && !$ENV{PAR_PROGNAME});
 }
 
 use strict;
@@ -55,6 +55,7 @@ use Modules;
 use Field;
 use I18N qw/bytesToString/;
 
+use Interface::Wx::Utils qw(wxFilePath);
 use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
 use Interface::Wx::LogView;
@@ -145,7 +146,7 @@ sub OnInit {
 
 	{
 		my $icon = [$0 =~ m{^(.*?)((\w|\.)*)$}]->[0] . 'src/build/openkore.ico';
-		$self->{frame}->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ANY)) if -f $icon;
+		$self->{frame}->SetIcon(new Wx::Icon(wxFilePath($icon), wxBITMAP_TYPE_ANY)) if -f $icon;
 	}
 
 	return 1;
@@ -427,6 +428,15 @@ sub createInterface {
 
 	# Hide console on Win32
 	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
+		eval {
+			if ($ENV{PAR_PROGNAME} && $main::OPENKORE_WX_ROOT_PID) {
+				require Win32::API;
+				my $window = Win32::API->new('kernel32', 'GetConsoleWindow', '', 'N')->Call();
+				my $pid = pack('L', 0);
+				Win32::API->new('user32', 'GetWindowThreadProcessId', 'NP', 'N')->Call($window, $pid);
+				Win32::API->new('user32', 'ShowWindow', 'NN', 'N')->Call($window, 0) if unpack('L', $pid) == $main::OPENKORE_WX_ROOT_PID;
+			}
+		};
 		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 }
