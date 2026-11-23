@@ -230,6 +230,8 @@ route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_maxNpcTries 5
+route_npcTalk_maxDistance 10
+route_npcTalk_minDistance 8
 route_relogOnNpcFailure 0
 route_teleport 0
 route_teleport_minDistance 75
