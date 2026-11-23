@@ -21,16 +21,14 @@ EXTRA_LIBRARY_DIRECTORIES = []
 # Optimized Flags. Use only on Release.
 EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
 
-# Brew's readline
-DARWIN_INCLUDE_DIRECTORIES = ['/usr/local/opt/readline/include']
-DARWIN_LIBRARY_DIRECTORIES = ['/usr/local/opt/readline/lib']
-
 # Fixes for OS X (src/auto/XSTools/darwin/include)
-DARWIN_INCLUDE_DIRECTORIES += ['darwin/include']
+DARWIN_INCLUDE_DIRECTORIES = ['darwin/include']
+DARWIN_LIBRARY_DIRECTORIES = []
 
 ####################
 
 import os
+import shlex
 import sys
 import subprocess
 
@@ -44,7 +42,18 @@ have_ncurses = False
 READLINE_LIB = 'readline'
 
 perlconfig = {}
+perl_executable = os.environ.get('XSTOOLS_PERL')
+if not perl_executable:
+	perl_executable = 'wperl' if win32 else 'perl'
 env = Environment()
+if os.environ.get('XSTOOLS_REBUILD'):
+	# A runtime loader failure means timestamps are not enough to establish that
+	# objects match the selected Perl ABI. Force their normal builders to run.
+	def force_rebuild(dependency, target, prev_ni, repo_node=None,
+			  env_decider=env.decide_source):
+		env_decider(dependency, target, prev_ni, repo_node)
+		return True
+	env.Decider(force_rebuild)
 if win32:
 	env = Environment(
 		ENV = {
@@ -56,6 +65,24 @@ if win32:
 	)
 
 if darwin:
+	# Discover the configured Homebrew prefix instead of assuming where
+	# Homebrew is installed. System compiler paths and legacy Fink paths are
+	# retained as fallbacks.
+	try:
+		brew_prefix = subprocess.check_output(
+			['brew', '--prefix', 'readline'], stderr=subprocess.PIPE).decode().strip()
+		if brew_prefix:
+			DARWIN_INCLUDE_DIRECTORIES.insert(0, os.path.join(brew_prefix, 'include'))
+			DARWIN_LIBRARY_DIRECTORIES.insert(0, os.path.join(brew_prefix, 'lib'))
+	except (OSError, subprocess.CalledProcessError):
+		pass
+	# Preserve the historical Intel Homebrew location as a fallback for older
+	# installations where brew itself is not on PATH.
+	legacy_readline = '/usr/local/opt/readline'
+	if os.path.isdir(os.path.join(legacy_readline, 'include')):
+		DARWIN_INCLUDE_DIRECTORIES.append(os.path.join(legacy_readline, 'include'))
+	if os.path.isdir(os.path.join(legacy_readline, 'lib')):
+		DARWIN_LIBRARY_DIRECTORIES.append(os.path.join(legacy_readline, 'lib'))
 	env['LIBPATH'] = DARWIN_LIBRARY_DIRECTORIES
 	env['CPPPATH'] = DARWIN_INCLUDE_DIRECTORIES
 
@@ -83,13 +110,16 @@ def CheckPerl(context):
 	}
 
 	my $coredir = File::Spec->catfile($Config{archlibexp}, "CORE");
+	my @keys = qw(cc ccflags cppflags cccdlflags lddlflags archlibexp libperl archname);
+	my $xsubpp = search(\\@INC, "ExtUtils/xsubpp") || search([File::Spec->path()], "xsubpp");
 
 	open(F, ">", ".perlconfig.txt");
 	print F "perl=$Config{perlpath}\\n";
 	print F "typemap=" . search(\\@INC, "ExtUtils/typemap") . "\\n";
-	print F "xsubpp=" . search(\\@INC, "ExtUtils/xsubpp" || search([File::Spec->path()], "xsubpp")) . "\\n";
+	print F "xsubpp=$xsubpp\\n";
 	print F "coredir=$coredir\\n";
 	print F "perlversion=" . $^V . "\\n";
+	for my $key (@keys) { print F "$key=$Config{$key}\\n"; }
 	close F;
 	'''
 
@@ -107,9 +137,9 @@ def CheckPerl(context):
 			# in PATH yet. So add the default Perl installation folder
 			# to PATH.
 			os.environ['PATH'] += os.path.pathsep + "/cygdrive/c/Perl/bin"
-		ret = subprocess.call(["wperl", ".perltest.pl"])
+		ret = subprocess.call([perl_executable, ".perltest.pl"])
 	else:
-		ret = subprocess.call(["perl", ".perltest.pl"])
+		ret = subprocess.call([perl_executable, ".perltest.pl"])
 	context.Result(ret == 0)
 
 	os.unlink(".perltest.pl")
@@ -125,10 +155,11 @@ def CheckPerl(context):
 				break
 			line = line.rstrip("\n")
 			line = line.rstrip("\r")
-			[name, value] = line.split("=", 2)
+			[name, value] = line.split("=", 1)
 			perlconfig[name] = value
 		f.close()
 		os.unlink(".perlconfig.txt")
+		perlconfig['perl'] = perl_executable
 
 		if cygwin:
 			# Convert paths to Cygwin-compatible paths
@@ -273,7 +304,7 @@ if cygwin:
 		print (' '.join(command))
 		ret = subprocess.call(command)
 		if ret != 0:
-			return 0
+			return ret
 
 		command = ['dllwrap', '--driver=g++', '--target=i386-mingw32',
 			'--def', targetName + '.def', '-mno-cygwin'] + \
@@ -299,16 +330,28 @@ elif darwin:
 		for f in source:
 			sources += [str(f)]
 
-		command = [env['CXX'], '-flat_namespace', '-bundle',
-			'-undefined', 'dynamic_lookup',
-			'-o', str(target[0])] + sources
+		# Link to a sibling temporary file and replace the old bundle only after
+		# a successful link. A failed auto-rebuild must not destroy a usable one.
+		temporary = str(target[0]) + '.tmp'
+		command = [env['CXX']] + env.get('LINKFLAGS', []) + ['-flat_namespace',
+			'-o', temporary] + sources
 		if env.has_key('LIBPATH'):
 			for dir in env['LIBPATH']: command += ['-L' + dir]
 		if env.has_key('LIBS'):
 		 	for flag in env['LIBS']: command += ['-l' + flag]
 
 		print (' '.join(command))
-		return subprocess.call(command)
+		ret = subprocess.call(command)
+		if ret == 0:
+			try:
+				os.rename(temporary, str(target[0]))
+			except OSError:
+				if os.path.exists(temporary):
+					os.unlink(temporary)
+				raise
+		elif os.path.exists(temporary):
+			os.unlink(temporary)
+		return ret
 
 	NativeDLLBuilder = Builder(action = linkBundleAction,
 				   emitter = '$LIBEMITTER',
@@ -337,15 +380,40 @@ elif not darwin:
 		' -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64')
 else:
 	# MacOS X
-	perlenv['CCFLAGS'] += ['-no-cpp-precomp', '-DPERL_DARWIN',
-			      '-fno-strict-aliasing']
-	perlenv['LIBS'] += ['perl']
+	# Use the active Perl's compiler and linker options. shlex preserves quoted
+	# arguments and definitions containing '=' when parsing Config strings.
+	# Keep the historical Apple compiler option for older supported toolchains;
+	# Perl Config supplies the ABI macros and remaining compiler flags.
+	perlenv.AppendUnique(CCFLAGS=[
+		'-no-cpp-precomp', '-DPERL_DARWIN', '-fno-strict-aliasing'])
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
-	# Add default Fink header directory to header search path.
-	# But give system's default include paths higher priority.
+	# Retain system and legacy Fink include locations for older macOS setups.
 	perlenv['CPPPATH'] += ['/usr/include', '/usr/local/include', '/sw/include']
 	perlenv['LIBPATH'] += DARWIN_LIBRARY_DIRECTORIES
 	perlenv['CPPPATH'] += DARWIN_INCLUDE_DIRECTORIES
+	linkflags = shlex.split(perlconfig.get('lddlflags', ''))
+	if '-bundle' not in linkflags:
+		linkflags += ['-bundle']
+	if '-undefined' not in linkflags:
+		linkflags += ['-undefined', 'dynamic_lookup']
+	perlenv.AppendUnique(LINKFLAGS=linkflags)
+	libperl = os.path.basename(perlconfig.get('libperl', ''))
+	if libperl.startswith('lib'):
+		libperl = libperl[3:]
+	for suffix in ('.dylib', '.so'):
+		if libperl.endswith(suffix):
+			libperl = libperl[:-len(suffix)]
+	perlenv['LIBS'] += [libperl or 'perl']
+
+if not win32:
+	# Perl's Config values describe the headers and compiler flags used to build
+	# this interpreter. Keep the existing Unix flags and add Config flags once.
+	perl_compile_flags = []
+	for key in ('ccflags', 'cppflags', 'cccdlflags'):
+		perl_compile_flags += shlex.split(perlconfig.get(key, ''))
+	perlenv.AppendUnique(CCFLAGS=perl_compile_flags)
+	if not darwin:
+		perlenv.AppendUnique(LINKFLAGS=shlex.split(perlconfig.get('lddlflags', '')))
 
 perlenv['CPPPATH'] += [perlconfig['coredir']]
 perlenv['CCFLAGS'] += ['-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
