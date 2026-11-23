@@ -8,92 +8,147 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 $dllPath = Join-Path $repoRoot 'XSTools.dll'
-if (-not (Test-Path -LiteralPath $dllPath -PathType Leaf)) {
-	throw "Distributed XSTools.dll is missing: $dllPath"
-}
+$netRedirectPath = Join-Path $repoRoot 'NetRedirect.dll'
+$failures = [System.Collections.Generic.List[string]]::new()
+$results = [System.Collections.Generic.List[object]]::new()
+$perlErrorPattern = '(?i)XSTools::(?:Load|Compile)Exception|Cannot load the XSTools library|XSTools\.dll is not found|Can.t locate .*? in \@INC|Can.t locate loadable object for module XSTools|Undefined subroutine|Compilation failed|BEGIN failed|Died at|Perl.*(?:panic|exception)|unable to load.*(?:dll|module)|(?:dll|module).*not found'
 
-$testRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("openkore-launcher-smoke-" + [guid]::NewGuid().ToString('N'))
-$runtimeDir = Join-Path $testRoot 'runtime'
-New-Item -ItemType Directory -Path $runtimeDir -Force | Out-Null
-$hiddenDllPath = Join-Path $testRoot 'XSTools.dll.original'
-$dllHidden = $false
+foreach ($name in $Executables) {
+	$exe = Join-Path $repoRoot $name
+	$isGui = $GuiExecutables -contains $name
+	$started = $false
+	$exitCode = $null
+	$timedOut = $false
+	$result = 'FAIL'
+	$failureReason = ''
+	$stdoutText = ''
+	$stderrText = ''
+	$process = $null
 
-try {
-	# Run the checked-in PerlApp launchers with the checked-in DLL that ships beside
-	# them. Hide the checkout copy while testing so the process cannot accidentally
-	# load a different DLL from its current working directory.
-	Copy-Item -LiteralPath $dllPath -Destination (Join-Path $runtimeDir 'XSTools.dll')
-	$netRedirect = Join-Path $repoRoot 'NetRedirect.dll'
-	if (Test-Path -LiteralPath $netRedirect -PathType Leaf) {
-		Copy-Item -LiteralPath $netRedirect -Destination (Join-Path $runtimeDir 'NetRedirect.dll')
-	}
-	Move-Item -LiteralPath $dllPath -Destination $hiddenDllPath
-	$dllHidden = $true
-
-	foreach ($name in $Executables) {
-		$source = Join-Path $repoRoot $name
-		if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
-			throw "Distributed launcher is missing: $source"
-		}
-		$exe = Join-Path $runtimeDir $name
-		Copy-Item -LiteralPath $source -Destination $exe
-		$isGui = $GuiExecutables -contains $name
-		$processInfo = New-Object System.Diagnostics.ProcessStartInfo
-		$processInfo.FileName = $exe
-		$processInfo.Arguments = '--version'
-		$processInfo.WorkingDirectory = $repoRoot
-		$processInfo.UseShellExecute = $false
-		$processInfo.CreateNoWindow = $true
-		$processInfo.RedirectStandardOutput = $true
-		$processInfo.RedirectStandardError = $true
-		$process = New-Object System.Diagnostics.Process
-		$process.StartInfo = $processInfo
-		Write-Host "Testing $name with the distributed XSTools.dll"
+	Write-Host "`nTesting $name from the distribution root: $exe"
+	if (-not (Test-Path -LiteralPath $dllPath -PathType Leaf)) {
+		$failureReason = "Distributed XSTools.dll is missing: $dllPath"
+	} elseif (-not (Test-Path -LiteralPath $netRedirectPath -PathType Leaf)) {
+		$failureReason = "Distributed NetRedirect.dll is missing: $netRedirectPath"
+	} elseif (-not (Test-Path -LiteralPath $exe -PathType Leaf)) {
+		$failureReason = "Distributed launcher is missing: $exe"
+	} else {
 		try {
-			if (-not $process.Start()) { throw "Windows did not start $name" }
+			$processInfo = [System.Diagnostics.ProcessStartInfo]::new()
+			$processInfo.FileName = $exe
+			$processInfo.Arguments = '--version'
+			$processInfo.WorkingDirectory = $repoRoot
+			$processInfo.UseShellExecute = $false
+			$processInfo.CreateNoWindow = $true
+			$processInfo.RedirectStandardInput = $true
+			$processInfo.RedirectStandardOutput = $true
+			$processInfo.RedirectStandardError = $true
+			$process = [System.Diagnostics.Process]::new()
+			$process.StartInfo = $processInfo
+			if (-not $process.Start()) {
+				throw "Windows did not start $name"
+			}
+			$started = $true
 			$stdoutTask = $process.StandardOutput.ReadToEndAsync()
 			$stderrTask = $process.StandardError.ReadToEndAsync()
+			$process.StandardInput.Close()
 			if (-not $process.WaitForExit($TimeoutSeconds * 1000)) {
-				Write-Host "$name exceeded ${TimeoutSeconds}s; terminating its process tree."
+				$timedOut = $true
+				$failureReason = "Process did not exit within $TimeoutSeconds seconds"
+				Write-Host "$name timed out; terminating its process tree."
 				& taskkill.exe /PID $process.Id /T /F 2>&1 | ForEach-Object { Write-Host $_ }
 				if (-not $process.WaitForExit(5000)) {
-					$process.Kill()
+					try {
+						$process.Kill($true)
+					} catch {
+						Write-Warning "Process-tree termination failed for $name; trying direct termination: $($_.Exception.Message)"
+						try { $process.Kill() } catch { Write-Warning "Direct termination failed for $name`: $($_.Exception.Message)" }
+					}
+					[void] $process.WaitForExit(5000)
+				}
+			}
+			if ($process.HasExited) {
+				$exitCode = $process.ExitCode
+			}
+		if ($stdoutTask.Wait(5000)) {
+			try { $stdoutText = $stdoutTask.GetAwaiter().GetResult() } catch { $stdoutText = "<stdout capture failed: $($_.Exception.Message)>" }
+		} else {
+			$stdoutText = '<stdout capture did not close within 5 seconds>'
+		}
+		if ($stderrTask.Wait(5000)) {
+			try { $stderrText = $stderrTask.GetAwaiter().GetResult() } catch { $stderrText = "<stderr capture failed: $($_.Exception.Message)>" }
+		} else {
+			$stderrText = '<stderr capture did not close within 5 seconds>'
+		}
+
+			$combined = $stdoutText + "`n" + $stderrText
+			if (-not $failureReason -and $combined -match $perlErrorPattern) {
+				$failureReason = 'Perl/XSTools or native DLL initialization error was reported'
+			} elseif (-not $failureReason -and $exitCode -ne 0) {
+				$failureReason = "Process exited with code $exitCode"
+			} elseif (-not $failureReason -and -not $isGui -and $combined -notmatch '(?im)^\*\*\*\s+OpenKore\s+.+\*\*\*') {
+				$failureReason = 'Successful exit did not include the expected OpenKore version banner'
+			} elseif (-not $failureReason) {
+				$result = 'PASS'
+			}
+		} catch {
+			$failureReason = $_.Exception.Message
+		} finally {
+			if ($process) {
+				if (-not $process.HasExited) {
+					try {
+						$process.Kill($true)
+					} catch {
+						Write-Warning "Process-tree cleanup failed for $name; trying direct termination: $($_.Exception.Message)"
+						try { $process.Kill() } catch { Write-Warning "Direct cleanup failed for $name`: $($_.Exception.Message)" }
+					}
 					if (-not $process.WaitForExit(5000)) {
-						throw "$name could not be terminated after timeout"
+						Write-Warning "Could not confirm $name exited after termination was requested."
 					}
 				}
-				throw "$name did not exit within $TimeoutSeconds seconds"
+				$process.Dispose()
 			}
-			$process.WaitForExit()
-			$stdoutText = $stdoutTask.GetAwaiter().GetResult()
-			$stderrText = $stderrTask.GetAwaiter().GetResult()
-			$combined = $stdoutText + $stderrText
-			Write-Host "stdout:`n$stdoutText"
-			Write-Host "stderr:`n$stderrText"
-			Write-Host "exit code: $($process.ExitCode)"
-			if ($combined -match '(?i)XSTools::(?:Load|Compile)Exception|Cannot load the XSTools library|XSTools\.dll is not found|Can.t locate .*? in \@INC|Can.t locate loadable object for module XSTools|Undefined subroutine|Compilation failed|BEGIN failed|Died at|Perl.*(?:panic|exception)') {
-				throw "$name reported a Perl/XSTools initialization failure"
-			}
-			if ($process.ExitCode -ne 0) {
-				throw "$name exited abnormally with exit code $($process.ExitCode)"
-			}
-			if (-not $isGui -and $combined -notmatch '(?im)^\*\*\*\s+OpenKore\s+.+\*\*\*') {
-				throw "$name exited successfully but did not print the expected OpenKore version banner"
-			}
-			if ($isGui) {
-				Write-Host "$name is a GUI-subsystem executable; Windows exposes no redirected console output. Verified bounded startup, clean exit, and any diagnostics exposed by the process."
-			} else {
-				Write-Host "$name printed the OpenKore version banner and exited successfully."
-			}
-		} finally {
-			$process.Dispose()
 		}
 	}
-} finally {
-	if ($dllHidden -and (Test-Path -LiteralPath $hiddenDllPath -PathType Leaf)) {
-		Move-Item -LiteralPath $hiddenDllPath -Destination $dllPath -Force
+
+	if ($failureReason) {
+		$failures.Add("$name`: $failureReason")
 	}
-	if (Test-Path -LiteralPath $testRoot) {
-		Remove-Item -LiteralPath $testRoot -Recurse -Force
+	Write-Host "Started: $started; Exit code: $exitCode; Timeout: $timedOut; Result: $result"
+	Write-Host "stdout:`n$stdoutText"
+	Write-Host "stderr:`n$stderrText"
+	if ($isGui) {
+		Write-Host "$name uses the Windows GUI subsystem. Its startup assertion is a bounded --version exit with code 0 and no Perl/DLL error; redirected output may be unavailable for GUI applications."
 	}
+	$results.Add([pscustomobject]@{
+		Executable = $name
+		Started = $started
+		ExitCode = if ($null -eq $exitCode) { '—' } else { $exitCode }
+		Timeout = $timedOut
+		Result = $result
+		FailureReason = if ($failureReason) { $failureReason } else { '—' }
+	})
+}
+
+$summary = $results | Format-Table -AutoSize | Out-String
+Write-Host "`nLauncher smoke summary:`n$summary"
+if ($env:GITHUB_STEP_SUMMARY) {
+	$markdown = @(
+		'### Windows PerlApp launcher smoke tests'
+		''
+		'Launchers run from the repository distribution root with the checked-in `XSTools.dll` and `NetRedirect.dll`. GUI launchers are validated by their bounded `--version` exit and exposed diagnostics; redirected console output is not guaranteed for GUI-subsystem executables.'
+		''
+		'| Executable | Started | Exit code | Timeout | Result | Failure reason |'
+		'| --- | --- | ---: | --- | --- | --- |'
+	)
+	foreach ($row in $results) {
+		$reason = ([string]$row.FailureReason) -replace '\|', '\|' -replace "`r?`n", ' '
+		$markdown += "| $($row.Executable) | $($row.Started) | $($row.ExitCode) | $($row.Timeout) | $($row.Result) | $reason |"
+	}
+	$markdown | Add-Content -LiteralPath $env:GITHUB_STEP_SUMMARY
+}
+
+if ($failures.Count -gt 0) {
+	Write-Error ("Launcher smoke tests failed: " + ($failures -join '; '))
+	exit 1
 }

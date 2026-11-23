@@ -261,6 +261,30 @@ jobs:
   # start the second job #
   ########################
 
+  test_Windows_PerlApp:
+
+    name: PerlApp launchers ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - os: windows-2022
+        - os: windows-2025
+
+    steps:
+    - name: GIT checkout
+      uses: actions/checkout@v7
+
+    # These are the checked-in PerlApp binaries and their checked-in distribution
+    # DLLs. Keep them separate from the ABI-specific DLLs built by the Perl matrix.
+    - name: Test distributed Windows PerlApp launchers
+      shell: pwsh
+      run: |
+        ./src/test/test_windows_launchers.ps1 `
+          -Executables @('start.exe', 'wxstart.exe', 'tkstart.exe', 'vxstart.exe', 'winguistart.exe') `
+          -GuiExecutables @('vxstart.exe', 'winguistart.exe')
+
   make_Windows_test:
 
     name: test ${{ matrix.os }} (perl ${{ matrix.perl }}) ${{ matrix.architecture }}
@@ -285,16 +309,6 @@ jobs:
     ########################
     # preparing Windows OS #
     ########################
-
-    # start/wx/tk share start.pl's deterministic --version exit path.
-    # vx/wingui use that path too, but cannot expose redirected console output.
-    # start-poseidon embeds poseidon.pl, which starts servers and has no version-only exit.
-    - name: Test distributed Windows PerlApp launchers
-      shell: pwsh
-      run: |
-        ./src/test/test_windows_launchers.ps1 `
-          -Executables @('start.exe', 'wxstart.exe', 'tkstart.exe', 'vxstart.exe', 'winguistart.exe') `
-          -GuiExecutables @('vxstart.exe', 'winguistart.exe')
 
     - name: Remove default Strawberry perl, XSTools.dll
       if: runner.os == 'Windows'
