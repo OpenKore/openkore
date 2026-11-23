@@ -3,6 +3,7 @@ use warnings;
 use FindBin qw($RealBin);
 use lib "$RealBin/..", "$RealBin/../deps", "$RealBin/../auto/XSTools";
 use File::Spec;
+use File::Temp qw(tempdir);
 use Test::More;
 no warnings 'once';
 
@@ -11,6 +12,8 @@ my $deps = File::Spec->catdir($src, 'deps');
 my $child = <<'PERL';
 use strict;
 use warnings;
+open STDOUT, '>', $ENV{XSTOOLS_STARTUP_TEST_OUTPUT} or die "Cannot open harness output: $!";
+open STDERR, '>&STDOUT' or die "Cannot redirect harness errors: $!";
 require XSLoader;
 no warnings 'redefine';
 no warnings 'once';
@@ -33,12 +36,22 @@ if ($^O eq 'MSWin32') {
 PERL
 
 my $output = '';
-if (open my $pipe, '-|', $^X, "-I$src", "-I$deps", '-e', $child) {
-	$output = do { local $/; <$pipe> };
-	close $pipe;
-	is($?, 0, 'fresh XSTools startup harness exits successfully');
+my $tmp = tempdir(CLEANUP => 1);
+my $child_path = File::Spec->catfile($tmp, 'xstools-startup-child.pl');
+my $output_path = File::Spec->catfile($tmp, 'xstools-startup-output.txt');
+open my $child_file, '>', $child_path or die "Cannot create startup harness: $!";
+print {$child_file} $child;
+close $child_file or die "Cannot finish startup harness: $!";
+{
+	local $ENV{XSTOOLS_STARTUP_TEST_OUTPUT} = $output_path;
+	my $status = system($^X, "-I$src", "-I$deps", $child_path);
+	is($status, 0, 'fresh XSTools startup harness exits successfully');
+}
+if (open my $output_file, '<', $output_path) {
+	$output = do { local $/; <$output_file> };
+	close $output_file;
 } else {
-	die "Could not start Perl startup harness: $!\n";
+	die "Could not read startup harness output: $!\n";
 }
 
 like($output, qr/INC=File\/Copy\.pm=0/, 'File::Copy is not loaded during normal startup');
