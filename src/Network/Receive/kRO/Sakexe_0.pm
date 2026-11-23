@@ -66,7 +66,7 @@ sub new {
 		'006B' => ['received_characters_info', 'v C3 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # last known struct
 		'006C' => ['login_error_game_login_server'],
 		'006D' => ['character_creation_successful', 'a*', [qw(charInfo)]],
-		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
+		'006E' => ['character_creation_failed', 'C' ,[qw(flag)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
