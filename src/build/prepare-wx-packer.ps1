@@ -65,6 +65,7 @@ try {
 '@
     if ($text.Split(@($old), [StringSplitOptions]::None).Count -ne 2) { throw 'Unexpected PAR::Packer source' }
     [IO.File]::WriteAllText($boot, $text.Replace($old, $replacement), [Text.Encoding]::ASCII)
+    Copy-Item -LiteralPath (Join-Path $repo 'src\build\openkore.ico') -Destination (Join-Path $source 'myldr\winres\pp.ico') -Force
     Push-Location $source
     try {
         & perl Makefile.PL
