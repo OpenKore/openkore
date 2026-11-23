@@ -21,7 +21,7 @@ my $real_xs_load = \&XSLoader::load;
 *XSLoader::load = sub {
 	my $module = $_[0] || caller;
 	return 1 if $module eq 'XSTools';
-	return $real_xs_load->($module, @_[1 .. $#_]);
+	goto &$real_xs_load;
 };
 require XSTools;
 print join("\n", map { "INC=$_=" . (exists $INC{$_} ? 1 : 0) }
@@ -70,7 +70,7 @@ if ($^O eq 'MSWin32') {
 	*XSLoader::load = sub {
 		my $module = $_[0] || caller;
 		return 1 if $module eq 'XSTools';
-		return $real_xs_load->($module, @_[1 .. $#_]);
+		goto &$real_xs_load;
 	};
 	require XSTools;
 	require Config;
