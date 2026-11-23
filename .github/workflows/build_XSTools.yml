@@ -80,6 +80,9 @@ jobs:
         perl -I src/deps -I src -e 'use XSTools; XSTools::bootModule("Utils::Whirlpool"); print "Automatic XSTools rebuild succeeded\n";'
         test "$(lipo -archs src/auto/XSTools/XSTools.bundle)" = "${{ matrix.architecture }}"
 
+    - name: Test XSTools compile isolation and failed-build recovery
+      run: perl src/test/XSToolsCompileTest.pl
+
     - name: Run OpenKore tests and startup check
       run: |
         make test
@@ -283,6 +286,16 @@ jobs:
     # preparing Windows OS #
     ########################
 
+    # start/wx/tk share start.pl's deterministic --version exit path.
+    # vx/wingui use that path too, but cannot expose redirected console output.
+    # start-poseidon embeds poseidon.pl, which starts servers and has no version-only exit.
+    - name: Test distributed Windows PerlApp launchers
+      shell: pwsh
+      run: |
+        ./src/test/test_windows_launchers.ps1 `
+          -Executables @('start.exe', 'wxstart.exe', 'tkstart.exe', 'vxstart.exe', 'winguistart.exe') `
+          -GuiExecutables @('vxstart.exe', 'winguistart.exe')
+
     - name: Remove default Strawberry perl, XSTools.dll
       if: runner.os == 'Windows'
       run: |
@@ -328,6 +341,9 @@ jobs:
       uses: actions/download-artifact@v8
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
+
+    - name: Test XSTools Windows compile guard and startup imports
+      run: perl src/test/XSToolsCompileTest.pl
 
     - name: Checking for XSTools
       shell: bash
@@ -459,6 +475,12 @@ jobs:
         ls -lh src/auto/XSTools/ | grep so
         echo "These XSTools.so and NetRedirect.so are built using: $OS + python $PYTHON $ARCHITECTURE + strawberry perl $PERL $ARCHITECTURE + strawberry g++ x86" > src/auto/XSTools/XSTools_notes.txt
 
+    - name: Verify automatic rebuild of an incompatible shared library
+      run: |
+        printf '%s\n' 'deliberately invalid XSTools binary' > src/auto/XSTools/XSTools.so
+        perl -I src/deps -I src -e 'use XSTools; XSTools::bootModule("Utils::Whirlpool"); print "Automatic XSTools rebuild succeeded\n";'
+        test -s src/auto/XSTools/XSTools.so
+
     ####################
     # making artifacts #
     ####################
@@ -533,6 +555,9 @@ jobs:
     - name: Running tests
       run: |
         make test
+
+    - name: Test XSTools lazy compilation imports and failed-build recovery
+      run: perl src/test/XSToolsCompileTest.pl
 
     - name: Running eventMacro tests
       run: perl plugins/eventMacro/test/unit_tests.pl
