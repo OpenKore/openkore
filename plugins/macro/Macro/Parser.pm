@@ -122,7 +122,8 @@ sub parseMacroFile {
 					next
 				}
 				if ($amSingle{$key}) {
-					$automacro{$block{name}}->{$key} = $value
+					$automacro{$block{name}}->{$key} = $value;
+					$automacro{$block{name}}->{keepDisabled} = $value if $key eq 'disabled'
 				} elsif ($amMulti{$key}) {
 					push(@{$automacro{$block{name}}->{$key}}, $value)
 				} else {
