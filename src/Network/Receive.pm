@@ -2770,11 +2770,11 @@ sub actor_action {
 			$dmgdisplay .= "!" if ($args->{type} == ACTION_ATTACK_LUCKY); # lucky dodge
 		} else {
 			$dmgdisplay = $args->{div} > 1
-				? sprintf '%d*%d', $args->{damage} / $args->{div}, $args->{div}
-				: $args->{damage}
+				? Misc::formatDamage(int($args->{damage} / $args->{div})) . "*$args->{div}"
+				: Misc::formatDamage($args->{damage})
 			;
 			$dmgdisplay .= "!" if ($args->{type} == ACTION_ATTACK_CRITICAL); # critical hit
-			$dmgdisplay .= " + $args->{dual_wield_damage}" if $args->{dual_wield_damage};
+			$dmgdisplay .= " + " . Misc::formatDamage($args->{dual_wield_damage}) if $args->{dual_wield_damage};
 		}
 
 		Misc::checkValidity("actor_action (attack 1)");
