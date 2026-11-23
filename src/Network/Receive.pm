@@ -2703,7 +2703,7 @@ sub actor_action {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
 
-	$args->{damage} = intToSignedShort($args->{damage});
+	$args->{damage} = $args->{switch} eq '008A' ? intToSignedShort($args->{damage}) : intToSignedInt($args->{damage});
 	if ($args->{type} == ACTION_ITEMPICKUP) {
 		# Take item
 		my $source = Actor::get($args->{sourceID});
