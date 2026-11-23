@@ -15,10 +15,6 @@ package XSTools;
 use strict;
 use FindBin qw($RealBin);
 use File::Spec;
-use File::Basename qw(dirname);
-use File::Copy qw(copy);
-use File::Temp qw(tempfile);
-use Config;
 use Cwd 'abs_path', 'realpath';
 use DynaLoader;
 use XSLoader;
@@ -91,6 +87,17 @@ sub bootModule {
 # Throws XSTools::MakefileNotFound if the compilation makefile cannot be found.
 # Throws XSTools::CompilationInterrupted if the user pressed Ctrl+C when compiling.
 sub compile {
+	if ($^O eq 'MSWin32') {
+		XSTools::CompileException->throw(
+			error => "XSTools::compile() is only supported on Unix."
+		);
+	}
+
+	require Config;
+	require File::Basename;
+	require File::Copy;
+	require File::Temp;
+
 	my $dir;
 	foreach my $try (@makefilePaths) {
 		if (-f "$try/Makefile") {
@@ -106,7 +113,7 @@ sub compile {
 	# cannot leave a partial or removed installation behind.
 	my $library;
 	foreach my $base (@makefilePaths) {
-		my $candidate = File::Spec->catfile($base, 'auto', 'XSTools', "XSTools.$Config{dlext}");
+		my $candidate = File::Spec->catfile($base, 'auto', 'XSTools', "XSTools.$Config::Config{dlext}");
 		if (-f $candidate) {
 			$library = $candidate;
 			last;
@@ -121,11 +128,11 @@ sub compile {
 			$library_link = readlink($library);
 			$library_target = File::Spec->file_name_is_absolute($library_link)
 				? $library_link
-				: File::Spec->catfile(dirname($library), $library_link);
+				: File::Spec->catfile(File::Basename::dirname($library), $library_link);
 		}
-		my ($handle, $path) = tempfile('XSTools-backup-XXXXXX', DIR => dirname($library_target), UNLINK => 0);
+		my ($handle, $path) = File::Temp::tempfile('XSTools-backup-XXXXXX', DIR => File::Basename::dirname($library_target), UNLINK => 0);
 		close $handle;
-		if (!copy($library_target, $path)) {
+		if (!File::Copy::copy($library_target, $path)) {
 			unlink $path;
 			XSTools::CompileException->throw(error => "Cannot preserve existing XSTools library before rebuilding: $!");
 		}

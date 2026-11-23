@@ -80,6 +80,9 @@ jobs:
         perl -I src/deps -I src -e 'use XSTools; XSTools::bootModule("Utils::Whirlpool"); print "Automatic XSTools rebuild succeeded\n";'
         test "$(lipo -archs src/auto/XSTools/XSTools.bundle)" = "${{ matrix.architecture }}"
 
+    - name: Test XSTools compile isolation and failed-build recovery
+      run: perl src/test/XSToolsCompileTest.pl
+
     - name: Run OpenKore tests and startup check
       run: |
         make test
@@ -258,6 +261,30 @@ jobs:
   # start the second job #
   ########################
 
+  test_Windows_PerlApp:
+
+    name: PerlApp launchers ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - os: windows-2022
+        - os: windows-2025
+
+    steps:
+    - name: GIT checkout
+      uses: actions/checkout@v7
+
+    # These are the checked-in PerlApp binaries and their checked-in distribution
+    # DLLs. Keep them separate from the ABI-specific DLLs built by the Perl matrix.
+    - name: Test distributed Windows PerlApp launchers
+      shell: pwsh
+      run: |
+        ./src/test/test_windows_launchers.ps1 `
+          -Executables @('start.exe', 'wxstart.exe', 'tkstart.exe', 'vxstart.exe', 'winguistart.exe') `
+          -GuiExecutables @('vxstart.exe', 'winguistart.exe')
+
   make_Windows_test:
 
     name: test ${{ matrix.os }} (perl ${{ matrix.perl }}) ${{ matrix.architecture }}
@@ -328,6 +355,9 @@ jobs:
       uses: actions/download-artifact@v8
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
+
+    - name: Test XSTools Windows compile guard and startup imports
+      run: perl src/test/XSToolsCompileTest.pl
 
     - name: Checking for XSTools
       shell: bash
@@ -459,6 +489,12 @@ jobs:
         ls -lh src/auto/XSTools/ | grep so
         echo "These XSTools.so and NetRedirect.so are built using: $OS + python $PYTHON $ARCHITECTURE + strawberry perl $PERL $ARCHITECTURE + strawberry g++ x86" > src/auto/XSTools/XSTools_notes.txt
 
+    - name: Verify automatic rebuild of an incompatible shared library
+      run: |
+        printf '%s\n' 'deliberately invalid XSTools binary' > src/auto/XSTools/XSTools.so
+        perl -I src/deps -I src -e 'use XSTools; XSTools::bootModule("Utils::Whirlpool"); print "Automatic XSTools rebuild succeeded\n";'
+        test -s src/auto/XSTools/XSTools.so
+
     ####################
     # making artifacts #
     ####################
@@ -533,6 +569,9 @@ jobs:
     - name: Running tests
       run: |
         make test
+
+    - name: Test XSTools lazy compilation imports and failed-build recovery
+      run: perl src/test/XSToolsCompileTest.pl
 
     - name: Running eventMacro tests
       run: perl plugins/eventMacro/test/unit_tests.pl
