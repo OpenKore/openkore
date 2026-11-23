@@ -220,7 +220,7 @@ sub commandHandler {
 	### parameter: reset
 	} elsif ($arg eq 'reset') {
 		if (!defined $params[0]) {
-			foreach my $am (keys %automacro) {undef $automacro{$am}->{disabled}}
+			releaseAM('all');
 			message "automacro runonce list cleared.\n";
 			return
 		}

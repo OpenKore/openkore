@@ -642,7 +642,7 @@ sub checkEval {
 sub releaseAM {
 	if ($_[0] eq 'all') {
 		foreach (keys %automacro) {
-			undef $automacro{$_}->{disabled}
+			undef $automacro{$_}->{disabled} unless $automacro{$_}->{keepDisabled}
 		}
 		return 1
 	}
