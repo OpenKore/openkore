@@ -6237,11 +6237,13 @@ sub deal_begin {
 	if ($args->{type} == 0) {
 		error T("That person is too far from you to trade.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	} elsif ($args->{type} == 2) {
 		error T("That person is in another deal.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	} elsif ($args->{type} == 3) {
@@ -6272,11 +6274,13 @@ sub deal_begin {
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	}
