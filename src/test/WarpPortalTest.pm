@@ -10,6 +10,7 @@ use WarpPortal qw(
 	availableWarpMaps warpMapIndex warpMapStatus memoCoordinateForMap
 	noteWarpSelection confirmPortalArrival clearPendingTraversal memoRejected
 	selectWarpPortalCastLevel
+	noteWarpPortalUnitSeen noteWarpPortalMovement noteWarpPortalUnitDisappeared
 );
 
 sub start {
@@ -216,27 +217,62 @@ sub testMemoAcknowledgementAndTraversalCorrelation {
 		['morocc 160 90', 'geffen 10 10', 'alberta'],
 		'successful acknowledgement inserts the observed map and shifts configured map-coordinate pairs');
 
-	noteWarpSelection('geffen', 'prontera', 10, 10, 2, 'attempt-a');
-	$Globals::char->{warpPortalPendingTraversal}{portal_seen_at} = time;
-	$Globals::char->{warpPortalPendingTraversal}{portal_pos} = {x => 11, y => 10};
+	$Globals::char->{ID} = 'test-character-id';
+	noteWarpSelection('geffen', 'prontera', 11, 10, 2, 'attempt-a', {x => 11, y => 10});
+	my $unit = {ID => 'portal-unit-a', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	ok(noteWarpPortalUnitSeen($unit, 'prontera'), 'server-observed owned portal unit is tied to the active attempt');
 	my $before = $Globals::config{memo3};
-	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62, {x => 12, y => 10}),
-		'a map change away from the observed portal tile is not a confirmed traversal');
+	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62),
+		'a map change without accepted movement and portal disappearance is not attributed');
 	ok(!$Globals::char->{warpPortalPendingTraversal}, 'unrelated arrival clears the pending portal attempt');
-	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62, {x => 11, y => 10}),
-		'cleared fallback state cannot be reused as a portal traversal');
-	is($Globals::config{memo3}, $before, 'unrelated fallback arrival cannot update coordinates');
+	is($Globals::config{memo3}, $before, 'unrelated arrival cannot update memo coordinates');
 
-	noteWarpSelection('geffen', 'prontera', 10, 10, 2, 'attempt-b');
+	# The movement packet is server evidence that the character is moving onto
+	# the exact portal tile, even when the local current position is one step stale.
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-b', {x => 11, y => 10});
+	$unit = {ID => 'portal-unit-b', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	ok(noteWarpPortalUnitSeen($unit, 'prontera'), 'owned portal creation is observed before movement');
+	ok(noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera'),
+		'server movement packet records exact movement onto the portal despite stale current position');
+	ok(!noteWarpPortalUnitDisappeared({%$unit, ID => 'other-unit', pos => {x => 11, y => 10}}, 'prontera'),
+		'disappearance of a different portal unit cannot complete the attempt');
+	ok(noteWarpPortalUnitDisappeared({%$unit, pos => {x => 11, y => 10}}, 'prontera'),
+		'disappearance of the same owned portal after movement completes traversal evidence');
 	$Globals::config{memo2} = 'geffen 100 100';
 	$Globals::config{memo3} = '';
-	$Globals::char->{warpPortalPendingTraversal}{portal_seen_at} = time;
-	$Globals::char->{warpPortalPendingTraversal}{portal_pos} = {x => 11, y => 10};
-	my $arrival = confirmPortalArrival('prontera', 'geffen', 120, 62, {x => 11, y => 10});
-	ok($arrival && $arrival->{attempt_id} eq 'attempt-b', 'confirmed arrival is correlated to the live attempt');
+	my $arrival = confirmPortalArrival('prontera', 'geffen', 120, 62);
+	ok($arrival && $arrival->{attempt_id} eq 'attempt-b', 'arrival is correlated to the live attempt');
 	is($arrival->{confidence}, 'inferred',
-		'portal entry correlation remains explicitly inferred because map-change packets do not identify the warp source');
-		is($Globals::config{memo2}, 'geffen 120 62', 'arrival corrects coordinates on the uniquely matched map entry');
+		'portal attribution remains inferred because map-change packets do not identify the warp source');
+	is_deeply([memoCoordinateForMap('geffen')], [120, 62, 'inferred_portal_entry_from_owned_unit_movement_disappearance_and_map_change'],
+		'landing coordinates come from server map-change coordinates, not the stale source position');
+	is($Globals::config{memo2}, 'geffen 120 62', 'inferred genuine arrival updates the uniquely matched memo');
+
+	delete $Globals::char->{warpPortalState}{last_traversal};
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-c', {x => 11, y => 10});
+	$unit = {ID => 'portal-unit-c', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	noteWarpPortalUnitSeen($unit, 'prontera');
+	ok(noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera'), 'same-destination test has movement evidence');
+	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62),
+		'same-map transition without disappearance of the selected portal is not attributed');
+	ok(!$Globals::char->{warpPortalState}{last_traversal}, 'ambiguous same-destination transition creates no traversal record');
+
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-d', {x => 11, y => 10});
+	$unit = {ID => 'portal-unit-d', sourceID => 'another-character', type => 0x81, x => 11, y => 10};
+	ok(!noteWarpPortalUnitSeen($unit, 'prontera'), 'portal created by another character is not owned evidence');
+	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62),
+		'same-destination change after an unrelated portal is not attributed');
+
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-e', {x => 11, y => 10});
+	$Globals::char->{warpPortalPendingTraversal}{selected_at} = time - 121;
+	ok(!noteWarpPortalUnitSeen({ID => 'expired-unit', sourceID => $Globals::char->{ID},
+		type => 0x81, x => 11, y => 10}, 'prontera'), 'expired attempts cannot acquire new portal evidence');
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'expired traversal state is cleared before a later map change');
+
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-f', {x => 11, y => 10});
+	beginCharacterSession();
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'character-session changes clear pending portal correlation');
+	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62), 'old-session evidence cannot confirm a new-session arrival');
 
 	setupCharacter(
 		warpPortal_autoUpdateMemo => 0, saveMap => 'prontera',
@@ -599,7 +635,7 @@ sub testWarpPortalMenuCorrelation {
 }
 
 package WarpPortalTest::Field;
-sub baseName { 'prontera' }
+sub baseName { $_[0]{map} || 'prontera' }
 sub width { 40 }
 sub height { 40 }
 sub isWalkable { return $_[1] >= 0 && $_[2] >= 0 && $_[1] < 40 && $_[2] < 40; }

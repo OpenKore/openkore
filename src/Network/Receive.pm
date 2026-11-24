@@ -45,7 +45,10 @@ use Network::MessageTokenizer;
 use Misc;
 use Plugins;
 use Skill;
-use WarpPortal qw(beginCharacterSession updateServerMemos memoAcknowledged memoRejected clearPendingTraversal confirmPortalArrival);
+use WarpPortal qw(
+	beginCharacterSession updateServerMemos memoAcknowledged memoRejected clearPendingTraversal confirmPortalArrival
+	noteWarpPortalUnitSeen noteWarpPortalMovement noteWarpPortalUnitDisappeared
+);
 use Utils;
 use Utils::Exceptions;
 use Utils::Crypton;
@@ -3714,42 +3717,24 @@ sub warp_portal_list {
 
 sub markWarpPortalPendingPortal {
 	my ($portal) = @_;
-	return unless $char && $field && $portal;
-	my $pending = $char->{warpPortalPendingTraversal};
-	return unless $pending && defined $pending->{selected_at};
-	if (time - $pending->{selected_at} > 120) {
-		clearPendingTraversal($pending->{attempt_id});
-		return;
-	}
-	return unless defined $portal->{sourceID} && defined $char->{ID}
-		&& $portal->{sourceID} eq $char->{ID};
-	return unless $pending->{source_map} eq $field->baseName;
-	my $expected = $pending->{portal_expected_pos} || {x => $pending->{x}, y => $pending->{y}};
-	return unless blockDistance($portal->{pos_to}, $expected) == 0;
-	$pending->{portal_seen_at} = time;
-	$pending->{portal_pos} = {%{$portal->{pos_to}}};
+	return unless $field && $portal && $portal->{pos_to};
+	noteWarpPortalUnitSeen({
+		ID => $portal->{ID}, sourceID => $portal->{sourceID}, type => 0x81,
+		x => $portal->{pos_to}{x}, y => $portal->{pos_to}{y},
+	}, $field->baseName);
 }
 
 sub markWarpPortalPendingAreaSpell {
 	my ($spell) = @_;
-	return unless $char && $field && $spell && ($spell->{type} || 0) == 0x81;
-	my $pending = $char->{warpPortalPendingTraversal};
-	return unless $pending && defined $pending->{selected_at};
-	if (time - $pending->{selected_at} > 120) {
-		clearPendingTraversal($pending->{attempt_id});
-		return;
-	}
-	return unless defined $char->{ID} && defined $spell->{sourceID}
-		&& $spell->{sourceID} eq $char->{ID}
-		&& $pending->{source_map} eq $field->baseName;
-	my $expected = $pending->{portal_expected_pos} || {x => $pending->{x}, y => $pending->{y}};
-	return unless blockDistance({x => $spell->{x}, y => $spell->{y}}, $expected) == 0;
-	$pending->{portal_seen_at} = time;
-	$pending->{portal_pos} = {x => $spell->{x}, y => $spell->{y}};
+	return unless $field && $spell;
+	noteWarpPortalUnitSeen({
+		ID => $spell->{ID}, sourceID => $spell->{sourceID}, type => $spell->{type},
+		x => $spell->{x}, y => $spell->{y},
+	}, $field->baseName);
 }
 
 sub recordWarpPortalPendingArrival {
-	my ($oldMap, $observedEntryPosition) = @_;
+	my ($oldMap) = @_;
 	return unless $char;
 	my $pending = $char->{warpPortalPendingTraversal};
 	return unless $pending;
@@ -3761,12 +3746,8 @@ sub recordWarpPortalPendingArrival {
 		clearPendingTraversal($pending->{attempt_id});
 		return;
 	}
-	unless ($pending->{portal_seen_at}) {
-		clearPendingTraversal($pending->{attempt_id});
-		return;
-	}
 	return unless defined $char->{pos}{x} && defined $char->{pos}{y};
-	confirmPortalArrival($oldMap, $field->baseName, $char->{pos}{x}, $char->{pos}{y}, $observedEntryPosition);
+	confirmPortalArrival($oldMap, $field->baseName, $char->{pos}{x}, $char->{pos}{y});
 }
 
 # 0828,14
@@ -5940,6 +5921,7 @@ sub character_moves {
 
 	return unless changeToInGameState();
 	makeCoordsFromTo($char->{pos}, $char->{pos_to}, $args->{coords});
+	noteWarpPortalMovement($char->{pos}, $char->{pos_to}, $field->baseName);
 	my $dist = blockDistance($char->{pos}, $char->{pos_to});
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move" if Log::debugEnabled("parseMsg_move", undef);
 
@@ -7687,7 +7669,6 @@ sub map_change {
 	Misc::clearTeleportItemPendingUse();
 
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
-	my $observedEntryPosition = $char->{pos} ? {%{$char->{pos}}} : undef;
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
 	my $map_noinstance;
 	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
@@ -7744,7 +7725,7 @@ sub map_change {
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-	recordWarpPortalPendingArrival($oldMap, $observedEntryPosition);
+	recordWarpPortalPendingArrival($oldMap);
 	$timeout{ai}{time} = time;
 }
 
@@ -7757,7 +7738,6 @@ sub map_changed {
 	Misc::clearTeleportItemPendingUse();
 
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
-	my $observedEntryPosition = $char && $char->{pos} ? {%{$char->{pos}}} : undef;
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
 	my $map_noinstance;
 	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
@@ -7866,7 +7846,7 @@ sub map_changed {
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-	recordWarpPortalPendingArrival($oldMap, $observedEntryPosition);
+	recordWarpPortalPendingArrival($oldMap);
 	$timeout{ai}{time} = time;
 }
 
@@ -10879,6 +10859,7 @@ sub area_spell_disappears {
 	# The area effect spell with ID dissappears
 	my $ID = $args->{ID};
 	my $spell = $spells{$ID};
+	noteWarpPortalUnitDisappeared($spell, $field ? $field->baseName : undef) if $spell;
 	debug "Area effect ".getSpellName($spell->{type})." ($spell->{binID}) from ".getActorName($spell->{sourceID})." disappeared from ($spell->{pos}{x}, $spell->{pos}{y})\n", "skill", 2;
 	delete $spells{$ID};
 	binRemove(\@spellsID, $ID);

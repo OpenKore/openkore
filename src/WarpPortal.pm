@@ -13,6 +13,7 @@ our @EXPORT_OK = qw(
 	noteMemoRequest memoAcknowledged updateServerMemos recordArrival
 	availableWarpMaps warpMapIndex memoCoordinateForMap clearPendingTraversal noteWarpSelection
 	warpMapStatus confirmPortalArrival memoRejected selectWarpPortalCastLevel
+	noteWarpPortalUnitSeen noteWarpPortalMovement noteWarpPortalUnitDisappeared
 );
 
 # Pick the least expensive learned AL_WARP level that still covers the server
@@ -374,35 +375,107 @@ sub clearPendingTraversal {
 	delete $char->{warpPortalPendingTraversal};
 }
 
-sub confirmPortalArrival {
-	my ($old_map, $new_map, $x, $y, $entered_pos) = @_;
-	return unless $char && defined($x) && defined($y);
-	my $pending = $char->{warpPortalPendingTraversal} or return;
+# Keep only server-observed evidence for the currently selected portal. The
+# protocol has no traversal identifier, so each event is tied to the active
+# character session, owner, source map, exact portal unit and expected tile.
+sub _livePortalAttempt {
+	my $pending = $char && $char->{warpPortalPendingTraversal} or return;
 	my $state = _state() or return;
-	if ($pending->{session} != $state->{session} || time - $pending->{selected_at} > 120) {
+	if (!defined($pending->{attempt_id}) || $pending->{attempt_id} eq ''
+		|| !defined($pending->{session}) || $pending->{session} != $state->{session}
+		|| !defined($pending->{selected_at}) || time - $pending->{selected_at} > 120) {
 		clearPendingTraversal($pending->{attempt_id});
 		return;
 	}
+	return $pending;
+}
+
+sub noteWarpPortalUnitSeen {
+	my ($unit, $map) = @_;
+	return unless $unit && ($unit->{type} || 0) == 0x81;
+	my $pending = _livePortalAttempt() or return;
+	return unless defined($map) && $map eq ($pending->{source_map} || '')
+		&& defined($char->{ID}) && defined($unit->{sourceID})
+		&& $unit->{sourceID} eq $char->{ID}
+		&& defined($unit->{ID}) && defined($unit->{x}) && defined($unit->{y});
+	my $expected = $pending->{portal_expected_pos} || {x => $pending->{x}, y => $pending->{y}};
+	return unless $unit->{x} == $expected->{x} && $unit->{y} == $expected->{y};
+	$pending->{portal_seen_at} = time;
+	$pending->{portal_unit_id} = $unit->{ID};
+	$pending->{portal_pos} = {x => 0 + $unit->{x}, y => 0 + $unit->{y}};
+	$pending->{portal_owner_id} = $unit->{sourceID};
+	return 1;
+}
+
+sub noteWarpPortalMovement {
+	my ($from, $to, $map) = @_;
+	my $pending = _livePortalAttempt() or return;
+	return unless $pending->{portal_seen_at} && $pending->{portal_pos}
+		&& $pending->{portal_owner_id} && $pending->{portal_unit_id}
+		&& defined($map) && $map eq ($pending->{source_map} || '')
+		&& $from && $to && defined($to->{x}) && defined($to->{y})
+		&& $to->{x} == $pending->{portal_pos}{x} && $to->{y} == $pending->{portal_pos}{y};
+	$pending->{portal_move_at} = time;
+	$pending->{portal_move_from} = {x => 0 + $from->{x}, y => 0 + $from->{y}}
+		if defined($from->{x}) && defined($from->{y});
+	$pending->{portal_move_to} = {x => 0 + $to->{x}, y => 0 + $to->{y}};
+	return 1;
+}
+
+sub noteWarpPortalUnitDisappeared {
+	my ($unit, $map) = @_;
+	return unless $unit && ($unit->{type} || 0) == 0x81;
+	my $pending = _livePortalAttempt() or return;
+	return unless $pending->{portal_move_at} && $pending->{portal_seen_at}
+		&& $pending->{portal_unit_id} && $pending->{portal_owner_id}
+		&& defined($unit->{ID}) && $unit->{ID} eq $pending->{portal_unit_id}
+		&& defined($unit->{sourceID}) && $unit->{sourceID} eq $pending->{portal_owner_id}
+		&& defined($char->{ID}) && $unit->{sourceID} eq $char->{ID}
+		&& defined($unit->{pos}{x}) && defined($unit->{pos}{y})
+		&& $unit->{pos}{x} == $pending->{portal_pos}{x}
+		&& $unit->{pos}{y} == $pending->{portal_pos}{y}
+		&& $pending->{portal_move_at} >= $pending->{portal_seen_at}
+		&& defined($map) && $map eq ($pending->{source_map} || '');
+	$pending->{portal_disappeared_at} = time;
+	return 1;
+}
+
+sub confirmPortalArrival {
+	my ($old_map, $new_map, $x, $y) = @_;
+	return unless $char && defined($x) && defined($y);
+	my $pending = _livePortalAttempt() or return;
+	my $state = _state() or return;
 	$new_map = normalizeWarpMap($new_map);
+	my $transition_at = time;
 	my $is_traversal = $pending->{portal_seen_at}
+		&& $pending->{portal_move_at}
+		&& $pending->{portal_disappeared_at}
 		&& defined($old_map) && $old_map eq $pending->{source_map}
 		&& $new_map && $new_map eq $pending->{map}
-		&& $entered_pos && $pending->{portal_pos}
-		&& $entered_pos->{x} == $pending->{portal_pos}{x}
-		&& $entered_pos->{y} == $pending->{portal_pos}{y};
+		&& $pending->{portal_owner_id} && defined($char->{ID})
+		&& $pending->{portal_owner_id} eq $char->{ID}
+		&& $pending->{portal_unit_id}
+		&& $pending->{portal_move_to}
+		&& $pending->{portal_move_to}{x} == $pending->{portal_pos}{x}
+		&& $pending->{portal_move_to}{y} == $pending->{portal_pos}{y}
+		&& $pending->{portal_move_at} >= $pending->{portal_seen_at}
+		&& $pending->{portal_disappeared_at} >= $pending->{portal_move_at}
+		&& $transition_at >= $pending->{portal_disappeared_at}
+		&& $transition_at - $pending->{portal_disappeared_at} <= 15;
 	unless ($is_traversal) {
 		clearPendingTraversal($pending->{attempt_id});
 		return;
 	}
 	# The protocol reports a map change and coordinates, not which warp caused it.
-	# Keep the destination position server-observed while labeling portal entry as
-	# inferred from the owned portal, exact entry tile, source map, and destination.
+	# Keep the landing position from the authoritative map-change packet while
+	# labeling the cause as inferred from owned portal creation, accepted movement
+	# onto its exact tile, unit disappearance, and the matching map transition.
 	recordArrival($new_map, $x, $y,
-		'inferred_portal_entry_from_server_observed_tile_and_map_change', $pending->{attempt_id});
+		'inferred_portal_entry_from_owned_unit_movement_disappearance_and_map_change', $pending->{attempt_id});
 	$state->{last_traversal} = {
 		source_map => $old_map, destination_map => $new_map,
 		attempt_id => $pending->{attempt_id}, time => time,
-		confidence => 'inferred', evidence => 'owned_portal_tile_and_server_map_change',
+		confidence => 'inferred', evidence => 'owned_portal_unit_movement_disappearance_and_server_map_change',
 	};
 	clearPendingTraversal($pending->{attempt_id});
 	return $state->{last_traversal};
