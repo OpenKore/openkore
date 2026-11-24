@@ -4050,9 +4050,9 @@ sub shop_sold_long {
 sub vending_start {
 	my ($self, $args) = @_;
 
-	my $modern_self_shop = $args->{switch} eq '0B40' && !$self->{vender_items_list_item_pack_self};
-	my $item_pack = $self->{vender_items_list_item_pack_self}
-		|| ($modern_self_shop ? 'V v2 C V C C a8 a25 C C' : undef)
+	my $modern_self_shop = $args->{switch} eq '0B40';
+	my $item_pack = $modern_self_shop ? 'V v2 C V C C a16 a25 C C'
+		: $self->{vender_items_list_item_pack_self}
 		|| $self->{vender_items_list_item_pack}
 		|| 'V v2 C v C3 a8';
 	my @item_keys = $modern_self_shop
