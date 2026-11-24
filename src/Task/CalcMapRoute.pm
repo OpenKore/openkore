@@ -26,7 +26,7 @@ use base qw(Task);
 use Task::Route;
 use Field;
 use Skill;
-use WarpPortal qw(parseMemoEntry memoCoordinateForMap warpMapIndex availableWarpMaps warpMapStatus);
+use WarpPortal qw(parseMemoEntry memoCoordinateForMap warpMapIndex availableWarpMaps warpMapStatus selectWarpPortalCastLevel);
 use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships %teleport_items);
 use Translation qw(T TF);
 use Log qw(debug warning error);
@@ -331,6 +331,7 @@ sub buildReachedTargetState {
 		airship_message => undef,
 		is_warpPortal => 0,
 		warpPortalMemoSlot => undef,
+		warpPortalMinLevel => undef,
 		warpPortalCastLevel => undef,
 	};
 	return ($key, $value);
@@ -366,6 +367,7 @@ sub buildMapSolutionStep {
 		airship_message => $value->{airship_message},
 		is_warpPortal => $value->{is_warpPortal} || 0,
 		warpPortalMemoSlot => $value->{warpPortalMemoSlot},
+		warpPortalMinLevel => $value->{warpPortalMinLevel},
 		warpPortalCastLevel => $value->{warpPortalCastLevel},
 	};
 }
@@ -1010,8 +1012,8 @@ sub populateOpenListWithWarpPortal {
 		next if $status eq 'absent' || $status eq 'invalid' || $status eq 'ambiguous';
 		$minimum_level = $server_index + 1 if defined $server_index;
 		next if $level < $minimum_level;
-		my $spCost = $skill->getSP($minimum_level);
-		next if defined $spCost && ($char->{sp} || 0) < $spCost;
+		my $cast_level = selectWarpPortalCastLevel($skill, $minimum_level, $level, $char->{sp});
+		next unless defined $cast_level;
 		my ($x, $y) = memoCoordinateForMap($map);
 		$routeSlot = $server_index if defined $server_index;
 		my $dest = defined $x && defined $y ? "$map $x $y" : $map;
@@ -1041,7 +1043,8 @@ sub populateOpenListWithWarpPortal {
 		);
 		$value->{is_warpPortal} = 1;
 		$value->{warpPortalMemoSlot} = $routeSlot;
-		$value->{warpPortalCastLevel} = $minimum_level;
+		$value->{warpPortalMinLevel} = $minimum_level;
+		$value->{warpPortalCastLevel} = $cast_level;
 		$self->registerSyntheticPortalDestination(
 			'tempWarpPortal', $dest, {map => $map, x => $x, y => $y},
 		);

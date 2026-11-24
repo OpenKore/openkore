@@ -12,8 +12,34 @@ our @EXPORT_OK = qw(
 	parseMemoEntry normalizeWarpMap normalizeWarpMapName beginCharacterSession noteWarpCast
 	noteMemoRequest memoAcknowledged updateServerMemos recordArrival
 	availableWarpMaps warpMapIndex memoCoordinateForMap clearPendingTraversal noteWarpSelection
-	warpMapStatus confirmPortalArrival memoRejected
+	warpMapStatus confirmPortalArrival memoRejected selectWarpPortalCastLevel
 );
+
+# Pick the least expensive learned AL_WARP level that still covers the server
+# menu slot and the character's current SP. Unknown costs retain the historic
+# minimum-level behavior only when that minimum's cost is also unknown.
+sub selectWarpPortalCastLevel {
+	my ($skill, $minimum_level, $learned_level, $available_sp) = @_;
+	return unless $skill && defined($minimum_level) && defined($learned_level)
+		&& $minimum_level >= 1 && $learned_level >= $minimum_level;
+	$learned_level = 4 if $learned_level > 4;
+	$available_sp = 0 unless defined $available_sp;
+	my @affordable;
+	for my $level ($minimum_level .. $learned_level) {
+		my $cost = $skill->getSP($level);
+		if (!defined $cost) {
+			push @affordable, [$level, undef] if $level == $minimum_level;
+		} elsif ($available_sp >= $cost) {
+			push @affordable, [$level, $cost];
+		}
+	}
+	return unless @affordable;
+	@affordable = sort {
+		(defined($a->[1]) ? $a->[1] : 9e99) <=> (defined($b->[1]) ? $b->[1] : 9e99)
+			|| $a->[0] <=> $b->[0]
+	} @affordable;
+	return $affordable[0][0];
+}
 
 sub normalizeWarpMapName {
 	my ($map) = @_;
@@ -219,7 +245,7 @@ sub updateServerMemos {
 
 	my $cast = $state->{pending_cast};
 	my $cast_level = $cast && $cast->{session} == $state->{session}
-		&& time - $cast->{time} <= 30 ? $cast->{level} : undef;
+		&& time - $cast->{time} <= 20 ? $cast->{level} : undef;
 	if (defined $cast_level) {
 		$state->{last_portal_cast} = {
 			level => $cast_level,

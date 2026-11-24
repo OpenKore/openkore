@@ -9,6 +9,7 @@ use WarpPortal qw(
 	noteMemoRequest memoAcknowledged updateServerMemos recordArrival
 	availableWarpMaps warpMapIndex warpMapStatus memoCoordinateForMap
 	noteWarpSelection confirmPortalArrival clearPendingTraversal memoRejected
+	selectWarpPortalCastLevel
 );
 
 sub start {
@@ -55,6 +56,8 @@ sub run {
 		$self->testRejectedAndAmbiguousMemoAcknowledgements;
 		$self->testUnknownSaveMapAndRouteCleanup;
 		$self->testWarpPortalPlacement;
+		$self->testCastLevelSelection;
+		$self->testWarpPortalMenuCorrelation;
 	}
 
 	%Globals::maps_lut = %old_maps_lut;
@@ -451,13 +454,179 @@ sub testWarpPortalPlacement {
 	}
 }
 
+sub testCastLevelSelection {
+	require Skill;
+	local %Skill::StaticInfo::ids = (27 => {handle => 'AL_WARP'});
+	local %Skill::StaticInfo::handles = (AL_WARP => 27);
+	local %Skill::StaticInfo::sps = (AL_WARP => [35, 32, 29, 26]);
+	my $skill = Skill->new(idn => 27);
+	is_deeply([map { $skill->getSP($_) } 1 .. 4], [35, 32, 29, 26],
+		'Warp Portal level costs come from the existing Skill SP API');
+	is(selectWarpPortalCastLevel($skill, 1, 4, 30), 4,
+		'level-four character with 30 SP selects affordable level four for a level-one destination');
+	is(selectWarpPortalCastLevel($skill, 3, 4, 28), 4,
+		'selected cast level still covers the actual server menu slot');
+	ok(!defined selectWarpPortalCastLevel($skill, 1, 4, 25),
+		'route is excluded when every eligible level is unaffordable');
+	ok(!defined selectWarpPortalCastLevel($skill, 3, 2, 100),
+		'route is excluded when learned level cannot cover the destination slot');
+
+	local %Skill::StaticInfo::sps = (AL_WARP => [28, 25, 12, 20]);
+	is(selectWarpPortalCastLevel($skill, 1, 4, 15), 3,
+		'custom server costs select the cheapest affordable learned level');
+	local %Skill::StaticInfo::sps = (AL_WARP => [35, 32, 29, 26]);
+
+	require Task::CalcMapRoute;
+	setupCharacter(route_warpPortal => 1, warpPortal_autoUpdateMemo => 0,
+		saveMap => 'prontera', memo1 => '', memo2 => '', memo3 => '', memo4 => '');
+	$Globals::char = bless {
+		charID => 'planner-char', learned => 4, sp => 30,
+		inventory => bless({amount => 1}, 'WarpPortalTest::Inventory'),
+	}, 'WarpPortalTest::Character';
+	beginCharacterSession();
+	serverList(4, qw(prontera geffen));
+	my $planner = bless {
+		source => {map => 'prontera'}, targets => [], noWarpPortalMaps => {},
+	}, 'Task::CalcMapRoute';
+	my $base_cost = {walk => 0, zeny => 0, blockedPortalGroups => {}};
+	{
+		no warnings 'redefine';
+		local *Field::new = sub { bless {}, 'WarpPortalTest::Field' };
+		local *Task::CalcMapRoute::getMapRouteWeight = sub { 0 };
+		local *Task::CalcMapRoute::getRouteWeight = sub { 0 };
+		local *Task::CalcMapRoute::buildRouteStateKey = sub { 'warp-portal-test' };
+		local *Task::CalcMapRoute::canAddOpenListEntry = sub { 1 };
+		local *Task::CalcMapRoute::cloneBlockedPortalGroups = sub { {} };
+		local *Task::CalcMapRoute::buildRouteValue = sub { {} };
+		local *Task::CalcMapRoute::registerSyntheticPortalDestination = sub { 1 };
+		local *Task::CalcMapRoute::add_key_to_openList = sub { $_[0]{candidate} = $_[2] };
+		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
+		is_deeply([@{$planner->{candidate}}{qw(warpPortalMinLevel warpPortalCastLevel warpPortalMemoSlot)}], [2, 4, 1],
+			'route planner selects affordable level four for the level-two server slot and preserves its index');
+		$Globals::char->{sp} = 25;
+		delete $planner->{candidate};
+		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
+		ok(!$planner->{candidate}, 'route planner omits Warp Portal when every eligible level exceeds available SP');
+	}
+
+	my $calculator = bless {}, 'Task::CalcMapRoute';
+	my $step = $calculator->buildMapSolutionStep('prontera 10 10=geffen 20 20', {
+		portal_string => 'prontera 10 10=geffen 20 20', walk => 1, zeny => 0,
+		amount_of_tickets_used => 0, is_warpPortal => 1, warpPortalMemoSlot => 0,
+		warpPortalMinLevel => 1, warpPortalCastLevel => 4,
+	});
+	is($step->{warpPortalMinLevel}, 1, 'route step retains the destination minimum skill level');
+	is($step->{warpPortalCastLevel}, 4, 'route step carries the affordable selected cast level');
+	is($step->{warpPortalMemoSlot}, 0, 'cast-level choice does not alter the server menu slot');
+
+	my $char = bless {ID => 'test-char', sp => 30, learned => 4,
+		inventory => bless({amount => 1}, 'WarpPortalTest::Inventory')}, 'WarpPortalTest::Character';
+	my $sender = bless {}, 'WarpPortalTest::Sender';
+	local $Globals::char = $char;
+	local $Task::UseSkill::char = $char;
+	local $Task::UseSkill::messageSender = $sender;
+	my $castSkill = bless {}, 'WarpPortalTest::Skill';
+	my $useSkill = bless {
+		actor => {ID => 'test-char'}, skill => $castSkill,
+		target => {x => 12, y => 13}, validateWarpPortal => 1,
+	}, 'WarpPortalTest::UseSkillTask';
+	is($useSkill->validateWarpPortalResources(), undef,
+		'route skill task confirms the planned level is still affordable before casting');
+	$useSkill->castSkill();
+	is_deeply($sender->{last_skill_location}, [27, 4, 12, 13],
+		'Task::UseSkill sends the selected level and the distinct portal target');
+	$char->{sp} = 25;
+	like($useSkill->validateWarpPortalResources(), qr/not enough SP/,
+		'Task::UseSkill rejects the cast if SP falls below the selected level cost');
+}
+
+sub testWarpPortalMenuCorrelation {
+	require Task::MapRoute;
+	require Task::UseSkill;
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => '', memo2 => '', memo3 => '', memo4 => '');
+	$Globals::char->{pos} = {x => 10, y => 10};
+	my $sender = bless {}, 'WarpPortalTest::Sender';
+	my $field = bless {}, 'WarpPortalTest::Field';
+	local $Task::MapRoute::char = $Globals::char;
+	local $Task::MapRoute::field = $field;
+	local $Task::MapRoute::messageSender = $sender;
+	my $cast_started_at = time;
+	my $route = bless {
+		mapSolution => [{is_warpPortal => 1}],
+		warpPortalStage => 'casting', warpPortalDestination => 'geffen',
+		warpPortalSourceMap => 'prontera', warpPortalCastLevel => 4,
+		warpPortalMinLevel => 1, warpPortalAttemptID => 'route-menu-test',
+		warpPortalPlacement => {x => 11, y => 10},
+		warpPortalSession => $Globals::char->{warpPortalState}{session},
+		warpPortalStarted => $cast_started_at, warpPortalCastRequestedAt => $cast_started_at,
+		ST_subtask => bless({skill => bless({}, 'WarpPortalTest::Skill'), castTries => 1}, 'WarpPortalTest::UseSkillTask'),
+	}, 'Task::MapRoute';
+	noteWarpCast(27, 4, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+	Task::MapRoute::warpPortalList(undef, {type => 27}, [$route]);
+	is($sender->{last_warp_destination}, 'geffen.gat',
+		'immediate same-second menu after an active AL_WARP cast selects by destination name');
+	is($route->{warpPortalStage}, 'awaiting_portal', 'accepted menu advances the active route once');
+
+	# A menu can arrive after Task::UseSkill completed; the active cast evidence
+	# remains in the current character session and retains the sent cast level.
+	delete $route->{ST_subtask};
+	$route->{warpPortalStage} = 'awaiting_menu';
+	$route->{warpPortalStarted} = time - 1;
+	$route->{warpPortalCastRequestedAt} = time - 1;
+	$route->{warpPortalAttemptID} = 'route-menu-completed';
+	noteWarpCast(27, 4, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+	$sender->{last_warp_destination} = undef;
+	Task::MapRoute::warpPortalList(undef, {type => 27}, [$route]);
+	is($sender->{last_warp_destination}, 'geffen.gat',
+		'menu after Task::UseSkill completion remains eligible for its active cast');
+
+	# A response recorded before this route's cast request is stale and ignored.
+	$route->{warpPortalStage} = 'awaiting_menu';
+	$route->{warpPortalStarted} = time - 1;
+	$route->{warpPortalCastRequestedAt} = time + 1;
+	$sender->{last_warp_destination} = undef;
+	Task::MapRoute::warpPortalList(undef, {type => 27}, [$route]);
+	ok(!defined $sender->{last_warp_destination}, 'stale menu evidence from an earlier cast is ignored');
+
+	# Replaying an already consumed packet cannot select the destination twice.
+	$route->{warpPortalStage} = 'awaiting_portal';
+	$route->{warpPortalCastRequestedAt} = time - 1;
+	$sender->{last_warp_destination} = undef;
+	Task::MapRoute::warpPortalList(undef, {type => 27}, [$route]);
+	ok(!defined $sender->{last_warp_destination}, 'duplicate menu is ignored after the route advances');
+}
+
 package WarpPortalTest::Field;
+sub baseName { 'prontera' }
 sub width { 40 }
 sub height { 40 }
 sub isWalkable { return $_[1] >= 0 && $_[2] >= 0 && $_[1] < 40 && $_[2] < 40; }
 
 package WarpPortalTest::Skill;
 sub getRange { 9 }
+sub getHandle { 'AL_WARP' }
+sub getIDN { 27 }
+sub getLevel { 4 }
+sub getSP { $_[1] == 4 ? 26 : 35 }
+sub getTargetType { Skill::TARGET_LOCATION() }
+
+package WarpPortalTest::Character;
+sub getSkillLevel { $_[0]{learned} }
+sub inventory { $_[0]{inventory} }
+sub statusActive { 0 }
+
+package WarpPortalTest::Inventory;
+sub getByNameID { return {amount => $_[0]{amount}} if $_[1] == 717; return; }
+
+package WarpPortalTest::Sender;
+sub sendSkillUseLoc { $_[0]{last_skill_location} = [@_[1 .. 4]]; }
+sub sendWarpTele { $_[0]{last_warp_destination} = $_[2]; }
+
+package WarpPortalTest::UseSkillTask;
+our @ISA = ('Task::UseSkill');
+sub DESTROY { }
 
 package WarpPortalTest;
 

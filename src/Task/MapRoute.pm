@@ -36,7 +36,7 @@ use Utils::DataStructures qw(hashSafeGetValue);
 use Utils::Exceptions;
 use AI qw(ai_useTeleport);
 use Skill;
-use WarpPortal qw(warpMapIndex availableWarpMaps noteWarpSelection clearPendingTraversal);
+use WarpPortal qw(warpMapIndex availableWarpMaps noteWarpSelection clearPendingTraversal selectWarpPortalCastLevel);
 
 
 # Error constants.
@@ -215,7 +215,7 @@ sub iterate {
 				&& $traversal->{attempt_id} eq ($self->{warpPortalAttemptID} || '')) {
 				# Recalculate from the server-confirmed landing position, which may differ from the memo coordinate.
 				delete $char->{warpPortalState}{last_traversal};
-				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalFailureReason warpPortalCastLevel warpPortalAttemptID mapChanged teleport teleportTime sentTeleport)};
+				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt mapChanged teleport teleportTime sentTeleport)};
 				delete $self->{mapSolution};
 				$self->initMapCalculator();
 				return;
@@ -1042,17 +1042,16 @@ sub iterateWarpPortalStep {
 		my $skill = Skill->new(handle => 'AL_WARP');
 		my $learned_level = $char->getSkillLevel($skill) || 0;
 		my $verified_index = warpMapIndex($destMap);
-		my $level = defined($verified_index) ? $verified_index + 1
-			: ($step->{warpPortalCastLevel} || $learned_level);
-		$level = 4 if $level > 4;
+		my $minimum_level = defined($verified_index) ? $verified_index + 1
+			: ($step->{warpPortalMinLevel} || $step->{warpPortalCastLevel} || $learned_level);
+		my $level = selectWarpPortalCastLevel($skill, $minimum_level, $learned_level, $char->{sp});
 		my $inventory = eval { $char->inventory };
 		my $gemstones = $inventory && $inventory->getByNameID(717);
-		my $spCost = $level ? $skill->getSP($level) : 0;
 		return $self->failWarpPortalStep('AL_WARP level, SP, or Blue Gemstone unavailable')
-			if !$level || $level > $learned_level
-			|| !$gemstones || !$gemstones->{amount}
-			|| (defined $spCost && ($char->{sp} || 0) < $spCost)
+			if !defined($level) || !$gemstones || !$gemstones->{amount}
 			|| Misc::_isTeleportSkillSuppressedByStatus();
+		$step->{warpPortalMinLevel} = $minimum_level;
+		$step->{warpPortalCastLevel} = $level;
 		my $placement = $self->findWarpPortalPlacement($skill, $level);
 		return $self->failWarpPortalStep('no reachable unoccupied portal placement tile') unless $placement;
 		$self->{warpPortalPlacement} = $placement;
@@ -1060,30 +1059,35 @@ sub iterateWarpPortalStep {
 		$self->{warpPortalDestination} = $destMap;
 		$self->{warpPortalSourceMap} = $sourceMap;
 		$self->{warpPortalAttemptID} ||= join('-', time, Scalar::Util::refaddr($self));
+		$self->{warpPortalSession} = $char->{warpPortalState}{session} || 0;
+		$self->{warpPortalMinLevel} = $minimum_level;
 		$self->{warpPortalCastLevel} = $level;
 		$self->{warpPortalStarted} = time;
 		$self->{warpPortalStage} = 'ready_to_cast';
 	}
 
 	if ($self->{warpPortalStage} eq 'ready_to_cast') {
-		my $placement = $self->findWarpPortalPlacement(
-			Skill->new(handle => 'AL_WARP'), $self->{warpPortalCastLevel});
-		my $level = $self->{warpPortalCastLevel} || 0;
 		my $skill = Skill->new(handle => 'AL_WARP');
+		my $learned_level = $char->getSkillLevel($skill) || 0;
+		my $minimum_level = $self->{warpPortalMinLevel} || 0;
+		my $level = selectWarpPortalCastLevel($skill, $minimum_level, $learned_level, $char->{sp});
+		my $placement = defined($level) ? $self->findWarpPortalPlacement($skill, $level) : undef;
 		my $inventory = eval { $char->inventory };
 		my $gemstones = $inventory && $inventory->getByNameID(717);
-		my $spCost = $level ? $skill->getSP($level) : undef;
 		return $self->failWarpPortalStep('AL_WARP requirements changed before casting')
 			unless $placement && $field->baseName eq $self->{warpPortalSourceMap}
-			&& $level > 0 && $level <= ($char->getSkillLevel($skill) || 0)
-			&& $gemstones && $gemstones->{amount}
-			&& (!defined($spCost) || ($char->{sp} || 0) >= $spCost);
+			&& defined($level) && $gemstones && $gemstones->{amount}
+			&& !Misc::_isTeleportSkillSuppressedByStatus();
 		$self->{warpPortalPlacement} = $placement;
+		$self->{warpPortalCastLevel} = $level;
+		$step->{warpPortalCastLevel} = $level;
+		$self->{warpPortalCastRequestedAt} = time;
 		$self->{warpPortalStage} = 'casting';
 		my $castSkill = Skill->new(handle => 'AL_WARP', level => $level);
 		$self->setSubtask(Task::UseSkill->new(
 			actor => $self->{actor}, skill => $castSkill,
 			target => {x => $placement->{x}, y => $placement->{y}},
+			validateWarpPortal => 1,
 		));
 		message TF("Using AL_WARP to route to %s.\n", $destMap), 'map_route';
 		return;
@@ -1217,14 +1221,19 @@ sub warpPortalList {
 			&& $task->{skill}->getHandle() eq 'AL_WARP'
 			&& ($task->{castTries} || 0) > 0;
 	}
-	my $menuObservedAt = $char->{warpPortalState}{verified_at} || 0;
-	return if $menuObservedAt <= ($self->{warpPortalStarted} || 0);
+	my $state = $char->{warpPortalState} || {};
+	my $menuObservedAt = $state->{verified_at} || 0;
+	my $cast = $state->{last_portal_cast};
+	return unless $cast && $cast->{session} == ($self->{warpPortalSession} || 0)
+		&& $cast->{time} >= ($self->{warpPortalCastRequestedAt} || $self->{warpPortalStarted} || 0)
+		&& $menuObservedAt >= $cast->{time}
+		&& $menuObservedAt - $cast->{time} <= 20;
 	my $wanted = $self->{warpPortalDestination};
 	my $available = availableWarpMaps();
 	my $slot = warpMapIndex($wanted);
 	return $self->failWarpPortalStep("server menu does not include memo $wanted")
 		unless defined($slot) && $available;
-	my $level = $char->{warpPortalState}{cast_level} || 0;
+	my $level = $state->{cast_level} || 0;
 	return $self->failWarpPortalStep('server menu does not match the active AL_WARP cast level')
 		if $level != ($self->{warpPortalCastLevel} || 0);
 	return $self->failWarpPortalStep("server menu slot for $wanted exceeds current AL_WARP level")
@@ -1294,7 +1303,7 @@ sub failWarpPortalStep {
 	my $map = $self->{warpPortalSourceMap} || ($field && $field->baseName) || '';
 	warning TF("Warp Portal route failed on %s: %s. Recalculating without this method on this map.\n", $map, $reason), 'map_route';
 	$self->{noWarpPortalMaps}{$map} = time if $map ne '';
-	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalFailureReason warpPortalCastLevel warpPortalAttemptID)};
+	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt)};
 	delete $self->{mapSolution};
 	$self->initMapCalculator() if $field;
 	return;
