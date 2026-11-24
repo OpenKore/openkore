@@ -3230,7 +3230,7 @@ sub cmdSlave {
 				return;
 			}
 			my $skill = new Skill(idn => $args[2]);
-			if (!$skill->getIDN() || !$char->{skills}{$skill->getHandle()}) {
+			if (!$skill->getIDN() || !$slave->{skills}{$skill->getHandle()}) {
 				error TF("Error in function '%s skills add' (Add Skill Point)\n" .
 					"Skill %s does not exist.\n", $cmd, $args[2]);
 			} elsif ($slave->{points_skill} < 1) {
