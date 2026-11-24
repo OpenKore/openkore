@@ -308,8 +308,7 @@ sub iterate {
 		if (!$self->{timeout} || timeOut($self->{timeout}, 0.5)) {
 			$self->{timeout} = time;
 			
-			my $min_npc_dist = 8;
-			my $max_npc_dist = 10;
+			my ($min_npc_dist, $max_npc_dist) = _npcTalkDistances();
 			my $realPos = calcPosFromPathfinding($field, $self->{actor});
 			my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
 			return unless actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1);
@@ -448,8 +447,7 @@ sub iterate {
 		}
 
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
-		my $min_npc_dist = 8;
-		my $max_npc_dist = 10;
+		my ($min_npc_dist, $max_npc_dist) = _npcTalkDistances();
 		my $realPos = calcPosFromPathfinding($field, $self->{actor});
 		my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
 		return unless actorFinishedMovement($self->{actor}, $field, $timeout{ai_portal_wait}{timeout}, 1);
@@ -925,6 +923,16 @@ sub _currentPortalUpdateCandidate {
 		oldDestY     => $dest_y,
 		time         => time,
 	};
+}
+
+sub _npcTalkDistances {
+	my $max = $config{route_npcTalk_maxDistance};
+	my $min = $config{route_npcTalk_minDistance};
+	$max = 10 unless defined $max && $max =~ /^\d+$/;
+	$min = 8 unless defined $min && $min =~ /^\d+$/;
+	$max = 1 if $max < 1;
+	$min = $max if $min > $max;
+	return (0 + $min, 0 + $max);
 }
 
 sub _relogAfterNpcFailure {
