@@ -2446,9 +2446,12 @@ sub sendWarpTele {
 	if ($skillID == 27 && $char && $field && !$char->{warpPortalPendingTraversal}) {
 		my $destination = normalizeWarpMap($map);
 		my $state = $char->{warpPortalState} || {};
-		noteWarpSelection($destination, $field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y},
-			$state->{cast_level}, undef)
-			if $destination ne '' && defined warpMapIndex($destination) && $char->{pos_to};
+		my $sourcePosition = $char->{pos};
+		my $portalPosition = $state->{last_portal_cast}{portal_pos};
+		if ($destination ne '' && defined(warpMapIndex($destination)) && $sourcePosition) {
+			noteWarpSelection($destination, $field->baseName,
+				$sourcePosition->{x}, $sourcePosition->{y}, $state->{cast_level}, undef, $portalPosition);
+		}
 	}
 
 	$self->sendToServer($self->reconstruct({

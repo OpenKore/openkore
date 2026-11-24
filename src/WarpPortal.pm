@@ -5,23 +5,25 @@ package WarpPortal;
 
 use strict;
 use Exporter 'import';
+use Time::HiRes qw(time);
 use Globals qw(%config %maps_lut $char $masterServer);
 
 our @EXPORT_OK = qw(
-	parseMemoEntry normalizeWarpMap beginCharacterSession noteWarpCast
+	parseMemoEntry normalizeWarpMap normalizeWarpMapName beginCharacterSession noteWarpCast
 	noteMemoRequest memoAcknowledged updateServerMemos recordArrival
 	availableWarpMaps warpMapIndex memoCoordinateForMap clearPendingTraversal noteWarpSelection
-	warpMapStatus confirmPortalArrival
+	warpMapStatus confirmPortalArrival memoRejected
 );
 
-sub normalizeWarpMap {
+sub normalizeWarpMapName {
 	my ($map) = @_;
 	return '' unless defined $map;
 	$map =~ s/\.gat\z//i;
 	return '' unless $map =~ /^[a-zA-Z0-9_]+\z/;
-	return '' unless exists $maps_lut{lc($map) . '.rsw'} || exists $maps_lut{$map . '.rsw'};
 	return lc $map;
 }
+
+sub normalizeWarpMap { return normalizeWarpMapName($_[0]); }
 
 sub parseMemoEntry {
 	my ($value) = @_;
@@ -72,29 +74,46 @@ sub beginCharacterSession {
 }
 
 sub noteWarpCast {
-	my ($skill_id, $level) = @_;
+	my ($skill_id, $level, $x, $y) = @_;
 	return unless $skill_id == 27 && $level && $level >= 1 && $level <= 4;
 	my $state = _state() or return;
-	$state->{pending_cast} = {level => 0 + $level, time => time, session => $state->{session}};
+	$state->{pending_cast} = {
+		level => 0 + $level, time => time, session => $state->{session},
+		portal_pos => defined($x) && defined($y) ? {x => 0 + $x, y => 0 + $y} : undef,
+	};
 }
 
 sub noteMemoRequest {
 	my ($map, $x, $y) = @_;
 	return unless $char && defined($x) && defined($y);
 	my $state = _state() or return;
-	push @{$state->{pending_memos}}, {
-		map => normalizeWarpMap($map), x => 0 + $x, y => 0 + $y,
+	if ($state->{pending_memo} && time - $state->{pending_memo}{time} > 30) {
+		delete $state->{pending_memo};
+		$state->{memo_ack_uncertain} = 1;
+	}
+	if ($state->{pending_memo}) {
+		# The protocol has no request identifier. Multiple outstanding /memo
+		# requests make the next acknowledgement impossible to correlate safely.
+		delete $state->{pending_memo};
+		$state->{memo_ack_uncertain} = 1;
+		return;
+	}
+	$state->{pending_memo} = {
+		map => normalizeWarpMapName($map), x => 0 + $x, y => 0 + $y,
 		time => time, session => $state->{session},
 	};
-	shift @{$state->{pending_memos}} while @{$state->{pending_memos}} > 8;
 }
 
 sub memoAcknowledged {
 	my ($failed) = @_;
 	my $state = _state() or return;
-	my $pending = shift @{$state->{pending_memos} || []} or return;
-	return if $failed || $pending->{session} != $state->{session}
-		|| time - $pending->{time} > 30 || !$pending->{map};
+	my $pending = delete $state->{pending_memo};
+	return if $failed || !$pending;
+	if ($pending->{session} != $state->{session} || time - $pending->{time} > 30) {
+		$state->{memo_ack_uncertain} = 1;
+		return;
+	}
+	return if $state->{memo_ack_uncertain} || !$pending->{map};
 
 	# rAthena's successful /memo operation moves the current map to the front,
 	# removes an existing copy, shifts the other points, then drops the oldest.
@@ -124,6 +143,15 @@ sub memoAcknowledged {
 			_writeConfig("memo$slot", $value);
 		}
 	}
+}
+
+sub memoRejected {
+	my $state = _state() or return;
+	my $pending = delete $state->{pending_memo};
+	# 0x0189 does not identify the /memo request it rejected. Even after clearing
+	# the current request, a delayed 0x011E could still belong to it, so no later
+	# acknowledgement is safe to associate until the server list reconciles state.
+	$state->{memo_ack_uncertain} = 1 if $pending || $state->{memo_ack_uncertain};
 }
 
 sub _coordinatesByMap {
@@ -176,9 +204,10 @@ sub updateServerMemos {
 	for my $slot (1 .. 4) {
 		my $raw = $args->{"memo$slot"} // '';
 		$raw =~ s/\.gat\z//i;
-		my $map = normalizeWarpMap($raw);
+		my $map = normalizeWarpMapName($raw);
 		push @maps, $map;
-		$unresolved_slots{$slot} = 1 if $raw ne '' && !$map;
+		$unresolved_slots{$slot} = 1 if $raw ne '' && (!$map
+			|| !exists $maps_lut{lc($map) . '.rsw'} && !exists $maps_lut{$map . '.rsw'});
 	}
 	unless (grep { $_ ne '' } @maps) {
 	delete @{$state}{qw(available_maps available_map_counts available_map_index cast_level verified_at)};
@@ -191,6 +220,13 @@ sub updateServerMemos {
 	my $cast = $state->{pending_cast};
 	my $cast_level = $cast && $cast->{session} == $state->{session}
 		&& time - $cast->{time} <= 30 ? $cast->{level} : undef;
+	if (defined $cast_level) {
+		$state->{last_portal_cast} = {
+			level => $cast_level,
+			portal_pos => $cast->{portal_pos} ? {%{$cast->{portal_pos}}} : undef,
+			time => $cast->{time}, session => $cast->{session},
+		};
+	}
 	delete $state->{pending_cast};
 	# Even if a proxy packet path did not expose the cast level, a valid AL_WARP
 	# list always proves the save point. Higher memo coverage remains unknown.
@@ -210,6 +246,7 @@ sub updateServerMemos {
 	$state->{list_provenance} = defined($cast_level) ? 'server_list_with_cast_level' : 'server_list_level_unknown';
 	$state->{list_ambiguous} = scalar(grep { $count{$_} > 1 } keys %count) ? 1 : 0;
 	delete $state->{memo_ack_order_pending};
+	delete @{$state}{qw(memo_ack_uncertain pending_memo)};
 
 	# Preserve the existing saveMap source used by other OpenKore features.
 	# The packet has no save-point coordinates, so discard old coordinates only
@@ -286,14 +323,18 @@ sub memoCoordinateForMap {
 }
 
 sub noteWarpSelection {
-	my ($map, $source_map, $x, $y, $cast_level, $attempt_id) = @_;
+	my ($map, $source_map, $x, $y, $cast_level, $attempt_id, $portal_pos) = @_;
 	return unless $char && defined $x && defined $y;
 	$map = normalizeWarpMap($map);
 	return unless $map;
 	my $state = _state() or return;
+	if (!defined($attempt_id) || $attempt_id eq '') {
+		$attempt_id = join('-', 'manual', $state->{session}, ++$state->{manual_attempt_sequence});
+	}
 	$char->{warpPortalPendingTraversal} = {
 		map => $map, source_map => $source_map, x => 0 + $x, y => 0 + $y,
 		cast_level => $cast_level, attempt_id => $attempt_id,
+		portal_expected_pos => $portal_pos ? {%$portal_pos} : undef,
 		selected_at => time, session => $state->{session},
 	};
 }
@@ -301,9 +342,9 @@ sub noteWarpSelection {
 sub clearPendingTraversal {
 	my ($attempt_id) = @_;
 	return unless $char && $char->{warpPortalPendingTraversal};
-	return if defined($attempt_id)
-		&& (!defined($char->{warpPortalPendingTraversal}{attempt_id})
-			|| $attempt_id ne $char->{warpPortalPendingTraversal}{attempt_id});
+	return unless defined($attempt_id) && $attempt_id ne ''
+		&& defined($char->{warpPortalPendingTraversal}{attempt_id})
+		&& $attempt_id eq $char->{warpPortalPendingTraversal}{attempt_id};
 	delete $char->{warpPortalPendingTraversal};
 }
 
@@ -327,10 +368,15 @@ sub confirmPortalArrival {
 		clearPendingTraversal($pending->{attempt_id});
 		return;
 	}
-	recordArrival($new_map, $x, $y, 'server_map_change_after_selected_warp_portal', $pending->{attempt_id});
+	# The protocol reports a map change and coordinates, not which warp caused it.
+	# Keep the destination position server-observed while labeling portal entry as
+	# inferred from the owned portal, exact entry tile, source map, and destination.
+	recordArrival($new_map, $x, $y,
+		'inferred_portal_entry_from_server_observed_tile_and_map_change', $pending->{attempt_id});
 	$state->{last_traversal} = {
 		source_map => $old_map, destination_map => $new_map,
 		attempt_id => $pending->{attempt_id}, time => time,
+		confidence => 'inferred', evidence => 'owned_portal_tile_and_server_map_change',
 	};
 	clearPendingTraversal($pending->{attempt_id});
 	return $state->{last_traversal};

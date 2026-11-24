@@ -89,7 +89,7 @@ sub memo_request {
 
 sub skill_use_location {
 	my ($self, $args) = @_;
-	noteWarpCast($args->{skillID}, $args->{lv});
+	noteWarpCast($args->{skillID}, $args->{lv}, $args->{x}, $args->{y});
 }
 
 sub actor_action {

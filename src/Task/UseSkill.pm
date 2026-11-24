@@ -274,7 +274,12 @@ sub castSkill {
 	if (!defined $level) {
 		$level = $char->getSkillLevel($skill);
 	}
-	noteWarpCast($skillID, $level) if $skillID == 27;
+	if ($skillID == 27) {
+		my $target = $self->{target};
+		noteWarpCast($skillID, $level,
+			ref($target) eq 'HASH' ? $target->{x} : undef,
+			ref($target) eq 'HASH' ? $target->{y} : undef);
+	}
 
 	if ($skill->getTargetType() == Skill::TARGET_SELF()) {
 		# A skill which is used on the character self.

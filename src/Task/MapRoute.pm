@@ -141,6 +141,7 @@ sub new {
 	$self->{warpPortalListHook} = Plugins::addHook('warp_portal_list', \&warpPortalList, \@holder);
 	$self->{warpPortalSpawnHook} = Plugins::addHook('portal_spawned', \&warpPortalSpawned, \@holder);
 	$self->{warpPortalAreaSpellHook} = Plugins::addHook('packet_areaSpell', \&warpPortalAreaSpell, \@holder);
+	$self->{warpPortalRejectHook} = Plugins::addHook('packet_no_teleport', \&warpPortalRejected, \@holder);
 
 	return $self;
 }
@@ -153,6 +154,7 @@ sub DESTROY {
 	Plugins::delHook($self->{warpPortalListHook}) if $self->{warpPortalListHook};
 	Plugins::delHook($self->{warpPortalSpawnHook}) if $self->{warpPortalSpawnHook};
 	Plugins::delHook($self->{warpPortalAreaSpellHook}) if $self->{warpPortalAreaSpellHook};
+	Plugins::delHook($self->{warpPortalRejectHook}) if $self->{warpPortalRejectHook};
 	$self->SUPER::DESTROY();
 }
 
@@ -982,7 +984,7 @@ sub prunePerMapBlocks {
 	my ($self) = @_;
 	my $now = time;
 
-	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps noWarpItemIDs)) {
+	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps noWarpItemIDs noWarpPortalMaps)) {
 		my $bucket = $self->{$bucketName};
 		next unless ($bucket && ref $bucket eq 'HASH');
 
@@ -1040,7 +1042,8 @@ sub iterateWarpPortalStep {
 		my $skill = Skill->new(handle => 'AL_WARP');
 		my $learned_level = $char->getSkillLevel($skill) || 0;
 		my $verified_index = warpMapIndex($destMap);
-		my $level = defined($verified_index) ? $verified_index + 1 : $learned_level;
+		my $level = defined($verified_index) ? $verified_index + 1
+			: ($step->{warpPortalCastLevel} || $learned_level);
 		$level = 4 if $level > 4;
 		my $inventory = eval { $char->inventory };
 		my $gemstones = $inventory && $inventory->getByNameID(717);
@@ -1049,9 +1052,8 @@ sub iterateWarpPortalStep {
 			if !$level || $level > $learned_level
 			|| !$gemstones || !$gemstones->{amount}
 			|| (defined $spCost && ($char->{sp} || 0) < $spCost)
-			|| Misc::isTeleportSkillBlockedOnMap($field->baseName)
 			|| Misc::_isTeleportSkillSuppressedByStatus();
-		my $placement = $self->findWarpPortalPlacement();
+		my $placement = $self->findWarpPortalPlacement($skill, $level);
 		return $self->failWarpPortalStep('no reachable unoccupied portal placement tile') unless $placement;
 		$self->{warpPortalPlacement} = $placement;
 		delete $char->{warpPortalState}{last_traversal};
@@ -1060,23 +1062,23 @@ sub iterateWarpPortalStep {
 		$self->{warpPortalAttemptID} ||= join('-', time, Scalar::Util::refaddr($self));
 		$self->{warpPortalCastLevel} = $level;
 		$self->{warpPortalStarted} = time;
-		if (blockDistance($self->{actor}{pos_to}, $placement) > 0) {
-			$self->{warpPortalStage} = 'moving_to_placement';
-			message TF("Moving to Warp Portal placement (%d, %d) from (%d, %d).\n",
-				$placement->{x}, $placement->{y}, $self->{actor}{pos_to}{x}, $self->{actor}{pos_to}{y}), 'map_route';
-			$self->setSubtask(Task::Route->new(actor => $self->{actor}, field => $field,
-				x => $placement->{x}, y => $placement->{y}, maxTime => $self->{maxTime}));
-			return;
-		}
 		$self->{warpPortalStage} = 'ready_to_cast';
 	}
 
 	if ($self->{warpPortalStage} eq 'ready_to_cast') {
-		my $placement = $self->{warpPortalPlacement};
-		return $self->failWarpPortalStep('character left the portal placement tile before casting')
+		my $placement = $self->findWarpPortalPlacement(
+			Skill->new(handle => 'AL_WARP'), $self->{warpPortalCastLevel});
+		my $level = $self->{warpPortalCastLevel} || 0;
+		my $skill = Skill->new(handle => 'AL_WARP');
+		my $inventory = eval { $char->inventory };
+		my $gemstones = $inventory && $inventory->getByNameID(717);
+		my $spCost = $level ? $skill->getSP($level) : undef;
+		return $self->failWarpPortalStep('AL_WARP requirements changed before casting')
 			unless $placement && $field->baseName eq $self->{warpPortalSourceMap}
-			&& blockDistance($self->{actor}{pos_to}, $placement) == 0;
-		my $level = $char->getSkillLevel(Skill->new(handle => 'AL_WARP')) || 0;
+			&& $level > 0 && $level <= ($char->getSkillLevel($skill) || 0)
+			&& $gemstones && $gemstones->{amount}
+			&& (!defined($spCost) || ($char->{sp} || 0) >= $spCost);
+		$self->{warpPortalPlacement} = $placement;
 		$self->{warpPortalStage} = 'casting';
 		my $castSkill = Skill->new(handle => 'AL_WARP', level => $level);
 		$self->setSubtask(Task::UseSkill->new(
@@ -1108,6 +1110,9 @@ sub iterateWarpPortalStep {
 			$self->setSubtask(Task::Route->new(actor => $self->{actor}, field => $field, x => $leave->{x}, y => $leave->{y}, maxTime => $self->{maxTime}));
 			return;
 		}
+		my @path;
+		return $self->failWarpPortalStep('created portal is no longer reachable')
+			unless Task::Route->getRoute(\@path, $field, $self->{actor}{pos}, $point);
 		$self->{warpPortalStage} = 'entering_portal';
 		$self->setSubtask(Task::Route->new(
 			actor => $self->{actor}, field => $field, x => $point->{x}, y => $point->{y},
@@ -1119,6 +1124,10 @@ sub iterateWarpPortalStep {
 	if ($self->{warpPortalStage} eq 'reenter_portal') {
 		my $portal = $self->{warpPortalActor};
 		return $self->failWarpPortalStep('portal expired before entry') unless $portal;
+		my $point = {x => $portal->{pos_to}{x}, y => $portal->{pos_to}{y}};
+		my @path;
+		return $self->failWarpPortalStep('created portal is no longer reachable')
+			unless Task::Route->getRoute(\@path, $field, $self->{actor}{pos}, $point);
 		$self->{warpPortalStage} = 'entering_portal';
 		$self->setSubtask(Task::Route->new(
 			actor => $self->{actor}, field => $field,
@@ -1134,16 +1143,20 @@ sub iterateWarpPortalStep {
 	}
 }
 
-# rAthena's AL_WARP unit has NoFootSet. On servers with skill_nofootset enabled,
-# a portal cannot be placed on the caster's occupied tile. The route graph's
-# source node is the character's current position, so choose a nearby reachable
-# tile for the native cast and let Task::Route establish actual arrival first.
+# rAthena's AL_WARP unit has NoFootSet. With the default skill_nofootset setting,
+# rAthena rejects a placement when a character occupies the target cell. Cast
+# from the current position onto a separate, reachable target cell; never walk
+# onto the target before casting.
 sub findWarpPortalPlacement {
-	my ($self) = @_;
+	my ($self, $skill, $level) = @_;
 	return unless $field && $char && $self->{actor};
 	my $origin = $self->{actor}{pos};
 	return unless $origin && defined $origin->{x} && defined $origin->{y};
-	for my $radius (1 .. 3) {
+	my $range = $skill->getRange($level);
+	$range = 9 unless defined($range) && $range > 0;
+	my $castOrigin = $origin;
+	my $movingTarget = $self->{actor}{pos_to};
+	for my $radius (1 .. ($range < 3 ? $range : 3)) {
 		my @candidates;
 		for my $dx (-$radius .. $radius) {
 			for my $dy (-$radius .. $radius) {
@@ -1156,14 +1169,28 @@ sub findWarpPortalPlacement {
 			|| $a->{y} <=> $b->{y} || $a->{x} <=> $b->{x}
 		} @candidates;
 		for my $candidate (@candidates) {
+			next if blockDistance($castOrigin, $candidate) > $range;
+			next if $movingTarget && blockDistance($movingTarget, $candidate) == 0;
 			next if $candidate->{x} < 0 || $candidate->{y} < 0
 				|| $candidate->{x} >= $field->width || $candidate->{y} >= $field->height;
 			next unless $field->isWalkable($candidate->{x}, $candidate->{y});
+			next if blockDistance($castOrigin, $candidate) == 0;
 			my $occupied = 0;
-			for my $id (@playersID, @monstersID) {
-				my $actor = $players{$id} || $monsters{$id};
+			for my $id (@playersID, @monstersID, @petsID, @slavesID, @elementalsID) {
+				my $actor = $players{$id} || $monsters{$id} || $pets{$id}
+					|| $slaves{$id} || $elementals{$id};
 				next unless $actor;
 				my $position = $actor->{pos_to} || $actor->{pos};
+				if ($position && blockDistance($position, $candidate) == 0) {
+					$occupied = 1;
+					last;
+				}
+			}
+			next if $occupied;
+			for my $id (@spellsID) {
+				my $spell = $spells{$id};
+				next unless $spell && ($spell->{type} || 0) == 0x81;
+				my $position = $spell->{pos_to} || $spell->{pos};
 				if ($position && blockDistance($position, $candidate) == 0) {
 					$occupied = 1;
 					last;
@@ -1184,18 +1211,29 @@ sub warpPortalList {
 	return unless $self->{mapSolution} && @{$self->{mapSolution}}
 		&& $self->{mapSolution}[0]{is_warpPortal}
 		&& ($self->{warpPortalStage} || '') =~ /^(casting|awaiting_menu)$/;
+	if ($self->{warpPortalStage} eq 'casting') {
+		my $task = $self->getSubtask();
+		return unless $task && $task->isa('Task::UseSkill')
+			&& $task->{skill}->getHandle() eq 'AL_WARP'
+			&& ($task->{castTries} || 0) > 0;
+	}
+	my $menuObservedAt = $char->{warpPortalState}{verified_at} || 0;
+	return if $menuObservedAt <= ($self->{warpPortalStarted} || 0);
 	my $wanted = $self->{warpPortalDestination};
 	my $available = availableWarpMaps();
 	my $slot = warpMapIndex($wanted);
 	return $self->failWarpPortalStep("server menu does not include memo $wanted")
 		unless defined($slot) && $available;
 	my $level = $char->{warpPortalState}{cast_level} || 0;
+	return $self->failWarpPortalStep('server menu does not match the active AL_WARP cast level')
+		if $level != ($self->{warpPortalCastLevel} || 0);
 	return $self->failWarpPortalStep("server menu slot for $wanted exceeds current AL_WARP level")
 		if $slot + 1 > $level;
 	# Selection is by map name, never by a local memo index. The fresh server
 	# menu must contain exactly one matching destination.
-	noteWarpSelection($wanted, $field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y},
-		$level, $self->{warpPortalAttemptID});
+	my $placement = $self->{warpPortalPlacement};
+	noteWarpSelection($wanted, $field->baseName, $char->{pos}{x}, $char->{pos}{y},
+		$level, $self->{warpPortalAttemptID}, $placement);
 	$messageSender->sendWarpTele(27, "$wanted.gat");
 	$self->{warpPortalStage} = 'awaiting_portal';
 	$self->{warpPortalStarted} = time;
@@ -1206,6 +1244,8 @@ sub warpPortalSpawned {
 	my $self = $holder->[0];
 	my $portal = $args->{portal};
 	return unless $self && $portal && ($self->{warpPortalStage} || '') eq 'awaiting_portal';
+	return unless $char && defined $char->{ID} && defined $portal->{sourceID}
+		&& $portal->{sourceID} eq $char->{ID};
 	return unless $field && $field->baseName eq $self->{warpPortalSourceMap};
 	my $step = $self->{mapSolution}[0];
 	return unless $step && $self->{warpPortalPlacement}
@@ -1224,9 +1264,21 @@ sub warpPortalAreaSpell {
 	return unless $field && $field->baseName eq $self->{warpPortalSourceMap}
 		&& $char && defined $args->{sourceID} && $args->{sourceID} eq $char->{ID};
 	my $placement = $self->{warpPortalPlacement};
-	return unless $placement && $args->{x} == $placement->{x} && $args->{y} == $placement->{y};
+	return unless $placement && blockDistance({x => $args->{x}, y => $args->{y}}, $placement) == 0;
 	$self->{warpPortalActor} = {pos_to => {x => $args->{x}, y => $args->{y}}, ID => $args->{ID}};
 	$self->{warpPortalStage} = 'portal_ready';
+}
+
+sub warpPortalRejected {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	return unless $self && $args && ($args->{fail} || 0) == 0
+		&& ($self->{warpPortalStage} || '') eq 'casting';
+	my $task = $self->getSubtask();
+	return unless $task && $task->isa('Task::UseSkill')
+		&& $task->{skill}->getHandle() eq 'AL_WARP'
+		&& ($task->{castTries} || 0) > 0;
+	$self->failWarpPortalStep('server rejected AL_WARP on this map');
 }
 
 sub failWarpPortalStep {
@@ -1234,6 +1286,9 @@ sub failWarpPortalStep {
 	clearPendingTraversal($self->{warpPortalAttemptID});
 	if ($self->getSubtask()) {
 		$self->{warpPortalFailureReason} = $reason;
+		my $task = $self->getSubtask();
+		$task->setError(Task::UseSkill::ERROR_CASTING_FAILED(), $reason)
+			if $task->isa('Task::UseSkill') && $task->getStatus() == Task::RUNNING;
 		return;
 	}
 	my $map = $self->{warpPortalSourceMap} || ($field && $field->baseName) || '';

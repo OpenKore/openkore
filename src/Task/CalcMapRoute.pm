@@ -331,6 +331,7 @@ sub buildReachedTargetState {
 		airship_message => undef,
 		is_warpPortal => 0,
 		warpPortalMemoSlot => undef,
+		warpPortalCastLevel => undef,
 	};
 	return ($key, $value);
 }
@@ -365,6 +366,7 @@ sub buildMapSolutionStep {
 		airship_message => $value->{airship_message},
 		is_warpPortal => $value->{is_warpPortal} || 0,
 		warpPortalMemoSlot => $value->{warpPortalMemoSlot},
+		warpPortalCastLevel => $value->{warpPortalCastLevel},
 	};
 }
 
@@ -968,37 +970,50 @@ sub populateOpenListWithWarpToSaveMap {
 sub populateOpenListWithWarpPortal {
 	my ($self, $from_node, $baseCost, $parent) = @_;
 	return unless !$parent && $config{route_warpPortal} && $char;
+	# OpenKore's local no-teleport table represents noteleport, not rAthena's
+	# MF_NOWARP. Let AL_WARP be planned and treat the server rejection as a
+	# bounded per-map failure in Task::MapRoute.
 	my $skill = Skill->new(handle => 'AL_WARP');
 	my $level = $char->getSkillLevel($skill) || 0;
 	return if $level < 1;
-	return if Misc::isTeleportSkillBlockedOnMap($self->{source}{map})
-		|| Misc::_isTeleportSkillSuppressedByStatus();
+	return if Misc::_isTeleportSkillSuppressedByStatus();
 	my $inventory = eval { $char->inventory };
 	my $blueGemstone = $inventory && $inventory->getByNameID(717);
 	return unless $blueGemstone && $blueGemstone->{amount} > 0;
-	my $spCost = $skill->getSP($level);
-	return if defined $spCost && ($char->{sp} || 0) < $spCost;
-
 	return if $self->{noWarpPortalMaps}{$self->{source}{map}};
 	my $serverMaps = availableWarpMaps();
 	my @configured = map { parseMemoEntry($config{"memo$_"}) } 1 .. 4;
 	my %configured_count;
 	$configured_count{$_->{map}}++ for grep { $_->{valid} && $_->{map} } @configured;
-	for my $config_slot (1 .. 4) {
-		my $entry = $configured[$config_slot - 1];
-		next unless $entry->{valid} && $entry->{map};
-		my $map = $entry->{map};
+	my @candidates;
+	if ($serverMaps) {
+		for my $index (0 .. $#$serverMaps) {
+			my $map = $serverMaps->[$index];
+			push @candidates, [$map, $index + 1, $index] if $map;
+		}
+	} else {
+		for my $slot (1 .. 4) {
+			my $entry = $configured[$slot - 1];
+			push @candidates, [$entry->{map}, $slot, $slot - 1]
+				if $entry->{valid} && $entry->{map};
+		}
+	}
+	for my $candidate (@candidates) {
+		my ($map, $minimum_level, $routeSlot) = @$candidate;
+		my $config_slot = $minimum_level;
 		# Config is a speculative hint until the current character has received
 		# an AL_WARP list. After a list arrives, only its unique map names are
 		# eligible. Never use the configuration slot as the server selection.
-		next if $configured_count{$map} != 1;
+		next if !$serverMaps && $configured_count{$map} != 1;
 		my $server_index = warpMapIndex($map);
 		my $status = warpMapStatus($map, $config_slot);
-		next if $status eq 'absent' || $status eq 'invalid';
-		my $minimum_level = defined($server_index) ? $server_index + 1 : $config_slot;
+		next if $status eq 'absent' || $status eq 'invalid' || $status eq 'ambiguous';
+		$minimum_level = $server_index + 1 if defined $server_index;
 		next if $level < $minimum_level;
+		my $spCost = $skill->getSP($minimum_level);
+		next if defined $spCost && ($char->{sp} || 0) < $spCost;
 		my ($x, $y) = memoCoordinateForMap($map);
-		my $routeSlot = defined($server_index) ? $server_index : $config_slot - 1;
+		$routeSlot = $server_index if defined $server_index;
 		my $dest = defined $x && defined $y ? "$map $x $y" : $map;
 		next if $dest eq $from_node;
 		my $destField = eval { Field->new(name => $map) };
@@ -1026,7 +1041,7 @@ sub populateOpenListWithWarpPortal {
 		);
 		$value->{is_warpPortal} = 1;
 		$value->{warpPortalMemoSlot} = $routeSlot;
-		$value->{warpPortalSpeculative} = $serverMaps ? 0 : 1;
+		$value->{warpPortalCastLevel} = $minimum_level;
 		$self->registerSyntheticPortalDestination(
 			'tempWarpPortal', $dest, {map => $map, x => $x, y => $y},
 		);

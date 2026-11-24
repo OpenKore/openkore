@@ -45,7 +45,7 @@ use Network::MessageTokenizer;
 use Misc;
 use Plugins;
 use Skill;
-use WarpPortal qw(beginCharacterSession updateServerMemos memoAcknowledged clearPendingTraversal confirmPortalArrival);
+use WarpPortal qw(beginCharacterSession updateServerMemos memoAcknowledged memoRejected clearPendingTraversal confirmPortalArrival);
 use Utils;
 use Utils::Exceptions;
 use Utils::Crypton;
@@ -3721,8 +3721,11 @@ sub markWarpPortalPendingPortal {
 		clearPendingTraversal($pending->{attempt_id});
 		return;
 	}
+	return unless defined $portal->{sourceID} && defined $char->{ID}
+		&& $portal->{sourceID} eq $char->{ID};
 	return unless $pending->{source_map} eq $field->baseName;
-	return unless blockDistance($portal->{pos_to}, {x => $pending->{x}, y => $pending->{y}}) <= 1;
+	my $expected = $pending->{portal_expected_pos} || {x => $pending->{x}, y => $pending->{y}};
+	return unless blockDistance($portal->{pos_to}, $expected) == 0;
 	$pending->{portal_seen_at} = time;
 	$pending->{portal_pos} = {%{$portal->{pos_to}}};
 }
@@ -3738,17 +3741,22 @@ sub markWarpPortalPendingAreaSpell {
 	}
 	return unless defined $char->{ID} && defined $spell->{sourceID}
 		&& $spell->{sourceID} eq $char->{ID}
-		&& $pending->{source_map} eq $field->baseName
-		&& blockDistance({x => $spell->{x}, y => $spell->{y}}, {x => $pending->{x}, y => $pending->{y}}) <= 1;
+		&& $pending->{source_map} eq $field->baseName;
+	my $expected = $pending->{portal_expected_pos} || {x => $pending->{x}, y => $pending->{y}};
+	return unless blockDistance({x => $spell->{x}, y => $spell->{y}}, $expected) == 0;
 	$pending->{portal_seen_at} = time;
 	$pending->{portal_pos} = {x => $spell->{x}, y => $spell->{y}};
 }
 
 sub recordWarpPortalPendingArrival {
-	my ($oldMap) = @_;
-	return unless $char && $field;
+	my ($oldMap, $observedEntryPosition) = @_;
+	return unless $char;
 	my $pending = $char->{warpPortalPendingTraversal};
 	return unless $pending;
+	unless ($field) {
+		clearPendingTraversal($pending->{attempt_id});
+		return;
+	}
 	if (time - $pending->{selected_at} > 120) {
 		clearPendingTraversal($pending->{attempt_id});
 		return;
@@ -3757,10 +3765,8 @@ sub recordWarpPortalPendingArrival {
 		clearPendingTraversal($pending->{attempt_id});
 		return;
 	}
-	return unless defined $oldMap && $oldMap eq $pending->{source_map};
-	return unless $pending->{map} eq $field->baseName;
 	return unless defined $char->{pos}{x} && defined $char->{pos}{y};
-	confirmPortalArrival($oldMap, $field->baseName, $char->{pos}{x}, $char->{pos}{y}, $char->{old_pos_to});
+	confirmPortalArrival($oldMap, $field->baseName, $char->{pos}{x}, $char->{pos}{y}, $observedEntryPosition);
 }
 
 # 0828,14
@@ -7681,6 +7687,7 @@ sub map_change {
 	Misc::clearTeleportItemPendingUse();
 
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
+	my $observedEntryPosition = $char->{pos} ? {%{$char->{pos}}} : undef;
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
 	my $map_noinstance;
 	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
@@ -7737,7 +7744,7 @@ sub map_change {
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-	recordWarpPortalPendingArrival($oldMap);
+	recordWarpPortalPendingArrival($oldMap, $observedEntryPosition);
 	$timeout{ai}{time} = time;
 }
 
@@ -7750,6 +7757,7 @@ sub map_changed {
 	Misc::clearTeleportItemPendingUse();
 
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
+	my $observedEntryPosition = $char && $char->{pos} ? {%{$char->{pos}}} : undef;
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
 	my $map_noinstance;
 	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
@@ -7858,7 +7866,7 @@ sub map_changed {
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-	recordWarpPortalPendingArrival($oldMap);
+	recordWarpPortalPendingArrival($oldMap, $observedEntryPosition);
 	$timeout{ai}{time} = time;
 }
 
@@ -11944,6 +11952,8 @@ sub mvp_you {
 sub no_teleport {
 	my ($self, $args) = @_;
 	my $fail = $args->{fail};
+	Plugins::callHook('packet_no_teleport', $args);
+	memoRejected() if $fail == 1;
 
 	if ($fail == 0) {
 		error T("Unavailable Area To Teleport\n");
