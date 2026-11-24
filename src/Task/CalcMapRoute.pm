@@ -657,10 +657,9 @@ sub searchStep {
 			&& $closelist->{$parent}{is_warpPortal}
 			&& $map_name eq $target->{map}) {
 			# We cannot validate a walk from an unknown landing coordinate. Keep
-			# Warp Portal as a conservative option only for an objective on the
-			# destination map, price it at the map's tile-count upper bound, and
-			# let MapRoute recalculate from the server-confirmed landing position.
-			my $estimate = $target->{field}->width() * $target->{field}->height();
+			# the route cost proportional to the field's block span, not its tile
+			# count, and let MapRoute recalculate from the server-confirmed landing.
+			my $estimate = $self->_warpPortalUnknownLandingEstimate($target->{field});
 			my $targetPortalString = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
 			my ($walk, $value) = $self->buildReachedTargetState(
 				$parent, $closelist->{$parent}, $targetPortalString, $estimate,
@@ -988,21 +987,36 @@ sub populateOpenListWithWarpPortal {
 	my %configured_count;
 	$configured_count{$_->{map}}++ for grep { $_->{valid} && $_->{map} } @configured;
 	my @candidates;
+	my %server_candidate;
 	if ($serverMaps) {
 		for my $index (0 .. $#$serverMaps) {
 			my $map = $serverMaps->[$index];
-			push @candidates, [$map, $index + 1, $index] if $map;
+			if ($map) {
+				push @candidates, [$map, $index + 1, $index, $index + 1];
+				$server_candidate{$map} = 1;
+			}
+		}
+		# A lower-level menu only disproves destinations in its verified
+		# coverage. Keep unique historical hints above that coverage as
+		# speculative candidates; the fresh menu from the routing cast must
+		# still contain the selected map before OpenKore sends a choice.
+		for my $slot (1 .. 4) {
+			my $entry = $configured[$slot - 1];
+			next unless $entry->{valid} && $entry->{map}
+				&& $configured_count{$entry->{map}} == 1
+				&& !$server_candidate{$entry->{map}}
+				&& warpMapStatus($entry->{map}, $slot) eq 'unknown';
+			push @candidates, [$entry->{map}, $slot, undef, $slot];
 		}
 	} else {
 		for my $slot (1 .. 4) {
 			my $entry = $configured[$slot - 1];
-			push @candidates, [$entry->{map}, $slot, $slot - 1]
+			push @candidates, [$entry->{map}, $slot, $slot - 1, $slot]
 				if $entry->{valid} && $entry->{map};
 		}
 	}
 	for my $candidate (@candidates) {
-		my ($map, $minimum_level, $routeSlot) = @$candidate;
-		my $config_slot = $minimum_level;
+		my ($map, $minimum_level, $routeSlot, $config_slot) = @$candidate;
 		# Config is a speculative hint until the current character has received
 		# an AL_WARP list. After a list arrives, only its unique map names are
 		# eligible. Never use the configuration slot as the server selection.
@@ -1029,8 +1043,9 @@ sub populateOpenListWithWarpPortal {
 		my $unknownCoordinateEstimate = 0;
 		if (!defined $x || !defined $y) {
 			my $hasCoordinateTarget = grep { $_->{map} eq $map && hasMapCoords($_) } @{$self->{targets}};
-			$unknownCoordinateEstimate = $destField->width() * $destField->height()
-				unless $hasCoordinateTarget;
+			my $hasMapTarget = grep { $_->{map} eq $map } @{$self->{targets}};
+			$unknownCoordinateEstimate = $self->_warpPortalUnknownLandingEstimate($destField)
+				unless $hasCoordinateTarget || $hasMapTarget;
 		}
 		my $penalty = $self->getMapRouteWeight($sourceMap) + $self->getRouteWeight('WARPPORTAL') + 2;
 		my $key = $self->buildRouteStateKey("$from_node=$dest", $baseCost->{blockedPortalGroups});
@@ -1050,6 +1065,18 @@ sub populateOpenListWithWarpPortal {
 		);
 		$self->add_key_to_openList($key, $value);
 	}
+}
+
+# The landing tile is not in the Warp Portal menu. Use the field's maximum
+# straight-line block span as a map-sized ranking estimate rather than charging
+# every tile on the map. Actual pathfinding is recalculated from the server's
+# landing position. A map-only objective has no post-arrival walking cost.
+sub _warpPortalUnknownLandingEstimate {
+	my ($self, $field) = @_;
+	return 0 unless $field;
+	my $width = $field->width() || 0;
+	my $height = $field->height() || 0;
+	return $width > $height ? $width : $height;
 }
 
 

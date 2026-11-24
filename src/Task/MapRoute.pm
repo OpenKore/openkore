@@ -207,14 +207,22 @@ sub iterate {
 		if ($self->{mapSolution}[0]{is_warpPortal} && $self->{warpPortalStage}) {
 			my $traversal = $char->{warpPortalState}{last_traversal};
 			if ($self->{warpPortalStage} eq 'entering_portal'
-				&& $field->baseName eq ($self->{warpPortalDestination} || '')
-				&& $traversal
+				&& $field->baseName eq ($self->{warpPortalDestination} || '')) {
+				my $confirmed = $traversal
 				&& $traversal->{source_map} eq ($self->{warpPortalSourceMap} || '')
 				&& $traversal->{destination_map} eq $field->baseName
 				&& $traversal->{time} >= ($self->{warpPortalStarted} || 0)
-				&& $traversal->{attempt_id} eq ($self->{warpPortalAttemptID} || '')) {
-				# Recalculate from the server-confirmed landing position, which may differ from the memo coordinate.
-				delete $char->{warpPortalState}{last_traversal};
+				&& $traversal->{attempt_id} eq ($self->{warpPortalAttemptID} || '');
+				if ($confirmed) {
+					# Recalculate from the server-confirmed landing position, which may differ from the memo coordinate.
+					delete $char->{warpPortalState}{last_traversal};
+				} else {
+					# Reaching the requested map completes this routing leg, but a
+					# destination match alone does not prove Warp Portal entry. Keep
+					# server coordinates and do not record traversal or learn a memo.
+					debug "Reached the requested Warp Portal destination, but entry could not be correlated; continuing from the server-reported position without portal attribution.\n", 'map_route';
+				}
+			clearPendingTraversal($self->{warpPortalAttemptID});
 				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt mapChanged teleport teleportTime sentTeleport)};
 				delete $self->{mapSolution};
 				$self->initMapCalculator();

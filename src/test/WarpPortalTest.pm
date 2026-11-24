@@ -238,6 +238,11 @@ sub testMemoAcknowledgementAndTraversalCorrelation {
 		'disappearance of a different portal unit cannot complete the attempt');
 	ok(noteWarpPortalUnitDisappeared({%$unit, pos => {x => 11, y => 10}}, 'prontera'),
 		'disappearance of the same owned portal after movement completes traversal evidence');
+	my $disappeared_at = $Globals::char->{warpPortalPendingTraversal}{portal_disappeared_at};
+	ok(noteWarpPortalUnitDisappeared({%$unit, pos => {x => 11, y => 10}}, 'prontera'),
+		'duplicate disappearance notifications are idempotent');
+	is($Globals::char->{warpPortalPendingTraversal}{portal_disappeared_at}, $disappeared_at,
+		'duplicate disappearance does not extend the correlation window');
 	$Globals::config{memo2} = 'geffen 100 100';
 	$Globals::config{memo3} = '';
 	my $arrival = confirmPortalArrival('prontera', 'geffen', 120, 62);
@@ -257,6 +262,17 @@ sub testMemoAcknowledgementAndTraversalCorrelation {
 		'same-map transition without disappearance of the selected portal is not attributed');
 	ok(!$Globals::char->{warpPortalState}{last_traversal}, 'ambiguous same-destination transition creates no traversal record');
 
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-delayed-disappear', {x => 11, y => 10});
+	$unit = {ID => 'portal-unit-late', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	noteWarpPortalUnitSeen($unit, 'prontera');
+	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62),
+		'map change before portal disappearance remains unattributed');
+	ok(!noteWarpPortalUnitDisappeared({%$unit, pos => {x => 11, y => 10}}, 'prontera'),
+		'delayed disappearance cannot retroactively attribute an already cleared transition');
+	ok(!$Globals::char->{warpPortalState}{last_traversal},
+		'delayed packet ordering does not create confirmed traversal evidence');
+
 	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-d', {x => 11, y => 10});
 	$unit = {ID => 'portal-unit-d', sourceID => 'another-character', type => 0x81, x => 11, y => 10};
 	ok(!noteWarpPortalUnitSeen($unit, 'prontera'), 'portal created by another character is not owned evidence');
@@ -273,6 +289,14 @@ sub testMemoAcknowledgementAndTraversalCorrelation {
 	beginCharacterSession();
 	ok(!$Globals::char->{warpPortalPendingTraversal}, 'character-session changes clear pending portal correlation');
 	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62), 'old-session evidence cannot confirm a new-session arrival');
+
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'attempt-disconnect', {x => 11, y => 10});
+	$unit = {ID => 'portal-unit-disconnect', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	noteWarpPortalUnitSeen($unit, 'prontera');
+	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+	beginCharacterSession();
+	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62),
+		'disconnect during traversal drops the prior session evidence');
 
 	setupCharacter(
 		warpPortal_autoUpdateMemo => 0, saveMap => 'prontera',
@@ -531,7 +555,7 @@ sub testCastLevelSelection {
 		local *Task::CalcMapRoute::getMapRouteWeight = sub { 0 };
 		local *Task::CalcMapRoute::getRouteWeight = sub { 0 };
 		local *Task::CalcMapRoute::buildRouteStateKey = sub { 'warp-portal-test' };
-		local *Task::CalcMapRoute::canAddOpenListEntry = sub { 1 };
+		local *Task::CalcMapRoute::canAddOpenListEntry = sub { $_[0]{last_route_cost} = $_[2]; 1 };
 		local *Task::CalcMapRoute::cloneBlockedPortalGroups = sub { {} };
 		local *Task::CalcMapRoute::buildRouteValue = sub { {} };
 		local *Task::CalcMapRoute::registerSyntheticPortalDestination = sub { 1 };
@@ -539,11 +563,56 @@ sub testCastLevelSelection {
 		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
 		is_deeply([@{$planner->{candidate}}{qw(warpPortalMinLevel warpPortalCastLevel warpPortalMemoSlot)}], [2, 4, 1],
 			'route planner selects affordable level four for the level-two server slot and preserves its index');
+		is($planner->{last_route_cost}, 42,
+			'a server-confirmed destination without coordinates receives the bounded field-span estimate');
 		$Globals::char->{sp} = 25;
 		delete $planner->{candidate};
 		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
 		ok(!$planner->{candidate}, 'route planner omits Warp Portal when every eligible level exceeds available SP');
+
+		setupCharacter(route_warpPortal => 1, warpPortal_autoUpdateMemo => 0,
+			saveMap => 'prontera', memo1 => 'prontera 10 10', memo2 => 'geffen 20 21', memo3 => '', memo4 => '');
+		$Globals::char = bless {
+			charID => 'partial-menu-char', learned => 4, sp => 100,
+			inventory => bless({amount => 1}, 'WarpPortalTest::Inventory'),
+		}, 'WarpPortalTest::Character';
+		beginCharacterSession();
+		serverList(1, 'prontera');
+		delete $planner->{candidate};
+		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
+		is_deeply([@{$planner->{candidate}}{qw(warpPortalMinLevel warpPortalCastLevel warpPortalMemoSlot)}],
+			[2, 4, undef], 'a lower-level menu keeps a unique higher-level memo hint speculative and routable');
+		is(warpMapStatus('geffen', 2), 'unknown',
+			'the partial menu does not promote the higher memo hint to verified server state');
+		is($Globals::config{memo2}, 'geffen 20 21',
+			'runtime discovery remains usable when automatic memo synchronization is disabled');
+		is($planner->{last_route_cost}, 2,
+			'configured but unverified coordinates remain a route estimate without becoming authoritative');
+		$Globals::config{memo3} = 'geffen 30 31';
+		delete $planner->{candidate};
+		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
+		ok(!$planner->{candidate}, 'duplicate speculative memo names are excluded from route candidates');
+
+		setupCharacter(route_warpPortal => 1, warpPortal_autoUpdateMemo => 0,
+			saveMap => 'prontera', memo1 => 'prontera', memo2 => 'geffen', memo3 => '', memo4 => '');
+		$Globals::char = bless {
+			charID => 'unknown-coordinate-char', learned => 4, sp => 100,
+			inventory => bless({amount => 1}, 'WarpPortalTest::Inventory'),
+		}, 'WarpPortalTest::Character';
+		beginCharacterSession();
+		serverList(1, 'prontera');
+		$planner->{targets} = [{map => 'geffen'}];
+		delete @{$planner}{qw(candidate last_route_cost)};
+		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
+		is($planner->{last_route_cost}, 2,
+			'map-only objectives do not pay a post-arrival walking estimate for unknown memo coordinates');
 	}
+
+	is(Task::CalcMapRoute::_warpPortalUnknownLandingEstimate(bless({}, 'Task::CalcMapRoute'),
+		bless({}, 'WarpPortalTest::LargeField')), 800,
+		'unknown-coordinate estimate scales with map span rather than total map tile count');
+	is(Task::CalcMapRoute::_warpPortalUnknownLandingEstimate(bless({}, 'Task::CalcMapRoute'), undef), 0,
+		'missing field data does not invent an unknown-coordinate estimate');
 
 	my $calculator = bless {}, 'Task::CalcMapRoute';
 	my $step = $calculator->buildMapSolutionStep('prontera 10 10=geffen 20 20', {
@@ -632,6 +701,55 @@ sub testWarpPortalMenuCorrelation {
 	$sender->{last_warp_destination} = undef;
 	Task::MapRoute::warpPortalList(undef, {type => 27}, [$route]);
 	ok(!defined $sender->{last_warp_destination}, 'duplicate menu is ignored after the route advances');
+
+	# A speculative candidate must be checked against the fresh routing-cast list.
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen', memo3 => '', memo4 => '');
+	$Globals::char->{pos} = {x => 10, y => 10};
+	my $stale_route = bless {
+		mapSolution => [{is_warpPortal => 1}], warpPortalStage => 'awaiting_menu',
+		warpPortalDestination => 'geffen', warpPortalSourceMap => 'prontera',
+		warpPortalCastLevel => 4, warpPortalAttemptID => 'stale-hint-route',
+		warpPortalSession => $Globals::char->{warpPortalState}{session},
+		warpPortalStarted => time - 1, warpPortalCastRequestedAt => time - 1,
+	}, 'Task::MapRoute';
+	local *Task::MapRoute::initMapCalculator = sub { $_[0]{recalculated}++ };
+	noteWarpCast(27, 4, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'payon', memo3 => 'alberta'});
+	$sender->{last_warp_destination} = undef;
+	Task::MapRoute::warpPortalList(undef, {type => 27}, [$stale_route]);
+	ok(!defined $sender->{last_warp_destination},
+		'a stale speculative memo absent from the fresh menu is never selected');
+	ok($stale_route->{recalculated} && $stale_route->{noWarpPortalMaps}{prontera},
+		'a stale destination enters bounded fallback after authoritative menu rejection');
+
+	# The server map change is authoritative for location, while missing portal
+	# disappearance evidence leaves its cause unconfirmed. Continue routing from
+	# that location without recording a traversal or blacklisting the source.
+	setupCharacter(warpPortal_autoUpdateMemo => 1, memo1 => 'prontera', memo2 => 'geffen', memo3 => '', memo4 => '');
+	$Globals::char->{ID} = 'arrival-route-character';
+	$Globals::char->{pos} = {x => 120, y => 62};
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'unconfirmed-route-attempt', {x => 11, y => 10});
+	ok(!confirmPortalArrival('prontera', 'geffen', 120, 62),
+		'map-only destination transition without portal evidence remains unconfirmed');
+	my $arrival_route = bless {
+		T_status => Task::RUNNING, mapBlockPruneTime => time,
+		actor => {pos_to => {x => 120, y => 62}},
+		mapSolution => [{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=geffen'}],
+		warpPortalStage => 'entering_portal', warpPortalDestination => 'geffen',
+		warpPortalSourceMap => 'prontera', warpPortalStarted => time - 1,
+		warpPortalAttemptID => 'unconfirmed-route-attempt', noWarpPortalMaps => {},
+	}, 'Task::MapRoute';
+	local $Task::MapRoute::net = bless {}, 'WarpPortalTest::Net';
+	local $Task::MapRoute::field = bless {map => 'geffen'}, 'WarpPortalTest::Field';
+	local $Task::MapRoute::char = $Globals::char;
+	local *Task::MapRoute::initMapCalculator = sub { $_[0]{recalculated}++ };
+	Task::MapRoute::iterate($arrival_route);
+	ok($arrival_route->{recalculated},
+		'MapRoute recalculates from the server-reported destination after an unconfirmed-cause arrival');
+	ok(!$arrival_route->{noWarpPortalMaps}{prontera} && !$arrival_route->{warpPortalFailureReason},
+		'unconfirmed arrival does not create a Warp Portal failure block');
+	ok(!$Globals::char->{warpPortalState}{last_traversal},
+		'MapRoute recovery does not relabel the unconfirmed transition as portal traversal');
 }
 
 package WarpPortalTest::Field;
@@ -639,6 +757,13 @@ sub baseName { $_[0]{map} || 'prontera' }
 sub width { 40 }
 sub height { 40 }
 sub isWalkable { return $_[1] >= 0 && $_[2] >= 0 && $_[1] < 40 && $_[2] < 40; }
+
+package WarpPortalTest::LargeField;
+sub width { 600 }
+sub height { 800 }
+
+package WarpPortalTest::Net;
+sub getState { Network::IN_GAME }
 
 package WarpPortalTest::Skill;
 sub getRange { 9 }

@@ -436,6 +436,7 @@ sub noteWarpPortalUnitDisappeared {
 		&& $unit->{pos}{y} == $pending->{portal_pos}{y}
 		&& $pending->{portal_move_at} >= $pending->{portal_seen_at}
 		&& defined($map) && $map eq ($pending->{source_map} || '');
+	return 1 if $pending->{portal_disappeared_at};
 	$pending->{portal_disappeared_at} = time;
 	return 1;
 }
