@@ -515,6 +515,7 @@ sub testWarpPortalPlacement {
 }
 
 sub testCastLevelSelection {
+	require Task::UseSkill;
 	require Skill;
 	local %Skill::StaticInfo::ids = (27 => {handle => 'AL_WARP'});
 	local %Skill::StaticInfo::handles = (AL_WARP => 27);
@@ -606,6 +607,42 @@ sub testCastLevelSelection {
 		$planner->populateOpenListWithWarpPortal('prontera 10 10', $base_cost, undef);
 		is($planner->{last_route_cost}, 2,
 			'map-only objectives do not pay a post-arrival walking estimate for unknown memo coordinates');
+
+		my $map_only_node = 'prontera 156 190=alberta';
+		my $map_only_search = bless {
+			openlist => {$map_only_node => {walk => 2, zeny => 0, is_warpPortal => 1}},
+			openlist_heap => [[2, $map_only_node]], closelist => {}, targets => [{map => 'alberta', pos => {}}],
+			solution => [], budget => '', noGoCommand => 1, noTeleSpawn => 1, noWarpItem => 1,
+			SyntheticPortals => {},
+		}, 'Task::CalcMapRoute';
+		$map_only_search->{SyntheticPortals}{tempWarpPortal}{alberta}{dest}{alberta} = {
+			map => 'alberta', enabled => 1,
+		};
+		$map_only_search->searchStep();
+		ok($map_only_search->{done} && $map_only_search->{found},
+			'map-only Warp Portal destination resolves as a route to a map objective');
+		ok($map_only_search->{mapSolution}[0]{is_warpPortal},
+			'route search selects the speculative map-only Warp Portal step');
+
+	}
+
+	{
+		no warnings 'redefine';
+		local *Field::new = sub {
+			my ($class, %args) = @_;
+			return bless {map => $args{name}}, 'WarpPortalTest::MapField';
+		};
+		my $same_map_objective = Task::CalcMapRoute->new(
+			sourceMap => 'alberta', sourceX => 192, sourceY => 183,
+			map => 'alberta', suppressDebug => 1,
+			noGoCommand => 1, noTeleSpawn => 1, noWarpItem => 1, noAirship => 1,
+		);
+		$same_map_objective->activate();
+		$same_map_objective->iterate() while $same_map_objective->getStatus() != Task::DONE;
+		ok(!$same_map_objective->getError(),
+			'a map-only objective completes after arriving on its requested map');
+		is_deeply($same_map_objective->getRoute(), [],
+			'a reached map-only objective returns an empty remaining route');
 	}
 
 	is(Task::CalcMapRoute::_warpPortalUnknownLandingEstimate(bless({}, 'Task::CalcMapRoute'),
@@ -640,6 +677,14 @@ sub testCastLevelSelection {
 	$useSkill->castSkill();
 	is_deeply($sender->{last_skill_location}, [27, 4, 12, 13],
 		'Task::UseSkill sends the selected level and the distinct portal target');
+	my $completed_task = bless {
+		T_status => Task::DONE, state => Task::UseSkill::WAITING_FOR_CAST_TO_FINISH(),
+		castingFinished => 1, skill => $castSkill, actor => $char,
+	}, 'WarpPortalTest::CompletedUseSkill';
+	local $Task::UseSkill::net = bless({}, 'WarpPortalTest::Net');
+	my $repeat_completion = eval { $completed_task->iterate(); 1 };
+	ok($repeat_completion && $completed_task->getStatus() == Task::DONE,
+		'a cast completion callback cannot complete an already failed/done UseSkill subtask twice');
 	$char->{sp} = 25;
 	like($useSkill->validateWarpPortalResources(), qr/not enough SP/,
 		'Task::UseSkill rejects the cast if SP falls below the selected level cost');
@@ -762,8 +807,15 @@ package WarpPortalTest::LargeField;
 sub width { 600 }
 sub height { 800 }
 
+package WarpPortalTest::MapField;
+sub baseName { $_[0]{map} }
+
 package WarpPortalTest::Net;
 sub getState { Network::IN_GAME }
+
+package WarpPortalTest::CompletedUseSkill;
+our @ISA = ('Task::UseSkill');
+sub DESTROY { }
 
 package WarpPortalTest::Skill;
 sub getRange { 9 }

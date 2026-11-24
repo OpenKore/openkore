@@ -408,6 +408,15 @@ sub iterate {
 				if $self->shouldLogDebug();
 
 		foreach my $target ( @{ $self->{targets} } ) {
+			# A map-only objective is already satisfied once the authoritative
+			# source map matches. There is no coordinate to walk toward.
+			if ($self->{source}{map} eq $target->{map}
+				&& (!defined($target->{x}) || !defined($target->{y}))) {
+				$self->{mapSolution} = [];
+				$self->{target} = $target;
+				$self->setDone();
+				return;
+			}
 			# Check whether destination is walkable from the starting point.
 			if ( $self->{source}{map} eq $target->{map} && Task::Route->getRoute( undef, $target->{field}, $self->{source}, $target, 0 ) ) {
 				$self->{mapSolution} = [];
@@ -868,6 +877,17 @@ sub parseRouteStateKey {
 
 sub resolveRouteDestinationEntry {
 	my ($self, $portal, $destID) = @_;
+	# Warp Portal can expose a valid map with no known landing coordinates.
+	# Keep that map-only result usable for map objectives and for the bounded
+	# unknown-landing estimate below; ordinary portal edges still require a
+	# complete map/x/y route point.
+	my $warpPortalEntry = hashSafeGetValue(
+		$self->{SyntheticPortals}, 'tempWarpPortal', $destID, 'dest', $destID,
+	);
+	return $warpPortalEntry if $warpPortalEntry
+		&& $warpPortalEntry->{enabled}
+		&& defined($warpPortalEntry->{map}) && $warpPortalEntry->{map} ne '';
+
 	my @candidates = (
 		hashSafeGetValue(\%portals_lut, $portal, 'dest', $destID),
 		hashSafeGetValue(\%portals_commands, $destID, 'dest', $destID),

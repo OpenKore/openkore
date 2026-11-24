@@ -337,6 +337,9 @@ sub castSkill {
 
 sub iterate {
 	my ($self) = @_;
+	# A packet hook can finish/fail this task while an enclosing task still
+	# holds it as a subtask. Do not process the same cast completion again.
+	return if $self->getStatus() == Task::DONE || $self->getStatus() == Task::STOPPED;
 	return if (!$char || $net->getState() != Network::IN_GAME);
 
 	my $handle = $self->{skill}->getHandle();
