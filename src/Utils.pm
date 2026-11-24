@@ -1874,9 +1874,9 @@ sub parseArgs {
 		} elsif ($char =~ /$delimiters/) {
 			unshift @args, '';
 			$command = substr($command, $i + 1);
-			($tmp, $command) =~ /^(${delimiters}*)(.*)/;
+			($tmp, $command) = $command =~ /^(${delimiters}*)(.*)/;
 			$len = length $command;
-			$last_arg_pos += $i + 1;
+			$last_arg_pos += $i + 1 + length $tmp;
 			$i = -1;
 
 		} else {

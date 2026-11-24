@@ -172,6 +172,12 @@ perlenv['LIBPATH'] += deps_path
 
 # We're linking C++ objects so force usage of g++
 XSTools = perlenv.NativeDLL('XSTools', sources, CC = 'g++')
+if not win32:
+	# SCons normally removes failed targets. Preserve the installed library while
+	# a replacement is being built; the runtime loader also keeps a backup.
+	Precious(XSTools)
+if os.environ.get('XSTOOLS_REBUILD'):
+	AlwaysBuild(XSTools)
 
 if not win32 and not darwin:
 	# Perl expects XSTools.so, not libXSTools.so, so create symlink.

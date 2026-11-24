@@ -34,7 +34,7 @@ use Globals;
 use Log qw(message warning error debug);
 use Plugins;
 use FileParsers;
-use Settings;
+use Settings qw(%sys);
 use Utils;
 use Utils::Assert;
 use Skill;
@@ -4837,6 +4837,14 @@ sub isSafeActorQuery {
 #######################################
 #######################################
 
+sub formatDamage {
+	my ($damage) = @_;
+	return $damage unless $sys{abbreviateDamage};
+	return sprintf('%.1fM', $damage / 1_000_000) if abs($damage) >= 999_950;
+	return sprintf('%.1fK', $damage / 1_000) if abs($damage) >= 1_000;
+	return $damage;
+}
+
 ##
 # String attack_string(Actor source, Actor target, int damage, int delay)
 #
@@ -4878,7 +4886,7 @@ sub skillUse_string {
 		($level != 65535 && $level != 4294967295) ? ' ' . TF("(Lv: %s)", $level) : '',
 		T('on'),
 		$target->nameString($source),
-		($damage != -30000) ? ' ' . TF("(Dmg: %s)", $damage || T('Miss')) : '',
+		($damage != -30000) ? ' ' . TF("(Dmg: %s)", formatDamage($damage) || T('Miss')) : '',
 		($delay) ? ' ' . TF("(Delay: %sms)", $delay) : '');
 }
 

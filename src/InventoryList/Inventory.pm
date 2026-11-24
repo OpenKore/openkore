@@ -31,7 +31,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	Plugins::delHooks(delete $self->{hooks}) if $self->{hooks};
+	eval { Plugins::delHooks(delete $self->{hooks}) } if $self->{hooks};
 }
 
 sub isReady {

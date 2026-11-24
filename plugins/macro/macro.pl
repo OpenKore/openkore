@@ -117,7 +117,6 @@ sub hookOnDemand {
 	my %load = ('AI_pre' => 1);
 	my $hookToLog;
 	foreach my $a (keys %automacro) {
-		next if $automacro{$a}->{disabled};
 		if (defined $automacro{$a}->{spell}) {
 			if (!defined $load{'is_casting'}) {$load{'is_casting'} = 1}
 			if (!defined $load{'packet_skilluse'}) {$load{'packet_skilluse'} = 1}
@@ -221,7 +220,7 @@ sub commandHandler {
 	### parameter: reset
 	} elsif ($arg eq 'reset') {
 		if (!defined $params[0]) {
-			foreach my $am (keys %automacro) {undef $automacro{$am}->{disabled}}
+			releaseAM('all');
 			message "automacro runonce list cleared.\n";
 			return
 		}

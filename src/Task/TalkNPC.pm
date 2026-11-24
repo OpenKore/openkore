@@ -291,6 +291,8 @@ sub find_and_set_target {
 	} elsif (exists $talk{nameID} && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {#check if this is really necessary
 		$self->{ID} = $talk{ID};
 		$self->{target} = Actor::NPC->new;
+		$self->{target}->{ID} = $talk{ID};
+		$self->{target}->{nameID} = $talk{nameID};
 		$self->{target}->{appear_time} = time;
 		$self->{target}->{name} = 'Unknown';
 	}
@@ -357,6 +359,12 @@ sub iterate {
 			#We must still send talk cancel or otherwise the character can't move.
 			$self->{stage} = AFTER_NPC_CLOSE;
 			$self->find_and_set_target;
+			$self->{time} = time;
+			return;
+
+		} elsif ($self->{type} eq 'autotalk' && %talk && defined $talk{nameID} && $self->{nameID} == $talk{nameID}) {
+			$self->find_and_set_target;
+			$self->{stage} = TALKING_TO_NPC;
 			$self->{time} = time;
 			return;
 

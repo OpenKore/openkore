@@ -536,6 +536,7 @@ use constant {
 	CONFIG_CALL => 1,
 	CONFIG_PET_AUTOFEED => 2,
 	CONFIG_HOMUNCULUS_AUTOFEED => 3,
+	CONFIG_DISABLE_SHOWCOSTUMES => 5,
 };
 
 #expand_inventory_result
@@ -922,6 +923,9 @@ sub received_characters {
 			$character = new Actor::You;
 		}
 
+		# The character object can be reused across logins. Rodex quota
+		# observations are scoped to the game session, not the object lifetime.
+		delete $character->{rodex};
 		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
 		$character->{exp64BasePending} = exists $temporary_character->{exp_2};
 		$character->{exp64JobPending} = exists $temporary_character->{exp_job_2};
@@ -2702,7 +2706,7 @@ sub actor_action {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
 
-	$args->{damage} = intToSignedShort($args->{damage});
+	$args->{damage} = $args->{switch} eq '008A' ? intToSignedShort($args->{damage}) : intToSignedInt($args->{damage});
 	if ($args->{type} == ACTION_ITEMPICKUP) {
 		# Take item
 		my $source = Actor::get($args->{sourceID});
@@ -2769,11 +2773,11 @@ sub actor_action {
 			$dmgdisplay .= "!" if ($args->{type} == ACTION_ATTACK_LUCKY); # lucky dodge
 		} else {
 			$dmgdisplay = $args->{div} > 1
-				? sprintf '%d*%d', $args->{damage} / $args->{div}, $args->{div}
-				: $args->{damage}
+				? Misc::formatDamage(int($args->{damage} / $args->{div})) . "*$args->{div}"
+				: Misc::formatDamage($args->{damage})
 			;
 			$dmgdisplay .= "!" if ($args->{type} == ACTION_ATTACK_CRITICAL); # critical hit
-			$dmgdisplay .= " + $args->{dual_wield_damage}" if $args->{dual_wield_damage};
+			$dmgdisplay .= " + " . Misc::formatDamage($args->{dual_wield_damage}) if $args->{dual_wield_damage};
 		}
 
 		Misc::checkValidity("actor_action (attack 1)");
@@ -3499,6 +3503,12 @@ sub misc_config_reply {
 			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
 		} else {
 			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
+		}
+	} elsif ( $args->{type} == CONFIG_DISABLE_SHOWCOSTUMES ) {
+		if ($args->{flag}) {
+			message T("Costumes are now hidden.\n");
+		} else {
+			message T("Costumes are now shown.\n");
 		}
 	} else {
 		message TF("Unknown Config Type: %s, Flag: %s\n", $args->{type}, $args->{flag});
@@ -4430,6 +4440,23 @@ sub actor_status_active {
 	$args->{skillName} = defined $statusName{$status} ? $statusName{$status} : $status;
 #	($args->{actor} = Actor::get($ID))->setStatus($status, 1, $tick == 9999 ? undef : $tick, $args->{unknown1}); # need test for '08FF'
 	($args->{actor} = Actor::get($ID))->setStatus($status, $flag, $tick == 9999 ? undef : $tick);
+
+	# EFST_DAILYSENDMAILCNT (824): rAthena sends the number of mails sent
+	# in status val2, exposed as unknown2 by 043F/08FF/0983/0984.
+	# This is character state, not BotController/plugin state. The actual
+	# daily limit is a server setting and is not transmitted here.
+	if ($type == 824 && $char && defined $ID && defined $accountID && $ID eq $accountID) {
+		my $rodex = $char->{rodex} ||= {};
+		if (!$flag) {
+			delete @{$rodex}{qw(dailySentCount dailyCountObservedAt)};
+		} elsif (defined $unknown2 && $unknown2 =~ /\A[0-9]+\z/) {
+			# A smaller server counter indicates a new daily counting period.
+			$rodex->{dailyQuotaExceeded} = 0
+				if defined $rodex->{dailySentCount} && $unknown2 < $rodex->{dailySentCount};
+			$rodex->{dailySentCount} = 0 + $unknown2;
+			$rodex->{dailyCountObservedAt} = time;
+		}
+	}
 
 	# Rolling Cutter counters.
 	if ($type == 0x153) {
@@ -6257,11 +6284,13 @@ sub deal_begin {
 	if ($args->{type} == 0) {
 		error T("That person is too far from you to trade.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	} elsif ($args->{type} == 2) {
 		error T("That person is in another deal.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	} elsif ($args->{type} == 3) {
@@ -6292,11 +6321,13 @@ sub deal_begin {
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %incomingDeal;
 		undef %outgoingDeal;
 
 	}
@@ -9229,6 +9260,7 @@ sub rodex_mail_list {
 
 sub rodex_read_mail {
 	my ( $self, $args ) = @_;
+	return unless $rodexList && exists $rodexList->{mails}{$args->{mailID1}};
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
@@ -9252,7 +9284,11 @@ sub rodex_read_mail {
 		3 => T('Unset'),
 	);
 
-	my $item_pack = $self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25';
+	# Modern 0B63 attachments carry 32-bit item IDs, sixteen card bytes,
+	# and refinement/grade at the end of each record.
+	my $modern = $args->{switch} eq '0B63';
+	my $item_pack = $modern ? 'v V C2 a16 V C v2 a25 C2'
+		: ($self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25');
 	my $item_len = length pack $item_pack;
 
 	my $mail_len;
@@ -9271,16 +9307,18 @@ sub rodex_read_mail {
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
 		my $item;
-		($item->{amount},
-		$item->{nameID},
-		$item->{identified},
-		$item->{broken},
-		$item->{upgrade},
-		$item->{cards},
-		$item->{unknow1},
-		$item->{type},
-		$item->{unknow2},
-		$item->{options}) = unpack($item_pack, substr($msg, $i, $item_len));
+		if ($modern) {
+			($item->{amount}, $item->{nameID}, $item->{identified},
+			 $item->{broken}, $item->{cards}, $item->{type_equip},
+			 $item->{type}, $item->{viewID}, $item->{bindOnEquip},
+			 $item->{options}, $item->{upgrade}, $item->{grade}) =
+				unpack($item_pack, substr($msg, $i, $item_len));
+		} else {
+			($item->{amount}, $item->{nameID}, $item->{identified},
+			 $item->{broken}, $item->{upgrade}, $item->{cards},
+			 $item->{unknow1}, $item->{type}, $item->{unknow2},
+			 $item->{options}) = unpack($item_pack, substr($msg, $i, $item_len));
+		}
 
 		$item->{name} = itemName($item);
 
@@ -9430,10 +9468,18 @@ sub rodex_write_result {
 	my ( $self, $args ) = @_;
 
 	if ($args->{fail}) {
-		error T("You failed to send the rodex mail.\n");
+		if ($args->{fail} == 2) { # rAthena WRITE_MAIL_FAILED_CNT
+			$char->{rodex}{dailyQuotaExceeded} = 1 if $char;
+			$char->{rodex}{dailyQuotaRejectedAt} = time if $char;
+			error T("The daily Rodex mail send limit has been reached.\n");
+		} else {
+			error T("You failed to send the rodex mail.\n");
+		}
 		return;
 	}
 
+	# A successful server ACK is authoritative, including after a day rollover.
+	$char->{rodex}{dailyQuotaExceeded} = 0 if $char && $char->{rodex};
 	message T("Your rodex mail was sent with success.\n");
 	undef $rodexWrite;
 }
@@ -11405,7 +11451,9 @@ sub equip_switch_log {
 	for (my $i = 0; $i < length($args->{log}); $i+= 6) {
 		my ($index, $position) = unpack('a2 V', substr($args->{log}, $i, 6));
 		my $item = $char->inventory->getByID($index);
-		$char->{eqswitch}{$equipSlot_lut{$position}} = $item;
+		foreach my $slot (grep { $_ & $position } keys %equipSlot_lut) {
+			$char->{eqswitch}{$equipSlot_lut{$slot}} = $item;
+		}
 	}
 }
 

@@ -87,6 +87,17 @@ sub bootModule {
 # Throws XSTools::MakefileNotFound if the compilation makefile cannot be found.
 # Throws XSTools::CompilationInterrupted if the user pressed Ctrl+C when compiling.
 sub compile {
+	if ($^O eq 'MSWin32') {
+		XSTools::CompileException->throw(
+			error => "XSTools::compile() is only supported on Unix."
+		);
+	}
+
+	require Config;
+	require File::Basename;
+	require File::Copy;
+	require File::Temp;
+
 	my $dir;
 	foreach my $try (@makefilePaths) {
 		if (-f "$try/Makefile") {
@@ -98,14 +109,67 @@ sub compile {
 		XSTools::MakefileNotFound->throw(error => "Cannot find Makefile.");
 	}
 
+	# Keep a sibling backup so a failed shared-library link on any Unix platform
+	# cannot leave a partial or removed installation behind.
+	my $library;
+	foreach my $base (@makefilePaths) {
+		my $candidate = File::Spec->catfile($base, 'auto', 'XSTools', "XSTools.$Config::Config{dlext}");
+		if (-f $candidate) {
+			$library = $candidate;
+			last;
+		}
+	}
+	my $backup;
+	my $library_target;
+	my $library_link;
+	if (defined $library) {
+		$library_target = $library;
+		if (-l $library) {
+			$library_link = readlink($library);
+			$library_target = File::Spec->file_name_is_absolute($library_link)
+				? $library_link
+				: File::Spec->catfile(File::Basename::dirname($library), $library_link);
+		}
+		my ($handle, $path) = File::Temp::tempfile('XSTools-backup-XXXXXX', DIR => File::Basename::dirname($library_target), UNLINK => 0);
+		close $handle;
+		if (!File::Copy::copy($library_target, $path)) {
+			unlink $path;
+			XSTools::CompileException->throw(error => "Cannot preserve existing XSTools library before rebuilding: $!");
+		}
+		$backup = $path;
+	}
+
+	my $restore_library = sub {
+		if (defined $backup && !rename($backup, $library_target)) {
+			XSTools::CompileException->throw(error => "Build failed and the previous XSTools library could not be restored: $!");
+		}
+		if (defined $library_link) {
+			unlink $library if -e $library || -l $library;
+			if (!symlink($library_link, $library)) {
+				XSTools::CompileException->throw(error => "Build failed and the previous XSTools library link could not be restored: $!");
+			}
+		}
+	};
+
+	# Build with the exact interpreter that loaded this module. This keeps XS
+	# generation, headers and the runtime ABI tied to one Perl installation.
+	# A load failure can mean the existing bundle is stale even when SCons sees
+	# newer timestamps, so force its objects and library to be rebuilt.
+	local $ENV{XSTOOLS_PERL} = $^X;
+	local $ENV{XSTOOLS_REBUILD} = 1;
 	my $ret = system('make', '-C', $dir);
 	if ($ret != 0) {
+		$restore_library->();
 		if (($ret & 127) == 2) {
 			# Ctrl+C pressed
 			XSTools::CompilationInterrupted->throw(error => "User interrupted compilation.");
 		} else {
-			XSTools::CompileException->throw(error => "Compilation failed.");
+			my $status = $ret == -1 ? "could not start make: $!" : "make exited with status " . ($ret >> 8);
+			XSTools::CompileException->throw(error => "Compilation failed ($status).");
 		}
+	}
+	if (defined $backup && !unlink($backup)) {
+		warn "Could not remove temporary XSTools backup '$backup': $!\n";
 	}
 }
 
@@ -129,6 +193,19 @@ if (my $e = caught('XSTools::LoadException')) {
 		<STDIN>;
 		exit 1;
 	} else {
+		# A missing runtime dependency cannot be repaired by rebuilding
+		# XSTools. Preserve any installed bundle and show the loader's details.
+		my $load_error = $e->wrappedError();
+		if ($load_error =~ /Library not loaded:|cannot open shared object file/) {
+			print STDERR $load_error;
+			print STDERR "Error: XSTools has a missing runtime dependency; automatic recompilation was skipped.\n";
+			exit 1;
+		}
+		if ($load_error =~ /Can't locate loadable object for module XSTools/i) {
+			print STDERR "XSTools native library is missing; attempting to build it.\n";
+		} else {
+			print STDERR "XSTools native library could not be loaded; rebuilding for the active Perl ABI.\n";
+		}
 		eval {
 			compile();
 			boot();

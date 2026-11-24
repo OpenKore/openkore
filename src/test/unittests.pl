@@ -26,7 +26,7 @@ my @tests = qw(
 	PluginsHookTest
 	FileParsersTest
 	DynamicPortalGroupsTest
-	NetworkTest
+	NetworkTest RodexCoreTest
 	QuestReceiveTest
 	FieldTest
 	NativeClosestWalkableTest
