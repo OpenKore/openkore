@@ -4095,8 +4095,12 @@ sub vender_items_list {
 	$venderCID = $args->{venderCID};
 
 	my $expireDate = 0;
-    my @item_keys = @{ $self->{vender_items_list_item_keys} || [ qw( price amount ID type nameID identified broken upgrade cards options location sprite_id ) ] };
-	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $modern_list = $args->{switch} eq '0B3D';
+	my @item_keys = $modern_list
+		? qw(price amount ID type nameID identified broken cards options location sprite_id upgrade grade)
+		: @{ $self->{vender_items_list_item_keys} || [ qw( price amount ID type nameID identified broken upgrade cards options location sprite_id ) ] };
+	my $item_pack = $modern_list ? 'V v2 C V C2 a16 a25 V v C2'
+		: $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
 	my $item_len = length pack $item_pack;
 	my $item_list_len = length $args->{itemList};
 
