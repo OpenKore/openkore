@@ -6346,7 +6346,7 @@ sub cmdUnequip {
 			}
 		}
 		for my $e (@equipment) {
-			my $item = Actor::Item::get($e->{name}, undef, 0);
+			my $item = $char->inventory->get($e->{binID});
 			$item->unequip();
 		}
 		return;
