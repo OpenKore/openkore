@@ -3640,7 +3640,11 @@ sub cmdGuild {
 			return;
 		}
 
-		$messageSender->sendGuildJoin($incomingGuild{ID}, $arg2);
+		if ($incomingGuild{Type} == 2) {
+			$messageSender->sendGuildAlly($incomingGuild{ID}, $arg2);
+		} else {
+			$messageSender->sendGuildJoin($incomingGuild{ID}, $arg2);
+		}
 		undef %incomingGuild;
 		if ($arg2) {
 			message T("You accepted the guild join request.\n"), "success";
