@@ -1753,7 +1753,7 @@ sub stat_info {
 		return;
 	}
 
-	my $value = $args->{switch} eq '0ACB' ? _signedExp64($args->{val}, $args->{val2}) : $args->{val};
+	my $value = ($args->{switch} eq '0ACB' || $args->{switch} eq '0BA5') ? _signedExp64($args->{val}, $args->{val2}) : $args->{val};
 
 	if ($actor->isa('Actor::You')) {
 		if ($args->{type} == VAR_EXP && delete $actor->{exp64BasePending} && $args->{switch} eq '0ACB') {
