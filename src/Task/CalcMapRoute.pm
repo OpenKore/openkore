@@ -596,6 +596,30 @@ sub searchStep {
 	# declare portals list
 	my $openlist = $self->{openlist}; # Nodes not visited yet
 	my $closelist = $self->{closelist}; # Nodes already visited
+	# Reaching a target through an unknown Warp Portal landing adds an estimate
+	# after the current node cost. Keep searching while another open node could
+	# still produce a cheaper complete route.
+	if (defined $self->{found}) {
+		my $bestCost = $closelist->{$self->{found}}{walk};
+		my $lowestOpenCost;
+		for my $entry (values %{$openlist || {}}) {
+			$lowestOpenCost = $entry->{walk}
+				if defined($entry->{walk}) && (!defined($lowestOpenCost) || $entry->{walk} < $lowestOpenCost);
+		}
+		if (!defined($lowestOpenCost) || $lowestOpenCost >= $bestCost) {
+			$self->{done} = 1;
+			$self->{mapSolution} = [];
+			$self->{target} = $self->{foundTarget};
+			$self->{target}->{pos}->{x} = $self->{target}->{x};
+			$self->{target}->{pos}->{y} = $self->{target}->{y};
+			my $this = $self->{found};
+			while ($this) {
+				unshift @{$self->{mapSolution}}, $self->buildMapSolutionStep($this, $closelist->{$this});
+				$this = $closelist->{$this}{parent};
+			}
+			return 0;
+		}
+	}
 
 	# exit early if no more paths to check
 	unless ($openlist && %{$openlist}) {
@@ -647,9 +671,10 @@ sub searchStep {
 		next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
 		my $target_has_coords = hasMapCoords($target);
 		my $map_destination_has_coords = hasMapCoords($map_destination);
+		my ($candidateFound, $candidateValue);
 		# if no x or y consider that is already at destination
 		if (!$target_has_coords) {
-			$self->{found} = $parent;
+			$candidateFound = $parent;
 		}
 		# uses getRoute to check whether you have reached exactly the desired point on the map.
 		elsif ($map_destination_has_coords
@@ -660,8 +685,8 @@ sub searchStep {
 				$closelist->{$parent},
 				$targetPortalString,
 			);
-			$self->{found} = $walk;
-			$closelist->{$walk} = $value;
+			$candidateFound = $walk;
+			$candidateValue = $value;
 		} elsif (!$map_destination_has_coords
 			&& $closelist->{$parent}{is_warpPortal}
 			&& $map_name eq $target->{map}) {
@@ -673,24 +698,19 @@ sub searchStep {
 			my ($walk, $value) = $self->buildReachedTargetState(
 				$parent, $closelist->{$parent}, $targetPortalString, $estimate,
 			);
-			$self->{found} = $walk;
-			$closelist->{$walk} = $value;
+			$candidateFound = $walk;
+			$candidateValue = $value;
+		}
+		if (defined $candidateFound) {
+			$closelist->{$candidateFound} = $candidateValue if $candidateValue;
+			my $candidateCost = $closelist->{$candidateFound}{walk};
+			my $bestCost = defined($self->{found}) ? $closelist->{$self->{found}}{walk} : undef;
+			if (!defined($bestCost) || $candidateCost < $bestCost) {
+				$self->{found} = $candidateFound;
+				$self->{foundTarget} = $target;
+			}
 		}
 
-		# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
-		if ( $self->{found} ) {
-			$self->{done} = 1;
-			$self->{mapSolution} = [];
-			$self->{target} = $target;
-			$self->{target}->{pos}->{x} = $self->{target}->{x};
-			$self->{target}->{pos}->{y} = $self->{target}->{y};
-			my $this = $self->{found};
-			while ($this) {
-				unshift @{$self->{mapSolution}}, $self->buildMapSolutionStep($this, $closelist->{$this});
-				$this = $closelist->{$this}{parent};
-			}
-			return;
-		}
 	}
 
 	# get all children of each openlist.

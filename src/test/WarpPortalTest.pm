@@ -618,11 +618,37 @@ sub testCastLevelSelection {
 		$map_only_search->{SyntheticPortals}{tempWarpPortal}{alberta}{dest}{alberta} = {
 			map => 'alberta', enabled => 1,
 		};
-		$map_only_search->searchStep();
+		$map_only_search->searchStep() while !$map_only_search->{done};
 		ok($map_only_search->{done} && $map_only_search->{found},
 			'map-only Warp Portal destination resolves as a route to a map objective');
 		ok($map_only_search->{mapSolution}[0]{is_warpPortal},
 			'route search selects the speculative map-only Warp Portal step');
+
+		my $unknownLanding = 'prontera 156 190=unknown_geffen';
+		my $knownLanding = 'prontera 146 89=known_geffen';
+		my $cost_search = bless {
+			openlist => {
+				$unknownLanding => {walk => 202, zeny => 0, is_warpPortal => 1},
+				$knownLanding => {walk => 401, zeny => 0, is_warpPortal => 0},
+			},
+			openlist_heap => [[202, $unknownLanding], [401, $knownLanding]], closelist => {},
+			targets => [{map => 'geffen', x => 120, y => 62, field => bless({}, 'WarpPortalTest::LargeField')}],
+			solution => [], budget => '', noGoCommand => 1, noTeleSpawn => 1, noWarpItem => 1,
+			SyntheticPortals => {},
+		}, 'Task::CalcMapRoute';
+		{
+			no warnings 'redefine';
+			local %Globals::portals_los = ();
+			local *Task::CalcMapRoute::resolveRouteDestinationEntry = sub {
+				my ($self, undef, $destination) = @_;
+				return $destination eq 'unknown_geffen'
+					? {map => 'geffen'} : {map => 'geffen', x => 120, y => 39};
+			};
+			local *Task::Route::getRoute = sub { return 1; };
+			$cost_search->searchStep() while !$cost_search->{done};
+		}
+		ok(!grep($_->{is_warpPortal}, @{$cost_search->{mapSolution}}),
+			'route search keeps the conventional path when its cost beats the unknown-landing Warp Portal estimate');
 
 	}
 
