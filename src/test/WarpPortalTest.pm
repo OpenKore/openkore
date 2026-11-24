@@ -674,6 +674,9 @@ sub testCastLevelSelection {
 	is(Task::CalcMapRoute::_warpPortalUnknownLandingEstimate(bless({}, 'Task::CalcMapRoute'),
 		bless({}, 'WarpPortalTest::LargeField')), 800,
 		'unknown-coordinate estimate scales with map span rather than total map tile count');
+	is(Task::CalcMapRoute::_warpPortalUnknownLandingEstimate(bless({}, 'Task::CalcMapRoute'),
+		bless({}, 'WarpPortalTest::Field')), 40,
+		'small destination maps receive a proportionally smaller unknown-landing estimate');
 	is(Task::CalcMapRoute::_warpPortalUnknownLandingEstimate(bless({}, 'Task::CalcMapRoute'), undef), 0,
 		'missing field data does not invent an unknown-coordinate estimate');
 
