@@ -103,6 +103,7 @@ sub start {
 		}
 	}
 	test_item_move_failed();
+	test_homunculus_par_change();
 }
 
 sub reduce_struct {
@@ -143,6 +144,24 @@ sub test_item_move_failed {
 					done_testing();
 				};
 			}
+			done_testing();
+		};
+	}
+}
+
+sub test_homunculus_par_change {
+	for my $serverType (0, 'kRO_RagexeRE_2021_11_03') {
+		subtest "0BA5 serverType $serverType" => sub {
+			my $receiver = Network::Receive->create(undef, $serverType);
+			no warnings 'redefine';
+			local *Network::Receive::changeToInGameState = sub { 1 };
+			local $Network::Receive::char = bless {}, 'Actor::You';
+			$Network::Receive::char->{homunculus} = bless {}, 'Actor::Slave::Homunculus';
+
+			$receiver->parse(pack('v2 V2', 0x0BA5, 5, 384, 0), $receiver);
+			is($Network::Receive::char->{homunculus}{hp}, 384, 'homunculus HP');
+			$receiver->parse(pack('v2 V2', 0x0BA5, 1, 705032704, 1), $receiver);
+			is($Network::Receive::char->{homunculus}{exp}, '5000000000', 'homunculus EXP above 32 bits');
 			done_testing();
 		};
 	}
