@@ -754,6 +754,7 @@ sub new {
 		'0B39' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B3D' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
 		'0B3F' => ['rodex_add_item', 'C a2 v V C3 a16 a25 v C V C2', [qw(fail ID amount nameID type identified broken cards options weight favorite type_equip upgrade grade)]], # 64: modern attachment ACK
+		'0B40' => ['vending_start', 'v a4 a*', [qw(len accountID itemList)]],
 		'0B41' => ['inventory_item_added', 'a2 v V C2 a16 V C2 a4 v a25 C v C2', [qw(ID amount nameID identified broken cards type_equip type fail expire unknown options favorite viewID upgrade grade)]],
 		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
 		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
