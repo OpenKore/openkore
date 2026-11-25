@@ -4223,8 +4223,8 @@ sub processSendIgnoreAll {
 }
 
 sub processFeed {
-	if ($config{pet_autoFeed} && timeOut($timeout{ai_petFeed}) && %pet && $pet{hungry} && ($pet{hungry} <= $config{pet_hunger} || $pet{hungry} <= $config{pet_return})) {
-		if ($pet{hungry} <= $config{pet_return} && %pet && $pet{hungry}) {
+	if ($config{pet_autoFeed} && timeOut($timeout{ai_petFeed}) && defined $pet{hungry} && ($pet{hungry} <= $config{pet_hunger} || $pet{hungry} <= $config{pet_return})) {
+		if ($pet{hungry} <= $config{pet_return}) {
 			message TF("Pet hunger reaches the return value.\n");
 			$messageSender->sendPetMenu(3);
 			undef %pet; # todo: instead undef %pet when the actor (our pet) dissapears, this is safer (xkore)
