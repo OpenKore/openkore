@@ -11236,17 +11236,19 @@ sub card_merge_status {
 		# FIXME: this is unoptimized
 		use bytes;
 		no encoding 'utf8';
+		my $card_unpack = $masterServer->{itemListType} ? "V" : "v";
+		my $card_len = length pack $card_unpack;
 		my $newcards = '';
 		my $addedcard;
 		for (my $i = 0; $i < 4; $i++) {
-			my $cardData = substr($item->{cards}, $i * 2, 2);
-			if (unpack("v", $cardData)) {
+			my $cardData = substr($item->{cards}, $i * $card_len, $card_len);
+			if (unpack($card_unpack, $cardData)) {
 				$newcards .= $cardData;
 			} elsif (!$addedcard) {
-				$newcards .= pack("v", $card->{nameID});
+				$newcards .= pack($card_unpack, $card->{nameID});
 				$addedcard = 1;
 			} else {
-				$newcards .= pack("v", 0);
+				$newcards .= pack($card_unpack, 0);
 			}
 		}
 		$item->{cards} = $newcards;
