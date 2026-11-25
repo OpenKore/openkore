@@ -6077,15 +6077,15 @@ sub chat_join_result {
 		message T("Can't join Chat Room - Incorrect Password\n");
 	} elsif ($args->{type} == 2) {
 		message T("Can't join Chat Room - You're Kicked\n");
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == 3) {
 		message T("Joined Chat Room\n");
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == 4) {
 		message T("Can't join Chat Room - No Enough Zeny\n"); # ??
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == 5) {
 		message T("Can't join Chat Room - You're Low Level\n");
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == 6) {
 		message T("Can't join Chat Room - You're High Level\n");
-	} elsif ($args->{type} == 2) {
+	} elsif ($args->{type} == 7) {
 		message T("Can't join Chat Room - You're Unsuitable Job Class\n");
 	} else {
 		message TF("Can't join Chat Room - Unknown Reason (%s)\n", $args->{type});
