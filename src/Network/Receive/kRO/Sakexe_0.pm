@@ -600,6 +600,10 @@ sub new {
 		'09DE' => ['private_message', 'v V Z24 C Z*', [qw(len charID privMsgUser isAdmin privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
+		'09E6' => ($rpackets{'09E6'}{length} == 24)
+			? ['buying_store_update', 'V v V4', [qw(itemID count zeny zenyLimit charID updateTime)]]
+			: ['buying_store_update', 'v2 V4', [qw(itemID count zeny zenyLimit charID updateTime)]]
+		,
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
 		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
