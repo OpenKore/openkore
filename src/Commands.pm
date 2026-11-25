@@ -1681,10 +1681,10 @@ sub cmdCart {
 		message T("Trying to released the cart...\n");
 
 	} elsif ($arg1 eq "change") {
-		if ($arg2 =~ m/^[1-5]$/) {
+		if ($arg2 =~ m/^(?:[1-9]|13)$/) {
 			$messageSender->sendChangeCart($arg2);
 		} else {
-			error T("Usage: cart change <1-5>\n");
+			error T("Usage: cart change <1-9|13>\n");
 		}
 
 	} else {
