@@ -274,7 +274,7 @@ sub iterate {
 				$self->initMapCalculator();
 				return;
 			}
-			$self->failWarpPortalStep('character changed maps before confirmed portal arrival');
+			$self->failWarpPortalStep('character changed maps before confirmed portal arrival', 1);
 			return;
 		}
 		# Solution Map does not match current map
@@ -1352,7 +1352,7 @@ sub warpPortalRejected {
 }
 
 sub failWarpPortalStep {
-	my ($self, $reason) = @_;
+	my ($self, $reason, $handledMapChange) = @_;
 	clearPendingTraversal($self->{warpPortalAttemptID});
 	if ($self->getSubtask()) {
 		$self->{warpPortalFailureReason} = $reason;
@@ -1365,7 +1365,8 @@ sub failWarpPortalStep {
 	warning TF("Warp Portal route failed on %s: %s. Recalculating without this method on this map.\n", $map, $reason), 'map_route';
 	$self->{noWarpPortalMaps}{$map} = time if $map ne '';
 	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation)};
-	delete @{$self}{qw(mapChanged teleport teleportTime sentTeleport teleportTries warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt)};
+	delete $self->{mapChanged} if $handledMapChange;
+	delete @{$self}{qw(teleport teleportTime sentTeleport teleportTries warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt)};
 	delete $self->{mapSolution};
 	$self->initMapCalculator() if $field;
 	return;

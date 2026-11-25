@@ -1321,7 +1321,7 @@ sub testWarpPortalFallbackClearsTransitionState {
 		warpPortalSourceMap => 'prontera', warpPortalAttemptID => 'fallback-transition',
 		mapChanged => 1, teleportTime => time - 1, sentTeleport => 1}, 'Task::MapRoute');
 	Task::activate($parent);
-	$parent->failWarpPortalStep('unexpected map transition could not be correlated');
+	$parent->failWarpPortalStep('unexpected map transition could not be correlated', 1);
 	ok(!$parent->{mapChanged} && !$parent->{teleport} && !$parent->{teleportTime} && !$parent->{sentTeleport},
 		'failed Warp Portal attempt clears only its already-handled transition and teleport state');
 	$parent->{mapSolution} = [
@@ -1336,6 +1336,12 @@ sub testWarpPortalFallbackClearsTransitionState {
 	}
 	is($parent->{mapSolution}[0]{portal}, $first,
 		'first route edge from the authoritative fallback position is not shifted by stale mapChanged state');
+	my $unhandled = bless({actor => $actor, dest => $parent->{dest},
+		mapSolution => [{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=payon'}],
+		warpPortalSourceMap => 'prontera', mapChanged => 1}, 'Task::MapRoute');
+	Task::activate($unhandled);
+	$unhandled->failWarpPortalStep('entry timed out before processing transition');
+	ok($unhandled->{mapChanged}, 'fallback without a handled map-change event preserves pending transition state');
 }
 
 sub testConfirmedArrivalWinsEntryTimeout {
