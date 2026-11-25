@@ -62,6 +62,7 @@ sub run {
 		$self->testWarpPortalMenuCorrelation;
 		$self->testXKoreWarpSelection;
 		$self->testManualWarpSelectionSupersession;
+		$self->testAggregatedAreaSpellWarpPortalObservation;
 		$self->testWarpPortalActiveEntryTimeout;
 		$self->testMapServerTransferKeepsPortalEvidence;
 		$self->testWarpPortalFallbackClearsTransitionState;
@@ -1358,6 +1359,179 @@ sub testManualWarpSelectionSupersession {
 	}
 	ok(!$Globals::char->{warpPortalPendingTraversal},
 		'selection after a new character session needs a fresh cast and authoritative menu');
+}
+
+sub testAggregatedAreaSpellWarpPortalObservation {
+	require Network::Receive::ServerType0;
+	require Task::MapRoute;
+	require Actor::You;
+	setupCharacter(warpPortal_autoUpdateMemo => 1, route_warpPortal => 1,
+		saveMap => 'prontera', memo1 => 'prontera', memo2 => 'geffen');
+	bless $Globals::char, 'Actor::You';
+	my $owner_id = pack('V', 0x10203040);
+	$Globals::char->{ID} = $owner_id;
+	$Globals::char->{pos} = {x => 10, y => 10};
+	$Globals::char->{pos_to} = {x => 10, y => 10};
+	my $source_field = bless({map => 'prontera'}, 'WarpPortalTest::RouteField');
+	local $Globals::field = $source_field;
+	local $Network::Receive::field = $source_field;
+	local $Task::MapRoute::char = $Globals::char;
+	local $Task::MapRoute::field = $source_field;
+	local $Task::MapRoute::messageSender = bless({}, 'WarpPortalTest::Sender');
+	local $Task::MapRoute::net = bless({}, 'WarpPortalTest::Net');
+	local $Task::Route::net = $Task::MapRoute::net;
+	local %Globals::spells = ();
+	local @Globals::spellsID = ();
+	my $receive = Network::Receive::ServerType0->new();
+	$receive->{hook_prefix} = 'Network::Receive';
+	my @public_events;
+	my $public_hook = Plugins::addHook('packet_areaSpell', sub {
+		my (undef, $spell) = @_;
+		push @public_events, {%$spell};
+	});
+	my $begin_route = sub {
+		clearPendingTraversal();
+		beginCharacterSession();
+		$Globals::char->{pos} = {x => 10, y => 10};
+		$Globals::char->{pos_to} = {x => 10, y => 10};
+		my $actor = bless({pos => {x => 10, y => 10}, pos_to => {x => 10, y => 10}}, 'WarpPortalTest::RouteActor');
+		my $route = Task::MapRoute->new(actor => $actor, map => 'geffen', x => 20, y => 20);
+		$route->{mapSolution} = [{is_warpPortal => 1, map => 'prontera',
+			portal => 'prontera 11 10=geffen 20 20'}];
+		$route->{warpPortalStage} = 'awaiting_menu';
+		$route->{warpPortalDestination} = 'geffen';
+		$route->{warpPortalSourceMap} = 'prontera';
+		$route->{warpPortalPlacement} = {x => 11, y => 10};
+		$route->{warpPortalCastLevel} = 2;
+		$route->{warpPortalAttemptID} = join('-', 'aggregate-test', $Globals::char->{warpPortalState}{session});
+		$route->{warpPortalSession} = $Globals::char->{warpPortalState}{session};
+		$route->{warpPortalStarted} = time - 1;
+		$route->{warpPortalCastRequestedAt} = time - 1;
+		noteWarpCast(27, 2, 11, 10);
+		updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+		Plugins::callHook('warp_portal_list', {type => 27});
+		is($route->{warpPortalStage}, 'awaiting_portal',
+			'production route menu processing selects the authoritative Warp Portal destination');
+		return $route;
+	};
+	my $encode_record = sub {
+		my ($format, $id, $source, $x, $y, $type) = @_;
+		return $format eq '099F'
+			? pack('a4 a4 v2 V C2', pack('V', $id), $source, $x, $y, $type, 2, 1)
+			: pack('a4 a4 v2 V C3', pack('V', $id), $source, $x, $y, $type, 2, 1, 4);
+	};
+	my $dispatch = sub {
+		my ($format, @records) = @_;
+		my $payload = join('', @records);
+		my $packet = $receive->reconstruct({
+			switch => $format, len => 4 + length($payload), spellInfo => $payload,
+		});
+		is(length($packet), 4 + length($payload), "$format aggregate uses its production packet length and effect layout");
+		$receive->parse($packet, $receive);
+	};
+	{
+		no warnings 'redefine';
+		local *Network::Receive::getActorName = sub { 'test caster' };
+		local *Network::Receive::getSpellName = sub { 'test area effect' };
+
+		for my $format (qw(099F 09CA)) {
+			for my $position (qw(first intermediate final)) {
+				my $route = $begin_route->();
+				my @effects = (
+					$encode_record->($format, 0x1001, $owner_id, 2, 2, 0x22),
+					$encode_record->($format, 0x1002, $owner_id, 3, 3, 0x23),
+					$encode_record->($format, 0x1003, $owner_id, 4, 4, 0x24),
+				);
+				my $portal = $encode_record->($format, 0xAABBCCDD, $owner_id, 11, 10, 0x81);
+				if ($position eq 'first') { unshift @effects, $portal; }
+				elsif ($position eq 'intermediate') { splice @effects, 1, 0, $portal; }
+				else { push @effects, $portal; }
+				@public_events = ();
+				$dispatch->($format, @effects);
+				my $pending = $Globals::char->{warpPortalPendingTraversal};
+				is($pending->{portal_unit_id}, pack('V', 0xAABBCCDD),
+					"$format $position owned portal is individually observed with its exact unit ID");
+				is($pending->{portal_owner_id}, $owner_id,
+					"$format $position portal retains its exact owner ID");
+				is_deeply($pending->{portal_pos}, {x => 11, y => 10},
+					"$format $position portal retains server coordinates and source map context");
+				is($route->{warpPortalStage}, 'portal_ready',
+					"$format $position portal notification advances MapRoute out of awaiting_portal");
+				is(scalar @public_events, 1,
+					"$format aggregate preserves the legacy single packet_areaSpell hook notification");
+				is($public_events[0]{ID}, unpack('a4', $effects[-1]),
+					"$format public hook still receives the legacy final packet entry");
+				clearPendingTraversal();
+				delete @{$Globals::char->{warpPortalState}}{qw(last_portal_cast available_maps available_map_counts available_map_index verified_at cast_level)};
+			}
+		}
+
+		# Non-portal effects, other players' portals, and owned portals at a
+		# different tile must not satisfy route ownership or placement correlation.
+		for my $case (
+			['non-portal effects', [
+				$encode_record->('099F', 0x2001, $owner_id, 11, 10, 0x22),
+				$encode_record->('099F', 0x2002, $owner_id, 11, 10, 0x23),
+			]],
+			['unrelated player portal', [
+				$encode_record->('09CA', 0x2003, pack('V', 0x55667788), 11, 10, 0x81),
+			]],
+			['owned portal at an unexpected tile', [
+				$encode_record->('099F', 0x2004, $owner_id, 12, 10, 0x81),
+			]],
+		) {
+			my $route = $begin_route->();
+			$dispatch->($case->[0] eq 'unrelated player portal' ? '09CA' : '099F', @{$case->[1]});
+			ok(!$Globals::char->{warpPortalPendingTraversal}{portal_unit_id},
+				"$case->[0] is not recorded as the owned route portal");
+			is($route->{warpPortalStage}, 'awaiting_portal',
+				"$case->[0] cannot advance MapRoute");
+			clearPendingTraversal();
+			delete @{$Globals::char->{warpPortalState}}{qw(last_portal_cast available_maps available_map_counts available_map_index verified_at cast_level)};
+		}
+
+		my $route = $begin_route->();
+		Task::activate($route);
+		my $portal = $encode_record->('099F', 0x3001, $owner_id, 11, 10, 0x81);
+		my $trap = $encode_record->('099F', 0x3002, $owner_id, 9, 9, 0x22);
+		$dispatch->('099F', $portal, $portal, $trap);
+		is($Globals::char->{warpPortalPendingTraversal}{portal_unit_id}, pack('V', 0x3001),
+			'duplicate and multiple portal entries keep the exact matching unit identity');
+		is($route->{warpPortalStage}, 'portal_ready',
+			'duplicate portal observations advance the route only once');
+		{
+			no warnings 'redefine';
+			local *Task::Route::getRoute = sub { 1 };
+			$route->iterateWarpPortalStep();
+		}
+		is($route->{warpPortalStage}, 'entering_portal',
+			'MapRoute creates its real portal-entry Route after aggregated unit observation');
+		ok($route->getSubtask() && $route->getSubtask()->isa('Task::Route'),
+			'portal-entry movement is owned by a live Task::Route subtask');
+		noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+		my $arrival = confirmPortalArrival('prontera', 'geffen', 121, 63);
+		ok($arrival && $arrival->{attempt_id} eq $route->{warpPortalAttemptID},
+			'server-reported destination transition correlates to the portal observed before the final effect');
+		$Globals::char->{pos} = {x => 121, y => 63};
+		$Globals::char->{pos_to} = {x => 121, y => 63};
+		$route->{actor}{pos} = {x => 121, y => 63};
+		$route->{actor}{pos_to} = {x => 121, y => 63};
+		$Globals::field = bless({map => 'geffen'}, 'WarpPortalTest::RouteField');
+		$Task::MapRoute::field = $Globals::field;
+		$Task::Route::field = $Globals::field;
+		Plugins::callHook('Network::Receive::map_changed', {oldMap => 'prontera'});
+		my @recalculation_origin;
+		local *Task::MapRoute::initMapCalculator = sub {
+			push @recalculation_origin, [$_[0]{actor}{pos}{x}, $_[0]{actor}{pos}{y}];
+			$_[0]{mapSolution} = [];
+		};
+		$route->iterate();
+		is_deeply(\@recalculation_origin, [[121, 63]],
+			'confirmed landing resumes MapRoute from the server-observed coordinates');
+		ok(!$route->{warpPortalStage},
+			'confirmed aggregated-packet traversal clears the completed portal routing stage');
+	}
+	Plugins::delHook($public_hook);
 }
 
 sub testWarpPortalActiveEntryTimeout {

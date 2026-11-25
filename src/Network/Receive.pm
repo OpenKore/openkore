@@ -3736,10 +3736,13 @@ sub markWarpPortalPendingPortal {
 sub markWarpPortalPendingAreaSpell {
 	my ($spell) = @_;
 	return unless $field && $spell;
-	noteWarpPortalUnitSeen({
+	my $observed = noteWarpPortalUnitSeen({
 		ID => $spell->{ID}, sourceID => $spell->{sourceID}, type => $spell->{type},
 		x => $spell->{x}, y => $spell->{y},
 	}, $field->baseName);
+	# MapRoute consumes only unit observations that passed the current attempt's
+	# owner, map, tile, and identity checks. Keep packet_areaSpell unchanged for plugins.
+	Plugins::callHook('warp_portal_area_spell', $spell) if $observed;
 }
 
 sub recordWarpPortalPendingArrival {
@@ -4573,6 +4576,11 @@ sub area_spell_multiple2 {
 		$spells{$ID}{'type'} = $type;
 		$spells{$ID}{'range'} = $range;
 		$spells{$ID}{'isVisible'} = $isVisible;
+		my $spell = {
+			ID => $ID, sourceID => $sourceID, x => $x, y => $y,
+			type => $type, isVisible => $isVisible, range => $range
+		};
+		markWarpPortalPendingAreaSpell($spell);
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
 		}
@@ -4583,7 +4591,6 @@ sub area_spell_multiple2 {
 		ID => $ID, sourceID => $sourceID, x => $x, y => $y,
 		type => $type, isVisible => $isVisible, range => $range
 	};
-	markWarpPortalPendingAreaSpell($spell);
 	Plugins::callHook('packet_areaSpell', $spell);
 }
 
@@ -4619,6 +4626,11 @@ sub area_spell_multiple3 {
 		$spells{$ID}{'range'} = $range;
 		$spells{$ID}{'isVisible'} = $isVisible;
 		$spells{$ID}{'lvl'} = $lvl;
+		my $spell = {
+			ID => $ID, sourceID => $sourceID, x => $x, y => $y,
+			type => $type, isVisible => $isVisible, range => $range, lvl => $lvl
+		};
+		markWarpPortalPendingAreaSpell($spell);
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
 		}
@@ -4629,7 +4641,6 @@ sub area_spell_multiple3 {
 		ID => $ID, sourceID => $sourceID, x => $x, y => $y,
 		type => $type, isVisible => $isVisible, range => $range, lvl => $lvl
 	};
-	markWarpPortalPendingAreaSpell($spell);
 	Plugins::callHook('packet_areaSpell', $spell);
 }
 

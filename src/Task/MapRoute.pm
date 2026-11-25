@@ -140,7 +140,7 @@ sub new {
 	$self->{localBroadcastHook} = Plugins::addHook('packet_localBroadcast', \&localBroadcast, \@holder);
 	$self->{warpPortalListHook} = Plugins::addHook('warp_portal_list', \&warpPortalList, \@holder);
 	$self->{warpPortalSpawnHook} = Plugins::addHook('portal_spawned', \&warpPortalSpawned, \@holder);
-	$self->{warpPortalAreaSpellHook} = Plugins::addHook('packet_areaSpell', \&warpPortalAreaSpell, \@holder);
+	$self->{warpPortalAreaSpellHook} = Plugins::addHook('warp_portal_area_spell', \&warpPortalAreaSpell, \@holder);
 	$self->{warpPortalRejectHook} = Plugins::addHook('packet_no_teleport', \&warpPortalRejected, \@holder);
 
 	return $self;
@@ -1344,8 +1344,10 @@ sub warpPortalSpawned {
 	$self->{warpPortalStage} = 'portal_ready';
 }
 
-# A player-created AL_WARP unit is reported through packet_areaSpell (type
-# 0x81), rather than the Actor::Portal spawn hook used for static portals.
+# A player-created AL_WARP unit is reported as an area spell (type 0x81). The
+# receive handler emits this internal hook only after validating the active
+# attempt's ownership, map, tile, and unit identity; static portals use a
+# separate Actor::Portal spawn hook.
 sub warpPortalAreaSpell {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
