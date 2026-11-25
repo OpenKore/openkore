@@ -12313,6 +12313,10 @@ sub unequip_item {
 
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByID($args->{ID});
+	if ($args->{switch} eq '00AC' ? !$args->{success} : $args->{success}) {
+		message TF("You can't unequip %s (%d)\n", $item->{name}, $item->{binID});
+		return;
+	}
 	delete $item->{equipped};
 
 	if ($args->{type} == 10 || $args->{type} == 32768) {
