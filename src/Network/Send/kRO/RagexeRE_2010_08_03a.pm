@@ -50,7 +50,8 @@ sub sendCashShopBuy {
 
 sub reconstruct_cash_dealer_buy {
 	my ($self, $args) = @_;
-	$args->{item_list} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemID)} } @{$args->{items}};
+	my $pack = $self->{cash_dealer_buy_item_pack} || 'v2';
+	$args->{item_list} = join '', map { pack $pack, @{$_}{qw(amount itemID)} } @{$args->{items}};
 }
 
 # 0x0842,6,recall2,2
