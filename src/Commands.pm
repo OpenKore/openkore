@@ -4663,7 +4663,7 @@ sub cmdPet {
 				"Egg: %s could not be found.\n", $args[1]);
 		}
 
-	} elsif ((!%pet||!$pet{hungry}) && defined $args[0]) {
+	} elsif (!defined $pet{hungry} && defined $args[0]) {
 		error T("Error in function 'pet' (Pet Management)\n" .
 			"You don't have a pet.\n");
 
