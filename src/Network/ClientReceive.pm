@@ -18,7 +18,7 @@ use Translation;
 use Utils qw(existsInList);
 use WarpPortal qw(
 	noteMemoRequest noteWarpCast noteWarpSelection
-	normalizeWarpMap availableWarpMaps warpMapIndex
+	normalizeWarpMap warpPortalSelectionContext clearManualWarpSelection
 );
 
 use base qw(Network::PacketParser);
@@ -100,28 +100,20 @@ sub skill_use_location {
 sub warp_select {
 	my ($self, $args) = @_;
 	return unless $char && $field && $char->{pos} && ($args->{skillID} || 0) == 27;
-	my $state = $char->{warpPortalState} or return;
-	my $cast = $state->{last_portal_cast} or return;
-	my $now = time;
-	return unless $cast->{session} == $state->{session}
-		&& $cast->{level} && $cast->{level} >= 1 && $cast->{level} <= 4
-		&& defined($cast->{time}) && $cast->{time} <= $now && $now - $cast->{time} <= 20
-		&& defined($state->{verified_at}) && $state->{verified_at} >= $cast->{time}
-		&& $state->{verified_at} <= $now && $now - $state->{verified_at} <= 20
-		&& ($state->{cast_level} || 0) == $cast->{level};
-	return unless availableWarpMaps();
 	my $map = normalizeWarpMap($args->{mapName});
-	return unless $map;
-	my $index = warpMapIndex($map);
-	return unless defined($index) && $index + 1 <= $cast->{level};
+	if ($map eq 'cancel') {
+		clearManualWarpSelection();
+		return;
+	}
+	my $context = warpPortalSelectionContext($map) or return;
 	my $source_map = $field->baseName;
-	my $attempt_id = join('-', 'xkore', $state->{session}, sprintf('%.6f', $cast->{time}));
+	my $attempt_id = join('-', 'xkore', $context->{session}, sprintf('%.6f', $context->{cast_time}));
 	my $pending = $char->{warpPortalPendingTraversal};
 	# Packet observation can be repeated by instrumentation; preserve evidence
 	# already attached to this cast instead of restarting its attempt clock.
 	return if $pending && ($pending->{attempt_id} || '') eq $attempt_id;
 	noteWarpSelection($map, $source_map, $char->{pos}{x}, $char->{pos}{y},
-		$cast->{level}, $attempt_id, $cast->{portal_pos});
+		$context->{level}, $attempt_id, $context->{portal_pos}, 'xkore');
 }
 
 sub actor_action {

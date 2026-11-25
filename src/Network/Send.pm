@@ -39,7 +39,10 @@ use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use FileParsers ();
 use Misc;
-use WarpPortal qw(normalizeWarpMap noteMemoRequest noteWarpSelection warpMapIndex);
+use WarpPortal qw(
+	normalizeWarpMap noteMemoRequest noteWarpSelection warpMapIndex
+	warpPortalSelectionContext clearManualWarpSelection
+);
 use Log qw(debug error);
 use Settings ();
 use Translation qw(T);
@@ -2443,14 +2446,16 @@ sub sendGuildBreak {
 
 sub sendWarpTele {
 	my ($self, $skillID, $map, $memoSlot) = @_;
-	if ($skillID == 27 && $char && $field && !$char->{warpPortalPendingTraversal}) {
+	if ($skillID == 27 && $char && $field && $char->{pos}) {
 		my $destination = normalizeWarpMap($map);
-		my $state = $char->{warpPortalState} || {};
-		my $sourcePosition = $char->{pos};
-		my $portalPosition = $state->{last_portal_cast}{portal_pos};
-		if ($destination ne '' && defined(warpMapIndex($destination)) && $sourcePosition) {
+		if ($destination eq 'cancel') {
+			clearManualWarpSelection();
+		} elsif (my $context = warpPortalSelectionContext($destination)) {
+			my $attempt_id = join('-', 'manual', $context->{session},
+				sprintf('%.6f', $context->{cast_time}));
 			noteWarpSelection($destination, $field->baseName,
-				$sourcePosition->{x}, $sourcePosition->{y}, $state->{cast_level}, undef, $portalPosition);
+				$char->{pos}{x}, $char->{pos}{y}, $context->{level},
+				$attempt_id, $context->{portal_pos}, 'manual');
 		}
 	}
 

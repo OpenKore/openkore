@@ -11,7 +11,8 @@ use Globals qw(%config %maps_lut $char $masterServer);
 our @EXPORT_OK = qw(
 	parseMemoEntry normalizeWarpMap normalizeWarpMapName beginCharacterSession noteWarpCast
 	noteMemoRequest memoAcknowledged updateServerMemos recordArrival
-	availableWarpMaps warpMapIndex memoCoordinateForMap clearPendingTraversal noteWarpSelection
+	availableWarpMaps warpMapIndex warpPortalSelectionContext memoCoordinateForMap
+	clearPendingTraversal clearManualWarpSelection noteWarpSelection
 	warpMapStatus confirmPortalArrival memoRejected selectWarpPortalCastLevel
 	noteWarpPortalUnitSeen noteWarpPortalMovement noteWarpPortalUnitDisappeared
 	markCharacterMapTransfer clearCharacterMapTransfer
@@ -364,9 +365,12 @@ sub updateServerMemos {
 	$covered = 4 if $covered > 4;
 	for my $slot (1 .. $covered) {
 		# Keep the position of a syntactically present map that is missing from
-		# the local map table. It is not routable, but compacting it here would
-		# attach the following map's coordinates to the wrong destination.
-		next if $unresolved_slots{$slot};
+		# the local map table. Persist its authoritative name without coordinates;
+		# malformed names remain non-authoritative and leave config unchanged.
+		if ($unresolved_slots{$slot}) {
+			_writeConfig("memo$slot", $maps[$slot - 1]) if $maps[$slot - 1];
+			next;
+		}
 		my $map = $canonical[$slot - 1] || '';
 		my $value = $map;
 		if ($map && $count{$map} == 1) {
@@ -435,20 +439,33 @@ sub memoCoordinateForMap {
 }
 
 sub noteWarpSelection {
-	my ($map, $source_map, $x, $y, $cast_level, $attempt_id, $portal_pos) = @_;
+	my ($map, $source_map, $x, $y, $cast_level, $attempt_id, $portal_pos, $owner) = @_;
 	return unless $char && defined $x && defined $y;
 	$map = normalizeWarpMap($map);
 	return unless $map;
 	my $state = _state() or return;
+	$owner ||= 'manual';
 	if (!defined($attempt_id) || $attempt_id eq '') {
 		$attempt_id = join('-', 'manual', $state->{session}, ++$state->{manual_attempt_sequence});
+	}
+	my $existing = _livePortalAttempt();
+	if ($existing) {
+		# A duplicate observation of the same menu choice is idempotent. Do not
+		# reset its age or replace its selected destination.
+		return $existing if ($existing->{attempt_id} || '') eq $attempt_id;
+		# Automated route ownership cannot be replaced by a manual command or
+		# client observation. A new automated attempt may replace an abandoned
+		# manual observation after validating its own authoritative menu.
+		return $existing if ($existing->{owner} || 'manual') eq 'route' && $owner ne 'route';
 	}
 	$char->{warpPortalPendingTraversal} = {
 		map => $map, source_map => $source_map, x => 0 + $x, y => 0 + $y,
 		cast_level => $cast_level, attempt_id => $attempt_id,
+		owner => $owner,
 		portal_expected_pos => $portal_pos ? {%$portal_pos} : undef,
 		selected_at => time, session => $state->{session},
 	};
+	return $char->{warpPortalPendingTraversal};
 }
 
 sub clearPendingTraversal {
@@ -458,6 +475,38 @@ sub clearPendingTraversal {
 		&& defined($char->{warpPortalPendingTraversal}{attempt_id})
 		&& $attempt_id eq $char->{warpPortalPendingTraversal}{attempt_id};
 	delete $char->{warpPortalPendingTraversal};
+}
+
+sub clearManualWarpSelection {
+	my $pending = _livePortalAttempt() or return;
+	return if ($pending->{owner} || 'manual') eq 'route';
+	clearPendingTraversal($pending->{attempt_id});
+}
+
+# Shared freshness and menu validation for native console and XKore selections.
+# The menu packet has no unique cast ID, so require a recent, same-session AL_WARP
+# cast whose verified list arrived after the cast and still covers this slot.
+sub warpPortalSelectionContext {
+	my ($map) = @_;
+	$map = normalizeWarpMap($map);
+	return unless $map;
+	my $state = _state() or return;
+	my $cast = $state->{last_portal_cast} or return;
+	my $now = time;
+	return unless ($cast->{session} || -1) == ($state->{session} || 0)
+		&& $cast->{level} && $cast->{level} >= 1 && $cast->{level} <= 4
+		&& defined($cast->{time}) && $cast->{time} <= $now && $now - $cast->{time} <= 20
+		&& defined($state->{verified_at}) && $state->{verified_at} >= $cast->{time}
+		&& $state->{verified_at} <= $now && $now - $state->{verified_at} <= 20
+		&& ($state->{cast_level} || 0) == $cast->{level}
+		&& availableWarpMaps();
+	my $index = warpMapIndex($map);
+	return unless defined($index) && $index + 1 <= $cast->{level};
+	return {
+		map => $map, index => $index, level => $cast->{level},
+		cast_time => $cast->{time}, session => $state->{session},
+		portal_pos => $cast->{portal_pos} ? {%{$cast->{portal_pos}}} : undef,
+	};
 }
 
 # Keep only server-observed evidence for the currently selected portal. The

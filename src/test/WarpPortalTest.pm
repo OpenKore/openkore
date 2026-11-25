@@ -61,6 +61,7 @@ sub run {
 		$self->testCastLevelSelection;
 		$self->testWarpPortalMenuCorrelation;
 		$self->testXKoreWarpSelection;
+		$self->testManualWarpSelectionSupersession;
 		$self->testWarpPortalActiveEntryTimeout;
 		$self->testMapServerTransferKeepsPortalEvidence;
 		$self->testWarpPortalFallbackClearsTransitionState;
@@ -562,20 +563,78 @@ sub testCharacterSwitchAndAmbiguity {
 }
 
 sub testUnresolvedMapDoesNotCompactSlots {
-	setupCharacter(
-		warpPortal_autoUpdateMemo => 1, saveMap => 'prontera',
-		memo1 => 'prontera', memo2 => 'geffen 20 21',
-		memo3 => 'alberta 30 31', memo4 => 'payon 40 41',
-	);
-	serverList(4, 'prontera', 'custom_unknown_map', 'alberta', 'payon');
-	is_deeply($Globals::char->{warpPortalState}{available_maps},
-		['prontera', 'custom_unknown_map', 'alberta', 'payon'],
-		'unsupported map remains an unresolved slot in the authoritative list');
-	is(warpMapIndex('alberta'), 2, 'a later known destination keeps its actual server index');
+	for my $auto_update (0, 1) {
+		setupCharacter(
+			warpPortal_autoUpdateMemo => $auto_update, saveMap => 'prontera',
+			memo1 => 'prontera', memo2 => 'geffen 20 21',
+			memo3 => 'alberta 30 31', memo4 => 'payon 40 41',
+		);
+		serverList(4, 'prontera', 'custom_unknown_map', 'alberta', 'payon');
+		is_deeply($Globals::char->{warpPortalState}{available_maps},
+			['prontera', 'custom_unknown_map', 'alberta', 'payon'],
+			"unsupported map remains in authoritative slot with auto-update $auto_update");
+		is(warpMapIndex('alberta'), 2, 'a later known destination keeps its actual server index');
+		is($Globals::config{memo2}, 'custom_unknown_map',
+			"unknown valid server map replaces the stale configured name without auto-update $auto_update");
+		ok(!parseMemoEntry($Globals::config{memo2})->{has_coords},
+			'coordinates from the replaced known map are not attached to the unknown destination');
+		is($Globals::config{memo3}, 'alberta 30 31',
+			'known map after an unresolved slot retains its own coordinates');
+
+		# A later level-one list does not cover memo2. Its old value must be the
+		# unknown authoritative map, not Geffen, so historical hints cannot revive it.
+		serverList(1, 'prontera');
+		is($Globals::config{memo2}, 'custom_unknown_map',
+			'uncovered higher memo retains the last authoritative unknown map name');
+		is(warpMapStatus('geffen', 2), 'unknown',
+			'lower-level menu leaves unverified destinations unknown without restoring the removed map');
+		ok(!defined(memoCoordinateForMap('custom_unknown_map')),
+			'unknown map has no coordinates inherited from the replaced destination');
+
+		require Task::CalcMapRoute;
+		$Globals::config{route_warpPortal} = 1;
+		$Globals::char = bless {
+			learned => 4, sp => 100,
+			inventory => bless({amount => 1}, 'WarpPortalTest::Inventory'),
+		}, 'WarpPortalTest::Character';
+		$Globals::char->{ID} = 'unknown-memo-planner';
+		my $planner = bless {
+			source => {map => 'prontera'}, targets => [], noWarpPortalMaps => {},
+			routeWeightCache => {WARPPORTAL => 200}, mapRouteWeightCache => {},
+			SyntheticPortals => {},
+		}, 'Task::CalcMapRoute';
+		{
+			no warnings 'redefine';
+			local *Field::new = sub {
+				my %args = @_[1 .. $#_];
+				return if $args{name} eq 'custom_unknown_map';
+				return bless({map => $args{name}}, 'WarpPortalTest::LargeField');
+			};
+			local *Task::CalcMapRoute::getMapRouteWeight = sub { 0 };
+			local *Task::CalcMapRoute::getRouteWeight = sub { 0 };
+			local *Task::CalcMapRoute::buildRouteStateKey = sub { $_[1] };
+			local *Task::CalcMapRoute::canAddOpenListEntry = sub { 1 };
+			local *Task::CalcMapRoute::cloneBlockedPortalGroups = sub { {} };
+			local *Task::CalcMapRoute::buildRouteValue = sub { {} };
+			local *Task::CalcMapRoute::registerSyntheticPortalDestination = sub { 1 };
+			local *Task::CalcMapRoute::add_key_to_openList = sub {
+				$_[0]{candidateKeys}{$_[1]} = 1;
+			};
+			local *Misc::_isTeleportSkillSuppressedByStatus = sub { 0 };
+			$planner->populateOpenListWithWarpPortal('prontera 1 1',
+				{walk => 0, zeny => 0, blockedPortalGroups => {}}, undef);
+		}
+		ok(!grep(/geffen/, keys %{$planner->{candidateKeys} || {}}),
+			'planner cannot resurrect Geffen from config after authoritative removal');
+		ok(!grep(/custom_unknown_map/, keys %{$planner->{candidateKeys} || {}}),
+			'unknown map without local field data is not offered for pathfinding');
+	}
+
+	setupCharacter(warpPortal_autoUpdateMemo => 0, saveMap => 'prontera',
+		memo1 => 'prontera', memo2 => 'geffen 20 21');
+	serverList(4, 'prontera', 'bad/map', 'alberta', 'payon');
 	is($Globals::config{memo2}, 'geffen 20 21',
-		'unknown map does not overwrite a coordinate pair with a different destination');
-	is($Globals::config{memo3}, 'alberta 30 31',
-		'known map after an unresolved slot retains its own coordinates');
+		'malformed server map content is not treated as an authoritative replacement');
 }
 
 sub testRejectedAndAmbiguousMemoAcknowledgements {
@@ -1196,6 +1255,109 @@ sub testXKoreWarpSelection {
 	beginCharacterSession();
 	$select->(27, 'geffen');
 	ok(!$Globals::char->{warpPortalPendingTraversal}, 'new character session cannot reuse an old cast or menu');
+}
+
+sub testManualWarpSelectionSupersession {
+	require Network::Send::ServerType0;
+	require Actor::You;
+	setupCharacter(route_warpPortal => 0, warpPortal_autoUpdateMemo => 1,
+		saveMap => 'prontera', memo1 => 'prontera', memo2 => 'geffen',
+		memo3 => 'payon', memo4 => 'alberta');
+	bless $Globals::char, 'Actor::You';
+	$Globals::char->{ID} = 'manual-selection-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	my $source = bless({map => 'prontera'}, 'WarpPortalTest::RouteField');
+	my $sender = Network::Send::ServerType0->new();
+	local $Network::Send::char = $Globals::char;
+	local $Network::Send::field = $source;
+	my $sent = 0;
+	{
+		no warnings 'redefine';
+		local *Network::Send::sendToServer = sub { $sent++ };
+		my $menu = sub {
+			my ($memo2) = @_;
+			noteWarpCast(27, 4, 11, 10);
+			updateServerMemos({type => 27, memo1 => 'prontera', memo2 => $memo2,
+				memo3 => 'alberta', memo4 => 'izlude'});
+		};
+
+		# Reproduce two casts and authoritative menus without traversing the first portal.
+		$menu->('geffen');
+		$sender->sendWarpTele(27, 'geffen.gat');
+		my $first = {%{$Globals::char->{warpPortalPendingTraversal}}};
+		$menu->('payon');
+		$sender->sendWarpTele(27, 'payon.gat');
+		my $second = $Globals::char->{warpPortalPendingTraversal};
+		ok($second && $second->{map} eq 'payon' && $second->{attempt_id} ne $first->{attempt_id},
+			'a fresh manual cast and menu supersede the abandoned Geffen selection with Payon');
+		is($sent, 2, 'both native manual selections are transmitted unchanged');
+
+		my ($second_id, $selected_at) = @{$second}{qw(attempt_id selected_at)};
+		$sender->sendWarpTele(27, 'payon.gat');
+		is($Globals::char->{warpPortalPendingTraversal}{attempt_id}, $second_id,
+			'duplicate native selection for one cast keeps its attempt identity');
+		is($Globals::char->{warpPortalPendingTraversal}{selected_at}, $selected_at,
+			'duplicate native selection does not extend the attempt lifetime');
+
+		noteWarpPortalUnitSeen({ID => 'manual-payon-portal', sourceID => $Globals::char->{ID},
+			type => 0x81, x => 11, y => 10}, 'prontera');
+		noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+		my $traversal = confirmPortalArrival('prontera', 'payon', 123, 45);
+		ok($traversal && $traversal->{attempt_id} eq $second_id,
+			'subsequent portal movement is attributed to the second manual destination');
+		is($Globals::config{memo2}, 'payon 123 45',
+			'second manual traversal learns the server-observed Payon landing coordinates');
+
+		# A new cast must also replace a selection after its 120-second lifetime.
+		$menu->('geffen');
+		$sender->sendWarpTele(27, 'geffen.gat');
+		$Globals::char->{warpPortalPendingTraversal}{selected_at} = time - 121;
+		$menu->('payon');
+		$sender->sendWarpTele(27, 'payon.gat');
+		ok($Globals::char->{warpPortalPendingTraversal}
+			&& $Globals::char->{warpPortalPendingTraversal}{map} eq 'payon'
+			&& $Globals::char->{warpPortalPendingTraversal}{selected_at} > time - 10,
+			'expired manual attempt is cleared before the next valid cast is tracked');
+
+		$sender->sendWarpTele(27, 'cancel');
+		ok(!$Globals::char->{warpPortalPendingTraversal},
+			'cancel clears an abandoned manual attempt and does not create a traversal');
+		$menu->('geffen');
+		$sender->sendWarpTele(27, 'geffen.gat');
+		my $valid_id = $Globals::char->{warpPortalPendingTraversal}{attempt_id};
+		$sender->sendWarpTele(27, 'not_a_menu_destination.gat');
+		is($Globals::char->{warpPortalPendingTraversal}{attempt_id}, $valid_id,
+			'invalid destination cannot replace a valid pending manual selection');
+
+		# A native console selection must not take ownership from MapRoute.
+		$menu->('payon');
+		noteWarpSelection('payon', 'prontera', 10, 10, 4, 'automated-route-owned',
+			{x => 11, y => 10}, 'route');
+		$sender->sendWarpTele(27, 'geffen.gat');
+		is($Globals::char->{warpPortalPendingTraversal}{attempt_id}, 'automated-route-owned',
+			'manual command cannot replace an active automated MapRoute attempt');
+		is($Globals::char->{warpPortalPendingTraversal}{map}, 'payon',
+			'automated MapRoute retains its selected destination');
+		$sender->sendWarpTele(27, 'cancel');
+		is($Globals::char->{warpPortalPendingTraversal}{attempt_id}, 'automated-route-owned',
+			'cancel does not clear a route-owned traversal');
+	}
+
+	# The real outgoing packet path must require a fresh menu after a new session.
+	setupCharacter(route_warpPortal => 0, warpPortal_autoUpdateMemo => 0,
+		saveMap => 'prontera', memo1 => 'prontera', memo2 => 'geffen');
+	bless $Globals::char, 'Actor::You';
+	$Globals::char->{ID} = 'manual-selection-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	$Network::Send::char = $Globals::char;
+	$Network::Send::field = $source;
+	{
+		no warnings 'redefine';
+		local *Network::Send::sendToServer = sub {};
+		$sender->sendWarpTele(27, 'geffen.gat');
+	}
+	ok(!$Globals::char->{warpPortalPendingTraversal},
+		'selection after a new character session needs a fresh cast and authoritative menu');
 }
 
 sub testWarpPortalActiveEntryTimeout {
@@ -1910,6 +2072,7 @@ our @ISA = ('Actor');
 package WarpPortalTest::LargeField;
 sub width { 600 }
 sub height { 800 }
+sub isWalkable { 1 }
 
 package WarpPortalTest::MapField;
 sub baseName { $_[0]{map} }

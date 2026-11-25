@@ -1323,7 +1323,7 @@ sub warpPortalList {
 	# menu must contain exactly one matching destination.
 	my $placement = $self->{warpPortalPlacement};
 	noteWarpSelection($wanted, $field->baseName, $char->{pos}{x}, $char->{pos}{y},
-		$level, $self->{warpPortalAttemptID}, $placement);
+		$level, $self->{warpPortalAttemptID}, $placement, 'route');
 	$messageSender->sendWarpTele(27, "$wanted.gat");
 	$self->{warpPortalStage} = 'awaiting_portal';
 	$self->{warpPortalStarted} = time;
