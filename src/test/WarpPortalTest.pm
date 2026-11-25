@@ -60,6 +60,7 @@ sub run {
 		$self->testWarpPortalPlacement;
 		$self->testCastLevelSelection;
 		$self->testWarpPortalMenuCorrelation;
+		$self->testXKoreWarpSelection;
 		$self->testWarpPortalActiveEntryTimeout;
 		$self->testMapServerTransferKeepsPortalEvidence;
 		$self->testWarpPortalFallbackClearsTransitionState;
@@ -1052,6 +1053,123 @@ sub testWarpPortalMenuCorrelation {
 		'MapRoute recovery does not relabel the unconfirmed transition as portal traversal');
 }
 
+sub testXKoreWarpSelection {
+	require Network::ClientReceive;
+	require Network::Send::ServerType0;
+	require Actor::You;
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen');
+	bless $Globals::char, 'Actor::You';
+	$Globals::char->{ID} = 'xkore-warp-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	my $source = bless({map => 'prontera'}, 'WarpPortalTest::RouteField');
+	local $Network::ClientReceive::char = $Globals::char;
+	local $Network::ClientReceive::field = $source;
+	my $parser = Network::Send::ServerType0->new();
+	$parser->{hook_prefix} = 'Network::ClientReceive';
+	my $client = Network::ClientReceive->new();
+	require Network::Send::kRO::Sakexe_0;
+	my $kro_parser = Network::Send::kRO::Sakexe_0->new();
+	is_deeply($kro_parser->{packet_list}{'011B'}, $parser->{packet_list}{'011B'},
+		'ServerType0 and kRO Sakexe_0 expose the same 011B skillID/mapName selection fields');
+	my $select = sub {
+		my ($skill_id, $map) = @_;
+		$parser->parse(pack('vvZ16', 0x011B, $skill_id, $map), $client);
+	};
+
+	# Model a native cast and authoritative server menu, then dispatch the
+	# official client's outgoing 011B selection through production parsing.
+	noteWarpCast(27, 4, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+	$select->(27, 'Geffen.gat');
+	my $pending = $Globals::char->{warpPortalPendingTraversal};
+	ok($pending && $pending->{map} eq 'geffen'
+		&& $pending->{source_map} eq 'prontera' && $pending->{cast_level} == 4
+		&& $pending->{x} == 10 && $pending->{y} == 10
+		&& $pending->{portal_expected_pos}{x} == 11 && $pending->{portal_expected_pos}{y} == 10,
+		'XKore 011B packet records normalized destination, observed cast level and portal tile');
+	my ($attempt_id, $selected_at) = @{$pending}{qw(attempt_id selected_at)};
+	$select->(27, 'geffen');
+	is($Globals::char->{warpPortalPendingTraversal}{attempt_id}, $attempt_id,
+		'duplicate XKore selection preserves the original attempt');
+	is($Globals::char->{warpPortalPendingTraversal}{selected_at}, $selected_at,
+		'duplicate XKore selection does not extend attempt lifetime');
+
+	my $portal = {ID => 'xkore-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	noteWarpPortalUnitSeen($portal, 'prontera');
+	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+	my $traversal = confirmPortalArrival('prontera', 'geffen', 120, 62);
+	ok($traversal && $traversal->{attempt_id} eq $attempt_id,
+		'XKore-selected traversal correlates from owned portal and movement evidence');
+	is_deeply([memoCoordinateForMap('geffen')],
+		[120, 62, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
+		'XKore selection learns only the server-reported landing position');
+
+	# Native OpenKore selection still uses the same tracking state.
+	my $native_sender = Network::Send::ServerType0->new();
+	local $Network::Send::char = $Globals::char;
+	local $Network::Send::field = $source;
+	{
+		no warnings 'redefine';
+		local *Network::Send::sendToServer = sub { };
+		$native_sender->sendWarpTele(27, 'geffen.gat', 2);
+	}
+	ok($Globals::char->{warpPortalPendingTraversal}
+		&& $Globals::char->{warpPortalPendingTraversal}{map} eq 'geffen',
+		'native OpenKore selection still registers its selected destination');
+
+	# A selected map from the preceding cast is not sufficient once a new
+	# character session starts; this isolates the no-cast/no-menu case.
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen');
+	bless $Globals::char, 'Actor::You';
+	$Globals::char->{ID} = 'xkore-warp-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	$Network::ClientReceive::char = $Globals::char;
+	$select->(27, 'geffen');
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'selection without a fresh cast and menu is ignored');
+
+	# Non-Warp Portal destination selections and invalid destinations are ignored.
+	noteWarpCast(27, 4, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+	delete $Globals::char->{warpPortalPendingTraversal};
+	$select->(26, 'geffen');
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'Teleport skill selection is not treated as AL_WARP');
+	$select->(27, 'not_a_menu_destination');
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'destination absent from the authoritative menu is ignored');
+
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen');
+	bless $Globals::char, 'Actor::You';
+	$Globals::char->{ID} = 'xkore-warp-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	$Network::ClientReceive::char = $Globals::char;
+	noteWarpCast(27, 1, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+	$select->(27, 'geffen');
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'memo beyond the observed cast level cannot be selected');
+
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen');
+	bless $Globals::char, 'Actor::You';
+	$Globals::char->{ID} = 'xkore-warp-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	$Network::ClientReceive::char = $Globals::char;
+	noteWarpCast(27, 4, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+	$Globals::char->{warpPortalState}{last_portal_cast}{time} = time - 21;
+	$Globals::char->{warpPortalState}{verified_at} = time - 21;
+	$select->(27, 'geffen');
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'expired cast and menu cannot create a traversal attempt');
+
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen');
+	bless $Globals::char, 'Actor::You';
+	$Globals::char->{ID} = 'xkore-warp-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	$Network::ClientReceive::char = $Globals::char;
+	noteWarpCast(27, 4, 11, 10);
+	updateServerMemos({type => 27, memo1 => 'prontera', memo2 => 'geffen'});
+	beginCharacterSession();
+	$select->(27, 'geffen');
+	ok(!$Globals::char->{warpPortalPendingTraversal}, 'new character session cannot reuse an old cast or menu');
+}
+
 sub testWarpPortalActiveEntryTimeout {
 	require Task::MapRoute;
 	require Task::Route;
@@ -1073,9 +1191,9 @@ sub testWarpPortalActiveEntryTimeout {
 	};
 
 	my $make_parent = sub {
-		my ($deadline) = @_;
+		my ($deadline, $route_max_time) = @_;
 		my $route = Task::Route->new(actor => $actor, field => $field, x => 11, y => 10,
-			isPortalRoute => 1);
+			isPortalRoute => 1, (defined($route_max_time) ? (maxTime => $route_max_time) : ()));
 		my $parent = Task::WithSubtask->new(
 			autostop => 1, autofail => 0, mutexes => ['movement']);
 		bless $parent, 'Task::MapRoute';
@@ -1089,6 +1207,16 @@ sub testWarpPortalActiveEntryTimeout {
 		$parent->setSubtask($route);
 		return ($parent, $route);
 	};
+
+	# A child walking deadline remains a real failure when no authoritative
+	# arrival was recorded, even if the broader portal-entry deadline is live.
+	my ($walking_timeout, $walking_route) = $make_parent->(time + 20, 1);
+	$walking_route->{time_start} = time - 2;
+	Task::MapRoute::iterate($walking_timeout);
+	ok($walking_timeout->{fallback_count} == 1
+		&& $walking_timeout->{noWarpPortalMaps}{prontera}
+		&& !$Globals::char->{warpPortalState}{last_traversal},
+		'expired child maxTime without a map change produces one bounded fallback');
 
 	# The real Route task completes through Task::WithSubtask's DONE path before
 	# the entry deadline. It must not be blacklisted or trigger fallback.
@@ -1204,6 +1332,14 @@ sub testWarpPortalActiveEntryTimeout {
 	ok($ordinary_route->getStatus() == Task::RUNNING && $ordinary_iterations == 1
 		&& !$ordinary->{fallback_count},
 		'unrelated MapRoute task lifecycle is unchanged without a Warp Portal entry deadline');
+
+	my $ordinary_walk = Task::Route->new(actor => $actor, field => $field,
+		x => 20, y => 20, maxTime => 1);
+	Task::activate($ordinary_walk);
+	$ordinary_walk->{time_start} = time - 2;
+	Task::Route::iterate($ordinary_walk);
+	is($ordinary_walk->getError()->{code}, Task::Route::TOO_MUCH_TIME(),
+		'ordinary walking still reports its expired maxTime unchanged');
 }
 
 sub testMapServerTransferKeepsPortalEvidence {
@@ -1279,7 +1415,7 @@ sub testMapServerTransferKeepsPortalEvidence {
 			$_[0]->setSubtask(WarpPortalTest::PendingCalc->new());
 		};
 		my $route = Task::Route->new(actor => $actor, field => $Network::Receive::field,
-			x => 120, y => 62, isPortalRoute => 1, stopWhenMapChanged => 1);
+			x => 120, y => 62, isPortalRoute => 1);
 		$route->{mapChanged} = 1;
 		my $parent = Task::WithSubtask->new(autostop => 1, autofail => 0);
 		bless $parent, 'Task::MapRoute';
@@ -1487,7 +1623,7 @@ sub testConfirmedArrivalWinsEntryTimeout {
 		$_[0]->setSubtask(WarpPortalTest::PendingCalc->new());
 	};
 	my $route = Task::Route->new(actor => $actor, field => $source, x => 120, y => 62,
-		isPortalRoute => 1, stopWhenMapChanged => 1);
+		isPortalRoute => 1, maxTime => 1);
 	my $parent = Task::WithSubtask->new(autostop => 1, autofail => 0, mutexes => ['movement']);
 	bless $parent, 'Task::MapRoute';
 	@{$parent}{qw(actor dest mapSolution warpPortalStage warpPortalDestination
@@ -1498,13 +1634,14 @@ sub testConfirmedArrivalWinsEntryTimeout {
 	);
 	Task::activate($parent);
 	$parent->setSubtask($route);
+	$route->{time_start} = time - 2;
 	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'deadline-attempt', {x => 11, y => 10});
 	my $portal = {ID => 'deadline-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
 	noteWarpPortalUnitSeen($portal, 'prontera');
 	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
 	Network::Receive::map_change(undef, {map => 'geffen.gat', x => 120, y => 62});
-	$route->{mapChanged} = 1;
-	$parent->{mapChanged} = 1;
+	Task::Route::mapChanged(undef, undef, [$route]);
+	Task::MapRoute::mapChanged(undef, {}, [$parent]);
 	ok($Globals::char->{warpPortalState}{last_traversal},
 		'production map-change packet confirms arrival after deadline before MapRoute processes it');
 	Task::MapRoute::iterate($parent);
@@ -1515,26 +1652,67 @@ sub testConfirmedArrivalWinsEntryTimeout {
 		&& !$Globals::char->{warpPortalState}{last_traversal},
 		'confirmed arrival starts one fresh calculation and consumes only the matching traversal');
 
+	# A correctly correlated arrival before the child's own maxTime still passes
+	# through the same task lifecycle without being canceled by the parent.
+	$Network::Receive::field = $source;
+	$Task::MapRoute::field = $destination;
+	$Task::Route::field = $destination;
+	$Globals::char->{pos} = {x => 10, y => 10};
+	$actor->{pos} = {x => 120, y => 62};
+	$actor->{pos_to} = {x => 120, y => 62};
+	my $before_timeout_route = Task::Route->new(actor => $actor, field => $source,
+		x => 120, y => 62, isPortalRoute => 1, maxTime => 60);
+	my $before_timeout_parent = Task::WithSubtask->new(autostop => 1, autofail => 0);
+	bless $before_timeout_parent, 'Task::MapRoute';
+	@{$before_timeout_parent}{qw(actor dest mapSolution warpPortalStage warpPortalDestination
+		warpPortalSourceMap warpPortalAttemptID warpPortalStarted warpPortalEntryDeadline noWarpPortalMaps)} = (
+		$actor, {map => 'geffen', pos => {x => 120, y => 62}},
+		[{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=geffen'}],
+		'entering_portal', 'geffen', 'prontera', 'before-child-timeout', time - 1, time + 20, {},
+	);
+	Task::activate($before_timeout_parent);
+	$before_timeout_parent->setSubtask($before_timeout_route);
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'before-child-timeout', {x => 11, y => 10});
+	noteWarpPortalUnitSeen({ID => 'before-timeout-portal', sourceID => $Globals::char->{ID},
+		type => 0x81, x => 11, y => 10}, 'prontera');
+	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+	Network::Receive::map_change(undef, {map => 'geffen.gat', x => 120, y => 62});
+	Task::Route::mapChanged(undef, undef, [$before_timeout_route]);
+	Task::MapRoute::mapChanged(undef, {}, [$before_timeout_parent]);
+	Task::MapRoute::iterate($before_timeout_parent);
+	ok($before_timeout_route->getStatus() == Task::DONE
+		&& !$before_timeout_parent->{noWarpPortalMaps}{prontera}
+		&& $before_timeout_parent->{fallback_count} == 1,
+		'confirmed arrival before child maxTime completes and continues the parent route');
+
 	my ($ambiguous, $ambiguous_route);
 	my $make_ambiguous = sub {
 		$ambiguous_route = Task::Route->new(actor => $actor, field => $source, x => 120, y => 62,
-			isPortalRoute => 1);
+			isPortalRoute => 1, maxTime => 1);
 		$ambiguous = Task::WithSubtask->new(autostop => 1, autofail => 0);
 		bless $ambiguous, 'Task::MapRoute';
 		@{$ambiguous}{qw(actor dest mapSolution warpPortalStage warpPortalDestination
 			warpPortalSourceMap warpPortalAttemptID warpPortalStarted warpPortalEntryDeadline noWarpPortalMaps)} = (
 			$actor, {map => 'geffen', pos => {x => 120, y => 62}},
 			[{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=geffen'}],
-			'entering_portal', 'geffen', 'prontera', 'ambiguous-deadline', time - 21, time - 1, {},
+			'entering_portal', 'geffen', 'prontera', 'ambiguous-deadline', time - 21, time + 20, {},
 		);
 		Task::activate($ambiguous);
 		$ambiguous->setSubtask($ambiguous_route);
+		$ambiguous_route->{time_start} = time - 2;
 	};
 	$make_ambiguous->();
 	delete $Globals::char->{warpPortalState}{last_traversal};
+	my @coordinates_before_ambiguous = memoCoordinateForMap('geffen');
+	Network::Receive::map_change(undef, {map => 'geffen.gat', x => 120, y => 62});
+	Task::Route::mapChanged(undef, undef, [$ambiguous_route]);
+	Task::MapRoute::mapChanged(undef, {}, [$ambiguous]);
 	Task::MapRoute::iterate($ambiguous);
-	is($ambiguous->{fallback_count}, 1, 'same-destination arrival without correlation still times out into one fallback');
-	ok($ambiguous->{noWarpPortalMaps}{prontera}, 'ambiguous transition does not suppress timeout fallback or blacklist');
+	is($ambiguous->{fallback_count}, 1, 'same-destination arrival without correlation still triggers one child-timeout fallback');
+	ok($ambiguous->{noWarpPortalMaps}{prontera} && !$Globals::char->{warpPortalState}{last_traversal},
+		'ambiguous transition cannot override child timeout or create a portal blacklist bypass');
+	is_deeply([memoCoordinateForMap('geffen')], \@coordinates_before_ambiguous,
+		'ambiguous same-destination transition does not change learned memo coordinates');
 }
 
 sub testSameMapWarpPortalRouting {

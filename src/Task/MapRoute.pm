@@ -180,6 +180,12 @@ sub iterate {
 			&& ($traversal->{destination_map} || '') eq $field->baseName
 			&& ($traversal->{time} || 0) >= ($self->{warpPortalStarted} || 0);
 	}
+	if ($confirmedArrival && $subtask && $subtask->isa('Task::Route') && $subtask->{maxTime}
+		&& timeOut($subtask->{time_start}, $subtask->{maxTime})) {
+		# The server has already confirmed this portal arrival. Let Route process
+		# its pending mapChanged event before applying its stale walking deadline.
+		$subtask->{time_start} = time;
+	}
 	if ($subtask && $subtask->isa('Task::Route')
 		&& ($self->{warpPortalStage} || '') eq 'entering_portal'
 		&& defined($self->{warpPortalEntryDeadline})
