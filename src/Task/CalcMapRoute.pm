@@ -596,30 +596,6 @@ sub searchStep {
 	# declare portals list
 	my $openlist = $self->{openlist}; # Nodes not visited yet
 	my $closelist = $self->{closelist}; # Nodes already visited
-	# Reaching a target through an unknown Warp Portal landing adds an estimate
-	# after the current node cost. Keep searching while another open node could
-	# still produce a cheaper complete route.
-	if (defined $self->{found}) {
-		my $bestCost = $closelist->{$self->{found}}{walk};
-		my $lowestOpenCost;
-		for my $entry (values %{$openlist || {}}) {
-			$lowestOpenCost = $entry->{walk}
-				if defined($entry->{walk}) && (!defined($lowestOpenCost) || $entry->{walk} < $lowestOpenCost);
-		}
-		if (!defined($lowestOpenCost) || $lowestOpenCost >= $bestCost) {
-			$self->{done} = 1;
-			$self->{mapSolution} = [];
-			$self->{target} = $self->{foundTarget};
-			$self->{target}->{pos}->{x} = $self->{target}->{x};
-			$self->{target}->{pos}->{y} = $self->{target}->{y};
-			my $this = $self->{found};
-			while ($this) {
-				unshift @{$self->{mapSolution}}, $self->buildMapSolutionStep($this, $closelist->{$this});
-				$this = $closelist->{$this}{parent};
-			}
-			return 0;
-		}
-	}
 
 	# exit early if no more paths to check
 	unless ($openlist && %{$openlist}) {
@@ -671,10 +647,9 @@ sub searchStep {
 		next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
 		my $target_has_coords = hasMapCoords($target);
 		my $map_destination_has_coords = hasMapCoords($map_destination);
-		my ($candidateFound, $candidateValue);
 		# if no x or y consider that is already at destination
 		if (!$target_has_coords) {
-			$candidateFound = $parent;
+			$self->{found} = $parent;
 		}
 		# uses getRoute to check whether you have reached exactly the desired point on the map.
 		elsif ($map_destination_has_coords
@@ -685,32 +660,31 @@ sub searchStep {
 				$closelist->{$parent},
 				$targetPortalString,
 			);
-			$candidateFound = $walk;
-			$candidateValue = $value;
+			$self->{found} = $walk;
+			$closelist->{$walk} = $value;
 		} elsif (!$map_destination_has_coords
 			&& $closelist->{$parent}{is_warpPortal}
 			&& $map_name eq $target->{map}) {
-			# We cannot validate a walk from an unknown landing coordinate. Keep
-			# the route cost proportional to the field's block span, not its tile
-			# count, and let MapRoute recalculate from the server-confirmed landing.
-			my $estimate = $self->_warpPortalUnknownLandingEstimate($target->{field});
-			my $targetPortalString = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
-			my ($walk, $value) = $self->buildReachedTargetState(
-				$parent, $closelist->{$parent}, $targetPortalString, $estimate,
-			);
-			$candidateFound = $walk;
-			$candidateValue = $value;
-		}
-		if (defined $candidateFound) {
-			$closelist->{$candidateFound} = $candidateValue if $candidateValue;
-			my $candidateCost = $closelist->{$candidateFound}{walk};
-			my $bestCost = defined($self->{found}) ? $closelist->{$self->{found}}{walk} : undef;
-			if (!defined($bestCost) || $candidateCost < $bestCost) {
-				$self->{found} = $candidateFound;
-				$self->{foundTarget} = $target;
-			}
+			# The Warp Portal node already includes the unknown-landing estimate.
+			# Reconstruct from that node and let MapRoute recalculate walking from
+			# the server-confirmed arrival position.
+			$self->{found} = $parent;
 		}
 
+		# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
+		if ( $self->{found} ) {
+			$self->{done} = 1;
+			$self->{mapSolution} = [];
+			$self->{target} = $target;
+			$self->{target}->{pos}->{x} = $self->{target}->{x};
+			$self->{target}->{pos}->{y} = $self->{target}->{y};
+			my $this = $self->{found};
+			while ($this) {
+				unshift @{$self->{mapSolution}}, $self->buildMapSolutionStep($this, $closelist->{$this});
+				$this = $closelist->{$this}{parent};
+			}
+			return;
+		}
 	}
 
 	# get all children of each openlist.
@@ -1081,11 +1055,10 @@ sub populateOpenListWithWarpPortal {
 
 		my $sourceMap = $self->{source}{map};
 		my $unknownCoordinateEstimate = 0;
-		if (!defined $x || !defined $y) {
-			my $hasCoordinateTarget = grep { $_->{map} eq $map && hasMapCoords($_) } @{$self->{targets}};
-			my $hasMapTarget = grep { $_->{map} eq $map } @{$self->{targets}};
-			$unknownCoordinateEstimate = $self->_warpPortalUnknownLandingEstimate($destField)
-				unless $hasCoordinateTarget || $hasMapTarget;
+		my $hasCoordinateTarget = grep { $_->{map} eq $map && hasMapCoords($_) } @{$self->{targets}};
+		my $hasMapOnlyTarget = grep { $_->{map} eq $map && !hasMapCoords($_) } @{$self->{targets}};
+		if ((!defined $x || !defined $y) && $hasCoordinateTarget && !$hasMapOnlyTarget) {
+			$unknownCoordinateEstimate = $self->_warpPortalUnknownLandingEstimate($destField);
 		}
 		my $penalty = $self->getMapRouteWeight($sourceMap) + $self->getRouteWeight('WARPPORTAL') + 2;
 		my $key = $self->buildRouteStateKey("$from_node=$dest", $baseCost->{blockedPortalGroups});
