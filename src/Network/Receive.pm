@@ -3886,6 +3886,8 @@ sub inventory_item_added {
 	} elsif ($fail == 6) {
 		message T("Can't loot item...wait...\n"), "drop";
 	} elsif ($fail == 2) {
+		message T("Cannot pickup item (overweight)\n"), "drop";
+	} elsif ($fail == 4) {
 		message T("Cannot pickup item (inventory full)\n"), "drop";
 	} elsif ($fail == 1) {
 		message T("Cannot pickup item (you're Frozen?)\n"), "drop";
