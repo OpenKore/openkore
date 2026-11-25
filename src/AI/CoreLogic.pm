@@ -1410,12 +1410,14 @@ sub processAutoMakeArrow {
 			next if (!$item);
 			if ($arrowcraft_items{lc($item->{name})}) {
 				$messageSender->sendArrowCraft($item->{nameID});
+				$char->{selected_craft} = 1;
 				debug "Making item\n", "ai_makeItem";
 				$nMake++;
 				last;
 			}
 		}
 		$messageSender->sendArrowCraft(-1) if ($nMake == 0 && $max > 0);
+		undef @arrowCraftID;
 		if ($nMake == 0 && !$useArrowCraft){
 			for my $item (@{$char->inventory}) {
 				if ($arrowcraft_items{lc($item->{name})}) {
