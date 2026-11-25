@@ -1179,11 +1179,11 @@ sub testWarpPortalActiveEntryTimeout {
 		$transitioned->{actor}{pos} = {x => 100, y => 100};
 		$transitioned->{actor}{pos_to} = {x => 100, y => 100};
 		Task::MapRoute::mapChanged(undef, {}, [$transitioned]);
-		Task::Route::mapChanged(undef, undef, [$firstEdge]);
+		Task::Route::mapChanged(undef, undef, [$firstEdge]) if $firstEdge;
 		Task::MapRoute::iterate($transitioned);
-		is($firstEdge->getStatus(), Task::DONE,
+		is($firstEdge ? $firstEdge->getStatus() : undef, Task::DONE,
 			'the first fallback movement subtask completes after its new route transition');
-		is($transitioned->{mapSolution}[0]{map}, 'payon',
+		is($transitioned->{mapSolution} && $transitioned->{mapSolution}[0]{map}, 'payon',
 			'the fresh transition advances from the first fallback edge to the second portal edge');
 	}
 	is_deeply(\@fallback_origin, ['alberta', 44, 55],
