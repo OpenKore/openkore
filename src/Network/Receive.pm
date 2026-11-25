@@ -3743,7 +3743,7 @@ sub markWarpPortalPendingAreaSpell {
 }
 
 sub recordWarpPortalPendingArrival {
-	my ($oldMap) = @_;
+	my ($oldMap, $deferPersistence) = @_;
 	return unless $char;
 	my $pending = $char->{warpPortalPendingTraversal};
 	return unless $pending;
@@ -3756,7 +3756,7 @@ sub recordWarpPortalPendingArrival {
 		return;
 	}
 	return unless defined $char->{pos}{x} && defined $char->{pos}{y};
-	confirmPortalArrival($oldMap, $field->baseName, $char->{pos}{x}, $char->{pos}{y});
+	confirmPortalArrival($oldMap, $field->baseName, $char->{pos}{x}, $char->{pos}{y}, $deferPersistence);
 }
 
 # 0828,14
@@ -7857,7 +7857,7 @@ sub map_changed {
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
-	recordWarpPortalPendingArrival($oldMap);
+	recordWarpPortalPendingArrival($oldMap, 1);
 	my $traversal = $char && $char->{warpPortalState} ? $char->{warpPortalState}{last_traversal} : undef;
 	my $confirmed_attempt_id = $portal_attempt_id && $traversal
 		&& ($traversal->{attempt_id} || '') eq $portal_attempt_id

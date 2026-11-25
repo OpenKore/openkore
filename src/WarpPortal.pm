@@ -94,12 +94,19 @@ sub beginCharacterSession {
 	my $state = _state() or return;
 	my $key = _characterKey();
 	my $handoff = delete $char->{warpPortalMapTransfer};
+	my $pending = $state->{pending_transfer_arrival};
+	my $confirmedHandoff = !$handoff || !$handoff->{attempt_id}
+		|| ($pending && ($pending->{attempt_id} || '') eq $handoff->{attempt_id}
+			&& ($pending->{map} || '') eq ($handoff->{map} || '')
+			&& ($pending->{x} || 0) == ($handoff->{x} || 0)
+			&& ($pending->{y} || 0) == ($handoff->{y} || 0)
+			&& ($pending->{session} || -1) == ($state->{session} || 0));
 	my $preserve = $handoff && ($handoff->{character_key} // '') eq $key
 		&& ($handoff->{session} // -1) == ($state->{session} || 0)
 		&& time - ($handoff->{time} || 0) <= 30
+		&& $confirmedHandoff
 		&& normalizeWarpMap($loaded_map) eq ($handoff->{map} || '')
 		&& defined($loaded_x) && defined($loaded_y)
-		&& $loaded_x == $handoff->{x} && $loaded_y == $handoff->{y}
 		&& defined($server_ip) && ($server_ip // '') eq ($handoff->{server_ip} // '')
 		&& defined($server_port) && ($server_port // '') eq ($handoff->{server_port} // '');
 	# A server handoff continues the existing logical character session. Only a
@@ -107,6 +114,16 @@ sub beginCharacterSession {
 	my $session = $preserve ? ($state->{session} || 0) : ($state->{session} || 0) + 1;
 	my %preserved;
 	if ($preserve) {
+		if ($handoff->{attempt_id} && $pending
+			&& ($pending->{attempt_id} || '') eq $handoff->{attempt_id}
+			&& ($pending->{map} || '') eq ($handoff->{map} || '')
+			&& ($pending->{session} || -1) == ($state->{session} || 0)) {
+			# map_loaded is the destination server's acceptance. Its coordinates
+			# supersede the requested coordinates in the server-transfer packet.
+			_recordObservedArrival($state, $loaded_map, $loaded_x, $loaded_y,
+				$pending->{source}, 1);
+			delete $state->{pending_transfer_arrival};
+		}
 		my %observed = map {
 			$_ => {%{$state->{observed_coordinates}{$_}}, session => $session}
 		} grep { ($state->{observed_coordinates}{$_}{session} || -1) == ($state->{session} || 0) }
@@ -116,7 +133,7 @@ sub beginCharacterSession {
 		if ($handoff->{attempt_id} && $traversal
 			&& ($traversal->{attempt_id} || '') eq $handoff->{attempt_id}
 			&& ($traversal->{destination_map} || '') eq ($handoff->{map} || '')) {
-			$preserved{last_traversal} = {%$traversal, session => $session};
+			$preserved{last_traversal} = {%$traversal, x => $loaded_x, y => $loaded_y, session => $session};
 		}
 	}
 	$char->{warpPortalState} = {
@@ -149,7 +166,12 @@ sub markCharacterMapTransfer {
 }
 
 sub clearCharacterMapTransfer {
-	delete $char->{warpPortalMapTransfer} if $char;
+	return unless $char;
+	my $handoff = delete $char->{warpPortalMapTransfer};
+	my $state = $char->{warpPortalState};
+	delete $state->{pending_transfer_arrival}
+		if $handoff && $handoff->{attempt_id} && $state && $state->{pending_transfer_arrival}
+		&& ($state->{pending_transfer_arrival}{attempt_id} || '') eq $handoff->{attempt_id};
 }
 
 sub noteWarpCast {
@@ -496,7 +518,7 @@ sub noteWarpPortalUnitDisappeared {
 }
 
 sub confirmPortalArrival {
-	my ($old_map, $new_map, $x, $y) = @_;
+	my ($old_map, $new_map, $x, $y, $defer_persistence) = @_;
 	return unless $char && defined($x) && defined($y);
 	my $pending = _livePortalAttempt() or return;
 	my $state = _state() or return;
@@ -525,11 +547,18 @@ sub confirmPortalArrival {
 	# Keep the landing position from the authoritative map-change packet while
 	# labeling the cause as inferred from owned portal placement, accepted movement
 	# onto its exact tile, and the matching server map transition.
-	recordArrival($new_map, $x, $y,
-		'inferred_portal_entry_from_owned_unit_movement_and_map_change', $pending->{attempt_id});
+	my $arrival_source = 'inferred_portal_entry_from_owned_unit_movement_and_map_change';
+	if ($defer_persistence) {
+		$state->{pending_transfer_arrival} = {
+			map => $new_map, x => 0 + $x, y => 0 + $y, source => $arrival_source,
+			attempt_id => $pending->{attempt_id}, time => time, session => $state->{session},
+		};
+	} else {
+		recordArrival($new_map, $x, $y, $arrival_source, $pending->{attempt_id});
+	}
 	$state->{last_traversal} = {
 		source_map => $old_map, destination_map => $new_map,
-		attempt_id => $pending->{attempt_id}, time => time,
+		attempt_id => $pending->{attempt_id}, x => 0 + $x, y => 0 + $y, time => time,
 		confidence => 'inferred', evidence => 'owned_portal_unit_placement_movement_and_server_map_change',
 	};
 	clearPendingTraversal($pending->{attempt_id});
@@ -542,10 +571,19 @@ sub recordArrival {
 	$map = normalizeWarpMap($map);
 	return unless $map;
 	my $state = _state() or return;
+	_recordObservedArrival($state, $map, $x, $y, $source, 1);
+}
+
+sub _recordObservedArrival {
+	my ($state, $map, $x, $y, $source, $persist) = @_;
+	return unless $state && defined $x && defined $y;
+	$map = normalizeWarpMap($map);
+	return unless $map;
 	$state->{observed_coordinates}{$map} = {
 		x => 0 + $x, y => 0 + $y, source => $source || 'confirmed_portal_traversal',
 		time => time, session => $state->{session},
 	};
+	return unless $persist;
 	my @matching = grep {
 		my $entry = parseMemoEntry($config{"memo$_"});
 		$entry->{valid} && $entry->{map} eq $map;

@@ -63,6 +63,7 @@ sub run {
 		$self->testWarpPortalActiveEntryTimeout;
 		$self->testMapServerTransferKeepsPortalEvidence;
 		$self->testWarpPortalFallbackClearsTransitionState;
+		$self->testSameMapWarpPortalRouting;
 		$self->testConfirmedArrivalWinsEntryTimeout;
 		$self->testCalcMapRouteSearchRegression;
 	}
@@ -1061,6 +1062,8 @@ sub testWarpPortalActiveEntryTimeout {
 		pos_to => {x => 10, y => 10}}, 'WarpPortalTest::RouteActor';
 	local $Task::MapRoute::net = bless {}, 'WarpPortalTest::Net';
 	local $Task::MapRoute::field = $field;
+	local $Task::Route::field = $field;
+	local $Task::Route::net = $Task::MapRoute::net;
 	local $Task::MapRoute::char = $Globals::char;
 	local $Task::MapRoute::messageSender = bless({}, 'WarpPortalTest::Sender');
 	local *Task::MapRoute::initMapCalculator = sub {
@@ -1135,6 +1138,60 @@ sub testWarpPortalActiveEntryTimeout {
 	ok(!$stalled->{warpPortalStage} && !$Globals::char->{warpPortalPendingTraversal},
 		'late portal evidence cannot restore the expired stage or pending traversal');
 
+	# Reproduce a map-change event that the parent has not processed before the
+	# portal-entry deadline. The fallback calculation must start at the server
+	# position and execute its first edge, not merely clear a boolean.
+	my ($transitioned, $transition_route) = $make_parent->(time - 1);
+	$field->{map} = 'alberta';
+	$transitioned->{actor}{pos} = {x => 44, y => 55};
+	$transitioned->{actor}{pos_to} = {x => 44, y => 55};
+	Task::MapRoute::mapChanged(undef, {}, [$transitioned]);
+	my @fallback_origin;
+	{
+		no warnings 'redefine';
+		local *Task::MapRoute::initMapCalculator = sub {
+			my ($self) = @_;
+			$self->{fallback_count}++;
+			@fallback_origin = ($Task::MapRoute::field->baseName, @{$self->{actor}{pos}}{qw(x y)});
+			$self->{mapSolution} = [
+				{map => 'alberta', pos => {x => 70, y => 70},
+					portal => 'alberta 70 70=payon 100 100', type => 'portal_or_npc'},
+				{map => 'payon', pos => {x => 110, y => 110},
+					portal => 'payon 110 110=prontera 10 10', type => 'portal_or_npc'},
+			];
+		};
+		local *Task::MapRoute::timeOut = sub { 1 };
+		local *Task::Route::getRoute = sub { 1 };
+		local %Task::MapRoute::portals_lut = (
+			'alberta 70 70' => {source => {map => 'alberta'},
+				dest => {'payon 100 100' => {enabled => 1, steps => ''}}},
+			'payon 110 110' => {source => {map => 'payon'},
+				dest => {'prontera 10 10' => {enabled => 1, steps => ''}}},
+		);
+		Task::MapRoute::iterate($transitioned);
+		my $firstEdge = $transitioned->getSubtask();
+		ok($firstEdge && $firstEdge->isa('Task::Route')
+			&& $firstEdge->{dest}{pos}{x} == 70 && $firstEdge->{dest}{pos}{y} == 70,
+			'first static portal edge of the fallback route starts its real movement task');
+		$field = bless({map => 'payon'}, 'WarpPortalTest::RouteField');
+		$Task::MapRoute::field = $field;
+		$Task::Route::field = $field;
+		$transitioned->{actor}{pos} = {x => 100, y => 100};
+		$transitioned->{actor}{pos_to} = {x => 100, y => 100};
+		Task::MapRoute::mapChanged(undef, {}, [$transitioned]);
+		Task::Route::mapChanged(undef, undef, [$firstEdge]);
+		Task::MapRoute::iterate($transitioned);
+		is($firstEdge->getStatus(), Task::DONE,
+			'the first fallback movement subtask completes after its new route transition');
+		is($transitioned->{mapSolution}[0]{map}, 'payon',
+			'the fresh transition advances from the first fallback edge to the second portal edge');
+	}
+	is_deeply(\@fallback_origin, ['alberta', 44, 55],
+		'timeout fallback calculates from the unexpected server map and coordinates');
+	ok($transition_route->getStatus() == Task::STOPPED && $transitioned->{fallback_count} == 1,
+		'unexpected transition timeout cancels the old Route and starts one fallback');
+	$field->{map} = 'prontera';
+
 	# An unrelated map route still waits normally on an active Route subtask.
 	my ($ordinary, $ordinary_route) = $make_parent->(undef);
 	delete @{$ordinary}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalAttemptID)};
@@ -1194,8 +1251,10 @@ sub testMapServerTransferKeepsPortalEvidence {
 		});
 		ok($Globals::char->{warpPortalState}{last_traversal},
 			'production cross-server packet handler confirms portal arrival before disconnect');
-		is_deeply([memoCoordinateForMap('geffen')], [120, 62, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
-			'auto-sync-off coordinates are available before destination map_loaded');
+		is_deeply([@{$Globals::char->{warpPortalState}{pending_transfer_arrival}}{qw(map x y)}],
+			['geffen', 120, 62], 'cross-server arrival coordinates remain provisional until destination acceptance');
+		ok(!memoCoordinateForMap('geffen'),
+			'provisional cross-server coordinates are not exposed as learned memo coordinates');
 		$Network::Receive::net->{state} = 4;
 		Network::Receive::map_loaded(undef, {syncMapSync => 0, coords => ''});
 		ok($Globals::char->{warpPortalState}{last_traversal},
@@ -1245,15 +1304,32 @@ sub testMapServerTransferKeepsPortalEvidence {
 		noteWarpPortalUnitSeen($unit, 'geffen');
 		noteWarpPortalMovement({x => 120, y => 62}, {x => 121, y => 63}, 'geffen');
 		$loaded_x = 42; $loaded_y = 43;
-		Network::Receive::map_changed(undef, {
-			map => 'payon.gat', x => 42, y => 43,
-			url => '127.0.0.3:5122', port => 5122,
+		my $transfer_writes = captureWrites(sub {
+			Network::Receive::map_changed(undef, {
+				map => 'payon.gat', x => 42, y => 43,
+				url => '127.0.0.3:5122', port => 5122,
+			});
 		});
-		is($Globals::config{memo2}, 'payon 42 43',
-			'production transfer handler auto-syncs the unique memo using server coordinates');
+	is(scalar(@$transfer_writes), 0,
+		'cross-server transfer packet keeps confirmed arrival provisional without persisting memo coordinates');
+	is($Globals::config{memo2}, 'payon',
+		'configuration remains unchanged until the destination map server accepts the character');
+	$loaded_x = 43; $loaded_y = 44;
+	$transfer_writes = captureWrites(sub {
 		Network::Receive::map_loaded(undef, {syncMapSync => 0, coords => ''});
-		is_deeply([memoCoordinateForMap('payon')], [42, 43, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
+	});
+	is($Globals::config{memo2}, 'payon 43 44',
+		'accepted destination coordinates, including a server adjustment, are persisted');
+	is(scalar(@$transfer_writes), 1, 'successful cross-server handoff writes the memo exactly once');
+	is_deeply([memoCoordinateForMap('payon')], [43, 44, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
 			'production auto-sync-on map-loaded path retains learned landing coordinates');
+		$transfer_writes = captureWrites(sub {
+			Network::Receive::map_loaded(undef, {syncMapSync => 0, coords => ''});
+		});
+		is(scalar(@$transfer_writes), 0,
+			'a repeated destination login packet cannot duplicate a confirmed memo update');
+		is($Globals::config{memo2}, 'payon 43 44',
+			'repeated destination login preserves the single accepted coordinate update');
 		my $same_server_session = $Globals::char->{warpPortalState}{session};
 		noteWarpSelection('geffen', 'payon', 43, 44, 4, 'same-server-attempt', {x => 43, y => 44});
 		$unit = {ID => 'same-server-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 43, y => 44};
@@ -1268,6 +1344,36 @@ sub testMapServerTransferKeepsPortalEvidence {
 		markCharacterMapTransfer('geffen', 120, 62, '127.0.0.2', 5121, undef);
 		Network::Receive::map_load_error(undef, {error => 1});
 		ok(!$Globals::char->{warpPortalMapTransfer}, 'failed destination reconnection clears transfer evidence');
+		$Globals::config{memo3} = 'alberta';
+		noteWarpSelection('alberta', 'geffen', 52, 53, 4, 'rejected-transfer-attempt', {x => 52, y => 53});
+		$unit = {ID => 'rejected-transfer-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 52, y => 53};
+		noteWarpPortalUnitSeen($unit, 'geffen');
+		noteWarpPortalMovement({x => 51, y => 53}, {x => 52, y => 53}, 'geffen');
+		$transfer_writes = captureWrites(sub {
+			Network::Receive::map_changed(undef, {
+				map => 'alberta.gat', x => 77, y => 88,
+				url => '127.0.0.4:5124', port => 5124,
+			});
+		});
+		is(scalar(@$transfer_writes), 0, 'rejected transfer remains provisional before map-server acceptance');
+		Network::Receive::map_load_error(undef, {error => 1});
+		is($Globals::config{memo3}, 'alberta',
+			'destination map-server rejection never persists its unaccepted coordinates');
+		ok(!$Globals::char->{warpPortalState}{pending_transfer_arrival}
+			&& !$Globals::char->{warpPortalMapTransfer},
+			'rejected transfer clears only its matching provisional arrival and handoff');
+		noteWarpSelection('alberta', 'geffen', 60, 61, 4, 'expired-transfer-attempt', {x => 60, y => 61});
+		noteWarpPortalUnitSeen({ID => 'expired-transfer-portal', sourceID => $Globals::char->{ID},
+			type => 0x81, x => 60, y => 61}, 'geffen');
+		noteWarpPortalMovement({x => 59, y => 61}, {x => 60, y => 61}, 'geffen');
+		confirmPortalArrival('geffen', 'alberta', 80, 81, 1);
+		markCharacterMapTransfer('alberta', 80, 81, '127.0.0.5', 5125, 'expired-transfer-attempt');
+		$Globals::char->{warpPortalMapTransfer}{time} = time - 31;
+		beginCharacterSession('alberta', '127.0.0.5', 5125, 80, 81);
+		is($Globals::config{memo3}, 'alberta',
+			'a timed-out transfer cannot persist provisional coordinates when a later session starts');
+		ok(!$Globals::char->{warpPortalState}{pending_transfer_arrival},
+			'expired provisional arrival is discarded with the timed-out transfer');
 	}
 	# A later genuine logical session and a character switch still discard it.
 	beginCharacterSession();
@@ -1293,7 +1399,7 @@ sub testMapServerTransferKeepsPortalEvidence {
 	$unit = {ID => 'sync-transfer-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
 	noteWarpPortalUnitSeen($unit, 'prontera');
 	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
-	confirmPortalArrival('prontera', 'geffen', 121, 63);
+	confirmPortalArrival('prontera', 'geffen', 121, 63, 1);
 	markCharacterMapTransfer('geffen', 121, 63, '127.0.0.2', 5123, 'cross-server-sync-attempt');
 	$Globals::char->{pos} = {x => 121, y => 63};
 	beginCharacterSession('geffen', '127.0.0.2', 5123, 121, 63);
@@ -1429,6 +1535,153 @@ sub testConfirmedArrivalWinsEntryTimeout {
 	Task::MapRoute::iterate($ambiguous);
 	is($ambiguous->{fallback_count}, 1, 'same-destination arrival without correlation still times out into one fallback');
 	ok($ambiguous->{noWarpPortalMaps}{prontera}, 'ambiguous transition does not suppress timeout fallback or blacklist');
+}
+
+sub testSameMapWarpPortalRouting {
+	require Task::CalcMapRoute;
+	require Task::MapRoute;
+	require Task::Route;
+	setupCharacter(route_warpPortal => 1, warpPortal_autoUpdateMemo => 0,
+		saveMap => 'prontera', memo1 => 'prontera 20 21', memo2 => '', memo3 => '', memo4 => '');
+	$Globals::char = bless {
+		charID => 'same-map-planner', learned => 4, sp => 100,
+		inventory => bless({amount => 1}, 'WarpPortalTest::Inventory'),
+	}, 'WarpPortalTest::Character';
+	$Globals::char->{ID} = 'same-map-character';
+	beginCharacterSession();
+	my $planner = bless {
+		source => {map => 'prontera'}, targets => [{map => 'prontera', x => 30, y => 30}],
+		noWarpPortalMaps => {}, routeWeightCache => {WARPPORTAL => 200}, mapRouteWeightCache => {},
+	}, 'Task::CalcMapRoute';
+	my $baseCost = {walk => 0, zeny => 0, blockedPortalGroups => {}};
+	{
+		no warnings 'redefine';
+		local *Field::new = sub { bless({}, 'WarpPortalTest::Field') };
+		local *Task::CalcMapRoute::getMapRouteWeight = sub { 0 };
+		local *Task::CalcMapRoute::getRouteWeight = sub { 0 };
+		local *Task::CalcMapRoute::buildRouteStateKey = sub { 'same-map-warp' };
+		local *Task::CalcMapRoute::canAddOpenListEntry = sub { 1 };
+		local *Task::CalcMapRoute::cloneBlockedPortalGroups = sub { {} };
+		local *Task::CalcMapRoute::buildRouteValue = sub { {} };
+		local *Task::CalcMapRoute::registerSyntheticPortalDestination = sub { 1 };
+		local *Task::CalcMapRoute::add_key_to_openList = sub { $_[0]{candidate} = $_[2] };
+		$planner->populateOpenListWithWarpPortal('prontera 10 10', $baseCost, undef);
+	}
+	ok($planner->{candidate}{is_warpPortal},
+		'planner supports a Warp Portal memo on the current map when landing coordinates differ');
+	{
+		no warnings 'redefine';
+		local *Field::new = sub {
+			my %args = @_[1 .. $#_];
+			bless({map => $args{name}}, 'WarpPortalTest::Field');
+		};
+		local *Task::Route::getRoute = sub { 1 };
+		my $walkable = Task::CalcMapRoute->new(
+			sourceMap => 'prontera', sourceX => 10, sourceY => 10,
+			map => 'prontera', x => 30, y => 30,
+			noGoCommand => 1, noTeleSpawn => 1, noWarpItem => 1, noAirship => 1,
+		);
+		Task::activate($walkable);
+		$walkable->iterate();
+		ok($walkable->getStatus() == Task::DONE && @{$walkable->getRoute()} == 0,
+			'a same-map destination reachable by walking keeps the ordinary direct route');
+	}
+	{
+		no warnings 'redefine';
+		local *Field::new = sub { bless({}, 'WarpPortalTest::Field') };
+		local *Task::Route::getRoute = sub { 0 };
+		local *Task::CalcMapRoute::buildRouteStateKey = sub { 'disconnected-same-map-warp' };
+		local *Task::CalcMapRoute::canAddOpenListEntry = sub { 1 };
+		local *Task::CalcMapRoute::cloneBlockedPortalGroups = sub { {} };
+		local *Task::CalcMapRoute::buildRouteValue = sub { {} };
+		local *Task::CalcMapRoute::registerSyntheticPortalDestination = sub { 1 };
+		local *Task::CalcMapRoute::add_key_to_openList = sub { $_[0]{candidate} = $_[2] };
+		delete $planner->{candidate};
+		$planner->populateOpenListWithWarpPortal('prontera 10 10', $baseCost, undef);
+		ok($planner->{candidate}{is_warpPortal},
+			'a disconnected same-map region remains eligible for the planned Warp Portal alternative');
+	}
+
+	my $field = bless({map => 'prontera'}, 'WarpPortalTest::RouteField');
+	my $actor = bless({ID => 'same-map-character', pos => {x => 10, y => 10},
+		pos_to => {x => 10, y => 10}}, 'WarpPortalTest::RouteActor');
+	local $Task::MapRoute::field = $field;
+	local $Task::Route::field = $field;
+	local $Task::MapRoute::char = $Globals::char;
+	local $Task::MapRoute::net = bless({state => Network::IN_GAME}, 'WarpPortalTest::HandoffNet');
+	local $Task::Route::net = $Task::MapRoute::net;
+	local *Task::Route::getRoute = sub { 1 };
+	my $parent = Task::WithSubtask->new(autostop => 1, autofail => 0);
+	bless $parent, 'Task::MapRoute';
+	@{$parent}{qw(actor dest mapSolution warpPortalStage warpPortalDestination warpPortalSourceMap
+		warpPortalAttemptID warpPortalStarted warpPortalEntryDeadline noWarpPortalMaps)} = (
+		$actor, {map => 'prontera', pos => {x => 30, y => 30}},
+		[{is_warpPortal => 1, map => 'prontera', portal => 'prontera 20 20=prontera 20 21'}],
+		'portal_ready', 'prontera', 'prontera', 'same-map-attempt', time - 1, time + 20, {},
+	);
+	$parent->{warpPortalActor} = {ID => 'same-map-portal', pos_to => {x => 20, y => 20}};
+	my @recalculationOrigin;
+	{
+		no warnings 'redefine';
+		local *Task::MapRoute::initMapCalculator = sub {
+			my ($self) = @_;
+			$self->{recalculations}++;
+			@recalculationOrigin = ($Task::MapRoute::field->baseName, @{$self->{actor}{pos}}{qw(x y)});
+			$self->setSubtask(WarpPortalTest::PendingCalc->new());
+		};
+		Task::activate($parent);
+		Task::MapRoute::iterateWarpPortalStep($parent);
+		my $entry = $parent->getSubtask();
+		ok($entry && $entry->{stopWhenMapChanged},
+			'same-map Warp Portal entry Route is configured to stop on an authoritative same-map teleport');
+		$actor->{pos} = {x => 31, y => 32};
+		$actor->{pos_to} = {x => 31, y => 32};
+		noteWarpSelection('prontera', 'prontera', 20, 20, 1, 'same-map-attempt', {x => 20, y => 20});
+		noteWarpPortalUnitSeen({ID => 'same-map-portal', sourceID => $Globals::char->{ID},
+			type => 0x81, x => 20, y => 20}, 'prontera');
+		noteWarpPortalMovement({x => 19, y => 20}, {x => 20, y => 20}, 'prontera');
+		ok(confirmPortalArrival('prontera', 'prontera', 31, 32),
+			'same-map Warp Portal movement and the server coordinate event form traversal evidence');
+		ok(!confirmPortalArrival('prontera', 'prontera', 31, 32),
+			'duplicate same-map arrival notification cannot confirm or learn the traversal twice');
+		Task::Route::mapChanged(undef, undef, [$entry]);
+		Task::MapRoute::mapChanged(undef, {}, [$parent]);
+		Task::Route::mapChanged(undef, undef, [$entry]);
+		Task::MapRoute::mapChanged(undef, {}, [$parent]);
+		Task::MapRoute::iterate($parent);
+		ok($entry->getStatus() == Task::DONE,
+			'same-map teleport terminates the old portal-entry movement task');
+		is_deeply(\@recalculationOrigin, ['prontera', 31, 32],
+			'routing resumes from the server-reported same-map landing coordinates');
+		ok($parent->{recalculations} == 1 && !$parent->{warpPortalStage}
+			&& !$Globals::char->{warpPortalState}{last_traversal},
+			'same-map arrival is consumed once and starts exactly one route recalculation');
+	}
+
+	# A normal same-map route has no stop-on-map-change flag and keeps its
+	# existing replan behavior; a conventional same-map portal still opts in.
+	my $normal = Task::Route->new(actor => $actor, field => $field, x => 35, y => 35);
+	ok(!$normal->{stopWhenMapChanged}, 'ordinary same-map walking does not inherit Warp Portal termination');
+	my $staticParent = Task::WithSubtask->new(autostop => 1, autofail => 0);
+	bless $staticParent, 'Task::MapRoute';
+	$staticParent->{actor} = $actor;
+	$staticParent->{dest} = {map => 'payon', pos => {x => 10, y => 10}};
+	$staticParent->{mapSolution} = [{map => 'prontera', pos => {x => 70, y => 70},
+		portal => 'prontera 70 70=prontera 100 100', type => 'portal_or_npc'}];
+	{
+		no warnings 'redefine';
+		local *Task::Route::getRoute = sub { 1 };
+		local *Task::MapRoute::isRouteTeleportAllowedOnMap = sub { 0 };
+		local %Task::MapRoute::portals_lut = (
+			'prontera 70 70' => {source => {map => 'prontera'},
+				dest => {'prontera 100 100' => {enabled => 1, steps => ''}}},
+		);
+		Task::activate($staticParent);
+		Task::MapRoute::iterate($staticParent);
+	}
+	ok($staticParent->getSubtask()
+		&& $staticParent->getSubtask()->{stopWhenMapChanged},
+		'conventional same-map static portal retains its existing segment-stop behavior');
 }
 
 package WarpPortalTest::Field;

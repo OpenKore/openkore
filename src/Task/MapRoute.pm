@@ -203,6 +203,10 @@ sub iterate {
 			# subtaskStopped() restores this task's saved mutexes and starts fallback.
 			$self->{warpPortalFailureReason} = 'timed out while entering_portal';
 			$self->{warpPortalStage} = 'expired';
+			$self->{warpPortalTimeoutHandledMapChange} =
+				$self->{mapChanged}
+				&& ($self->{mapChangedWarpPortalAttemptID} || '') eq ($self->{warpPortalAttemptID} || '')
+				? 1 : 0;
 			clearPendingTraversal($self->{warpPortalAttemptID});
 			$restoreAutostop = $self->{ST_autostop};
 			$self->{ST_autostop} = 0;
@@ -249,7 +253,11 @@ sub iterate {
 		debug "Map Router has finished traversing the map solution\n", "map_route" if Log::debugEnabled('map_route', 1);
 
 	} elsif ( $field->baseName ne $self->{mapSolution}[0]{map}
-	     || ( $self->{mapChanged} && (!$self->{teleport} || $self->_hasReachedSameMapPortalDestination($self->{mapSolution}[0])) ) ) {
+	     || ( $self->{mapChanged} && (!$self->{teleport}
+		|| $self->_hasReachedSameMapPortalDestination($self->{mapSolution}[0])
+		|| (($self->{warpPortalStage} || '') eq 'entering_portal'
+			&& ($self->{mapChangedWarpPortalAttemptID} || '') eq ($self->{warpPortalAttemptID} || '')
+			&& $field->baseName eq ($self->{warpPortalDestination} || ''))) ) ) {
 		if ($self->{mapSolution}[0]{is_warpPortal} && $self->{warpPortalStage}) {
 			my $traversal = $char->{warpPortalState}{last_traversal};
 			if ($self->{warpPortalStage} eq 'entering_portal'
@@ -269,7 +277,7 @@ sub iterate {
 					debug "Reached the requested Warp Portal destination, but entry could not be correlated; continuing from the server-reported position without portal attribution.\n", 'map_route';
 				}
 			clearPendingTraversal($self->{warpPortalAttemptID});
-				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt mapChanged teleport teleportTime sentTeleport)};
+				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt warpPortalTimeoutHandledMapChange mapChangedWarpPortalAttemptID mapChanged teleport teleportTime sentTeleport)};
 				delete $self->{mapSolution};
 				$self->initMapCalculator();
 				return;
@@ -1172,10 +1180,13 @@ sub iterateWarpPortalStep {
 		return $self->failWarpPortalStep('created portal is no longer reachable')
 			unless Task::Route->getRoute(\@path, $field, $self->{actor}{pos}, $point);
 		$self->{warpPortalStage} = 'entering_portal';
-		$self->setSubtask(Task::Route->new(
+		my $entryRoute = Task::Route->new(
 			actor => $self->{actor}, field => $field, x => $point->{x}, y => $point->{y},
 			maxTime => $self->{maxTime}, isPortalRoute => 1,
-		));
+		);
+		$entryRoute->{stopWhenMapChanged} = 1
+			if $self->{warpPortalSourceMap} eq $self->{warpPortalDestination};
+		$self->setSubtask($entryRoute);
 		$self->{warpPortalEntryDeadline} = time + 20;
 		return;
 	}
@@ -1188,11 +1199,14 @@ sub iterateWarpPortalStep {
 		return $self->failWarpPortalStep('created portal is no longer reachable')
 			unless Task::Route->getRoute(\@path, $field, $self->{actor}{pos}, $point);
 		$self->{warpPortalStage} = 'entering_portal';
-		$self->setSubtask(Task::Route->new(
+		my $entryRoute = Task::Route->new(
 			actor => $self->{actor}, field => $field,
 			x => $portal->{pos_to}{x}, y => $portal->{pos_to}{y},
 			maxTime => $self->{maxTime}, isPortalRoute => 1,
-		));
+		);
+		$entryRoute->{stopWhenMapChanged} = 1
+			if $self->{warpPortalSourceMap} eq $self->{warpPortalDestination};
+		$self->setSubtask($entryRoute);
 		$self->{warpPortalEntryDeadline} = time + 20;
 		return;
 	}
@@ -1364,7 +1378,7 @@ sub failWarpPortalStep {
 	my $map = $self->{warpPortalSourceMap} || ($field && $field->baseName) || '';
 	warning TF("Warp Portal route failed on %s: %s. Recalculating without this method on this map.\n", $map, $reason), 'map_route';
 	$self->{noWarpPortalMaps}{$map} = time if $map ne '';
-	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation)};
+	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation warpPortalTimeoutHandledMapChange mapChangedWarpPortalAttemptID)};
 	delete $self->{mapChanged} if $handledMapChange;
 	delete @{$self}{qw(teleport teleportTime sentTeleport teleportTries warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt)};
 	delete $self->{mapSolution};
@@ -1528,7 +1542,8 @@ sub subtaskStopped {
 	}
 	return if $arrivalCancellation;
 	my $reason = delete $self->{warpPortalFailureReason} || 'timed out while entering_portal';
-	return $self->failWarpPortalStep($reason)
+	my $handledMapChange = delete $self->{warpPortalTimeoutHandledMapChange};
+	return $self->failWarpPortalStep($reason, $handledMapChange)
 		if $self->{mapSolution} && @{$self->{mapSolution}}
 		&& $self->{mapSolution}[0]{is_warpPortal};
 }
@@ -1543,6 +1558,12 @@ sub mapChanged {
 	}
 
 	$self->{mapChanged} = 1;
+	if (($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& $self->{warpPortalAttemptID}) {
+		$self->{mapChangedWarpPortalAttemptID} = $self->{warpPortalAttemptID};
+	} else {
+		delete $self->{mapChangedWarpPortalAttemptID};
+	}
 
 	my $subtask = $self->getSubtask();
 	if ($subtask
