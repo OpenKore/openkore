@@ -44,6 +44,7 @@ sub new {
 	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
 
 	$self->{send_buy_bulk_pack} = "v V";
+	$self->{cash_dealer_buy_item_pack} = "v V";
 	$self->{send_sell_buy_complete} = 1;
 
 	return $self;

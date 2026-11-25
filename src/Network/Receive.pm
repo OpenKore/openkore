@@ -10694,7 +10694,8 @@ sub cash_dealer {
 
 	# Parse item_list => ['V2 C v', [qw(price price_discount type nameid)]]
 	$cashList->clear;
-	@{$args->{items}} = map { my %item; @item{qw(price price_discount type nameid)} = unpack 'V2 C v', $_; \%item } unpack '(a11)*', $args->{item_list};
+	my $pack = $self->{cash_dealer_item_pack} || 'V2 C v';
+	@{$args->{items}} = map { my %item; @item{qw(price price_discount type nameid)} = unpack $pack, $_; \%item } unpack '(a' . length(pack $pack) . ')*', $args->{item_list};
 
 	# Just keep cash_points and kafra_points locally not as $char->{cashpoint}, $cashShop{points}->{cash}, $cashShop{points}->{kafra}
 	# private servers can add custom currency that may overwrite the cash & points from cash shop
