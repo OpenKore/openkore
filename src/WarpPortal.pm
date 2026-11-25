@@ -358,7 +358,6 @@ sub updateServerMemos {
 		_writeConfig('saveMap_y', '') if defined($config{saveMap_y}) && $config{saveMap_y} ne '';
 	}
 
-	return unless $config{warpPortal_autoUpdateMemo};
 	my $coordinates = _coordinatesByMap();
 	my @canonical = ($maps[0], @maps[1 .. $#maps]);
 	my $covered = $coverage > 0 ? $coverage : 0;
@@ -369,7 +368,19 @@ sub updateServerMemos {
 		# attach the following map's coordinates to the wrong destination.
 		next if $unresolved_slots{$slot};
 		my $map = $canonical[$slot - 1] || '';
-		my $value = $map && $count{$map} == 1 ? _entryForMap($map, $coordinates) : $map;
+		my $value = $map;
+		if ($map && $count{$map} == 1) {
+			# Memo names and ordering were synchronized from every AL_WARP menu
+			# before warpPortal_autoUpdateMemo existed. Keep that behavior within
+			# the cast level's verified coverage. Persist coordinates learned from
+			# a traversal only when explicitly enabled; manually configured
+			# coordinates may follow their unique map identity across reordering.
+			if ($config{warpPortal_autoUpdateMemo}) {
+				$value = _entryForMap($map, $coordinates);
+			} elsif ($coordinates->{$map}) {
+				$value = "$map @{$coordinates->{$map}}";
+			}
+		}
 		_writeConfig("memo$slot", $value);
 	}
 }

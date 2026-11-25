@@ -195,16 +195,44 @@ sub testAuthoritativeOrderAndManualMode {
 	is(warpMapIndex('geffen'), 1, 'server menu index identifies geffen by its actual name');
 
 	setupCharacter(
-		warpPortal_autoUpdateMemo => 0, saveMap => 'prontera',
+		route_warpPortal => 0, warpPortal_autoUpdateMemo => 0, saveMap => 'prontera',
+		memo1 => 'geffen 9 9', memo2 => 'payon 1 2', memo3 => 'geffen 3 4', memo4 => 'stale_map 7 8',
+	);
+	my @higher_before = @Globals::config{qw(memo2 memo3 memo4)};
+	my $writes = captureWrites(sub { serverList(1, 'prontera'); });
+	is($Globals::config{memo1}, 'prontera', 'level-one menu still synchronizes its authoritative memo name for a default-config user');
+	is_deeply([@Globals::config{qw(memo2 memo3 memo4)}], \@higher_before,
+		'level-one menu leaves unverified higher memo slots untouched');
+	ok(@$writes, 'level-one menu writes only changed covered configuration entries');
+
+	setupCharacter(
+		route_warpPortal => 0, warpPortal_autoUpdateMemo => 0, saveMap => 'prontera',
 		memo1 => 'prontera 5 6', memo2 => 'payon 1 2', memo3 => 'geffen 3 4', memo4 => 'stale_map 7 8',
 	);
-	my @before = @Globals::config{qw(memo1 memo2 memo3 memo4)};
-	my $writes = captureWrites(sub { serverList(4, qw(prontera geffen alberta payon)); });
-	is(scalar(@$writes), 0, 'disabled synchronization makes no config writes when saveMap already matches');
-	is_deeply([@Globals::config{qw(memo1 memo2 memo3 memo4)}], \@before,
-		'manual entries stay byte-for-byte unchanged');
+	$writes = captureWrites(sub { serverList(4, qw(prontera geffen alberta payon)); });
+	is_deeply([@Globals::config{qw(memo1 memo2 memo3 memo4)}],
+		['prontera 5 6', 'geffen 3 4', 'alberta', 'payon 1 2'],
+		'level-four authoritative order synchronizes while manually configured coordinates follow unique maps');
+	ok(@$writes, 'legacy memo-name synchronization remains active with route and coordinate auto-update disabled');
 	is(warpMapIndex('payon'), 3, 'manual config order cannot select the wrong server destination');
-	is(warpMapStatus('stale_map', 4), 'absent', 'manual stale map is not considered available');
+	is(warpMapStatus('stale_map', 4), 'absent', 'stale manual map is not considered available');
+
+	serverList(4, qw(prontera geffen alberta));
+	is($Globals::config{memo4}, '', 'full-level empty memo slot clears a confirmed stale memo without auto coordinate persistence');
+	serverList(4, qw(prontera izlude geffen alberta));
+	is($Globals::config{memo2}, 'izlude', 'new server memo is synchronized as a map-only entry when coordinate learning is disabled');
+	serverList(4, qw(prontera geffen geffen alberta));
+	is_deeply([@Globals::config{qw(memo2 memo3)}], ['geffen', 'geffen'],
+		'duplicate server destinations do not receive coordinates from a unique configured identity');
+
+	setupCharacter(
+		route_warpPortal => 0, warpPortal_autoUpdateMemo => 1, saveMap => 'prontera',
+		memo1 => 'prontera', memo2 => 'payon 1 2', memo3 => 'geffen 3 4', memo4 => 'alberta 5 6',
+	);
+	serverList(4, qw(prontera geffen alberta payon));
+	is_deeply([@Globals::config{qw(memo1 memo2 memo3 memo4)}],
+		['prontera', 'geffen 3 4', 'alberta 5 6', 'payon 1 2'],
+		'coordinate auto-update enabled also preserves coordinates by unique map identity during reordering');
 }
 
 sub testMemoAcknowledgementAndTraversalCorrelation {
@@ -604,8 +632,8 @@ sub testRejectedAndAmbiguousMemoAcknowledgements {
 	serverList(4, qw(prontera geffen alberta payon));
 	is(warpMapIndex('alberta'), 2,
 		'verified runtime server destinations remain indexed when config sync is disabled and memo entries are empty');
-	is_deeply([@Globals::config{qw(memo1 memo2 memo3 memo4)}], ['', '', '', ''],
-		'runtime discovery does not require or modify configured memo hints');
+	is_deeply([@Globals::config{qw(memo1 memo2 memo3 memo4)}], [qw(prontera geffen alberta payon)],
+		'legacy config memo names synchronize from full coverage without requiring route or coordinate auto-update');
 
 	noteWarpSelection('geffen', 'prontera', 10, 10, 2, 'owned-attempt');
 	clearPendingTraversal(undef);
