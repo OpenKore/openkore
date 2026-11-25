@@ -4728,6 +4728,9 @@ sub sprite_change {
 			message TF("%s changed Job to: %s\n", $player, $jobs_lut{$value1}), "parseMsg_statuslook";
 		}
 
+	} elsif ($type == 1) {
+		$player->{hair_style} = $value1;
+
 	} elsif ($type == 2) {
 		if ($value1 ne $player->{weapon}) {
 			message TF("%s changed Weapon to %s (%d)\n", $player, itemName({nameID => $value1}), $value1), "parseMsg_statuslook", 2;
