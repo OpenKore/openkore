@@ -9310,6 +9310,7 @@ sub rodex_read_mail {
 
 sub unread_rodex {
 	my ( $self, $args ) = @_;
+	return unless $args->{show};
 	message T("You have new unread rodex mails.\n");
 	Plugins::callHook('rodex_unread_mail');
 }
