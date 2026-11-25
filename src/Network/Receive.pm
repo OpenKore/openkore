@@ -10858,7 +10858,7 @@ sub arrowcraft_list {
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	$char->{selected_craft} = 0;
+	$char->{selected_craft} = $msg_size > 4 ? 0 : 1;
 
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
