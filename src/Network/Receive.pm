@@ -12860,7 +12860,7 @@ sub load_confirm {
 }
 
 # Inventory Expansion Result
-# 0B18 <Result>W
+# 0B17 <Result>B
 # result:
 #    EXPAND_INVENTORY_RESULT_SUCCESS    = 0x0
 #    EXPAND_INVENTORY_RESULT_FAILED     = 0x1
@@ -12884,6 +12884,11 @@ sub inventory_expansion_result {
 	} else {
 		message TF("Unknown result in inventory expansion (%s).\n", $args->{result}),"info";
 	}
+}
+
+sub inventory_expansion_info {
+	my ($self, $args) = @_;
+	debug "Inventory expansion: $args->{expansionSize} extra slots\n", "parseMsg";
 }
 
 sub item_preview {

@@ -45,7 +45,7 @@ sub new {
 	}
 
 	my %handlers = qw(
-		inventory_expansion_result 0B18
+		inventory_expansion_info 0B18
 		received_characters 099D
 		received_characters_info 082D
 		skills_list 0B32
