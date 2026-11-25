@@ -7320,7 +7320,7 @@ sub cmdQuest {
 				my $msg = center (' ' . ($quests_lut{$args[1]}{title} || T('Quest Info')) . ' ', 79, '-') . "\n";
 				$msg .= "$quests_lut{$args[1]}{summary}\n" if $quests_lut{$args[1]}{summary};
 				$msg .= TF("Objective: %s\n", $quests_lut{$args[1]}{objective}) if $quests_lut{$args[1]}{objective};
-				$msg .= $quests_lut{$args[1]}{active} ? T("active") : T("inactive") . "\n";
+				$msg .= ($questList->{$args[1]} && $questList->{$args[1]}{active} ? T("active") : T("inactive")) . "\n";
 				message $msg;
 			} else {
 				message T("Unknown quest\n"), "info";
