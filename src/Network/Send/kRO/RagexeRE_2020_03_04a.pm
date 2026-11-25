@@ -22,6 +22,7 @@ sub new {
 	my %packets = (
 		'0064' => ['token_login', 'V Z24 Z24 C', [qw(version username password master_version)]], # 55
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password flag)]],
+		'018E' => ['make_item_request', 'V4', [qw(nameID material_nameID1 material_nameID2 material_nameID3)]],
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
