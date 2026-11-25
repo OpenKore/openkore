@@ -59,6 +59,7 @@ sub run {
 		$self->testWarpPortalPlacement;
 		$self->testCastLevelSelection;
 		$self->testWarpPortalMenuCorrelation;
+		$self->testWarpPortalActiveEntryTimeout;
 		$self->testCalcMapRouteSearchRegression;
 	}
 
@@ -896,6 +897,7 @@ sub testCastLevelSelection {
 		inventory => bless({amount => 1}, 'WarpPortalTest::Inventory')}, 'WarpPortalTest::Character';
 	my $sender = bless {}, 'WarpPortalTest::Sender';
 	local $Globals::char = $char;
+	local $WarpPortal::char = $char;
 	local $Task::UseSkill::char = $char;
 	local $Task::UseSkill::messageSender = $sender;
 	my $castSkill = bless {}, 'WarpPortalTest::Skill';
@@ -908,6 +910,23 @@ sub testCastLevelSelection {
 	$useSkill->castSkill();
 	is_deeply($sender->{last_skill_location}, [27, 4, 12, 13],
 		'Task::UseSkill sends the selected level and the distinct portal target');
+	is($char->{warpPortalState}{pending_cast}{level}, 4,
+		'native Task::UseSkill records the exact AL_WARP cast level');
+
+	require AI::CoreLogic;
+	AI::CoreLogic::noteLegacyWarpPortalCast(27, 2, 8, 9);
+	is_deeply([$char->{warpPortalState}{pending_cast}{level}, @{$char->{warpPortalState}{pending_cast}{portal_pos}}{qw(x y)}],
+		[2, 8, 9], 'legacy AI location-skill path records its AL_WARP level before protocol-specific sending');
+	AI::CoreLogic::noteLegacyWarpPortalCast(28, 1, 3, 4);
+	is($char->{warpPortalState}{pending_cast}{level}, 2,
+		'legacy non-AL_WARP location skills do not replace Warp Portal cast evidence');
+	require Network::ClientReceive;
+	Network::ClientReceive::skill_use_location(undef, {skillID => 27, lv => 3, x => 15, y => 16});
+	is_deeply([$char->{warpPortalState}{pending_cast}{level}, @{$char->{warpPortalState}{pending_cast}{portal_pos}}{qw(x y)}],
+		[3, 15, 16], 'XKore packet observation records the server-client observed AL_WARP level and tile');
+	Network::ClientReceive::skill_use_location(undef, {skillID => 27, lv => 3, x => 15, y => 16});
+	is($char->{warpPortalState}{pending_cast}{level}, 3,
+		'repeated observation retains one current cast record without conflicting level state');
 	my $completed_task = bless {
 		T_status => Task::DONE, state => Task::UseSkill::WAITING_FOR_CAST_TO_FINISH(),
 		castingFinished => 1, skill => $castSkill, actor => $char,
@@ -1028,11 +1047,119 @@ sub testWarpPortalMenuCorrelation {
 		'MapRoute recovery does not relabel the unconfirmed transition as portal traversal');
 }
 
+sub testWarpPortalActiveEntryTimeout {
+	require Task::MapRoute;
+	require Task::Route;
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'geffen', memo2 => '', memo3 => '', memo4 => '');
+	$Globals::char->{ID} = 'timeout-character';
+	my $field = bless {map => 'prontera'}, 'WarpPortalTest::RouteField';
+	my $actor = bless {ID => 'timeout-character', pos => {x => 10, y => 10},
+		pos_to => {x => 10, y => 10}}, 'WarpPortalTest::RouteActor';
+	local $Task::MapRoute::net = bless {}, 'WarpPortalTest::Net';
+	local $Task::MapRoute::field = $field;
+	local $Task::MapRoute::char = $Globals::char;
+	local $Task::MapRoute::messageSender = bless({}, 'WarpPortalTest::Sender');
+	local *Task::MapRoute::initMapCalculator = sub {
+		my ($self) = @_;
+		$self->{fallback_count}++;
+		$self->setSubtask(WarpPortalTest::PendingCalc->new());
+	};
+
+	my $make_parent = sub {
+		my ($deadline) = @_;
+		my $route = Task::Route->new(actor => $actor, field => $field, x => 11, y => 10,
+			isPortalRoute => 1);
+		my $parent = Task::WithSubtask->new(
+			autostop => 1, autofail => 0, mutexes => ['movement']);
+		bless $parent, 'Task::MapRoute';
+		@{$parent}{qw(actor dest mapSolution warpPortalStage warpPortalDestination
+			warpPortalSourceMap warpPortalAttemptID warpPortalStarted warpPortalEntryDeadline noWarpPortalMaps)} = (
+			$actor, {map => 'geffen', pos => {x => 10, y => 10}},
+			[{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=geffen'}],
+			'entering_portal', 'geffen', 'prontera', 'timeout-test', time - 1, $deadline, {},
+		);
+		Task::activate($parent);
+		$parent->setSubtask($route);
+		return ($parent, $route);
+	};
+
+	# The real Route task completes through Task::WithSubtask's DONE path before
+	# the entry deadline. It must not be blacklisted or trigger fallback.
+	my ($successful, $successful_route) = $make_parent->(time + 20);
+	{
+		no warnings 'redefine';
+		local *Task::Route::iterate = sub { $_[0]->setDone() if $_[0]->getStatus() == Task::RUNNING };
+		Task::MapRoute::iterate($successful);
+	}
+	ok($successful_route->getStatus() == Task::DONE && !$successful->{fallback_count}
+		&& !$successful->{noWarpPortalMaps}{prontera},
+		'portal-entry Route completion before its deadline keeps the Warp Portal route eligible');
+
+	# Keep a real Route task active with a real nested Task child. MapRoute must
+	# cancel it through WithSubtask::stop(), then start one fallback calculator.
+	my ($stalled, $stalled_route) = $make_parent->(time - 1);
+	my $movement = WarpPortalTest::PendingCalc->new();
+	$stalled_route->setSubtask($movement);
+	my $route_iterations = 0;
+	{
+		no warnings 'redefine';
+		local *Task::Route::iterate = sub {
+			$route_iterations++ if $_[0]->getStatus() == Task::RUNNING;
+		};
+		Task::MapRoute::iterate($stalled);
+		is($route_iterations, 0, 'expired entry is canceled before another movement-task iteration');
+	}
+	is($stalled_route->getStatus(), Task::STOPPED, 'timed-out portal-entry Route is stopped');
+	ok(!$stalled_route->getSubtask() && $movement->getStatus() == Task::STOPPED,
+		'timeout detaches the route and stops its nested movement subtask');
+	is($stalled->{fallback_count}, 1, 'timed-out entry starts exactly one fallback calculation');
+	ok($stalled->{noWarpPortalMaps}{prontera}, 'timed-out method is excluded on the source map');
+	ok($stalled->getStatus() == Task::RUNNING
+		&& $stalled->getSubtask()->isa('WarpPortalTest::PendingCalc'),
+		'fallback remains attached to the running MapRoute without nested completion');
+
+	# The attempt has been cleared and the old Route is no longer attached, so a
+	# late callback or portal-spawn event cannot revive the expired attempt.
+	my $late_route = Task::Route->new(actor => $actor, field => $field, x => 11, y => 10);
+	$late_route->{T_status} = Task::DONE;
+	$stalled->subtaskDone($late_route);
+	Task::MapRoute::warpPortalSpawned(undef, {portal => {
+		ID => 'late-portal', type => 0x81, sourceID => $Globals::char->{ID},
+		pos_to => {x => 11, y => 10},
+	}}, [$stalled]);
+	is($stalled->{fallback_count}, 1, 'late completion does not start duplicate fallback');
+	ok(!$stalled->{warpPortalStage} && !$Globals::char->{warpPortalPendingTraversal},
+		'late portal evidence cannot restore the expired stage or pending traversal');
+
+	# An unrelated map route still waits normally on an active Route subtask.
+	my ($ordinary, $ordinary_route) = $make_parent->(undef);
+	delete @{$ordinary}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalAttemptID)};
+	my $ordinary_iterations = 0;
+	{
+		no warnings 'redefine';
+		local *Task::Route::iterate = sub { $ordinary_iterations++ };
+		Task::MapRoute::iterate($ordinary);
+	}
+	ok($ordinary_route->getStatus() == Task::RUNNING && $ordinary_iterations == 1
+		&& !$ordinary->{fallback_count},
+		'unrelated MapRoute task lifecycle is unchanged without a Warp Portal entry deadline');
+}
+
 package WarpPortalTest::Field;
 sub baseName { $_[0]{map} || 'prontera' }
 sub width { 40 }
 sub height { 40 }
 sub isWalkable { return $_[1] >= 0 && $_[2] >= 0 && $_[1] < 40 && $_[2] < 40; }
+
+package WarpPortalTest::RouteField;
+our @ISA = ('Field');
+sub baseName { $_[0]{map} }
+sub width { 40 }
+sub height { 40 }
+sub isWalkable { 1 }
+
+package WarpPortalTest::RouteActor;
+our @ISA = ('Actor');
 
 package WarpPortalTest::LargeField;
 sub width { 600 }
@@ -1043,6 +1170,11 @@ sub baseName { $_[0]{map} }
 
 package WarpPortalTest::Net;
 sub getState { Network::IN_GAME }
+
+package WarpPortalTest::PendingCalc;
+our @ISA = ('Task');
+sub new { my $class = shift; return bless(Task->new(), $class); }
+sub iterate { }
 
 package WarpPortalTest::CompletedUseSkill;
 our @ISA = ('Task::UseSkill');

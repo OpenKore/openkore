@@ -41,6 +41,7 @@ use Field;
 use Task::TalkNPC;
 use Task::UseSkill;
 use Task::ErrorReport;
+use WarpPortal qw(noteWarpCast);
 use Utils::Exceptions;
 use Utils::Benchmark;
 
@@ -985,6 +986,7 @@ sub processSkillUse {
 				if ($skillsArea{$handle} == 2) {
 					$messageSender->sendSkillUse($skillID, $args->{lv}, $accountID);
 				} elsif ($args->{x} ne "") {
+					noteLegacyWarpPortalCast($skillID, $args->{lv}, $args->{x}, $args->{y});
 					$messageSender->sendSkillUseLoc($skillID, $args->{lv}, $args->{x}, $args->{y});
 				} elsif ($args->{isStartSkill}) {
 					$messageSender->sendStartSkillUse($skillID, $args->{lv}, $args->{target});
@@ -1015,6 +1017,15 @@ sub processSkillUse {
 			}
 		}
 	}
+}
+
+# The legacy AI path sends location skills directly through the selected
+# protocol sender, whose server-type subclasses override sendSkillUseLoc().
+# Record AL_WARP here, before that protocol-specific packet path.
+sub noteLegacyWarpPortalCast {
+	my ($skill_id, $level, $x, $y) = @_;
+	return unless defined($skill_id) && $skill_id == 27;
+	noteWarpCast($skill_id, $level, $x, $y);
 }
 
 sub processTake {

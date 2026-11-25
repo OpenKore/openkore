@@ -167,7 +167,28 @@ sub activate {
 
 sub iterate {
 	my ($self) = @_;
-	return if (!$self->SUPER::iterate() || $net->getState() != Network::IN_GAME);
+	my $restoreAutostop;
+	my $subtask = $self->getSubtask();
+	if ($subtask && $subtask->isa('Task::Route')
+		&& ($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& defined($self->{warpPortalEntryDeadline})
+		&& time >= $self->{warpPortalEntryDeadline}
+		&& $subtask->getStatus() == Task::RUNNING) {
+		# Let WithSubtask::stop() cancel and detach the nested Route/Move tasks.
+		# Suppress its default parent-stop behavior only for this handled timeout;
+		# subtaskStopped() restores this task's saved mutexes and starts fallback.
+		$self->{warpPortalFailureReason} = 'timed out while entering_portal';
+		$self->{warpPortalStage} = 'expired';
+		clearPendingTraversal($self->{warpPortalAttemptID});
+		$restoreAutostop = $self->{ST_autostop};
+		$self->{ST_autostop} = 0;
+		$self->{warpPortalTimeoutCancellation} = 1;
+		$self->stop();
+		$self->{ST_autostop} = $restoreAutostop;
+	}
+	my $subtaskReady = $self->SUPER::iterate();
+	$self->{ST_autostop} = $restoreAutostop if defined $restoreAutostop;
+	return if (!$subtaskReady || $net->getState() != Network::IN_GAME);
 	# FIXME: don't use global $field in tasks
 	return unless defined $field && defined $self->{actor}{pos_to} && defined $self->{actor}{pos_to}{x} && defined $self->{actor}{pos_to}{y};
 
@@ -223,7 +244,7 @@ sub iterate {
 					debug "Reached the requested Warp Portal destination, but entry could not be correlated; continuing from the server-reported position without portal attribution.\n", 'map_route';
 				}
 			clearPendingTraversal($self->{warpPortalAttemptID});
-				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt mapChanged teleport teleportTime sentTeleport)};
+				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation mapChanged teleport teleportTime sentTeleport)};
 				delete $self->{mapSolution};
 				$self->initMapCalculator();
 				return;
@@ -1130,6 +1151,7 @@ sub iterateWarpPortalStep {
 			actor => $self->{actor}, field => $field, x => $point->{x}, y => $point->{y},
 			maxTime => $self->{maxTime}, isPortalRoute => 1,
 		));
+		$self->{warpPortalEntryDeadline} = time + 20;
 		return;
 	}
 
@@ -1146,12 +1168,18 @@ sub iterateWarpPortalStep {
 			x => $portal->{pos_to}{x}, y => $portal->{pos_to}{y},
 			maxTime => $self->{maxTime}, isPortalRoute => 1,
 		));
+		$self->{warpPortalEntryDeadline} = time + 20;
 		return;
 	}
 
-	if ($self->{warpPortalStage} =~ /^(awaiting_menu|awaiting_portal|entering_portal)$/
+	if ($self->{warpPortalStage} =~ /^(awaiting_menu|awaiting_portal)$/
 		&& timeOut($self->{warpPortalStarted}, 20)) {
 		return $self->failWarpPortalStep("timed out while $self->{warpPortalStage}");
+	}
+	if (($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& defined($self->{warpPortalEntryDeadline})
+		&& time >= $self->{warpPortalEntryDeadline}) {
+		return $self->failWarpPortalStep('timed out while entering_portal');
 	}
 }
 
@@ -1311,7 +1339,7 @@ sub failWarpPortalStep {
 	my $map = $self->{warpPortalSourceMap} || ($field && $field->baseName) || '';
 	warning TF("Warp Portal route failed on %s: %s. Recalculating without this method on this map.\n", $map, $reason), 'map_route';
 	$self->{noWarpPortalMaps}{$map} = time if $map ne '';
-	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt)};
+	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation)};
 	delete $self->{mapSolution};
 	$self->initMapCalculator() if $field;
 	return;
@@ -1349,7 +1377,10 @@ sub subtaskDone {
 		if ($task->getError()) {
 			return $self->failWarpPortalStep($task->getError()->{message});
 		}
-		$self->{warpPortalStage} = 'awaiting_menu' if ($self->{warpPortalStage} || '') eq 'casting';
+		if (($self->{warpPortalStage} || '') eq 'casting') {
+			$self->{warpPortalStage} = 'awaiting_menu';
+			$self->{warpPortalStarted} = time;
+		}
 
 	} elsif ($task->isa('Task::Route') && $self->{mapSolution} && @{$self->{mapSolution}} && $self->{mapSolution}[0]{is_warpPortal}) {
 		if ($task->getError()) {
@@ -1455,6 +1486,21 @@ sub subtaskDone {
 	} elsif (my $error = $task->getError()) {
 		$self->setError(UNKNOWN_ERROR, $error->{message});
 	}
+}
+
+sub subtaskStopped {
+	my ($self, $task) = @_;
+	return unless delete $self->{warpPortalTimeoutCancellation};
+	if ($self->{ST_oldmutexes}) {
+		$task->onMutexesChanged->remove($self->{ST_mutexesChangedEvent});
+		delete $self->{ST_mutexesChangedEvent};
+		$self->setMutexes(@{$self->{ST_oldmutexes}});
+		delete $self->{ST_oldmutexes};
+	}
+	my $reason = delete $self->{warpPortalFailureReason} || 'timed out while entering_portal';
+	return $self->failWarpPortalStep($reason)
+		if $self->{mapSolution} && @{$self->{mapSolution}}
+		&& $self->{mapSolution}[0]{is_warpPortal};
 }
 
 sub mapChanged {
