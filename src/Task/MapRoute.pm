@@ -169,22 +169,47 @@ sub iterate {
 	my ($self) = @_;
 	my $restoreAutostop;
 	my $subtask = $self->getSubtask();
+	my $confirmedArrival;
+	if ($subtask && $subtask->isa('Task::Route')
+		&& ($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& $field && $field->baseName eq ($self->{warpPortalDestination} || '')) {
+		my $traversal = $char->{warpPortalState}{last_traversal};
+		$confirmedArrival = $traversal
+			&& ($traversal->{attempt_id} || '') eq ($self->{warpPortalAttemptID} || '')
+			&& ($traversal->{source_map} || '') eq ($self->{warpPortalSourceMap} || '')
+			&& ($traversal->{destination_map} || '') eq $field->baseName
+			&& ($traversal->{time} || 0) >= ($self->{warpPortalStarted} || 0);
+	}
 	if ($subtask && $subtask->isa('Task::Route')
 		&& ($self->{warpPortalStage} || '') eq 'entering_portal'
 		&& defined($self->{warpPortalEntryDeadline})
 		&& time >= $self->{warpPortalEntryDeadline}
 		&& $subtask->getStatus() == Task::RUNNING) {
-		# Let WithSubtask::stop() cancel and detach the nested Route/Move tasks.
-		# Suppress its default parent-stop behavior only for this handled timeout;
-		# subtaskStopped() restores this task's saved mutexes and starts fallback.
-		$self->{warpPortalFailureReason} = 'timed out while entering_portal';
-		$self->{warpPortalStage} = 'expired';
-		clearPendingTraversal($self->{warpPortalAttemptID});
-		$restoreAutostop = $self->{ST_autostop};
-		$self->{ST_autostop} = 0;
-		$self->{warpPortalTimeoutCancellation} = 1;
-		$self->stop();
-		$self->{ST_autostop} = $restoreAutostop;
+		if ($confirmedArrival) {
+			if (($self->{warpPortalArrivalGraceAttempt} || '') eq ($self->{warpPortalAttemptID} || '')) {
+				# Give Route one iteration to process the already-observed server move.
+				# If it still runs, detach it as a successful arrival and recalculate.
+				$restoreAutostop = $self->{ST_autostop};
+				$self->{ST_autostop} = 0;
+				$self->{warpPortalConfirmedArrivalCancellation} = 1;
+				$self->stop();
+				$self->{ST_autostop} = $restoreAutostop;
+			} else {
+				$self->{warpPortalArrivalGraceAttempt} = $self->{warpPortalAttemptID};
+			}
+		} else {
+			# Let WithSubtask::stop() cancel and detach the nested Route/Move tasks.
+			# Suppress its default parent-stop behavior only for this handled timeout;
+			# subtaskStopped() restores this task's saved mutexes and starts fallback.
+			$self->{warpPortalFailureReason} = 'timed out while entering_portal';
+			$self->{warpPortalStage} = 'expired';
+			clearPendingTraversal($self->{warpPortalAttemptID});
+			$restoreAutostop = $self->{ST_autostop};
+			$self->{ST_autostop} = 0;
+			$self->{warpPortalTimeoutCancellation} = 1;
+			$self->stop();
+			$self->{ST_autostop} = $restoreAutostop;
+		}
 	}
 	my $subtaskReady = $self->SUPER::iterate();
 	$self->{ST_autostop} = $restoreAutostop if defined $restoreAutostop;
@@ -244,7 +269,7 @@ sub iterate {
 					debug "Reached the requested Warp Portal destination, but entry could not be correlated; continuing from the server-reported position without portal attribution.\n", 'map_route';
 				}
 			clearPendingTraversal($self->{warpPortalAttemptID});
-				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation mapChanged teleport teleportTime sentTeleport)};
+				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt mapChanged teleport teleportTime sentTeleport)};
 				delete $self->{mapSolution};
 				$self->initMapCalculator();
 				return;
@@ -1340,6 +1365,7 @@ sub failWarpPortalStep {
 	warning TF("Warp Portal route failed on %s: %s. Recalculating without this method on this map.\n", $map, $reason), 'map_route';
 	$self->{noWarpPortalMaps}{$map} = time if $map ne '';
 	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation)};
+	delete @{$self}{qw(mapChanged teleport teleportTime sentTeleport teleportTries warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt)};
 	delete $self->{mapSolution};
 	$self->initMapCalculator() if $field;
 	return;
@@ -1490,13 +1516,16 @@ sub subtaskDone {
 
 sub subtaskStopped {
 	my ($self, $task) = @_;
-	return unless delete $self->{warpPortalTimeoutCancellation};
+	my $timeoutCancellation = delete $self->{warpPortalTimeoutCancellation};
+	my $arrivalCancellation = delete $self->{warpPortalConfirmedArrivalCancellation};
+	return unless $timeoutCancellation || $arrivalCancellation;
 	if ($self->{ST_oldmutexes}) {
 		$task->onMutexesChanged->remove($self->{ST_mutexesChangedEvent});
 		delete $self->{ST_mutexesChangedEvent};
 		$self->setMutexes(@{$self->{ST_oldmutexes}});
 		delete $self->{ST_oldmutexes};
 	}
+	return if $arrivalCancellation;
 	my $reason = delete $self->{warpPortalFailureReason} || 'timed out while entering_portal';
 	return $self->failWarpPortalStep($reason)
 		if $self->{mapSolution} && @{$self->{mapSolution}}

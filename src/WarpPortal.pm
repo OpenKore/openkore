@@ -14,6 +14,7 @@ our @EXPORT_OK = qw(
 	availableWarpMaps warpMapIndex memoCoordinateForMap clearPendingTraversal noteWarpSelection
 	warpMapStatus confirmPortalArrival memoRejected selectWarpPortalCastLevel
 	noteWarpPortalUnitSeen noteWarpPortalMovement noteWarpPortalUnitDisappeared
+	markCharacterMapTransfer clearCharacterMapTransfer
 );
 
 # Pick the least expensive learned AL_WARP level that still covers the server
@@ -89,15 +90,66 @@ sub _state {
 }
 
 sub beginCharacterSession {
+	my ($loaded_map, $server_ip, $server_port, $loaded_x, $loaded_y) = @_;
 	my $state = _state() or return;
 	my $key = _characterKey();
+	my $handoff = delete $char->{warpPortalMapTransfer};
+	my $preserve = $handoff && ($handoff->{character_key} // '') eq $key
+		&& ($handoff->{session} // -1) == ($state->{session} || 0)
+		&& time - ($handoff->{time} || 0) <= 30
+		&& normalizeWarpMap($loaded_map) eq ($handoff->{map} || '')
+		&& defined($loaded_x) && defined($loaded_y)
+		&& $loaded_x == $handoff->{x} && $loaded_y == $handoff->{y}
+		&& defined($server_ip) && ($server_ip // '') eq ($handoff->{server_ip} // '')
+		&& defined($server_port) && ($server_port // '') eq ($handoff->{server_port} // '');
+	# A server handoff continues the existing logical character session. Only a
+	# fresh login without a validated handoff advances the session generation.
+	my $session = $preserve ? ($state->{session} || 0) : ($state->{session} || 0) + 1;
+	my %preserved;
+	if ($preserve) {
+		my %observed = map {
+			$_ => {%{$state->{observed_coordinates}{$_}}, session => $session}
+		} grep { ($state->{observed_coordinates}{$_}{session} || -1) == ($state->{session} || 0) }
+			keys %{$state->{observed_coordinates} || {}};
+		$preserved{observed_coordinates} = \%observed if %observed;
+		my $traversal = $state->{last_traversal};
+		if ($handoff->{attempt_id} && $traversal
+			&& ($traversal->{attempt_id} || '') eq $handoff->{attempt_id}
+			&& ($traversal->{destination_map} || '') eq ($handoff->{map} || '')) {
+			$preserved{last_traversal} = {%$traversal, session => $session};
+		}
+	}
 	$char->{warpPortalState} = {
 		character_key => $key,
-		session => ($state->{session} || 0) + 1,
+		session => $session,
+		%preserved,
 		# A previous session's menu and arrival coordinates are not current
-		# server evidence. Configuration coordinates remain historical hints.
+		# menu evidence. A validated server handoff may carry only runtime
+		# coordinates and the traversal confirmed by that exact transfer.
 	};
 	delete $char->{warpPortalPendingTraversal};
+}
+
+# Preserve session-scoped runtime coordinates while the same character moves
+# between map servers. A traversal is carried only when this exact transfer
+# confirmed its active attempt; beginCharacterSession validates the one-shot
+# token against the destination map, position, server, character, and age.
+sub markCharacterMapTransfer {
+	my ($map, $x, $y, $server_ip, $server_port, $attempt_id) = @_;
+	return unless $char && defined($x) && defined($y) && defined($server_ip) && defined($server_port);
+	$map = normalizeWarpMap($map);
+	return unless $map;
+	my $state = _state() or return;
+	$char->{warpPortalMapTransfer} = {
+		character_key => _characterKey(), session => $state->{session} || 0,
+		map => $map, x => 0 + $x, y => 0 + $y,
+		server_ip => "$server_ip", server_port => "$server_port", time => time,
+		attempt_id => $attempt_id,
+	};
+}
+
+sub clearCharacterMapTransfer {
+	delete $char->{warpPortalMapTransfer} if $char;
 }
 
 sub noteWarpCast {

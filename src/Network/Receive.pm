@@ -48,6 +48,7 @@ use Skill;
 use WarpPortal qw(
 	beginCharacterSession updateServerMemos memoAcknowledged memoRejected clearPendingTraversal confirmPortalArrival
 	noteWarpPortalUnitSeen noteWarpPortalMovement noteWarpPortalUnitDisappeared
+	markCharacterMapTransfer clearCharacterMapTransfer
 );
 use Utils;
 use Utils::Exceptions;
@@ -1325,7 +1326,14 @@ sub map_loaded {
 	# assertClass($char, 'Actor::You');
 	$syncMapSync = pack('V1',$args->{syncMapSync}); # unused, should we keep this for legacy compatibility?
 	main::initMapChangeVars();
-	beginCharacterSession();
+	# Validate a one-shot map-server handoff against coordinates from this
+	# server's map_loaded packet, rather than the position retained from the
+	# preceding map-change packet.
+	my %loadedPosition;
+	my $loadedBody = $char->{look}{body};
+	makeCoordsDir(\%loadedPosition, $args->{coords}, \$loadedBody);
+	beginCharacterSession($field ? $field->baseName : undef, $map_ip, $map_port,
+		$loadedPosition{x}, $loadedPosition{y});
 	%minimap_indicator_seen = ();
 
 	if ($net->version == 1) {
@@ -1380,6 +1388,7 @@ sub map_loaded {
 #     4 = mobile - waiting state
 sub map_load_error {
 	my ($self, $args) = @_;
+	clearCharacterMapTransfer();
 
 	error T("Error while try to login in map-server: ");
 	if ($args->{error} == 0) {
@@ -7843,10 +7852,20 @@ sub map_changed {
 		$char->cart->clear;
 	}
 
+	my $portal_attempt_id = $char && $char->{warpPortalPendingTraversal}
+		? $char->{warpPortalPendingTraversal}{attempt_id} : undef;
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
 	recordWarpPortalPendingArrival($oldMap);
+	my $traversal = $char && $char->{warpPortalState} ? $char->{warpPortalState}{last_traversal} : undef;
+	my $confirmed_attempt_id = $portal_attempt_id && $traversal
+		&& ($traversal->{attempt_id} || '') eq $portal_attempt_id
+		&& ($traversal->{source_map} || '') eq ($oldMap || '')
+		&& ($traversal->{destination_map} || '') eq ($field ? $field->baseName : $map_noinstance)
+		? $portal_attempt_id : undef;
+	markCharacterMapTransfer($field ? $field->baseName : $map_noinstance,
+		$char->{pos}{x}, $char->{pos}{y}, $map_ip, $map_port, $confirmed_attempt_id);
 	$timeout{ai}{time} = time;
 }
 
@@ -10183,6 +10202,7 @@ sub achievement_list {
 #     ? = ignored
 sub quit_response {
 	my ($self, $args) = @_;
+	clearCharacterMapTransfer() unless $args->{fail};
 	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
 		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
 	} else { # DISCONNECTABLE_STATE =  0x0
@@ -12326,6 +12346,7 @@ sub cast_cancelled {
 # ClientLogic: LoginStartMode = 5; ShowLoginScreen;
 sub switch_character {
 	my ($self, $args) = @_;
+	clearCharacterMapTransfer();
 	# User is switching characters in X-Kore
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
 	$net->serverDisconnect() if(UNIVERSAL::isa($net, 'Network::DirectConnection'));

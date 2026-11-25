@@ -11,6 +11,7 @@ use WarpPortal qw(
 	noteWarpSelection confirmPortalArrival clearPendingTraversal memoRejected
 	selectWarpPortalCastLevel
 	noteWarpPortalUnitSeen noteWarpPortalMovement noteWarpPortalUnitDisappeared
+	markCharacterMapTransfer clearCharacterMapTransfer
 );
 
 sub start {
@@ -60,6 +61,9 @@ sub run {
 		$self->testCastLevelSelection;
 		$self->testWarpPortalMenuCorrelation;
 		$self->testWarpPortalActiveEntryTimeout;
+		$self->testMapServerTransferKeepsPortalEvidence;
+		$self->testWarpPortalFallbackClearsTransitionState;
+		$self->testConfirmedArrivalWinsEntryTimeout;
 		$self->testCalcMapRouteSearchRegression;
 	}
 
@@ -1145,6 +1149,282 @@ sub testWarpPortalActiveEntryTimeout {
 		'unrelated MapRoute task lifecycle is unchanged without a Warp Portal entry deadline');
 }
 
+sub testMapServerTransferKeepsPortalEvidence {
+	require Network::Receive;
+	setupCharacter(char => 0, warpPortal_autoUpdateMemo => 0, saveMap => 'prontera',
+		memo1 => 'prontera', memo2 => 'geffen', memo3 => '', memo4 => '');
+	$Globals::char->{ID} = 'transfer-character';
+	bless $Globals::char, 'WarpPortalTest::HandoffCharacter';
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'cross-server-attempt', {x => 11, y => 10});
+	my $unit = {ID => 'transfer-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	noteWarpPortalUnitSeen($unit, 'prontera');
+	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+	my $logical_session = $Globals::char->{warpPortalState}{session};
+	$Globals::char->{pos} = {x => 120, y => 62};
+	require Network::Receive;
+	{
+		no warnings 'redefine';
+		local $Network::Receive::net = bless({}, 'WarpPortalTest::HandoffNet');
+		local $Network::Receive::char = $Globals::char;
+		local $Network::Receive::field = bless({map => 'prontera'}, 'WarpPortalTest::RouteField');
+		local $Network::Receive::masterServer = {serverType => 'kRO', private => 0};
+		local $Network::Receive::map_ip = '127.0.0.1';
+		local $Network::Receive::map_port = 5120;
+		local $Network::Receive::config{char} = 0;
+		local @Network::Receive::chars = ($Globals::char);
+		local $Network::Receive::messageSender = bless({}, 'WarpPortalTest::HandoffSender');
+		local @Network::Receive::ai_seq = ();
+		local *Network::Receive::checkAllowedMap = sub { };
+		local *Field::new = sub { my %args = @_[1 .. $#_]; bless({map => $args{name}}, 'WarpPortalTest::RouteField') };
+		local *Network::Receive::changeToInGameState = sub { 1 };
+		local *Network::Receive::message = sub { };
+		local *Network::Receive::swrite = sub { '' };
+	my ($loaded_x, $loaded_y) = (120, 62);
+		local *Network::Receive::makeCoordsDir = sub { $_[0]{x} = $loaded_x; $_[0]{y} = $loaded_y; ${$_[2]} = 0; };
+		local *Misc::clearTeleportItemPendingUse = sub { };
+		local *Plugins::callHook = sub { };
+		local *AI::SlaveManager::setMapChanged = sub { };
+		local *AI::ai_setMapChanged = sub { };
+		local *main::initMapChangeVars = sub { };
+		local *Network::Receive::error = sub { };
+		$Globals::char->{look} = {body => 0};
+		Network::Receive::map_changed(undef, {
+			map => 'geffen.gat', x => 120, y => 62,
+			url => '127.0.0.2:5121', port => 5121,
+		});
+		ok($Globals::char->{warpPortalState}{last_traversal},
+			'production cross-server packet handler confirms portal arrival before disconnect');
+		is_deeply([memoCoordinateForMap('geffen')], [120, 62, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
+			'auto-sync-off coordinates are available before destination map_loaded');
+		$Network::Receive::net->{state} = 4;
+		Network::Receive::map_loaded(undef, {syncMapSync => 0, coords => ''});
+		ok($Globals::char->{warpPortalState}{last_traversal},
+			'production destination map_loaded handler preserves traversal until MapRoute resumes');
+		is($Globals::char->{warpPortalState}{session}, $logical_session,
+			'map-server reconnect preserves the same logical character session generation');
+		is_deeply([memoCoordinateForMap('geffen')], [120, 62, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
+			'production map_loaded path preserves auto-sync-off landing coordinates');
+		ok(!$Globals::char->{warpPortalMapTransfer}, 'successful map_loaded consumes its one-shot transfer token');
+		require Task::MapRoute;
+		require Task::Route;
+		my $source = bless({map => 'prontera'}, 'WarpPortalTest::RouteField');
+		my $actor = bless({ID => $Globals::char->{ID}, pos => {x => 120, y => 62},
+			pos_to => {x => 120, y => 62}}, 'WarpPortalTest::RouteActor');
+		local $Task::MapRoute::net = $Network::Receive::net;
+		local $Task::Route::net = $Network::Receive::net;
+		local $Task::MapRoute::field = $Network::Receive::field;
+		local $Task::Route::field = $Network::Receive::field;
+		local $Task::MapRoute::char = $Globals::char;
+		local *Task::MapRoute::initMapCalculator = sub {
+			$_[0]{recalculations}++;
+			$_[0]->setSubtask(WarpPortalTest::PendingCalc->new());
+		};
+		my $route = Task::Route->new(actor => $actor, field => $Network::Receive::field,
+			x => 120, y => 62, isPortalRoute => 1, stopWhenMapChanged => 1);
+		$route->{mapChanged} = 1;
+		my $parent = Task::WithSubtask->new(autostop => 1, autofail => 0);
+		bless $parent, 'Task::MapRoute';
+		@{$parent}{qw(actor dest mapSolution warpPortalStage warpPortalDestination
+			warpPortalSourceMap warpPortalAttemptID warpPortalStarted warpPortalEntryDeadline mapChanged noWarpPortalMaps)} = (
+			$actor, {map => 'geffen', pos => {x => 120, y => 62}},
+			[{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=geffen'}],
+			'entering_portal', 'geffen', 'prontera', 'cross-server-attempt', time - 1, time + 20, 1, {},
+		);
+		Task::activate($parent);
+		$parent->setSubtask($route);
+		Task::MapRoute::iterate($parent);
+		ok($route->getStatus() == Task::DONE && !$Globals::char->{warpPortalState}{last_traversal}
+			&& $parent->getSubtask()->isa('WarpPortalTest::PendingCalc')
+			&& !$parent->{noWarpPortalMaps}{prontera},
+			'MapRoute resumes after map_loaded, consumes the transfer evidence, and recalculates without blacklisting');
+
+		$Globals::config{warpPortal_autoUpdateMemo} = 1;
+		$Globals::config{memo2} = 'payon';
+		noteWarpSelection('payon', 'geffen', 121, 63, 4, 'cross-server-sync-packet', {x => 121, y => 63});
+		$unit = {ID => 'sync-packet-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 121, y => 63};
+		noteWarpPortalUnitSeen($unit, 'geffen');
+		noteWarpPortalMovement({x => 120, y => 62}, {x => 121, y => 63}, 'geffen');
+		$loaded_x = 42; $loaded_y = 43;
+		Network::Receive::map_changed(undef, {
+			map => 'payon.gat', x => 42, y => 43,
+			url => '127.0.0.3:5122', port => 5122,
+		});
+		is($Globals::config{memo2}, 'payon 42 43',
+			'production transfer handler auto-syncs the unique memo using server coordinates');
+		Network::Receive::map_loaded(undef, {syncMapSync => 0, coords => ''});
+		is_deeply([memoCoordinateForMap('payon')], [42, 43, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
+			'production auto-sync-on map-loaded path retains learned landing coordinates');
+		my $same_server_session = $Globals::char->{warpPortalState}{session};
+		noteWarpSelection('geffen', 'payon', 43, 44, 4, 'same-server-attempt', {x => 43, y => 44});
+		$unit = {ID => 'same-server-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 43, y => 44};
+		noteWarpPortalUnitSeen($unit, 'payon');
+		noteWarpPortalMovement({x => 42, y => 43}, {x => 43, y => 44}, 'payon');
+		Network::Receive::map_change(undef, {map => 'geffen.gat', x => 51, y => 52});
+		is($Globals::char->{warpPortalState}{session}, $same_server_session,
+			'same-map-server transition does not start a new character session');
+		is($Globals::char->{warpPortalState}{last_traversal}{attempt_id}, 'same-server-attempt',
+			'same-map-server portal arrival remains immediately available to MapRoute');
+
+		markCharacterMapTransfer('geffen', 120, 62, '127.0.0.2', 5121, undef);
+		Network::Receive::map_load_error(undef, {error => 1});
+		ok(!$Globals::char->{warpPortalMapTransfer}, 'failed destination reconnection clears transfer evidence');
+	}
+	# A later genuine logical session and a character switch still discard it.
+	beginCharacterSession();
+	ok(!$Globals::char->{warpPortalState}{last_traversal}, 'genuine new session clears old traversal evidence');
+	$Globals::char->{warpPortalState}{observed_coordinates}{geffen} = {
+		x => 120, y => 62, source => 'inferred_portal_entry', session => $Globals::char->{warpPortalState}{session},
+	};
+	markCharacterMapTransfer('payon', 20, 30, '127.0.0.2', 5122, undef);
+	$Globals::char->{pos} = {x => 20, y => 30};
+	beginCharacterSession('payon', '127.0.0.2', 5122, 20, 30);
+	ok(!exists($Globals::char->{warpPortalState}{last_traversal}),
+		'ordinary server transfer preserves no stale portal traversal');
+	is_deeply([memoCoordinateForMap('geffen')], [120, 62, 'inferred_portal_entry'],
+		'ordinary map-server transfer keeps current-session learned coordinates with auto-sync disabled');
+	markCharacterMapTransfer('payon', 20, 30, '127.0.0.2', 5122, undef);
+	clearCharacterMapTransfer();
+	beginCharacterSession('payon', '127.0.0.2', 5122, 20, 30);
+	ok(!memoCoordinateForMap('geffen'), 'failed or interrupted handoff is discarded before a new logical session');
+	setupCharacter(warpPortal_autoUpdateMemo => 1, saveMap => 'prontera',
+		memo1 => 'prontera', memo2 => 'geffen', memo3 => '', memo4 => '');
+	$Globals::char->{ID} = 'transfer-sync-character';
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'cross-server-sync-attempt', {x => 11, y => 10});
+	$unit = {ID => 'sync-transfer-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	noteWarpPortalUnitSeen($unit, 'prontera');
+	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+	confirmPortalArrival('prontera', 'geffen', 121, 63);
+	markCharacterMapTransfer('geffen', 121, 63, '127.0.0.2', 5123, 'cross-server-sync-attempt');
+	$Globals::char->{pos} = {x => 121, y => 63};
+	beginCharacterSession('geffen', '127.0.0.2', 5123, 121, 63);
+	is($Globals::config{memo2}, 'geffen 121 63', 'auto-sync-on transfer keeps the confirmed memo coordinate update');
+	is_deeply([memoCoordinateForMap('geffen')], [121, 63, 'inferred_portal_entry_from_owned_unit_movement_and_map_change'],
+		'auto-sync-on transfer also keeps runtime arrival evidence for the active route');
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen');
+	$Globals::char->{ID} = 'different-character';
+	ok(!$Globals::char->{warpPortalState}{last_traversal}, 'character switch cannot inherit transfer evidence');
+}
+
+sub testWarpPortalFallbackClearsTransitionState {
+	require Task::MapRoute;
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'payon');
+	my $field = bless {map => 'geffen'}, 'WarpPortalTest::RouteField';
+	my $actor = bless {ID => 'fallback-character', pos => {x => 100, y => 100},
+		pos_to => {x => 100, y => 100}}, 'WarpPortalTest::RouteActor';
+	local $Task::MapRoute::field = $field;
+	local $Task::MapRoute::char = $Globals::char;
+	local $Task::MapRoute::net = bless({state => Network::IN_GAME}, 'WarpPortalTest::HandoffNet');
+	local *Task::MapRoute::initMapCalculator = sub { $_[0]{fallback_count}++ };
+	my $parent = bless({actor => $actor, dest => {map => 'payon', pos => {x => 10, y => 10}},
+		mapSolution => [{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=payon'}],
+		warpPortalStage => 'entering_portal', warpPortalDestination => 'payon',
+		warpPortalSourceMap => 'prontera', warpPortalAttemptID => 'fallback-transition',
+		mapChanged => 1, teleportTime => time - 1, sentTeleport => 1}, 'Task::MapRoute');
+	Task::activate($parent);
+	$parent->failWarpPortalStep('unexpected map transition could not be correlated');
+	ok(!$parent->{mapChanged} && !$parent->{teleport} && !$parent->{teleportTime} && !$parent->{sentTeleport},
+		'failed Warp Portal attempt clears only its already-handled transition and teleport state');
+	$parent->{mapSolution} = [
+		{map => 'geffen', portal => 'geffen 110 110=payon 20 20', type => 'portal_or_npc'},
+		{map => 'payon', portal => 'payon 20 20=payon 10 10', type => 'portal_or_npc'},
+	];
+	my $first = $parent->{mapSolution}[0]{portal};
+	{
+		no warnings 'redefine';
+		local *Task::MapRoute::setSubtask = sub { };
+		Task::MapRoute::iterate($parent);
+	}
+	is($parent->{mapSolution}[0]{portal}, $first,
+		'first route edge from the authoritative fallback position is not shifted by stale mapChanged state');
+}
+
+sub testConfirmedArrivalWinsEntryTimeout {
+	require Task::MapRoute;
+	require Task::Route;
+	setupCharacter(warpPortal_autoUpdateMemo => 0, memo1 => 'prontera', memo2 => 'geffen');
+	$Globals::char->{ID} = 'deadline-arrival-character';
+	$Globals::char->{pos} = {x => 10, y => 10};
+	my $source = bless({map => 'prontera'}, 'WarpPortalTest::RouteField');
+	my $destination = bless({map => 'geffen'}, 'WarpPortalTest::RouteField');
+	my $actor = bless({ID => $Globals::char->{ID}, pos => {x => 120, y => 62},
+		pos_to => {x => 120, y => 62}}, 'WarpPortalTest::RouteActor');
+	local $Task::MapRoute::net = bless({state => Network::IN_GAME}, 'WarpPortalTest::HandoffNet');
+	local $Task::Route::net = $Task::MapRoute::net;
+	local $Task::MapRoute::field = $destination;
+	local $Task::Route::field = $destination;
+	local $Task::MapRoute::char = $Globals::char;
+	local $Task::MapRoute::messageSender = bless({}, 'WarpPortalTest::Sender');
+	local $Network::Receive::net = $Task::MapRoute::net;
+	local $Network::Receive::char = $Globals::char;
+	local $Network::Receive::field = $source;
+	local $Network::Receive::masterServer = {serverType => 'kRO', private => 0};
+	local $Network::Receive::messageSender = bless({}, 'WarpPortalTest::HandoffSender');
+	local @Network::Receive::ai_seq = ();
+	local *Network::Receive::checkAllowedMap = sub { };
+	local *Network::Receive::changeToInGameState = sub { 1 };
+	local *Network::Receive::message = sub { };
+	local *Network::Receive::swrite = sub { '' };
+	local *Field::new = sub { my %args = @_[1 .. $#_]; bless({map => $args{name}}, 'WarpPortalTest::RouteField') };
+	local *Misc::clearTeleportItemPendingUse = sub { };
+	local *Plugins::callHook = sub { };
+	local *AI::SlaveManager::setMapChanged = sub { };
+	local *AI::ai_setMapChanged = sub { };
+	local *main::initMapChangeVars = sub { };
+	local *Task::MapRoute::initMapCalculator = sub {
+		$_[0]{fallback_count}++;
+		$_[0]->setSubtask(WarpPortalTest::PendingCalc->new());
+	};
+	my $route = Task::Route->new(actor => $actor, field => $source, x => 120, y => 62,
+		isPortalRoute => 1, stopWhenMapChanged => 1);
+	my $parent = Task::WithSubtask->new(autostop => 1, autofail => 0, mutexes => ['movement']);
+	bless $parent, 'Task::MapRoute';
+	@{$parent}{qw(actor dest mapSolution warpPortalStage warpPortalDestination
+		warpPortalSourceMap warpPortalAttemptID warpPortalStarted warpPortalEntryDeadline noWarpPortalMaps mapChanged)} = (
+		$actor, {map => 'geffen', pos => {x => 120, y => 62}},
+		[{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=geffen'}],
+		'entering_portal', 'geffen', 'prontera', 'deadline-attempt', time - 21, time - 1, {}, 1,
+	);
+	Task::activate($parent);
+	$parent->setSubtask($route);
+	noteWarpSelection('geffen', 'prontera', 11, 10, 4, 'deadline-attempt', {x => 11, y => 10});
+	my $portal = {ID => 'deadline-portal', sourceID => $Globals::char->{ID}, type => 0x81, x => 11, y => 10};
+	noteWarpPortalUnitSeen($portal, 'prontera');
+	noteWarpPortalMovement({x => 10, y => 10}, {x => 11, y => 10}, 'prontera');
+	Network::Receive::map_change(undef, {map => 'geffen.gat', x => 120, y => 62});
+	$route->{mapChanged} = 1;
+	$parent->{mapChanged} = 1;
+	ok($Globals::char->{warpPortalState}{last_traversal},
+		'production map-change packet confirms arrival after deadline before MapRoute processes it');
+	Task::MapRoute::iterate($parent);
+	ok($route->getStatus() == Task::DONE && !$parent->{noWarpPortalMaps}{prontera}
+		&& $parent->{fallback_count} == 1,
+		'correlated arrival observed after deadline wins over timeout cancellation and blacklist');
+	ok($parent->getSubtask()->isa('WarpPortalTest::PendingCalc')
+		&& !$Globals::char->{warpPortalState}{last_traversal},
+		'confirmed arrival starts one fresh calculation and consumes only the matching traversal');
+
+	my ($ambiguous, $ambiguous_route);
+	my $make_ambiguous = sub {
+		$ambiguous_route = Task::Route->new(actor => $actor, field => $source, x => 120, y => 62,
+			isPortalRoute => 1);
+		$ambiguous = Task::WithSubtask->new(autostop => 1, autofail => 0);
+		bless $ambiguous, 'Task::MapRoute';
+		@{$ambiguous}{qw(actor dest mapSolution warpPortalStage warpPortalDestination
+			warpPortalSourceMap warpPortalAttemptID warpPortalStarted warpPortalEntryDeadline noWarpPortalMaps)} = (
+			$actor, {map => 'geffen', pos => {x => 120, y => 62}},
+			[{is_warpPortal => 1, map => 'prontera', portal => 'prontera 11 10=geffen'}],
+			'entering_portal', 'geffen', 'prontera', 'ambiguous-deadline', time - 21, time - 1, {},
+		);
+		Task::activate($ambiguous);
+		$ambiguous->setSubtask($ambiguous_route);
+	};
+	$make_ambiguous->();
+	delete $Globals::char->{warpPortalState}{last_traversal};
+	Task::MapRoute::iterate($ambiguous);
+	is($ambiguous->{fallback_count}, 1, 'same-destination arrival without correlation still times out into one fallback');
+	ok($ambiguous->{noWarpPortalMaps}{prontera}, 'ambiguous transition does not suppress timeout fallback or blacklist');
+}
+
 package WarpPortalTest::Field;
 sub baseName { $_[0]{map} || 'prontera' }
 sub width { 40 }
@@ -1154,6 +1434,7 @@ sub isWalkable { return $_[1] >= 0 && $_[2] >= 0 && $_[1] < 40 && $_[2] < 40; }
 package WarpPortalTest::RouteField;
 our @ISA = ('Field');
 sub baseName { $_[0]{map} }
+sub name { $_[0]{map} }
 sub width { 40 }
 sub height { 40 }
 sub isWalkable { 1 }
@@ -1170,6 +1451,20 @@ sub baseName { $_[0]{map} }
 
 package WarpPortalTest::Net;
 sub getState { Network::IN_GAME }
+
+package WarpPortalTest::HandoffNet;
+sub setState { $_[0]{state} = $_[1] }
+sub getState { $_[0]{state} }
+sub version { 2 }
+sub serverDisconnect { $_[0]{disconnects}++ }
+
+package WarpPortalTest::HandoffCharacter;
+sub cartActive { 0 }
+
+package WarpPortalTest::HandoffSender;
+sub sendMapLoaded { }
+sub sendSync { }
+sub sendGuildRequestInfo { }
 
 package WarpPortalTest::PendingCalc;
 our @ISA = ('Task');
