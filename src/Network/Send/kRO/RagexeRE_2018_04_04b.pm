@@ -26,7 +26,7 @@ sub new {
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0819' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
 		'0815' => ['buy_bulk_closeShop'],
-		'0811' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
+		'0811' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], #Selling store
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'035F' => ['character_move', 'a3', [qw(coordString)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
