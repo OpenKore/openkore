@@ -235,6 +235,7 @@ sub new {
 		'0838' => ['search_store_request_next_page'],
 		'083B' => ['search_store_close'],
 		'083C' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
+		'0841' => ['select_accessible_mapname', 'C C', [qw(char_slot map_slot)]],
 		'0842' => ['recall_sso', 'V', [qw(ID)]],
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
