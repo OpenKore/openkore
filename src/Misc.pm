@@ -5260,13 +5260,13 @@ sub compilePortals {
 	# Calculate LOS values from each spawn point per map to other portals on same map
 	foreach my $map (sort keys %mapSpawns) {
 		($map, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
-		message TF("Processing map %s...\n", $map), "system" unless $checkOnly;
 		foreach my $spawn (keys %{$mapSpawns{$map}}) {
 			foreach my $portal (keys %{$mapPortals{$map}}) {
 				next if $spawn eq $portal;
 				next if $portals_los{$spawn}{$portal} ne '';
 				return 1 if $checkOnly;
 				if ((!$field || $field->baseName ne $map) && !$missingMap{$map}) {
+					message TF("Processing map %s...\n", $map), "system";
 					eval {
 						$field = new Field(name => $map);
 					};
