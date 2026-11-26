@@ -117,6 +117,8 @@ sub iterate {
 	$char->processTask("route", onError => sub {
 		my ($task, $error) = @_;
 		AI::Attack::note_approach_route_failure($task, $error);
+		$ai_v{lockMap_routeFailed} = { time => time, map => $field->baseName, lockMap => $config{lockMap} }
+			if $task->{isToLockMap} && $task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::CANNOT_CALCULATE_ROUTE();
 		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
 		 && !($task->isa('Task::Route') && $error->{code} == Task::Route::TOO_MUCH_TIME())) {
 			error("$error->{message}\n");
@@ -2407,6 +2409,9 @@ sub processLockMap {
 			my %args;
 			Plugins::callHook('AI/lockMap', \%args);
 			unless ($args{'return'}) {
+				my $failed = $ai_v{lockMap_routeFailed};
+				return if $failed && $failed->{map} eq $field->baseName && $failed->{lockMap} eq $config{lockMap}
+					&& !timeOut($failed->{time}, $timeout{ai_lockMap_retry}{timeout} || 10);
 				my ($cell, $i);
 				if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
 					eval {
