@@ -529,6 +529,7 @@ sub new {
 		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
 		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
+		'0840' => ['notify_accessible_mapname', 'v a*', [qw(len mapList)]],
 		'0845' => ['cash_shop_open_result', 'V2', [qw(cash_points kafra_points)]],#10
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],#16
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
