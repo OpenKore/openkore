@@ -518,7 +518,7 @@ sub _trashCorruptedPortalsLOS {
 	my $portals_los_file = Settings::getTableFilename("portalsLOS.txt");
 	return 0 unless defined $portals_los_file && -f $portals_los_file;
 
-	open my $fh, '<:raw', $portals_los_file or do {
+	open my $fh, '<', $portals_los_file or do {
 		warning TF("Unable to inspect '%s' for portal LOS corruption: %s\n", $portals_los_file, $!);
 		return 0;
 	};
