@@ -614,7 +614,7 @@ sub new {
 		'09F8' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'09F9' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
-		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
+		'09FC' => ['pet_evolution_result', 'V', [qw(result)]],
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss body_style name)]],
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss body_style name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font maxHP HP isBoss body_style name)]],
