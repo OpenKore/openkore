@@ -10378,7 +10378,7 @@ sub open_buying_store_item_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen = 12;
-	my $unpack = $self->{open_buying_store_items_list_pack} || 'V v C v';
+	my $unpack = $self->{buying_store_items_list_pack} || 'V v C v';
 	my $len = length pack $unpack;
 
 	undef @selfBuyerItemList;
