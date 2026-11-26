@@ -3396,7 +3396,7 @@ sub processAutoAttack {
 
 	return if (AI::inQueue("attack"));
 	
-	if (AI::isIdle() || AI::is(qw/route follow sitAuto take items_gather items_take/)
+	if ((AI::isIdle() || AI::is(qw/route follow sitAuto take items_gather items_take/))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::inQueue("take", "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && AI::inQueue("take", "items_gather"))
