@@ -633,10 +633,19 @@ sub new {
 		'0A15' => ['gold_pc_cafe_point', 'C2 V2', [qw(isActive mode point playedTime)]], # 12
 		'0A17' => ['dynamicnpc_create_result', 'V', [qw(result)]], # 6
 		'0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
-		'0A1A' => ['roulette_window', 'C V C2 v V3', [qw(result serial stage price additional_item gold silver bronze)]],
+		'0A1A' => ($rpackets{'0A1A'}{length} == 25)
+			? ['roulette_window', 'C V C2 V4', [qw(result serial stage price additional_item gold silver bronze)]]
+			: ['roulette_window', 'C V C2 v V3', [qw(result serial stage price additional_item gold silver bronze)]]
+		,
 		'0A1C' => ['roulette_info', 'v V a*', [qw(len serial roulette_info)]],
-		'0A20' => ['roulette_window_update', 'C v3 V3', [qw(result stage price additional_item gold silver bronze)]],
-		'0A22' => ['roulette_recv_item', 'C v', [qw(type item_id)]],
+		'0A20' => ($rpackets{'0A20'}{length} == 23)
+			? ['roulette_window_update', 'C v2 V4', [qw(result stage price additional_item gold silver bronze)]]
+			: ['roulette_window_update', 'C v3 V3', [qw(result stage price additional_item gold silver bronze)]]
+		,
+		'0A22' => ($rpackets{'0A22'}{length} == 7)
+			? ['roulette_recv_item', 'C V', [qw(type item_id)]]
+			: ['roulette_recv_item', 'C v', [qw(type item_id)]]
+		,
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points achievementID completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received achievementID)]], # 7
