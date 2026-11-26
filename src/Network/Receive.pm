@@ -12809,9 +12809,10 @@ sub roulette_window {
 sub roulette_info {
 	my ($self, $args) = @_;
 
+	my $modern = length($args->{roulette_info}) == 42 * 12;
 	my $item_info = {
-			len => 8, # or 12
-			types => 'v4', # or v2 V2
+			len => $modern ? 12 : 8,
+			types => $modern ? 'v2 V v' : 'v4',
 			keys => [qw(level column item_id amount)],
 		};
 
