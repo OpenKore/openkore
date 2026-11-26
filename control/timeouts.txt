@@ -241,6 +241,9 @@ ai_repair 4
 # delay before starting escape sequence
 ai_route_escape 8
 
+# delay before retrying a lockMap route that could not be calculated from the same map
+ai_lockMap_retry 10
+
 # Don't change the following timeouts!
 ai_sync 12
 
