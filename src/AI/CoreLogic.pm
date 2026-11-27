@@ -948,6 +948,14 @@ sub processSkillUse {
 
 			# Use skill if we haven't done so yet
 			} elsif (!$args->{skill_used}) {
+				if (!($char->{permitSkill} && $char->{permitSkill}->getHandle() eq $args->{skillHandle})
+				  && grep { $char->{statuses}{$_} && $char->{statuses}{$_}{tick} } 'EFST_POSTDELAY', "$args->{skillHandle}_DELAY") {
+					if (timeOut($args->{giveup})) {
+						AI::dequeue();
+						${$args->{ret}} = 'timeout' if ($args->{ret});
+					}
+					last SKILL_USE;
+				}
 				if ($char->{last_skill_used_is_continuous}) {
 					message T("Stoping rolling\n");
 					$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
