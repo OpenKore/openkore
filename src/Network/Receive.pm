@@ -1338,7 +1338,7 @@ sub map_loaded {
 		# Request for Guild Information
 		$messageSender->sendGuildRequestInfo(0) unless (grep { $masterServer->{serverType} eq $_ } qw(twRO ROla)); # some servers does not send this packet
 
-		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal twRO ROla)); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendRequestCashItemsList() if ((grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal twRO ROla)) || ($masterServer->{serverType} =~ /^kRO_/ && exists $rpackets{'08C9'})); # tested at bRO 2013.11.30, request for cashitemslist
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 
 		# request to unfreeze char - alisonrag
