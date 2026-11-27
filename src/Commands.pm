@@ -7975,8 +7975,8 @@ sub cmdRodex {
 
 		my ($index, $amount) = parseArgs($arg2);
 		$amount = defined $amount ? $amount : 1;
-		my $rodex_item = $rodexWrite->{items}->get($index);
 		my $item = $char->inventory->get($index);
+		my $rodex_item = $item && $rodexWrite->{items}->getByID($item->{ID});
 
 		if (!$item) {
 			error TF("Error in function 'rodex add' (Add item to rodex mail)\n" .
