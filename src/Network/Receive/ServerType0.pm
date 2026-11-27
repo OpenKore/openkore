@@ -663,6 +663,7 @@ sub new {
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points achievementID completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received achievementID)]], # 7
 		'0A27' => ['hp_sp_changed', 'v V', [qw(type amount)]],
+		'0A2B' => ['cash_shop_open_result', 'V3', [qw(cash_points kafra_points tab)]],
 		'0A28' => ['open_store_status', 'C', [qw(flag)]],
 		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0A2F' => ['change_title', 'C V', [qw(result title_id)]],
@@ -778,6 +779,7 @@ sub new {
 		'0B63' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]], # -1: modern read ACK
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
         '0B62' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], #-1
+		'0B6E' => ['cash_shop_open_result', 'V3', [qw(cash_points kafra_points tab)]],
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
