@@ -27,6 +27,7 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	$self->{cash_shop_list_pack} = "V V";
 
 	return $self;
 }
