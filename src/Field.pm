@@ -67,6 +67,11 @@ use constant {
 my %FIELD_FILE_RESOLUTION_CACHE;
 my %FIELD_FOLDER_CONTENTS_CACHE;
 
+sub clearFileCache {
+	%FIELD_FILE_RESOLUTION_CACHE = ();
+	%FIELD_FOLDER_CONTENTS_CACHE = ();
+}
+
 sub _fieldFolderIndex {
 	my ($folder) = @_;
 	return {} if !defined $folder || $folder eq '' || !-d $folder;

@@ -5159,6 +5159,7 @@ sub cmdReload {
 			error T("No map to load a field for.\n");
 			return;
 		}
+		Field::clearFileCache();
 		my $newField = eval { new Field(name => $map) };
 		if (my $e = caught('FileNotFoundException', 'IOException')) {
 			error TF("Cannot load field %s: %s\n", $map, $e);
