@@ -9442,7 +9442,7 @@ sub rodex_write_result {
 	# A successful server ACK is authoritative, including after a day rollover.
 	$char->{rodex}{dailyQuotaExceeded} = 0 if $char && $char->{rodex};
 	message T("Your rodex mail was sent with success.\n");
-	undef $rodexWrite;
+	$messageSender->rodex_cancel_write_mail();
 }
 
 sub rodex_get_zeny {
