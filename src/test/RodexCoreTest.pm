@@ -11,6 +11,10 @@ use Network::Send;
   sub setStatus { 1 }
 }
 
+{ package RodexCoreTest::Sender;
+  sub rodex_cancel_write_mail { $_[0]{closed}++ }
+}
+
 sub start {
     test_daily_status();
     test_modern_rodex_packets();
@@ -21,6 +25,8 @@ sub test_daily_status {
     my $id = pack('V', 12345);
     local $Network::Receive::accountID = $id;
     local $Network::Receive::char = bless {ID => $id}, 'Actor::You';
+    my $sender = bless {closed => 0}, 'RodexCoreTest::Sender';
+    local $Network::Receive::messageSender = $sender;
     no warnings 'redefine';
     local *Network::Receive::changeToInGameState = sub { 1 };
     local *Network::Receive::error = sub {};
@@ -60,6 +66,7 @@ sub test_daily_status {
     $receiver->rodex_write_result({fail => 2});
     $receiver->rodex_write_result({fail => 0});
     ok(!$Network::Receive::char->{rodex}{dailyQuotaExceeded}, 'successful send clears quota rejection');
+    is($sender->{closed}, 1, 'only the successful send closes the write box');
 }
 
 sub test_modern_rodex_packets {
