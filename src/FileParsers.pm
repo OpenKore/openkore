@@ -1143,7 +1143,9 @@ sub parsePortalsLOS {
 			my $x = shift @args;
 			my $y = shift @args;
 			for (my $i = 0; $i < @args; $i += 4) {
-				$$r_hash{"$map $x $y"}{"$args[$i] $args[$i+1] $args[$i+2]"} = $args[$i+3];
+				my $distance = $args[$i+3];
+				$distance = 0 + $distance if defined($distance) && $distance =~ /\A(?:0|[1-9][0-9]{0,8})\z/;
+				$$r_hash{"$map $x $y"}{"$args[$i] $args[$i+1] $args[$i+2]"} = $distance;
 			}
 		}
 	}
