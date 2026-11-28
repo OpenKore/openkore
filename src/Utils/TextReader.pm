@@ -122,7 +122,6 @@ sub _openWideFile {
 	}
 	require Win32API::File;
 	require Fcntl;
-	require POSIX;
 	my $name = Encode::encode('UTF-16LE', "$file\0");
 	my $exists = Win32API::File::GetFileAttributesW($name) != Win32API::File::INVALID_FILE_ATTRIBUTES();
 	if (!$exists && !$create) {
@@ -145,7 +144,11 @@ sub _openWideFile {
 	}
 	open my $handle, "<&=$fd" or do {
 		my $error = "$!";
-		POSIX::close($fd);
+		if (eval { require POSIX; 1 }) {
+			POSIX::close($fd);
+		} else {
+			Win32API::File::CloseHandle($raw);
+		}
 		IOException->throw(error => $error);
 	};
 	binmode($handle, ':crlf');
