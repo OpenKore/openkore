@@ -22,7 +22,6 @@ package Utils;
 use strict;
 use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
-use Math::Trig;
 use Text::Wrap;
 use Scalar::Util;
 use Exporter;
@@ -59,6 +58,7 @@ our %strings;
 our %quarks;
 
 use constant {
+	RADIANS_TO_DEGREES => 45 / atan2(1, 1),
 	MOVE_COST => 10,
 	MOVE_DIAGONAL_COST => 14,
 };
@@ -1072,7 +1072,7 @@ sub vectorToDegree {
 			return undef;
 		}
 	} else {
-		my $ret = rad2deg(atan2($x, $y));
+		my $ret = RADIANS_TO_DEGREES * atan2($x, $y);
 		if ($ret < 0) {
 			return 360 + $ret;
 		} else {

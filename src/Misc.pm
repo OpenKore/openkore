@@ -28,7 +28,6 @@ use Data::Dumper;
 use Compress::Zlib;
 use base qw(Exporter);
 use utf8;
-use Math::Trig;
 
 use Globals;
 use Log qw(message warning error debug);
