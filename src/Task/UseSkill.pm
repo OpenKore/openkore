@@ -33,6 +33,7 @@ use Globals qw($net $char $messageSender $accountID %timeout);
 use Network;
 use Plugins;
 use Skill;
+use WarpPortal qw(noteWarpCast);
 use Log qw(debug);
 use Translation qw(T TF);
 use Utils qw(timeOut);
@@ -96,6 +97,7 @@ sub new {
 	@{$self}{qw(actor skill)} = @args{qw(actor skill)};
 	$self->{stopWhenHit} = defined($args{stopWhenHit}) ? $args{stopWhenHit} : 1;
 	$self->{isStartUseSkill} = defined($args{isStartUseSkill}) ? $args{isStartUseSkill} : 0;
+	$self->{validateWarpPortal} = $args{validateWarpPortal} ? 1 : 0;
 	if ($args{target}) {
 		if (UNIVERSAL::isa($args{target}, 'Actor') && !$args{target}->isa('Actor::You') && !$args{actorList}) {
 			ArgumentException->throw("No actorList argument given.");
@@ -257,6 +259,23 @@ sub hasNecessaryEquipment {
 	return 1;
 }
 
+sub validateWarpPortalResources {
+	my ($self) = @_;
+	return unless $self->{validateWarpPortal} && $self->{skill}->getIDN() == 27;
+	my $level = $self->{skill}->getLevel();
+	my $learned = $char->getSkillLevel($self->{skill}) || 0;
+	my $spCost = defined($level) && $level > 0 ? $self->{skill}->getSP($level) : undef;
+	my $inventory = eval { $char->inventory };
+	my $gemstones = $inventory && $inventory->getByNameID(717);
+	return 'The selected AL_WARP level is no longer learned.'
+		if !$level || $level > $learned;
+	return 'A Blue Gemstone is no longer available for AL_WARP.'
+		if !$gemstones || !$gemstones->{amount};
+	return 'There is not enough SP for the selected AL_WARP level.'
+		if defined($spCost) && ($char->{sp} || 0) < $spCost;
+	return;
+}
+
 # Check whether the preparation conditions are satisfied.
 sub checkPreparations {
 	my ($self) = @_;
@@ -272,6 +291,16 @@ sub castSkill {
 	my $level = $skill->getLevel();
 	if (!defined $level) {
 		$level = $char->getSkillLevel($skill);
+	}
+	if (my $error = $self->validateWarpPortalResources()) {
+		$self->setError(ERROR_CASTING_FAILED, $error);
+		return;
+	}
+	if ($skillID == 27) {
+		my $target = $self->{target};
+		noteWarpCast($skillID, $level,
+			ref($target) eq 'HASH' ? $target->{x} : undef,
+			ref($target) eq 'HASH' ? $target->{y} : undef);
 	}
 
 	if ($skill->getTargetType() == Skill::TARGET_SELF()) {
@@ -308,6 +337,9 @@ sub castSkill {
 
 sub iterate {
 	my ($self) = @_;
+	# A packet hook can finish/fail this task while an enclosing task still
+	# holds it as a subtask. Do not process the same cast completion again.
+	return if $self->getStatus() == Task::DONE || $self->getStatus() == Task::STOPPED;
 	return if (!$char || $net->getState() != Network::IN_GAME);
 
 	my $handle = $self->{skill}->getHandle();

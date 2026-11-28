@@ -33,12 +33,16 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop $refineUI);
+use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $field $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop $refineUI);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use FileParsers ();
 use Misc;
+use WarpPortal qw(
+	normalizeWarpMap noteMemoRequest noteWarpSelection warpMapIndex
+	warpPortalSelectionContext clearManualWarpSelection
+);
 use Log qw(debug error);
 use Settings ();
 use Translation qw(T);
@@ -2285,6 +2289,8 @@ sub sendPartyKick {
 
 sub sendMemo {
 	my ($self) = @_;
+	noteMemoRequest($field->baseName, $char->{pos}{x}, $char->{pos}{y})
+		if $char && $field && $char->{pos};
 
 	$self->sendToServer($self->reconstruct({switch => 'memo_request'}));
 
@@ -2439,7 +2445,19 @@ sub sendGuildBreak {
 }
 
 sub sendWarpTele {
-	my ($self, $skillID, $map) = @_;
+	my ($self, $skillID, $map, $memoSlot) = @_;
+	if ($skillID == 27 && $char && $field && $char->{pos}) {
+		my $destination = normalizeWarpMap($map);
+		if ($destination eq 'cancel') {
+			clearManualWarpSelection();
+		} elsif (my $context = warpPortalSelectionContext($destination)) {
+			my $attempt_id = join('-', 'manual', $context->{session},
+				sprintf('%.6f', $context->{cast_time}));
+			noteWarpSelection($destination, $field->baseName,
+				$char->{pos}{x}, $char->{pos}{y}, $context->{level},
+				$attempt_id, $context->{portal_pos}, 'manual');
+		}
+	}
 
 	$self->sendToServer($self->reconstruct({
 		switch => 'warp_select',

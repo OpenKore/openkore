@@ -24,6 +24,7 @@ use Task::Route;
 use Task::CalcMapRoute;
 use Task::TalkNPC;
 use Task::SitStand;
+use Task::UseSkill;
 use base qw(Task::WithSubtask);
 use Translation qw(T TF);
 use Log qw(message debug warning error);
@@ -34,6 +35,8 @@ use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding actorFini
 use Utils::DataStructures qw(hashSafeGetValue);
 use Utils::Exceptions;
 use AI qw(ai_useTeleport);
+use Skill;
+use WarpPortal qw(warpMapIndex availableWarpMaps noteWarpSelection clearPendingTraversal selectWarpPortalCastLevel);
 
 
 # Error constants.
@@ -127,6 +130,7 @@ sub new {
 	$self->{noWarpItemMaps} = {} if (!defined $self->{noWarpItemMaps});
 	$self->{noWarpItemIDs} = {} if (!defined $self->{noWarpItemIDs});
 	$self->{noAirship} = 0 if (!defined $self->{noAirship});
+	$self->{noWarpPortalMaps} = {};
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
@@ -134,14 +138,23 @@ sub new {
 	Scalar::Util::weaken($holder[0]);
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
 	$self->{localBroadcastHook} = Plugins::addHook('packet_localBroadcast', \&localBroadcast, \@holder);
+	$self->{warpPortalListHook} = Plugins::addHook('warp_portal_list', \&warpPortalList, \@holder);
+	$self->{warpPortalSpawnHook} = Plugins::addHook('portal_spawned', \&warpPortalSpawned, \@holder);
+	$self->{warpPortalAreaSpellHook} = Plugins::addHook('warp_portal_area_spell', \&warpPortalAreaSpell, \@holder);
+	$self->{warpPortalRejectHook} = Plugins::addHook('packet_no_teleport', \&warpPortalRejected, \@holder);
 
 	return $self;
 }
 
 sub DESTROY {
 	my ($self) = @_;
+	clearPendingTraversal($self->{warpPortalAttemptID});
 	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};
 	Plugins::delHook($self->{localBroadcastHook}) if $self->{localBroadcastHook};
+	Plugins::delHook($self->{warpPortalListHook}) if $self->{warpPortalListHook};
+	Plugins::delHook($self->{warpPortalSpawnHook}) if $self->{warpPortalSpawnHook};
+	Plugins::delHook($self->{warpPortalAreaSpellHook}) if $self->{warpPortalAreaSpellHook};
+	Plugins::delHook($self->{warpPortalRejectHook}) if $self->{warpPortalRejectHook};
 	$self->SUPER::DESTROY();
 }
 
@@ -154,7 +167,63 @@ sub activate {
 
 sub iterate {
 	my ($self) = @_;
-	return if (!$self->SUPER::iterate() || $net->getState() != Network::IN_GAME);
+	my $restoreAutostop;
+	my $subtask = $self->getSubtask();
+	my $confirmedArrival;
+	if ($subtask && $subtask->isa('Task::Route')
+		&& ($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& $field && $field->baseName eq ($self->{warpPortalDestination} || '')) {
+		my $traversal = $char->{warpPortalState}{last_traversal};
+		$confirmedArrival = $traversal
+			&& ($traversal->{attempt_id} || '') eq ($self->{warpPortalAttemptID} || '')
+			&& ($traversal->{source_map} || '') eq ($self->{warpPortalSourceMap} || '')
+			&& ($traversal->{destination_map} || '') eq $field->baseName
+			&& ($traversal->{time} || 0) >= ($self->{warpPortalStarted} || 0);
+	}
+	if ($confirmedArrival && $subtask && $subtask->isa('Task::Route') && $subtask->{maxTime}
+		&& timeOut($subtask->{time_start}, $subtask->{maxTime})) {
+		# The server has already confirmed this portal arrival. Let Route process
+		# its pending mapChanged event before applying its stale walking deadline.
+		$subtask->{time_start} = time;
+	}
+	if ($subtask && $subtask->isa('Task::Route')
+		&& ($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& defined($self->{warpPortalEntryDeadline})
+		&& time >= $self->{warpPortalEntryDeadline}
+		&& $subtask->getStatus() == Task::RUNNING) {
+		if ($confirmedArrival) {
+			if (($self->{warpPortalArrivalGraceAttempt} || '') eq ($self->{warpPortalAttemptID} || '')) {
+				# Give Route one iteration to process the already-observed server move.
+				# If it still runs, detach it as a successful arrival and recalculate.
+				$restoreAutostop = $self->{ST_autostop};
+				$self->{ST_autostop} = 0;
+				$self->{warpPortalConfirmedArrivalCancellation} = 1;
+				$self->stop();
+				$self->{ST_autostop} = $restoreAutostop;
+			} else {
+				$self->{warpPortalArrivalGraceAttempt} = $self->{warpPortalAttemptID};
+			}
+		} else {
+			# Let WithSubtask::stop() cancel and detach the nested Route/Move tasks.
+			# Suppress its default parent-stop behavior only for this handled timeout;
+			# subtaskStopped() restores this task's saved mutexes and starts fallback.
+			$self->{warpPortalFailureReason} = 'timed out while entering_portal';
+			$self->{warpPortalStage} = 'expired';
+			$self->{warpPortalTimeoutHandledMapChange} =
+				$self->{mapChanged}
+				&& ($self->{mapChangedWarpPortalAttemptID} || '') eq ($self->{warpPortalAttemptID} || '')
+				? 1 : 0;
+			clearPendingTraversal($self->{warpPortalAttemptID});
+			$restoreAutostop = $self->{ST_autostop};
+			$self->{ST_autostop} = 0;
+			$self->{warpPortalTimeoutCancellation} = 1;
+			$self->stop();
+			$self->{ST_autostop} = $restoreAutostop;
+		}
+	}
+	my $subtaskReady = $self->SUPER::iterate();
+	$self->{ST_autostop} = $restoreAutostop if defined $restoreAutostop;
+	return if (!$subtaskReady || $net->getState() != Network::IN_GAME);
 	# FIXME: don't use global $field in tasks
 	return unless defined $field && defined $self->{actor}{pos_to} && defined $self->{actor}{pos_to}{x} && defined $self->{actor}{pos_to}{y};
 
@@ -190,7 +259,38 @@ sub iterate {
 		debug "Map Router has finished traversing the map solution\n", "map_route" if Log::debugEnabled('map_route', 1);
 
 	} elsif ( $field->baseName ne $self->{mapSolution}[0]{map}
-	     || ( $self->{mapChanged} && (!$self->{teleport} || $self->_hasReachedSameMapPortalDestination($self->{mapSolution}[0])) ) ) {
+	     || ( $self->{mapChanged} && (!$self->{teleport}
+		|| $self->_hasReachedSameMapPortalDestination($self->{mapSolution}[0])
+		|| (($self->{warpPortalStage} || '') eq 'entering_portal'
+			&& ($self->{mapChangedWarpPortalAttemptID} || '') eq ($self->{warpPortalAttemptID} || '')
+			&& $field->baseName eq ($self->{warpPortalDestination} || ''))) ) ) {
+		if ($self->{mapSolution}[0]{is_warpPortal} && $self->{warpPortalStage}) {
+			my $traversal = $char->{warpPortalState}{last_traversal};
+			if ($self->{warpPortalStage} eq 'entering_portal'
+				&& $field->baseName eq ($self->{warpPortalDestination} || '')) {
+				my $confirmed = $traversal
+				&& $traversal->{source_map} eq ($self->{warpPortalSourceMap} || '')
+				&& $traversal->{destination_map} eq $field->baseName
+				&& $traversal->{time} >= ($self->{warpPortalStarted} || 0)
+				&& $traversal->{attempt_id} eq ($self->{warpPortalAttemptID} || '');
+				if ($confirmed) {
+					# Recalculate from the server-confirmed landing position, which may differ from the memo coordinate.
+					delete $char->{warpPortalState}{last_traversal};
+				} else {
+					# Reaching the requested map completes this routing leg, but a
+					# destination match alone does not prove Warp Portal entry. Keep
+					# server coordinates and do not record traversal or learn a memo.
+					debug "Reached the requested Warp Portal destination, but entry could not be correlated; continuing from the server-reported position without portal attribution.\n", 'map_route';
+				}
+			clearPendingTraversal($self->{warpPortalAttemptID});
+				delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalPlacement warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt warpPortalTimeoutHandledMapChange mapChangedWarpPortalAttemptID mapChanged teleport teleportTime sentTeleport)};
+				delete $self->{mapSolution};
+				$self->initMapCalculator();
+				return;
+			}
+			$self->failWarpPortalStep('character changed maps before confirmed portal arrival', 1);
+			return;
+		}
 		# Solution Map does not match current map
 		debug "Current map " . $field->baseName . " does not match solution [ $self->{mapSolution}[0]{portal} ].\n", "map_route" if Log::debugEnabled('map_route', 1);
 		delete $self->{substage};
@@ -206,6 +306,9 @@ sub iterate {
 		delete $self->{guess_portal};
 		shift @{$self->{mapSolution}};
 
+	} elsif ($self->{mapSolution}[0]{is_warpPortal}) {
+		$self->iterateWarpPortalStep();
+		return;
 	} elsif ( $self->{mapSolution}[0]{is_command} ) {
 		$self->{timeout} = time unless $self->{timeout};
 
@@ -957,7 +1060,7 @@ sub prunePerMapBlocks {
 	my ($self) = @_;
 	my $now = time;
 
-	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps noWarpItemIDs)) {
+	for my $bucketName (qw(noGoCommandMaps noTeleSpawnMaps noRouteTeleportMaps noWarpItemMaps noWarpItemIDs noWarpPortalMaps)) {
 		my $bucket = $self->{$bucketName};
 		next unless ($bucket && ref $bucket eq 'HASH');
 
@@ -1002,6 +1105,303 @@ sub setNpcTalk {
 	$self->setSubtask($task);
 }
 
+sub iterateWarpPortalStep {
+	my ($self) = @_;
+	my $step = $self->{mapSolution}[0];
+	my (undef, $destination) = split /=/, $step->{portal}, 2;
+	my ($destMap, $destX, $destY) = split /\s+/, $destination || '', 3;
+	my $sourceMap = $step->{map};
+	return $self->failWarpPortalStep('invalid route destination') unless $destMap;
+	return if $self->getSubtask();
+
+	if (!$self->{warpPortalStage}) {
+		my $skill = Skill->new(handle => 'AL_WARP');
+		my $learned_level = $char->getSkillLevel($skill) || 0;
+		my $verified_index = warpMapIndex($destMap);
+		my $minimum_level = defined($verified_index) ? $verified_index + 1
+			: ($step->{warpPortalMinLevel} || $step->{warpPortalCastLevel} || $learned_level);
+		my $level = selectWarpPortalCastLevel($skill, $minimum_level, $learned_level, $char->{sp});
+		my $inventory = eval { $char->inventory };
+		my $gemstones = $inventory && $inventory->getByNameID(717);
+		return $self->failWarpPortalStep('AL_WARP level, SP, or Blue Gemstone unavailable')
+			if !defined($level) || !$gemstones || !$gemstones->{amount}
+			|| Misc::_isTeleportSkillSuppressedByStatus();
+		$step->{warpPortalMinLevel} = $minimum_level;
+		$step->{warpPortalCastLevel} = $level;
+		my $placement = $self->findWarpPortalPlacement($skill, $level);
+		return $self->failWarpPortalStep('no reachable unoccupied portal placement tile') unless $placement;
+		$self->{warpPortalPlacement} = $placement;
+		delete $char->{warpPortalState}{last_traversal};
+		$self->{warpPortalDestination} = $destMap;
+		$self->{warpPortalSourceMap} = $sourceMap;
+		$self->{warpPortalAttemptID} ||= join('-', time, Scalar::Util::refaddr($self));
+		$self->{warpPortalSession} = $char->{warpPortalState}{session} || 0;
+		$self->{warpPortalMinLevel} = $minimum_level;
+		$self->{warpPortalCastLevel} = $level;
+		$self->{warpPortalStarted} = time;
+		$self->{warpPortalStage} = 'ready_to_cast';
+	}
+
+	if ($self->{warpPortalStage} eq 'ready_to_cast') {
+		my $skill = Skill->new(handle => 'AL_WARP');
+		my $learned_level = $char->getSkillLevel($skill) || 0;
+		my $minimum_level = $self->{warpPortalMinLevel} || 0;
+		my $level = selectWarpPortalCastLevel($skill, $minimum_level, $learned_level, $char->{sp});
+		my $placement = defined($level) ? $self->findWarpPortalPlacement($skill, $level) : undef;
+		my $inventory = eval { $char->inventory };
+		my $gemstones = $inventory && $inventory->getByNameID(717);
+		return $self->failWarpPortalStep('AL_WARP requirements changed before casting')
+			unless $placement && $field->baseName eq $self->{warpPortalSourceMap}
+			&& defined($level) && $gemstones && $gemstones->{amount}
+			&& !Misc::_isTeleportSkillSuppressedByStatus();
+		$self->{warpPortalPlacement} = $placement;
+		$self->{warpPortalCastLevel} = $level;
+		$step->{warpPortalCastLevel} = $level;
+		$self->{warpPortalCastRequestedAt} = time;
+		$self->{warpPortalStage} = 'casting';
+		my $castSkill = Skill->new(handle => 'AL_WARP', level => $level);
+		$self->setSubtask(Task::UseSkill->new(
+			actor => $self->{actor}, skill => $castSkill,
+			target => {x => $placement->{x}, y => $placement->{y}},
+			validateWarpPortal => 1,
+		));
+		message TF("Using AL_WARP to route to %s.\n", $destMap), 'map_route';
+		return;
+	}
+
+	if ($self->{warpPortalStage} eq 'portal_ready') {
+		my $portal = $self->{warpPortalActor};
+		return $self->failWarpPortalStep('created portal was no longer available') unless $portal;
+		my $point = {x => $portal->{pos_to}{x}, y => $portal->{pos_to}{y}};
+		if (blockDistance($self->{actor}{pos_to}, $point) == 0) {
+			my $leave;
+			for my $dx (-1 .. 1) {
+				for my $dy (-1 .. 1) {
+					next if !$dx && !$dy;
+					my $candidate = {x => $point->{x} + $dx, y => $point->{y} + $dy};
+					next unless $field->isWalkable($candidate->{x}, $candidate->{y});
+					my @path;
+					if (Task::Route->getRoute(\@path, $field, $self->{actor}{pos}, $candidate)) { $leave = $candidate; last; }
+				}
+				last if $leave;
+			}
+			return $self->failWarpPortalStep('could not find a reachable step off the portal tile') unless $leave;
+			$self->{warpPortalStage} = 'leaving_portal';
+			$self->setSubtask(Task::Route->new(actor => $self->{actor}, field => $field, x => $leave->{x}, y => $leave->{y}, maxTime => $self->{maxTime}));
+			return;
+		}
+		my @path;
+		return $self->failWarpPortalStep('created portal is no longer reachable')
+			unless Task::Route->getRoute(\@path, $field, $self->{actor}{pos}, $point);
+		$self->{warpPortalStage} = 'entering_portal';
+		my $entryRoute = Task::Route->new(
+			actor => $self->{actor}, field => $field, x => $point->{x}, y => $point->{y},
+			maxTime => $self->{maxTime}, isPortalRoute => 1,
+		);
+		$entryRoute->{stopWhenMapChanged} = 1
+			if $self->{warpPortalSourceMap} eq $self->{warpPortalDestination};
+		$self->setSubtask($entryRoute);
+		$self->{warpPortalEntryDeadline} = time + 20;
+		return;
+	}
+
+	if ($self->{warpPortalStage} eq 'reenter_portal') {
+		my $portal = $self->{warpPortalActor};
+		return $self->failWarpPortalStep('portal expired before entry') unless $portal;
+		my $point = {x => $portal->{pos_to}{x}, y => $portal->{pos_to}{y}};
+		my @path;
+		return $self->failWarpPortalStep('created portal is no longer reachable')
+			unless Task::Route->getRoute(\@path, $field, $self->{actor}{pos}, $point);
+		$self->{warpPortalStage} = 'entering_portal';
+		my $entryRoute = Task::Route->new(
+			actor => $self->{actor}, field => $field,
+			x => $portal->{pos_to}{x}, y => $portal->{pos_to}{y},
+			maxTime => $self->{maxTime}, isPortalRoute => 1,
+		);
+		$entryRoute->{stopWhenMapChanged} = 1
+			if $self->{warpPortalSourceMap} eq $self->{warpPortalDestination};
+		$self->setSubtask($entryRoute);
+		$self->{warpPortalEntryDeadline} = time + 20;
+		return;
+	}
+
+	if ($self->{warpPortalStage} =~ /^(awaiting_menu|awaiting_portal)$/
+		&& timeOut($self->{warpPortalStarted}, 20)) {
+		return $self->failWarpPortalStep("timed out while $self->{warpPortalStage}");
+	}
+	if (($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& defined($self->{warpPortalEntryDeadline})
+		&& time >= $self->{warpPortalEntryDeadline}) {
+		return $self->failWarpPortalStep('timed out while entering_portal');
+	}
+}
+
+# rAthena's AL_WARP unit has NoFootSet. With the default skill_nofootset setting,
+# rAthena rejects a placement when a character occupies the target cell. Cast
+# from the current position onto a separate, reachable target cell; never walk
+# onto the target before casting.
+sub findWarpPortalPlacement {
+	my ($self, $skill, $level) = @_;
+	return unless $field && $char && $self->{actor};
+	my $origin = $self->{actor}{pos};
+	return unless $origin && defined $origin->{x} && defined $origin->{y};
+	my $range = $skill->getRange($level);
+	$range = 9 unless defined($range) && $range > 0;
+	my $castOrigin = $origin;
+	my $movingTarget = $self->{actor}{pos_to};
+	for my $radius (1 .. ($range < 3 ? $range : 3)) {
+		my @candidates;
+		for my $dx (-$radius .. $radius) {
+			for my $dy (-$radius .. $radius) {
+				next unless abs($dx) == $radius || abs($dy) == $radius;
+				push @candidates, {x => $origin->{x} + $dx, y => $origin->{y} + $dy};
+			}
+		}
+		@candidates = sort {
+			blockDistance($origin, $a) <=> blockDistance($origin, $b)
+			|| $a->{y} <=> $b->{y} || $a->{x} <=> $b->{x}
+		} @candidates;
+		for my $candidate (@candidates) {
+			next if blockDistance($castOrigin, $candidate) > $range;
+			next if $movingTarget && blockDistance($movingTarget, $candidate) == 0;
+			next if $candidate->{x} < 0 || $candidate->{y} < 0
+				|| $candidate->{x} >= $field->width || $candidate->{y} >= $field->height;
+			next unless $field->isWalkable($candidate->{x}, $candidate->{y});
+			next if blockDistance($castOrigin, $candidate) == 0;
+			my $occupied = 0;
+			for my $id (@playersID, @monstersID, @petsID, @slavesID, @elementalsID) {
+				my $actor = $players{$id} || $monsters{$id} || $pets{$id}
+					|| $slaves{$id} || $elementals{$id};
+				next unless $actor;
+				my $position = $actor->{pos_to} || $actor->{pos};
+				if ($position && blockDistance($position, $candidate) == 0) {
+					$occupied = 1;
+					last;
+				}
+			}
+			next if $occupied;
+			for my $id (@spellsID) {
+				my $spell = $spells{$id};
+				next unless $spell && ($spell->{type} || 0) == 0x81;
+				my $position = $spell->{pos_to} || $spell->{pos};
+				if ($position && blockDistance($position, $candidate) == 0) {
+					$occupied = 1;
+					last;
+				}
+			}
+			next if $occupied;
+			my @path;
+			return $candidate if Task::Route->getRoute(\@path, $field, $origin, $candidate);
+		}
+	}
+	return;
+}
+
+sub warpPortalList {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	return unless $self && $args && ($args->{type} || 0) == 27;
+	return unless $self->{mapSolution} && @{$self->{mapSolution}}
+		&& $self->{mapSolution}[0]{is_warpPortal}
+		&& ($self->{warpPortalStage} || '') =~ /^(casting|awaiting_menu)$/;
+	if ($self->{warpPortalStage} eq 'casting') {
+		my $task = $self->getSubtask();
+		return unless $task && $task->isa('Task::UseSkill')
+			&& $task->{skill}->getHandle() eq 'AL_WARP'
+			&& ($task->{castTries} || 0) > 0;
+	}
+	my $state = $char->{warpPortalState} || {};
+	my $menuObservedAt = $state->{verified_at} || 0;
+	my $cast = $state->{last_portal_cast};
+	return unless $cast && $cast->{session} == ($self->{warpPortalSession} || 0)
+		&& $cast->{time} >= ($self->{warpPortalCastRequestedAt} || $self->{warpPortalStarted} || 0)
+		&& $menuObservedAt >= $cast->{time}
+		&& $menuObservedAt - $cast->{time} <= 20;
+	my $wanted = $self->{warpPortalDestination};
+	my $available = availableWarpMaps();
+	my $slot = warpMapIndex($wanted);
+	return $self->failWarpPortalStep("server menu does not include memo $wanted")
+		unless defined($slot) && $available;
+	my $level = $state->{cast_level} || 0;
+	return $self->failWarpPortalStep('server menu does not match the active AL_WARP cast level')
+		if $level != ($self->{warpPortalCastLevel} || 0);
+	return $self->failWarpPortalStep("server menu slot for $wanted exceeds current AL_WARP level")
+		if $slot + 1 > $level;
+	# Selection is by map name, never by a local memo index. The fresh server
+	# menu must contain exactly one matching destination.
+	my $placement = $self->{warpPortalPlacement};
+	noteWarpSelection($wanted, $field->baseName, $char->{pos}{x}, $char->{pos}{y},
+		$level, $self->{warpPortalAttemptID}, $placement, 'route');
+	$messageSender->sendWarpTele(27, "$wanted.gat");
+	$self->{warpPortalStage} = 'awaiting_portal';
+	$self->{warpPortalStarted} = time;
+}
+
+sub warpPortalSpawned {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	my $portal = $args->{portal};
+	return unless $self && $portal && ($self->{warpPortalStage} || '') eq 'awaiting_portal';
+	return unless $char && defined $char->{ID} && defined $portal->{sourceID}
+		&& $portal->{sourceID} eq $char->{ID};
+	return unless $field && $field->baseName eq $self->{warpPortalSourceMap};
+	my $step = $self->{mapSolution}[0];
+	return unless $step && $self->{warpPortalPlacement}
+		&& blockDistance($portal->{pos_to}, $self->{warpPortalPlacement}) == 0;
+	$self->{warpPortalActor} = $portal;
+	$self->{warpPortalStage} = 'portal_ready';
+}
+
+# A player-created AL_WARP unit is reported as an area spell (type 0x81). The
+# receive handler emits this internal hook only after validating the active
+# attempt's ownership, map, tile, and unit identity; static portals use a
+# separate Actor::Portal spawn hook.
+sub warpPortalAreaSpell {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	return unless $self && $args && ($args->{type} || 0) == 0x81
+		&& ($self->{warpPortalStage} || '') eq 'awaiting_portal';
+	return unless $field && $field->baseName eq $self->{warpPortalSourceMap}
+		&& $char && defined $args->{sourceID} && $args->{sourceID} eq $char->{ID};
+	my $placement = $self->{warpPortalPlacement};
+	return unless $placement && blockDistance({x => $args->{x}, y => $args->{y}}, $placement) == 0;
+	$self->{warpPortalActor} = {pos_to => {x => $args->{x}, y => $args->{y}}, ID => $args->{ID}};
+	$self->{warpPortalStage} = 'portal_ready';
+}
+
+sub warpPortalRejected {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	return unless $self && $args && ($args->{fail} || 0) == 0
+		&& ($self->{warpPortalStage} || '') eq 'casting';
+	my $task = $self->getSubtask();
+	return unless $task && $task->isa('Task::UseSkill')
+		&& $task->{skill}->getHandle() eq 'AL_WARP'
+		&& ($task->{castTries} || 0) > 0;
+	$self->failWarpPortalStep('server rejected AL_WARP on this map');
+}
+
+sub failWarpPortalStep {
+	my ($self, $reason, $handledMapChange) = @_;
+	clearPendingTraversal($self->{warpPortalAttemptID});
+	if ($self->getSubtask()) {
+		$self->{warpPortalFailureReason} = $reason;
+		my $task = $self->getSubtask();
+		$task->setError(Task::UseSkill::ERROR_CASTING_FAILED(), $reason)
+			if $task->isa('Task::UseSkill') && $task->getStatus() == Task::RUNNING;
+		return;
+	}
+	my $map = $self->{warpPortalSourceMap} || ($field && $field->baseName) || '';
+	warning TF("Warp Portal route failed on %s: %s. Recalculating without this method on this map.\n", $map, $reason), 'map_route';
+	$self->{noWarpPortalMaps}{$map} = time if $map ne '';
+	delete @{$self}{qw(warpPortalStage warpPortalDestination warpPortalSourceMap warpPortalActor warpPortalStarted warpPortalEntryDeadline warpPortalFailureReason warpPortalMinLevel warpPortalCastLevel warpPortalAttemptID warpPortalSession warpPortalCastRequestedAt warpPortalTimeoutCancellation warpPortalTimeoutHandledMapChange mapChangedWarpPortalAttemptID)};
+	delete $self->{mapChanged} if $handledMapChange;
+	delete @{$self}{qw(teleport teleportTime sentTeleport teleportTries warpPortalConfirmedArrivalCancellation warpPortalArrivalGraceAttempt)};
+	delete $self->{mapSolution};
+	$self->initMapCalculator() if $field;
+	return;
+}
+
 sub initMapCalculator {
 	my ($self) = @_;
 	my $task = new Task::CalcMapRoute(
@@ -1017,6 +1417,7 @@ sub initMapCalculator {
 		noTeleSpawnMaps => $self->{noTeleSpawnMaps},
 		noWarpItemMaps => $self->{noWarpItemMaps},
 		noWarpItemIDs => $self->{noWarpItemIDs},
+		noWarpPortalMaps => $self->{noWarpPortalMaps},
 		noAirship => $self->{noAirship},
 	);
 	$self->setSubtask($task);
@@ -1024,7 +1425,37 @@ sub initMapCalculator {
 
 sub subtaskDone {
 	my ($self, $task) = @_;
-	if ($task->isa('Task::CalcMapRoute')) {
+	if (my $failure = delete $self->{warpPortalFailureReason}) {
+		return $self->failWarpPortalStep($failure)
+			if $self->{mapSolution} && @{$self->{mapSolution}}
+			&& $self->{mapSolution}[0]{is_warpPortal};
+	}
+	if ($task->isa('Task::UseSkill') && $self->{mapSolution} && @{$self->{mapSolution}} && $self->{mapSolution}[0]{is_warpPortal}) {
+		if ($task->getError()) {
+			return $self->failWarpPortalStep($task->getError()->{message});
+		}
+		if (($self->{warpPortalStage} || '') eq 'casting') {
+			$self->{warpPortalStage} = 'awaiting_menu';
+			$self->{warpPortalStarted} = time;
+		}
+
+	} elsif ($task->isa('Task::Route') && $self->{mapSolution} && @{$self->{mapSolution}} && $self->{mapSolution}[0]{is_warpPortal}) {
+		if ($task->getError()) {
+			return $self->failWarpPortalStep($task->getError()->{message});
+		}
+		if (($self->{warpPortalStage} || '') eq 'leaving_portal') {
+			$self->{warpPortalStage} = 'reenter_portal';
+		} elsif (($self->{warpPortalStage} || '') eq 'moving_to_placement') {
+			$self->{warpPortalStage} = 'ready_to_cast'
+				if $self->{warpPortalPlacement}
+				&& blockDistance($self->{actor}{pos_to}, $self->{warpPortalPlacement}) == 0;
+			my $position = $self->{actor}{pos_to};
+			return $self->failWarpPortalStep(sprintf('route ended at (%d, %d) before placement (%d, %d)',
+				$position->{x}, $position->{y}, $self->{warpPortalPlacement}{x}, $self->{warpPortalPlacement}{y}))
+				if ($self->{warpPortalStage} || '') eq 'moving_to_placement';
+		}
+
+	} elsif ($task->isa('Task::CalcMapRoute')) {
 		my $error = $task->getError();
 		if ($error) {
 			my $code;
@@ -1114,6 +1545,25 @@ sub subtaskDone {
 	}
 }
 
+sub subtaskStopped {
+	my ($self, $task) = @_;
+	my $timeoutCancellation = delete $self->{warpPortalTimeoutCancellation};
+	my $arrivalCancellation = delete $self->{warpPortalConfirmedArrivalCancellation};
+	return unless $timeoutCancellation || $arrivalCancellation;
+	if ($self->{ST_oldmutexes}) {
+		$task->onMutexesChanged->remove($self->{ST_mutexesChangedEvent});
+		delete $self->{ST_mutexesChangedEvent};
+		$self->setMutexes(@{$self->{ST_oldmutexes}});
+		delete $self->{ST_oldmutexes};
+	}
+	return if $arrivalCancellation;
+	my $reason = delete $self->{warpPortalFailureReason} || 'timed out while entering_portal';
+	my $handledMapChange = delete $self->{warpPortalTimeoutHandledMapChange};
+	return $self->failWarpPortalStep($reason, $handledMapChange)
+		if $self->{mapSolution} && @{$self->{mapSolution}}
+		&& $self->{mapSolution}[0]{is_warpPortal};
+}
+
 sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
@@ -1124,6 +1574,12 @@ sub mapChanged {
 	}
 
 	$self->{mapChanged} = 1;
+	if (($self->{warpPortalStage} || '') eq 'entering_portal'
+		&& $self->{warpPortalAttemptID}) {
+		$self->{mapChangedWarpPortalAttemptID} = $self->{warpPortalAttemptID};
+	} else {
+		delete $self->{mapChangedWarpPortalAttemptID};
+	}
 
 	my $subtask = $self->getSubtask();
 	if ($subtask

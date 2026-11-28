@@ -11,11 +11,15 @@ use strict;
 use Modules 'register';
 use Time::HiRes qw(time);
 
-use Globals qw($packetParser $incomingMessages %config $char %ai_v %timeout $shopstarted $firstLoginMap $sentWelcomeMessage @lastpm %lastpm);
+use Globals qw($packetParser $incomingMessages %config $char $field %ai_v %timeout $shopstarted $firstLoginMap $sentWelcomeMessage @lastpm %lastpm);
 use Misc qw(configModify visualDump);
 use Log qw(message debug warning);
 use Translation;
 use Utils qw(existsInList);
+use WarpPortal qw(
+	noteMemoRequest noteWarpCast noteWarpSelection
+	normalizeWarpMap warpPortalSelectionContext clearManualWarpSelection
+);
 
 use base qw(Network::PacketParser);
 
@@ -76,6 +80,40 @@ sub map_loaded {
 	message T("Map loaded\n"), 'connection';
 	
 	Plugins::callHook('map_loaded');
+}
+
+# These are outgoing client packets parsed by ClientReceive in XKore mode.
+# Capture only the observed request facts; the server acknowledgement remains
+# the authority for whether /memo actually succeeded.
+sub memo_request {
+	return unless $char && $field && $char->{pos};
+	noteMemoRequest($field->baseName, $char->{pos}{x}, $char->{pos}{y});
+}
+
+sub skill_use_location {
+	my ($self, $args) = @_;
+	noteWarpCast($args->{skillID}, $args->{lv}, $args->{x}, $args->{y});
+}
+
+# XKore sees the official client's destination choice as an outgoing packet.
+# Correlate it only with a fresh AL_WARP menu and the cast observed for that menu.
+sub warp_select {
+	my ($self, $args) = @_;
+	return unless $char && $field && $char->{pos} && ($args->{skillID} || 0) == 27;
+	my $map = normalizeWarpMap($args->{mapName});
+	if ($map eq 'cancel') {
+		clearManualWarpSelection();
+		return;
+	}
+	my $context = warpPortalSelectionContext($map) or return;
+	my $source_map = $field->baseName;
+	my $attempt_id = join('-', 'xkore', $context->{session}, sprintf('%.6f', $context->{cast_time}));
+	my $pending = $char->{warpPortalPendingTraversal};
+	# Packet observation can be repeated by instrumentation; preserve evidence
+	# already attached to this cast instead of restarting its attempt clock.
+	return if $pending && ($pending->{attempt_id} || '') eq $attempt_id;
+	noteWarpSelection($map, $source_map, $char->{pos}{x}, $char->{pos}{y},
+		$context->{level}, $attempt_id, $context->{portal_pos}, 'xkore');
 }
 
 sub actor_action {
