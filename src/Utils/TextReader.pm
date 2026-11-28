@@ -77,16 +77,28 @@ sub add {
 	my ( $self, $file, $options ) = @_;
 
 	if ( @{ $self->{files} } ) {
-		my ( $vol, $dir ) = File::Spec->splitpath( $self->{files}->[-1]->{file} );
+		my $parent = $self->{files}->[-1]->{file};
+		if ($^O eq 'MSWin32' && ($parent . $file) =~ /[^\x00-\x7f]/) {
+			$parent = _decodeWindowsPath($parent) unless utf8::is_utf8($parent);
+			$file = _decodeWindowsPath($file) unless utf8::is_utf8($file);
+		}
+		my ( $vol, $dir ) = File::Spec->splitpath( $parent );
 		$file = File::Spec->catpath( $vol, $dir, $file );
 	}
 
-	if ( grep { $_->{file} eq $file } @{ $self->{files} } ) {
+	my $wide = $^O eq 'MSWin32' && utf8::is_utf8($file) && $file =~ /[^\x00-\x7f]/;
+	if ( grep {
+		my $entry = $_->{file};
+		$entry = _decodeWindowsPath($entry) if $wide && !utf8::is_utf8($entry);
+		$entry eq $file;
+	} @{ $self->{files} } ) {
 		IOException->throw( TF( 'File [%s] cannot include itself.', $file ) );
 	}
 
 	my $handle;
-	if (! -e $file && $options->{create_if_missing}) {
+	if ($wide) {
+		$handle = _openWideFile($file, $options->{create_if_missing});
+	} elsif (! -e $file && $options->{create_if_missing}) {
 		if (!open($handle, '>', $file)) {
 			IOException->throw( TF( 'File [%s] cannot be created: $!', $file, $! ) );
 		}
@@ -95,8 +107,52 @@ sub add {
 	} elsif (!open($handle, "<", $file)) {
 		IOException->throw(error => $!);
 	}
-
 	push @{ $self->{files} }, { file => $file, line => 0, handle => $handle };
+}
+
+sub _decodeWindowsPath {
+	my $encoding = Translation::getLocaleCharset();
+	return Encode::decode($encoding eq 'CP65001' ? 'UTF-8' : $encoding, $_[0]);
+}
+
+sub _openWideFile {
+	my ($file, $create) = @_;
+	if (index($file, "\0") != -1) {
+		FileNotFoundException->throw( error => TF( 'File [%s] does not exist.', $file ), filename => $file );
+	}
+	require Win32API::File;
+	require Fcntl;
+	my $name = Encode::encode('UTF-16LE', "$file\0");
+	my $exists = Win32API::File::GetFileAttributesW($name) != Win32API::File::INVALID_FILE_ATTRIBUTES();
+	if (!$exists && !$create) {
+		FileNotFoundException->throw( error => TF( 'File [%s] does not exist.', $file ), filename => $file );
+	}
+	my $raw = Win32API::File::CreateFileW($name, Win32API::File::GENERIC_READ(),
+		Win32API::File::FILE_SHARE_READ() | Win32API::File::FILE_SHARE_WRITE(), [],
+		$exists ? Win32API::File::OPEN_EXISTING() : Win32API::File::OPEN_ALWAYS(),
+		Win32API::File::FILE_ATTRIBUTE_NORMAL(), []);
+	if ($raw == Win32API::File::INVALID_HANDLE_VALUE()) {
+		my $error = "$^E";
+		IOException->throw(error => $exists ? $error : TF('File [%s] cannot be created: %s', $file, $error));
+	}
+
+	my $fd = Win32API::File::OsFHandleOpenFd($raw, Fcntl::O_BINARY());
+	if ($fd < 0) {
+		my $error = "$!";
+		Win32API::File::CloseHandle($raw);
+		IOException->throw(error => $error);
+	}
+	open my $handle, "<&=$fd" or do {
+		my $error = "$!";
+		if (eval { require POSIX; 1 }) {
+			POSIX::close($fd);
+		} else {
+			Win32API::File::CloseHandle($raw);
+		}
+		IOException->throw(error => $error);
+	};
+	binmode($handle, ':crlf');
+	return $handle;
 }
 
 sub currentFile {
