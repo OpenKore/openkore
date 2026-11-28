@@ -32,8 +32,8 @@ our @EXPORT_OK = qw(bytesToString stringToBytes stringToUTF8 UTF8ToString isUTF8
 
 define_alias("Western"				=> "cp1252");
 define_alias("Tagalog"				=> "cp1252");
-define_alias("Simplified Chinese"	=> "GBK");
-define_alias("Traditional Chinese"	=> "Big5");
+define_alias(qr/\ASimplified\s*Chinese\z/i => '"GBK"');
+define_alias(qr/\ATraditional\s*Chinese\z/i => '"Big5"');
 define_alias("Korean"				=> "cp949");
 define_alias("Russian"				=> "cp1251");
 define_alias("Cyrillic"				=> "cp1251");
