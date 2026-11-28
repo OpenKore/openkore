@@ -12,9 +12,8 @@ use Misc;
 use Translation;
 use Utils::Benchmark;
 
-use AI::Slave;
-
 sub addSlave {
+	require AI::Slave;
 	my $actor = shift;
 
 	$actor->{slave_ai_seq} = [];
